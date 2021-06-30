@@ -63,3 +63,7 @@
 * 配布サイト:[ブルネイ工廠電気実験部](http://electronicobserver.blog.fc2.com/) (バグ報告・要望等はこちらにお願いします)
 * 開発:[Andante](https://twitter.com/andanteyk)
 
+
+## オリジナル版から改変した内容
+
+* 装備一覧にフィルタを実装(20210630)
