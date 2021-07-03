@@ -95,6 +95,7 @@
             this.PicketCrew_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MaintenanceTeam_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SubmarineEquipment_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CommandFacility_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DamageControl_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Ration_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.RepairFacility_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -114,7 +115,7 @@
             this.DetailView_CountAll = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DetailView_CountRemain = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DetailView_EquippedShip = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CommandFacility_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Reload_RToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.EquipmentView)).BeginInit();
             this.TopMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -195,7 +196,8 @@
             this.TopMenu.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.TopMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TopMenu_File,
-            this.ソートToolStripMenuItem});
+            this.ソートToolStripMenuItem,
+            this.Reload_RToolStripMenuItem});
             this.TopMenu.Location = new System.Drawing.Point(0, 0);
             this.TopMenu.Name = "TopMenu";
             this.TopMenu.Size = new System.Drawing.Size(640, 24);
@@ -296,7 +298,7 @@
             this.GunSmall_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.GunSmall_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.GunSmall_ToolStripMenuItem.Name = "GunSmall_ToolStripMenuItem";
-            this.GunSmall_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.GunSmall_ToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.GunSmall_ToolStripMenuItem.Text = "小口径主砲";
             this.GunSmall_ToolStripMenuItem.Click += new System.EventHandler(this.GunSmall_ToolStripMenuItem_Click);
             // 
@@ -307,7 +309,7 @@
             this.GunMidium_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.GunMidium_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.GunMidium_ToolStripMenuItem.Name = "GunMidium_ToolStripMenuItem";
-            this.GunMidium_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.GunMidium_ToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.GunMidium_ToolStripMenuItem.Text = "中口径主砲";
             this.GunMidium_ToolStripMenuItem.Click += new System.EventHandler(this.GunMidium_ToolStripMenuItem_Click);
             // 
@@ -318,7 +320,7 @@
             this.GunLarge_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.GunLarge_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.GunLarge_ToolStripMenuItem.Name = "GunLarge_ToolStripMenuItem";
-            this.GunLarge_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.GunLarge_ToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.GunLarge_ToolStripMenuItem.Text = "大口径主砲";
             this.GunLarge_ToolStripMenuItem.Click += new System.EventHandler(this.GunLarge_ToolStripMenuItem_Click);
             // 
@@ -329,7 +331,7 @@
             this.Secondary_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.Secondary_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.Secondary_ToolStripMenuItem.Name = "Secondary_ToolStripMenuItem";
-            this.Secondary_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Secondary_ToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.Secondary_ToolStripMenuItem.Text = "副砲";
             this.Secondary_ToolStripMenuItem.Click += new System.EventHandler(this.Secondary_ToolStripMenuItem_Click);
             // 
@@ -354,7 +356,7 @@
             this.Fighter_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.Fighter_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.Fighter_ToolStripMenuItem.Name = "Fighter_ToolStripMenuItem";
-            this.Fighter_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Fighter_ToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.Fighter_ToolStripMenuItem.Text = "艦戦";
             this.Fighter_ToolStripMenuItem.Click += new System.EventHandler(this.Fighter_ToolStripMenuItem_Click);
             // 
@@ -365,7 +367,7 @@
             this.Bomber_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.Bomber_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.Bomber_ToolStripMenuItem.Name = "Bomber_ToolStripMenuItem";
-            this.Bomber_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Bomber_ToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.Bomber_ToolStripMenuItem.Text = "艦爆";
             this.Bomber_ToolStripMenuItem.Click += new System.EventHandler(this.Bomber_ToolStripMenuItem_Click);
             // 
@@ -376,7 +378,7 @@
             this.Attacker_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.Attacker_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.Attacker_ToolStripMenuItem.Name = "Attacker_ToolStripMenuItem";
-            this.Attacker_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Attacker_ToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.Attacker_ToolStripMenuItem.Text = "艦攻";
             this.Attacker_ToolStripMenuItem.Click += new System.EventHandler(this.Attacker_ToolStripMenuItem_Click);
             // 
@@ -387,7 +389,7 @@
             this.Recon_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.Recon_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.Recon_ToolStripMenuItem.Name = "Recon_ToolStripMenuItem";
-            this.Recon_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Recon_ToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.Recon_ToolStripMenuItem.Text = "艦偵";
             this.Recon_ToolStripMenuItem.Click += new System.EventHandler(this.Recon_ToolStripMenuItem_Click);
             // 
@@ -398,7 +400,7 @@
             this.Jet_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.Jet_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.Jet_ToolStripMenuItem.Name = "Jet_ToolStripMenuItem";
-            this.Jet_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Jet_ToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.Jet_ToolStripMenuItem.Text = "ジェット機";
             this.Jet_ToolStripMenuItem.Click += new System.EventHandler(this.Jet_ToolStripMenuItem_Click);
             // 
@@ -409,7 +411,7 @@
             this.AutoGyro_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.AutoGyro_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.AutoGyro_ToolStripMenuItem.Name = "AutoGyro_ToolStripMenuItem";
-            this.AutoGyro_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.AutoGyro_ToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.AutoGyro_ToolStripMenuItem.Text = "オートジャイロ";
             this.AutoGyro_ToolStripMenuItem.Click += new System.EventHandler(this.AutoGyro_ToolStripMenuItem_Click);
             // 
@@ -420,7 +422,7 @@
             this.MPA_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.MPA_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MPA_ToolStripMenuItem.Name = "MPA_ToolStripMenuItem";
-            this.MPA_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.MPA_ToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
             this.MPA_ToolStripMenuItem.Text = "対潜哨戒機";
             this.MPA_ToolStripMenuItem.Click += new System.EventHandler(this.MPA_ToolStripMenuItem_Click);
             // 
@@ -442,7 +444,7 @@
             this.PlaneRecon_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.PlaneRecon_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.PlaneRecon_ToolStripMenuItem.Name = "PlaneRecon_ToolStripMenuItem";
-            this.PlaneRecon_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.PlaneRecon_ToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
             this.PlaneRecon_ToolStripMenuItem.Text = "水偵";
             this.PlaneRecon_ToolStripMenuItem.Click += new System.EventHandler(this.PlaneRecon_ToolStripMenuItem_Click);
             // 
@@ -453,7 +455,7 @@
             this.PlaneBomber_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.PlaneBomber_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.PlaneBomber_ToolStripMenuItem.Name = "PlaneBomber_ToolStripMenuItem";
-            this.PlaneBomber_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.PlaneBomber_ToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
             this.PlaneBomber_ToolStripMenuItem.Text = "水爆";
             this.PlaneBomber_ToolStripMenuItem.Click += new System.EventHandler(this.PlaneBomber_ToolStripMenuItem_Click);
             // 
@@ -464,7 +466,7 @@
             this.PlaneFighter_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.PlaneFighter_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.PlaneFighter_ToolStripMenuItem.Name = "PlaneFighter_ToolStripMenuItem";
-            this.PlaneFighter_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.PlaneFighter_ToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
             this.PlaneFighter_ToolStripMenuItem.Text = "水戦";
             this.PlaneFighter_ToolStripMenuItem.Click += new System.EventHandler(this.PlaneFighter_ToolStripMenuItem_Click);
             // 
@@ -475,7 +477,7 @@
             this.FlyingBoat_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.FlyingBoat_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.FlyingBoat_ToolStripMenuItem.Name = "FlyingBoat_ToolStripMenuItem";
-            this.FlyingBoat_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.FlyingBoat_ToolStripMenuItem.Size = new System.Drawing.Size(110, 22);
             this.FlyingBoat_ToolStripMenuItem.Text = "飛行艇";
             this.FlyingBoat_ToolStripMenuItem.Click += new System.EventHandler(this.FlyingBoat_ToolStripMenuItem_Click);
             // 
@@ -496,7 +498,7 @@
             this.Torpedo_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.Torpedo_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.Torpedo_ToolStripMenuItem.Name = "Torpedo_ToolStripMenuItem";
-            this.Torpedo_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Torpedo_ToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.Torpedo_ToolStripMenuItem.Text = "水上艦魚雷";
             this.Torpedo_ToolStripMenuItem.Click += new System.EventHandler(this.Torpedo_ToolStripMenuItem_Click);
             // 
@@ -519,7 +521,7 @@
             this.MidgetSubmarine_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.MidgetSubmarine_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MidgetSubmarine_ToolStripMenuItem.Name = "MidgetSubmarine_ToolStripMenuItem";
-            this.MidgetSubmarine_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.MidgetSubmarine_ToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.MidgetSubmarine_ToolStripMenuItem.Text = "特殊潜航艇";
             this.MidgetSubmarine_ToolStripMenuItem.ToolTipText = "甲標的";
             this.MidgetSubmarine_ToolStripMenuItem.Click += new System.EventHandler(this.MidgetSubmarine_ToolStripMenuItem_Click);
@@ -594,7 +596,7 @@
             this.DepthCharge_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.DepthCharge_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.DepthCharge_ToolStripMenuItem.Name = "DepthCharge_ToolStripMenuItem";
-            this.DepthCharge_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.DepthCharge_ToolStripMenuItem.Size = new System.Drawing.Size(124, 22);
             this.DepthCharge_ToolStripMenuItem.Text = "爆雷";
             this.DepthCharge_ToolStripMenuItem.Click += new System.EventHandler(this.DepthCharge_ToolStripMenuItem_Click);
             // 
@@ -646,7 +648,7 @@
             this.Drum_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.Drum_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.Drum_ToolStripMenuItem.Name = "Drum_ToolStripMenuItem";
-            this.Drum_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Drum_ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.Drum_ToolStripMenuItem.Text = "簡易輸送部材";
             this.Drum_ToolStripMenuItem.ToolTipText = "ドラム缶";
             this.Drum_ToolStripMenuItem.Click += new System.EventHandler(this.Drum_ToolStripMenuItem_Click);
@@ -690,7 +692,7 @@
             this.APShell_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.APShell_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.APShell_ToolStripMenuItem.Name = "APShell_ToolStripMenuItem";
-            this.APShell_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.APShell_ToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.APShell_ToolStripMenuItem.Text = "対艦強化弾";
             this.APShell_ToolStripMenuItem.ToolTipText = "徹甲弾";
             this.APShell_ToolStripMenuItem.Click += new System.EventHandler(this.APShell_ToolStripMenuItem_Click);
@@ -703,7 +705,7 @@
             this.AAShell_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.AAShell_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.AAShell_ToolStripMenuItem.Name = "AAShell_ToolStripMenuItem";
-            this.AAShell_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.AAShell_ToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.AAShell_ToolStripMenuItem.Text = "対空強化弾";
             this.AAShell_ToolStripMenuItem.ToolTipText = "三式弾";
             this.AAShell_ToolStripMenuItem.Click += new System.EventHandler(this.AAShell_ToolStripMenuItem_Click);
@@ -724,7 +726,7 @@
             this.BulgeMid_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.BulgeMid_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.BulgeMid_ToolStripMenuItem.Name = "BulgeMid_ToolStripMenuItem";
-            this.BulgeMid_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.BulgeMid_ToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.BulgeMid_ToolStripMenuItem.Text = "中型バルジ";
             this.BulgeMid_ToolStripMenuItem.Click += new System.EventHandler(this.BulgeMid_ToolStripMenuItem_Click);
             // 
@@ -735,7 +737,7 @@
             this.BulgeLarge_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.BulgeLarge_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.BulgeLarge_ToolStripMenuItem.Name = "BulgeLarge_ToolStripMenuItem";
-            this.BulgeLarge_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.BulgeLarge_ToolStripMenuItem.Size = new System.Drawing.Size(128, 22);
             this.BulgeLarge_ToolStripMenuItem.Text = "大型バルジ";
             this.BulgeLarge_ToolStripMenuItem.Click += new System.EventHandler(this.BulgeLarge_ToolStripMenuItem_Click);
             // 
@@ -756,7 +758,7 @@
             this.Flare_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.Flare_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.Flare_ToolStripMenuItem.Name = "Flare_ToolStripMenuItem";
-            this.Flare_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Flare_ToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.Flare_ToolStripMenuItem.Text = "照明弾";
             this.Flare_ToolStripMenuItem.Click += new System.EventHandler(this.Flare_ToolStripMenuItem_Click);
             // 
@@ -767,7 +769,7 @@
             this.Searchlight_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.Searchlight_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.Searchlight_ToolStripMenuItem.Name = "Searchlight_ToolStripMenuItem";
-            this.Searchlight_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Searchlight_ToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.Searchlight_ToolStripMenuItem.Text = "探照灯";
             this.Searchlight_ToolStripMenuItem.Click += new System.EventHandler(this.Searchlight_ToolStripMenuItem_Click);
             // 
@@ -778,7 +780,7 @@
             this.SearchlightLarge_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.SearchlightLarge_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.SearchlightLarge_ToolStripMenuItem.Name = "SearchlightLarge_ToolStripMenuItem";
-            this.SearchlightLarge_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.SearchlightLarge_ToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
             this.SearchlightLarge_ToolStripMenuItem.Text = "大型探照灯";
             this.SearchlightLarge_ToolStripMenuItem.Click += new System.EventHandler(this.SearchlightLarge_ToolStripMenuItem_Click);
             // 
@@ -808,7 +810,7 @@
             this.Engine_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.Engine_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.Engine_ToolStripMenuItem.Name = "Engine_ToolStripMenuItem";
-            this.Engine_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Engine_ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.Engine_ToolStripMenuItem.Text = "機関部強化";
             this.Engine_ToolStripMenuItem.ToolTipText = "缶、タービン";
             this.Engine_ToolStripMenuItem.Click += new System.EventHandler(this.Engine_ToolStripMenuItem_Click);
@@ -821,7 +823,7 @@
             this.Rocket_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.Rocket_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.Rocket_ToolStripMenuItem.Name = "Rocket_ToolStripMenuItem";
-            this.Rocket_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Rocket_ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.Rocket_ToolStripMenuItem.Text = "対地装備";
             this.Rocket_ToolStripMenuItem.ToolTipText = "WG、対地噴進砲";
             this.Rocket_ToolStripMenuItem.Click += new System.EventHandler(this.Rocket_ToolStripMenuItem_Click);
@@ -833,7 +835,7 @@
             this.PicketCrew_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.PicketCrew_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.PicketCrew_ToolStripMenuItem.Name = "PicketCrew_ToolStripMenuItem";
-            this.PicketCrew_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.PicketCrew_ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.PicketCrew_ToolStripMenuItem.Text = "水上艦要員";
             this.PicketCrew_ToolStripMenuItem.Click += new System.EventHandler(this.PicketCrew_ToolStripMenuItem_Click);
             // 
@@ -844,7 +846,7 @@
             this.MaintenanceTeam_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.MaintenanceTeam_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MaintenanceTeam_ToolStripMenuItem.Name = "MaintenanceTeam_ToolStripMenuItem";
-            this.MaintenanceTeam_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.MaintenanceTeam_ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.MaintenanceTeam_ToolStripMenuItem.Text = "航空要員";
             this.MaintenanceTeam_ToolStripMenuItem.Click += new System.EventHandler(this.MaintenanceTeam_ToolStripMenuItem_Click);
             // 
@@ -855,9 +857,20 @@
             this.SubmarineEquipment_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.SubmarineEquipment_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.SubmarineEquipment_ToolStripMenuItem.Name = "SubmarineEquipment_ToolStripMenuItem";
-            this.SubmarineEquipment_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.SubmarineEquipment_ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.SubmarineEquipment_ToolStripMenuItem.Text = "潜水艦装備";
             this.SubmarineEquipment_ToolStripMenuItem.Click += new System.EventHandler(this.SubmarineEquipment_ToolStripMenuItem_Click);
+            // 
+            // CommandFacility_ToolStripMenuItem
+            // 
+            this.CommandFacility_ToolStripMenuItem.Checked = true;
+            this.CommandFacility_ToolStripMenuItem.CheckOnClick = true;
+            this.CommandFacility_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.CommandFacility_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.CommandFacility_ToolStripMenuItem.Name = "CommandFacility_ToolStripMenuItem";
+            this.CommandFacility_ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
+            this.CommandFacility_ToolStripMenuItem.Text = "司令部施設";
+            this.CommandFacility_ToolStripMenuItem.Click += new System.EventHandler(this.CommandFacility_ToolStripMenuItem_Click);
             // 
             // DamageControl_ToolStripMenuItem
             // 
@@ -866,7 +879,7 @@
             this.DamageControl_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.DamageControl_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.DamageControl_ToolStripMenuItem.Name = "DamageControl_ToolStripMenuItem";
-            this.DamageControl_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.DamageControl_ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.DamageControl_ToolStripMenuItem.Text = "ダメコン";
             this.DamageControl_ToolStripMenuItem.Click += new System.EventHandler(this.DamageControl_ToolStripMenuItem_Click);
             // 
@@ -877,7 +890,7 @@
             this.Ration_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.Ration_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.Ration_ToolStripMenuItem.Name = "Ration_ToolStripMenuItem";
-            this.Ration_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Ration_ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.Ration_ToolStripMenuItem.Text = "戦闘糧食";
             this.Ration_ToolStripMenuItem.Click += new System.EventHandler(this.Ration_ToolStripMenuItem_Click);
             // 
@@ -888,7 +901,7 @@
             this.RepairFacility_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.RepairFacility_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.RepairFacility_ToolStripMenuItem.Name = "RepairFacility_ToolStripMenuItem";
-            this.RepairFacility_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.RepairFacility_ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.RepairFacility_ToolStripMenuItem.Text = "艦艇修理施設";
             this.RepairFacility_ToolStripMenuItem.Click += new System.EventHandler(this.RepairFacility_ToolStripMenuItem_Click);
             // 
@@ -899,7 +912,7 @@
             this.Supplies_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.Supplies_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.Supplies_ToolStripMenuItem.Name = "Supplies_ToolStripMenuItem";
-            this.Supplies_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.Supplies_ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.Supplies_ToolStripMenuItem.Text = "補給物資";
             this.Supplies_ToolStripMenuItem.Click += new System.EventHandler(this.Supplies_ToolStripMenuItem_Click);
             // 
@@ -911,7 +924,7 @@
             this.TransportMaterials_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.TransportMaterials_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.TransportMaterials_ToolStripMenuItem.Name = "TransportMaterials_ToolStripMenuItem";
-            this.TransportMaterials_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.TransportMaterials_ToolStripMenuItem.Size = new System.Drawing.Size(146, 22);
             this.TransportMaterials_ToolStripMenuItem.Text = "輸送機材";
             this.TransportMaterials_ToolStripMenuItem.ToolTipText = "分解彩雲(イベント限定)";
             this.TransportMaterials_ToolStripMenuItem.Click += new System.EventHandler(this.TransportMaterials_ToolStripMenuItem_Click);
@@ -1062,16 +1075,12 @@
             this.DetailView_EquippedShip.ReadOnly = true;
             this.DetailView_EquippedShip.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // CommandFacility_ToolStripMenuItem
+            // Reload_RToolStripMenuItem
             // 
-            this.CommandFacility_ToolStripMenuItem.Checked = true;
-            this.CommandFacility_ToolStripMenuItem.CheckOnClick = true;
-            this.CommandFacility_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.CommandFacility_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.CommandFacility_ToolStripMenuItem.Name = "CommandFacility_ToolStripMenuItem";
-            this.CommandFacility_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.CommandFacility_ToolStripMenuItem.Text = "司令部施設";
-            this.CommandFacility_ToolStripMenuItem.Click += new System.EventHandler(this.CommandFacility_ToolStripMenuItem_Click);
+            this.Reload_RToolStripMenuItem.Name = "Reload_RToolStripMenuItem";
+            this.Reload_RToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
+            this.Reload_RToolStripMenuItem.Text = "更新(&R)";
+            this.Reload_RToolStripMenuItem.Click += new System.EventHandler(this.Reload_RToolStripMenuItem_Click);
             // 
             // DialogEquipmentList
             // 
@@ -1189,5 +1198,6 @@
 		private System.Windows.Forms.ToolStripMenuItem Interceptor_ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem LandPatrol_ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem CommandFacility_ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem Reload_RToolStripMenuItem;
 	}
 }

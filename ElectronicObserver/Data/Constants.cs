@@ -340,7 +340,7 @@ namespace ElectronicObserver.Data
 				case 46: return "三式潜航輸送艇";
 				case 47: return "Bismarck級";
 				case 48: return "Z1型";
-				case 49: return "工作艦";
+				case 49: return "明石型";　//20210703 変更(艦これwikiに合わせた)
 				case 50: return "大鯨型";
 				case 51: return "龍鳳型";
 				case 52: return "大淀型";
@@ -377,7 +377,7 @@ namespace ElectronicObserver.Data
 				case 83: return "Casablanca級";
 				case 84: return "Essex級";
 				case 85: return "日振型";
-				case 86: return "呂号潜水艦";			// "潜水艦" が艦種と被るので省くべき?
+				case 86: return "呂号";			// 20210703 変更
 				case 87: return "John C.Butler級";
 				case 88: return "Nelson級";
 				case 89: return "Gotland級";
@@ -395,12 +395,16 @@ namespace ElectronicObserver.Data
 				case 101: return "松型";
 				case 102: return "South Dakota級";
 				case 103: return "巡潜丙型";
-				case 104: return "丁型海防艦";		// 86 に同じ
+				case 104: return "丁型";       // 20210703 変更
 				case 105: return "Yorktown級";
 				case 106: return "St. Louis級";
 				case 107: return "North Carolina級";
 				case 108: return "Town級";
-				default: return "不明";
+				case 109: return "潜高型";
+				case 110: return "Brooklyn級";
+				case 111: return "宗谷型"; //宗谷のコンバート改装先の2つも同じIDなので便宜上の命名
+				default: 
+					return "不明";
 			}
 		}
 
@@ -793,6 +797,12 @@ namespace ElectronicObserver.Data
 					return "Colorado Touch";
 				case DayAttackKind.SpecialKongo:
 					return "僚艦夜戦突撃";
+				case DayAttackKind.SpecialSubmarineAttack1:
+					return "潜水艦隊攻撃";
+				case DayAttackKind.SpecialSubmarineAttack2:
+					return "潜水艦隊攻撃";
+				case DayAttackKind.SpecialSubmarineAttack3:
+					return "潜水艦隊攻撃";
 				case DayAttackKind.ZuiunMultiAngle:
 					return "瑞雲立体攻撃";
 				case DayAttackKind.SeaAirMultiAngle:
@@ -845,9 +855,21 @@ namespace ElectronicObserver.Data
 				case NightAttackKind.CutinAirAttack:
 					return "空母カットイン";
 				case NightAttackKind.CutinTorpedoRadar:
-					return "駆逐カットイン(主砲/魚雷/電探)";
+					return "駆逐カットイン(主砲/魚雷/電探) 1Hit";
 				case NightAttackKind.CutinTorpedoPicket:
-					return "駆逐カットイン(魚雷/見張員/電探)";
+					return "駆逐カットイン(魚雷/見張員/電探) 1Hit";
+				case NightAttackKind.CutinTorpedoTorpedoMasterPicket:
+					return "駆逐カットイン(魚雷/魚雷/水雷見張員) 1Hit";
+				case NightAttackKind.CutinTorpedoDrumMasterPicket:
+					return "駆逐カットイン(魚雷/ドラム缶/水雷見張員) 1Hit";
+				case NightAttackKind.CutinTorpedoRadar2:
+					return "駆逐カットイン(主砲/魚雷/電探) 2Hit";
+				case NightAttackKind.CutinTorpedoPicket2:
+					return "駆逐カットイン(魚雷/見張員/電探) 2Hit";
+				case NightAttackKind.CutinTorpedoTorpedoMasterPicket2:
+					return "駆逐カットイン(魚雷/魚雷/水雷見張員) 2Hit";
+				case NightAttackKind.CutinTorpedoDrumMasterPicket2:
+					return "駆逐カットイン(魚雷/ドラム缶/水雷見張員) 2Hit";
 				case NightAttackKind.SpecialNelson:
 					return "Nelson Touch";
 				case NightAttackKind.SpecialNagato:
@@ -858,6 +880,12 @@ namespace ElectronicObserver.Data
 					return "Colorado Touch";
 				case NightAttackKind.SpecialKongo:
 					return "僚艦夜戦突撃";
+				case NightAttackKind.SpecialSubmarineAttack1:
+					return "潜水艦隊攻撃";
+				case NightAttackKind.SpecialSubmarineAttack2:
+					return "潜水艦隊攻撃";
+				case NightAttackKind.SpecialSubmarineAttack3:
+					return "潜水艦隊攻撃";
 				case NightAttackKind.Shelling:
 					return "砲撃";
 				case NightAttackKind.AirAttack:

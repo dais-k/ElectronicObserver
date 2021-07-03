@@ -304,6 +304,22 @@ namespace ElectronicObserver.Window.Dialog
 				bool isShipClassUnknown = shipClassName == "不明";
 
 				ShipType.Text = (ship.IsAbyssalShip ? "深海" : isShipClassUnknown ? "" : shipClassName) + (ship.IsLandBase ? "陸上施設" : ship.ShipTypeName);
+				//固有対応：宗谷
+				if (ShipType.Text == "宗谷型補給艦")
+				{
+					if (shipID == 645)
+					{
+						ShipType.Text = "灯台補給船";
+					}
+					if (shipID == 650)
+					{
+						ShipType.Text = "南極観測船";
+					}
+					if (shipID == 699)
+					{
+						ShipType.Text = "特務艦";
+					}
+				}
 
 				var tip = new StringBuilder();
 				if (ship.IsAbyssalShip)
@@ -957,11 +973,29 @@ namespace ElectronicObserver.Window.Dialog
 
 							if (ship.Name == "なし") continue;
 
+							//特別対応：宗谷
+							string tmpShipTypeName = ship.ShipTypeName;
+							if(tmpShipTypeName == "補給艦")
+							{
+								if(ship.ShipID == 645)
+								{
+									tmpShipTypeName = "灯台補給船";
+								}
+								if (ship.ShipID == 650)
+								{
+									tmpShipTypeName = "南極観測船";
+								}
+								if (ship.ShipID == 699)
+								{
+									tmpShipTypeName = "特務艦";
+								}
+							}
+
 							sw.WriteLine(string.Join(",",
 								ship.ShipID,
 								ship.AlbumNo,
 								ship.IsAbyssalShip ? "深海棲艦" : Constants.GetShipClass(ship.ShipClass),
-								CsvHelper.EscapeCsvCell(ship.ShipTypeName),
+								CsvHelper.EscapeCsvCell(tmpShipTypeName),
 								CsvHelper.EscapeCsvCell(ship.Name),
 								CsvHelper.EscapeCsvCell(ship.NameReading),
 								ship.SortID,

@@ -2494,6 +2494,14 @@ namespace ElectronicObserver.Utility.Data
 		/// <summary> 海空立体攻撃 </summary>
 		SeaAirMultiAngle = 201,
 
+		/// <summary> 潜水艦隊攻撃 (2,3) </summary>
+		SpecialSubmarineAttack1 = 300,
+
+		/// <summary> 潜水艦隊攻撃 (3,4) </summary>
+		SpecialSubmarineAttack2 = 301,
+
+		/// <summary> 潜水艦隊攻撃 (2,4) </summary>
+		SpecialSubmarineAttack3 = 302,
 
 		/// <summary> 砲撃 </summary>
 		Shelling = 1000,
@@ -2560,11 +2568,29 @@ namespace ElectronicObserver.Utility.Data
 		/// <summary> 空母カットイン </summary>
 		CutinAirAttack,
 
-		/// <summary> 駆逐カットイン(主砲/魚雷/電探) </summary>
+		/// <summary> 駆逐カットイン(主砲/魚雷/電探) 1Hit </summary>
 		CutinTorpedoRadar,
 
-		/// <summary> 駆逐カットイン(魚雷/見張員/電探) </summary>
+		/// <summary> 駆逐カットイン(魚雷/見張員/電探) 1Hit </summary>
 		CutinTorpedoPicket,
+
+		/// <summary> 駆逐カットイン(魚雷/魚雷/水雷見張員) 1Hit </summary>
+		CutinTorpedoTorpedoMasterPicket,
+
+		/// <summary> 駆逐カットイン(魚雷/ドラム缶/水雷見張員) 1Hit </summary>
+		CutinTorpedoDrumMasterPicket,
+
+		/// <summary> 駆逐カットイン(主砲/魚雷/電探) 2Hit </summary>
+		CutinTorpedoRadar2,
+
+		/// <summary> 駆逐カットイン(魚雷/見張員/電探) 2Hit </summary>
+		CutinTorpedoPicket2,
+
+		/// <summary> 駆逐カットイン(魚雷/魚雷/水雷見張員) 2Hit </summary>
+		CutinTorpedoTorpedoMasterPicket2,
+
+		/// <summary> 駆逐カットイン(魚雷/ドラム缶/水雷見張員) 2Hit </summary>
+		CutinTorpedoDrumMasterPicket2,
 
 		/// <summary> Nelson Touch </summary>
 		SpecialNelson = 100,
@@ -2581,6 +2607,14 @@ namespace ElectronicObserver.Utility.Data
 		/// <summary> 僚艦夜戦突撃 </summary>
 		SpecialKongo = 104,
 
+		/// <summary> 潜水艦隊攻撃 (2,3) </summary>
+		SpecialSubmarineAttack1 = 300,
+
+		/// <summary> 潜水艦隊攻撃 (3,4) </summary>
+		SpecialSubmarineAttack2 = 301,
+
+		/// <summary> 潜水艦隊攻撃 (2,4) </summary>
+		SpecialSubmarineAttack3 = 302,
 
 		/// <summary> 砲撃 </summary>
 		Shelling = 1000,

@@ -1323,6 +1323,27 @@ namespace ElectronicObserver.Window.Dialog
 		{
 			FilterFinish();
 		}
+		//更新
+		//(ダイアログを表示した状態で装備を変更しても一覧と連動しないので、そのための更新ボタン)
+		private void Reload_RToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			if (EquipmentView.Enabled && EquipmentView.SelectedRows != null && EquipmentView.SelectedRows.Count > 0)
+			{
+				//今選ばれているもののindexを取得しておき、
+				//一覧を更新してから選びなおして詳細を更新する
+				int v = 0;
+
+				foreach(DataGridViewRow r in EquipmentView.SelectedRows)
+				{
+					v = r.Index;
+					break;
+				}
+				UpdateView();
+				EquipmentView.ClearSelection();
+				EquipmentView.Rows[v].Selected = true;
+				UpdateDetailView((int)EquipmentView[EquipmentView_ID.Index, EquipmentView.SelectedRows[0].Index].Value);
+			}
+		}
 
 		/// <summary>
 		/// 「艦隊分析」装備情報反映用
