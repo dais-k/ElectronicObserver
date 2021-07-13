@@ -64,6 +64,7 @@ namespace ElectronicObserver.Window
 		public FormBaseAirCorps fBaseAirCorps;
 		public FormJson fJson;
 		public FormFleetPreset fFleetPreset;
+		public FormSenka fSenka;
 
 		#endregion
 
@@ -123,6 +124,7 @@ namespace ElectronicObserver.Window
 			StripMenu_View_Dock.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormDock];
 			StripMenu_View_Arsenal.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormArsenal];
 			StripMenu_View_Headquarters.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormHeadQuarters];
+			StripMenu_View_Senka.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormExpChecker];	//アイコンは使いまわし
 			StripMenu_View_Quest.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormQuest];
 			StripMenu_View_Information.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormInformation];
 			StripMenu_View_Compass.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormCompass];
@@ -182,6 +184,7 @@ namespace ElectronicObserver.Window
 			SubForms.Add(fBaseAirCorps = new FormBaseAirCorps(this));
 			SubForms.Add(fJson = new FormJson(this));
 			SubForms.Add(fFleetPreset = new FormFleetPreset(this));
+			SubForms.Add(fSenka = new FormSenka(this));
 
 			ConfigurationChanged();     //設定から初期化
 
@@ -508,6 +511,8 @@ namespace ElectronicObserver.Window
 					return fJson;
 				case "FleetPreset":
 					return fFleetPreset;
+				case "Senka":
+					return fSenka;
 				default:
 					if (persistString.StartsWith("ShipGroup"))
 					{
@@ -1564,8 +1569,11 @@ namespace ElectronicObserver.Window
 			ShowForm(fFleetPreset);
 		}
 
+		private void StripMenu_View_Senka_Click(object sender, EventArgs e)
+		{
+			ShowForm(fSenka);
+		}
 
 		#endregion
-
 	}
 }
