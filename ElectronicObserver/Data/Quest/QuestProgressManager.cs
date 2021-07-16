@@ -466,6 +466,27 @@ namespace ElectronicObserver.Data.Quest
 								}));
 							}
 							break;
+						case 949:   //|949|単|改装特務空母「Gambier Bay Mk.II」抜錨！|2-4, 3-5ボスS勝利各2回、6-4AボスA勝利2回|要Gambier Bay Mk.II旗艦、Flecher級駆逐艦x1
+							Progresses.Add(new ProgressMultiBattle(q, new[]{
+								new ProgressSpecialBattle(q, 2, "S", new[]{ 24 }, true),
+								new ProgressSpecialBattle(q, 2, "S", new[]{ 35 }, true),
+								new ProgressSpecialBattle(q, 2, "A", new[]{ 64 }, true),
+								}));
+							break;
+						case 950:   //|950|単|【夏季限定】「渚のマーメイド」作戦！|1-4, 2-3, 3-2ボスS勝利各2回|条件：曙/潮/漣/朧 or 白露改二/時雨改二/村雨改二/夕立改二、期間限定(2021/07/15～????/??/??)
+							Progresses.Add(new ProgressMultiBattle(q, new[]{
+								new ProgressSpecialBattle(q, 2, "S", new[]{ 14 }, true),
+								new ProgressSpecialBattle(q, 2, "S", new[]{ 23 }, true),
+								new ProgressSpecialBattle(q, 2, "S", new[]{ 32 }, true),
+								}));
+							break;
+						case 951:   //|951|単|【夏季限定】「渚のシレーナ」欧州作戦！|4-1, 4-3, 4-4ボスS勝利各2回|条件：伊駆逐、独駆逐、米駆逐、仏艦艇、「Littorio(Italia)」「U-511(呂500)」「Houston」「Gotland」の中から5隻、期間限定(2021/07/15～????/??/??)
+							Progresses.Add(new ProgressMultiBattle(q, new[]{
+								new ProgressSpecialBattle(q, 2, "S", new[]{ 41 }, true),
+								new ProgressSpecialBattle(q, 2, "S", new[]{ 43 }, true),
+								new ProgressSpecialBattle(q, 2, "S", new[]{ 44 }, true),
+								}));
+							break;
 
 						case 303:   //|303|「演習」で練度向上！|演習3
 							Progresses.Add(new ProgressPractice(q, 3, false));
@@ -576,7 +597,17 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressExpedition(q, 1, new[]{ 110 }),
 								new ProgressExpedition(q, 1, new[]{ 11 }),
 							})); break;
-
+						case 445:   //|445|単|航空基地を整備拡張せよ！|「海上護衛任務」「兵站強化任務」「タンカー護衛任務」「航空機輸送作戦」「ボーキサイト船団護衛」「水上機基地建設」「水上機前線輸送」成功各1
+							Progresses.Add(new ProgressMultiExpedition(q, new[]{
+								new ProgressExpedition(q, 1, new[]{ 5 }),
+								new ProgressExpedition(q, 1, new[]{ 100 }),
+								new ProgressExpedition(q, 1, new[]{ 9 }),
+								new ProgressExpedition(q, 1, new[]{ 18 }),
+								new ProgressExpedition(q, 1, new[]{ 45 }),
+								new ProgressExpedition(q, 1, new[]{ 36 }),
+								new ProgressExpedition(q, 1, new[]{ 40 }),
+							}));
+							break;
 						case 503:   //|503|艦隊大整備！|入渠5
 							Progresses.Add(new ProgressDocking(q, 5));
 							break;
@@ -720,7 +751,15 @@ namespace ElectronicObserver.Data.Quest
 						case 703:   //|703|「近代化改修」を進め、戦備を整えよ！|改修成功15
 							Progresses.Add(new ProgressModernization(q, 15));
 							break;
-
+						case 1105:  //|1105|夏の格納庫整備＆航空基地整備|陸攻系x3廃棄、弾薬2800、九七式艦攻x4、天山x4を保有
+							Progresses.Add(new ProgressDiscard(q, 3, true, new[] { 47 }));
+							break;
+						case 1106:  //|1106|精鋭三座水上偵察機隊の前線投入|瑞雲x3、零式水上偵察機x3破棄、秘書艦「由良改二」の第一スロットに零式水上偵察機11型乙★10を装備し、燃料1300、ボーキ1700、新型航空兵装資材x1、戦闘詳報x1、熟練搭乗員x3を保有
+							Progresses.Add(new ProgressMultiDiscard(q, new[]{
+								new ProgressDiscard(q, 3, true, new[]{ 25 }, -1),
+								new ProgressDiscard(q, 3, true, new[]{ 26 }, -1),
+							}));
+							break;
 					}
 
 					#endregion

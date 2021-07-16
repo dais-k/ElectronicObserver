@@ -50,7 +50,7 @@ namespace ElectronicObserver.Window
 				Alignment = DataGridViewContentAlignment.MiddleCenter
 			};
 
-			CSCategories = new DataGridViewCellStyle[10];
+			CSCategories = new DataGridViewCellStyle[11];
 			for (int i = 0; i < CSCategories.Length; i++)
 			{
 				CSCategories[i] = new DataGridViewCellStyle(CSDefaultCenter);
@@ -85,7 +85,12 @@ namespace ElectronicObserver.Window
 					case 9:     //出撃(3)
 						c = Color.FromArgb(0xFF, 0xCC, 0xCC);
 						break;
-					case 10:     //その他
+					case 10:    //その他
+						c = CSDefaultCenter.BackColor;
+						break;
+					case 11:    //工廠(2)
+						c = Color.FromArgb(0xDD, 0xCC, 0xBB);
+						break;
 					default:
 						c = CSDefaultCenter.BackColor;
 						break;
@@ -96,7 +101,7 @@ namespace ElectronicObserver.Window
 			}
 
 			QuestView.DefaultCellStyle = CSDefaultCenter;
-			QuestView_Category.DefaultCellStyle = CSCategories[CSCategories.Length - 1];
+			QuestView_Category.DefaultCellStyle = CSCategories[CSCategories.Length - 2]; //その他を指定しておく
 			QuestView_Name.DefaultCellStyle = CSDefaultLeft;
 			QuestView_Progress.DefaultCellStyle = CSDefaultLeft;
 

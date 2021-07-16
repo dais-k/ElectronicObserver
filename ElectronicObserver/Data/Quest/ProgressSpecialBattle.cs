@@ -310,6 +310,61 @@ namespace ElectronicObserver.Data.Quest
 						}.Contains(memberstype.FirstOrDefault()) &&
 						memberstype.Count(t => t == ShipTypes.Destroyer) >= 2;
 					break;
+				case 949:   //|949|単|改装特務空母「Gambier Bay Mk.II」抜錨！|2-4, 3-5ボスS勝利各2回、6-4ボスA勝利2回|要Gambier Bay Mk.II旗艦、Fletcher級駆逐艦x1
+					isAccepted =
+						members.FirstOrDefault()?.MasterShip?.ShipID == 707 && (members.Count(s => s?.MasterShip?.ShipClass == 91) >= 1);
+					break;
+				case 950:   //|950|単|【夏季限定】「渚のマーメイド」作戦！|1-4, 2-3, 3-2ボスS勝利各2回|条件：曙/潮/漣/朧 or 白露改二/時雨改二/村雨改二/夕立改二のいずれかの組み合わせ、期間限定(2021/07/15～????/??/??)
+					isAccepted = (members.Count(s =>
+						{
+							switch (s?.MasterShip?.NameReading)
+							{
+								case "おぼろ":
+								case "さざなみ":
+								case "うしお":
+								case "あけぼの":
+									return true;
+								default:
+									return false;
+							}
+						}) >= 4) ||	(members.Count(s =>
+						{
+							switch (s?.MasterShip?.NameReading)
+							{
+								case "しらつゆ":
+								case "しぐれ":
+								case "むらさめ":
+								case "ゆうだち":
+									return s.MasterShip.RemodelTier >= 2;
+								default:
+									return false;
+							}
+						}) >= 4);
+					break;
+				case 951:   //|951|単|【夏季限定】「渚のシレーナ」欧州作戦！|4-1, 4-3, 4-4ボスS勝利各2回|伊駆逐、独駆逐、米駆逐、仏艦艇、「Littorio(Italia)」「U-511(呂500)」「Houston」「Gotland」の中から5隻、期間限定(2021/07/15～????/??/??)
+					isAccepted =
+						(
+							(members.Count(s => 
+								 s?.MasterShip?.ShipClass == 61 ||										//マエストラーレ級駆逐艦
+								 s?.MasterShip?.ShipClass == 48 ||										//Z1型駆逐艦
+								 s?.MasterShip?.ShipClass == 87 || s?.MasterShip?.ShipClass == 91 ||	//ジョンCバトラー級駆逐艦、フレッチャー級駆逐艦
+								 s?.MasterShip?.ShipClass == 70 || s?.MasterShip?.ShipClass == 79))		//リシュリュー級戦艦、コマンダンテスト級水上機母艦
+							+
+							(members.Count(s =>
+							{
+								switch (s?.MasterShip?.NameReading)
+								{
+									case "リットリオ・イタリア":
+									case "ゆー511・ろ500":
+									case "ヒューストン":
+									case "ゴトランド":
+										return true;
+									default:
+										return false;
+								}
+							}))
+						) >= 5;
+					break;
 			}
 
 			// 第二ゲージでも第一ボスに行ける場合があるので、個別対応が必要

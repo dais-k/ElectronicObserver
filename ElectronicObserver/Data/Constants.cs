@@ -1196,6 +1196,7 @@ namespace ElectronicObserver.Data
 				case 5:
 					return "補給";        //入渠も含むが、文字数の関係
 				case 6:
+				case 11:
 					return "工廠";
 				case 7:
 					return "改装";
