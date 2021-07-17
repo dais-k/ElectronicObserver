@@ -462,6 +462,12 @@
     <Compile Include="Window\Dialog\DialogExpeditionCheck.Designer.cs">
       <DependentUpon>DialogExpeditionCheck.cs</DependentUpon>
     </Compile>
+    <Compile Include="Window\Dialog\DialogFleetAnalysis.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Window\Dialog\DialogFleetAnalysis.Designer.cs">
+      <DependentUpon>DialogFleetAnalysis.cs</DependentUpon>
+    </Compile>
     <Compile Include="Window\Dialog\DialogFleetImageGenerator.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -753,6 +759,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Window\Dialog\DialogExpeditionCheck.resx">
       <DependentUpon>DialogExpeditionCheck.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Window\Dialog\DialogFleetAnalysis.resx">
+      <DependentUpon>DialogFleetAnalysis.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Window\Dialog\DialogFleetImageGenerator.resx">
       <DependentUpon>DialogFleetImageGenerator.cs</DependentUpon>

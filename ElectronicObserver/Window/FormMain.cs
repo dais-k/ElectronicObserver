@@ -148,6 +148,7 @@ namespace ElectronicObserver.Window
 			StripMenu_Tool_BaseAirCorpsSimulation.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormBaseAirCorps];
 			StripMenu_Tool_ExpChecker.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormExpChecker];
 			StripMenu_Tool_ExpeditionCheck.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormExpeditionCheck];
+			StripMenu_Tool_FleetAnalysis.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormResourceChart];
 
 			StripMenu_Help_Version.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.AppIcon];
 			#endregion
@@ -1439,7 +1440,10 @@ namespace ElectronicObserver.Window
 			fWindowCapture.DetachAll();
 		}
 
-
+		private void StripMenu_Tool_FleetAnalysis_Click(object sender, EventArgs e)
+		{
+			new Dialog.DialogFleetAnalysis().Show(this);
+		}
 
 		private void UpdatePlayTime()
 		{
