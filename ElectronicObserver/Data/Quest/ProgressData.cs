@@ -148,10 +148,49 @@ namespace ElectronicObserver.Data.Quest
 			switch (q.Progress)
 			{
 				case 1:     //50%
-					Progress = (int)Math.Max(Progress, Math.Ceiling((ProgressMax + SharedCounterShift) * 0.5) - SharedCounterShift);
+					//一部の任務で進捗がバグるので個別対策
+					switch (q.QuestID)
+					{
+						case 337:
+							Progress = 1;
+							break;
+						case 339:
+							Progress = 1;
+							break;
+						default:
+							Progress = (int)Math.Max(Progress, Math.Ceiling((ProgressMax + SharedCounterShift) * 0.5) - SharedCounterShift);
+							break;
+					}
 					break;
 				case 2:     //80%
-					Progress = (int)Math.Max(Progress, Math.Ceiling((ProgressMax + SharedCounterShift) * 0.8) - SharedCounterShift);
+					//一部の任務で進捗がバグるので個別対策
+					switch (q.QuestID)
+					{
+						case 330:
+							Progress = 3;
+							break;
+						case 337:
+							Progress = 2;
+							break;
+						case 339:
+							Progress = 2;
+							break;
+						case 341:
+							Progress = 3;
+							break;
+						case 342:
+							Progress = 3;
+							break;
+						case 348:
+							Progress = 3;
+							break;
+						case 354:
+							Progress = 3;
+							break;
+						default:
+							Progress = (int)Math.Max(Progress, Math.Ceiling((ProgressMax + SharedCounterShift) * 0.8) - SharedCounterShift);
+							break;
+					}
 					break;
 			}
 

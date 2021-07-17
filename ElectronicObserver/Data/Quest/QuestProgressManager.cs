@@ -282,7 +282,7 @@ namespace ElectronicObserver.Data.Quest
 						case 249:   //|249|月|「第五戦隊」出撃せよ！|2-5ボスS勝利1|要「那智」「妙高」「羽黒」
 							Progresses.Add(new ProgressSpecialBattle(q, 1, "S", new[] { 25 }, true));
 							break;
-						case 256:   //|256|「潜水艦隊」出撃せよ！|6-1ボスS勝利3
+						case 256:   //|256|月|「潜水艦隊」出撃せよ！|6-1ボスS勝利3
 							Progresses.Add(new ProgressBattle(q, 3, "S", new[] { 61 }, true));
 							break;
 						case 257:   //|257|月|「水雷戦隊」南西へ！|1-4ボスS勝利1|要軽巡旗艦、軽巡3隻まで、他駆逐艦　他艦種禁止
@@ -446,7 +446,7 @@ namespace ElectronicObserver.Data.Quest
 								}));
 							}
 							break;
-						case 841:   //|841|841|週|【節分任務】令和三年西方海域節分作戦|4-(1~3)ボスS勝利各1|要(水母2or航巡2or重巡2)旗艦, 期間限定(2021/01/13～????/??/??)
+						case 841:   //|841|週|【節分任務】令和三年西方海域節分作戦|4-(1~3)ボスS勝利各1|要(水母2or航巡2or重巡2)旗艦, 期間限定(2021/01/13～????/??/??)
 							if (DateTime.Now < new DateTime(2021, 4, 1))
 							{
 								Progresses.Add(new ProgressMultiBattle(q, new[] {
@@ -488,17 +488,38 @@ namespace ElectronicObserver.Data.Quest
 								}));
 							break;
 
-						case 303:   //|303|「演習」で練度向上！|演習3
+						case 303:   //|303|日|「演習」で練度向上！|演習3
 							Progresses.Add(new ProgressPractice(q, 3, false));
 							break;
-						case 304:   //|304|「演習」で他提督を圧倒せよ！|演習勝利5
+						case 304:   //|304|日|「演習」で他提督を圧倒せよ！|演習勝利5
 							Progresses.Add(new ProgressPractice(q, 5, true));
 							break;
-						case 302:   //|302|大規模演習|演習勝利20
+						case 302:   //|302|週|大規模演習|演習勝利20
 							Progresses.Add(new ProgressPractice(q, 20, true));
 							break;
-						case 311:   //|311|精鋭艦隊演習|演習勝利7|マンスリーだが1日で進捗リセット
+						case 311:   //|311|月|精鋭艦隊演習|演習勝利7|マンスリーだが1日で進捗リセット
 							Progresses.Add(new ProgressPractice(q, 7, true));
+							break;
+						case 330:   //|330|Ｑ|空母機動部隊、演習始め！|演習B勝利以上4|条件：航空母艦旗艦他1隻計2隻以上及び駆逐艦2隻を含む|クォータリーだが1日で進捗リセット
+							Progresses.Add(new ProgressPractice(q, 4, "B", true));
+							break;
+						case 337:   //|337|Ｑ|「十八駆」演習！|演習S勝利以上3|条件：霞、霰、陽炎、不知火 |クォータリーだが1日で進捗リセット
+							Progresses.Add(new ProgressPractice(q, 3, "S", true));
+							break;
+						case 339:   //|339|Ｑ|「十九駆」演習！|演習S勝利以上3|条件：磯波、浦波、綾波、敷波|クォータリーだが1日で進捗リセット
+							Progresses.Add(new ProgressPractice(q, 3, "S", true));
+							break;
+						case 341:   //|341|３|精鋭「第七駆逐隊」演習開始！|演習A勝利以上3|条件、朧、曙、漣、潮|イヤーリーだが1日で進捗リセット
+							Progresses.Add(new ProgressPractice(q, 3, "A", true));
+							break;
+						case 342:   //|342|Ｑ|小艦艇群演習強化任務|演習A勝利以上4|(駆逐艦/海防艦)3隻+(駆逐艦/海防艦/軽巡級)1隻|クォータリーだが1日で進捗リセット
+							Progresses.Add(new ProgressPractice(q, 4, "A", true));
+							break;
+						case 348:   //|348|２|「精鋭軽巡」演習！|演習A勝利以上4|条件：軽巡級(雷巡を除く)旗艦、旗艦含む軽巡3隻以上、随伴に駆逐艦2隻以上|イヤーリーだが1日で進捗リセット|
+							Progresses.Add(new ProgressPractice(q, 4, "A", true));
+							break;
+						case 354:   //|354|７|「改装特設空母」任務部隊演習！|演習S勝利以上4|条件：旗艦がガンビアベイMK2かつフレッチャー級orジョンCバトラー級2隻以上を含む|イヤーリーだが1日で進捗リセット|
+							Progresses.Add(new ProgressPractice(q, 4, "S", true));
 							break;
 
 						case 402:   //|402|「遠征」を3回成功させよう！|遠征成功3
@@ -608,6 +629,7 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressExpedition(q, 1, new[]{ 40 }),
 							}));
 							break;
+
 						case 503:   //|503|艦隊大整備！|入渠5
 							Progresses.Add(new ProgressDocking(q, 5));
 							break;
@@ -751,6 +773,7 @@ namespace ElectronicObserver.Data.Quest
 						case 703:   //|703|「近代化改修」を進め、戦備を整えよ！|改修成功15
 							Progresses.Add(new ProgressModernization(q, 15));
 							break;
+
 						case 1105:  //|1105|夏の格納庫整備＆航空基地整備|陸攻系x3廃棄、弾薬2800、九七式艦攻x4、天山x4を保有
 							Progresses.Add(new ProgressDiscard(q, 3, true, new[] { 47 }));
 							break;
