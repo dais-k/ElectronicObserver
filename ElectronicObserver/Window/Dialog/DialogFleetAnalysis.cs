@@ -24,9 +24,9 @@ namespace ElectronicObserver.Window.Dialog
 		private void UpdateView()
 		{
 			var ships = KCDatabase.Instance.Ships.Values;
-			var equipments = KCDatabase.Instance.Equipments.Values;
-			var masterEquipments = KCDatabase.Instance.MasterEquipments;
-			int masterCount = masterEquipments.Values.Count(eq => !eq.IsAbyssalEquipment);
+			//var equipments = KCDatabase.Instance.Equipments.Values;
+			//var masterEquipments = KCDatabase.Instance.MasterEquipments;
+			//int masterCount = masterEquipments.Values.Count(eq => !eq.IsAbyssalEquipment);
 
 			//var allCount = equipments.GroupBy(eq => eq.EquipmentID).ToDictionary(group => group.Key, group => group.Count());
 			//var remainCount = new Dictionary<int, int>(allCount);
@@ -47,7 +47,7 @@ namespace ElectronicObserver.Window.Dialog
 				//Console.WriteLine(st+ "|" + shipTypeCount[st]);
 				dataGridView_ShipTypes.Rows.Add();
 				int maxRowNum = dataGridView_ShipTypes.Rows.Count;
-				dataGridView_ShipTypes.Rows[maxRowNum - 1].Cells[0].Value = maxRowNum;
+				dataGridView_ShipTypes.Rows[maxRowNum - 1].Cells[0].Value = maxRowNum; //デフォルトソートで困るので通番を入れておく(艦種のIDではない)
 				dataGridView_ShipTypes.Rows[maxRowNum - 1].Cells[1].Value = st;
 				dataGridView_ShipTypes.Rows[maxRowNum - 1].Cells[2].Value = shipTypeCount[st] ;
 				dataGridView_ShipTypes.Rows[maxRowNum - 1].Cells[3].Value = Math.Round(shipTypeLevelAvg[st]);
@@ -66,7 +66,7 @@ namespace ElectronicObserver.Window.Dialog
 				//項目のラベル
 				chart_ShipTypes.ChartAreas[0].AxisX.CustomLabels.Add(i, i, dataGridView_ShipTypes[1, i].Value.ToString());
 				//項目の値
-				chart_ShipTypes.Series[0].Points.Add(new DataPoint(0, Int32.Parse(dataGridView_ShipTypes[5, i].Value.ToString()))); //最高Lv
+				chart_ShipTypes.Series[0].Points.Add(new DataPoint(0, Int32.Parse(dataGridView_ShipTypes[5, i].Value.ToString()))); //最大Lv
 				chart_ShipTypes.Series[1].Points.Add(new DataPoint(0, Int32.Parse(dataGridView_ShipTypes[3, i].Value.ToString())));	//平均Lv
 				chart_ShipTypes.Series[2].Points.Add(new DataPoint(0, Int32.Parse(dataGridView_ShipTypes[4, i].Value.ToString())));	//最小Lv
 			}
@@ -103,10 +103,12 @@ namespace ElectronicObserver.Window.Dialog
 		private void Reload_ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			dataGridView_ShipTypes.Rows.Clear();
+
 			chart_ShipTypes.ChartAreas[0].AxisX.CustomLabels.Clear();
 			chart_ShipTypes.Series[0].Points.Clear();
 			chart_ShipTypes.Series[1].Points.Clear();
 			chart_ShipTypes.Series[2].Points.Clear();
+
 			UpdateView();
 		}
 	}
