@@ -29,11 +29,11 @@ namespace ElectronicObserver.Window.Dialog
 		/// </summary>
 		private void InitializeComponent()
 		{
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.dataGridView_ShipTypes = new System.Windows.Forms.DataGridView();
             this.Index = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ShipType = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -50,6 +50,9 @@ namespace ElectronicObserver.Window.Dialog
             this.tabControl_ShipType = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.checkBox_LvMax = new System.Windows.Forms.CheckBox();
+            this.checkBox_LvAvg = new System.Windows.Forms.CheckBox();
+            this.checkBox_LvMin = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_ShipTypes)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart_ShipTypes)).BeginInit();
@@ -186,63 +189,63 @@ namespace ElectronicObserver.Window.Dialog
             // 
             // chart_ShipTypes
             // 
-            chartArea1.AxisX.IsLabelAutoFit = false;
-            chartArea1.AxisX.LabelStyle.Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            chartArea1.AxisY.Interval = 25D;
-            chartArea1.AxisY.IntervalOffset = 25D;
-            chartArea1.AxisY.IsLabelAutoFit = false;
-            chartArea1.AxisY.LineColor = System.Drawing.Color.Gainsboro;
-            chartArea1.AxisY.MajorGrid.IntervalOffset = 25D;
-            chartArea1.AxisY.MajorTickMark.Enabled = false;
-            chartArea1.AxisY.Maximum = 175D;
-            chartArea1.AxisY.MinorGrid.Enabled = true;
-            chartArea1.AxisY.MinorGrid.IntervalOffset = 5D;
-            chartArea1.AxisY.MinorGrid.LineColor = System.Drawing.Color.Gainsboro;
-            chartArea1.Name = "ChartArea1";
-            this.chart_ShipTypes.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.chart_ShipTypes.Legends.Add(legend1);
+            chartArea4.AxisX.IsLabelAutoFit = false;
+            chartArea4.AxisX.LabelStyle.Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            chartArea4.AxisY.Interval = 25D;
+            chartArea4.AxisY.IntervalOffset = 25D;
+            chartArea4.AxisY.IsLabelAutoFit = false;
+            chartArea4.AxisY.LineColor = System.Drawing.Color.Gainsboro;
+            chartArea4.AxisY.MajorGrid.IntervalOffset = 25D;
+            chartArea4.AxisY.MajorTickMark.Enabled = false;
+            chartArea4.AxisY.Maximum = 175D;
+            chartArea4.AxisY.MinorGrid.Enabled = true;
+            chartArea4.AxisY.MinorGrid.IntervalOffset = 5D;
+            chartArea4.AxisY.MinorGrid.LineColor = System.Drawing.Color.Gainsboro;
+            chartArea4.Name = "ChartArea1";
+            this.chart_ShipTypes.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.chart_ShipTypes.Legends.Add(legend4);
             this.chart_ShipTypes.Location = new System.Drawing.Point(6, 6);
             this.chart_ShipTypes.Name = "chart_ShipTypes";
-            series1.BorderColor = System.Drawing.Color.Red;
-            series1.BorderWidth = 3;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Radar;
-            series1.Color = System.Drawing.Color.Transparent;
-            series1.CustomProperties = "AreaDrawingStyle=Polygon";
-            series1.Legend = "Legend1";
-            series1.MarkerBorderColor = System.Drawing.Color.Red;
-            series1.MarkerBorderWidth = 5;
-            series1.MarkerColor = System.Drawing.Color.Red;
-            series1.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Diamond;
-            series1.Name = "最大Lv";
-            series2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            series2.BorderWidth = 3;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Radar;
-            series2.Color = System.Drawing.Color.Transparent;
-            series2.CustomProperties = "AreaDrawingStyle=Polygon";
-            series2.Legend = "Legend1";
-            series2.MarkerBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            series2.MarkerBorderWidth = 5;
-            series2.MarkerColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            series2.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
-            series2.Name = "平均Lv";
-            series3.BorderColor = System.Drawing.Color.Aqua;
-            series3.BorderWidth = 3;
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Radar;
-            series3.Color = System.Drawing.Color.Transparent;
-            series3.CustomProperties = "AreaDrawingStyle=Polygon";
-            series3.Legend = "Legend1";
-            series3.MarkerBorderColor = System.Drawing.Color.Aqua;
-            series3.MarkerBorderWidth = 5;
-            series3.MarkerColor = System.Drawing.Color.Aqua;
-            series3.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Square;
-            series3.Name = "最小Lv";
-            this.chart_ShipTypes.Series.Add(series1);
-            this.chart_ShipTypes.Series.Add(series2);
-            this.chart_ShipTypes.Series.Add(series3);
+            series10.BorderColor = System.Drawing.Color.Red;
+            series10.BorderWidth = 3;
+            series10.ChartArea = "ChartArea1";
+            series10.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Radar;
+            series10.Color = System.Drawing.Color.Transparent;
+            series10.CustomProperties = "AreaDrawingStyle=Polygon";
+            series10.Legend = "Legend1";
+            series10.MarkerBorderColor = System.Drawing.Color.Red;
+            series10.MarkerBorderWidth = 5;
+            series10.MarkerColor = System.Drawing.Color.Red;
+            series10.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Diamond;
+            series10.Name = "最大Lv";
+            series11.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            series11.BorderWidth = 3;
+            series11.ChartArea = "ChartArea1";
+            series11.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Radar;
+            series11.Color = System.Drawing.Color.Transparent;
+            series11.CustomProperties = "AreaDrawingStyle=Polygon";
+            series11.Legend = "Legend1";
+            series11.MarkerBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            series11.MarkerBorderWidth = 5;
+            series11.MarkerColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            series11.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+            series11.Name = "平均Lv";
+            series12.BorderColor = System.Drawing.Color.Aqua;
+            series12.BorderWidth = 3;
+            series12.ChartArea = "ChartArea1";
+            series12.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Radar;
+            series12.Color = System.Drawing.Color.Transparent;
+            series12.CustomProperties = "AreaDrawingStyle=Polygon";
+            series12.Legend = "Legend1";
+            series12.MarkerBorderColor = System.Drawing.Color.Aqua;
+            series12.MarkerBorderWidth = 5;
+            series12.MarkerColor = System.Drawing.Color.Aqua;
+            series12.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Square;
+            series12.Name = "最小Lv";
+            this.chart_ShipTypes.Series.Add(series10);
+            this.chart_ShipTypes.Series.Add(series11);
+            this.chart_ShipTypes.Series.Add(series12);
             this.chart_ShipTypes.Size = new System.Drawing.Size(656, 440);
             this.chart_ShipTypes.TabIndex = 4;
             this.chart_ShipTypes.Text = "艦種別(Lv1の艦を除く)";
@@ -270,6 +273,9 @@ namespace ElectronicObserver.Window.Dialog
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.checkBox_LvMin);
+            this.tabPage2.Controls.Add(this.checkBox_LvAvg);
+            this.tabPage2.Controls.Add(this.checkBox_LvMax);
             this.tabPage2.Controls.Add(this.chart_ShipTypes);
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
@@ -278,6 +284,45 @@ namespace ElectronicObserver.Window.Dialog
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "レーダーチャート";
             this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // checkBox_LvMax
+            // 
+            this.checkBox_LvMax.AutoSize = true;
+            this.checkBox_LvMax.Checked = true;
+            this.checkBox_LvMax.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_LvMax.Location = new System.Drawing.Point(602, 405);
+            this.checkBox_LvMax.Name = "checkBox_LvMax";
+            this.checkBox_LvMax.Size = new System.Drawing.Size(60, 16);
+            this.checkBox_LvMax.TabIndex = 5;
+            this.checkBox_LvMax.Text = "最大Lv";
+            this.checkBox_LvMax.UseVisualStyleBackColor = true;
+            this.checkBox_LvMax.CheckedChanged += new System.EventHandler(this.checkBox_LvMax_CheckedChanged);
+            // 
+            // checkBox_LvAvg
+            // 
+            this.checkBox_LvAvg.AutoSize = true;
+            this.checkBox_LvAvg.Checked = true;
+            this.checkBox_LvAvg.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_LvAvg.Location = new System.Drawing.Point(602, 419);
+            this.checkBox_LvAvg.Name = "checkBox_LvAvg";
+            this.checkBox_LvAvg.Size = new System.Drawing.Size(60, 16);
+            this.checkBox_LvAvg.TabIndex = 6;
+            this.checkBox_LvAvg.Text = "平均Lv";
+            this.checkBox_LvAvg.UseVisualStyleBackColor = true;
+            this.checkBox_LvAvg.CheckedChanged += new System.EventHandler(this.checkBox_LvAvg_CheckedChanged);
+            // 
+            // checkBox_LvMin
+            // 
+            this.checkBox_LvMin.AutoSize = true;
+            this.checkBox_LvMin.Checked = true;
+            this.checkBox_LvMin.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_LvMin.Location = new System.Drawing.Point(602, 433);
+            this.checkBox_LvMin.Name = "checkBox_LvMin";
+            this.checkBox_LvMin.Size = new System.Drawing.Size(60, 16);
+            this.checkBox_LvMin.TabIndex = 7;
+            this.checkBox_LvMin.Text = "最小Lv";
+            this.checkBox_LvMin.UseVisualStyleBackColor = true;
+            this.checkBox_LvMin.CheckedChanged += new System.EventHandler(this.checkBox_LvMin_CheckedChanged);
             // 
             // DialogFleetAnalysis
             // 
@@ -301,6 +346,7 @@ namespace ElectronicObserver.Window.Dialog
             this.tabControl_ShipType.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -324,5 +370,8 @@ namespace ElectronicObserver.Window.Dialog
 		private System.Windows.Forms.TabControl tabControl_ShipType;
 		private System.Windows.Forms.TabPage tabPage1;
 		private System.Windows.Forms.TabPage tabPage2;
+		private System.Windows.Forms.CheckBox checkBox_LvMin;
+		private System.Windows.Forms.CheckBox checkBox_LvAvg;
+		private System.Windows.Forms.CheckBox checkBox_LvMax;
 	}
 }

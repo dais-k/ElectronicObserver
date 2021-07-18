@@ -111,5 +111,20 @@ namespace ElectronicObserver.Window.Dialog
 
 			UpdateView();
 		}
+
+		private void checkBox_LvMax_CheckedChanged(object sender, EventArgs e)
+		{
+			chart_ShipTypes.Series[0].Enabled = checkBox_LvMax.Checked;
+		}
+
+		private void checkBox_LvAvg_CheckedChanged(object sender, EventArgs e)
+		{
+			chart_ShipTypes.Series[1].Enabled = checkBox_LvAvg.Checked;
+		}
+
+		private void checkBox_LvMin_CheckedChanged(object sender, EventArgs e)
+		{
+			chart_ShipTypes.Series[2].Enabled = checkBox_LvMin.Checked;
+		}
 	}
 }
