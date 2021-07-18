@@ -21,16 +21,43 @@ namespace ElectronicObserver.Window.Dialog
 			InitializeComponent();
 		}
 
+		private string GetLevelChartAxisString(int num)
+		{
+			string retStr = "";
+			switch (num)
+			{
+				case 0:
+					retStr = "2-39";
+					break;
+				case 1:
+					retStr = "40-59";
+					break;
+				case 2:
+					retStr = "60-79";
+					break;
+				case 3:
+					retStr = "80-99";
+					break;
+				case 4:
+					retStr = "100-127";
+					break;
+				case 5:
+					retStr = "128-";
+					break;
+				default:
+					break;
+			}
+			return retStr;
+		}
+
 		private void UpdateView()
 		{
+			//鎮守府の艦隊データを取得
 			var ships = KCDatabase.Instance.Ships.Values;
-			//var equipments = KCDatabase.Instance.Equipments.Values;
-			//var masterEquipments = KCDatabase.Instance.MasterEquipments;
-			//int masterCount = masterEquipments.Values.Count(eq => !eq.IsAbyssalEquipment);
 
-			//var allCount = equipments.GroupBy(eq => eq.EquipmentID).ToDictionary(group => group.Key, group => group.Count());
-			//var remainCount = new Dictionary<int, int>(allCount);
-
+			//################################
+			//# 艦種別
+			//################################
 			//Lv1でない艦の数を数える
 			var shipTypeCount = ships.GroupBy(s => s.MasterShip.ShipTypeName).ToDictionary(group => group.Key, group => group.Count(s => s.Level != 1));
 			//Lv1でない艦の平均レベルを算出する
@@ -41,15 +68,15 @@ namespace ElectronicObserver.Window.Dialog
 			var shipTypeLevelMax = ships.GroupBy(s => s.MasterShip.ShipTypeName).ToDictionary(group => group.Key, group => group.Where(s => s.Level != 1).Max(s => s.Level));
 			//Lv1でない艦の取得経験値合計を算出する
 			var shipTypeExpSum = ships.GroupBy(s => s.MasterShip.ShipTypeName).ToDictionary(group => group.Key, group => group.Where(s => s.Level != 1).Sum(s => s.ExpTotal));
-			
+
 			foreach (var st in shipTypeCount.Keys)
 			{
 				//Console.WriteLine(st+ "|" + shipTypeCount[st]);
 				dataGridView_ShipTypes.Rows.Add();
 				int maxRowNum = dataGridView_ShipTypes.Rows.Count;
-				dataGridView_ShipTypes.Rows[maxRowNum - 1].Cells[0].Value = maxRowNum; //デフォルトソートで困るので通番を入れておく(艦種のIDではない)
+				dataGridView_ShipTypes.Rows[maxRowNum - 1].Cells[0].Value = maxRowNum; //デフォルトソートで困るので連番を入れておく(艦種のIDではない)
 				dataGridView_ShipTypes.Rows[maxRowNum - 1].Cells[1].Value = st;
-				dataGridView_ShipTypes.Rows[maxRowNum - 1].Cells[2].Value = shipTypeCount[st] ;
+				dataGridView_ShipTypes.Rows[maxRowNum - 1].Cells[2].Value = shipTypeCount[st];
 				dataGridView_ShipTypes.Rows[maxRowNum - 1].Cells[3].Value = Math.Round(shipTypeLevelAvg[st]);
 				dataGridView_ShipTypes.Rows[maxRowNum - 1].Cells[4].Value = shipTypeLevelMin[st];
 				dataGridView_ShipTypes.Rows[maxRowNum - 1].Cells[5].Value = shipTypeLevelMax[st];
@@ -57,8 +84,8 @@ namespace ElectronicObserver.Window.Dialog
 			}
 
 			//並び変え：1列目(通番)の昇順
-			DataGridViewColumn sortColumn = dataGridView_ShipTypes.Columns[0];
-			dataGridView_ShipTypes.Sort(sortColumn, ListSortDirection.Ascending);
+			DataGridViewColumn sortColumnShipType = dataGridView_ShipTypes.Columns[0];
+			dataGridView_ShipTypes.Sort(sortColumnShipType, ListSortDirection.Ascending);
 
 			//レーダーチャート
 			for (int i = 0; i < dataGridView_ShipTypes.RowCount; i++)
@@ -67,8 +94,57 @@ namespace ElectronicObserver.Window.Dialog
 				chart_ShipTypes.ChartAreas[0].AxisX.CustomLabels.Add(i, i, dataGridView_ShipTypes[1, i].Value.ToString());
 				//項目の値
 				chart_ShipTypes.Series[0].Points.Add(new DataPoint(0, Int32.Parse(dataGridView_ShipTypes[5, i].Value.ToString()))); //最大Lv
-				chart_ShipTypes.Series[1].Points.Add(new DataPoint(0, Int32.Parse(dataGridView_ShipTypes[3, i].Value.ToString())));	//平均Lv
-				chart_ShipTypes.Series[2].Points.Add(new DataPoint(0, Int32.Parse(dataGridView_ShipTypes[4, i].Value.ToString())));	//最小Lv
+				chart_ShipTypes.Series[1].Points.Add(new DataPoint(0, Int32.Parse(dataGridView_ShipTypes[3, i].Value.ToString()))); //平均Lv
+				chart_ShipTypes.Series[2].Points.Add(new DataPoint(0, Int32.Parse(dataGridView_ShipTypes[4, i].Value.ToString()))); //最小Lv
+			}
+
+			//########################################
+			//# レベル帯別
+			//########################################
+			//2-39
+			var shipTypeLevelRange1 = ships.GroupBy(s => s.MasterShip.ShipTypeName).ToDictionary(group => group.Key, group => group.Count(s => s.Level >= 2 && s.Level <= 39));
+			//40-59
+			var shipTypeLevelRange2 = ships.GroupBy(s => s.MasterShip.ShipTypeName).ToDictionary(group => group.Key, group => group.Count(s => s.Level >= 40 && s.Level <= 59));
+			//60-79
+			var shipTypeLevelRange3 = ships.GroupBy(s => s.MasterShip.ShipTypeName).ToDictionary(group => group.Key, group => group.Count(s => s.Level >= 60 && s.Level <= 79));
+			//80-99
+			var shipTypeLevelRange4 = ships.GroupBy(s => s.MasterShip.ShipTypeName).ToDictionary(group => group.Key, group => group.Count(s => s.Level >= 80 && s.Level <= 99));
+			//100-127
+			var shipTypeLevelRange5 = ships.GroupBy(s => s.MasterShip.ShipTypeName).ToDictionary(group => group.Key, group => group.Count(s => s.Level >= 100 && s.Level <= 128));
+			//128-
+			var shipTypeLevelRange6 = ships.GroupBy(s => s.MasterShip.ShipTypeName).ToDictionary(group => group.Key, group => group.Count(s => s.Level >= 128));
+			
+			foreach (var st in shipTypeLevelRange1.Keys)
+			{
+				dataGridView_Level.Rows.Add();
+				int maxRowNum = dataGridView_Level.Rows.Count;
+				dataGridView_Level.Rows[maxRowNum - 1].Cells[0].Value = maxRowNum; //デフォルトソートで困るので連番を入れておく
+				dataGridView_Level.Rows[maxRowNum - 1].Cells[1].Value = st;
+				dataGridView_Level.Rows[maxRowNum - 1].Cells[2].Value = shipTypeLevelRange1[st];
+				dataGridView_Level.Rows[maxRowNum - 1].Cells[3].Value = shipTypeLevelRange2[st];
+				dataGridView_Level.Rows[maxRowNum - 1].Cells[4].Value = shipTypeLevelRange3[st];
+				dataGridView_Level.Rows[maxRowNum - 1].Cells[5].Value = shipTypeLevelRange4[st];
+				dataGridView_Level.Rows[maxRowNum - 1].Cells[6].Value = shipTypeLevelRange5[st];
+				dataGridView_Level.Rows[maxRowNum - 1].Cells[7].Value = shipTypeLevelRange6[st];
+			}
+
+			//並び変え：1列目(通番)の昇順
+			DataGridViewColumn sortColumnLevel = dataGridView_Level.Columns[0];
+			dataGridView_Level.Sort(sortColumnLevel, ListSortDirection.Ascending);
+
+			//積み上げ棒グラフ
+			for (int i = 0; i < dataGridView_Level.RowCount; i++)
+			{
+				//Seriesを追加する
+				chart_Level.Series.Add(dataGridView_Level[1, i].Value.ToString());
+				chart_Level.Series[i].ChartType = SeriesChartType.StackedColumn;
+				//DataPoint設定
+				for (int j = 2; j < dataGridView_Level.ColumnCount; j++)
+				{
+					chart_Level.Series[i].Points.AddXY(GetLevelChartAxisString(j-2), Int32.Parse(dataGridView_Level[j, i].Value.ToString()));
+					int maxPointNum = chart_Level.Series[i].Points.Count;
+					chart_Level.Series[i].Points[maxPointNum - 1].ToolTip = dataGridView_Level[1, i].Value.ToString()+ ":" +dataGridView_Level[j, i].Value.ToString();
+				}
 			}
 		}
 
@@ -82,32 +158,56 @@ namespace ElectronicObserver.Window.Dialog
 		private void SaveCSV_ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			var now = System.DateTime.Now;
-			string savedir = Directory.GetCurrentDirectory() + "\\Record\\FleetAnalysis_"+ now.ToString("yyyyMMddHHmmss") + ".csv";
+			string dirNameParent = Directory.GetCurrentDirectory() + "\\FleetAnalysis";
+			string dirNameDate = dirNameParent + "\\" +now.ToString("yyyyMMdd_HHmmss");
 
-			StreamWriter sw = new StreamWriter(savedir, false, Encoding.Default);
-			sw.Write("通番,艦種,隻数,平均Lv,最小Lv,最大Lv,取得経験値,");
-			sw.WriteLine();
+			//ディレクトリ作成
+			Directory.CreateDirectory(dirNameParent);
+			Directory.CreateDirectory(dirNameDate);
+
+			//艦種別
+			string savedir1 = dirNameDate + "\\ShipType.csv";
+			StreamWriter sw1 = new StreamWriter(savedir1, false, Encoding.Default);
+			sw1.Write("通番,艦種,隻数,平均Lv,最小Lv,最大Lv,取得経験値,");
+			sw1.WriteLine();
 			for (int i = 0; i < dataGridView_ShipTypes.RowCount; i++)
 			{
 				for (int j = 0; j < dataGridView_ShipTypes.ColumnCount; j++)
 				{
-					sw.Write(dataGridView_ShipTypes[j, i].Value + ",");
+					sw1.Write(dataGridView_ShipTypes[j, i].Value + ",");
 				}
-				sw.WriteLine();
+				sw1.WriteLine();
 			}
-			sw.Close();
+			sw1.Close();
 
-			MessageBox.Show("保存完了："+savedir);
+			//レベル帯別
+			string savedir2 = dirNameDate + "\\Level.csv";
+			StreamWriter sw2 = new StreamWriter(savedir2, false, Encoding.Default);
+			sw2.Write("区分,艦種,0-39,40-59,60-79,80-99,100-127,128-,");
+			sw2.WriteLine();
+			for (int i = 0; i < dataGridView_Level.RowCount; i++)
+			{
+				for (int j = 0; j < dataGridView_Level.ColumnCount; j++)
+				{
+					sw2.Write(dataGridView_Level[j, i].Value + ",");
+				}
+				sw2.WriteLine();
+			}
+			sw2.Close();
+
+			MessageBox.Show("保存完了\n"+savedir1 +"\n"+ savedir2);
 		}
 
 		private void Reload_ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			dataGridView_ShipTypes.Rows.Clear();
-
 			chart_ShipTypes.ChartAreas[0].AxisX.CustomLabels.Clear();
 			chart_ShipTypes.Series[0].Points.Clear();
 			chart_ShipTypes.Series[1].Points.Clear();
 			chart_ShipTypes.Series[2].Points.Clear();
+
+			dataGridView_Level.Rows.Clear();
+			chart_Level.Series.Clear();
 
 			UpdateView();
 		}
