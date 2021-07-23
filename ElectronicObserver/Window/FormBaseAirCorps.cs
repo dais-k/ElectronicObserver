@@ -137,23 +137,30 @@ namespace ElectronicObserver.Window
 
 				KCDatabase db = KCDatabase.Instance;
 				var corps = db.BaseAirCorps[baseAirCorpsID];
+				int maintenanceLevel = 0;
 
 				if (corps == null)
 				{
 					baseAirCorpsID = -1;
-
 				}
 				else
 				{
+					var maintenance = db.BaseAirCorpsMaintenance[corps.MapAreaID];
+					if(maintenance == null)
+					{
+						maintenanceLevel = 0;
+					}
+					else
+					{
+						maintenanceLevel = maintenance.MaintenanceLevel;
+					}
 
 					Name.Text = string.Format("#{0} - {1}", corps.MapAreaID, corps.Name);
 					Name.Tag = corps.MapAreaID;
 					var sb = new StringBuilder();
 
-
 					string areaName = KCDatabase.Instance.MapArea.ContainsKey(corps.MapAreaID) ? KCDatabase.Instance.MapArea[corps.MapAreaID].Name : "バミューダ海域";
-
-					sb.AppendLine("所属海域: " + areaName);
+					sb.AppendLine("所属海域: " + areaName + "(整備Lv:" + maintenanceLevel + ")"); ;
 
 					// state 
 

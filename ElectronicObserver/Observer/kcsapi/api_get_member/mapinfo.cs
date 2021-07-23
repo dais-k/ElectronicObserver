@@ -33,6 +33,8 @@ namespace ElectronicObserver.Observer.kcsapi.api_get_member
 			if (data.api_air_base())
 			{
 				db.BaseAirCorps.Clear();
+				db.BaseAirCorpsMaintenance.Clear();
+
 				foreach (var elem in data.api_air_base)
 				{
 					int id = BaseAirCorpsData.GetID(elem);
@@ -47,6 +49,26 @@ namespace ElectronicObserver.Observer.kcsapi.api_get_member
 					else
 					{
 						db.BaseAirCorps[id].LoadFromResponse(APIName, elem);
+					}
+				}
+			}
+
+			if (data.api_air_base_expanded_info())
+			{
+				foreach (var elem in data.api_air_base_expanded_info)
+				{
+					int id = BaseAirCorpsMaintenance.GetID(elem);
+
+					if (db.BaseAirCorpsMaintenance[id] == null)
+					{
+						var inst = new BaseAirCorpsMaintenance();
+						inst.LoadFromResponse(APIName, elem);
+						db.BaseAirCorpsMaintenance.Add(inst);
+						Console.WriteLine(inst.ID+" "+inst.MaintenanceLevel);
+					}
+					else
+					{
+						db.BaseAirCorpsMaintenance[id].LoadFromResponse(APIName, elem);
 					}
 				}
 			}

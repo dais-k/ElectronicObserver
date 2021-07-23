@@ -53,8 +53,6 @@ namespace ElectronicObserver.Data
 		public BaseAirCorpsSquadron this[int i] => Squadrons[i];
 
 
-
-
 		public BaseAirCorpsData()
 		{
 			Squadrons = new IDDictionary<BaseAirCorpsSquadron>();
@@ -126,6 +124,8 @@ namespace ElectronicObserver.Data
 
 				case "api_req_air_corps/supply":
 					SetSquadrons(apiname, data.api_plane_info);
+					break;
+				case "api_air_base_expanded_info":
 					break;
 			}
 		}

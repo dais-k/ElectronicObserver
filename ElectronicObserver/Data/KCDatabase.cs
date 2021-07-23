@@ -154,6 +154,8 @@ namespace ElectronicObserver.Data
 		/// </summary>
 		public IDDictionary<BaseAirCorpsData> BaseAirCorps { get; private set; }
 
+		public IDDictionary<BaseAirCorpsMaintenance> BaseAirCorpsMaintenance { get; private set; }
+
 		/// <summary>
 		/// 配置転換中装備データ
 		/// </summary>
@@ -191,6 +193,7 @@ namespace ElectronicObserver.Data
 			Mission = new IDDictionary<MissionData>();
 			ShipGroup = new ShipGroupManager();
 			BaseAirCorps = new IDDictionary<BaseAirCorpsData>();
+			BaseAirCorpsMaintenance = new IDDictionary<BaseAirCorpsMaintenance>();
 			RelocatedEquipments = new IDDictionary<RelocationData>();
 			FleetPreset = new FleetPresetManager();
 		}

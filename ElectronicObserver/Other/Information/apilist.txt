@@ -2384,6 +2384,9 @@ api_get_member/mapinfo				：出撃準備　未出現海域は存在しない
 	api_air_base				：基地航空隊データ なければ存在しない
 		api_area_id				：出撃可能海域
 		(以降のメンバは api_get_member/base_air_corps と同じ)
+	api_air_base_expanded_info		: 限定海域を除き、整備Lvを上げていない場合は存在しない
+		api_area_id           : 出撃可能海域
+		api_maintenance_level : 整備レベル
 
 
 api_get_member/furniture	：所有家具データ
