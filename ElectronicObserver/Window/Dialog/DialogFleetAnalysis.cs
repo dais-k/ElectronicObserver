@@ -16,6 +16,9 @@ namespace ElectronicObserver.Window.Dialog
 {
 	public partial class DialogFleetAnalysis : Form
 	{
+		Point? prevPosition = null; // グラフ上の位置（グラフデータ表示用）
+		ToolTip tooltip = new ToolTip(); // ツールチップ（グラフデータ表示用）
+
 		public DialogFleetAnalysis()
 		{
 			InitializeComponent();
@@ -136,7 +139,7 @@ namespace ElectronicObserver.Window.Dialog
 			var shipTypeLevelRange5 = ships.GroupBy(s => s.MasterShip.ShipTypeName).ToDictionary(group => group.Key, group => group.Count(s => s.Level >= 100 && s.Level <= 128));
 			//128-
 			var shipTypeLevelRange6 = ships.GroupBy(s => s.MasterShip.ShipTypeName).ToDictionary(group => group.Key, group => group.Count(s => s.Level >= 128));
-			
+
 			foreach (var st in shipTypeLevelRange1.Keys)
 			{
 				dataGridView_Level.Rows.Add();
@@ -160,6 +163,8 @@ namespace ElectronicObserver.Window.Dialog
 
 		private void DialogFleetAnalysis_Load(object sender, EventArgs e)
 		{
+			FleetAnalysis_menuStrip.ShowItemToolTips = true;
+
 			UpdateView();
 
 			this.Icon = ResourceManager.ImageToIcon(ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormResourceChart]);
@@ -169,7 +174,7 @@ namespace ElectronicObserver.Window.Dialog
 		{
 			var now = System.DateTime.Now;
 			string dirNameParent = Directory.GetCurrentDirectory() + "\\FleetAnalysis";
-			string dirNameDate = dirNameParent + "\\" +now.ToString("yyyyMMdd_HHmmss");
+			string dirNameDate = dirNameParent + "\\" + now.ToString("yyyyMMdd_HHmmss");
 
 			//ディレクトリ作成
 			Directory.CreateDirectory(dirNameParent);
@@ -205,7 +210,7 @@ namespace ElectronicObserver.Window.Dialog
 			}
 			sw2.Close();
 
-			MessageBox.Show("保存完了\n"+savedir1 +"\n"+ savedir2);
+			MessageBox.Show("保存完了\n" + savedir1 + "\n" + savedir2);
 		}
 
 		private void ClearData()
@@ -229,19 +234,61 @@ namespace ElectronicObserver.Window.Dialog
 			this.Text = "艦隊分析";
 		}
 
+		private void ShowLabelSwitch()
+		{
+			int count = 0;
+
+			//いったん初期化
+			chart_ShipTypes.ChartAreas[0].AxisY.LabelStyle.Enabled = true;
+			for (int i = 0; i < chart_ShipTypes.Series.Count; i++)
+			{
+				for (int j = 0; j < chart_ShipTypes.Series[i].Points.Count; j++)
+				{
+					chart_ShipTypes.Series[i].Points[j].IsValueShownAsLabel = false;
+				}
+			}
+
+			//有効になっているチェックを数える
+			for (int i = 0; i < chart_ShipTypes.Series.Count; i++)
+			{
+				if (chart_ShipTypes.Series[i].Enabled)
+				{
+					count++;
+				}
+			}
+
+			//1項目だけのときは値をラベル表示する
+			if(count == 1)
+			{
+				chart_ShipTypes.ChartAreas[0].AxisY.LabelStyle.Enabled = false;
+				for(int i = 0; i < chart_ShipTypes.Series.Count; i++)
+				{
+					if (chart_ShipTypes.Series[i].Enabled)
+					{
+						for (int j = 0; j < chart_ShipTypes.Series[i].Points.Count; j++)
+						{
+							chart_ShipTypes.Series[i].Points[j].IsValueShownAsLabel = true;
+						}
+					}
+				}
+			}
+		}
 		private void checkBox_LvMax_CheckedChanged(object sender, EventArgs e)
 		{
 			chart_ShipTypes.Series[0].Enabled = checkBox_LvMax.Checked;
+			ShowLabelSwitch();
 		}
 
 		private void checkBox_LvAvg_CheckedChanged(object sender, EventArgs e)
 		{
 			chart_ShipTypes.Series[1].Enabled = checkBox_LvAvg.Checked;
+			ShowLabelSwitch();
 		}
 
 		private void checkBox_LvMin_CheckedChanged(object sender, EventArgs e)
 		{
 			chart_ShipTypes.Series[2].Enabled = checkBox_LvMin.Checked;
+			ShowLabelSwitch();
 		}
 
 		private void ReadToGridDataView(DataGridView dataGridView, string fn)

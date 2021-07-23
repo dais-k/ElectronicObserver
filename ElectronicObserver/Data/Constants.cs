@@ -1247,26 +1247,6 @@ namespace ElectronicObserver.Data
 			}
 		}
 
-		/// <summary>
-		/// 基地航空中隊IDから海域IDを取得します。
-		/// </summary>
-		public static int GetAreaIDFromBaseAirCorpsId(int value)
-		{
-			//[Note]
-			//イベントが始まったら限定海域対応をする
-			//南西海域などに基地航空隊が追加されたらその時に対応する
-			switch (value)
-			{
-				//中部海域
-				case 61:
-				case 62:
-				case 63:
-					return 50;
-				default:
-					return -1;
-			}
-		}
-
 		#endregion
 
 	}
