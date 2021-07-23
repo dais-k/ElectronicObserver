@@ -50,6 +50,38 @@ namespace ElectronicObserver.Window.Dialog
 			return retStr;
 		}
 
+		private void UpdateLevelChart()
+		{
+			//積み上げ棒グラフ
+			for (int i = 0; i < dataGridView_Level.RowCount; i++)
+			{
+				//Seriesを追加する
+				chart_Level.Series.Add(dataGridView_Level[1, i].Value.ToString());
+				chart_Level.Series[i].ChartType = SeriesChartType.StackedColumn;
+				//DataPoint設定
+				for (int j = 2; j < dataGridView_Level.ColumnCount; j++)
+				{
+					chart_Level.Series[i].Points.AddXY(GetLevelChartAxisString(j - 2), Int32.Parse(dataGridView_Level[j, i].Value.ToString()));
+					int maxPointNum = chart_Level.Series[i].Points.Count;
+					chart_Level.Series[i].Points[maxPointNum - 1].ToolTip = dataGridView_Level[1, i].Value.ToString() + ":" + dataGridView_Level[j, i].Value.ToString();
+				}
+			}
+		}
+
+		private void UpdateShipTypeChart()
+		{
+			//レーダーチャート
+			for (int i = 0; i < dataGridView_ShipTypes.RowCount; i++)
+			{
+				//項目のラベル
+				chart_ShipTypes.ChartAreas[0].AxisX.CustomLabels.Add(i, i, dataGridView_ShipTypes[1, i].Value.ToString());
+				//項目の値
+				chart_ShipTypes.Series[0].Points.Add(new DataPoint(0, Int32.Parse(dataGridView_ShipTypes[5, i].Value.ToString()))); //最大Lv
+				chart_ShipTypes.Series[1].Points.Add(new DataPoint(0, Int32.Parse(dataGridView_ShipTypes[3, i].Value.ToString()))); //平均Lv
+				chart_ShipTypes.Series[2].Points.Add(new DataPoint(0, Int32.Parse(dataGridView_ShipTypes[4, i].Value.ToString()))); //最小Lv
+			}
+		}
+
 		private void UpdateView()
 		{
 			//鎮守府の艦隊データを取得
@@ -87,16 +119,7 @@ namespace ElectronicObserver.Window.Dialog
 			DataGridViewColumn sortColumnShipType = dataGridView_ShipTypes.Columns[0];
 			dataGridView_ShipTypes.Sort(sortColumnShipType, ListSortDirection.Ascending);
 
-			//レーダーチャート
-			for (int i = 0; i < dataGridView_ShipTypes.RowCount; i++)
-			{
-				//項目のラベル
-				chart_ShipTypes.ChartAreas[0].AxisX.CustomLabels.Add(i, i, dataGridView_ShipTypes[1, i].Value.ToString());
-				//項目の値
-				chart_ShipTypes.Series[0].Points.Add(new DataPoint(0, Int32.Parse(dataGridView_ShipTypes[5, i].Value.ToString()))); //最大Lv
-				chart_ShipTypes.Series[1].Points.Add(new DataPoint(0, Int32.Parse(dataGridView_ShipTypes[3, i].Value.ToString()))); //平均Lv
-				chart_ShipTypes.Series[2].Points.Add(new DataPoint(0, Int32.Parse(dataGridView_ShipTypes[4, i].Value.ToString()))); //最小Lv
-			}
+			UpdateShipTypeChart();
 
 			//########################################
 			//# レベル帯別
@@ -128,24 +151,11 @@ namespace ElectronicObserver.Window.Dialog
 				dataGridView_Level.Rows[maxRowNum - 1].Cells[7].Value = shipTypeLevelRange6[st];
 			}
 
-			//並び変え：1列目(通番)の昇順
+			//並び変え：1列目(区分)の昇順
 			DataGridViewColumn sortColumnLevel = dataGridView_Level.Columns[0];
 			dataGridView_Level.Sort(sortColumnLevel, ListSortDirection.Ascending);
 
-			//積み上げ棒グラフ
-			for (int i = 0; i < dataGridView_Level.RowCount; i++)
-			{
-				//Seriesを追加する
-				chart_Level.Series.Add(dataGridView_Level[1, i].Value.ToString());
-				chart_Level.Series[i].ChartType = SeriesChartType.StackedColumn;
-				//DataPoint設定
-				for (int j = 2; j < dataGridView_Level.ColumnCount; j++)
-				{
-					chart_Level.Series[i].Points.AddXY(GetLevelChartAxisString(j-2), Int32.Parse(dataGridView_Level[j, i].Value.ToString()));
-					int maxPointNum = chart_Level.Series[i].Points.Count;
-					chart_Level.Series[i].Points[maxPointNum - 1].ToolTip = dataGridView_Level[1, i].Value.ToString()+ ":" +dataGridView_Level[j, i].Value.ToString();
-				}
-			}
+			UpdateLevelChart();
 		}
 
 		private void DialogFleetAnalysis_Load(object sender, EventArgs e)
@@ -198,7 +208,7 @@ namespace ElectronicObserver.Window.Dialog
 			MessageBox.Show("保存完了\n"+savedir1 +"\n"+ savedir2);
 		}
 
-		private void Reload_ToolStripMenuItem_Click(object sender, EventArgs e)
+		private void ClearData()
 		{
 			dataGridView_ShipTypes.Rows.Clear();
 			chart_ShipTypes.ChartAreas[0].AxisX.CustomLabels.Clear();
@@ -208,8 +218,15 @@ namespace ElectronicObserver.Window.Dialog
 
 			dataGridView_Level.Rows.Clear();
 			chart_Level.Series.Clear();
+		}
+
+		private void Reload_ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			ClearData();
 
 			UpdateView();
+
+			this.Text = "艦隊分析";
 		}
 
 		private void checkBox_LvMax_CheckedChanged(object sender, EventArgs e)
@@ -225,6 +242,74 @@ namespace ElectronicObserver.Window.Dialog
 		private void checkBox_LvMin_CheckedChanged(object sender, EventArgs e)
 		{
 			chart_ShipTypes.Series[2].Enabled = checkBox_LvMin.Checked;
+		}
+
+		private void ReadToGridDataView(DataGridView dataGridView, string fn)
+		{
+			StreamReader reader = new StreamReader(fn, Encoding.GetEncoding("shift_jis"));
+			while (reader.Peek() >= 0)
+			{
+				string[] cols = reader.ReadLine().Split(',');
+				if(cols[0] == "" || cols[0] == "区分" || cols[0] == "通番")
+				{
+					//最初の行はスキップ
+					continue;
+				}
+				dataGridView.Rows.Add();
+				int maxRowNum = dataGridView.Rows.Count;
+				for (int i = 0;i < cols.Length-1;i++)
+				{
+					if(i == 1)
+					{
+						//艦種は文字列のまま
+						dataGridView.Rows[maxRowNum - 1].Cells[i].Value = cols[i];
+					}
+					else
+					{
+						//他は数値
+						dataGridView.Rows[maxRowNum - 1].Cells[i].Value = Int32.Parse(cols[i]);
+					}
+				}
+			}
+			reader.Close();
+
+			//並び変え：1列目の昇順
+			DataGridViewColumn sortColumnLevel = dataGridView.Columns[0];
+			dataGridView.Sort(sortColumnLevel, ListSortDirection.Ascending);
+		}
+
+		private void ReadCSV_ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			string dirPath = "";
+
+			ClearData();
+
+			//フォルダ選択
+			OpenFileDialog openFileDialog = new OpenFileDialog();
+			openFileDialog.Title = "フォルダを選択してください。";
+			openFileDialog.InitialDirectory = Directory.GetCurrentDirectory();
+			openFileDialog.FileName = "SelectFolder";
+			openFileDialog.Filter = "Folder|.";
+			openFileDialog.CheckFileExists = false;
+			if (openFileDialog.ShowDialog() == DialogResult.OK)
+			{
+				dirPath = Path.GetDirectoryName(openFileDialog.FileName);
+			}
+
+			// CSVファイルの読み込み、反映
+			if (dirPath != "")
+			{
+				string fileShipTypePath = dirPath + "\\ShipType.csv";
+				string fileLevelPath = dirPath + "\\Level.csv";
+
+				ReadToGridDataView(dataGridView_ShipTypes, fileShipTypePath);
+				ReadToGridDataView(dataGridView_Level, fileLevelPath);
+
+				UpdateShipTypeChart();
+				UpdateLevelChart();
+
+				this.Text = "艦隊分析("+Path.GetFileName(dirPath)+")";
+			}
 		}
 	}
 }

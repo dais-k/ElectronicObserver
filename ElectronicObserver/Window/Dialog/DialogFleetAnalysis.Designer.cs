@@ -52,15 +52,14 @@ namespace ElectronicObserver.Window.Dialog
             this.tabControl_ShipType = new System.Windows.Forms.TabControl();
             this.tabPage_ShipType_Data = new System.Windows.Forms.TabPage();
             this.tabPage_ShipType_Chart = new System.Windows.Forms.TabPage();
-            this.checkBox_LvMax = new System.Windows.Forms.CheckBox();
-            this.checkBox_LvAvg = new System.Windows.Forms.CheckBox();
             this.checkBox_LvMin = new System.Windows.Forms.CheckBox();
+            this.checkBox_LvAvg = new System.Windows.Forms.CheckBox();
+            this.checkBox_LvMax = new System.Windows.Forms.CheckBox();
             this.tabControl_Parent = new System.Windows.Forms.TabControl();
             this.tabPage_ShipType = new System.Windows.Forms.TabPage();
             this.tabPage_Level = new System.Windows.Forms.TabPage();
             this.tabControl_Level = new System.Windows.Forms.TabControl();
             this.tabPage_Level_Data = new System.Windows.Forms.TabPage();
-            this.tabPage_Level_Chart = new System.Windows.Forms.TabPage();
             this.dataGridView_Level = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -70,7 +69,9 @@ namespace ElectronicObserver.Window.Dialog
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage_Level_Chart = new System.Windows.Forms.TabPage();
             this.chart_Level = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.ReadCSV_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_ShipTypes)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart_ShipTypes)).BeginInit();
@@ -82,8 +83,8 @@ namespace ElectronicObserver.Window.Dialog
             this.tabPage_Level.SuspendLayout();
             this.tabControl_Level.SuspendLayout();
             this.tabPage_Level_Data.SuspendLayout();
-            this.tabPage_Level_Chart.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Level)).BeginInit();
+            this.tabPage_Level_Chart.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart_Level)).BeginInit();
             this.SuspendLayout();
             // 
@@ -192,6 +193,7 @@ namespace ElectronicObserver.Window.Dialog
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.SaveCSV_ToolStripMenuItem,
+            this.ReadCSV_ToolStripMenuItem,
             this.Reload_ToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -204,6 +206,7 @@ namespace ElectronicObserver.Window.Dialog
             this.SaveCSV_ToolStripMenuItem.Name = "SaveCSV_ToolStripMenuItem";
             this.SaveCSV_ToolStripMenuItem.Size = new System.Drawing.Size(77, 20);
             this.SaveCSV_ToolStripMenuItem.Text = "CSV保存(&S)";
+            this.SaveCSV_ToolStripMenuItem.ToolTipText = "自艦隊のデータをCSV形式で出力します";
             this.SaveCSV_ToolStripMenuItem.Click += new System.EventHandler(this.SaveCSV_ToolStripMenuItem_Click);
             // 
             // Reload_ToolStripMenuItem
@@ -211,6 +214,7 @@ namespace ElectronicObserver.Window.Dialog
             this.Reload_ToolStripMenuItem.Name = "Reload_ToolStripMenuItem";
             this.Reload_ToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
             this.Reload_ToolStripMenuItem.Text = "更新(&R)";
+            this.Reload_ToolStripMenuItem.ToolTipText = "自艦隊の最新データに更新します";
             this.Reload_ToolStripMenuItem.Click += new System.EventHandler(this.Reload_ToolStripMenuItem_Click);
             // 
             // chart_ShipTypes
@@ -312,18 +316,18 @@ namespace ElectronicObserver.Window.Dialog
             this.tabPage_ShipType_Chart.TabIndex = 1;
             this.tabPage_ShipType_Chart.Text = "レーダーチャート";
             // 
-            // checkBox_LvMax
+            // checkBox_LvMin
             // 
-            this.checkBox_LvMax.AutoSize = true;
-            this.checkBox_LvMax.Checked = true;
-            this.checkBox_LvMax.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_LvMax.Location = new System.Drawing.Point(570, 420);
-            this.checkBox_LvMax.Name = "checkBox_LvMax";
-            this.checkBox_LvMax.Size = new System.Drawing.Size(60, 16);
-            this.checkBox_LvMax.TabIndex = 5;
-            this.checkBox_LvMax.Text = "最大Lv";
-            this.checkBox_LvMax.UseVisualStyleBackColor = true;
-            this.checkBox_LvMax.CheckedChanged += new System.EventHandler(this.checkBox_LvMax_CheckedChanged);
+            this.checkBox_LvMin.AutoSize = true;
+            this.checkBox_LvMin.Checked = true;
+            this.checkBox_LvMin.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_LvMin.Location = new System.Drawing.Point(570, 448);
+            this.checkBox_LvMin.Name = "checkBox_LvMin";
+            this.checkBox_LvMin.Size = new System.Drawing.Size(60, 16);
+            this.checkBox_LvMin.TabIndex = 7;
+            this.checkBox_LvMin.Text = "最小Lv";
+            this.checkBox_LvMin.UseVisualStyleBackColor = true;
+            this.checkBox_LvMin.CheckedChanged += new System.EventHandler(this.checkBox_LvMin_CheckedChanged);
             // 
             // checkBox_LvAvg
             // 
@@ -338,18 +342,18 @@ namespace ElectronicObserver.Window.Dialog
             this.checkBox_LvAvg.UseVisualStyleBackColor = true;
             this.checkBox_LvAvg.CheckedChanged += new System.EventHandler(this.checkBox_LvAvg_CheckedChanged);
             // 
-            // checkBox_LvMin
+            // checkBox_LvMax
             // 
-            this.checkBox_LvMin.AutoSize = true;
-            this.checkBox_LvMin.Checked = true;
-            this.checkBox_LvMin.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBox_LvMin.Location = new System.Drawing.Point(570, 448);
-            this.checkBox_LvMin.Name = "checkBox_LvMin";
-            this.checkBox_LvMin.Size = new System.Drawing.Size(60, 16);
-            this.checkBox_LvMin.TabIndex = 7;
-            this.checkBox_LvMin.Text = "最小Lv";
-            this.checkBox_LvMin.UseVisualStyleBackColor = true;
-            this.checkBox_LvMin.CheckedChanged += new System.EventHandler(this.checkBox_LvMin_CheckedChanged);
+            this.checkBox_LvMax.AutoSize = true;
+            this.checkBox_LvMax.Checked = true;
+            this.checkBox_LvMax.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBox_LvMax.Location = new System.Drawing.Point(570, 420);
+            this.checkBox_LvMax.Name = "checkBox_LvMax";
+            this.checkBox_LvMax.Size = new System.Drawing.Size(60, 16);
+            this.checkBox_LvMax.TabIndex = 5;
+            this.checkBox_LvMax.Text = "最大Lv";
+            this.checkBox_LvMax.UseVisualStyleBackColor = true;
+            this.checkBox_LvMax.CheckedChanged += new System.EventHandler(this.checkBox_LvMax_CheckedChanged);
             // 
             // tabControl_Parent
             // 
@@ -405,17 +409,6 @@ namespace ElectronicObserver.Window.Dialog
             this.tabPage_Level_Data.TabIndex = 0;
             this.tabPage_Level_Data.Text = "データ";
             this.tabPage_Level_Data.UseVisualStyleBackColor = true;
-            // 
-            // tabPage_Level_Chart
-            // 
-            this.tabPage_Level_Chart.BackColor = System.Drawing.Color.White;
-            this.tabPage_Level_Chart.Controls.Add(this.chart_Level);
-            this.tabPage_Level_Chart.Location = new System.Drawing.Point(4, 22);
-            this.tabPage_Level_Chart.Name = "tabPage_Level_Chart";
-            this.tabPage_Level_Chart.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage_Level_Chart.Size = new System.Drawing.Size(643, 470);
-            this.tabPage_Level_Chart.TabIndex = 1;
-            this.tabPage_Level_Chart.Text = "グラフ";
             // 
             // dataGridView_Level
             // 
@@ -520,6 +513,17 @@ namespace ElectronicObserver.Window.Dialog
             this.dataGridViewTextBoxColumn8.Resizable = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewTextBoxColumn8.Width = 60;
             // 
+            // tabPage_Level_Chart
+            // 
+            this.tabPage_Level_Chart.BackColor = System.Drawing.Color.White;
+            this.tabPage_Level_Chart.Controls.Add(this.chart_Level);
+            this.tabPage_Level_Chart.Location = new System.Drawing.Point(4, 22);
+            this.tabPage_Level_Chart.Name = "tabPage_Level_Chart";
+            this.tabPage_Level_Chart.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage_Level_Chart.Size = new System.Drawing.Size(643, 470);
+            this.tabPage_Level_Chart.TabIndex = 1;
+            this.tabPage_Level_Chart.Text = "グラフ";
+            // 
             // chart_Level
             // 
             chartArea4.AxisX.Title = "レベル帯";
@@ -533,6 +537,14 @@ namespace ElectronicObserver.Window.Dialog
             this.chart_Level.Size = new System.Drawing.Size(637, 461);
             this.chart_Level.TabIndex = 0;
             this.chart_Level.Text = "chart1";
+            // 
+            // ReadCSV_ToolStripMenuItem
+            // 
+            this.ReadCSV_ToolStripMenuItem.Name = "ReadCSV_ToolStripMenuItem";
+            this.ReadCSV_ToolStripMenuItem.Size = new System.Drawing.Size(78, 20);
+            this.ReadCSV_ToolStripMenuItem.Text = "CSV読込(&R)";
+            this.ReadCSV_ToolStripMenuItem.ToolTipText = "CSV形式で保存されている艦隊データを読み込みます";
+            this.ReadCSV_ToolStripMenuItem.Click += new System.EventHandler(this.ReadCSV_ToolStripMenuItem_Click);
             // 
             // DialogFleetAnalysis
             // 
@@ -562,8 +574,8 @@ namespace ElectronicObserver.Window.Dialog
             this.tabPage_Level.ResumeLayout(false);
             this.tabControl_Level.ResumeLayout(false);
             this.tabPage_Level_Data.ResumeLayout(false);
-            this.tabPage_Level_Chart.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_Level)).EndInit();
+            this.tabPage_Level_Chart.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chart_Level)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -607,5 +619,6 @@ namespace ElectronicObserver.Window.Dialog
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn7;
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
 		private System.Windows.Forms.DataVisualization.Charting.Chart chart_Level;
+		private System.Windows.Forms.ToolStripMenuItem ReadCSV_ToolStripMenuItem;
 	}
 }
