@@ -365,6 +365,9 @@ namespace ElectronicObserver.Data.Quest
 							}))
 						) >= 5;
 					break;
+				case 952:   //|952|単|【作戦準備】第二段階任務(対地/対空整備)|1-3, 1-4, 2-1, 2-2ボスS勝利各1回|条件：駆逐3以上|
+					isAccepted = memberstype.Count(t => t == ShipTypes.Destroyer) >= 3;
+					break;
 			}
 
 			// 第二ゲージでも第一ボスに行ける場合があるので、個別対応が必要

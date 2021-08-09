@@ -91,7 +91,95 @@ namespace ElectronicObserver.Data.Quest
 			}
 		}
 
+		public override void Increment()
+		{
+			var Empty = (ShipTypes)(-1);
+			var q = KCDatabase.Instance.Quest[QuestID];
+			var f = KCDatabase.Instance.Fleet.Fleets.Values.FirstOrDefault(); //第一艦隊
+			var members = f.MembersWithoutEscaped;
+			var memberstype = members.Select(s => s?.MasterShip?.ShipType ?? Empty).ToArray();
 
+			int isAccepted = -1; //-1:チェック不要、0:条件未達、1:条件達成 
+
+			if (q == null)
+			{
+				TemporaryProgress++;
+				return;
+			}
+
+			if (q.State != 2)
+				return;
+
+			//任務IDごとの個別チェック
+			//MEMO:装備スロットの空きはnullになっているので、要nullチェック
+			switch (QuestID)
+			{
+				case 626:   //|626|月|精鋭「艦戦」隊の新編成|熟練搭乗員, 零式艦戦21型>>装備の鳳翔旗艦, (零式艦戦21型x2,九六式艦戦x1)廃棄
+					isAccepted = 0;
+					//秘書艦が鳳翔か？
+					if (members.FirstOrDefault()?.MasterShip?.NameReading == "ほうしょう")
+					{
+						//装備スロット内を調べて練度MAXの零戦21型があれば条件達成
+						foreach (var slot in members.FirstOrDefault().SlotInstance)
+						{
+							if(slot != null && slot.EquipmentID == 20 && slot.AircraftLevel == 7)
+							{
+								isAccepted = 1;
+							}
+						}
+					}
+					break;
+				case 628:   //|628|月|機種転換|零式艦戦21型(熟練)>>装備の空母旗艦, 零式艦戦52型x2廃棄
+					isAccepted = 0;
+					//秘書艦が空母系か？
+					if (members.FirstOrDefault()?.MasterShip?.ShipType == ShipTypes.AircraftCarrier ||
+					    members.FirstOrDefault()?.MasterShip?.ShipType == ShipTypes.LightAircraftCarrier ||
+					    members.FirstOrDefault()?.MasterShip?.ShipType == ShipTypes.ArmoredAircraftCarrier)
+					{
+						//装備スロット内を調べて練度MAXの零戦21型(熟練)があれば条件達成
+						foreach(var slot in members.FirstOrDefault().SlotInstance)
+						{
+							if(slot != null && slot.EquipmentID == 96 && slot.AircraftLevel == 7)
+							{
+								isAccepted = 1;
+							}
+						}
+					}
+					break;
+				case 654:   //|654|10|精鋭複葉機飛行隊の編成|(Swordfishx1, Fulmarx2)廃棄, 秘書艦Ark Royalの第一スロットにSwordfish★10装備, (熟練搭乗員x1, 弾薬x1500, ボーキx1500)保有
+					isAccepted = (members.FirstOrDefault()?.MasterShip?.NameReading == "アークロイヤル" && 
+								  members.FirstOrDefault().SlotInstance[0] != null &&
+								  members.FirstOrDefault().SlotInstance[0].EquipmentID == 242 &&
+								  members.FirstOrDefault().SlotInstance[0].Level == 10) ? 1 : 0;
+					break;
+				case 686:	//|686|季|戦時改修A型高角砲の量産|12.7cm連装砲A型改二★10を第一スロ装備の特型駆逐艦旗艦, (10cm連装高角砲x4, 94式高射装置x1)廃棄, (開発資材30, 鋼材900, 新型砲熕兵装資材1)保有
+					isAccepted = ((members.FirstOrDefault()?.MasterShip?.ShipClass == 1 ||
+								   members.FirstOrDefault()?.MasterShip?.ShipClass == 5 ||
+								   members.FirstOrDefault()?.MasterShip?.ShipClass == 12) &&
+								  members.FirstOrDefault().SlotInstance[0] != null &&
+								  members.FirstOrDefault().SlotInstance[0].EquipmentID == 294 &&
+								  members.FirstOrDefault().SlotInstance[0].Level == 10) ? 1 : 0;
+					break;
+				case 1106:  //|1106|精鋭三座水上偵察機隊の前線投入|秘書艦「由良改二」の第一スロットに零式水上偵察機11型乙★10を装備した状態で瑞雲x3、零式水上偵察機x3破棄、燃料1300、ボーキ1700、新型航空兵装資材x1、戦闘詳報x1、熟練搭乗員x3を保有
+					isAccepted = (members.FirstOrDefault()?.MasterShip?.ShipID == 488 &&
+								  members.FirstOrDefault().SlotInstance[0] != null &&
+								  members.FirstOrDefault().SlotInstance[0].EquipmentID == 238 &&
+							      members.FirstOrDefault().SlotInstance[0].Level == 10) ? 1 : 0;
+					break;
+				default:
+					//任務IDが当てはまらないなら-1のまま、つまりチェックの必要なし
+					break;
+			}
+			if(isAccepted == 0)
+			{
+				return;
+			}
+
+			if (!IgnoreCheckProgress)
+				CheckProgress(q);
+
+			Progress = Math.Min(Progress + 1, ProgressMax);
+		}
 
 		public override string GetClearCondition()
 		{

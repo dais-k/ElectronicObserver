@@ -487,6 +487,14 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressSpecialBattle(q, 2, "S", new[]{ 44 }, true),
 								}));
 							break;
+						case 952:   //|952|単|【作戦準備】第二段階任務(対地/対空整備)|1-3, 1-4, 2-1, 2-2ボスS勝利各1回|条件：駆逐3以上|
+							Progresses.Add(new ProgressMultiBattle(q, new[]{
+								new ProgressSpecialBattle(q, 1, "S", new[]{ 13 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[]{ 14 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[]{ 21 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[]{ 22 }, true),
+								}));
+							break;
 
 						case 303:   //|303|日|「演習」で練度向上！|演習3
 							Progresses.Add(new ProgressPractice(q, 3, false));
@@ -629,6 +637,14 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressExpedition(q, 1, new[]{ 40 }),
 							}));
 							break;
+						case 446:   //|446|単|【作戦準備】第一段階任務(対潜整備)|「警備任務」「対潜警戒任務」「海上護衛任務」「海峡警備行動」「兵站強化任務」を各1回|
+							Progresses.Add(new ProgressMultiExpedition(q, new[]{
+								new ProgressExpedition(q, 1, new[]{ 3 }),
+								new ProgressExpedition(q, 1, new[]{ 4 }),
+								new ProgressExpedition(q, 1, new[]{ 5 }),
+								new ProgressExpedition(q, 1, new[]{ 101 }),
+								new ProgressExpedition(q, 1, new[]{ 100 }),
+							})); break;
 
 						case 503:   //|503|艦隊大整備！|入渠5
 							Progresses.Add(new ProgressDocking(q, 5));
@@ -654,8 +670,63 @@ namespace ElectronicObserver.Data.Quest
 						case 609:   //|609|軍縮条約対応！|解体2
 							Progresses.Add(new ProgressDestruction(q, 2));
 							break;
+						case 613:   //|613|資源の再利用|廃棄24回
+							Progresses.Add(new ProgressDiscard(q, 24, false, null));
+							break;
 						case 619:   //|619|装備の改修強化|装備改修1(失敗可)
 							Progresses.Add(new ProgressImprovement(q, 1));
+							break;
+						case 626:   //|626|月|精鋭「艦戦」隊の新編成|熟練搭乗員, 零式艦戦21型>>装備の鳳翔旗艦, (零式艦戦21型x2,九六式艦戦x1)廃棄
+							Progresses.Add(new ProgressMultiDiscard(q, new[]{
+								new ProgressDiscard(q, 2, true, new[]{ 20 }, -1),
+								new ProgressDiscard(q, 1, true, new[]{ 19 }, -1),
+							}));
+							break;
+						case 628:   //|628|月|機種転換|零式艦戦21型(熟練)>>装備の空母旗艦, 零式艦戦52型x2廃棄
+							Progresses.Add(new ProgressDiscard(q, 2, true, new[] { 21 }, -1));
+							break;
+						case 638:   //|638|対空機銃量産|機銃廃棄6個|回ではない
+							Progresses.Add(new ProgressDiscard(q, 6, true, new[] { 21 }));
+							break;
+						case 643:   //|643|季|主力「陸攻」の調達|零式艦戦21型x2廃棄, (九六式陸攻x1, 九七式艦攻x2)保有
+							Progresses.Add(new ProgressDiscard(q, 2, true, new[] { 20 }, -1));
+							break;
+						case 645:   //|645|月|「洋上補給」物資の調達|三式弾廃棄, (燃料750, 弾薬750, ドラム缶(輸送用)x2, 九一式徹甲弾)保有
+							Progresses.Add(new ProgressDiscard(q, 1, true, new[] { 18 }));
+							break;
+						case 653:   //|653|季|工廠稼働！次期作戦準備！|14cm単装砲x6廃棄, (家具コイン6000, 35.6cm連装砲x3, 九六式艦戦x3)保有
+							Progresses.Add(new ProgressDiscard(q, 6, true, new[] { 4 }, -1));
+							break;
+						case 654:   //|654|10|精鋭複葉機飛行隊の編成|(Swordfishx1, Fulmarx2)廃棄, 秘書艦Ark Royalの第一スロットにSwordfish★10装備, (熟練搭乗員x1, 弾薬x1500, ボーキx1500)保有
+							Progresses.Add(new ProgressMultiDiscard(q, new[]{
+								new ProgressDiscard(q, 1, true, new[]{ 242 }, -1),
+								new ProgressDiscard(q, 2, true, new[]{ 249 }, -1),
+							}));
+							break;
+						case 655:   //|655|11|工廠フル稼働！新兵装を開発せよ！|(小口径主砲x5, 中口径主砲x5, 大口径主砲x5, 水上偵察機x5, 艦上攻撃機x5)廃棄, (燃料x1500, 鋼材x1500, ボーキx1500)保有
+							Progresses.Add(new ProgressMultiDiscard(q, new[]{
+								new ProgressDiscard(q, 5, true, new[]{ 1 }),
+								new ProgressDiscard(q, 5, true, new[]{ 2 }),
+								new ProgressDiscard(q, 5, true, new[]{ 3 }),
+								new ProgressDiscard(q, 5, true, new[]{ 8 }),
+								new ProgressDiscard(q, 5, true, new[]{ 10 }),
+							}));
+							break;
+						case 657:   //|657|年(9月)|新型兵装開発整備の強化|(小口径主砲x6, 中口径主砲x5, 魚雷x4)廃棄, 鋼材4000保有|
+							Progresses.Add(new ProgressMultiDiscard(q, new[]{
+								new ProgressDiscard(q, 6, true, new[]{ 1 }),
+								new ProgressDiscard(q, 5, true, new[]{ 2 }),
+								new ProgressDiscard(q, 4, true, new[]{ 5 }),
+							}));
+							break;
+						case 663:   //|663|季|新型艤装の継続研究|大口径主砲x10廃棄, 鋼材18000保有
+							Progresses.Add(new ProgressDiscard(q, 10, true, new[] { 3 }));
+							break;
+						case 675:   //|675|季|運用装備の統合整備|(艦上戦闘機x6, 機銃x4)廃棄, ボーキ800保有
+							Progresses.Add(new ProgressMultiDiscard(q, new[]{
+								new ProgressDiscard(q, 6, true, new[]{ 6 }),
+								new ProgressDiscard(q, 4, true, new[]{ 21 }),
+								}));
 							break;
 						case 673:   //|673|装備開発力の整備|小口径主砲廃棄4個|進捗は1/5から始まる(3個廃棄時点で80%達成になる)
 							Progresses.Add(new ProgressDiscard(q, 4, true, new[] { 1 }));
@@ -664,12 +735,6 @@ namespace ElectronicObserver.Data.Quest
 						case 674:   //|674|工廠環境の整備|機銃廃棄3個,鋼材300保有|進捗は2/5から始まる(2個廃棄時点で80%達成になる)
 							Progresses.Add(new ProgressDiscard(q, 3, true, new[] { 21 }));
 							Progresses[q.QuestID].SharedCounterShift = 2;
-							break;
-						case 613:   //|613|資源の再利用|廃棄24回
-							Progresses.Add(new ProgressDiscard(q, 24, false, null));
-							break;
-						case 638:   //|638|対空機銃量産|機銃廃棄6個|回ではない
-							Progresses.Add(new ProgressDiscard(q, 6, true, new[] { 21 }));
 							break;
 						case 676:   //|676|週|装備開発力の集中整備|(中口径主砲x3, 副砲x3, 簡易輸送部材x1)廃棄, 鋼材2400保有|進捗は n/7 で1つごとに進む
 							Progresses.Add(new ProgressMultiDiscard(q, new[]{
@@ -685,34 +750,8 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressDiscard(q, 3, true, new[]{ 5 }),
 								}));
 							break;
-						case 626:   //|626|月|精鋭「艦戦」隊の新編成|熟練搭乗員, 零式艦戦21型>>装備の鳳翔旗艦, (零式艦戦21型x2,九六式艦戦x1)廃棄
-							Progresses.Add(new ProgressMultiDiscard(q, new[]{
-								new ProgressDiscard(q, 2, true, new[]{ 20 }, -1),
-								new ProgressDiscard(q, 1, true, new[]{ 19 }, -1),
-							}));
-							break;
-						case 628:   //|628|月|機種転換|零式艦戦21型(熟練)>>装備の空母旗艦, 零式艦戦52型x2廃棄
-							Progresses.Add(new ProgressDiscard(q, 2, true, new[] { 21 }, -1));
-							break;
-						case 645:   //|645|月|「洋上補給」物資の調達|三式弾廃棄, (燃料750, 弾薬750, ドラム缶(輸送用)x2, 九一式徹甲弾)保有
-							Progresses.Add(new ProgressDiscard(q, 1, true, new[] { 18 }));
-							break;
-						case 643:   //|643|季|主力「陸攻」の調達|零式艦戦21型x2廃棄, (九六式陸攻x1, 九七式艦攻x2)保有
-							Progresses.Add(new ProgressDiscard(q, 2, true, new[] { 20 }, -1));
-							break;
-						case 653:   //|653|季|工廠稼働！次期作戦準備！|14cm単装砲x6廃棄, (家具コイン6000, 35.6cm連装砲x3, 九六式艦戦x3)保有
-							Progresses.Add(new ProgressDiscard(q, 6, true, new[] { 4 }, -1));
-							break;
-						case 663:   //|663|季|新型艤装の継続研究|大口径主砲x10廃棄, 鋼材18000保有
-							Progresses.Add(new ProgressDiscard(q, 10, true, new[] { 3 }));
-							break;
-						case 675:   //|675|季|運用装備の統合整備|(艦上戦闘機x6, 機銃x4)廃棄, ボーキ800保有
-							Progresses.Add(new ProgressMultiDiscard(q, new[]{
-								new ProgressDiscard(q, 6, true, new[]{ 6 }),
-								new ProgressDiscard(q, 4, true, new[]{ 21 }),
-								}));
-							break;
 						case 678:   //|678|季|主力艦上戦闘機の更新|(九六式艦戦x3, 零式艦戦21型x5)廃棄, 秘書艦の第1・第2スロットに零式艦戦52型装備, ボーキ4000保有
+									//※この任務は装備を捨ててから秘書艦の装備を変えてもよい
 							Progresses.Add(new ProgressMultiDiscard(q, new[]{
 								new ProgressDiscard(q, 3, true, new[]{ 19 }, -1),
 								new ProgressDiscard(q, 5, true, new[]{ 20 }, -1),
@@ -722,6 +761,12 @@ namespace ElectronicObserver.Data.Quest
 							Progresses.Add(new ProgressMultiDiscard(q, new[]{
 								new ProgressDiscard(q, 4, true, new[]{ 21 }),
 								new ProgressDiscard(q, 4, true, new[]{ 12, 13 }),
+							}));
+							break;
+						case 681:   //|681|１|航空戦力の再編増強準備|(艦上爆撃機x4, 艦上攻撃機x4)廃棄, (開発資材20, ボーキ1600)保有
+							Progresses.Add(new ProgressMultiDiscard(q, new[]{
+								new ProgressDiscard(q, 4, true, new[]{ 7 }),
+								new ProgressDiscard(q, 4, true, new[]{ 8 }),
 							}));
 							break;
 						case 686:   //|686|季|戦時改修A型高角砲の量産|12.7cm連装砲A型改二★10を第一スロ装備の特型駆逐艦旗艦, (10cm連装高角砲x4, 94式高射装置x1)廃棄, (開発資材30, 鋼材900, 新型砲熕兵装資材1)保有
@@ -738,34 +783,6 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressDiscard(q, 3, true, new[]{ 10 }),
 							}));
 							break;
-						case 657:   //|657|年(9月)|新型兵装開発整備の強化|(小口径主砲x6, 中口径主砲x5, 魚雷x4)廃棄, 鋼材4000保有|
-							Progresses.Add(new ProgressMultiDiscard(q, new[]{
-								new ProgressDiscard(q, 6, true, new[]{ 1 }),
-								new ProgressDiscard(q, 5, true, new[]{ 2 }),
-								new ProgressDiscard(q, 4, true, new[]{ 5 }),
-							}));
-							break;
-						case 655:   //|655|11|工廠フル稼働！新兵装を開発せよ！|(小口径主砲x5, 中口径主砲x5, 大口径主砲x5, 水上偵察機x5, 艦上攻撃機x5)廃棄, (燃料x1500, 鋼材x1500, ボーキx1500)保有
-							Progresses.Add(new ProgressMultiDiscard(q, new[]{
-								new ProgressDiscard(q, 5, true, new[]{ 1 }),
-								new ProgressDiscard(q, 5, true, new[]{ 2 }),
-								new ProgressDiscard(q, 5, true, new[]{ 3 }),
-								new ProgressDiscard(q, 5, true, new[]{ 8 }),
-								new ProgressDiscard(q, 5, true, new[]{ 10 }),
-							}));
-							break;
-						case 654:   //|654|10|精鋭複葉機飛行隊の編成|(Swordfishx1, Fulmarx2)廃棄, 秘書艦Ark Royalの第一スロットにSwordfish★10装備, (熟練搭乗員x1, 弾薬x1500, ボーキx1500)保有
-							Progresses.Add(new ProgressMultiDiscard(q, new[]{
-								new ProgressDiscard(q, 1, true, new[]{ 242 }, -1),
-								new ProgressDiscard(q, 2, true, new[]{ 249 }, -1),
-							}));
-							break;
-						case 681:   //|681|１|航空戦力の再編増強準備|(艦上爆撃機x4, 艦上攻撃機x4)廃棄, (開発資材20, ボーキ1600)保有
-							Progresses.Add(new ProgressMultiDiscard(q, new[]{
-								new ProgressDiscard(q, 4, true, new[]{ 7 }),
-								new ProgressDiscard(q, 4, true, new[]{ 8 }),
-							}));
-							break;
 
 						case 702:   //|702|艦の「近代化改修」を実施せよ！|改修成功2
 							Progresses.Add(new ProgressModernization(q, 2));
@@ -777,7 +794,7 @@ namespace ElectronicObserver.Data.Quest
 						case 1105:  //|1105|夏の格納庫整備＆航空基地整備|陸攻系x3廃棄、弾薬2800、九七式艦攻x4、天山x4を保有
 							Progresses.Add(new ProgressDiscard(q, 3, true, new[] { 47 }));
 							break;
-						case 1106:  //|1106|精鋭三座水上偵察機隊の前線投入|瑞雲x3、零式水上偵察機x3破棄、秘書艦「由良改二」の第一スロットに零式水上偵察機11型乙★10を装備し、燃料1300、ボーキ1700、新型航空兵装資材x1、戦闘詳報x1、熟練搭乗員x3を保有
+						case 1106:  //|1106|精鋭三座水上偵察機隊の前線投入|秘書艦「由良改二」の第一スロットに零式水上偵察機11型乙★10を装備した状態で瑞雲x3、零式水上偵察機x3破棄、燃料1300、ボーキ1700、新型航空兵装資材x1、戦闘詳報x1、熟練搭乗員x3を保有
 							Progresses.Add(new ProgressMultiDiscard(q, new[]{
 								new ProgressDiscard(q, 3, true, new[]{ 25 }, -1),
 								new ProgressDiscard(q, 3, true, new[]{ 26 }, -1),

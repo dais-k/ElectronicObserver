@@ -16,7 +16,6 @@ namespace ElectronicObserver.Window.Dialog
 {
 	public partial class DialogFleetAnalysis : Form
 	{
-		Point? prevPosition = null; // グラフ上の位置（グラフデータ表示用）
 		ToolTip tooltip = new ToolTip(); // ツールチップ（グラフデータ表示用）
 
 		public DialogFleetAnalysis()
@@ -87,6 +86,8 @@ namespace ElectronicObserver.Window.Dialog
 
 		private void UpdateView()
 		{
+			this.SuspendLayout();
+
 			//鎮守府の艦隊データを取得
 			var ships = KCDatabase.Instance.Ships.Values;
 
@@ -144,7 +145,7 @@ namespace ElectronicObserver.Window.Dialog
 			{
 				dataGridView_Level.Rows.Add();
 				int maxRowNum = dataGridView_Level.Rows.Count;
-				dataGridView_Level.Rows[maxRowNum - 1].Cells[0].Value = maxRowNum; //デフォルトソートで困るので連番を入れておく
+				dataGridView_Level.Rows[maxRowNum - 1].Cells[0].Value = maxRowNum; //デフォルトソートで困るので連番を入れておく(艦種のIDではない)
 				dataGridView_Level.Rows[maxRowNum - 1].Cells[1].Value = st;
 				dataGridView_Level.Rows[maxRowNum - 1].Cells[2].Value = shipTypeLevelRange1[st];
 				dataGridView_Level.Rows[maxRowNum - 1].Cells[3].Value = shipTypeLevelRange2[st];
@@ -159,6 +160,8 @@ namespace ElectronicObserver.Window.Dialog
 			dataGridView_Level.Sort(sortColumnLevel, ListSortDirection.Ascending);
 
 			UpdateLevelChart();
+
+			this.ResumeLayout();
 		}
 
 		private void DialogFleetAnalysis_Load(object sender, EventArgs e)
@@ -329,8 +332,6 @@ namespace ElectronicObserver.Window.Dialog
 		{
 			string dirPath = "";
 
-			ClearData();
-
 			//フォルダ選択
 			OpenFileDialog openFileDialog = new OpenFileDialog();
 			openFileDialog.Title = "フォルダを選択してください。";
@@ -346,6 +347,8 @@ namespace ElectronicObserver.Window.Dialog
 			// CSVファイルの読み込み、反映
 			if (dirPath != "")
 			{
+				ClearData();
+
 				string fileShipTypePath = dirPath + "\\ShipType.csv";
 				string fileLevelPath = dirPath + "\\Level.csv";
 
