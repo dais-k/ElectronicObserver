@@ -82,6 +82,69 @@ namespace ElectronicObserver.Data
 		/// </summary>
 		public ShipDataMaster RemodelBeforeShip => RemodelBeforeShipID > 0 ? KCDatabase.Instance.MasterShips[RemodelBeforeShipID] : null;
 
+		internal ShipDataMaster finalRemodelShip = null;
+		/// <summary>
+		/// 最終改装の艦船
+		/// </summary>
+		public ShipDataMaster FinalRemodelShip
+		{
+			get
+			{
+				if (finalRemodelShip != null) return finalRemodelShip;
+				if (RemodelAfterShipID <= 0)
+				{
+					finalRemodelShip = this;
+				}
+
+				ShipDataMaster lastRemodel = this;
+				int lastRemodelLv = RemodelBeforeShip == null ? 0 : RemodelBeforeShip.RemodelAfterLevel;
+
+				while (lastRemodel != null && lastRemodel.RemodelAfterLevel > lastRemodelLv && lastRemodel.RemodelAfterShipID != this.ShipID)
+				{
+					lastRemodelLv = lastRemodel.RemodelAfterLevel;
+					lastRemodel = lastRemodel.RemodelAfterShip;
+				}
+				finalRemodelShip = lastRemodel;
+				return finalRemodelShip;
+			}
+		}
+
+		/// <summary>
+		/// 最終改装Lv
+		/// </summary>
+		public int FinalRemodelLevel => FinalRemodelShip == null ? 0 : FinalRemodelShip.RemodelBeforeShip.RemodelAfterLevel;
+
+		/// <summary>
+		/// 最終改装の艦船ID
+		/// 0=なし
+		/// </summary>
+		public int FinalRemodelShipID => FinalRemodelShip == null ? 0 : FinalRemodelShip.ShipID;
+
+		public bool CanConvertRemodel
+		{
+			get
+			{
+				if (FinalRemodelShip == null || FinalRemodelShip.RemodelAfterShip == null)
+				{
+					// If it cannot remodel after final-remodel, it cannot convert-remodel
+					return false;
+				}
+				if (ShipID == FinalRemodelShipID && RemodelAfterShipID != 0)
+				{
+					return true;
+				}
+
+				ShipDataMaster tmpShip = FinalRemodelShip.RemodelAfterShip;
+				bool result = false;
+				while (!result && tmpShip.ShipID != FinalRemodelShipID)
+				{
+					// if current ship can be remodeled from final-remodel, it can convert-remodel
+					result = tmpShip.RemodelAfterShipID == ShipID;
+					tmpShip = tmpShip.RemodelAfterShip;
+				}
+				return result;
+			}
+		}
 
 		/// <summary>
 		/// 改装に必要な弾薬
