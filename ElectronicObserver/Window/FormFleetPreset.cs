@@ -51,8 +51,9 @@ namespace ElectronicObserver.Window
 				Name = CreateDefaultLabel();
 				Name.ImageAlign = ContentAlignment.MiddleRight;
 
-				// TODO: 本体側がもし 7 隻編成に対応したら変更してください
-				Ships = new ImageLabel[6];
+				//1艦隊あたりの最大隻数が変わった場合、変更する
+				//2021/08/2x 7隻編成に対応
+				Ships = new ImageLabel[7];
 				for (int i = 0; i < Ships.Length; i++)
 				{
 					Ships[i] = CreateDefaultLabel();

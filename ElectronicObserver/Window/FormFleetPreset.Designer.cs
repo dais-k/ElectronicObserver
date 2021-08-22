@@ -43,7 +43,7 @@
             // 
             this.TablePresets.AutoSize = true;
             this.TablePresets.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.TablePresets.ColumnCount = 7;
+            this.TablePresets.ColumnCount = 8;
             this.TablePresets.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.TablePresets.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.TablePresets.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
