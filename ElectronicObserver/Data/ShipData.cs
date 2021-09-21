@@ -1251,24 +1251,30 @@ namespace ElectronicObserver.Data
 
             switch (kind)
             {
+				//連撃
                 case NightAttackKind.DoubleShelling:
                     basepower *= 1.2;
                     break;
 
+				//主魚
                 case NightAttackKind.CutinMainTorpedo:
                     basepower *= 1.3;
                     break;
 
+				//魚雷
                 case NightAttackKind.CutinTorpedoTorpedo:
                     {
                         switch (Calculator.GetNightTorpedoCutinKind(AllSlotInstanceMaster, ShipID, -1))
                         {
+							//潜水艦：後期艦首魚雷+潜水艦電探
                             case NightTorpedoCutinKind.LateModelTorpedoSubmarineEquipment:
                                 basepower *= 1.75;
                                 break;
+							//潜水艦：後期艦首魚雷*2
                             case NightTorpedoCutinKind.LateModelTorpedo2:
                                 basepower *= 1.6;
                                 break;
+							//水上艦
                             default:
                                 basepower *= 1.5;
                                 break;
@@ -1276,14 +1282,17 @@ namespace ElectronicObserver.Data
                     }
                     break;
 
+				//主副
                 case NightAttackKind.CutinMainSub:
                     basepower *= 1.75;
                     break;
 
+				//主砲
                 case NightAttackKind.CutinMainMain:
                     basepower *= 2.0;
                     break;
 
+				//空母夜襲カットイン
                 case NightAttackKind.CutinAirAttack:
                     {
                         int nightFighter = SlotInstanceMaster.Count(eq => eq?.IsNightFighter ?? false);
@@ -1301,7 +1310,8 @@ namespace ElectronicObserver.Data
                     }
                     break;
 
-                case NightAttackKind.CutinTorpedoRadar:
+				//主魚電
+				case NightAttackKind.CutinTorpedoRadar:
 					{
 						double baseModifier = 1.3;
 						int typeDmod2 = AllSlotInstanceMaster.Count(eq => eq?.EquipmentID == 267);  // 12.7cm連装砲D型改二
@@ -1315,6 +1325,7 @@ namespace ElectronicObserver.Data
                     
                     break;
 
+				//魚見電
                 case NightAttackKind.CutinTorpedoPicket:
 					{
 						double baseModifier = 1.25;		// TODO: 処理の共通化
@@ -1327,7 +1338,21 @@ namespace ElectronicObserver.Data
 						basepower *= baseModifier;
 					}
 					break;
-            }
+
+				//魚魚水
+				case NightAttackKind.CutinTorpedoTorpedoMasterPicket:
+					{
+						basepower *= 1.5;
+					}
+					break;
+
+				//ド水魚
+				case NightAttackKind.CutinTorpedoDrumMasterPicket:
+					{
+						basepower *= 1.3;
+					}
+					break;
+			}
 
             basepower += GetLightCruiserDamageBonus() + GetItalianDamageBonus();
 

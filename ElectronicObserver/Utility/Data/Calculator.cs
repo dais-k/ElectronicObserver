@@ -946,7 +946,6 @@ namespace ElectronicObserver.Utility.Data
 		/// <param name="nightAirAttackFlag">夜戦空母攻撃フラグ</param>
 		public static NightAttackKind GetNightAttackKind(int[] slot, int attackerShipID, int defenderShipID, bool includeSpecialAttack = true, bool nightAirAttackFlag = false)
 		{
-
 			int mainGunCount = 0;
 			int subGunCount = 0;
 			int torpedoCount = 0;
@@ -961,6 +960,8 @@ namespace ElectronicObserver.Utility.Data
 			int nightPersonnelCount = 0;
 			int surfaceRadarCount = 0;
 			int picketCrewCount = 0;
+			int masterPicketCrewCount = 0;
+			int drumCount = 0;
 
 			if (slot == null)
 				return NightAttackKind.Unknown;
@@ -1030,7 +1031,14 @@ namespace ElectronicObserver.Utility.Data
 
 					// 見張員
 					case EquipmentTypes.SurfaceShipPersonnel:
-						picketCrewCount++;
+						if(eq.EquipmentID == 412)
+						{
+							masterPicketCrewCount++;
+						}
+						else
+						{
+							picketCrewCount++;
+						}
 						break;
 
 					// 夜間作戦航空要員
@@ -1048,8 +1056,15 @@ namespace ElectronicObserver.Utility.Data
 					case EquipmentTypes.SubmarineEquipment:
 						submarineEquipmentCount++;
 						break;
-				}
 
+					//ドラム缶
+					case EquipmentTypes.TransportContainer:
+						if (eq.EquipmentID == 75)
+						{
+							drumCount++;
+						}
+						break;
+				}
 			}
 
 			if (attackerShipID == 545 || attackerShipID == 599 || attackerShipID == 610)      // Saratoga Mk.II/赤城改二戊/加賀改二戊
@@ -1062,10 +1077,21 @@ namespace ElectronicObserver.Utility.Data
 				// 駆逐艦カットイン
 				if (attacker?.ShipType == ShipTypes.Destroyer)
 				{
+					//note:発動優先度が高い順にしておく
+					//     例えば魚雷/魚雷/ドラム缶/水雷見張員だと魚魚水が表示される
+
+					//主魚電
 					if (mainGunCount >= 1 && torpedoCount >= 1 && surfaceRadarCount >= 1)
 						return NightAttackKind.CutinTorpedoRadar;
+					//魚見電
 					if (torpedoCount >= 1 && surfaceRadarCount >= 1 && picketCrewCount >= 1)
 						return NightAttackKind.CutinTorpedoPicket;
+					//魚魚水
+					if (torpedoCount >= 2 && masterPicketCrewCount >= 1)
+						return NightAttackKind.CutinTorpedoTorpedoMasterPicket;
+					//ド水魚
+					if (torpedoCount >= 1 && masterPicketCrewCount >= 1 && drumCount >= 1)
+						return NightAttackKind.CutinTorpedoDrumMasterPicket;
 				}
 
 				// 潜水艦カットイン
@@ -1175,9 +1201,7 @@ namespace ElectronicObserver.Utility.Data
 			}
 
 			return NightAttackKind.Shelling;
-
 		}
-
 
 		/// <summary>
 		/// 夜戦カットインにおける魚雷カットインの種別を取得します。
