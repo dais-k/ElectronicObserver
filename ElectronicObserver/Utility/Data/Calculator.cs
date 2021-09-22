@@ -1166,7 +1166,7 @@ namespace ElectronicObserver.Utility.Data
 					else if (attacker.Name == "リコリス棲姫" || attacker.Name == "深海海月姫")
 						return NightAttackKind.Shelling;
 					else
-						return NightAttackKind.AirAttack;
+						return NightAttackKind.AirAttack; //加賀改二護などがここに該当する
 
 				}
 				else if (attacker.IsSubmarine)

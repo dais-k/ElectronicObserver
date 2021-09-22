@@ -1213,12 +1213,14 @@ namespace ElectronicObserver.Data
 
         /// <summary>
         /// 夜戦での威力を求めます。
+		/// TODO:処理の共通化
         /// </summary>
         private int CalculateNightBattlePower()
         {
             var kind = Calculator.GetNightAttackKind(AllSlotMaster.ToArray(), ShipID, -1);
             double basepower = 0;
 
+			//空母カットイン
             if (kind == NightAttackKind.CutinAirAttack)
             {
                 var airs = SlotInstance.Zip(Aircraft, (eq, count) => new { eq, master = eq?.MasterEquipment, count }).Where(a => a.eq != null);
@@ -1233,14 +1235,66 @@ namespace ElectronicObserver.Data
                             0.3 * (p.master.Firepower + p.master.Torpedo + p.master.Bomber + p.master.ASW) * Math.Sqrt(p.count) + Math.Sqrt(p.eq.Level));
 
             }
-            else if (ShipID == 515 || ShipID == 393)
-            {       // Ark Royal (改)
-                basepower = FirepowerBase + SlotInstanceMaster.Where(eq => eq?.IsSwordfish ?? false).Sum(eq => eq.Firepower + eq.Torpedo);
-            }
+			//空撃
+            else if (kind == NightAttackKind.AirAttack)
+            {
+				int countNightAircraft = SlotInstance.Where(eq => eq != null).Where(eq => eq?.MasterEquipment.IsNightAircraft ?? false).Count();
+
+				// Ark Royal (改) かつ 夜間に行動可能な航空機が1つもない場合(Swordfishで夜戦が可能になっている)
+				if ((ShipID == 515 || ShipID == 393) && countNightAircraft == 0)
+				{
+					// ソードフィッシュ系に限り装備の火力/雷装/改修値が加算される
+					// 改修値はルート計算
+					// ※熟練度による威力補正はクリティカル時の火力を表示していないので含まない
+					basepower = FirepowerBase
+						+ SlotInstanceMaster.Where(eq => eq?.IsSwordfish ?? false).Sum(eq => eq.Firepower + eq.Torpedo)
+						+ SlotInstance.Where(eq => eq?.MasterEquipment.IsSwordfish ?? false).Sum(eq => Math.Sqrt(eq.Level));
+				}
+				//神鷹改二、大鷹改二、加賀改二護 かつ 夜間に行動可能な航空機が1つもない場合(この三隻は無条件に夜戦可能)
+				if ((ShipID == 529 || ShipID == 536 || ShipID == 646) && countNightAircraft == 0)
+				{
+					// ソードフィッシュ系に限らずすべての装備の火力/雷装/改修値が加算される
+					// (艦載機の改修値は暫定でルート計算)
+					basepower = FirepowerBase
+						+ SlotInstanceMaster.Where(eq => eq?.IsAvailable ?? false).Sum(eq => eq.Firepower + eq.Torpedo)
+						+ GetNightBattleEquipmentLevelBonus()
+						+ SlotInstance.Where(eq => eq?.MasterEquipment.IsAircraft ?? false).Sum(eq => Math.Sqrt(eq.Level));
+				}
+				//その他の場合は空母カットインと同じ計算
+				else
+				{
+					var airs = SlotInstance.Zip(Aircraft, (eq, count) => new { eq, master = eq?.MasterEquipment, count }).Where(a => a.eq != null);
+
+					basepower = FirepowerBase +
+						airs.Where(p => p.master.IsNightAircraft)
+							.Sum(p => p.master.Firepower + p.master.Torpedo + p.master.Bomber +
+								3 * p.count +
+								0.45 * (p.master.Firepower + p.master.Torpedo + p.master.Bomber + p.master.ASW) * Math.Sqrt(p.count) + Math.Sqrt(p.eq.Level)) +
+						airs.Where(p => p.master.IsSwordfish || p.master.EquipmentID == 154 || p.master.EquipmentID == 320)   // 零戦62型(爆戦/岩井隊)、彗星一二型(三一号光電管爆弾搭載機)
+							.Sum(p => p.master.Firepower + p.master.Torpedo + p.master.Bomber +
+								0.3 * (p.master.Firepower + p.master.Torpedo + p.master.Bomber + p.master.ASW) * Math.Sqrt(p.count) + Math.Sqrt(p.eq.Level));
+				}
+			}
+			//グラーフツェッペリン(改)と未改造サラトガ固有(砲撃)
             else if (ShipID == 353 || ShipID == 432 || ShipID == 433)
-            {       // Graf Zeppelin(改), Saratoga
-                basepower = FirepowerBase + SlotInstanceMaster.Where(eq => eq?.IsSwordfish ?? false).Sum(eq => eq.Firepower + eq.Torpedo);
-            }
+			{
+				// ソードフィッシュ系に限らずすべての装備の火力/雷装/改修値が加算される
+				// (艦載機の改修値は暫定でルート計算)
+				basepower = FirepowerBase
+					+ SlotInstanceMaster.Where(eq => eq?.IsAvailable ?? false).Sum(eq => eq.Firepower + eq.Torpedo)
+					+ GetNightBattleEquipmentLevelBonus()
+					+ SlotInstance.Where(eq => eq?.MasterEquipment.IsAircraft ?? false).Sum(eq => Math.Sqrt(eq.Level));
+			}
+			//アークロイヤル(改)の夜戦連撃
+			else if(ShipID == 515 || ShipID == 393)
+			{
+				// ソードフィッシュ系に限り装備の火力/雷装/改修値が加算される
+				// 改修値はルート計算
+				// ※熟練度による威力補正はクリティカル時の火力を表示していないので含まない
+				basepower = FirepowerBase
+					+ SlotInstanceMaster.Where(eq => eq?.IsSwordfish ?? false).Sum(eq => eq.Firepower + eq.Torpedo)
+					+ SlotInstance.Where(eq => eq?.MasterEquipment.IsSwordfish ?? false).Sum(eq => Math.Sqrt(eq.Level));
+			}
             else
             {
                 basepower = FirepowerTotal + TorpedoTotal + GetNightBattleEquipmentLevelBonus();
