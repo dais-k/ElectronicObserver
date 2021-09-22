@@ -1083,8 +1083,8 @@ namespace ElectronicObserver.Utility.Data
 					//主魚電
 					if (mainGunCount >= 1 && torpedoCount >= 1 && surfaceRadarCount >= 1)
 						return NightAttackKind.CutinTorpedoRadar;
-					//魚見電
-					if (torpedoCount >= 1 && surfaceRadarCount >= 1 && picketCrewCount >= 1)
+					//魚見電、魚水電
+					if (torpedoCount >= 1 && surfaceRadarCount >= 1 && (picketCrewCount >= 1 || masterPicketCrewCount >= 1))
 						return NightAttackKind.CutinTorpedoPicket;
 					//魚魚水
 					if (torpedoCount >= 2 && masterPicketCrewCount >= 1)
