@@ -821,8 +821,8 @@ namespace ElectronicObserver.Data.Quest
 							break;
 						case 1107:  //|1107|【鋼材輸出】基地航空兵力を増備せよ！|艦上戦闘機x2、艦上攻撃機x2を破棄、鋼材24000と開発資材10を保有
 							Progresses.Add(new ProgressMultiDiscard(q, new[]{
-								new ProgressDiscard(q, 3, true, new[]{ 6 }),
-								new ProgressDiscard(q, 3, true, new[]{ 8 }),
+								new ProgressDiscard(q, 2, true, new[]{ 6 }),
+								new ProgressDiscard(q, 2, true, new[]{ 8 }),
 							}));
 							break;
 					}
