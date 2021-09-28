@@ -368,6 +368,26 @@ namespace ElectronicObserver.Data.Quest
 				case 952:   //|952|単|【作戦準備】第二段階任務(対地/対空整備)|1-3, 1-4, 2-1, 2-2ボスS勝利各1回|条件：駆逐3以上|
 					isAccepted = memberstype.Count(t => t == ShipTypes.Destroyer) >= 3;
 					break;
+				case 957:	//|957|単|「山風改二」、抜錨せよ！|1-2、1-3、1-4、1-5ボス各S勝利1改|条件：山風改二旗艦および随伴に駆逐/海防3|
+					isAccepted = 
+						(members[0]?.MasterShip?.ShipID == 588 || members[0]?.MasterShip?.ShipID == 667) && (memberstype.Count(t => t == ShipTypes.Destroyer) + memberstype.Count(t => t == ShipTypes.Escort)) >= 4;
+					break;
+				case 958:   //|958|単|改白露型駆逐艦「山風改二」、奮戦す！|2-2、7-2、5-1、6-4ボスS勝利1回||条件：山風改二、江風改二、海風改二から2隻|
+					isAccepted =
+						members.Count(s =>
+						{
+							switch (s?.MasterShip?.ShipID)
+							{
+								case 588: //山風改二
+								case 667: //山風改二丁
+								case 469: //江風改二
+								case 587: //海風改二 
+									return true;
+								default:
+									return false;
+							}
+						}) >= 2;
+					break;
 			}
 
 			// 第二ゲージでも第一ボスに行ける場合があるので、個別対応が必要

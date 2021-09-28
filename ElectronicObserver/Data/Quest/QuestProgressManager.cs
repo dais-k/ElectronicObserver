@@ -495,6 +495,22 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressSpecialBattle(q, 1, "S", new[]{ 22 }, true),
 								}));
 							break;
+						case 957:   //|957|単|「山風改二」、抜錨せよ！|1-2、1-3、1-4、1-5ボス各S勝利1改|条件：山風改二旗艦および随伴に駆逐/海防3|
+							Progresses.Add(new ProgressMultiBattle(q, new[]{
+								new ProgressSpecialBattle(q, 1, "S", new[]{ 12 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[]{ 13 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[]{ 14 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[]{ 15 }, true),
+								}));
+							break;
+						case 958:   //|958|単|改白露型駆逐艦「山風改二」、奮戦す！|2-2、7-2、5-1、6-4ボスS勝利1回||条件：山風改二、江風改二、海風改二から2隻|
+							Progresses.Add(new ProgressMultiBattle(q, new[] {
+								new ProgressSpecialBattle(q, 2, "S", new[] { 22 }, true),
+								new ProgressSpecialBattle(q, 2, "S", new[] { 51 }, true),
+								new ProgressSpecialBattle(q, 2, "S", new[] { 64 }, true),
+								new ProgressSpecialBattle(q, 2, "S", new[] { 72 }, true, 2),
+							}));
+							break;
 
 						case 303:   //|303|日|「演習」で練度向上！|演習3
 							Progresses.Add(new ProgressPractice(q, 3, false));
@@ -507,6 +523,9 @@ namespace ElectronicObserver.Data.Quest
 							break;
 						case 311:   //|311|月|精鋭艦隊演習|演習勝利7|マンスリーだが1日で進捗リセット
 							Progresses.Add(new ProgressPractice(q, 7, true));
+							break;
+						case 313:	//|313|単|秋季大演習|演習勝利8|1日で進捗リセット
+							Progresses.Add(new ProgressPractice(q, 8, true));
 							break;
 						case 330:   //|330|Ｑ|空母機動部隊、演習始め！|演習B勝利以上4|条件：航空母艦旗艦他1隻計2隻以上及び駆逐艦2隻を含む|クォータリーだが1日で進捗リセット
 							Progresses.Add(new ProgressPractice(q, 4, "B", true));

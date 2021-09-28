@@ -116,7 +116,7 @@
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(207, 15);
             this.label4.TabIndex = 7;
-            this.label4.Text = "改変：ヨシヒロ＠パラオ泊地(20210926)";
+            this.label4.Text = "改変：ヨシヒロ＠パラオ泊地(20210928)";
             // 
             // DialogVersion
             // 
