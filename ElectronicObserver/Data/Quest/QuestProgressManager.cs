@@ -505,10 +505,10 @@ namespace ElectronicObserver.Data.Quest
 							break;
 						case 958:   //|958|単|改白露型駆逐艦「山風改二」、奮戦す！|2-2、7-2、5-1、6-4ボスS勝利1回||条件：山風改二、江風改二、海風改二から2隻|
 							Progresses.Add(new ProgressMultiBattle(q, new[] {
-								new ProgressSpecialBattle(q, 2, "S", new[] { 22 }, true),
-								new ProgressSpecialBattle(q, 2, "S", new[] { 51 }, true),
-								new ProgressSpecialBattle(q, 2, "S", new[] { 64 }, true),
-								new ProgressSpecialBattle(q, 2, "S", new[] { 72 }, true, 2),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 22 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 51 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 64 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 72 }, true, 2),
 							}));
 							break;
 
@@ -663,6 +663,14 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressExpedition(q, 1, new[]{ 5 }),
 								new ProgressExpedition(q, 1, new[]{ 101 }),
 								new ProgressExpedition(q, 1, new[]{ 100 }),
+							})); break;
+						case 447:   //|447|単|海上輸送航路の護衛強化|「対潜警戒任務」「海上護衛任務」「タンカー護衛任務」「兵站強化任務」「南西方面航空偵察作戦」を各1回|
+							Progresses.Add(new ProgressMultiExpedition(q, new[]{
+								new ProgressExpedition(q, 1, new[]{ 4 }),
+								new ProgressExpedition(q, 1, new[]{ 5 }),
+								new ProgressExpedition(q, 1, new[]{ 9 }),
+								new ProgressExpedition(q, 1, new[]{ 100 }),
+								new ProgressExpedition(q, 1, new[]{ 110 }),
 							})); break;
 
 						case 503:   //|503|艦隊大整備！|入渠5
