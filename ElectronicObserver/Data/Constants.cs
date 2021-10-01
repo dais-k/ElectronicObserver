@@ -991,6 +991,8 @@ namespace ElectronicObserver.Data
 					return "Fletcher砲改x2/GFCS<Johnston>";
 				case 37:
 					return "Fletcher砲改x2<Johnston>";
+				case 38:
+					return "Atlanta砲+GFCSx2<Atlanta>";
 				case 39:
 					return "Atlanta砲+GFCS/Atlanta砲<Atlanta>";
 				case 40:
