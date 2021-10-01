@@ -187,6 +187,12 @@ namespace ElectronicObserver.Data.Quest
 						case 354:
 							Progress = 3;
 							break;
+						case 345:
+							Progress = 3;
+							break;
+						case 346:
+							Progress = 3;
+							break;
 						default:
 							Progress = (int)Math.Max(Progress, Math.Ceiling((ProgressMax + SharedCounterShift) * 0.8) - SharedCounterShift);
 							break;

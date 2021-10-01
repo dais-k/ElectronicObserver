@@ -524,8 +524,11 @@ namespace ElectronicObserver.Data.Quest
 						case 311:   //|311|月|精鋭艦隊演習|演習勝利7|マンスリーだが1日で進捗リセット
 							Progresses.Add(new ProgressPractice(q, 7, true));
 							break;
-						case 313:	//|313|単|秋季大演習|演習勝利8|1日で進捗リセット
+						case 313:	//|313|単|秋季大演習|演習勝利8|単発(というか更新時期不定、名前の通り秋ごろ)だが1日で進捗リセット
 							Progresses.Add(new ProgressPractice(q, 8, true));
+							break;
+						case 318:   //|318|月|給糧艦「伊良湖」の支援|編成条件を満たした状態で演習に3回勝利後、達成後旗艦におにぎり2つ装備|編成条件：軽巡2隻|マンスリーだが1日で進捗リセット|
+							Progresses.Add(new ProgressPractice(q, 3, "B", true));
 							break;
 						case 330:   //|330|Ｑ|空母機動部隊、演習始め！|演習B勝利以上4|条件：航空母艦旗艦他1隻計2隻以上及び駆逐艦2隻を含む|クォータリーだが1日で進捗リセット
 							Progresses.Add(new ProgressPractice(q, 4, "B", true));
@@ -541,6 +544,12 @@ namespace ElectronicObserver.Data.Quest
 							break;
 						case 342:   //|342|Ｑ|小艦艇群演習強化任務|演習A勝利以上4|(駆逐艦/海防艦)3隻+(駆逐艦/海防艦/軽巡級)1隻|クォータリーだが1日で進捗リセット
 							Progresses.Add(new ProgressPractice(q, 4, "A", true));
+							break;
+						case 345:   //|345|10|演習ティータイム！|演習勝利A以上4|条件：Warspite、Ark Royal、金剛、Nelson、J級駆逐艦から4隻|イヤーリーだが1日で進捗リセット|
+							Progresses.Add(new ProgressPractice(q, 4, "A", true));
+							break;
+						case 346:   //|346|10|最精鋭！主力オブ主力、演習開始！|演習S勝利以上4|夕雲改二、巻雲改二、風雲改二、秋雲改二の4隻|イヤーリーだが1日で進捗リセット|
+							Progresses.Add(new ProgressPractice(q, 4, "S", true));
 							break;
 						case 348:   //|348|２|「精鋭軽巡」演習！|演習A勝利以上4|条件：軽巡級(雷巡を除く)旗艦、旗艦含む軽巡3隻以上、随伴に駆逐艦2隻以上|イヤーリーだが1日で進捗リセット|
 							Progresses.Add(new ProgressPractice(q, 4, "A", true));
@@ -831,6 +840,12 @@ namespace ElectronicObserver.Data.Quest
 							Progresses.Add(new ProgressMultiDiscard(q, new[]{
 								new ProgressDiscard(q, 2, true, new[]{ 6 }),
 								new ProgressDiscard(q, 2, true, new[]{ 8 }),
+							}));
+							break;
+						case 1108:  //|1108|調整改良型「水中探信儀」の増産|秘書艦「山風改二(丁)」もしくは「時雨改二」の第一スロットに三式水中探信儀★10を装備した状態で九三式水中聴音機x2破棄、三式水中探信儀x2破棄、新型兵装資材x2＆開発資材x30＆ボーキ1300x3を保有
+							Progresses.Add(new ProgressMultiDiscard(q, new[]{
+								new ProgressDiscard(q, 2, true, new[]{ 46 }, -1),
+								new ProgressDiscard(q, 2, true, new[]{ 47 }, -1),
 							}));
 							break;
 					}

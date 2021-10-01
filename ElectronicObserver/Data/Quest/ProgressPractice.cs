@@ -79,10 +79,16 @@ namespace ElectronicObserver.Data.Quest
 				//################################
 				//任務IDごとに個別記述(地獄)
 				//################################
+				case 318:   //|318|月|給糧艦「伊良湖」の支援|編成条件を満たした状態で演習に3回勝利後、達成後旗艦におにぎり2つ装備|編成条件：軽巡2隻|マンスリーだが1日で進捗リセット|
+					if(ships.Count(s => s.MasterShip.ShipType == ShipTypes.LightCruiser) >= 2)
+					{
+						ret = true;
+					}
+					break;
 				case 330:   //|330|Ｑ|空母機動部隊、演習始め！|演習B勝利以上4|条件：航空母艦旗艦他1隻計2隻以上及び駆逐艦2隻を含む|クォータリーだが1日で進捗リセット
 					if ((ships.FirstOrDefault().MasterShip.IsAircraftCarrier) &&
-					    (ships.Count(s => s.MasterShip.IsAircraftCarrier) >= 2) &&
-					    (ships.Count(s => s.MasterShip.ShipType == ShipTypes.Destroyer) >= 2))
+						(ships.Count(s => s.MasterShip.IsAircraftCarrier) >= 2) &&
+						(ships.Count(s => s.MasterShip.ShipType == ShipTypes.Destroyer) >= 2))
 					{
 						ret = true;
 					}
@@ -143,11 +149,49 @@ namespace ElectronicObserver.Data.Quest
 					break;
 				case 342:   //|342|Ｑ|小艦艇群演習強化任務|演習A勝利以上4|(駆逐艦/海防艦)3隻+(駆逐艦/海防艦/軽巡級)1隻|クォータリーだが1日で進捗リセット
 					if ((ships.Count(s => s.MasterShip.ShipType == ShipTypes.Destroyer || s.MasterShip.ShipType == ShipTypes.Escort) >= 4)
-						    ||
+							||
 						((ships.Count(s => s.MasterShip.ShipType == ShipTypes.Destroyer || s.MasterShip.ShipType == ShipTypes.Escort)) >= 3
-						    	&&
+								&&
 						 (ships.Count(s => s.MasterShip.ShipType == ShipTypes.LightCruiser || ships.FirstOrDefault().MasterShip.ShipType == ShipTypes.TrainingCruiser || ships.FirstOrDefault().MasterShip.ShipType == ShipTypes.TorpedoCruiser)) >= 1)
 					)
+					{
+						ret = true;
+					}
+					break;
+				case 345:   //|345|10|演習ティータイム！|演習勝利A以上4|条件：Warspite、Ark Royal、金剛、Nelson、J級駆逐艦から4隻|イヤーリーだが1日で進捗リセット|
+					if (ships.Count(s => s.MasterShip.ShipClass == 82) + //J級駆逐艦
+						(ships.Count(s =>
+						{
+							switch (s?.MasterShip?.NameReading)
+							{
+								case "こんごう":
+								case "ネルソン":
+								case "アークロイヤル":
+								case "ウォースパイト":
+									return true;
+								default:
+									return false;
+							}
+						})) >= 4
+					)
+					{
+						ret = true;
+					}
+					break;
+				case 346:   //|346|10|最精鋭！主力オブ主力、演習開始！|演習A勝利以上4|夕雲改二、巻雲改二、風雲改二、秋雲改二の4隻|イヤーリーだが1日で進捗リセット|
+					if (ships.Count(s =>
+					{
+						switch (s?.MasterShip?.ShipID)
+						{
+							case 542: //夕雲改二
+							case 563: //巻雲改二
+							case 564: //風雲改二
+							case 648: //秋雲改二
+								return true;
+							default:
+								return false;
+						}
+					}) >= 4)
 					{
 						ret = true;
 					}

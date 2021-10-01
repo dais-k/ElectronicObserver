@@ -58,26 +58,61 @@ namespace ElectronicObserver.Data
 
 
 			//周期任務削除
+			//デイリー
 			if (DateTimeHelper.IsCrossedDay(progress.LastUpdateTime, 5, 0, 0))
 			{
-				progress.Progresses.RemoveAll(p => (p.QuestType == 1 || p.QuestID == 211 /* 空母3 */ || p.QuestID == 212 /* 輸送5 */ || p.QuestID == 311 /* 演習勝利7 */ || p.QuestID == 313 /* 演習勝利8 */ || p.QuestID == 330 || p.QuestID == 337 || p.QuestID == 339 || p.QuestID == 341 || p.QuestID == 342 || p.QuestID == 348 || p.QuestID == 354));
-				Quests.RemoveAll(q => q.Type == 1 || q.QuestID == 211 /* 空母3 */ || q.QuestID == 212 /* 輸送5 */ || q.QuestID == 311 /* 演習勝利7 */ || q.QuestID == 313 /* 演習勝利8 */ );
+				progress.Progresses.RemoveAll(p => (p.QuestType == 1 || 
+					p.QuestID == 211 ||	/* 空母3 */
+					p.QuestID == 212 ||	/* 輸送5 */
+					p.QuestID == 311 ||	/* 演習勝利7 */
+					p.QuestID == 313 ||	/* 演習勝利8 */
+					p.QuestID == 318 || 
+					p.QuestID == 330 || 
+					p.QuestID == 337 || 
+					p.QuestID == 339 || 
+					p.QuestID == 341 || 
+					p.QuestID == 342 ||
+					p.QuestID == 345 ||
+					p.QuestID == 346 ||
+					p.QuestID == 348 || 
+					p.QuestID == 354
+				));
+				Quests.RemoveAll(q => (q.Type == 1 || 
+					q.QuestID == 211 ||	/* 空母3 */
+					q.QuestID == 212 ||	/* 輸送5 */
+					q.QuestID == 311 ||	/* 演習勝利7 */
+					q.QuestID == 313 ||	/* 演習勝利8 */
+					q.QuestID == 318 || 
+					q.QuestID == 330 || 
+					q.QuestID == 337 || 
+					q.QuestID == 339 || 
+					q.QuestID == 341 || 
+					q.QuestID == 342 ||
+					q.QuestID == 345 ||
+					q.QuestID == 346 ||
+					q.QuestID == 348 || 
+					q.QuestID == 354
+				));
 			}
+			//ウィークリー
 			if (DateTimeHelper.IsCrossedWeek(progress.LastUpdateTime, DayOfWeek.Monday, 5, 0, 0))
 			{
 				progress.Progresses.RemoveAll(p => p.QuestType == 2);
 				Quests.RemoveAll(q => q.Type == 2);
 			}
+			//マンスリー
 			if (DateTimeHelper.IsCrossedMonth(progress.LastUpdateTime, 1, 5, 0, 0))
 			{
 				progress.Progresses.RemoveAll(p => p.QuestType == 3);
 				Quests.RemoveAll(q => q.Type == 3);
 			}
+			//クォータリー
 			if (DateTimeHelper.IsCrossedQuarter(progress.LastUpdateTime, 0, 1, 5, 0, 0))
 			{
 				progress.Progresses.RemoveAll(p => p.QuestType == 5);
 				Quests.RemoveAll(p => p.Type == 5);
 			}
+			//イヤーリー
 			for (int i = 1; i <= 12; i++)
 			{
 				if (DateTimeHelper.IsCrossedYear(progress.LastUpdateTime, i, 1, 5, 0, 0))

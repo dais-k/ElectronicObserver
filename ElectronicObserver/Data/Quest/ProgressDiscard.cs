@@ -160,11 +160,19 @@ namespace ElectronicObserver.Data.Quest
 								  members.FirstOrDefault().SlotInstance[0].EquipmentID == 294 &&
 								  members.FirstOrDefault().SlotInstance[0].Level == 10) ? 1 : 0;
 					break;
-				case 1106:  //|1106|精鋭三座水上偵察機隊の前線投入|秘書艦「由良改二」の第一スロットに零式水上偵察機11型乙★10を装備した状態で瑞雲x3、零式水上偵察機x3破棄、燃料1300、ボーキ1700、新型航空兵装資材x1、戦闘詳報x1、熟練搭乗員x3を保有
+				case 1106:  //|1106|精鋭三座水上偵察機隊の前線投入|秘書艦「由良改二」の第一スロットに零式水上偵察機11型乙★10を装備した状態で瑞雲x3＆零式水上偵察機x3破棄、燃料1300＆ボーキ1700＆新型航空兵装資材x1＆戦闘詳報x1＆熟練搭乗員x3を保有
 					isAccepted = (members.FirstOrDefault()?.MasterShip?.ShipID == 488 &&
 								  members.FirstOrDefault().SlotInstance[0] != null &&
 								  members.FirstOrDefault().SlotInstance[0].EquipmentID == 238 &&
 							      members.FirstOrDefault().SlotInstance[0].Level == 10) ? 1 : 0;
+					break;
+				case 1108:  //|1108|調整改良型「水中探信儀」の増産|秘書艦「山風改二(丁)」もしくは「時雨改二」の第一スロットに三式水中探信儀★10を装備した状態で九三式水中聴音機x2破棄、三式水中探信儀x2破棄、新型兵装資材x2＆開発資材x30＆ボーキ1300x3を保有
+					isAccepted = (((members.FirstOrDefault()?.MasterShip?.ShipID == 588) ||  //山風改二
+						           (members.FirstOrDefault()?.MasterShip?.ShipID == 667) ||  //山風改二丁
+								   (members.FirstOrDefault()?.MasterShip?.ShipID == 145)) && //時雨改二
+								  members.FirstOrDefault().SlotInstance[0] != null &&
+								  members.FirstOrDefault().SlotInstance[0].EquipmentID == 47 &&
+								  members.FirstOrDefault().SlotInstance[0].Level == 10) ? 1 : 0;
 					break;
 				default:
 					//任務IDが当てはまらないなら-1のまま、つまりチェックの必要なし
