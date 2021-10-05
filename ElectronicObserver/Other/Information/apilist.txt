@@ -2480,6 +2480,22 @@ Request.api_req_air_corps/set_action	：基地航空隊 - 行動指示変更
 api_req_air_corps/set_action	：基地航空隊 - 行動指示変更
 	(情報なし)
 
+Request.api_req_air_corps/change_deployment_base	：中隊入れ替え情報
+	api_area_id		：選択した航空隊の所属海域ID
+	api_base_id		：選択した航空隊ID
+	api_squadron_id	：選択した中隊ID
+	api_item_id		：入れ替え先の装備ID
+	api_base_id_src	：入れ替え先の航空隊ID
+
+　　※入れ替え元は航空隊IDと中隊ID、入れ替え先は航空隊IDと選択した装備のIDという形でRequestしている
+
+api_req_air_corps/change_deployment_base
+	api_base_items			：入れ替わった中隊情報(必ず2セット存在)
+		api_rid					：航空隊ID
+		api_distance			：戦闘行動半径
+			api_base				：基礎半径　≒半径が最小の中隊
+			api_bonus				：偵察機等による半径ボーナス
+		api_plane_info			：中隊情報　base_air_corps と同じ、入れ替え対象のスロットのみ
 
 Request.api_req_map/start_air_base		：基地航空隊 - 出撃
 	api_strike_point_1		：第一航空隊の攻撃対象のセルID（マップ内ID）　コンマ区切り配列　「出撃」命令時のみ存在

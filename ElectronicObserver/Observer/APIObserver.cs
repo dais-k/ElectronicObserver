@@ -104,6 +104,7 @@ namespace ElectronicObserver.Observer
 				new kcsapi.api_req_combined_battle.ld_airbattle(),
 				new kcsapi.api_get_member.require_info(),
 				new kcsapi.api_get_member.base_air_corps(),
+				new kcsapi.api_req_air_corps.change_deployment_base(),
 				new kcsapi.api_req_air_corps.set_plane(),
 				new kcsapi.api_req_air_corps.set_action(),
 				new kcsapi.api_req_air_corps.supply(),
