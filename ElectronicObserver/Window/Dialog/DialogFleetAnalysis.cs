@@ -105,6 +105,9 @@ namespace ElectronicObserver.Window.Dialog
 			//Lv1でない艦の取得経験値合計を算出する
 			var shipTypeExpSum = ships.GroupBy(s => s.MasterShip.ShipTypeName).ToDictionary(group => group.Key, group => group.Where(s => s.Level != 1).Sum(s => s.ExpTotal));
 
+			int allSumExp = 0;
+			labelAllSumExp.Text = "経験値合計：0";
+
 			foreach (var st in shipTypeCount.Keys)
 			{
 				//Console.WriteLine(st+ "|" + shipTypeCount[st]);
@@ -117,7 +120,9 @@ namespace ElectronicObserver.Window.Dialog
 				dataGridView_ShipTypes.Rows[maxRowNum - 1].Cells[4].Value = shipTypeLevelMin[st];
 				dataGridView_ShipTypes.Rows[maxRowNum - 1].Cells[5].Value = shipTypeLevelMax[st];
 				dataGridView_ShipTypes.Rows[maxRowNum - 1].Cells[6].Value = shipTypeExpSum[st];
+				allSumExp += shipTypeExpSum[st];
 			}
+			labelAllSumExp.Text = "経験値合計：" + String.Format("{0:#,0}", allSumExp);
 
 			//並び変え：1列目(通番)の昇順
 			DataGridViewColumn sortColumnShipType = dataGridView_ShipTypes.Columns[0];
@@ -261,10 +266,10 @@ namespace ElectronicObserver.Window.Dialog
 			}
 
 			//1項目だけのときは値をラベル表示する
-			if(count == 1)
+			if (count == 1)
 			{
 				chart_ShipTypes.ChartAreas[0].AxisY.LabelStyle.Enabled = false;
-				for(int i = 0; i < chart_ShipTypes.Series.Count; i++)
+				for (int i = 0; i < chart_ShipTypes.Series.Count; i++)
 				{
 					if (chart_ShipTypes.Series[i].Enabled)
 					{
@@ -294,22 +299,28 @@ namespace ElectronicObserver.Window.Dialog
 			ShowLabelSwitch();
 		}
 
+		/// <summary>
+		/// CSV⇒GridDataWiewへの反映
+		/// </summary>
+		/// <param name="dataGridView"></param>
+		/// <param name="fn"></param>
 		private void ReadToGridDataView(DataGridView dataGridView, string fn)
 		{
 			StreamReader reader = new StreamReader(fn, Encoding.GetEncoding("shift_jis"));
+
 			while (reader.Peek() >= 0)
 			{
 				string[] cols = reader.ReadLine().Split(',');
-				if(cols[0] == "" || cols[0] == "区分" || cols[0] == "通番")
+				if (cols[0] == "" || cols[0] == "区分" || cols[0] == "通番")
 				{
 					//最初の行はスキップ
 					continue;
 				}
 				dataGridView.Rows.Add();
 				int maxRowNum = dataGridView.Rows.Count;
-				for (int i = 0;i < cols.Length-1;i++)
+				for (int i = 0; i < cols.Length - 1; i++)
 				{
-					if(i == 1)
+					if (i == 1)
 					{
 						//艦種は文字列のまま
 						dataGridView.Rows[maxRowNum - 1].Cells[i].Value = cols[i];
@@ -326,6 +337,18 @@ namespace ElectronicObserver.Window.Dialog
 			//並び変え：1列目の昇順
 			DataGridViewColumn sortColumnLevel = dataGridView.Columns[0];
 			dataGridView.Sort(sortColumnLevel, ListSortDirection.Ascending);
+		}
+
+		private void UpdateAllSumExp(DataGridView dataGridView)
+		{
+			int allSumExp = 0;
+
+			for (int i = 0; i < dataGridView.Rows.Count - 1;i++)
+			{
+				allSumExp += Int32.Parse(dataGridView.Rows[i].Cells[dataGridView.Columns.Count - 1].Value.ToString());
+			}
+
+			labelAllSumExp.Text = "経験値合計：" + String.Format("{0:#,0}", allSumExp);
 		}
 
 		private void ReadCSV_ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -357,6 +380,7 @@ namespace ElectronicObserver.Window.Dialog
 
 				UpdateShipTypeChart();
 				UpdateLevelChart();
+				UpdateAllSumExp(dataGridView_ShipTypes);
 
 				this.Text = "艦隊分析("+Path.GetFileName(dirPath)+")";
 			}

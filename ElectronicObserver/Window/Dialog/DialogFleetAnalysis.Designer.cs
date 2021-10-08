@@ -29,13 +29,13 @@ namespace ElectronicObserver.Window.Dialog
 		/// </summary>
 		private void InitializeComponent()
 		{
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series5 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series6 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
             this.dataGridView_ShipTypes = new System.Windows.Forms.DataGridView();
             this.Index = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ShipType = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -72,6 +72,7 @@ namespace ElectronicObserver.Window.Dialog
             this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage_Level_Chart = new System.Windows.Forms.TabPage();
             this.chart_Level = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.labelAllSumExp = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView_ShipTypes)).BeginInit();
             this.FleetAnalysis_menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart_ShipTypes)).BeginInit();
@@ -227,64 +228,64 @@ namespace ElectronicObserver.Window.Dialog
             // 
             // chart_ShipTypes
             // 
-            chartArea1.AxisX.IsLabelAutoFit = false;
-            chartArea1.AxisX.LabelStyle.Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            chartArea1.AxisY.Interval = 25D;
-            chartArea1.AxisY.IntervalOffset = 25D;
-            chartArea1.AxisY.IsLabelAutoFit = false;
-            chartArea1.AxisY.LineColor = System.Drawing.Color.Gainsboro;
-            chartArea1.AxisY.MajorGrid.IntervalOffset = 25D;
-            chartArea1.AxisY.MajorTickMark.Enabled = false;
-            chartArea1.AxisY.Maximum = 175D;
-            chartArea1.AxisY.MinorGrid.Enabled = true;
-            chartArea1.AxisY.MinorGrid.IntervalOffset = 5D;
-            chartArea1.AxisY.MinorGrid.LineColor = System.Drawing.Color.Gainsboro;
-            chartArea1.Name = "ChartArea1";
-            this.chart_ShipTypes.ChartAreas.Add(chartArea1);
-            legend1.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Top;
-            legend1.Name = "Legend1";
-            this.chart_ShipTypes.Legends.Add(legend1);
+            chartArea3.AxisX.IsLabelAutoFit = false;
+            chartArea3.AxisX.LabelStyle.Font = new System.Drawing.Font("Yu Gothic UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            chartArea3.AxisY.Interval = 25D;
+            chartArea3.AxisY.IntervalOffset = 25D;
+            chartArea3.AxisY.IsLabelAutoFit = false;
+            chartArea3.AxisY.LineColor = System.Drawing.Color.Gainsboro;
+            chartArea3.AxisY.MajorGrid.IntervalOffset = 25D;
+            chartArea3.AxisY.MajorTickMark.Enabled = false;
+            chartArea3.AxisY.Maximum = 175D;
+            chartArea3.AxisY.MinorGrid.Enabled = true;
+            chartArea3.AxisY.MinorGrid.IntervalOffset = 5D;
+            chartArea3.AxisY.MinorGrid.LineColor = System.Drawing.Color.Gainsboro;
+            chartArea3.Name = "ChartArea1";
+            this.chart_ShipTypes.ChartAreas.Add(chartArea3);
+            legend3.Docking = System.Windows.Forms.DataVisualization.Charting.Docking.Top;
+            legend3.Name = "Legend1";
+            this.chart_ShipTypes.Legends.Add(legend3);
             this.chart_ShipTypes.Location = new System.Drawing.Point(3, 6);
             this.chart_ShipTypes.Name = "chart_ShipTypes";
-            series1.BorderColor = System.Drawing.Color.Red;
-            series1.BorderWidth = 3;
-            series1.ChartArea = "ChartArea1";
-            series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Radar;
-            series1.Color = System.Drawing.Color.Transparent;
-            series1.CustomProperties = "AreaDrawingStyle=Polygon";
-            series1.Legend = "Legend1";
-            series1.MarkerBorderColor = System.Drawing.Color.Red;
-            series1.MarkerBorderWidth = 5;
-            series1.MarkerColor = System.Drawing.Color.Red;
-            series1.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Diamond;
-            series1.Name = "最大Lv";
-            series2.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            series2.BorderWidth = 3;
-            series2.ChartArea = "ChartArea1";
-            series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Radar;
-            series2.Color = System.Drawing.Color.Transparent;
-            series2.CustomProperties = "AreaDrawingStyle=Polygon";
-            series2.Legend = "Legend1";
-            series2.MarkerBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            series2.MarkerBorderWidth = 5;
-            series2.MarkerColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
-            series2.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
-            series2.Name = "平均Lv";
-            series3.BorderColor = System.Drawing.Color.Aqua;
-            series3.BorderWidth = 3;
-            series3.ChartArea = "ChartArea1";
-            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Radar;
-            series3.Color = System.Drawing.Color.Transparent;
-            series3.CustomProperties = "AreaDrawingStyle=Polygon";
-            series3.Legend = "Legend1";
-            series3.MarkerBorderColor = System.Drawing.Color.Aqua;
-            series3.MarkerBorderWidth = 5;
-            series3.MarkerColor = System.Drawing.Color.Aqua;
-            series3.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Square;
-            series3.Name = "最小Lv";
-            this.chart_ShipTypes.Series.Add(series1);
-            this.chart_ShipTypes.Series.Add(series2);
-            this.chart_ShipTypes.Series.Add(series3);
+            series4.BorderColor = System.Drawing.Color.Red;
+            series4.BorderWidth = 3;
+            series4.ChartArea = "ChartArea1";
+            series4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Radar;
+            series4.Color = System.Drawing.Color.Transparent;
+            series4.CustomProperties = "AreaDrawingStyle=Polygon";
+            series4.Legend = "Legend1";
+            series4.MarkerBorderColor = System.Drawing.Color.Red;
+            series4.MarkerBorderWidth = 5;
+            series4.MarkerColor = System.Drawing.Color.Red;
+            series4.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Diamond;
+            series4.Name = "最大Lv";
+            series5.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            series5.BorderWidth = 3;
+            series5.ChartArea = "ChartArea1";
+            series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Radar;
+            series5.Color = System.Drawing.Color.Transparent;
+            series5.CustomProperties = "AreaDrawingStyle=Polygon";
+            series5.Legend = "Legend1";
+            series5.MarkerBorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            series5.MarkerBorderWidth = 5;
+            series5.MarkerColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(0)))));
+            series5.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Circle;
+            series5.Name = "平均Lv";
+            series6.BorderColor = System.Drawing.Color.Aqua;
+            series6.BorderWidth = 3;
+            series6.ChartArea = "ChartArea1";
+            series6.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Radar;
+            series6.Color = System.Drawing.Color.Transparent;
+            series6.CustomProperties = "AreaDrawingStyle=Polygon";
+            series6.Legend = "Legend1";
+            series6.MarkerBorderColor = System.Drawing.Color.Aqua;
+            series6.MarkerBorderWidth = 5;
+            series6.MarkerColor = System.Drawing.Color.Aqua;
+            series6.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Square;
+            series6.Name = "最小Lv";
+            this.chart_ShipTypes.Series.Add(series4);
+            this.chart_ShipTypes.Series.Add(series5);
+            this.chart_ShipTypes.Series.Add(series6);
             this.chart_ShipTypes.Size = new System.Drawing.Size(637, 461);
             this.chart_ShipTypes.TabIndex = 4;
             this.chart_ShipTypes.Text = "艦種別(Lv1の艦を除く)";
@@ -534,22 +535,32 @@ namespace ElectronicObserver.Window.Dialog
             // 
             // chart_Level
             // 
-            chartArea2.AxisX.Title = "レベル帯";
-            chartArea2.AxisY.Title = "隻数";
-            chartArea2.Name = "ChartArea1";
-            this.chart_Level.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chart_Level.Legends.Add(legend2);
+            chartArea4.AxisX.Title = "レベル帯";
+            chartArea4.AxisY.Title = "隻数";
+            chartArea4.Name = "ChartArea1";
+            this.chart_Level.ChartAreas.Add(chartArea4);
+            legend4.Name = "Legend1";
+            this.chart_Level.Legends.Add(legend4);
             this.chart_Level.Location = new System.Drawing.Point(3, 6);
             this.chart_Level.Name = "chart_Level";
             this.chart_Level.Size = new System.Drawing.Size(637, 461);
             this.chart_Level.TabIndex = 0;
             this.chart_Level.Text = "chart1";
             // 
+            // labelAllSumExp
+            // 
+            this.labelAllSumExp.AutoSize = true;
+            this.labelAllSumExp.Location = new System.Drawing.Point(34, 540);
+            this.labelAllSumExp.Name = "labelAllSumExp";
+            this.labelAllSumExp.Size = new System.Drawing.Size(23, 12);
+            this.labelAllSumExp.TabIndex = 7;
+            this.labelAllSumExp.Text = "exp";
+            // 
             // DialogFleetAnalysis
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(700, 561);
+            this.Controls.Add(this.labelAllSumExp);
             this.Controls.Add(this.tabControl_Parent);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.FleetAnalysis_menuStrip);
@@ -620,5 +631,6 @@ namespace ElectronicObserver.Window.Dialog
 		private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
 		private System.Windows.Forms.DataVisualization.Charting.Chart chart_Level;
 		private System.Windows.Forms.ToolStripMenuItem ReadCSV_ToolStripMenuItem;
+		private System.Windows.Forms.Label labelAllSumExp;
 	}
 }

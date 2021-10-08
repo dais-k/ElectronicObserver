@@ -94,7 +94,7 @@ namespace ElectronicObserver.Data
 			{
 				case "api_get_member/base_air_corps":
 				default:
-					//すべてのデータが渡ってくるので継承元の処理も実施して全データを更新する
+					//ここに来る場合のdataにはすべてのデータが渡ってくるので継承元の処理も実施して全データを更新する
 					base.LoadFromResponse(apiname, (object)data);
 
 					Name = (string)data.api_name;
@@ -104,7 +104,7 @@ namespace ElectronicObserver.Data
 					SetSquadrons(apiname, data.api_plane_info);
 					break;
 				case "api_req_air_corps/change_deployment_base":
-					//入れ替えた航空隊の中隊情報しかないのでNameやActionKindは更新できない。
+					//ここに来る場合のdataには入れ替えた航空隊の中隊情報しかないのでNameやActionKindは更新できない。
 					//継承元の処理も行わない。
 					Distance = (int)data.api_distance.api_base + (int)data.api_distance.api_bonus;
 					SetSquadrons(apiname, data.api_plane_info);
