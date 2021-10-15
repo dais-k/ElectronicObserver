@@ -936,7 +936,7 @@ phase/combat に API ごとの戦闘の流れが書いてある
 |35|5inch単装砲 Mk.30改+GFCS Mk.37/5inch単装砲 Mk.30改|Fletcher級|
 |36|5inch単装砲 Mk.30改x2/GFCS Mk.37|Fletcher級|
 |37|5inch単装砲 Mk.30改x2|Fletcher級|
-|38|???||
+|38|GFCS Mk.37+5inch連装両用砲(集中配備)/GFCS Mk.37+5inch連装両用砲(集中配備)|Atlanta|
 |39|GFCS Mk.37+5inch連装両用砲(集中配備)/5inch連装両用砲(集中配備)|Atlanta|
 |40|(GFCS Mk.37+)5inch連装両用砲(集中配備)/5inch連装両用砲(集中配備)/GFCS Mk.37|Atlanta|
 |41|(GFCS Mk.37+)5inch連装両用砲(集中配備)/5inch連装両用砲(集中配備)|Atlanta|

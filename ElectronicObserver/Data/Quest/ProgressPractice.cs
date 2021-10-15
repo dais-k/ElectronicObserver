@@ -212,6 +212,14 @@ namespace ElectronicObserver.Data.Quest
 						ret = true;
 					}
 					break;
+				case 355:   //|355|10|精鋭「第十五駆逐隊」第一小隊演習！|演習S勝利以上4|条件：親潮改二、黒潮改二を1番艦、2番艦に配置|イヤーリーだが1日で進捗リセット|
+					if ((ships[0].MasterShip.ShipID == 568 && ships[1].MasterShip.ShipID == 670) ||
+						(ships[0].MasterShip.ShipID == 670 && ships[1].MasterShip.ShipID == 568)
+					)
+					{
+						ret = true;
+					}
+					break;
 				default:
 					//ここに来たらバグ
 					ret = false;

@@ -174,6 +174,12 @@ namespace ElectronicObserver.Data.Quest
 								  members.FirstOrDefault().SlotInstance[0].EquipmentID == 47 &&
 								  members.FirstOrDefault().SlotInstance[0].Level == 10) ? 1 : 0;
 					break;
+				case 1109:  //|1109|上陸作戦支援用装備の配備|秘書艦「神州丸」の第一スロットに大発戦車★10を装備した状態で7.7mm機銃x2、大発動艇x2を破棄、高速建造材x8、開発資材x10、鋼材800を保有
+					isAccepted = (members.FirstOrDefault()?.MasterShip?.NameReading == "しんしゅうまる" &&
+								  members.FirstOrDefault().SlotInstance[0] != null &&
+								  members.FirstOrDefault().SlotInstance[0].EquipmentID == 166 &&
+								  members.FirstOrDefault().SlotInstance[0].Level == 10) ? 1 : 0;
+					break;
 				default:
 					//任務IDが当てはまらないなら-1のまま、つまりチェックの必要なし
 					break;

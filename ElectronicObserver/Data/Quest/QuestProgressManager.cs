@@ -511,6 +511,31 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressSpecialBattle(q, 1, "S", new[] { 72 }, true, 2),
 							}));
 							break;
+						case 959:   //|959|単|「鎮守府秋刀魚祭り」発動準備！|1-1～1-5ボスを各S勝利1回ずつ|条件：軽巡、練巡、水上機母艦、特務艦のいずれかが旗艦|
+							Progresses.Add(new ProgressMultiBattle(q, new[] {
+								new ProgressSpecialBattle(q, 1, "S", new[] { 11 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 12 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 13 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 14 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 15 }, true),
+							}));
+							break;
+						case 960:   //|960|単|続：「鎮守府秋刀魚祭り」発動準備！|3-1～3-5ボスを各S勝利1回ずつ|条件：軽巡、練巡、潜水母艦、特務艦のいずれかが旗艦|
+							Progresses.Add(new ProgressMultiBattle(q, new[] {
+								new ProgressSpecialBattle(q, 1, "S", new[] { 31 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 32 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 33 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 34 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 35 }, true),
+							}));
+							break;
+						case 961:   //|961|単|奮戦！精鋭「第十五駆逐隊」第一小隊|2-4、5-4、7-2-2ボスを各S勝利1回ずつ|条件：黒潮改二、親潮改二を編成に入れる|
+							Progresses.Add(new ProgressMultiBattle(q, new[] {
+								new ProgressSpecialBattle(q, 2, "S", new[] { 24 }, true),
+								new ProgressSpecialBattle(q, 2, "S", new[] { 54 }, true),
+								new ProgressSpecialBattle(q, 2, "S", new[] { 72 }, true, 2),
+							}));
+							break;
 
 						case 303:   //|303|日|「演習」で練度向上！|演習3
 							Progresses.Add(new ProgressPractice(q, 3, false));
@@ -555,6 +580,9 @@ namespace ElectronicObserver.Data.Quest
 							Progresses.Add(new ProgressPractice(q, 4, "A", true));
 							break;
 						case 354:   //|354|７|「改装特設空母」任務部隊演習！|演習S勝利以上4|条件：旗艦がガンビアベイMK2かつフレッチャー級orジョンCバトラー級2隻以上を含む|イヤーリーだが1日で進捗リセット|
+							Progresses.Add(new ProgressPractice(q, 4, "S", true));
+							break;
+						case 355:   //|355|10|精鋭「第十五駆逐隊」第一小隊演習！|演習S勝利以上4|条件：親潮改二、黒潮改二を1番艦、2番艦に配置|イヤーリーだが1日で進捗リセット|
 							Progresses.Add(new ProgressPractice(q, 4, "S", true));
 							break;
 
@@ -846,6 +874,12 @@ namespace ElectronicObserver.Data.Quest
 							Progresses.Add(new ProgressMultiDiscard(q, new[]{
 								new ProgressDiscard(q, 2, true, new[]{ 46 }, -1),
 								new ProgressDiscard(q, 2, true, new[]{ 47 }, -1),
+							}));
+							break;
+						case 1109:  //|1109|上陸作戦支援用装備の配備|秘書艦「神州丸」の第一スロットに大発戦車★10を装備した状態で7.7mm機銃x2、大発動艇x2を破棄、高速建造材x8、開発資材x10、鋼材800を保有
+							Progresses.Add(new ProgressMultiDiscard(q, new[]{
+								new ProgressDiscard(q, 2, true, new[]{ 37 }, -1),
+								new ProgressDiscard(q, 2, true, new[]{ 68 }, -1),
 							}));
 							break;
 					}
