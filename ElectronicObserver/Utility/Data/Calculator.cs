@@ -658,7 +658,9 @@ namespace ElectronicObserver.Utility.Data
 			return tp;
 		}
 
-
+		/// <summary>
+		/// 大発系遠征ボーナステーブル
+		/// </summary>
 		private static readonly Dictionary<int, double> EquipmentExpeditionBonus = new Dictionary<int, double>() {
 			//士魂隊、シャーマンは0なので登録なし
 			{  68, 0.05 },	// 大発動艇
@@ -667,8 +669,10 @@ namespace ElectronicObserver.Utility.Data
 			{ 193, 0.05 },	// 特大発動艇
 			{ 408, 0.02 },	// 装甲艇(AB艇)
 			{ 409, 0.03 },	// 武装大発
-			{ 436, 0.02 },	// 2号戦車/アフリカ仕様
+			{ 436, 0.02 },  // 2号戦車/アフリカ仕様
+			{ 449, 0.02 },  // 一式砲戦車
 		};
+
 		/// <summary>
 		/// 遠征資源の大発ボーナスを取得します。
 		/// </summary>

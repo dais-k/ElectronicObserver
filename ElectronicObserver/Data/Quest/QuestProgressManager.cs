@@ -552,6 +552,9 @@ namespace ElectronicObserver.Data.Quest
 						case 313:	//|313|単|秋季大演習|演習勝利8|単発(というか更新時期不定、名前の通り秋ごろ)だが1日で進捗リセット
 							Progresses.Add(new ProgressPractice(q, 8, true));
 							break;
+						case 314:   //|314|単|冬季大演習|演習勝利8|単発(というか更新時期不定、名前の通り冬ごろ)だが1日で進捗リセット
+							Progresses.Add(new ProgressPractice(q, 8, true));
+							break;
 						case 318:   //|318|月|給糧艦「伊良湖」の支援|編成条件を満たした状態で演習に3回勝利後、達成後旗艦におにぎり2つ装備|編成条件：軽巡2隻|マンスリーだが1日で進捗リセット|
 							Progresses.Add(new ProgressPractice(q, 3, "B", true));
 							break;
@@ -880,6 +883,13 @@ namespace ElectronicObserver.Data.Quest
 							Progresses.Add(new ProgressMultiDiscard(q, new[]{
 								new ProgressDiscard(q, 2, true, new[]{ 37 }, -1),
 								new ProgressDiscard(q, 2, true, new[]{ 68 }, -1),
+							}));
+							break;
+						case 1112:  //|1112|鎮守府「大掃除」祭り！|小口径主砲x4、中口径主砲x4、大口径主砲x4を破棄、ドラム缶x1、開発資材x10、鋼材1800を保有
+							Progresses.Add(new ProgressMultiDiscard(q, new[]{
+								new ProgressDiscard(q, 4, true, new[]{ 1 }),
+								new ProgressDiscard(q, 4, true, new[]{ 2 }),
+								new ProgressDiscard(q, 4, true, new[]{ 3 }),
 							}));
 							break;
 					}

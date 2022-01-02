@@ -66,6 +66,7 @@ namespace ElectronicObserver.Data
 					p.QuestID == 212 ||	/* 輸送5 */
 					p.QuestID == 311 ||	/* 演習勝利7 */
 					p.QuestID == 313 ||	/* 演習勝利8 */
+					p.QuestID == 314 || /* 演習勝利8 */
 					p.QuestID == 318 || 
 					p.QuestID == 330 || 
 					p.QuestID == 337 || 
@@ -83,6 +84,7 @@ namespace ElectronicObserver.Data
 					q.QuestID == 212 ||	/* 輸送5 */
 					q.QuestID == 311 ||	/* 演習勝利7 */
 					q.QuestID == 313 ||	/* 演習勝利8 */
+					q.QuestID == 314 || /* 演習勝利8 */
 					q.QuestID == 318 || 
 					q.QuestID == 330 || 
 					q.QuestID == 337 || 
