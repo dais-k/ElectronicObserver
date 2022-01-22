@@ -539,10 +539,12 @@ namespace ElectronicObserver.Window
 		{
 			get
 			{
-				if (KCDatabase.Instance.Battle != null)
-					return KCDatabase.Instance.Equipments.Count + KCDatabase.Instance.Battle.DroppedEquipmentCount;
+				int equipmentCount = KCDatabase.Instance.Equipments.Values.Count(e => !e.MasterEquipment.IsNotCountEquipmentType);
 
-				return KCDatabase.Instance.Equipments.Count;
+				if (KCDatabase.Instance.Battle != null)
+					return equipmentCount + KCDatabase.Instance.Battle.DroppedEquipmentCount;
+
+				return equipmentCount;
 			}
 		}
 

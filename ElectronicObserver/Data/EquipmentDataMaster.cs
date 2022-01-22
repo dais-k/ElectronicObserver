@@ -369,7 +369,11 @@ namespace ElectronicObserver.Data
 		public bool IsAARocketLauncher =>
 			EquipmentID == 274;
 
-
+		/// <summary> 装備運用枠のカウント対象外かどうか </summary>
+		public bool IsNotCountEquipmentType =>
+			CategoryType == EquipmentTypes.Ration ||
+			CategoryType == EquipmentTypes.DamageControl ||
+			CategoryType == EquipmentTypes.Supplies;
 
 		public int ID => EquipmentID;
 

@@ -419,10 +419,9 @@ namespace ElectronicObserver.Data.Battle
 
 
 
-			//ドロップ艦記録
+			//ドロップ記録
 			if (!IsPractice && !IsBaseAirRaid)
 			{
-
 				//checkme: とてもアレな感じ
 
 				int shipID = Result.DroppedShipID;
@@ -430,23 +429,36 @@ namespace ElectronicObserver.Data.Battle
 				int eqID = Result.DroppedEquipmentID;
 				bool showLog = Utility.Configuration.Config.Log.ShowSpoiler;
 
+				//艦のドロップ
 				if (shipID != -1)
 				{
-
 					ShipDataMaster ship = KCDatabase.Instance.MasterShips[shipID];
 					DroppedShipCount++;
 
 					var defaultSlot = ship.DefaultSlot;
 					if (defaultSlot != null)
-						DroppedEquipmentCount += defaultSlot.Count(id => id != -1);
+					{
+						//現状、速吸が洋上補給を持ってくる可能性がある
+						foreach (int id in defaultSlot)
+						{
+							if(id != -1)
+							{
+								EquipmentDataMaster eq = KCDatabase.Instance.MasterEquipments[id];
+								if (!eq.IsNotCountEquipmentType)
+								{
+									DroppedEquipmentCount++;
+								}
+							}
+						}
+					}
 
 					if (showLog)
 						Utility.Logger.Add(2, string.Format("{0}「{1}」が戦列に加わりました。", ship.ShipTypeName, ship.NameWithClass));
 				}
 
+				//アイテムのドロップ（秋刀魚など）
 				if (itemID != -1)
 				{
-
 					if (!DroppedItemCount.ContainsKey(itemID))
 						DroppedItemCount.Add(itemID, 0);
 					DroppedItemCount[itemID]++;
@@ -459,18 +471,20 @@ namespace ElectronicObserver.Data.Battle
 					}
 				}
 
+				//装備のドロップ
 				if (eqID != -1)
 				{
-
 					EquipmentDataMaster eq = KCDatabase.Instance.MasterEquipments[eqID];
-					DroppedEquipmentCount++;
+					if (!eq.IsNotCountEquipmentType)
+					{
+						DroppedEquipmentCount++;
+					}
 
 					if (showLog)
 					{
 						Utility.Logger.Add(2, string.Format("{0}「{1}」を入手しました。", eq.CategoryTypeInstance.Name, eq.Name));
 					}
 				}
-
 
 				// 満員判定
 				if (shipID == -1 && (
