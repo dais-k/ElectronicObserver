@@ -1254,7 +1254,9 @@ namespace ElectronicObserver.Window
 
 		/// <summary>
 		/// 「艦隊分析 -艦これ-」の艦隊情報反映用フォーマットでコピー
-		/// https://kancolle-fleetanalysis.firebaseapp.com/#/
+		/// メモ
+		/// https://kancolle-fleetanalysis.firebaseapp.com/#/ はサービス終了閉鎖済み
+		/// 制空権シミュレータ：https://noro6.github.io/kcTools/list/ で本フォーマットを使用できる
 		/// </summary>
 		private void ContextMenuFleet_CopyToFleetAnalysis_Click(object sender, EventArgs e)
 		{
@@ -1263,8 +1265,21 @@ namespace ElectronicObserver.Window
 			sb.Append("[");
 			foreach (var ship in KCDatabase.Instance.Ships.Values.Where(s => s.IsLocked))
 			{
-				sb.AppendFormat(@"{{""api_ship_id"":{0},""api_lv"":{1},""api_kyouka"":[{2}],""api_exp"":[{3}]}},",
-					ship.ShipID, ship.Level, string.Join(",", (int[])ship.RawData.api_kyouka), string.Join(",", (int[])ship.RawData.api_exp));
+				//現在の進捗計算
+				int expProgress = 0;
+				if (ExpTable.ShipExp.ContainsKey(ship.Level + 1) && ship.Level != 99)
+				{
+					double tmpExpProgress = ((double)ExpTable.ShipExp[ship.Level].Next - (double)ship.ExpNext) / (double)ExpTable.ShipExp[ship.Level].Next * 100;
+					expProgress = (int)Math.Truncate(tmpExpProgress);
+				}
+				int[] apiExp = { ship.ExpTotal, ship.ExpNext, expProgress };
+
+				sb.AppendFormat(@"{{""api_ship_id"":{0},""api_lv"":{1},""api_kyouka"":[{2}],""api_exp"":[{3}],""api_slot_ex"":{4},""api_sally_area"":{5}}},",
+					ship.ShipID, ship.Level, 
+					string.Join(",", (int[])ship.RawData.api_kyouka), 
+					string.Join(",", apiExp), 
+					ship.ExpansionSlot, 
+					(ship.SallyArea >= 0 ? ship.SallyArea : 0));
 			}
 			sb.Remove(sb.Length - 1, 1);        // remove ","
 			sb.Append("]");
