@@ -75,6 +75,7 @@ namespace ElectronicObserver.Observer.kcsapi.api_req_kaisou
 
 						int hp = updated_ship.HPMax - ship.HPMax;
 						if (hp > 0)
+							//ShipDataMasterに最大値がないパラメータだが、海防艦による改修で限界突破可能なので現在値+改修残りを表示する
 							contents.AddLast(string.Format("耐久+{0}→{1}/{2}", hp, updated_ship.HPMax, updated_ship.HPMax + updated_ship.HPMaxRemain));
 
 						int firepower = updated_ship.FirepowerBase - ship.FirepowerBase;
@@ -95,7 +96,8 @@ namespace ElectronicObserver.Observer.kcsapi.api_req_kaisou
 
 						int asw = updated_ship.ASWBase - ship.ASWBase;
 						if (asw > 0)
-							contents.AddLast(string.Format("対潜+{0}→{1}/{2}", asw, updated_ship.ASWBase, updated_ship.ASWMax + updated_ship.MasterShip.ASWModernizable));
+							//Lv99以降も上がり続けるステータスかつ海防艦による改修で限界突破可能なので現在値+改修残りを表示する
+							contents.AddLast(string.Format("対潜+{0}→{1}/{2}", asw, updated_ship.ASWBase, updated_ship.ASWBase + updated_ship.ASWRemain));
 
 						int luck = updated_ship.LuckBase - ship.LuckBase;
 						if (luck > 0)
