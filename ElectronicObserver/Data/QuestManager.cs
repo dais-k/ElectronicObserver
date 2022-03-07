@@ -71,11 +71,11 @@ namespace ElectronicObserver.Data
 					p.QuestID == 330 || 
 					p.QuestID == 337 || 
 					p.QuestID == 339 || 
-					p.QuestID == 341 || 
 					p.QuestID == 342 ||
 					p.QuestID == 345 ||
 					p.QuestID == 346 ||
-					p.QuestID == 348 || 
+					p.QuestID == 348 ||
+					p.QuestID == 350 ||
 					p.QuestID == 354 ||
 					p.QuestID == 355
 				));
@@ -89,11 +89,11 @@ namespace ElectronicObserver.Data
 					q.QuestID == 330 || 
 					q.QuestID == 337 || 
 					q.QuestID == 339 || 
-					q.QuestID == 341 || 
 					q.QuestID == 342 ||
 					q.QuestID == 345 ||
 					q.QuestID == 346 ||
-					q.QuestID == 348 || 
+					q.QuestID == 348 ||
+					q.QuestID == 350 ||
 					q.QuestID == 354 ||
 					q.QuestID == 355
 				));

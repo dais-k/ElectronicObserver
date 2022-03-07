@@ -129,24 +129,6 @@ namespace ElectronicObserver.Data.Quest
 						ret = true;
 					}
 					break;
-				case 341:   //|341|３|精鋭「第七駆逐隊」演習開始！|演習A勝利3|条件：朧、曙、漣、潮|イヤーリーだが1日で進捗リセット
-					if (ships.Count(s =>
-					{
-						switch (s?.MasterShip?.NameReading)
-						{
-							case "おぼろ":
-							case "あけぼの":
-							case "さざなみ":
-							case "うしお":
-								return true;
-							default:
-								return false;
-						}
-					}) >= 4)
-					{
-						ret = true;
-					}
-					break;
 				case 342:   //|342|Ｑ|小艦艇群演習強化任務|演習A勝利以上4|(駆逐艦/海防艦)3隻+(駆逐艦/海防艦/軽巡級)1隻|クォータリーだが1日で進捗リセット
 					if ((ships.Count(s => s.MasterShip.ShipType == ShipTypes.Destroyer || s.MasterShip.ShipType == ShipTypes.Escort) >= 4)
 							||
@@ -200,6 +182,24 @@ namespace ElectronicObserver.Data.Quest
 					if ((ships.FirstOrDefault().MasterShip.ShipType == ShipTypes.LightCruiser || ships.FirstOrDefault().MasterShip.ShipType == ShipTypes.TrainingCruiser) &&
 						(ships.Count(s => s.MasterShip.ShipType == ShipTypes.LightCruiser || s.MasterShip.ShipType == ShipTypes.TrainingCruiser) >= 3) &&
 					    (ships.Count(s => s.MasterShip.ShipType == ShipTypes.Destroyer) >= 2))
+					{
+						ret = true;
+					}
+					break;
+				case 350:   //|350|３|精鋭「第七駆逐隊」演習開始！|演習A勝利3|条件：朧、曙、漣、潮|イヤーリーだが1日で進捗リセット
+					if (ships.Count(s =>
+					{
+						switch (s?.MasterShip?.NameReading)
+						{
+							case "おぼろ":
+							case "あけぼの":
+							case "さざなみ":
+							case "うしお":
+								return true;
+							default:
+								return false;
+						}
+					}) >= 4)
 					{
 						ret = true;
 					}

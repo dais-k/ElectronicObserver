@@ -567,9 +567,6 @@ namespace ElectronicObserver.Data.Quest
 						case 339:   //|339|Ｑ|「十九駆」演習！|演習S勝利以上3|条件：磯波、浦波、綾波、敷波|クォータリーだが1日で進捗リセット
 							Progresses.Add(new ProgressPractice(q, 3, "S", true));
 							break;
-						case 341:   //|341|３|精鋭「第七駆逐隊」演習開始！|演習A勝利以上3|条件、朧、曙、漣、潮|イヤーリーだが1日で進捗リセット
-							Progresses.Add(new ProgressPractice(q, 3, "A", true));
-							break;
 						case 342:   //|342|Ｑ|小艦艇群演習強化任務|演習A勝利以上4|(駆逐艦/海防艦)3隻+(駆逐艦/海防艦/軽巡級)1隻|クォータリーだが1日で進捗リセット
 							Progresses.Add(new ProgressPractice(q, 4, "A", true));
 							break;
@@ -581,6 +578,9 @@ namespace ElectronicObserver.Data.Quest
 							break;
 						case 348:   //|348|２|「精鋭軽巡」演習！|演習A勝利以上4|条件：軽巡級(雷巡を除く)旗艦、旗艦含む軽巡3隻以上、随伴に駆逐艦2隻以上|イヤーリーだが1日で進捗リセット|
 							Progresses.Add(new ProgressPractice(q, 4, "A", true));
+							break;
+						case 350:   //|350|３|精鋭「第七駆逐隊」演習開始！|演習A勝利以上3|条件、朧、曙、漣、潮|イヤーリーだが1日で進捗リセット
+							Progresses.Add(new ProgressPractice(q, 3, "A", true));
 							break;
 						case 354:   //|354|７|「改装特設空母」任務部隊演習！|演習S勝利以上4|条件：旗艦がガンビアベイMK2かつフレッチャー級orジョンCバトラー級2隻以上を含む|イヤーリーだが1日で進捗リセット|
 							Progresses.Add(new ProgressPractice(q, 4, "S", true));
