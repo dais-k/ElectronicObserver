@@ -71,6 +71,7 @@ namespace ElectronicObserver.Observer
 				new kcsapi.api_req_kaisou.powerup(),
 				new kcsapi.api_req_map.start(),
 				new kcsapi.api_req_map.next(),
+				new kcsapi.api_req_map.air_raid(),
 				new kcsapi.api_req_kousyou.createitem(),
 				new kcsapi.api_req_sortie.battle(),
 				new kcsapi.api_req_sortie.battleresult(),

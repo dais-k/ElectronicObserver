@@ -1750,7 +1750,13 @@ api_req_map/next		：進撃
 		api_m1		：('16秋イベ) 1=スタート地点解放ギミック発動　それ以外の場合は存在しない
 	api_m1			：イベント海域ギミック開放フラグ　1=ルート解放など　進捗によって 2 の場合もある　通常は存在しない
 	api_anchorage_flag	：泊地セルでのみ存在　0=修理不可 1=修理可能
+	api_destruction_flag　：超重爆基地空襲が発生するかどうか　発生する場合に存在し値は1固定
 
+Request.api_req_map/air_raid
+	api_scc　：目押し結果 0=防空部隊なし、1～3=防空部隊の最大出撃数
+
+api_req_map/air_raid
+	api_destruction_battle　：防空部隊の戦闘結果（既存の基地空襲とフォーマットは同じ）
 
 Request.api_req_sortie/battle	：通常艦隊　昼戦
 	api_formation		：陣形

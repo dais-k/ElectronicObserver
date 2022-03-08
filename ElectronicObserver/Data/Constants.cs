@@ -570,6 +570,22 @@ namespace ElectronicObserver.Data
 			}
 		}
 
+		public static string GetHeavyAirRaidButtonResult(int value)
+		{
+			switch (value)
+			{
+				case 0:
+					return "部隊なし";
+				case 1:
+					return "最大1部隊出撃";
+				case 2:
+					return "最大2部隊出撃";
+				case 3:
+					return "最大3部隊出撃";
+				default:
+					return "-";
+			}
+		}
 
 		#endregion
 
