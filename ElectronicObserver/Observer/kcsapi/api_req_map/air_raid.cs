@@ -20,12 +20,17 @@ namespace ElectronicObserver.Observer.kcsapi.api_req_map
 
 		public override void OnResponseReceived(dynamic data)
 		{
+			CompassData compassData = KCDatabase.Instance.Battle.Compass;
 			Utility.Logger.Add(
-				2, 
-				string.Format("超重爆基地空襲 [{0}]", 
-					Constants.GetHeavyAirRaidButtonResult(_success)
-				)
-			);
+				2,
+				string.Format("{0}-{1}-{2} で基地に超重爆空襲を受けました。( {3}, {4} )",
+					compassData.RawData.api_maparea_id, 
+					compassData.RawData.api_mapinfo_no, 
+					compassData.RawData.api_no,
+					Constants.GetHeavyAirRaidButtonResult(_success),
+					Constants.GetAirRaidDamage((int)data.api_destruction_battle[0].api_lost_kind))
+				);
+
 			base.OnResponseReceived((object)data);
 		}
 
