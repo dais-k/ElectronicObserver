@@ -21,13 +21,23 @@ namespace ElectronicObserver.Observer.kcsapi.api_req_map
 		public override void OnResponseReceived(dynamic data)
 		{
 			CompassData compassData = KCDatabase.Instance.Battle.Compass;
+			int damage = 0;
+
+			Console.WriteLine(data.api_destruction_battle[0].api_air_base_attack.api_stage3.api_fdam.GetType());
+
+			foreach(int dmg in (int[])data.api_destruction_battle[0].api_air_base_attack.api_stage3.api_fdam)
+			{
+				damage += dmg;
+			}
+
 			Utility.Logger.Add(
 				2,
-				string.Format("{0}-{1}-{2} で基地に超重爆空襲を受けました。( {3}, {4} )",
+				string.Format("{0}-{1}-{2} で基地に超重爆空襲を受けました。( {3}, 被ダメージ合計: {4}, {5} )",
 					compassData.RawData.api_maparea_id, 
 					compassData.RawData.api_mapinfo_no, 
 					compassData.RawData.api_no,
 					Constants.GetHeavyAirRaidButtonResult(_success),
+					damage,
 					Constants.GetAirRaidDamage((int)data.api_destruction_battle[0].api_lost_kind))
 				);
 
