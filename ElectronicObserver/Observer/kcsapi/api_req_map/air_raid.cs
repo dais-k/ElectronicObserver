@@ -23,11 +23,14 @@ namespace ElectronicObserver.Observer.kcsapi.api_req_map
 			CompassData compassData = KCDatabase.Instance.Battle.Compass;
 			int damage = 0;
 
-			Console.WriteLine(data.api_destruction_battle[0].api_air_base_attack.api_stage3.api_fdam.GetType());
-
-			foreach(int dmg in (int[])data.api_destruction_battle[0].api_air_base_attack.api_stage3.api_fdam)
+			//敵機が全滅して攻撃が基地にまったく届かなかった場合、減らされた基地HPの情報自体が存在しない
+			//敵機が全滅せずにたまたま攻撃が1つも当たらなかった場合、情報自体はあるがすべて0
+			if (data.api_destruction_battle[0].api_air_base_attack.api_stage3())
 			{
-				damage += dmg;
+				foreach (int dmg in (int[])data.api_destruction_battle[0].api_air_base_attack.api_stage3.api_fdam)
+				{
+					damage += dmg;
+				}
 			}
 
 			Utility.Logger.Add(
