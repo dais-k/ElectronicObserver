@@ -34,7 +34,7 @@ namespace ElectronicObserver.Observer.kcsapi.api_req_map
 				
 				if (data.api_destruction_battle[i].api_air_base_attack.api_stage3())
 				{
-					foreach (int dmg in (int[])data.api_destruction_battle[0].api_air_base_attack.api_stage3.api_fdam)
+					foreach (int dmg in (int[])data.api_destruction_battle[i].api_air_base_attack.api_stage3.api_fdam)
 					{
 						damage += dmg;
 					}
