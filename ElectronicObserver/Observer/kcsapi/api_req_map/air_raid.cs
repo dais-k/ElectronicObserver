@@ -30,9 +30,10 @@ namespace ElectronicObserver.Observer.kcsapi.api_req_map
 			int max = ((DynaJson.JsonObject)data.api_destruction_battle).Length;
 			for (int i = 0;i < max; i++)
 			{
-				int damage = 0; 
-				
-				if (data.api_destruction_battle[i].api_air_base_attack.api_stage3())
+				DynaJson.JsonObject stg3 = (DynaJson.JsonObject)data.api_destruction_battle[i].api_air_base_attack.api_stage3;
+				int damage = 0;
+
+				if (stg3 != null)
 				{
 					foreach (int dmg in (int[])data.api_destruction_battle[i].api_air_base_attack.api_stage3.api_fdam)
 					{
