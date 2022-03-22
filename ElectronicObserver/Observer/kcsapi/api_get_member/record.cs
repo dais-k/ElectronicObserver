@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace ElectronicObserver.Observer.kcsapi.api_get_member
 {
 
-	public class record : APIBase
+	public class Record : APIBase
 	{
 		public override string APIName => "api_get_member/record";
 	}

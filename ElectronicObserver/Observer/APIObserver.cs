@@ -98,7 +98,7 @@ namespace ElectronicObserver.Observer
 				new kcsapi.api_req_kaisou.marriage(),
 				new kcsapi.api_req_hensei.preset_select(),
 				new kcsapi.api_req_kaisou.slot_exchange_index(),
-				new kcsapi.api_get_member.record(),
+				new kcsapi.api_get_member.Record(),
 				new kcsapi.api_get_member.payitem(),
 				new kcsapi.api_req_kousyou.remodel_slotlist(),
 				new kcsapi.api_req_sortie.ld_airbattle(),
