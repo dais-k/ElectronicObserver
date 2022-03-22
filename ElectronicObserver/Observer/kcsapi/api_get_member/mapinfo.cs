@@ -64,7 +64,7 @@ namespace ElectronicObserver.Observer.kcsapi.api_get_member
 						var inst = new BaseAirCorpsMaintenance();
 						inst.LoadFromResponse(APIName, elem);
 						db.BaseAirCorpsMaintenance.Add(inst);
-						Console.WriteLine(inst.ID+" "+inst.MaintenanceLevel);
+						//Console.WriteLine(inst.ID+" "+inst.MaintenanceLevel);
 					}
 					else
 					{
