@@ -58,13 +58,16 @@
         * [log4net](https://logging.apache.org/log4net/) - [Apache License version 2.0](https://github.com/andanteyk/ElectronicObserver/blob/master/Licenses/Apache.txt)
 
 
-## 連絡先など
+## Fork元について
 
-* 配布サイト:[ブルネイ工廠電気実験部](http://electronicobserver.blog.fc2.com/) (バグ報告・要望等はこちらにお願いします)
-* 開発:[Andante](https://twitter.com/andanteyk)
+* 下記Fork元の方は開発対応の終了を正式に宣言されておりますので、連絡はお控えください
+** 配布サイト:[ブルネイ工廠電気実験部](http://electronicobserver.blog.fc2.com/)
+** 開発:[Andante](https://twitter.com/andanteyk)
 
-
-## このForkリポジトリでの更新履歴
+## このリポジトリでの更新履歴
+* 20220323
+	* 戦闘：超重爆空襲の戦闘結果表示対応
+	* 装備一覧：ファイルメニューの下にあった更新ボタン削除(トップに出したのに消していなかった)
 * 20220317
 	* 2022年冬イベントの超重爆空襲対応(ログのみ)
 * 20220213
@@ -113,7 +116,6 @@
 * 20210703
     * 艦船図鑑：艦型追加、表示上の不自然な点を修正(明石、宗谷など)
     * 装備一覧：ダイアログを表示した状態で装備を変更しても連動しないので、更新するボタンを用意
-        * 実はファイル(F)の配下にはあるのだが、トップに欲しかった
     * 戦闘：新カットイン(魚見電2hitなど)の表示対応
     * 戦闘：潜水艦隊攻撃の表示対応
 * 20210630
