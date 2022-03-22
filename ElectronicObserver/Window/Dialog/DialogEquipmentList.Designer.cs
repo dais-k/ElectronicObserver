@@ -37,7 +37,6 @@
             this.TopMenu = new System.Windows.Forms.MenuStrip();
             this.TopMenu_File = new System.Windows.Forms.ToolStripMenuItem();
             this.TopMenu_File_CSVOutput = new System.Windows.Forms.ToolStripMenuItem();
-            this.TopMenu_File_Update = new System.Windows.Forms.ToolStripMenuItem();
             this.TopMenu_File_CopyToFleetAnalysis = new System.Windows.Forms.ToolStripMenuItem();
             this.ソートToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AllOn_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -107,6 +106,7 @@
             this.HeavyBomber_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Interceptor_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.LandPatrol_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Reload_RToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SaveCSVDialog = new System.Windows.Forms.SaveFileDialog();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.DetailView = new System.Windows.Forms.DataGridView();
@@ -115,7 +115,6 @@
             this.DetailView_CountAll = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DetailView_CountRemain = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DetailView_EquippedShip = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Reload_RToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.EquipmentView)).BeginInit();
             this.TopMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -208,7 +207,6 @@
             // 
             this.TopMenu_File.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TopMenu_File_CSVOutput,
-            this.TopMenu_File_Update,
             this.TopMenu_File_CopyToFleetAnalysis});
             this.TopMenu_File.Name = "TopMenu_File";
             this.TopMenu_File.Size = new System.Drawing.Size(67, 20);
@@ -221,14 +219,6 @@
             this.TopMenu_File_CSVOutput.Size = new System.Drawing.Size(201, 22);
             this.TopMenu_File_CSVOutput.Text = "CSV出力(&C)...";
             this.TopMenu_File_CSVOutput.Click += new System.EventHandler(this.Menu_File_CSVOutput_Click);
-            // 
-            // TopMenu_File_Update
-            // 
-            this.TopMenu_File_Update.Name = "TopMenu_File_Update";
-            this.TopMenu_File_Update.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.R)));
-            this.TopMenu_File_Update.Size = new System.Drawing.Size(201, 22);
-            this.TopMenu_File_Update.Text = "更新(&U)";
-            this.TopMenu_File_Update.Click += new System.EventHandler(this.TopMenu_File_Update_Click);
             // 
             // TopMenu_File_CopyToFleetAnalysis
             // 
@@ -990,6 +980,13 @@
             this.LandPatrol_ToolStripMenuItem.Text = "陸上偵察機";
             this.LandPatrol_ToolStripMenuItem.Click += new System.EventHandler(this.LandPatrol_ToolStripMenuItem_Click);
             // 
+            // Reload_RToolStripMenuItem
+            // 
+            this.Reload_RToolStripMenuItem.Name = "Reload_RToolStripMenuItem";
+            this.Reload_RToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
+            this.Reload_RToolStripMenuItem.Text = "更新(&R)";
+            this.Reload_RToolStripMenuItem.Click += new System.EventHandler(this.Reload_RToolStripMenuItem_Click);
+            // 
             // SaveCSVDialog
             // 
             this.SaveCSVDialog.Filter = "CSV|*.csv|File|*";
@@ -1075,13 +1072,6 @@
             this.DetailView_EquippedShip.ReadOnly = true;
             this.DetailView_EquippedShip.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // Reload_RToolStripMenuItem
-            // 
-            this.Reload_RToolStripMenuItem.Name = "Reload_RToolStripMenuItem";
-            this.Reload_RToolStripMenuItem.Size = new System.Drawing.Size(58, 20);
-            this.Reload_RToolStripMenuItem.Text = "更新(&R)";
-            this.Reload_RToolStripMenuItem.Click += new System.EventHandler(this.Reload_RToolStripMenuItem_Click);
-            // 
             // DialogEquipmentList
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1116,7 +1106,6 @@
 		private System.Windows.Forms.ToolStripMenuItem TopMenu_File;
 		private System.Windows.Forms.ToolStripMenuItem TopMenu_File_CSVOutput;
 		private System.Windows.Forms.SaveFileDialog SaveCSVDialog;
-		private System.Windows.Forms.ToolStripMenuItem TopMenu_File_Update;
 		private System.Windows.Forms.DataGridViewTextBoxColumn EquipmentView_ID;
 		private System.Windows.Forms.DataGridViewImageColumn EquipmentView_Icon;
 		private System.Windows.Forms.DataGridViewTextBoxColumn EquipmentView_Name;
