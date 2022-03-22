@@ -61,8 +61,8 @@
 ## Fork元について
 
 * 下記Fork元の方は開発対応の終了を正式に宣言されておりますので、連絡はお控えください
-** 配布サイト:[ブルネイ工廠電気実験部](http://electronicobserver.blog.fc2.com/)
-** 開発:[Andante](https://twitter.com/andanteyk)
+	* 配布サイト:[ブルネイ工廠電気実験部](http://electronicobserver.blog.fc2.com/)
+	* 開発:[Andante](https://twitter.com/andanteyk)
 
 ## このリポジトリでの更新履歴
 * 20220323
