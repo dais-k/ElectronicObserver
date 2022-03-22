@@ -13,6 +13,7 @@ namespace ElectronicObserver.Observer.kcsapi.api_req_map
 
 		public override void OnRequestReceived(Dictionary<string, string> data)
 		{
+			//押しボタンの結果を保存
 			_success = int.Parse(data["api_scc"]);
 
 			base.OnRequestReceived(data);
@@ -20,14 +21,30 @@ namespace ElectronicObserver.Observer.kcsapi.api_req_map
 
 		public override void OnResponseReceived(dynamic data)
 		{
-			CompassData compassData = KCDatabase.Instance.Battle.Compass;
+			KCDatabase.Instance.Battle.LoadFromResponse(APIName, data);
+
 			//NOTE：
-			//敵機が全滅して攻撃が基地にまったく届かなかった場合、減らされた基地HPの情報自体が存在しない
+			//敵機が全滅して攻撃が基地にまったく届かなかった場合、減らされた基地HPの情報自体(stage3)が存在しない
 			//敵機が全滅せずにたまたま攻撃が1つも当たらなかった場合、情報自体はあるがすべて0
 			//
 			//丙丁だと空襲が1波、乙だと2波、甲だと3波となっていて
 			//その分だけapi_destruction_battleの配列要素が存在するため、存在する分をすべて表示する
+			CompassData compassData = KCDatabase.Instance.Battle.Compass;
 			int max = ((DynaJson.JsonObject)data.api_destruction_battle).Length;
+
+			Utility.Logger.Add
+			(
+				2,
+				string.Format
+				(
+					"{0}-{1}-{2} で基地に超重爆空襲を受けました。( 防空出撃判定：{3} )",
+					compassData.RawData.api_maparea_id,
+					compassData.RawData.api_mapinfo_no,
+					compassData.RawData.api_no,
+					Constants.GetHeavyAirRaidButtonResult(_success)
+				)
+			);
+
 			for (int i = 0;i < max; i++)
 			{
 				DynaJson.JsonObject stg3 = (DynaJson.JsonObject)data.api_destruction_battle[i].api_air_base_attack.api_stage3;
@@ -45,12 +62,8 @@ namespace ElectronicObserver.Observer.kcsapi.api_req_map
 					2,
 					string.Format
 					(
-						"{0}-{1}-{2} で基地に超重爆空襲を受けました。( {3}/{4}# {5}, 被ダメージ合計: {6}, {7} )",
-						compassData.RawData.api_maparea_id,
-						compassData.RawData.api_mapinfo_no,
-						compassData.RawData.api_no,
+						"　第{0}波：{1}, 被ダメージ合計: {2}, {3}",
 						i+1,
-						max,
 						Constants.GetHeavyAirRaidButtonResult(_success),
 						damage,
 						Constants.GetAirRaidDamage((int)data.api_destruction_battle[i].api_lost_kind)

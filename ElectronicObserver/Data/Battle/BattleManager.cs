@@ -40,6 +40,8 @@ namespace ElectronicObserver.Data.Battle
 		/// </summary>
 		public BattleResultData Result { get; private set; }
 
+		public List<BattleBaseAirRaid> HeavyBaseAirRaids { get; } = new();
+
 		[Flags]
 		public enum BattleModes
 		{
@@ -106,7 +108,13 @@ namespace ElectronicObserver.Data.Battle
 		/// <summary>
 		/// 1回目の戦闘
 		/// </summary>
-		public BattleData FirstBattle => StartsFromDayBattle ? (BattleData)BattleDay : BattleNight;
+		public BattleData FirstBattle => HeavyBaseAirRaids switch
+		{
+			// first battle gets used for things like engagement
+			// remove this part if heavy air raids get moved to BattleDay
+			{ Count: > 0 } => HeavyBaseAirRaids.Last(),
+			_ => StartsFromDayBattle ? BattleDay : BattleNight
+		};
 
 		/// <summary>
 		/// 2回目の戦闘
@@ -164,6 +172,8 @@ namespace ElectronicObserver.Data.Battle
 		{
 			//base.LoadFromResponse( apiname, data );	//不要
 
+			HeavyBaseAirRaids.Clear();
+
 			switch (apiname)
 			{
 				case "api_req_map/start":
@@ -182,6 +192,17 @@ namespace ElectronicObserver.Data.Battle
 						BattleDay.LoadFromResponse(apiname, Compass.AirRaidData);
 						BattleFinished();
 					}
+					break;
+
+				case "api_req_map/air_raid":
+					BattleMode = BattleModes.BaseAirRaid;
+					foreach (dynamic airraid in data.api_destruction_battle)
+					{
+						BattleBaseAirRaid raid = new();
+						raid.LoadFromResponse(apiname, airraid);
+						HeavyBaseAirRaids.Add(raid);
+					}
+					BattleFinished();
 					break;
 
 				case "api_req_sortie/battle":
@@ -367,14 +388,18 @@ namespace ElectronicObserver.Data.Battle
 			}
 			else if (IsBaseAirRaid)
 			{
-				var initialHPs = BattleDay.Initial.FriendInitialHPs.TakeWhile(hp => hp >= 0);
-				var damage = initialHPs.Zip(BattleDay.ResultHPs.Take(initialHPs.Count()), (initial, result) => initial - result).Sum();
-				var airraid = ((BattleBaseAirRaid)BattleDay).BaseAirRaid;
+				//NOTE：
+				//超重爆空襲のログ追加は kcsapi/api_req_map/api_raid.cs で実施
+				if (BattleDay is BattleBaseAirRaid { BaseAirRaid: { } airraid })
+				{
+					var initialHPs = BattleDay.Initial.FriendInitialHPs.TakeWhile(hp => hp >= 0);
+					var damage = initialHPs.Zip(BattleDay.ResultHPs.Take(initialHPs.Count()), (initial, result) => initial - result).Sum();
 
-				Utility.Logger.Add(2,
+					Utility.Logger.Add(2,
 					string.Format("{0}-{1}-{2} で基地に空襲を受けました。( {3}, 被ダメージ合計: {4}, {5} )",
 						Compass.MapAreaID, Compass.MapInfoID, Compass.Destination,
 						Constants.GetAirSuperiority(airraid.IsAvailable ? airraid.AirSuperiority : -1), damage, Constants.GetAirRaidDamage(Compass.AirRaidDamageKind)));
+				}
 			}
 			else
 			{

@@ -113,6 +113,7 @@ namespace ElectronicObserver.Window
 			o["api_port/port"].ResponseReceived += Updated;
 			o["api_req_map/start"].ResponseReceived += Updated;
 			o["api_req_map/next"].ResponseReceived += Updated;
+			o["api_req_map/air_raid"].ResponseReceived += Updated;
 			o["api_req_sortie/battle"].ResponseReceived += Updated;
 			o["api_req_sortie/battleresult"].ResponseReceived += Updated;
 			o["api_req_battle_midnight/battle"].ResponseReceived += Updated;
@@ -176,6 +177,21 @@ namespace ElectronicObserver.Window
 					BaseLayoutPanel.Visible = !hideDuringBattle;
 					break;
 
+				case "api_req_map/air_raid":
+					if (!bm.HeavyBaseAirRaids.Any())
+					{
+						goto case "api_port/port";
+					}
+
+					SetFormation(bm);
+					ClearSearchingResult();
+					ClearBaseAirAttack();
+					SetAerialWarfare(null, bm.HeavyBaseAirRaids.Last().BaseAirRaid);
+					SetHPBar(bm.HeavyBaseAirRaids.Last());
+					SetDamageRate(bm);
+
+					BaseLayoutPanel.Visible = !hideDuringBattle;
+					break;
 
 				case "api_req_sortie/battle":
 				case "api_req_practice/battle":
