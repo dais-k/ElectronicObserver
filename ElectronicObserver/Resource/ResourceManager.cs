@@ -178,7 +178,7 @@ namespace ElectronicObserver.Resource
 			CarrierBasedBomber,
 			CarrierBasedTorpedo,
 			CarrierBasedRecon,
-			Seaplane,
+			Seaplane,			//10
 			Radar,
 			AAShell,
 			APShell,
@@ -188,7 +188,7 @@ namespace ElectronicObserver.Resource
 			DepthCharge,
 			Sonar,
 			Engine,
-			LandingCraft,
+			LandingCraft,		//20
 			Autogyro,
 			ASPatrol,
 			Bulge,
@@ -198,7 +198,7 @@ namespace ElectronicObserver.Resource
 			Flare,
 			CommandFacility,
 			MaintenanceTeam,
-			AADirector,
+			AADirector,			//30
 			RocketArtillery,
 			PicketCrew,
 			FlyingBoat,
@@ -208,7 +208,7 @@ namespace ElectronicObserver.Resource
 			LandAttacker,
 			Interceptor,
 			JetFightingBomberKeiun,
-			JetFightingBomberKikka,
+			JetFightingBomberKikka,	//40
 			TransportMaterials,
 			SubmarineEquipment,
 			SeaplaneFighter,
@@ -216,10 +216,10 @@ namespace ElectronicObserver.Resource
 			NightFighter,
 			NightAttacker,
 			LandASPatrol,
-			Reserved48,			// 艦これ本体側が未実装
+			LandAssaultPlane,
 			HeavyBomber,
-			Locked,
-			Unknown,
+			Locked,					//50
+			Unknown,				//不明な場合はこれ
 		}
 
 
@@ -462,7 +462,7 @@ namespace ElectronicObserver.Resource
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/NightFighter.png", "Equipment_NightFighter");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/NightAttacker.png", "Equipment_NightAttacker");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/LandASPatrol.png", "Equipment_LandASPatrol");
-				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/Unknown.png", "Equipment_Reserved48");                   // 艦これ本体側が未実装
+				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/LandAttacker.png", "Equipment_LandAssaultPlane");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/HeavyBomber.png", "Equipment_HeavyBomber");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/Locked.png", "Equipment_Locked");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/Unknown.png", "Equipment_Unknown");
