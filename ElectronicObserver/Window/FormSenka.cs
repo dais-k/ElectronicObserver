@@ -118,15 +118,28 @@ namespace ElectronicObserver.Window
 							}
 							else
 							{
-								sb.AppendLine(string.Format("{0}-{1}{2}: {3}{4} {5} / {6}{7}",
-								map.MapAreaID,
-								map.MapInfoID,
-								map.EventDifficulty > 0 ? $" [{Constants.GetDifficulty(map.EventDifficulty)}]" : "",
-								map.CurrentGaugeIndex > 0 ? $"#{map.CurrentGaugeIndex} " : "",
-								gaugeType == 1 ? "撃破" : gaugeType == 2 ? "HP" : "TP",
-								current,
-								max,
-								gaugeType == 1 ? " 回" : ""));
+								if (gaugeType > 0)
+								{
+									//解放済みの場合
+									sb.AppendLine(string.Format("{0}-{1}{2}: {3}{4} {5} / {6}{7}",
+									map.MapAreaID,
+									map.MapInfoID,
+									map.EventDifficulty > 0 ? $" [{Constants.GetDifficulty(map.EventDifficulty)}]" : "",
+									map.CurrentGaugeIndex > 0 ? $"#{map.CurrentGaugeIndex} " : "",
+									gaugeType == 1 ? "撃破" : gaugeType == 2 ? "HP" : "TP",
+									current,
+									max,
+									gaugeType == 1 ? " 回" : ""));
+								}
+								else
+								{
+									//未開放の場合
+									sb.AppendLine(string.Format("{0}-{1}{2}: {3}[未開放]",
+									map.MapAreaID,
+									map.MapInfoID,
+									map.EventDifficulty > 0 ? $" [{Constants.GetDifficulty(map.EventDifficulty)}]" : "",
+									map.CurrentGaugeIndex > 0 ? $"#{map.CurrentGaugeIndex} " : ""));
+								}
 							}
 						}
 					}
