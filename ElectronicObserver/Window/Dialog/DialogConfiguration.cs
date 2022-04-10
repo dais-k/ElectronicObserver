@@ -600,6 +600,10 @@ namespace ElectronicObserver.Window.Dialog
 			config.Debug.APIListPath = Debug_APIListPath.Text;
 			config.Debug.AlertOnError = Debug_AlertOnError.Checked;
 
+			//[ツール]
+			config.Tool.MCTwitterURL = Tool_MCTwitterURL.Text;
+			config.Tool.C2TwitterURL = Tool_C2TwitterURL.Text;
+
 			//[起動と終了]
 			config.Life.ConfirmOnClosing = Life_ConfirmOnClosing.Checked;
 			config.Life.TopMost = Life_TopMost.Checked;
