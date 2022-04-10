@@ -94,6 +94,7 @@ namespace ElectronicObserver.Resource
 			FormExpChecker,
 			FormExpeditionCheck,
 			FormFleetPreset,
+			FormTwitter,
 			FleetNoShip,
 			FleetDocking,
 			FleetSortieDamaged,
@@ -333,6 +334,7 @@ namespace ElectronicObserver.Resource
 				LoadImageFromArchive(Icons, archive, mstpath + @"Form/ExpChecker.png", "Form_ExpChecker");
 				LoadImageFromArchive(Icons, archive, mstpath + @"Form/ExpeditionCheck.png", "Form_ExpeditionCheck");
 				LoadImageFromArchive(Icons, archive, mstpath + @"Form/FleetPreset.png", "Form_FleetPreset");
+				LoadImageFromArchive(Icons, archive, mstpath + @"Form/Twitter.png", "Form_Twittert");
 
 				LoadImageFromArchive(Icons, archive, mstpath + @"Fleet/NoShip.png", "Fleet_NoShip");
 				LoadImageFromArchive(Icons, archive, mstpath + @"Fleet/Docking.png", "Fleet_Docking");

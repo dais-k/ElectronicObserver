@@ -381,6 +381,10 @@ namespace ElectronicObserver.Window.Dialog
 			Debug_APIListPath.Text = config.Debug.APIListPath;
 			Debug_AlertOnError.Checked = config.Debug.AlertOnError;
 
+			//[ツール]
+			Tool_MCTwitterURL.Text = config.Tool.MCTwitterURL;
+			Tool_C2TwitterURL.Text = config.Tool.C2TwitterURL;
+
 			//[起動と終了]
 			Life_ConfirmOnClosing.Checked = config.Life.ConfirmOnClosing;
 			Life_TopMost.Checked = this.TopMost = config.Life.TopMost;      //メインウィンドウに隠れないように

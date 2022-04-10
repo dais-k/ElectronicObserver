@@ -29,8 +29,8 @@
 		private void InitializeComponent()
 		{
             this.components = new System.ComponentModel.Container();
-            ElectronicObserver.Window.Control.StatusBarModule statusBarModule1 = new ElectronicObserver.Window.Control.StatusBarModule();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            ElectronicObserver.Window.Control.StatusBarModule statusBarModule1 = new ElectronicObserver.Window.Control.StatusBarModule();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.label19 = new System.Windows.Forms.Label();
@@ -57,7 +57,6 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.UI_RenderingTestChanger = new System.Windows.Forms.TrackBar();
-            this.UI_RenderingTest = new ElectronicObserver.Window.Control.ShipStatusHP();
             this.UI_IsLayoutFixed = new System.Windows.Forms.CheckBox();
             this.UI_BarColorMorphing = new System.Windows.Forms.CheckBox();
             this.UI_SubFontSelect = new System.Windows.Forms.Button();
@@ -246,6 +245,12 @@
             this.APIListBrowser = new System.Windows.Forms.OpenFileDialog();
             this.Log_PlayTime = new System.Windows.Forms.Label();
             this.PlayTimeTimer = new System.Windows.Forms.Timer(this.components);
+            this.tabPage14 = new System.Windows.Forms.TabPage();
+            this.label21 = new System.Windows.Forms.Label();
+            this.Tool_MCTwitterURL = new System.Windows.Forms.TextBox();
+            this.UI_RenderingTest = new ElectronicObserver.Window.Control.ShipStatusHP();
+            this.label22 = new System.Windows.Forms.Label();
+            this.Tool_C2TwitterURL = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Connection_UpstreamProxyPort)).BeginInit();
@@ -287,6 +292,7 @@
             this.tabPage17.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BGMPlayer_VolumeAll)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.BGMPlayer_ControlGrid)).BeginInit();
+            this.tabPage14.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -299,6 +305,7 @@
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Controls.Add(this.tabPage5);
+            this.tabControl1.Controls.Add(this.tabPage14);
             this.tabControl1.Controls.Add(this.tabPage6);
             this.tabControl1.Controls.Add(this.tabPage7);
             this.tabControl1.Controls.Add(this.tabPage11);
@@ -579,10 +586,10 @@
             this.tabPage2.Controls.Add(this.UI_MainFontSelect);
             this.tabPage2.Controls.Add(this.UI_MainFont);
             this.tabPage2.Controls.Add(this.label5);
-            this.tabPage2.Location = new System.Drawing.Point(4, 24);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(696, 372);
+            this.tabPage2.Size = new System.Drawing.Size(696, 374);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "UI";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -616,30 +623,6 @@
             this.UI_RenderingTestChanger.TabIndex = 14;
             this.UI_RenderingTestChanger.TickStyle = System.Windows.Forms.TickStyle.None;
             this.UI_RenderingTestChanger.Scroll += new System.EventHandler(this.UI_RenderingTestChanger_Scroll);
-            // 
-            // UI_RenderingTest
-            // 
-            this.UI_RenderingTest.AutoSize = true;
-            this.UI_RenderingTest.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            statusBarModule1.BarColor0Begin = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            statusBarModule1.BarColor0End = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            statusBarModule1.MaximumValue = 500;
-            statusBarModule1.PrevValue = 401;
-            statusBarModule1.Value = 401;
-            this.UI_RenderingTest.HPBar = statusBarModule1;
-            this.UI_RenderingTest.Location = new System.Drawing.Point(16, 3);
-            this.UI_RenderingTest.MainFontColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.UI_RenderingTest.Margin = new System.Windows.Forms.Padding(16, 3, 16, 3);
-            this.UI_RenderingTest.MaximumValue = 500;
-            this.UI_RenderingTest.Name = "UI_RenderingTest";
-            this.UI_RenderingTest.PrevValue = 401;
-            this.UI_RenderingTest.RepairTime = new System.DateTime(2017, 6, 18, 0, 0, 59, 159);
-            this.UI_RenderingTest.RepairTimeShowMode = ElectronicObserver.Window.Control.ShipStatusHPRepairTimeShowMode.Invisible;
-            this.UI_RenderingTest.Size = new System.Drawing.Size(136, 20);
-            this.UI_RenderingTest.TabIndex = 12;
-            this.UI_RenderingTest.Text = "Rendering Test: ";
-            this.ToolTipInfo.SetToolTip(this.UI_RenderingTest, "描画プレビューです。\r\n下のバーから値を調整できます。");
-            this.UI_RenderingTest.Value = 401;
             // 
             // UI_IsLayoutFixed
             // 
@@ -741,10 +724,10 @@
             this.tabPage3.Controls.Add(this.Log_SaveLogFlag);
             this.tabPage3.Controls.Add(this.Log_LogLevel);
             this.tabPage3.Controls.Add(this.label6);
-            this.tabPage3.Location = new System.Drawing.Point(4, 24);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(696, 372);
+            this.tabPage3.Size = new System.Drawing.Size(696, 374);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "ログ";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -874,10 +857,10 @@
             this.tabPage4.Controls.Add(this.label9);
             this.tabPage4.Controls.Add(this.Control_ConditionBorder);
             this.tabPage4.Controls.Add(this.label7);
-            this.tabPage4.Location = new System.Drawing.Point(4, 24);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(696, 372);
+            this.tabPage4.Size = new System.Drawing.Size(696, 374);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "動作";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -991,10 +974,10 @@
             this.tabPage5.Controls.Add(this.Debug_AlertOnError);
             this.tabPage5.Controls.Add(this.Debug_SealingPanel);
             this.tabPage5.Controls.Add(this.Debug_EnableDebugMenu);
-            this.tabPage5.Location = new System.Drawing.Point(4, 24);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(696, 372);
+            this.tabPage5.Size = new System.Drawing.Size(696, 374);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "デバッグ";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -1019,7 +1002,7 @@
             this.Debug_SealingPanel.Controls.Add(this.Debug_APIListPathSearch);
             this.Debug_SealingPanel.Location = new System.Drawing.Point(0, 56);
             this.Debug_SealingPanel.Name = "Debug_SealingPanel";
-            this.Debug_SealingPanel.Size = new System.Drawing.Size(696, 245);
+            this.Debug_SealingPanel.Size = new System.Drawing.Size(696, 243);
             this.Debug_SealingPanel.TabIndex = 1;
             // 
             // Debug_APIListPath
@@ -1080,10 +1063,10 @@
             this.tabPage6.Controls.Add(this.label14);
             this.tabPage6.Controls.Add(this.Life_TopMost);
             this.tabPage6.Controls.Add(this.Life_ConfirmOnClosing);
-            this.tabPage6.Location = new System.Drawing.Point(4, 24);
+            this.tabPage6.Location = new System.Drawing.Point(4, 22);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(696, 372);
+            this.tabPage6.Size = new System.Drawing.Size(696, 374);
             this.tabPage6.TabIndex = 5;
             this.tabPage6.Text = "ウィンドウ";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -1205,10 +1188,10 @@
             // tabPage7
             // 
             this.tabPage7.Controls.Add(this.tabControl2);
-            this.tabPage7.Location = new System.Drawing.Point(4, 24);
+            this.tabPage7.Location = new System.Drawing.Point(4, 22);
             this.tabPage7.Name = "tabPage7";
             this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage7.Size = new System.Drawing.Size(696, 372);
+            this.tabPage7.Size = new System.Drawing.Size(696, 374);
             this.tabPage7.TabIndex = 6;
             this.tabPage7.Text = "サブウィンドウ";
             this.tabPage7.UseVisualStyleBackColor = true;
@@ -1230,7 +1213,7 @@
             this.tabControl2.Location = new System.Drawing.Point(3, 3);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(690, 366);
+            this.tabControl2.Size = new System.Drawing.Size(690, 368);
             this.tabControl2.TabIndex = 0;
             // 
             // tabPage8
@@ -1262,7 +1245,7 @@
             this.tabPage8.Location = new System.Drawing.Point(4, 24);
             this.tabPage8.Name = "tabPage8";
             this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage8.Size = new System.Drawing.Size(682, 338);
+            this.tabPage8.Size = new System.Drawing.Size(682, 340);
             this.tabPage8.TabIndex = 0;
             this.tabPage8.Text = "艦隊";
             this.tabPage8.UseVisualStyleBackColor = true;
@@ -1988,10 +1971,10 @@
             this.tabPage13.Controls.Add(this.label25);
             this.tabPage13.Controls.Add(this.FormShipGroup_ShowStatusBar);
             this.tabPage13.Controls.Add(this.FormShipGroup_AutoUpdate);
-            this.tabPage13.Location = new System.Drawing.Point(4, 24);
+            this.tabPage13.Location = new System.Drawing.Point(4, 22);
             this.tabPage13.Name = "tabPage13";
             this.tabPage13.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage13.Size = new System.Drawing.Size(682, 338);
+            this.tabPage13.Size = new System.Drawing.Size(682, 340);
             this.tabPage13.TabIndex = 4;
             this.tabPage13.Text = "グループ";
             this.tabPage13.UseVisualStyleBackColor = true;
@@ -2561,10 +2544,10 @@
             this.tabPage11.Controls.Add(this.Notification_Repair);
             this.tabPage11.Controls.Add(this.Notification_Construction);
             this.tabPage11.Controls.Add(this.Notification_Expedition);
-            this.tabPage11.Location = new System.Drawing.Point(4, 24);
+            this.tabPage11.Location = new System.Drawing.Point(4, 22);
             this.tabPage11.Name = "tabPage11";
             this.tabPage11.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage11.Size = new System.Drawing.Size(696, 372);
+            this.tabPage11.Size = new System.Drawing.Size(696, 374);
             this.tabPage11.TabIndex = 7;
             this.tabPage11.Text = "通知";
             this.tabPage11.UseVisualStyleBackColor = true;
@@ -2616,7 +2599,7 @@
             // 
             this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(3, 316);
+            this.label10.Location = new System.Drawing.Point(3, 314);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(238, 15);
             this.label10.TabIndex = 5;
@@ -2679,10 +2662,10 @@
             this.tabPage17.Controls.Add(this.BGMPlayer_VolumeAll);
             this.tabPage17.Controls.Add(this.BGMPlayer_Enabled);
             this.tabPage17.Controls.Add(this.BGMPlayer_ControlGrid);
-            this.tabPage17.Location = new System.Drawing.Point(4, 24);
+            this.tabPage17.Location = new System.Drawing.Point(4, 22);
             this.tabPage17.Name = "tabPage17";
             this.tabPage17.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage17.Size = new System.Drawing.Size(696, 372);
+            this.tabPage17.Size = new System.Drawing.Size(696, 374);
             this.tabPage17.TabIndex = 9;
             this.tabPage17.Text = "BGM";
             this.tabPage17.UseVisualStyleBackColor = true;
@@ -2761,7 +2744,7 @@
             this.BGMPlayer_ControlGrid.RowHeadersVisible = false;
             this.BGMPlayer_ControlGrid.RowTemplate.Height = 21;
             this.BGMPlayer_ControlGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.BGMPlayer_ControlGrid.Size = new System.Drawing.Size(684, 265);
+            this.BGMPlayer_ControlGrid.Size = new System.Drawing.Size(684, 263);
             this.BGMPlayer_ControlGrid.TabIndex = 0;
             this.BGMPlayer_ControlGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.BGMPlayer_ControlGrid_CellContentClick);
             this.BGMPlayer_ControlGrid.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.BGMPlayer_ControlGrid_CellFormatting);
@@ -2859,6 +2842,76 @@
             this.PlayTimeTimer.Interval = 1000;
             this.PlayTimeTimer.Tick += new System.EventHandler(this.PlayTimeTimer_Tick);
             // 
+            // tabPage14
+            // 
+            this.tabPage14.Controls.Add(this.Tool_C2TwitterURL);
+            this.tabPage14.Controls.Add(this.label22);
+            this.tabPage14.Controls.Add(this.Tool_MCTwitterURL);
+            this.tabPage14.Controls.Add(this.label21);
+            this.tabPage14.Location = new System.Drawing.Point(4, 24);
+            this.tabPage14.Name = "tabPage14";
+            this.tabPage14.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage14.Size = new System.Drawing.Size(696, 372);
+            this.tabPage14.TabIndex = 10;
+            this.tabPage14.Text = "ツール";
+            this.tabPage14.UseVisualStyleBackColor = true;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(8, 6);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(104, 15);
+            this.label21.TabIndex = 0;
+            this.label21.Text = "艦これ運営Twitter";
+            // 
+            // Tool_MCTwitterURL
+            // 
+            this.Tool_MCTwitterURL.Location = new System.Drawing.Point(118, 3);
+            this.Tool_MCTwitterURL.Name = "Tool_MCTwitterURL";
+            this.Tool_MCTwitterURL.Size = new System.Drawing.Size(456, 23);
+            this.Tool_MCTwitterURL.TabIndex = 1;
+            // 
+            // UI_RenderingTest
+            // 
+            this.UI_RenderingTest.AutoSize = true;
+            this.UI_RenderingTest.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            statusBarModule1.BarColor0Begin = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            statusBarModule1.BarColor0End = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            statusBarModule1.MaximumValue = 500;
+            statusBarModule1.PrevValue = 401;
+            statusBarModule1.Value = 401;
+            this.UI_RenderingTest.HPBar = statusBarModule1;
+            this.UI_RenderingTest.Location = new System.Drawing.Point(16, 3);
+            this.UI_RenderingTest.MainFontColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.UI_RenderingTest.Margin = new System.Windows.Forms.Padding(16, 3, 16, 3);
+            this.UI_RenderingTest.MaximumValue = 500;
+            this.UI_RenderingTest.Name = "UI_RenderingTest";
+            this.UI_RenderingTest.PrevValue = 401;
+            this.UI_RenderingTest.RepairTime = new System.DateTime(2017, 6, 18, 0, 0, 59, 159);
+            this.UI_RenderingTest.RepairTimeShowMode = ElectronicObserver.Window.Control.ShipStatusHPRepairTimeShowMode.Invisible;
+            this.UI_RenderingTest.Size = new System.Drawing.Size(136, 20);
+            this.UI_RenderingTest.TabIndex = 12;
+            this.UI_RenderingTest.Text = "Rendering Test: ";
+            this.ToolTipInfo.SetToolTip(this.UI_RenderingTest, "描画プレビューです。\r\n下のバーから値を調整できます。");
+            this.UI_RenderingTest.Value = 401;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(8, 33);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(88, 15);
+            this.label22.TabIndex = 2;
+            this.label22.Text = "C2機関Twitter";
+            // 
+            // Tool_C2TwitterURL
+            // 
+            this.Tool_C2TwitterURL.Location = new System.Drawing.Point(118, 30);
+            this.Tool_C2TwitterURL.Name = "Tool_C2TwitterURL";
+            this.Tool_C2TwitterURL.Size = new System.Drawing.Size(456, 23);
+            this.Tool_C2TwitterURL.TabIndex = 3;
+            // 
             // DialogConfiguration
             // 
             this.AcceptButton = this.ButtonOK;
@@ -2945,6 +2998,8 @@
             this.tabPage17.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BGMPlayer_VolumeAll)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.BGMPlayer_ControlGrid)).EndInit();
+            this.tabPage14.ResumeLayout(false);
+            this.tabPage14.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -3167,5 +3222,10 @@
         private System.Windows.Forms.CheckBox Control_ShowExpeditionAlertDialog;
         private System.Windows.Forms.CheckBox FormBrowser_SavesBrowserLog;
 		private System.Windows.Forms.Button Notification_BaseAirCorps;
+		private System.Windows.Forms.TabPage tabPage14;
+		private System.Windows.Forms.TextBox Tool_MCTwitterURL;
+		private System.Windows.Forms.Label label21;
+		private System.Windows.Forms.TextBox Tool_C2TwitterURL;
+		private System.Windows.Forms.Label label22;
 	}
 }

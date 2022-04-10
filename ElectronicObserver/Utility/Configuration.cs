@@ -415,6 +415,32 @@ namespace ElectronicObserver.Utility
 
 
 			/// <summary>
+			/// ツールの設定を扱います。
+			/// </summary>
+			public class ConfigTool : ConfigPartBase
+			{
+
+				/// <summary>
+				/// 艦これ運営Twitter
+				/// </summary>
+				public string MCTwitterURL { get; set; }
+
+				/// <summary>
+				/// C2機関Twitter
+				/// </summary>
+				public string C2TwitterURL { get; set; }
+
+				public ConfigTool()
+				{
+					MCTwitterURL = "https://twitter.com/KanColle_STAFF";
+					C2TwitterURL = "https://twitter.com/C2_STAFF";
+				}
+			}
+			/// <summary>ツール</summary>
+			[DataMember]
+			public ConfigTool Tool { get; private set; }
+
+			/// <summary>
 			/// デバッグの設定を扱います。
 			/// </summary>
 			public class ConfigDebug : ConfigPartBase
@@ -1499,6 +1525,7 @@ namespace ElectronicObserver.Utility
 				Log = new ConfigLog();
 				Control = new ConfigControl();
 				Debug = new ConfigDebug();
+				Tool = new ConfigTool();
 				Life = new ConfigLife();
 
 				FormArsenal = new ConfigFormArsenal();

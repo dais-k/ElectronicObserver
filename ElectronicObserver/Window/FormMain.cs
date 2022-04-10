@@ -12,6 +12,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.IO.Compression;
@@ -149,6 +150,8 @@ namespace ElectronicObserver.Window
 			StripMenu_Tool_ExpChecker.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormExpChecker];
 			StripMenu_Tool_ExpeditionCheck.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormExpeditionCheck];
 			StripMenu_Tool_FleetAnalysis.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormResourceChart];
+			StripMenu_Tool_MCTwitter.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormTwitter];
+			StripMenu_Tool_C2Twitter.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormTwitter];
 
 			StripMenu_Help_Version.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.AppIcon];
 			#endregion
@@ -1407,7 +1410,6 @@ namespace ElectronicObserver.Window
 
 		}
 
-
 		private void StripMenu_File_Notification_MuteAll_Click(object sender, EventArgs e)
 		{
 			bool isSilenced = StripMenu_File_Notification_MuteAll.Checked;
@@ -1421,14 +1423,11 @@ namespace ElectronicObserver.Window
 			new Dialog.DialogExpChecker().Show(this);
 		}
 
-
-
 		private void CallPumpkinHead(string apiname, dynamic data)
 		{
 			new DialogHalloween().Show(this);
 			APIObserver.Instance.APIList["api_port/port"].ResponseReceived -= CallPumpkinHead;
 		}
-
 
 		private void StripMenu_WindowCapture_AttachAll_Click(object sender, EventArgs e)
 		{
@@ -1445,6 +1444,28 @@ namespace ElectronicObserver.Window
 			new Dialog.DialogFleetAnalysis().Show(this);
 		}
 
+		private void StripMenu_Tool_MCTwitter_Click(object sender, EventArgs e)
+		{
+			//Console.WriteLine(Configuration.Config.Tool.MCTwitterURL);
+			OpenUrl(Configuration.Config.Tool.MCTwitterURL);
+		}
+
+		private void StripMenu_Tool_C2Twitter_Click(object sender, EventArgs e)
+		{
+			OpenUrl(Configuration.Config.Tool.C2TwitterURL);
+		}
+
+		private Process OpenUrl(string url)
+		{
+			ProcessStartInfo pi = new ProcessStartInfo()
+			{
+				FileName = url,
+				UseShellExecute = true,
+			};
+
+			return Process.Start(pi);
+		}
+
 		private void UpdatePlayTime()
 		{
 			var c = Utility.Configuration.Config.Log;
@@ -1458,9 +1479,6 @@ namespace ElectronicObserver.Window
 
 			_prevPlayTimeRecorded = now;
 		}
-
-
-
 
 		#region フォーム表示
 
@@ -1579,5 +1597,6 @@ namespace ElectronicObserver.Window
 		}
 
 		#endregion
+
 	}
 }
