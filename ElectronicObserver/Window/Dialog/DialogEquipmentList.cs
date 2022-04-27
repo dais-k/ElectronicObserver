@@ -222,7 +222,7 @@ namespace ElectronicObserver.Window.Dialog
 			int masterCount = masterEquipments.Values.Count(eq => !eq.IsAbyssalEquipment);
 
 			var allCount = equipments.GroupBy(eq => eq.EquipmentID).ToDictionary(group => group.Key, group => group.Count());
-
+			var unlockedCount = equipments.Where(eq => !eq.IsLocked).GroupBy(eq => eq.EquipmentID).ToDictionary(group => group.Key, group => group.Count());
 			var remainCount = new Dictionary<int, int>(allCount);
 
 
@@ -489,7 +489,8 @@ namespace ElectronicObserver.Window.Dialog
 					masterEquipments[id].IconType,
 					masterEquipments[id].Name,
 					allCount[id],
-					remainCount[id]
+					remainCount[id],
+					unlockedCount.ContainsKey(id) ? unlockedCount[id] : 0
 					);
 
 				{
@@ -1342,6 +1343,10 @@ namespace ElectronicObserver.Window.Dialog
 				EquipmentView.ClearSelection();
 				EquipmentView.Rows[v].Selected = true;
 				UpdateDetailView((int)EquipmentView[EquipmentView_ID.Index, EquipmentView.SelectedRows[0].Index].Value);
+			}
+			else
+			{
+				UpdateView();
 			}
 		}
 
