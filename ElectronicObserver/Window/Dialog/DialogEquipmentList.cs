@@ -1324,8 +1324,21 @@ namespace ElectronicObserver.Window.Dialog
 		{
 			FilterFinish();
 		}
-		//更新
-		//(ダイアログを表示した状態で装備を変更しても一覧と連動しないので、そのための更新ボタン)
+
+		private void VisibleAllCountColumn_ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			EquipmentView_CountAll.Visible = VisibleAllCountColumn_ToolStripMenuItem.Checked;
+		}
+		private void VisibleRemainCountColumn_ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			EquipmentView_CountRemain.Visible = VisibleRemainCountColumn_ToolStripMenuItem.Checked;
+		}
+		private void VisibleUnlockedCountColumn_ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			EquipmentView_Unlocked.Visible = VisibleUnlockedCountColumn_ToolStripMenuItem.Checked;
+		}
+
+		//更新(埋まっていたのをトップに出した)
 		private void Reload_RToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			if (EquipmentView.Enabled && EquipmentView.SelectedRows != null && EquipmentView.SelectedRows.Count > 0)

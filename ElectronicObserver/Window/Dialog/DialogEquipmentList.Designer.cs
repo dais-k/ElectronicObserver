@@ -29,6 +29,12 @@
 		private void InitializeComponent()
 		{
             this.EquipmentView = new System.Windows.Forms.DataGridView();
+            this.EquipmentView_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EquipmentView_Icon = new System.Windows.Forms.DataGridViewImageColumn();
+            this.EquipmentView_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EquipmentView_CountAll = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EquipmentView_CountRemain = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.EquipmentView_Unlocked = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TopMenu = new System.Windows.Forms.MenuStrip();
             this.TopMenu_File = new System.Windows.Forms.ToolStripMenuItem();
             this.TopMenu_File_CSVOutput = new System.Windows.Forms.ToolStripMenuItem();
@@ -110,12 +116,10 @@
             this.DetailView_CountAll = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DetailView_CountRemain = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DetailView_EquippedShip = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EquipmentView_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EquipmentView_Icon = new System.Windows.Forms.DataGridViewImageColumn();
-            this.EquipmentView_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EquipmentView_CountAll = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EquipmentView_CountRemain = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.EquipmentView_Unlocked = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.オプションToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.VisibleUnlockedCountColumn_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.VisibleAllCountColumn_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.VisibleRemainCountColumn_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.EquipmentView)).BeginInit();
             this.TopMenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -154,13 +158,59 @@
             this.EquipmentView.SortCompare += new System.Windows.Forms.DataGridViewSortCompareEventHandler(this.EquipmentView_SortCompare);
             this.EquipmentView.Sorted += new System.EventHandler(this.EquipmentView_Sorted);
             // 
+            // EquipmentView_ID
+            // 
+            this.EquipmentView_ID.HeaderText = "ID";
+            this.EquipmentView_ID.Name = "EquipmentView_ID";
+            this.EquipmentView_ID.ReadOnly = true;
+            this.EquipmentView_ID.Width = 40;
+            // 
+            // EquipmentView_Icon
+            // 
+            this.EquipmentView_Icon.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+            this.EquipmentView_Icon.HeaderText = "";
+            this.EquipmentView_Icon.Name = "EquipmentView_Icon";
+            this.EquipmentView_Icon.ReadOnly = true;
+            this.EquipmentView_Icon.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.EquipmentView_Icon.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.EquipmentView_Icon.Width = 5;
+            // 
+            // EquipmentView_Name
+            // 
+            this.EquipmentView_Name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.EquipmentView_Name.HeaderText = "装備名";
+            this.EquipmentView_Name.Name = "EquipmentView_Name";
+            this.EquipmentView_Name.ReadOnly = true;
+            // 
+            // EquipmentView_CountAll
+            // 
+            this.EquipmentView_CountAll.HeaderText = "全個数";
+            this.EquipmentView_CountAll.Name = "EquipmentView_CountAll";
+            this.EquipmentView_CountAll.ReadOnly = true;
+            this.EquipmentView_CountAll.Width = 40;
+            // 
+            // EquipmentView_CountRemain
+            // 
+            this.EquipmentView_CountRemain.HeaderText = "余個数";
+            this.EquipmentView_CountRemain.Name = "EquipmentView_CountRemain";
+            this.EquipmentView_CountRemain.ReadOnly = true;
+            this.EquipmentView_CountRemain.Width = 40;
+            // 
+            // EquipmentView_Unlocked
+            // 
+            this.EquipmentView_Unlocked.HeaderText = "未ロック";
+            this.EquipmentView_Unlocked.Name = "EquipmentView_Unlocked";
+            this.EquipmentView_Unlocked.ReadOnly = true;
+            this.EquipmentView_Unlocked.Width = 40;
+            // 
             // TopMenu
             // 
             this.TopMenu.ImageScalingSize = new System.Drawing.Size(32, 32);
             this.TopMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TopMenu_File,
             this.ソートToolStripMenuItem,
-            this.Reload_RToolStripMenuItem});
+            this.Reload_RToolStripMenuItem,
+            this.オプションToolStripMenuItem});
             this.TopMenu.Location = new System.Drawing.Point(0, 0);
             this.TopMenu.Name = "TopMenu";
             this.TopMenu.Size = new System.Drawing.Size(700, 24);
@@ -218,21 +268,21 @@
             // AllOn_ToolStripMenuItem
             // 
             this.AllOn_ToolStripMenuItem.Name = "AllOn_ToolStripMenuItem";
-            this.AllOn_ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.AllOn_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.AllOn_ToolStripMenuItem.Text = "すべてチェック";
             this.AllOn_ToolStripMenuItem.Click += new System.EventHandler(this.AllOn_ToolStripMenuItem_Click);
             // 
             // AllOff_ToolStripMenuItem
             // 
             this.AllOff_ToolStripMenuItem.Name = "AllOff_ToolStripMenuItem";
-            this.AllOff_ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.AllOff_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.AllOff_ToolStripMenuItem.Text = "すべてオフ";
             this.AllOff_ToolStripMenuItem.Click += new System.EventHandler(this.AllOff_ToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
             // 主砲ToolStripMenuItem
             // 
@@ -242,7 +292,7 @@
             this.GunLarge_ToolStripMenuItem,
             this.Secondary_ToolStripMenuItem});
             this.主砲ToolStripMenuItem.Name = "主砲ToolStripMenuItem";
-            this.主砲ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.主砲ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.主砲ToolStripMenuItem.Text = "艦載砲";
             // 
             // GunSmall_ToolStripMenuItem
@@ -252,7 +302,7 @@
             this.GunSmall_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.GunSmall_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.GunSmall_ToolStripMenuItem.Name = "GunSmall_ToolStripMenuItem";
-            this.GunSmall_ToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.GunSmall_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.GunSmall_ToolStripMenuItem.Text = "小口径主砲";
             this.GunSmall_ToolStripMenuItem.Click += new System.EventHandler(this.GunSmall_ToolStripMenuItem_Click);
             // 
@@ -263,7 +313,7 @@
             this.GunMidium_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.GunMidium_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.GunMidium_ToolStripMenuItem.Name = "GunMidium_ToolStripMenuItem";
-            this.GunMidium_ToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.GunMidium_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.GunMidium_ToolStripMenuItem.Text = "中口径主砲";
             this.GunMidium_ToolStripMenuItem.Click += new System.EventHandler(this.GunMidium_ToolStripMenuItem_Click);
             // 
@@ -274,7 +324,7 @@
             this.GunLarge_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.GunLarge_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.GunLarge_ToolStripMenuItem.Name = "GunLarge_ToolStripMenuItem";
-            this.GunLarge_ToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.GunLarge_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.GunLarge_ToolStripMenuItem.Text = "大口径主砲";
             this.GunLarge_ToolStripMenuItem.Click += new System.EventHandler(this.GunLarge_ToolStripMenuItem_Click);
             // 
@@ -285,7 +335,7 @@
             this.Secondary_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.Secondary_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.Secondary_ToolStripMenuItem.Name = "Secondary_ToolStripMenuItem";
-            this.Secondary_ToolStripMenuItem.Size = new System.Drawing.Size(134, 22);
+            this.Secondary_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.Secondary_ToolStripMenuItem.Text = "副砲";
             this.Secondary_ToolStripMenuItem.Click += new System.EventHandler(this.Secondary_ToolStripMenuItem_Click);
             // 
@@ -300,7 +350,7 @@
             this.AutoGyro_ToolStripMenuItem,
             this.MPA_ToolStripMenuItem});
             this.艦載機ToolStripMenuItem.Name = "艦載機ToolStripMenuItem";
-            this.艦載機ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.艦載機ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.艦載機ToolStripMenuItem.Text = "艦載機";
             // 
             // Fighter_ToolStripMenuItem
@@ -310,7 +360,7 @@
             this.Fighter_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.Fighter_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.Fighter_ToolStripMenuItem.Name = "Fighter_ToolStripMenuItem";
-            this.Fighter_ToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.Fighter_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.Fighter_ToolStripMenuItem.Text = "艦戦";
             this.Fighter_ToolStripMenuItem.Click += new System.EventHandler(this.Fighter_ToolStripMenuItem_Click);
             // 
@@ -321,7 +371,7 @@
             this.Bomber_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.Bomber_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.Bomber_ToolStripMenuItem.Name = "Bomber_ToolStripMenuItem";
-            this.Bomber_ToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.Bomber_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.Bomber_ToolStripMenuItem.Text = "艦爆";
             this.Bomber_ToolStripMenuItem.Click += new System.EventHandler(this.Bomber_ToolStripMenuItem_Click);
             // 
@@ -332,7 +382,7 @@
             this.Attacker_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.Attacker_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.Attacker_ToolStripMenuItem.Name = "Attacker_ToolStripMenuItem";
-            this.Attacker_ToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.Attacker_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.Attacker_ToolStripMenuItem.Text = "艦攻";
             this.Attacker_ToolStripMenuItem.Click += new System.EventHandler(this.Attacker_ToolStripMenuItem_Click);
             // 
@@ -343,7 +393,7 @@
             this.Recon_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.Recon_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.Recon_ToolStripMenuItem.Name = "Recon_ToolStripMenuItem";
-            this.Recon_ToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.Recon_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.Recon_ToolStripMenuItem.Text = "艦偵";
             this.Recon_ToolStripMenuItem.Click += new System.EventHandler(this.Recon_ToolStripMenuItem_Click);
             // 
@@ -354,7 +404,7 @@
             this.Jet_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.Jet_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.Jet_ToolStripMenuItem.Name = "Jet_ToolStripMenuItem";
-            this.Jet_ToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.Jet_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.Jet_ToolStripMenuItem.Text = "ジェット機";
             this.Jet_ToolStripMenuItem.Click += new System.EventHandler(this.Jet_ToolStripMenuItem_Click);
             // 
@@ -365,7 +415,7 @@
             this.AutoGyro_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.AutoGyro_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.AutoGyro_ToolStripMenuItem.Name = "AutoGyro_ToolStripMenuItem";
-            this.AutoGyro_ToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.AutoGyro_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.AutoGyro_ToolStripMenuItem.Text = "オートジャイロ";
             this.AutoGyro_ToolStripMenuItem.Click += new System.EventHandler(this.AutoGyro_ToolStripMenuItem_Click);
             // 
@@ -376,7 +426,7 @@
             this.MPA_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.MPA_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
             this.MPA_ToolStripMenuItem.Name = "MPA_ToolStripMenuItem";
-            this.MPA_ToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+            this.MPA_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.MPA_ToolStripMenuItem.Text = "対潜哨戒機";
             this.MPA_ToolStripMenuItem.Click += new System.EventHandler(this.MPA_ToolStripMenuItem_Click);
             // 
@@ -388,7 +438,7 @@
             this.PlaneFighter_ToolStripMenuItem,
             this.FlyingBoat_ToolStripMenuItem});
             this.水上機ToolStripMenuItem.Name = "水上機ToolStripMenuItem";
-            this.水上機ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.水上機ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.水上機ToolStripMenuItem.Text = "水上機";
             // 
             // PlaneRecon_ToolStripMenuItem
@@ -442,7 +492,7 @@
             this.SubmarineTorpedo_ToolStripMenuItem,
             this.MidgetSubmarine_ToolStripMenuItem});
             this.魚雷ToolStripMenuItem.Name = "魚雷ToolStripMenuItem";
-            this.魚雷ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.魚雷ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.魚雷ToolStripMenuItem.Text = "魚雷";
             // 
             // Torpedo_ToolStripMenuItem
@@ -486,7 +536,7 @@
             this.RadarSmall_ToolStripMenuItem,
             this.RadarLarge_ToolStripMenuItem});
             this.Radar_ToolStripMenuItem.Name = "Radar_ToolStripMenuItem";
-            this.Radar_ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.Radar_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.Radar_ToolStripMenuItem.Text = "電探";
             // 
             // RadarSmall_ToolStripMenuItem
@@ -518,7 +568,7 @@
             this.SonarLarge_ToolStripMenuItem,
             this.DepthCharge_ToolStripMenuItem});
             this.ソナー爆雷ToolStripMenuItem.Name = "ソナー爆雷ToolStripMenuItem";
-            this.ソナー爆雷ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.ソナー爆雷ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.ソナー爆雷ToolStripMenuItem.Text = "ソナー/爆雷";
             // 
             // SonarNormal_ToolStripMenuItem
@@ -560,7 +610,7 @@
             this.AAGun_ToolStripMenuItem,
             this.AADirector_ToolStripMenuItem});
             this.機銃高射装置ToolStripMenuItem.Name = "機銃高射装置ToolStripMenuItem";
-            this.機銃高射装置ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.機銃高射装置ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.機銃高射装置ToolStripMenuItem.Text = "機銃/高射装置";
             // 
             // AAGun_ToolStripMenuItem
@@ -592,7 +642,7 @@
             this.LandingCraft_ToolStripMenuItem,
             this.AmphibiousVehicle_ToolStripMenuItem});
             this.大発ドラム缶ToolStripMenuItem.Name = "大発ドラム缶ToolStripMenuItem";
-            this.大発ドラム缶ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.大発ドラム缶ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.大発ドラム缶ToolStripMenuItem.Text = "大発系/ドラム缶";
             // 
             // Drum_ToolStripMenuItem
@@ -635,7 +685,7 @@
             this.APShell_ToolStripMenuItem,
             this.AAShell_ToolStripMenuItem});
             this.砲弾ToolStripMenuItem.Name = "砲弾ToolStripMenuItem";
-            this.砲弾ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.砲弾ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.砲弾ToolStripMenuItem.Text = "砲弾";
             // 
             // APShell_ToolStripMenuItem
@@ -670,7 +720,7 @@
             this.BulgeMid_ToolStripMenuItem,
             this.BulgeLarge_ToolStripMenuItem});
             this.バルジToolStripMenuItem.Name = "バルジToolStripMenuItem";
-            this.バルジToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.バルジToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.バルジToolStripMenuItem.Text = "バルジ";
             // 
             // BulgeMid_ToolStripMenuItem
@@ -702,7 +752,7 @@
             this.Searchlight_ToolStripMenuItem,
             this.SearchlightLarge_ToolStripMenuItem});
             this.照明弾探照灯ToolStripMenuItem.Name = "照明弾探照灯ToolStripMenuItem";
-            this.照明弾探照灯ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.照明弾探照灯ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.照明弾探照灯ToolStripMenuItem.Text = "照明弾/探照灯";
             // 
             // Flare_ToolStripMenuItem
@@ -753,7 +803,7 @@
             this.Supplies_ToolStripMenuItem,
             this.TransportMaterials_ToolStripMenuItem});
             this.その他ToolStripMenuItem.Name = "その他ToolStripMenuItem";
-            this.その他ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.その他ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.その他ToolStripMenuItem.Text = "その他";
             // 
             // Engine_ToolStripMenuItem
@@ -886,7 +936,7 @@
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(177, 6);
             // 
             // 陸上機ToolStripMenuItem
             // 
@@ -896,7 +946,7 @@
             this.Interceptor_ToolStripMenuItem,
             this.LandPatrol_ToolStripMenuItem});
             this.陸上機ToolStripMenuItem.Name = "陸上機ToolStripMenuItem";
-            this.陸上機ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.陸上機ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.陸上機ToolStripMenuItem.Text = "陸上機";
             // 
             // LandAttacker_ToolStripMenuItem
@@ -1036,50 +1086,48 @@
             this.DetailView_EquippedShip.ReadOnly = true;
             this.DetailView_EquippedShip.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
-            // EquipmentView_ID
+            // オプションToolStripMenuItem
             // 
-            this.EquipmentView_ID.HeaderText = "ID";
-            this.EquipmentView_ID.Name = "EquipmentView_ID";
-            this.EquipmentView_ID.ReadOnly = true;
-            this.EquipmentView_ID.Width = 40;
+            this.オプションToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.VisibleAllCountColumn_ToolStripMenuItem,
+            this.VisibleRemainCountColumn_ToolStripMenuItem,
+            this.VisibleUnlockedCountColumn_ToolStripMenuItem});
+            this.オプションToolStripMenuItem.Name = "オプションToolStripMenuItem";
+            this.オプションToolStripMenuItem.Size = new System.Drawing.Size(80, 20);
+            this.オプションToolStripMenuItem.Text = "オプション(&O)";
             // 
-            // EquipmentView_Icon
+            // VisibleUnlockedCountColumn_ToolStripMenuItem
             // 
-            this.EquipmentView_Icon.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
-            this.EquipmentView_Icon.HeaderText = "";
-            this.EquipmentView_Icon.Name = "EquipmentView_Icon";
-            this.EquipmentView_Icon.ReadOnly = true;
-            this.EquipmentView_Icon.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.EquipmentView_Icon.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.EquipmentView_Icon.Width = 5;
+            this.VisibleUnlockedCountColumn_ToolStripMenuItem.Checked = true;
+            this.VisibleUnlockedCountColumn_ToolStripMenuItem.CheckOnClick = true;
+            this.VisibleUnlockedCountColumn_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.VisibleUnlockedCountColumn_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.VisibleUnlockedCountColumn_ToolStripMenuItem.Name = "VisibleUnlockedCountColumn_ToolStripMenuItem";
+            this.VisibleUnlockedCountColumn_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.VisibleUnlockedCountColumn_ToolStripMenuItem.Text = "未ロック数を表示";
+            this.VisibleUnlockedCountColumn_ToolStripMenuItem.Click += new System.EventHandler(this.VisibleUnlockedCountColumn_ToolStripMenuItem_Click);
             // 
-            // EquipmentView_Name
+            // VisibleAllCountColumn_ToolStripMenuItem
             // 
-            this.EquipmentView_Name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.EquipmentView_Name.HeaderText = "装備名";
-            this.EquipmentView_Name.Name = "EquipmentView_Name";
-            this.EquipmentView_Name.ReadOnly = true;
+            this.VisibleAllCountColumn_ToolStripMenuItem.Checked = true;
+            this.VisibleAllCountColumn_ToolStripMenuItem.CheckOnClick = true;
+            this.VisibleAllCountColumn_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.VisibleAllCountColumn_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.VisibleAllCountColumn_ToolStripMenuItem.Name = "VisibleAllCountColumn_ToolStripMenuItem";
+            this.VisibleAllCountColumn_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.VisibleAllCountColumn_ToolStripMenuItem.Text = "全個数を表示";
+            this.VisibleAllCountColumn_ToolStripMenuItem.Click += new System.EventHandler(this.VisibleAllCountColumn_ToolStripMenuItem_Click);
             // 
-            // EquipmentView_CountAll
+            // VisibleRemainCountColumn_ToolStripMenuItem
             // 
-            this.EquipmentView_CountAll.HeaderText = "全個数";
-            this.EquipmentView_CountAll.Name = "EquipmentView_CountAll";
-            this.EquipmentView_CountAll.ReadOnly = true;
-            this.EquipmentView_CountAll.Width = 40;
-            // 
-            // EquipmentView_CountRemain
-            // 
-            this.EquipmentView_CountRemain.HeaderText = "余個数";
-            this.EquipmentView_CountRemain.Name = "EquipmentView_CountRemain";
-            this.EquipmentView_CountRemain.ReadOnly = true;
-            this.EquipmentView_CountRemain.Width = 40;
-            // 
-            // EquipmentView_Unlocked
-            // 
-            this.EquipmentView_Unlocked.HeaderText = "未ロック";
-            this.EquipmentView_Unlocked.Name = "EquipmentView_Unlocked";
-            this.EquipmentView_Unlocked.ReadOnly = true;
-            this.EquipmentView_Unlocked.Width = 40;
+            this.VisibleRemainCountColumn_ToolStripMenuItem.Checked = true;
+            this.VisibleRemainCountColumn_ToolStripMenuItem.CheckOnClick = true;
+            this.VisibleRemainCountColumn_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.VisibleRemainCountColumn_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.VisibleRemainCountColumn_ToolStripMenuItem.Name = "VisibleRemainCountColumn_ToolStripMenuItem";
+            this.VisibleRemainCountColumn_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.VisibleRemainCountColumn_ToolStripMenuItem.Text = "余個数を表示";
+            this.VisibleRemainCountColumn_ToolStripMenuItem.Click += new System.EventHandler(this.VisibleRemainCountColumn_ToolStripMenuItem_Click);
             // 
             // DialogEquipmentList
             // 
@@ -1198,5 +1246,9 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn EquipmentView_CountAll;
 		private System.Windows.Forms.DataGridViewTextBoxColumn EquipmentView_CountRemain;
 		private System.Windows.Forms.DataGridViewTextBoxColumn EquipmentView_Unlocked;
+		private System.Windows.Forms.ToolStripMenuItem オプションToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem VisibleUnlockedCountColumn_ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem VisibleAllCountColumn_ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem VisibleRemainCountColumn_ToolStripMenuItem;
 	}
 }
