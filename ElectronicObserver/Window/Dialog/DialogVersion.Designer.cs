@@ -35,7 +35,7 @@
             this.TextInformation = new System.Windows.Forms.LinkLabel();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.labelLastUpdate = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // TextVersion
@@ -109,21 +109,21 @@
             this.label3.Size = new System.Drawing.Size(435, 2);
             this.label3.TabIndex = 6;
             // 
-            // label4
+            // labelLastUpdate
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(15, 102);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(207, 15);
-            this.label4.TabIndex = 7;
-            this.label4.Text = "改変：ヨシヒロ＠パラオ泊地(20220410)";
+            this.labelLastUpdate.AutoSize = true;
+            this.labelLastUpdate.Location = new System.Drawing.Point(15, 102);
+            this.labelLastUpdate.Name = "labelLastUpdate";
+            this.labelLastUpdate.Size = new System.Drawing.Size(221, 15);
+            this.labelLastUpdate.TabIndex = 7;
+            this.labelLastUpdate.Text = "改変：ヨシヒロ＠パラオ泊地(YYYYMMDD)";
             // 
             // DialogVersion
             // 
             this.AcceptButton = this.ButtonClose;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(464, 162);
-            this.Controls.Add(this.label4);
+            this.Controls.Add(this.labelLastUpdate);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.TextInformation);
@@ -155,6 +155,6 @@
 		private System.Windows.Forms.LinkLabel TextInformation;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.Label label4;
+		private System.Windows.Forms.Label labelLastUpdate;
 	}
 }

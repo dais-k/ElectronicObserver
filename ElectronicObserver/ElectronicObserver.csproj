@@ -910,6 +910,9 @@
   <ItemGroup>
     <Content Include="74eo.ico" />
     <Content Include="Other\Information\apilist.txt" />
+    <Content Include="version.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Other\Information\kcmemo.md" />
     <Content Include="Other\Information\todo.txt" />
   </ItemGroup>

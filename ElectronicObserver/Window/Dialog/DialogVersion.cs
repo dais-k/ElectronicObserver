@@ -1,6 +1,7 @@
 ﻿using ElectronicObserver.Resource;
 using ElectronicObserver.Utility;
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -46,6 +47,14 @@ namespace ElectronicObserver.Window.Dialog
 		{
 
 			this.Icon = ResourceManager.Instance.AppIcon;
+
+			//version.txtを読み取って設定
+			StreamReader sr = new StreamReader("version.txt");
+
+			sr.ReadLine(); //1行目は読み飛ばす
+			labelLastUpdate.Text = "ヨシヒロ＠パラオ泊地("+sr.ReadLine()+")";
+
+			sr.Close();
 		}
 	}
 }

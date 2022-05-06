@@ -42,11 +42,7 @@ namespace ElectronicObserver.Utility
 		/// <summary>
 		/// 更新日時
 		/// </summary>
-		public static DateTime UpdateTime => DateTimeHelper.CSVStringToTime("2021/11/23 18:30:00");
-
-
-
-
+		public static DateTime UpdateTime => DateTimeHelper.CSVStringToTime("2022/04/10 18:30:00");
 		private static System.Net.WebClient client;
 		private static readonly Uri uri = new Uri("https://www.dropbox.com/s/vk073iw1wvktq4d/version.txt?dl=1");
 
