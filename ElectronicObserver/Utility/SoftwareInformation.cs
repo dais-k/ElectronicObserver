@@ -36,7 +36,7 @@ namespace ElectronicObserver.Utility
 		/// <summary>
 		/// 更新日時
 		/// </summary>
-		public static DateTime UpdateTime => DateTimeHelper.CSVStringToTime("2022/04/10 18:30:00");
+		public static DateTime UpdateTime => DateTimeHelper.CSVStringToTime("2022/05/06 21:15:00");
 		
 
 		private static System.Net.WebClient client;
