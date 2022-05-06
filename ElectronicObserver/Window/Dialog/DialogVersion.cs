@@ -19,40 +19,38 @@ namespace ElectronicObserver.Window.Dialog
 		{
 			InitializeComponent();
 
-			TextVersion.Text = string.Format("{0} (ver. {1} - {2} Release)", SoftwareInformation.VersionJapanese, SoftwareInformation.VersionEnglish, SoftwareInformation.UpdateTime.ToString("d"));
+			TextVersion.Text = string.Format("{0} (ver. {1})", SoftwareInformation.VersionJapanese, SoftwareInformation.VersionEnglish);
 		}
 
 		private void TextAuthor_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-
 			System.Diagnostics.Process.Start("https://twitter.com/andanteyk");
-
 		}
 
 		private void ButtonClose_Click(object sender, EventArgs e)
 		{
-
 			this.Close();
-
 		}
 
 		private void TextInformation_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
-
 			System.Diagnostics.Process.Start("http://electronicobserver.blog.fc2.com/");
+		}
 
+		private void TextInformation2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			System.Diagnostics.Process.Start("https://github.com/yosxpeee/ElectronicObserver");
 		}
 
 		private void DialogVersion_Load(object sender, EventArgs e)
 		{
-
 			this.Icon = ResourceManager.Instance.AppIcon;
 
 			//version.txtを読み取って設定
 			StreamReader sr = new StreamReader("version.txt");
 
 			sr.ReadLine(); //1行目は読み飛ばす
-			labelLastUpdate.Text = "ヨシヒロ＠パラオ泊地("+sr.ReadLine()+")";
+			labelLastUpdate.Text = sr.ReadLine();
 
 			sr.Close();
 		}
