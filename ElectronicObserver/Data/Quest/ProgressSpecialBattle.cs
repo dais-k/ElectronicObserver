@@ -419,6 +419,38 @@ namespace ElectronicObserver.Data.Quest
 							}
 						}) >= 2;
 					break;
+				case 973:   //|973|５|日英米合同水上艦隊、抜錨せよ！|3-1、3-3、4-3、7-3-2ボスを各A勝利以上1回ずつ|条件：米+英艦艇3隻を編成に入れる、かつ空母を含まない|
+					isAccepted = 
+						(memberstype.Count(t => t == ShipTypes.LightAircraftCarrier) == 0) &&
+						(memberstype.Count(t => t == ShipTypes.AircraftCarrier) == 0) &&
+						(memberstype.Count(t => t == ShipTypes.ArmoredAircraftCarrier) == 0) &&
+						members.Count
+						(s =>
+						 s?.MasterShip?.ShipClass == 67  ||										  //クイーンエリザベス級戦艦
+						 s?.MasterShip?.ShipClass == 88  || s?.MasterShip?.ShipClass == 65  ||    //ネルソン級戦艦、アイオワ級戦艦
+						 s?.MasterShip?.ShipClass == 106 || s?.MasterShip?.ShipClass == 93  ||    //セントルイス級軽巡洋艦、コロラド級戦艦
+						 s?.MasterShip?.ShipClass == 107 || s?.MasterShip?.ShipClass == 95  ||    //ノースカロライナ級戦艦、ノーザンプトン級重巡洋艦
+						 s?.MasterShip?.ShipClass == 108 || s?.MasterShip?.ShipClass == 99  ||    //タウン級軽巡洋艦、アトランタ級軽巡洋艦
+						 s?.MasterShip?.ShipClass == 110 || s?.MasterShip?.ShipClass == 102 ||    //ブルックリン級軽巡洋艦、サウスダコタ級戦艦
+						 s?.MasterShip?.ShipClass == 87  || s?.MasterShip?.ShipClass == 91  ||    //ジョンCバトラー級駆逐艦、フレッチャー級駆逐艦
+						 s?.MasterShip?.ShipClass == 82  || s?.MasterShip?.ShipClass == 114) >= 3;//J級駆逐艦、ガトー級潜水艦
+					break;
+				case 975:   //|975|５|精鋭「第十九駆逐隊」、全力出撃！|1-5、2-3、3-2、5-3ボスを各S勝利1回ずつ|条件：磯波改二、浦波改二、綾波改二、敷波改二を編成に入れる|
+					isAccepted =
+						members.Count(s =>
+						{
+							switch (s?.MasterShip?.ShipID)
+							{
+								case 666:
+								case 195:
+								case 647:
+								case 627:
+									return true;
+								default:
+									return false;
+							}
+						}) >= 4;
+					break;
 			}
 
 			// 第二ゲージでも第一ボスに行ける場合があるので、個別対応が必要

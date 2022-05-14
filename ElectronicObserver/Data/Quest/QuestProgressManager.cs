@@ -536,6 +536,22 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressSpecialBattle(q, 2, "S", new[] { 72 }, true, 2),
 							}));
 							break;
+						case 973:   //|973|５|日英米合同水上艦隊、抜錨せよ！|3-1、3-3、4-3、7-3-2ボスを各A勝利以上1回ずつ|条件：米+英艦艇3隻を編成に入れる、かつ空母を含まない|
+							Progresses.Add(new ProgressMultiBattle(q, new[] {
+								new ProgressSpecialBattle(q, 1, "A", new[] { 31 }, true),
+								new ProgressSpecialBattle(q, 1, "A", new[] { 33 }, true),
+								new ProgressSpecialBattle(q, 1, "A", new[] { 43 }, true),
+								new ProgressSpecialBattle(q, 1, "A", new[] { 73 }, true, 2),
+							}));
+							break;
+						case 975:   //|975|５|精鋭「第十九駆逐隊」、全力出撃！|1-5、2-3、3-2、5-3ボスを各S勝利1回ずつ|条件：磯波改二、浦波改二、綾波改二、敷波改二を編成に入れる|
+							Progresses.Add(new ProgressMultiBattle(q, new[] {
+								new ProgressSpecialBattle(q, 1, "S", new[] { 15 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 23 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 32 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 53 }, true),
+							}));
+							break;
 
 						case 303:   //|303|日|「演習」で練度向上！|演習3
 							Progresses.Add(new ProgressPractice(q, 3, false));
@@ -587,6 +603,9 @@ namespace ElectronicObserver.Data.Quest
 							break;
 						case 355:   //|355|10|精鋭「第十五駆逐隊」第一小隊演習！|演習S勝利以上4|条件：親潮改二、黒潮改二を1番艦、2番艦に配置|イヤーリーだが1日で進捗リセット|
 							Progresses.Add(new ProgressPractice(q, 4, "S", true));
+							break;
+						case 356:   //|356|５|精鋭「第十九駆逐隊」演習！|演習S勝利以上3|条件：磯波改二、浦波改二、綾波改二、敷波改二|イヤーリーだが1日で進捗リセット|
+							Progresses.Add(new ProgressPractice(q, 3, "S", true));
 							break;
 
 						case 402:   //|402|「遠征」を3回成功させよう！|遠征成功3

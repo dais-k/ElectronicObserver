@@ -220,6 +220,24 @@ namespace ElectronicObserver.Data.Quest
 						ret = true;
 					}
 					break;
+				case 356:   //|356|５|精鋭「第十九駆逐隊」演習！|演習S勝利以上3|条件：磯波改二、浦波改二、綾波改二、敷波改二|イヤーリーだが1日で進捗リセット|
+					if (ships.Count(s =>
+					{
+						switch (s?.MasterShip?.ShipID)
+						{
+							case 666:
+							case 195:
+							case 647:
+							case 627:
+								return true;
+							default:
+								return false;
+						}
+					}) >= 4)
+					{
+						ret = true;
+					}
+					break;
 				default:
 					//ここに来たらバグ
 					ret = false;
