@@ -36,7 +36,6 @@ namespace ElectronicObserver.Data.Quest
 		[DataMember]
 		protected int CategoryIndex { get; set; }
 
-
 		public ProgressDiscard(QuestData quest, int maxCount, bool countsAmount, int[] categories)
 			: this(quest, maxCount, countsAmount, categories, 2) { }
 
@@ -47,7 +46,6 @@ namespace ElectronicObserver.Data.Quest
 			Categories = categories == null ? null : new HashSet<int>(categories);
 			CategoryIndex = categoryIndex;
 		}
-
 
 		public void Increment(IEnumerable<int> equipments)
 		{
@@ -110,7 +108,9 @@ namespace ElectronicObserver.Data.Quest
 			if (q.State != 2)
 				return;
 
-			//任務IDごとの個別チェック
+			//=============================================================
+			// 任務IDごとの個別チェック
+			//=============================================================
 			//MEMO:装備スロットの空きはnullになっているので、要nullチェック
 			switch (QuestID)
 			{
@@ -166,7 +166,7 @@ namespace ElectronicObserver.Data.Quest
 								  members.FirstOrDefault().SlotInstance[0].EquipmentID == 238 &&
 							      members.FirstOrDefault().SlotInstance[0].Level == 10) ? 1 : 0;
 					break;
-				case 1108:  //|1108|調整改良型「水中探信儀」の増産|秘書艦「山風改二(丁)」もしくは「時雨改二」の第一スロットに三式水中探信儀★10を装備した状態で九三式水中聴音機x2破棄、三式水中探信儀x2破棄、新型兵装資材x2＆開発資材x30＆ボーキ1300x3を保有
+				case 1108:  //|1108|調整改良型「水中探信儀」の増産|秘書艦「山風改二(丁)」もしくは「時雨改二」の第一スロットに三式水中探信儀★10を装備した状態で九三式水中聴音機x2破棄、三式水中探信儀x2破棄、新型兵装資材x2＆開発資材x30＆ボーキ1300を保有
 					isAccepted = (((members.FirstOrDefault()?.MasterShip?.ShipID == 588) ||  //山風改二
 						           (members.FirstOrDefault()?.MasterShip?.ShipID == 667) ||  //山風改二丁
 								   (members.FirstOrDefault()?.MasterShip?.ShipID == 145)) && //時雨改二
@@ -214,8 +214,6 @@ namespace ElectronicObserver.Data.Quest
 				}
 			}))) + "廃棄" + ProgressMax + (CountsAmount ? "個" : "回");
 		}
-
-
 
 		/// <summary>
 		/// 互換性維持：デフォルト値の設定

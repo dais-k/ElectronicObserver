@@ -76,6 +76,7 @@ namespace ElectronicObserver.Data
 					p.QuestID == 346 ||
 					p.QuestID == 348 ||
 					p.QuestID == 350 ||
+					p.QuestID == 353 ||
 					p.QuestID == 354 ||
 					p.QuestID == 355 ||
 					p.QuestID == 356
@@ -95,6 +96,7 @@ namespace ElectronicObserver.Data
 					q.QuestID == 346 ||
 					q.QuestID == 348 ||
 					q.QuestID == 350 ||
+					q.QuestID == 353 ||
 					q.QuestID == 354 ||
 					q.QuestID == 355 ||
 					q.QuestID == 356

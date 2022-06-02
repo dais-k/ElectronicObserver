@@ -204,6 +204,16 @@ namespace ElectronicObserver.Data.Quest
 						ret = true;
 					}
 					break;
+				case 353:   //|353|６|「巡洋艦戦隊」演習！|演習B勝利以上5|条件：重巡or航巡4(旗艦含む)、駆逐2|イヤーリーだが1日で進捗リセット|
+					if (
+						(ships.FirstOrDefault().MasterShip.ShipType == ShipTypes.HeavyCruiser || ships.FirstOrDefault().MasterShip.ShipType == ShipTypes.AviationCruiser) &&
+						(ships.Count(s => s.MasterShip.ShipType == ShipTypes.HeavyCruiser || s.MasterShip.ShipType == ShipTypes.AviationCruiser) >= 4) &&
+						(ships.Count(s => s.MasterShip.ShipType == ShipTypes.Destroyer) >= 2)
+					)
+					{
+						ret = true;
+					}
+					break;
 				case 354:   //|354|７|「改装特設空母」任務部隊演習！|演習S勝利以上4|条件：旗艦がガンビアベイMK2かつフレッチャー級orジョンCバトラー級2隻以上を含む|イヤーリーだが1日で進捗リセット|
 					if (ships.FirstOrDefault()?.MasterShip?.ShipID == 707 && 
 						ships.Count(s => s?.MasterShip?.ShipClass == 87 || s?.MasterShip?.ShipClass == 91) >= 2
