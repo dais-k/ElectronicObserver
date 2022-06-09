@@ -823,6 +823,10 @@ namespace ElectronicObserver.Data
 					return "瑞雲立体攻撃";
 				case DayAttackKind.SeaAirMultiAngle:
 					return "海空立体攻撃";
+				case DayAttackKind.SpecialYamato1:
+					return "大和、突撃します！二番艦も続いてください！";
+				case DayAttackKind.SpecialYamato2:
+					return "第一戦隊、突撃！主砲、全力斉射ッ！";
 				case DayAttackKind.Shelling:
 					return "砲撃";
 				case DayAttackKind.AirAttack:
@@ -902,6 +906,10 @@ namespace ElectronicObserver.Data
 					return "潜水艦隊攻撃";
 				case NightAttackKind.SpecialSubmarineAttack3:
 					return "潜水艦隊攻撃";
+				case NightAttackKind.SpecialYamato1:
+					return "大和、突撃します！二番艦も続いてください！";
+				case NightAttackKind.SpecialYamato2:
+					return "第一戦隊、突撃！主砲、全力斉射ッ！";
 				case NightAttackKind.Shelling:
 					return "砲撃";
 				case NightAttackKind.AirAttack:

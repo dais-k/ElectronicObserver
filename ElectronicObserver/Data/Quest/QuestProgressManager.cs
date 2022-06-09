@@ -372,6 +372,9 @@ namespace ElectronicObserver.Data.Quest
 						case 356:   //|356|５|精鋭「第十九駆逐隊」演習！|演習S勝利以上3|条件：磯波改二、浦波改二、綾波改二、敷波改二|イヤーリーだが1日で進捗リセット|
 							Progresses.Add(new ProgressPractice(q, 3, "S", true));
 							break;
+						case 357:   //|357|６|「大和型戦艦」第一戦隊演習、始め！|演習S勝利以上3|条件：大和、武蔵、軽巡1隻、駆逐2隻|イヤーリーだが1日で進捗リセット|
+							Progresses.Add(new ProgressPractice(q, 3, "S", true));
+							break;
 						//============================ 400～499 ============================
 						case 402:   //|402|「遠征」を3回成功させよう！|遠征成功3
 							Progresses.Add(new ProgressExpedition(q, 3, null));

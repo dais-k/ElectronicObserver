@@ -1303,7 +1303,9 @@ namespace ElectronicObserver.Utility.Data
 			int highangle_musashi = 0;
 			int highangle_america = 0;
 			int highangle_america_gfcs = 0;
+			int highangle_yamato = 0;
 			int radar_gfcs = 0;
+			int radar_with_range_finder = 0;
 			int highangle_atlanta = 0;
 			int highangle_atlanta_gfcs = 0;
 
@@ -1336,8 +1338,10 @@ namespace ElectronicObserver.Utility.Data
 						case 363:   // GFCS Mk.37+5inch連装両用砲(集中配備)
 							highangle_atlanta_gfcs++;
 							break;
+						case 464:	// 10cm連装高角砲群 集中配備
+							highangle_yamato++;
+							break;
 					}
-
 				}
 				else if (eq.CategoryType == EquipmentTypes.AADirector)
 				{
@@ -1352,6 +1356,9 @@ namespace ElectronicObserver.Utility.Data
 
 					if (eq.EquipmentID == 307)   // GFCS Mk.37
 						radar_gfcs++;
+
+					if (eq.IsRadarWithRangeFinder)
+						radar_with_range_finder++;
 				}
 				else if (eq.CategoryType == EquipmentTypes.MainGunLarge || eq.CategoryType == EquipmentTypes.MainGunLarge2)
 				{
@@ -1514,10 +1521,36 @@ namespace ElectronicObserver.Utility.Data
 					break;
 
 				case 546:   // 武蔵改二
+				case 911:   // 大和改二
+				case 916:   // 大和改二重
 					if (highangle_musashi >= 1 && aaradar >= 1)
 						return 26;
 					if (aarocket_mod >= 1 && aaradar >= 1)
 						return 28;
+
+					if (radar_with_range_finder >= 1)
+					{
+						if(highangle_yamato >= 2)
+						{
+							if (aagun_medium >= 1)
+							{
+								//42:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備*2、対空機銃
+								return 42;
+							}
+							//43:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備*2
+							return 43;
+						}
+						if (highangle_yamato >= 1)
+						{
+							if (aagun_medium >= 1)
+							{
+								//44:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備、対空機銃
+								return 44;
+							}
+							//45:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備
+							return 45;
+						}
+					}
 					break;
 
 				case 557:   // 磯風乙改
@@ -1570,8 +1603,6 @@ namespace ElectronicObserver.Utility.Data
 					}
 					break;
 			}
-
-
 
 			if (maingunl >= 1 && aashell >= 1 && director >= 1 && aaradar >= 1)
 			{
@@ -1852,6 +1883,10 @@ namespace ElectronicObserver.Utility.Data
 			{ 39, 10 },
 			{ 40, 10 },
 			{ 41, 9 },
+			{ 42, 10 },
+			{ 43, 8 },
+			{ 44, 6 },
+			{ 45, 5 },
 		});
 
 
@@ -1899,6 +1934,10 @@ namespace ElectronicObserver.Utility.Data
 			{ 39, 1.7 },
 			{ 40, 1.7 },
 			{ 41, 1.65 },
+			{ 42, 1.65 },
+			{ 43, 1.6 },
+			{ 44, 1.6 },
+			{ 45, 1.55 },
 		});
 
 
@@ -2539,6 +2578,12 @@ namespace ElectronicObserver.Utility.Data
 		/// <summary> 潜水艦隊攻撃 (2,4) </summary>
 		SpecialSubmarineAttack3 = 302,
 
+		/// <summary> 大和、突撃します！二番艦も続いてください！ </summary>
+		SpecialYamato1 = 400,
+
+		/// <summary> 第一戦隊、突撃！主砲、全力斉射ッ！ </summary>
+		SpecialYamato2 = 401,
+
 		/// <summary> 砲撃 </summary>
 		Shelling = 1000,
 
@@ -2651,6 +2696,12 @@ namespace ElectronicObserver.Utility.Data
 
 		/// <summary> 潜水艦隊攻撃 (2,4) </summary>
 		SpecialSubmarineAttack3 = 302,
+
+		/// <summary> 大和、突撃します！二番艦も続いてください！ </summary>
+		SpecialYamato1 = 400,
+
+		/// <summary> 第一戦隊、突撃！主砲、全力斉射ッ！ </summary>
+		SpecialYamato2 = 401,
 
 		/// <summary> 砲撃 </summary>
 		Shelling = 1000,

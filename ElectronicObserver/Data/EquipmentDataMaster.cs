@@ -197,8 +197,10 @@ namespace ElectronicObserver.Data
 		public bool IsLateModelTorpedo =>
 			EquipmentID == 213 ||   // 後期型艦首魚雷(6門)
 			EquipmentID == 214 ||   // 熟練聴音員+後期型艦首魚雷(6門)
-			EquipmentID == 383;     // 後期型53cm艦首魚雷(8門)
-
+			EquipmentID == 383 ||   // 後期型53cm艦首魚雷(8門)
+			EquipmentID == 441 ||	// 21inch艦首魚雷発射管6門(後期型)
+			EquipmentID == 443 ||	// 潜水艦後部魚雷発射管4門(後期型)
+			EquipmentID == 457;		// 後期型艦首魚雷(4門)
 
 		/// <summary> 高角砲かどうか </summary>
 		public bool IsHighAngleGun => IconType == 16;
@@ -339,6 +341,11 @@ namespace ElectronicObserver.Data
 		/// <summary> 水上電探かどうか </summary>
 		public bool IsSurfaceRadar => IsRadar && LOS >= 5;
 
+		/// <summary> 測距儀付き電探かどうか </summary>
+		public bool IsRadarWithRangeFinder =>
+			EquipmentID == 142 ||       //15m二重測距儀+21号電探改二
+			EquipmentID == 460;			//15m二重測距儀改+21号電探改二+熟練射撃指揮所
+
 
 		/// <summary> ソナーかどうか </summary>
 		public bool IsSonar => CategoryType == EquipmentTypes.Sonar || CategoryType == EquipmentTypes.SonarLarge;
@@ -346,13 +353,17 @@ namespace ElectronicObserver.Data
 		/// <summary> 爆雷かどうか(投射機は含まない) </summary>
 		public bool IsDepthCharge =>
 			EquipmentID == 226 ||       // 九五式爆雷 
-			EquipmentID == 227;         // 二式爆雷
+			EquipmentID == 227 ||       // 二式爆雷
+			EquipmentID == 439 ||       // Hedgehog(初期型)
+			EquipmentID == 378;         // 対潜短魚雷(試作初期型)
 
 		/// <summary> 爆雷投射機かどうか(爆雷/対潜迫撃砲は含まない) </summary>
 		public bool IsDepthChargeProjector =>
-			EquipmentID == 44 ||        // 九四式爆雷投射機
-			EquipmentID == 45;          // 三式爆雷投射機
-
+			EquipmentID == 44  ||       // 九四式爆雷投射機
+			EquipmentID == 45  ||       // 三式爆雷投射機
+			EquipmentID == 288 ||       // 試製15cm9連装対潜噴進砲
+			EquipmentID == 377 ||       // RUR-4A Weapon Alpha改
+			EquipmentID == 287;			// 三式爆雷投射機 集中配備
 
 		/// <summary> 夜間作戦航空要員かどうか </summary>
 		public bool IsNightAviationPersonnel =>

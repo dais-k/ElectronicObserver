@@ -79,7 +79,8 @@ namespace ElectronicObserver.Data
 					p.QuestID == 353 ||
 					p.QuestID == 354 ||
 					p.QuestID == 355 ||
-					p.QuestID == 356
+					p.QuestID == 356 ||
+					p.QuestID == 357
 				));
 				Quests.RemoveAll(q => (q.Type == 1 || 
 					q.QuestID == 211 ||	/* 空母3 */
@@ -99,7 +100,8 @@ namespace ElectronicObserver.Data
 					q.QuestID == 353 ||
 					q.QuestID == 354 ||
 					q.QuestID == 355 ||
-					q.QuestID == 356
+					q.QuestID == 356 ||
+					q.QuestID == 357
 				));
 			}
 			//ウィークリー

@@ -248,6 +248,24 @@ namespace ElectronicObserver.Data.Quest
 						ret = true;
 					}
 					break;
+				case 357:   //|357|６|「大和型戦艦」第一戦隊演習、始め！|演習S勝利以上3|条件：大和、武蔵、軽巡1隻、駆逐2隻|イヤーリーだが1日で進捗リセット|
+					if ((ships.Count(s =>
+					{
+						switch (s?.MasterShip?.NameReading)
+						{
+							case "やまと":
+							case "むさし":
+								return true;
+							default:
+								return false;
+						}
+					}) >= 2) &&
+					(ships.Count(s => s.MasterShip.ShipType == ShipTypes.LightCruiser) >= 1) &&
+					(ships.Count(s => s.MasterShip.ShipType == ShipTypes.Destroyer) >= 2))
+					{
+						ret = true;
+					}
+					break;
 				default:
 					//ここに来たらバグ
 					ret = false;
