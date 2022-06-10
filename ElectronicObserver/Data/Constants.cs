@@ -403,6 +403,10 @@ namespace ElectronicObserver.Data
 				case 109: return "潜高型";
 				case 110: return "Brooklyn級";
 				case 111: return "宗谷型"; //宗谷のコンバート改装先の2つも同じIDなので便宜上の命名
+				case 112: return "Illustrious級";
+				case 113: return "Conte di Cavour級";
+				case 114: return "Gato級";
+				case 115: return "特2TL型";
 				default: 
 					return "不明";
 			}
@@ -1023,6 +1027,14 @@ namespace ElectronicObserver.Data
 					return "Atlanta砲x2/GFCS<Atlanta>";
 				case 41:
 					return "Atlanta砲x2<Atlanta>";
+				case 42:
+					return "測距儀付き電探+10cm連装高角砲群x2+対空機銃<大和型>";
+				case 43:
+					return "測距儀付き電探+10cm連装高角砲群x2<大和型>";
+				case 44:
+					return "測距儀付き電探+10cm連装高角砲群+対空機銃<大和型>";
+				case 45:
+					return "測距儀付き電探+10cm連装高角砲群<大和型>";
 				default:
 					return "不明(" + id + ")";
 			}

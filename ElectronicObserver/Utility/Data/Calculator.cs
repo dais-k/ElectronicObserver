@@ -1296,6 +1296,7 @@ namespace ElectronicObserver.Utility.Data
 			int aashell = 0;
 			int aagun_total = 0;
 			int aagun_medium = 0;
+			int aagun_high = 0;
 			int aagun_concentrated = 0;
 			int aagun_pompom = 0;
 			int aarocket_english = 0;
@@ -1384,6 +1385,8 @@ namespace ElectronicObserver.Utility.Data
 
 					if (eq.IsConcentratedAAGun)
 						aagun_concentrated++;
+					else if (eq.AA >= 6)
+						aagun_high++;
 					else if (eq.AA >= 3)
 						aagun_medium++;
 				}
@@ -1522,7 +1525,6 @@ namespace ElectronicObserver.Utility.Data
 
 				case 546:   // 武蔵改二
 				case 911:   // 大和改二
-				case 916:   // 大和改二重
 					if (highangle_musashi >= 1 && aaradar >= 1)
 						return 26;
 					if (aarocket_mod >= 1 && aaradar >= 1)
@@ -1532,7 +1534,7 @@ namespace ElectronicObserver.Utility.Data
 					{
 						if(highangle_yamato >= 2)
 						{
-							if (aagun_medium >= 1)
+							if (aagun_high >= 1)
 							{
 								//42:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備*2、対空機銃
 								return 42;
@@ -1542,7 +1544,7 @@ namespace ElectronicObserver.Utility.Data
 						}
 						if (highangle_yamato >= 1)
 						{
-							if (aagun_medium >= 1)
+							if (aagun_high >= 1)
 							{
 								//44:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備、対空機銃
 								return 44;
@@ -1552,7 +1554,34 @@ namespace ElectronicObserver.Utility.Data
 						}
 					}
 					break;
+				case 916:   // 大和改二重
+					if (highangle_musashi >= 1 && aaradar >= 1)
+						return 26;
 
+					if (radar_with_range_finder >= 1)
+					{
+						if (highangle_yamato >= 2)
+						{
+							if (aagun_high >= 1)
+							{
+								//42:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備*2、対空機銃
+								return 42;
+							}
+							//43:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備*2
+							return 43;
+						}
+						if (highangle_yamato >= 1)
+						{
+							if (aagun_high >= 1)
+							{
+								//44:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備、対空機銃
+								return 44;
+							}
+							//45:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備
+							return 45;
+						}
+					}
+					break;
 				case 557:   // 磯風乙改
 				case 558:   // 浜風乙改
 					if (highangle >= 1 && aaradar >= 1)

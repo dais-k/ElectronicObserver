@@ -320,6 +320,11 @@ namespace ElectronicObserver.Window.Dialog
 						ShipType.Text = "特務艦";
 					}
 				}
+				//固有対応：山汐丸
+				if (ShipType.Text == "特2TL型補給艦")
+				{
+					ShipType.Text = "特2TL型特設護衛空母";
+				}
 
 				var tip = new StringBuilder();
 				if (ship.IsAbyssalShip)
