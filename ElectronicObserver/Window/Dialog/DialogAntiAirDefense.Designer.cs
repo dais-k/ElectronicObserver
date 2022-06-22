@@ -48,7 +48,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.FleetID = new System.Windows.Forms.ComboBox();
             this.ResultView = new System.Windows.Forms.DataGridView();
-            this.ToolTipInfo = new System.Windows.Forms.ToolTip(this.components);
             this.ResultView_ShipName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ResultView_AntiAir = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ResultView_AdjustedAntiAir = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -59,6 +58,7 @@
             this.ResultView_ShootDownFixed = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ResultView_ShootDownFailed = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ResultView_AARocketBarrageProbability = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ToolTipInfo = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -129,7 +129,7 @@
             // ShowAll
             // 
             this.ShowAll.AutoSize = true;
-            this.ShowAll.Location = new System.Drawing.Point(539, 14);
+            this.ShowAll.Location = new System.Drawing.Point(667, 14);
             this.ShowAll.Name = "ShowAll";
             this.ShowAll.Size = new System.Drawing.Size(112, 19);
             this.ShowAll.TabIndex = 10;
@@ -162,7 +162,7 @@
             this.AACutinKind.FormattingEnabled = true;
             this.AACutinKind.Location = new System.Drawing.Point(282, 12);
             this.AACutinKind.Name = "AACutinKind";
-            this.AACutinKind.Size = new System.Drawing.Size(240, 23);
+            this.AACutinKind.Size = new System.Drawing.Size(379, 23);
             this.AACutinKind.TabIndex = 6;
             this.AACutinKind.SelectedIndexChanged += new System.EventHandler(this.AACutinKind_SelectedIndexChanged);
             // 
@@ -284,13 +284,6 @@
             this.ResultView.TabIndex = 0;
             this.ResultView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.ResultView_CellFormatting);
             // 
-            // ToolTipInfo
-            // 
-            this.ToolTipInfo.AutoPopDelay = 30000;
-            this.ToolTipInfo.InitialDelay = 500;
-            this.ToolTipInfo.ReshowDelay = 100;
-            this.ToolTipInfo.ShowAlways = true;
-            // 
             // ResultView_ShipName
             // 
             this.ResultView_ShipName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
@@ -381,6 +374,13 @@
             this.ResultView_AARocketBarrageProbability.ReadOnly = true;
             this.ResultView_AARocketBarrageProbability.ToolTipText = "対空噴進弾幕の発動確率";
             this.ResultView_AARocketBarrageProbability.Width = 80;
+            // 
+            // ToolTipInfo
+            // 
+            this.ToolTipInfo.AutoPopDelay = 30000;
+            this.ToolTipInfo.InitialDelay = 500;
+            this.ToolTipInfo.ReshowDelay = 100;
+            this.ToolTipInfo.ShowAlways = true;
             // 
             // DialogAntiAirDefense
             // 
