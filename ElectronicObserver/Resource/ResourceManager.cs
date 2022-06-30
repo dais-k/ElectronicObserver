@@ -219,7 +219,8 @@ namespace ElectronicObserver.Resource
 			LandASPatrol,
 			LandAssaultPlane,
 			HeavyBomber,
-			Locked,					//50
+			NightSeaplane,          //50
+			Locked,					
 			Unknown,				//不明な場合はこれ
 		}
 
@@ -466,11 +467,10 @@ namespace ElectronicObserver.Resource
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/LandASPatrol.png", "Equipment_LandASPatrol");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/LandAttacker.png", "Equipment_LandAssaultPlane");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/HeavyBomber.png", "Equipment_HeavyBomber");
+				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/NightSeaplane.png", "Equipment_NightSeaplane");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/Locked.png", "Equipment_Locked");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/Unknown.png", "Equipment_Unknown");
-
 			}
-
 		}
 
 		private static void LoadImageFromArchive(ImageList imglist, ZipArchive arc, string path, string name)
