@@ -117,7 +117,12 @@ namespace ElectronicObserver.Data.Battle.Phase
 						// colorado touch / kongo-class night attack / Yamato touch (Battleship * 3)
 						for (int i = 0; i < atk.Defenders.Count; i++)
 						{
-							var comboatk = new BattleIndex(atk.Attacker.Side, i);       // #1, #2 (, #3)
+							BattleIndex comboatk = hps.Length switch
+							{
+								//僚艦夜戦突撃(連合vs連合)の場合のみずらす
+								24 when i < 6 => new(i + 6, true, true),
+								_ => new BattleIndex(atk.Attacker.Side, i)  // #1, #2 (, #3)
+							};
 							BattleDetails.Add(new BattleNightDetail(Battle, comboatk, atk.Defenders[i].Defender, new[] { atk.Defenders[i].RawDamage }, new[] { atk.Defenders[i].CriticalFlag }, atk.AttackType, atk.EquipmentIDs, atk.NightAirAttackFlag, hps[atk.Defenders[i].Defender]));
 							AddDamage(hps, atk.Defenders[i].Defender, atk.Defenders[i].Damage);
 							damages[comboatk] += atk.Defenders[i].Damage;

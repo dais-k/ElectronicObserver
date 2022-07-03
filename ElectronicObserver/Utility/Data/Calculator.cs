@@ -397,25 +397,29 @@ namespace ElectronicObserver.Utility.Data
 					var category = eq.MasterEquipment.CategoryType;
 
 					losBase -= eq.MasterEquipment.LOS;
-					if (eq.EquipmentID == 315)                      // SG レーダー(初期型) だけ装備シナジー補正が乗らないので :(
-					{
-						switch (ship.MasterShip.ShipClass)
-						{
-							case 65:        // Iowa級
-							case 69:        // Lexington級
-							case 83:        // Casablanca級
-							case 84:        // Essex級
-							case 87:        // John C.Butler級
-							case 91:        // Fletcher級
-							case 93:        // Colorado級
-							case 95:        // Northampton級
-							case 99:        // Atlanta級
-							case 102:       // South Dakota級
-							case 105:       // Yorktown級
-								losBase -= 4;
-								break;
-						}
-					}
+
+					//2022/04/28 SGレーダー後期型の実装と共に、SGレーダー系の装備シナジー補正が反映されるようになった
+					//           今後、万が一装備ボーナスの索敵値が反映されないケースが復活した場合ここで差し引く
+
+					//if (eq.EquipmentID == 315)                      // SG レーダー(初期型) だけ装備シナジー補正が乗らないので :(
+					//{
+					//	switch (ship.MasterShip.ShipClass)
+					//	{
+					//		case 65:        // Iowa級
+					//		case 69:        // Lexington級
+					//		case 83:        // Casablanca級
+					//		case 84:        // Essex級
+					//		case 87:        // John C.Butler級
+					//		case 91:        // Fletcher級
+					//		case 93:        // Colorado級
+					//		case 95:        // Northampton級
+					//		case 99:        // Atlanta級
+					//		case 102:       // South Dakota級
+					//		case 105:       // Yorktown級
+					//			losBase -= 4;
+					//			break;
+					//	}
+					//}
 
 					double equipmentRate;
 					switch (category)
@@ -424,20 +428,16 @@ namespace ElectronicObserver.Utility.Data
 						case EquipmentTypes.JetTorpedo:
 							equipmentRate = 0.8;
 							break;
-
 						case EquipmentTypes.CarrierBasedRecon:
 						case EquipmentTypes.JetRecon:
 							equipmentRate = 1.0;
 							break;
-
 						case EquipmentTypes.SeaplaneRecon:
 							equipmentRate = 1.2;
 							break;
-
 						case EquipmentTypes.SeaplaneBomber:
 							equipmentRate = 1.1;
 							break;
-
 						default:
 							equipmentRate = 0.6;
 							break;
@@ -450,27 +450,21 @@ namespace ElectronicObserver.Utility.Data
 						case EquipmentTypes.CarrierBasedRecon:
 							levelRate = 1.2;
 							break;
-
 						case EquipmentTypes.SeaplaneBomber:
 							levelRate = 1.15;
 							break;
-
 						case EquipmentTypes.RadarSmall:
 							levelRate = 1.25;
 							break;
-
 						case EquipmentTypes.RadarLarge:
 							levelRate = 1.4;
 							break;
-
 						default:
 							levelRate = 0;
 							break;
 					}
-
 					equipmentBonus += equipmentRate * (eq.MasterEquipment.LOS + levelRate * Math.Sqrt(eq.Level));
 				}
-
 				ret += Math.Sqrt(losBase) + equipmentBonus * branchWeight;
 			}
 
