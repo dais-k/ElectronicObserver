@@ -1208,7 +1208,9 @@ namespace ElectronicObserver.Window
 			{
 				var master = ship.MasterShip;
 				while (master.RemodelBeforeShip != null)
+				{
 					master = master.RemodelBeforeShip;
+				}
 
 				if (!shiplist.ContainsKey(master.ShipID))
 				{
@@ -1220,8 +1222,27 @@ namespace ElectronicObserver.Window
 				}
 			}
 
+			//Note:宗谷に対する特別対応
+			//艦隊晒しページの宗谷は主キーがID:645(灯台補給艦)であるとしてデータを読み込んでいる(IDが一番若いから？)
+			//未改造時の艦IDを主キーとしている本ロジックとマッチしないため例外的に差し替えを行う
+			if (shiplist.ContainsKey(699))	//699：特務艦
+			{
+				List<ShipData> tmpShipData = shiplist[699];
+
+				shiplist.Remove(699);
+				shiplist.Add(645, tmpShipData);
+			}
+			if (shiplist.ContainsKey(650))	//650：南極観測船
+			{
+				List<ShipData> tmpShipData = shiplist[650];
+
+				shiplist.Remove(650);
+				shiplist.Add(645, tmpShipData);
+			}
+
 			// 上で作った分類の各項を文字列化
-			foreach (var sl in shiplist)
+			// Note:KancolleSnifferでの出力がID順なのでそちらに合わせるようにした
+			foreach (var sl in shiplist.OrderBy(id => id.Key))
 			{
 				sb.Append("|").Append(sl.Key).Append(":");
 
@@ -1287,7 +1308,6 @@ namespace ElectronicObserver.Window
 			Clipboard.SetData(DataFormats.StringFormat, sb.ToString());
 		}
 
-
 		private void ContextMenuFleet_AntiAirDetails_Click(object sender, EventArgs e)
 		{
 
@@ -1301,10 +1321,8 @@ namespace ElectronicObserver.Window
 			dialog.Show(this);
 		}
 
-
 		private void ContextMenuFleet_Capture_Click(object sender, EventArgs e)
 		{
-
 			using (Bitmap bitmap = new Bitmap(this.ClientSize.Width, this.ClientSize.Height))
 			{
 				this.DrawToBitmap(bitmap, this.ClientRectangle);
@@ -1313,21 +1331,16 @@ namespace ElectronicObserver.Window
 			}
 		}
 
-
 		private void ContextMenuFleet_OutputFleetImage_Click(object sender, EventArgs e)
 		{
-
 			using (var dialog = new DialogFleetImageGenerator(FleetID))
 			{
 				dialog.ShowDialog(this);
 			}
 		}
 
-
-
 		void ConfigurationChanged()
 		{
-
 			var c = Utility.Configuration.Config;
 
 			MainFont = Font = c.UI.MainFont;
@@ -1403,22 +1416,17 @@ namespace ElectronicObserver.Window
 			TableMember.Location = new Point(TableMember.Location.X, TableFleet.Bottom /*+ Math.Max( TableFleet.Margin.Bottom, TableMember.Margin.Top )*/ );
 
 			TableMember.PerformLayout();        //fixme:サイズ変更に親パネルが追随しない
-
 		}
-
-
 
 		private void TableMember_CellPaint(object sender, TableLayoutCellPaintEventArgs e)
 		{
 			e.Graphics.DrawLine(Pens.Silver, e.CellBounds.X, e.CellBounds.Bottom - 1, e.CellBounds.Right - 1, e.CellBounds.Bottom - 1);
 		}
 
-
 		protected override string GetPersistString()
 		{
 			return "Fleet #" + FleetID.ToString();
 		}
-
 
 		/// <summary>
 		/// Clean up any resources being used.
@@ -1430,7 +1438,6 @@ namespace ElectronicObserver.Window
 			for (int i = 0; i < ControlMember.Length; i++)
 				ControlMember[i].Dispose();
 
-
 			// --- auto generated ---
 			if (disposing && (components != null))
 			{
@@ -1438,8 +1445,5 @@ namespace ElectronicObserver.Window
 			}
 			base.Dispose(disposing);
 		}
-
-
 	}
-
 }
