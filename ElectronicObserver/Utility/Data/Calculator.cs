@@ -1069,7 +1069,7 @@ namespace ElectronicObserver.Utility.Data
 				}
 			}
 
-			if (attackerShipID == 545 || attackerShipID == 599 || attackerShipID == 610)      // Saratoga Mk.II/赤城改二戊/加賀改二戊
+			if (attackerShipID == 545 || attackerShipID == 599 || attackerShipID == 610 || attackerShipID == 883)      // Saratoga Mk.II/赤城改二戊/加賀改二戊/龍鳳改二戊
 				nightPersonnelCount++;
 
 
