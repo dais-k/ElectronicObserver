@@ -465,7 +465,7 @@ namespace ElectronicObserver.Resource
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/NightFighter.png", "Equipment_NightFighter");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/NightAttacker.png", "Equipment_NightAttacker");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/LandASPatrol.png", "Equipment_LandASPatrol");
-				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/LandAttacker.png", "Equipment_LandAssaultPlane");
+				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/LandAssaultPlane.png", "Equipment_LandAssaultPlane");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/HeavyBomber.png", "Equipment_HeavyBomber");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/NightSeaplane.png", "Equipment_NightSeaplane");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/Locked.png", "Equipment_Locked");
