@@ -336,6 +336,9 @@ namespace ElectronicObserver.Data.Quest
 						case 318:   //|318|月|給糧艦「伊良湖」の支援|編成条件を満たした状態で演習に3回勝利後、達成後旗艦におにぎり2つ装備|編成条件：軽巡2隻|マンスリーだが1日で進捗リセット|
 							Progresses.Add(new ProgressPractice(q, 3, "B", true));
 							break;
+						case 326:   //|326|単|夏季大演習|演習勝利8|単発(というか更新時期不定、名前の通り夏ごろ)だが1日で進捗リセット
+							Progresses.Add(new ProgressPractice(q, 8, true));
+							break;
 						case 330:   //|330|Ｑ|空母機動部隊、演習始め！|演習B勝利以上4|条件：航空母艦旗艦他1隻計2隻以上及び駆逐艦2隻を含む|クォータリーだが1日で進捗リセット
 							Progresses.Add(new ProgressPractice(q, 4, "B", true));
 							break;
