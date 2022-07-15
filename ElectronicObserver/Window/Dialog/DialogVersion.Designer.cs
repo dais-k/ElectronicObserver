@@ -151,7 +151,7 @@
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(105, 15);
             this.label5.TabIndex = 12;
-            this.label5.Text = "ヨシヒロ＠パラオ泊地";
+            this.label5.Text = "だいすけ＠岩川泊地";
             // 
             // label6
             // 
