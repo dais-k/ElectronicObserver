@@ -1046,28 +1046,28 @@ namespace ElectronicObserver.Window
 
 				strs.AddLast(itemName + " x " + item.Amount);
 			}
-
+			
 			if (!strs.Any())
 			{
 				return "(なし)";
-
 			}
 			else
 			{
-				return string.Join(", ", strs);
+				string materialInfo = string.Join(", ", strs);
+				string suffix = "";
+				if (compass.MapAreaID == 6 && compass.MapInfoID == 3)
+				{
+					suffix = "(作戦完遂時にGet)";
+				}
+				Utility.Logger.Add(2, $"{compass.MapAreaID}-{compass.MapInfoID}-{compass.Destination} にて {materialInfo} を発見しました。{suffix}");
+				return materialInfo;
 			}
 		}
-
-
 
 		private void BattleStarted(string apiname, dynamic data)
 		{
 			UpdateEnemyFleetInstant(apiname.Contains("practice"));
 		}
-
-
-
-
 
 		private void UpdateEnemyFleet()
 		{
