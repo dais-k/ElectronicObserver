@@ -41,7 +41,7 @@
 
 ## 開発者の皆様へ
 
-[ライセンスは MIT License です。](https://github.com/andanteyk/ElectronicObserver/blob/master/LICENSE)  
+ライセンスは [MIT License](https://github.com/yosxpeee/ElectronicObserver/blob/master/LICENSE) です。
 
 
 ## 使用しているライブラリ
