@@ -1231,7 +1231,7 @@ namespace ElectronicObserver.Window
 				== System.Windows.Forms.DialogResult.Yes)
 			{
 
-				System.Diagnostics.Process.Start("https://github.com/andanteyk/ElectronicObserver/wiki");
+				System.Diagnostics.Process.Start("https://github.com/yosxpeee/ElectronicObserver/wiki");
 			}
 
 		}
