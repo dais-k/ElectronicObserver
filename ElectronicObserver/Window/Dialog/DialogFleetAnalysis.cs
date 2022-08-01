@@ -95,15 +95,15 @@ namespace ElectronicObserver.Window.Dialog
 			//# 艦種別
 			//################################
 			//Lv1でない艦の数を数える
-			var shipTypeCount = ships.GroupBy(s => s.MasterShip.ShipTypeName).ToDictionary(group => group.Key, group => group.Count(s => s.Level != 1));
+			var shipTypeCount = ships.GroupBy(s => s.MasterShip.ShipTypeName).ToDictionary(group => group.Key, group => group.Count(s => s.Level != 1 && s.IsLocked));
 			//Lv1でない艦の平均レベルを算出する
-			var shipTypeLevelAvg = ships.GroupBy(s => s.MasterShip.ShipTypeName).ToDictionary(group => group.Key, group => group.Where(s => s.Level != 1).Average(s => s.Level));
+			var shipTypeLevelAvg = ships.GroupBy(s => s.MasterShip.ShipTypeName).ToDictionary(group => group.Key, group => group.Where(s => s.Level != 1 && s.IsLocked).Average(s => s.Level));
 			//Lv1でない艦の最小レベルを抽出する
-			var shipTypeLevelMin = ships.GroupBy(s => s.MasterShip.ShipTypeName).ToDictionary(group => group.Key, group => group.Where(s => s.Level != 1).Min(s => s.Level));
+			var shipTypeLevelMin = ships.GroupBy(s => s.MasterShip.ShipTypeName).ToDictionary(group => group.Key, group => group.Where(s => s.Level != 1 && s.IsLocked).Min(s => s.Level));
 			//Lv1でない艦の最大レベルを抽出する
-			var shipTypeLevelMax = ships.GroupBy(s => s.MasterShip.ShipTypeName).ToDictionary(group => group.Key, group => group.Where(s => s.Level != 1).Max(s => s.Level));
+			var shipTypeLevelMax = ships.GroupBy(s => s.MasterShip.ShipTypeName).ToDictionary(group => group.Key, group => group.Where(s => s.Level != 1 && s.IsLocked).Max(s => s.Level));
 			//Lv1でない艦の取得経験値合計を算出する
-			var shipTypeExpSum = ships.GroupBy(s => s.MasterShip.ShipTypeName).ToDictionary(group => group.Key, group => group.Where(s => s.Level != 1).Sum(s => s.ExpTotal));
+			var shipTypeExpSum = ships.GroupBy(s => s.MasterShip.ShipTypeName).ToDictionary(group => group.Key, group => group.Where(s => s.Level != 1 && s.IsLocked).Sum(s => s.ExpTotal));
 
 			int allSumExp = 0;
 			labelAllSumExp.Text = "経験値合計：0";
