@@ -200,7 +200,8 @@ namespace ElectronicObserver.Data
 			EquipmentID == 383 ||   // 後期型53cm艦首魚雷(8門)
 			EquipmentID == 441 ||	// 21inch艦首魚雷発射管6門(後期型)
 			EquipmentID == 443 ||	// 潜水艦後部魚雷発射管4門(後期型)
-			EquipmentID == 457;		// 後期型艦首魚雷(4門)
+			EquipmentID == 457 ||   // 後期型艦首魚雷(4門)
+			EquipmentID == 461;     // 熟練聴音員+後期型艦首魚雷(4門)
 
 		/// <summary> 高角砲かどうか </summary>
 		public bool IsHighAngleGun => IconType == 16;
