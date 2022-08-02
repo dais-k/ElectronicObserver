@@ -16,6 +16,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Diagnostics;
 using WeifenLuo.WinFormsUI.Docking;
 
 namespace ElectronicObserver.Window
@@ -1125,15 +1126,8 @@ namespace ElectronicObserver.Window
 
 		}
 
-
-
-		/// <summary>
-		/// 「艦隊デッキビルダー」用編成コピー
-		/// <see cref="http://www.kancolle-calc.net/deckbuilder.html"/>
-		/// </summary>
-		private void ContextMenuFleet_CopyFleetDeckBuilder_Click(object sender, EventArgs e)
+		private string CreateDeciBuilderData()
 		{
-
 			StringBuilder sb = new StringBuilder();
 			KCDatabase db = KCDatabase.Instance;
 
@@ -1152,10 +1146,11 @@ namespace ElectronicObserver.Window
 				{
 					if (ship == null) break;
 
-					sb.AppendFormat(@"""s{0}"":{{""id"":{1},""lv"":{2},""luck"":{3},""items"":{{",
+					sb.AppendFormat(@"""s{0}"":{{""id"":{1},""lv"":{2},""asw"":{3},""luck"":{4},""items"":{{",
 						shipcount,
 						ship.ShipID,
 						ship.Level,
+						ship.ASWBase,
 						ship.LuckBase);
 
 					int eqcount = 1;
@@ -1184,9 +1179,17 @@ namespace ElectronicObserver.Window
 			sb.Remove(sb.Length - 1, 1);        // remove ","
 			sb.Append(@"}");
 
-			Clipboard.SetData(DataFormats.StringFormat, sb.ToString());
+			return sb.ToString();
 		}
 
+		/// <summary>
+		/// 「艦隊デッキビルダー」用編成コピー
+		/// <see cref="http://www.kancolle-calc.net/deckbuilder.html"/>
+		/// </summary>
+		private void ContextMenuFleet_CopyFleetDeckBuilder_Click(object sender, EventArgs e)
+		{
+			Clipboard.SetData(DataFormats.StringFormat, CreateDeciBuilderData());
+		}
 
 		/// <summary>
 		/// 「艦隊晒しページ」用編成コピー
@@ -1306,6 +1309,43 @@ namespace ElectronicObserver.Window
 			sb.Append("]");
 
 			Clipboard.SetData(DataFormats.StringFormat, sb.ToString());
+		}
+
+		private Process OpenUrl(string url)
+		{
+			ProcessStartInfo pi = new ProcessStartInfo()
+			{
+				FileName = url,
+				UseShellExecute = true,
+			};
+
+			return Process.Start(pi);
+		}
+
+		/// <summary>
+		/// 現在の艦隊データで制空権シミュレータ(https://noro6.github.io/kc-web)を開く
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ContextMenuFleet_OpenAirControlSimulator_Click(object sender, EventArgs e)
+		{
+			string data = CreateDeciBuilderData();
+			string uri = @$"https://noro6.github.io/kc-web?predeck={data.Replace("\"","\\\"")}";
+			//Console.WriteLine(uri);
+			OpenUrl(uri);
+		}
+
+		/// <summary>
+		/// 現在の艦隊データで作戦室(https://jervis.vercel.app/)をダイレクトに開く
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ContextMenuFleet_OpenTacticalRoom_Click(object sender, EventArgs e)
+		{
+			string data = CreateDeciBuilderData();
+			string uri = @$"https://jervis.vercel.app?predeck={data.Replace("\"", "\\\"")}";
+			//Console.WriteLine(uri);
+			OpenUrl(uri);
 		}
 
 		private void ContextMenuFleet_AntiAirDetails_Click(object sender, EventArgs e)
