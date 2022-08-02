@@ -21,12 +21,9 @@ using WeifenLuo.WinFormsUI.Docking;
 
 namespace ElectronicObserver.Window
 {
-
 	public partial class FormFleet : DockContent
 	{
-
 		private bool IsRemodeling = false;
-
 
 		private class TableFleetControl : IDisposable
 		{
@@ -41,7 +38,6 @@ namespace ElectronicObserver.Window
 
 			public TableFleetControl(FormFleet parent)
 			{
-
 				#region Initialize
 
 				Name = new Label
@@ -106,7 +102,6 @@ namespace ElectronicObserver.Window
 				ToolTipInfo = parent.ToolTipInfo;
 
 				#endregion
-
 			}
 
 			public TableFleetControl(FormFleet parent, TableLayoutPanel table)
@@ -117,7 +112,6 @@ namespace ElectronicObserver.Window
 
 			public void AddToTable(TableLayoutPanel table)
 			{
-
 				table.SuspendLayout();
 				table.Controls.Add(Name, 0, 0);
 				table.Controls.Add(State, 1, 0);
@@ -125,7 +119,6 @@ namespace ElectronicObserver.Window
 				table.Controls.Add(SearchingAbility, 3, 0);
 				table.Controls.Add(AntiAirPower, 4, 0);
 				table.ResumeLayout();
-
 			}
 
 			private void SearchingAbility_Click(object sender, EventArgs e, int fleetID)
@@ -139,12 +132,9 @@ namespace ElectronicObserver.Window
 
 			public void Update(FleetData fleet)
 			{
-
 				KCDatabase db = KCDatabase.Instance;
 
 				if (fleet == null) return;
-
-
 
 				Name.Text = fleet.Name;
 				{
@@ -214,10 +204,7 @@ namespace ElectronicObserver.Window
 						));
 
 				}
-
-
 				State.UpdateFleetState(fleet, ToolTipInfo);
-
 
 				//制空戦力計算	
 				{
@@ -233,7 +220,6 @@ namespace ElectronicObserver.Window
 						includeLevel ? "熟練度なし" : "熟練度あり",
 						includeLevel ? Calculator.GetAirSuperiorityIgnoreLevel(fleet) : Calculator.GetAirSuperiority(fleet)));
 				}
-
 
 				//索敵能力計算
 				SearchingAbility.Text = fleet.GetSearchingAbilityString(BranchWeight);
@@ -276,12 +262,9 @@ namespace ElectronicObserver.Window
 				}
 			}
 
-
 			public void Refresh()
 			{
-
 				State.RefreshFleetState();
-
 			}
 
 			public void ConfigurationChanged(FormFleet parent)
@@ -306,7 +289,6 @@ namespace ElectronicObserver.Window
 			}
 		}
 
-
 		private class TableMemberControl : IDisposable
 		{
 			public ImageLabel Name;
@@ -319,10 +301,8 @@ namespace ElectronicObserver.Window
 			private ToolTip ToolTipInfo;
 			private FormFleet Parent;
 
-
 			public TableMemberControl(FormFleet parent)
 			{
-
 				#region Initialize
 
 				Name = new ImageLabel();
@@ -419,7 +399,6 @@ namespace ElectronicObserver.Window
 				ToolTipInfo = parent.ToolTipInfo;
 				Parent = parent;
 				#endregion
-
 			}
 
 			public TableMemberControl(FormFleet parent, TableLayoutPanel table, int row)
@@ -430,10 +409,8 @@ namespace ElectronicObserver.Window
 				Equipments.Name = string.Format("{0}_{1}", parent.FleetID, row + 1);
 			}
 
-
 			public void AddToTable(TableLayoutPanel table, int row)
 			{
-
 				table.SuspendLayout();
 
 				table.Controls.Add(Name, 0, row);
@@ -444,12 +421,10 @@ namespace ElectronicObserver.Window
 				table.Controls.Add(Equipments, 5, row);
 
 				table.ResumeLayout();
-
 			}
 
 			public void Update(int shipMasterID)
 			{
-
 				KCDatabase db = KCDatabase.Instance;
 				ShipData ship = db.Ships[shipMasterID];
 
@@ -542,7 +517,6 @@ namespace ElectronicObserver.Window
 						ToolTipInfo.SetToolTip(Level, tip.ToString());
 					}
 
-
 					HP.SuspendUpdate();
 					HP.Value = HP.PrevValue = ship.HPCurrent;
 					HP.MaximumValue = ship.HPMax;
@@ -604,7 +578,6 @@ namespace ElectronicObserver.Window
 					}
 					HP.ResumeUpdate();
 
-
 					Condition.Text = ship.Condition.ToString();
 					Condition.Tag = ship.Condition;
 					SetConditionDesign(Condition, ship.Condition);
@@ -621,16 +594,13 @@ namespace ElectronicObserver.Window
 
 					ShipResource.SetResources(ship.Fuel, ship.FuelMax, ship.Ammo, ship.AmmoMax);
 
-
 					Equipments.SetSlotList(ship);
 					ToolTipInfo.SetToolTip(Equipments, GetEquipmentString(ship));
-
 				}
 				else
 				{
 					Name.Tag = -1;
 				}
-
 
 				Name.Visible =
 				Level.Visible =
@@ -638,7 +608,6 @@ namespace ElectronicObserver.Window
 				Condition.Visible =
 				ShipResource.Visible =
 				Equipments.Visible = shipMasterID != -1;
-
 			}
 
 			void Name_MouseDown(object sender, MouseEventArgs e)
@@ -662,7 +631,6 @@ namespace ElectronicObserver.Window
 					}
 				}
 			}
-
 
 			private string GetEquipmentString(ShipData ship)
 			{
@@ -790,7 +758,6 @@ namespace ElectronicObserver.Window
 				return sb.ToString();
 			}
 
-
 			public void ConfigurationChanged(FormFleet parent)
 			{
 				Name.Font = parent.MainFont;
@@ -844,18 +811,12 @@ namespace ElectronicObserver.Window
 			}
 		}
 
-
-
-
-
 		public int FleetID { get; private set; }
-
 
 		public Font MainFont { get; set; }
 		public Font SubFont { get; set; }
 		public Color MainFontColor { get; set; }
 		public Color SubFontColor { get; set; }
-
 
 		private TableFleetControl ControlFleet;
 		private TableMemberControl[] ControlMember;
@@ -882,13 +843,11 @@ namespace ElectronicObserver.Window
 			ControlHelper.SetDoubleBuffered(TableFleet);
 			ControlHelper.SetDoubleBuffered(TableMember);
 
-
 			TableFleet.Visible = false;
 			TableFleet.SuspendLayout();
 			TableFleet.BorderStyle = BorderStyle.FixedSingle;
 			ControlFleet = new TableFleetControl(this, TableFleet);
 			TableFleet.ResumeLayout();
-
 
 			TableMember.SuspendLayout();
 			ControlMember = new TableMemberControl[7];
@@ -898,18 +857,13 @@ namespace ElectronicObserver.Window
 			}
 			TableMember.ResumeLayout();
 
-
 			ConfigurationChanged();     //fixme: 苦渋の決断
 
 			Icon = ResourceManager.ImageToIcon(ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormFleet]);
-
 		}
-
-
 
 		private void FormFleet_Load(object sender, EventArgs e)
 		{
-
 			Text = string.Format("#{0}", FleetID);
 
 			APIObserver o = APIObserver.Instance;
@@ -949,10 +903,8 @@ namespace ElectronicObserver.Window
 			Utility.Configuration.Instance.ConfigurationChanged += ConfigurationChanged;
 		}
 
-
 		void Updated(string apiname, dynamic data)
 		{
-
 			if (IsRemodeling)
 			{
 				if (apiname == "api_get_member/slot_item")
@@ -992,13 +944,10 @@ namespace ElectronicObserver.Window
 			if (Icon != null) ResourceManager.DestroyIcon(Icon);
 			Icon = ResourceManager.ImageToIcon(ResourceManager.Instance.Icons.Images[ControlFleet.State.GetIconIndex()]);
 			if (Parent != null) Parent.Refresh();       //アイコンを更新するため
-
 		}
-
 
 		void UpdateTimerTick()
 		{
-
 			FleetData fleet = KCDatabase.Instance.Fleet.Fleets[FleetID];
 
 			TableFleet.SuspendLayout();
@@ -1015,7 +964,6 @@ namespace ElectronicObserver.Window
 				ControlMember[i].HP.Refresh();
 			}
 			TableMember.ResumeLayout();
-
 
 			// anchorage repairing
 			if (fleet != null && Utility.Configuration.Config.FormFleet.ReflectAnchorageRepairHealing)
@@ -1055,11 +1003,9 @@ namespace ElectronicObserver.Window
 			}
 		}
 
-
 		//艦隊編成のコピー
 		private void ContextMenuFleet_CopyFleet_Click(object sender, EventArgs e)
 		{
-
 			StringBuilder sb = new StringBuilder();
 			KCDatabase db = KCDatabase.Instance;
 			FleetData fleet = db.Fleet[FleetID];
@@ -1114,16 +1060,12 @@ namespace ElectronicObserver.Window
 				sb.AppendLine();
 			}
 
-
 			Clipboard.SetData(DataFormats.StringFormat, sb.ToString());
 		}
 
-
 		private void ContextMenuFleet_Opening(object sender, CancelEventArgs e)
 		{
-
 			ContextMenuFleet_Capture.Visible = Utility.Configuration.Config.Debug.EnableDebugMenu;
-
 		}
 
 		private string CreateDeciBuilderData()
@@ -1132,9 +1074,8 @@ namespace ElectronicObserver.Window
 			KCDatabase db = KCDatabase.Instance;
 
 			// 手書き json の悲しみ
-
 			sb.Append(@"{""version"":4,");
-
+			sb.Append(@"""hplv"":"+db.Admiral.Level+",");
 			foreach (var fleet in db.Fleet.Fleets.Values)
 			{
 				if (fleet == null || fleet.MembersInstance.All(m => m == null)) continue;
@@ -1197,7 +1138,6 @@ namespace ElectronicObserver.Window
 		/// </summary>
 		private void ContextMenuFleet_CopyKanmusuList_Click(object sender, EventArgs e)
 		{
-
 			StringBuilder sb = new StringBuilder();
 			KCDatabase db = KCDatabase.Instance;
 
@@ -1226,7 +1166,7 @@ namespace ElectronicObserver.Window
 			}
 
 			//Note:宗谷に対する特別対応
-			//艦隊晒しページの宗谷は主キーがID:645(灯台補給艦)であるとしてデータを読み込んでいる(IDが一番若いから？)
+			//艦隊晒しページ(http://kancolle-calc.net/kanmusu_list.html)の宗谷は主キーがID:645(灯台補給艦)であるとしてデータを読み込んでいる(IDが一番若いから？)
 			//未改造時の艦IDを主キーとしている本ロジックとマッチしないため例外的に差し替えを行う
 			if (shiplist.ContainsKey(699))	//699：特務艦
 			{
@@ -1311,14 +1251,21 @@ namespace ElectronicObserver.Window
 			Clipboard.SetData(DataFormats.StringFormat, sb.ToString());
 		}
 
-		private Process OpenUrl(string url)
+		/// <summary>
+		/// 外部サイトをデッキビルダー形式指定で開く
+		/// </summary>
+		/// <param name="baseUrl"></param>
+		/// <returns></returns>
+		private Process OpenUrlWithDeciBuilderData(string baseUrl)
 		{
+			string data = CreateDeciBuilderData();
+			string url = $@"{baseUrl}?predeck={data.Replace("\"", "\\\"")}";
+
 			ProcessStartInfo pi = new ProcessStartInfo()
 			{
 				FileName = url,
 				UseShellExecute = true,
 			};
-
 			return Process.Start(pi);
 		}
 
@@ -1329,28 +1276,31 @@ namespace ElectronicObserver.Window
 		/// <param name="e"></param>
 		private void ContextMenuFleet_OpenAirControlSimulator_Click(object sender, EventArgs e)
 		{
-			string data = CreateDeciBuilderData();
-			string uri = @$"https://noro6.github.io/kc-web?predeck={data.Replace("\"","\\\"")}";
-			//Console.WriteLine(uri);
-			OpenUrl(uri);
+			OpenUrlWithDeciBuilderData("https://noro6.github.io/kc-web");
 		}
 
 		/// <summary>
-		/// 現在の艦隊データで作戦室(https://jervis.vercel.app/)をダイレクトに開く
+		/// 現在の艦隊データで作戦室(https://jervis.vercel.app/)を開く
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private void ContextMenuFleet_OpenTacticalRoom_Click(object sender, EventArgs e)
 		{
-			string data = CreateDeciBuilderData();
-			string uri = @$"https://jervis.vercel.app?predeck={data.Replace("\"", "\\\"")}";
-			//Console.WriteLine(uri);
-			OpenUrl(uri);
+			OpenUrlWithDeciBuilderData("https://jervis.vercel.app");
+		}
+
+		/// <summary>
+		/// 現在の艦隊データでデッキビルダー(http://kancolle-calc.net/deckbuilder.html)を開く
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ContextMenuFleet_OpenDeckBuilder_Click(object sender, EventArgs e)
+		{
+			OpenUrlWithDeciBuilderData("http://kancolle-calc.net/deckbuilder.html");
 		}
 
 		private void ContextMenuFleet_AntiAirDetails_Click(object sender, EventArgs e)
 		{
-
 			var dialog = new DialogAntiAirDefense();
 
 			if (KCDatabase.Instance.Fleet.CombinedFlag != 0 && (FleetID == 1 || FleetID == 2))

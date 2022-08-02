@@ -25,13 +25,14 @@
             this.ContextMenuFleet_CopyKanmusuList = new System.Windows.Forms.ToolStripMenuItem();
             this.ContextMenuFleet_CopyToFleetAnalysis = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.ContextMenuFleet_OpenTacticalRoom = new System.Windows.Forms.ToolStripMenuItem();
+            this.ContextMenuFleet_OpenAirControlSimulator = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.ContextMenuFleet_AntiAirDetails = new System.Windows.Forms.ToolStripMenuItem();
             this.ContextMenuFleet_Capture = new System.Windows.Forms.ToolStripMenuItem();
             this.ContextMenuFleet_OutputFleetImage = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolTipInfo = new System.Windows.Forms.ToolTip(this.components);
-            this.ContextMenuFleet_OpenAirControlSimulator = new System.Windows.Forms.ToolStripMenuItem();
-            this.ContextMenuFleet_OpenTacticalRoom = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.ContextMenuFleet_OpenDeckBuilder = new System.Windows.Forms.ToolStripMenuItem();
             this.ContextMenuFleet.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -83,12 +84,13 @@
             this.toolStripSeparator1,
             this.ContextMenuFleet_OpenTacticalRoom,
             this.ContextMenuFleet_OpenAirControlSimulator,
+            this.ContextMenuFleet_OpenDeckBuilder,
             this.toolStripSeparator2,
             this.ContextMenuFleet_AntiAirDetails,
             this.ContextMenuFleet_Capture,
             this.ContextMenuFleet_OutputFleetImage});
             this.ContextMenuFleet.Name = "ContextMenuFleet";
-            this.ContextMenuFleet.Size = new System.Drawing.Size(218, 236);
+            this.ContextMenuFleet.Size = new System.Drawing.Size(218, 258);
             this.ContextMenuFleet.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenuFleet_Opening);
             // 
             // ContextMenuFleet_CopyFleet
@@ -124,6 +126,25 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(214, 6);
             // 
+            // ContextMenuFleet_OpenTacticalRoom
+            // 
+            this.ContextMenuFleet_OpenTacticalRoom.Name = "ContextMenuFleet_OpenTacticalRoom";
+            this.ContextMenuFleet_OpenTacticalRoom.Size = new System.Drawing.Size(217, 22);
+            this.ContextMenuFleet_OpenTacticalRoom.Text = "作戦室を開く(&W)";
+            this.ContextMenuFleet_OpenTacticalRoom.Click += new System.EventHandler(this.ContextMenuFleet_OpenTacticalRoom_Click);
+            // 
+            // ContextMenuFleet_OpenAirControlSimulator
+            // 
+            this.ContextMenuFleet_OpenAirControlSimulator.Name = "ContextMenuFleet_OpenAirControlSimulator";
+            this.ContextMenuFleet_OpenAirControlSimulator.Size = new System.Drawing.Size(217, 22);
+            this.ContextMenuFleet_OpenAirControlSimulator.Text = "制空権シミュレータを開く(&V)";
+            this.ContextMenuFleet_OpenAirControlSimulator.Click += new System.EventHandler(this.ContextMenuFleet_OpenAirControlSimulator_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(214, 6);
+            // 
             // ContextMenuFleet_AntiAirDetails
             // 
             this.ContextMenuFleet_AntiAirDetails.Name = "ContextMenuFleet_AntiAirDetails";
@@ -152,24 +173,12 @@
             this.ToolTipInfo.ReshowDelay = 100;
             this.ToolTipInfo.ShowAlways = true;
             // 
-            // ContextMenuFleet_OpenAirControlSimulator
+            // ContextMenuFleet_OpenDeckBuilder
             // 
-            this.ContextMenuFleet_OpenAirControlSimulator.Name = "ContextMenuFleet_OpenAirControlSimulator";
-            this.ContextMenuFleet_OpenAirControlSimulator.Size = new System.Drawing.Size(217, 22);
-            this.ContextMenuFleet_OpenAirControlSimulator.Text = "制空権シミュレータを開く(&V)";
-            this.ContextMenuFleet_OpenAirControlSimulator.Click += new System.EventHandler(this.ContextMenuFleet_OpenAirControlSimulator_Click);
-            // 
-            // ContextMenuFleet_OpenTacticalRoom
-            // 
-            this.ContextMenuFleet_OpenTacticalRoom.Name = "ContextMenuFleet_OpenTacticalRoom";
-            this.ContextMenuFleet_OpenTacticalRoom.Size = new System.Drawing.Size(217, 22);
-            this.ContextMenuFleet_OpenTacticalRoom.Text = "作戦室を開く(&W)";
-            this.ContextMenuFleet_OpenTacticalRoom.Click += new System.EventHandler(this.ContextMenuFleet_OpenTacticalRoom_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(214, 6);
+            this.ContextMenuFleet_OpenDeckBuilder.Name = "ContextMenuFleet_OpenDeckBuilder";
+            this.ContextMenuFleet_OpenDeckBuilder.Size = new System.Drawing.Size(217, 22);
+            this.ContextMenuFleet_OpenDeckBuilder.Text = "デッキビルダーを開く(&X)";
+            this.ContextMenuFleet_OpenDeckBuilder.Click += new System.EventHandler(this.ContextMenuFleet_OpenDeckBuilder_Click);
             // 
             // FormFleet
             // 
@@ -211,5 +220,6 @@
 		private System.Windows.Forms.ToolStripMenuItem ContextMenuFleet_OpenAirControlSimulator;
 		private System.Windows.Forms.ToolStripMenuItem ContextMenuFleet_OpenTacticalRoom;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+		private System.Windows.Forms.ToolStripMenuItem ContextMenuFleet_OpenDeckBuilder;
 	}
 }
