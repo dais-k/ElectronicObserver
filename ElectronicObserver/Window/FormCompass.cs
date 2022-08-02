@@ -859,7 +859,10 @@ namespace ElectronicObserver.Window
 									Constants.GetMaterialName(compass.WhirlpoolItemID),
 									compass.WhirlpoolItemAmount,
 									(double)compass.WhirlpoolItemAmount / Math.Max(materialmax, 1));
-
+								Utility.Logger.Add(2, string.Format("渦潮により {0} x {1} を失いました。({2:p0})",
+									Constants.GetMaterialName(compass.WhirlpoolItemID),
+									compass.WhirlpoolItemAmount,
+									(double)compass.WhirlpoolItemAmount / Math.Max(materialmax, 1)));
 							}
 							break;
 
