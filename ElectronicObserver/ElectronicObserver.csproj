@@ -414,6 +414,12 @@
     <Compile Include="Window\Dialog\DialogBattleDetail.Designer.cs">
       <DependentUpon>DialogBattleDetail.cs</DependentUpon>
     </Compile>
+    <Compile Include="Window\Dialog\DialogChooseAirBase.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Window\Dialog\DialogChooseAirBase.Designer.cs">
+      <DependentUpon>DialogChooseAirBase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Window\Dialog\DialogConfiguration.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -738,6 +744,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Window\Dialog\DialogBattleDetail.resx">
       <DependentUpon>DialogBattleDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Window\Dialog\DialogChooseAirBase.resx">
+      <DependentUpon>DialogChooseAirBase.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Window\Dialog\DialogConfiguration.resx">
       <DependentUpon>DialogConfiguration.cs</DependentUpon>

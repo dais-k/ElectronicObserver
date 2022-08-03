@@ -1068,7 +1068,7 @@ namespace ElectronicObserver.Window
 			ContextMenuFleet_Capture.Visible = Utility.Configuration.Config.Debug.EnableDebugMenu;
 		}
 
-		private string CreateDeciBuilderData()
+		private string CreateDeciBuilderData(int areaId)
 		{
 			StringBuilder sb = new StringBuilder();
 			KCDatabase db = KCDatabase.Instance;
@@ -1114,12 +1114,55 @@ namespace ElectronicObserver.Window
 				if (shipcount > 0)
 					sb.Remove(sb.Length - 1, 1);        // remove ","
 				sb.Append(@"},");
+			}
 
+			//基地航空隊
+			//Note:mode(出撃/待機などの中隊ごとの状態)は、読み取る側の制御が揃っていないため対応しない。
+			//　制空権シミュレータ：modeはitemの前にないといけない、modeがない場合は「待機」になる
+			//　作戦室　　　　　　：modeはitemの後にないといけない、modeがない場合は「出撃」になる
+			if (areaId != 0)
+			{
+				int corpsNumber = 1;
+				int squadronNumber = 1;
+				string corpsJson = "";
+				string squadronJson = "";
+				foreach (KeyValuePair<int, BaseAirCorpsData> corps in db.BaseAirCorps)
+				{
+					if (corps.Value.MapAreaID == areaId)
+					{
+						corpsJson += @"""a" + corpsNumber + @""":{";
+						foreach (KeyValuePair<int,BaseAirCorpsSquadron> sq in corps.Value.Squadrons)
+						{
+							int emid = sq.Value.EquipmentMasterID;
+							EquipmentData eq = db.Equipments[emid];
+							if(eq != null)
+							{
+								squadronJson += @"""i"+squadronNumber+@""":{""id"":"+ sq.Value.EquipmentID+@",""rf"":"+eq.Level+@",""mas"":"+eq.AircraftLevel+@"},";
+								//Console.WriteLine(sq.Value.SquadronID + "," + sq.Value.EquipmentID + "," + eq.Level + "," + eq.AircraftLevel);
+							}
+							squadronNumber++;
+						}
+						squadronJson = @"""items"":{" + squadronJson.Trim(',') + "}";
+
+						corpsJson += squadronJson + "},";
+						squadronJson = "";
+						squadronNumber = 1;
+						corpsNumber++;
+					}
+				}
+
+				corpsJson = corpsJson.Trim(',');
+				Console.WriteLine(corpsJson+ "}");
+				if(corpsJson != "")
+				{
+					sb.Append(corpsJson+ "}");
+				}
 			}
 
 			sb.Remove(sb.Length - 1, 1);        // remove ","
 			sb.Append(@"}");
 
+			Console.WriteLine(sb.ToString());
 			return sb.ToString();
 		}
 
@@ -1129,7 +1172,14 @@ namespace ElectronicObserver.Window
 		/// </summary>
 		private void ContextMenuFleet_CopyFleetDeckBuilder_Click(object sender, EventArgs e)
 		{
-			Clipboard.SetData(DataFormats.StringFormat, CreateDeciBuilderData());
+			int areaId = 0;
+			DialogChooseAirBase dca = new DialogChooseAirBase();
+			DialogResult dr = dca.ShowDialog();
+			if (dr == DialogResult.OK)
+			{
+				areaId = dca.areaId;
+				Clipboard.SetData(DataFormats.StringFormat, CreateDeciBuilderData(areaId));
+			}
 		}
 
 		/// <summary>
@@ -1255,10 +1305,11 @@ namespace ElectronicObserver.Window
 		/// 外部サイトをデッキビルダー形式指定で開く
 		/// </summary>
 		/// <param name="baseUrl"></param>
+		/// <param name="areaId"></param>
 		/// <returns></returns>
-		private Process OpenUrlWithDeciBuilderData(string baseUrl)
+		private Process OpenUrlWithDeciBuilderData(string baseUrl, int areaId)
 		{
-			string data = CreateDeciBuilderData();
+			string data = CreateDeciBuilderData(areaId);
 			string url = $@"{baseUrl}?predeck={data.Replace("\"", "\\\"")}";
 
 			ProcessStartInfo pi = new ProcessStartInfo()
@@ -1276,7 +1327,14 @@ namespace ElectronicObserver.Window
 		/// <param name="e"></param>
 		private void ContextMenuFleet_OpenAirControlSimulator_Click(object sender, EventArgs e)
 		{
-			OpenUrlWithDeciBuilderData("https://noro6.github.io/kc-web");
+			int areaId = 0;
+			DialogChooseAirBase dca = new DialogChooseAirBase();
+			DialogResult dr = dca.ShowDialog();
+			if (dr == DialogResult.OK)
+			{
+				areaId = dca.areaId;
+				OpenUrlWithDeciBuilderData("https://noro6.github.io/kc-web", areaId);
+			}
 		}
 
 		/// <summary>
@@ -1286,7 +1344,14 @@ namespace ElectronicObserver.Window
 		/// <param name="e"></param>
 		private void ContextMenuFleet_OpenTacticalRoom_Click(object sender, EventArgs e)
 		{
-			OpenUrlWithDeciBuilderData("https://jervis.vercel.app");
+			int areaId = 0;
+			DialogChooseAirBase dca = new DialogChooseAirBase();
+			DialogResult dr = dca.ShowDialog();
+			if(dr == DialogResult.OK)
+			{
+				areaId = dca.areaId;
+				OpenUrlWithDeciBuilderData("https://jervis.vercel.app", areaId);
+			}
 		}
 
 		/// <summary>
@@ -1296,7 +1361,8 @@ namespace ElectronicObserver.Window
 		/// <param name="e"></param>
 		private void ContextMenuFleet_OpenDeckBuilder_Click(object sender, EventArgs e)
 		{
-			OpenUrlWithDeciBuilderData("http://kancolle-calc.net/deckbuilder.html");
+			//デッキビルダーは基地のデータを読み取る必要がない
+			OpenUrlWithDeciBuilderData("http://kancolle-calc.net/deckbuilder.html", 0);
 		}
 
 		private void ContextMenuFleet_AntiAirDetails_Click(object sender, EventArgs e)
