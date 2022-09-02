@@ -999,6 +999,8 @@ namespace ElectronicObserver.Data
 					return "噴進砲改二/電探/三式弾<伊勢>";
 				case 26:
 					return "高角砲+増設機銃/電探<武蔵>";
+				case 27:
+					return "高角砲+増設機銃/噴進砲改二/電探<大淀>";
 				case 28:
 					return "噴進砲改二/電探<伊勢>";
 				case 29:

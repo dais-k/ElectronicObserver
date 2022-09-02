@@ -1069,7 +1069,8 @@ namespace ElectronicObserver.Utility.Data
 				}
 			}
 
-			if (attackerShipID == 545 || attackerShipID == 599 || attackerShipID == 610 || attackerShipID == 883)      // Saratoga Mk.II/赤城改二戊/加賀改二戊/龍鳳改二戊
+			if (attackerShipID == 5
+				|| attackerShipID == 599 || attackerShipID == 610 || attackerShipID == 883)      // Saratoga Mk.II/赤城改二戊/加賀改二戊/龍鳳改二戊
 				nightPersonnelCount++;
 
 
@@ -1384,13 +1385,9 @@ namespace ElectronicObserver.Utility.Data
 					else if (eq.AA >= 3)
 						aagun_medium++;
 				}
-
 			}
 
-
-
 			// 固有カットイン
-
 			switch (KCDatabase.Instance.MasterShips[shipID]?.ShipClass)
 			{
 				case 54:    // 秋月型
@@ -1422,9 +1419,14 @@ namespace ElectronicObserver.Utility.Data
 					break;
 			}
 
-
 			switch (shipID)
 			{
+				case 321:	//大淀改
+					if (aaradar >= 1 && highangle_musashi >= 1 && aarocket_mod >= 1)
+					{
+						return 27;
+					}
+					break;
 
 				case 428:   // 摩耶改二
 					if (highangle >= 1 && aagun_concentrated >= 1)
@@ -1892,6 +1894,7 @@ namespace ElectronicObserver.Utility.Data
 			{ 24, 3 },
 			{ 25, 7 },
 			{ 26, 6 },
+			{ 27, 5 },
 			{ 28, 4 },
 			{ 29, 5 },
 			{ 30, 3 },
@@ -1943,6 +1946,7 @@ namespace ElectronicObserver.Utility.Data
 			{ 24, 1.25 },
 			{ 25, 1.55 },
 			{ 26, 1.4 },
+			{ 27, 1.55 },
 			{ 28, 1.4 },
 			{ 29, 1.55 },
 			{ 30, 1.3 },
