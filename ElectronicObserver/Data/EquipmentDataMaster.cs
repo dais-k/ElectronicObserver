@@ -364,7 +364,8 @@ namespace ElectronicObserver.Data
 			EquipmentID == 45  ||       // 三式爆雷投射機
 			EquipmentID == 288 ||       // 試製15cm9連装対潜噴進砲
 			EquipmentID == 377 ||       // RUR-4A Weapon Alpha改
-			EquipmentID == 287;			// 三式爆雷投射機 集中配備
+			EquipmentID == 287 ||       // 三式爆雷投射機 集中配備
+			EquipmentID == 472;			// Mk.32 対潜魚雷(Mk.2落射機)
 
 		/// <summary> 夜間作戦航空要員かどうか </summary>
 		public bool IsNightAviationPersonnel =>

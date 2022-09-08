@@ -17,11 +17,7 @@ namespace ElectronicObserver.Window.Dialog
 	{
 		private static readonly string DefaultTitle = "必要経験値計算";
 		private DataGridViewCellStyle CellStyleModernized;
-
-
 		private int DefaultShipID = -1;
-
-
 
 		private class ComboShipData
 		{
@@ -45,11 +41,6 @@ namespace ElectronicObserver.Window.Dialog
 
 			public override string ToString() => Name;
 		}
-
-
-
-
-
 
 		public DialogExpChecker()
 		{
@@ -95,8 +86,6 @@ namespace ElectronicObserver.Window.Dialog
 			ResourceManager.DestroyIcon(Icon);
 		}
 
-
-
 		private void UpdateLevelView()
 		{
 			var selectedShip = (TextShip.SelectedItem as ComboShipData)?.Ship;
@@ -107,11 +96,8 @@ namespace ElectronicObserver.Window.Dialog
 				return;
 			}
 
-
 			LevelView.SuspendLayout();
-
 			LevelView.Rows.Clear();
-
 
 			// 空母系は面倒なので省略
 			int openingASWborder = selectedShip.MasterShip.ShipType == ShipTypes.Escort ? 60 : 100;
@@ -119,12 +105,28 @@ namespace ElectronicObserver.Window.Dialog
 			var ASWEquipmentPairs = new Dictionary<int, string>();
 			if (ShowAllASWEquipments.Checked)
 			{
-
 				var had = KCDatabase.Instance.Equipments.Values
 					.Where(eq => eq.MasterEquipment.CategoryType == EquipmentTypes.Sonar || eq.MasterEquipment.CategoryType == EquipmentTypes.DepthCharge)
 					.GroupBy(eq => eq.EquipmentID)
-					.Select(g => new ASWEquipmentData { ID = g.Key, ASW = g.First().MasterEquipment.ASW, Name = g.First().MasterEquipment.Name, IsSonar = g.First().MasterEquipment.IsSonar, Count = g.Count() })
-					.Concat(new[] { new ASWEquipmentData { ID = -1, ASW = 0, Name = "", Count = 99, IsSonar = false } })
+					.Select(g => new ASWEquipmentData
+					{
+						ID = g.Key,
+						ASW = g.First().MasterEquipment.ASW,
+						Name = g.First().MasterEquipment.Name,
+						IsSonar = g.First().MasterEquipment.IsSonar,
+						Count = g.Count()
+					})
+					.Concat(new[] 
+					{ 
+						new ASWEquipmentData
+						{
+							ID = -1,
+							ASW = 0,
+							Name = "",
+							Count = 99,
+							IsSonar = false
+						}
+					})
 					.OrderByDescending(a => a.ASW)
 					.ToArray();
 
@@ -134,11 +136,9 @@ namespace ElectronicObserver.Window.Dialog
 
 				if (had.Length > 0 && stack.Length > 0)
 				{
-
 					while (stack[0] != -1)
 					{
 						var convert = stack.Select(i => had[i]).ToArray();
-
 
 						if (convert.Any(c => c.IsSonar) && stack.GroupBy(s => s).All(s => had[s.Key].Count >= s.Count()))
 						{
@@ -176,8 +176,12 @@ namespace ElectronicObserver.Window.Dialog
 			}
 			else
 			{
+				//[Note]
+				//下記は艦種や艦固有の装備ボーナスは勘案しないものである
 				if (selectedShip.SlotSize >= 4)
 				{
+					ASWEquipmentPairs.Add(openingASWborder - 72, "[HF/DF + Type144/147 ASDIC, 対潜短魚雷(試作初期型), Hedgehog(初期型), Mk.32 対潜魚雷(Mk.2落射機)]");
+					ASWEquipmentPairs.Add(openingASWborder - 71, "[HF/DF + Type144/147 ASDIC, 対潜短魚雷(試作初期型), RUR-4A Weapon Alpha改, Mk.32 対潜魚雷(Mk.2落射機)]");
 					ASWEquipmentPairs.Add(openingASWborder - 67, "[HF/DF + Type144/147 ASDIC, 対潜短魚雷(試作初期型), RUR-4A Weapon Alpha改, 試製15cm9連装対潜噴進砲]");
 					ASWEquipmentPairs.Add(openingASWborder - 51, "[四式水中聴音機x3, 試製15cm9連装対潜噴進砲]");
 					ASWEquipmentPairs.Add(openingASWborder - 48, "[四式水中聴音機x4]");
@@ -185,9 +189,10 @@ namespace ElectronicObserver.Window.Dialog
 				}
 				if (selectedShip.SlotSize >= 3)
 				{
+					ASWEquipmentPairs.Add(openingASWborder - 54, "[HF/DF + Type144/147 ASDIC, 対潜短魚雷(試作初期型), Mk.32 対潜魚雷(Mk.2落射機)]");
+					ASWEquipmentPairs.Add(openingASWborder - 53, "[HF/DF + Type144/147 ASDIC, 対潜短魚雷(試作初期型), Hedgehog(初期型)]");
 					ASWEquipmentPairs.Add(openingASWborder - 52, "[HF/DF + Type144/147 ASDIC, 対潜短魚雷(試作初期型), RUR-4A Weapon Alpha改]");
 					ASWEquipmentPairs.Add(openingASWborder - 47, "[HF/DF + Type144/147 ASDIC, RUR-4A Weapon Alpha改, 試製15cm9連装対潜噴進砲]");
-
 					ASWEquipmentPairs.Add(openingASWborder - 39, "[四式水中聴音機x2, 試製15cm9連装対潜噴進砲]");
 					ASWEquipmentPairs.Add(openingASWborder - 36, "[四式水中聴音機x3]");
 					ASWEquipmentPairs.Add(openingASWborder - 32, "[四式水中聴音機x2, 三式爆雷投射機]");
@@ -197,21 +202,24 @@ namespace ElectronicObserver.Window.Dialog
 				if (selectedShip.SlotSize >= 2)
 				{
 					ASWEquipmentPairs.Add(openingASWborder - 35, "[HF/DF + Type144/147 ASDIC, 対潜短魚雷(試作初期型)]");
-					if (ASWEquipmentPairs.ContainsKey(openingASWborder - 32))
+					ASWEquipmentPairs.Add(openingASWborder - 34, "[HF/DF + Type144/147 ASDIC, Mk.32 対潜魚雷(Mk.2落射機)]");
+					ASWEquipmentPairs.Add(openingASWborder - 33, "[HF/DF + Type144/147 ASDIC, Hedgehog(初期型)]");
+					if (ASWEquipmentPairs.ContainsKey(openingASWborder - 32)) {
 						ASWEquipmentPairs[openingASWborder - 32] += ", [HF/DF + Type144/147 ASDIC, RUR-4A Weapon Alpha改]";
-					else
+					} else {
 						ASWEquipmentPairs.Add(openingASWborder - 32, "[HF/DF + Type144/147 ASDIC, RUR-4A Weapon Alpha改]");
-					if (ASWEquipmentPairs.ContainsKey(openingASWborder - 27))
+					}
+					if (ASWEquipmentPairs.ContainsKey(openingASWborder - 27)) {
 						ASWEquipmentPairs[openingASWborder - 27] += ", [四式水中聴音機, 試製15cm9連装対潜噴進砲]";
-					else
+					} else {
 						ASWEquipmentPairs.Add(openingASWborder - 27, "[四式水中聴音機, 試製15cm9連装対潜噴進砲]");
+					}
 					ASWEquipmentPairs.Add(openingASWborder - 20, "[四式水中聴音機, 三式爆雷投射機]");
 					ASWEquipmentPairs.Add(openingASWborder - 18, "[三式水中探信儀, 三式爆雷投射機]");
 				}
 				ASWEquipmentPairs.Add(openingASWborder - 15, "[HF/DF + Type144/147 ASDIC]");
 				ASWEquipmentPairs.Add(openingASWborder - 12, "[四式水中聴音機]");
 			}
-
 
 			var aswdata = selectedShip.MasterShip.ASW;
 			int aswmin = aswdata.Minimum;
@@ -222,14 +230,12 @@ namespace ElectronicObserver.Window.Dialog
 			int unitexp = Math.Max((int)ExpUnit.Value, 1);
 			var remodelLevelTable = GetRemodelLevelTable(selectedShip.MasterShip);
 
-
 			if (!aswdata.IsAvailable)
 				LabelAlert.Text = "＊対潜値が不明なため、成長予測ができません。";
 			else if (!aswdata.IsDetermined)
 				LabelAlert.Text = "＊対潜値が未確定なため、成長予測は不正確です。";
 			else
 				LabelAlert.Text = "";
-
 
 			var rows = new DataGridViewRow[ExpTable.ShipMaximumLevel - (minlv - 1)];
 
@@ -259,15 +265,11 @@ namespace ElectronicObserver.Window.Dialog
 			}
 
 			LevelView.Rows.AddRange(rows);
-
 			LevelView.ResumeLayout();
-
 
 			Text = DefaultTitle + " - " + selectedShip.NameWithLevel;
 			GroupExp.Text = $"{selectedShip.NameWithLevel}: Exp. {selectedShip.ExpTotal}, 対潜 {selectedShip.ASWBase} (現在改修+{selectedShip.ASWModernized})";
 		}
-
-
 
 		private void SearchInFleet_CheckedChanged(object sender, EventArgs e)
 		{
@@ -344,7 +346,6 @@ namespace ElectronicObserver.Window.Dialog
 
 			return list.ToArray();
 		}
-
 
 		private void LevelView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
 		{
