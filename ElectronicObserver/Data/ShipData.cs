@@ -1501,6 +1501,14 @@ namespace ElectronicObserver.Data
                         return true;
                 }
 
+				//攻撃型軽空母は先制対潜不可能
+				switch (ShipID)
+				{
+					case 508:   // 鈴谷航改二
+					case 509:   // 熊野航改二
+						return false;
+				}
+
                 var eqs = AllSlotInstance.Where(eq => eq != null);
 
                 switch (ShipID)
@@ -1509,6 +1517,8 @@ namespace ElectronicObserver.Data
                     case 529:   // 大鷹改二
                     case 381:   // 神鷹改
                     case 536:   // 神鷹改二
+					case 382:   // 雲鷹改
+					case 889:	// 雲鷹改二
 					case 646:	// 加賀改二護
                         return true;
 
@@ -1536,6 +1546,17 @@ namespace ElectronicObserver.Data
                     if (hasASWAircraft && ASWTotal >= 50 && eqs.Any(eq => eq.MasterEquipment.CategoryType == EquipmentTypes.SonarLarge))
                         return true;
                 }
+
+				if (MasterShip.ShipType == ShipTypes.LightAircraftCarrier)	//通常の軽空母
+				{
+					bool hasASWAircraft = eqs.Any(eq =>
+						(eq.MasterEquipment.CategoryType == EquipmentTypes.CarrierBasedTorpedo && eq.MasterEquipment.ASW >= 7) ||
+						eq.MasterEquipment.CategoryType == EquipmentTypes.ASPatrol ||
+						eq.MasterEquipment.CategoryType == EquipmentTypes.Autogyro);
+
+					if (hasASWAircraft && ASWTotal >= 50 && eqs.Any(eq => eq.MasterEquipment.CategoryType == EquipmentTypes.SonarLarge))
+						return true;
+				}
 
                 bool hasSonar = eqs.Any(eq => eq.MasterEquipment.IsSonar);
                 bool needSonar = !(

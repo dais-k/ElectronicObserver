@@ -10,14 +10,11 @@ using System.Threading.Tasks;
 
 namespace ElectronicObserver.Data
 {
-
-
 	/// <summary>
 	/// 艦船のマスターデータを保持します。
 	/// </summary>
 	public class ShipDataMaster : ResponseWrapper, IIdentifiable
 	{
-
 		/// <summary>
 		/// 艦船ID
 		/// </summary>
@@ -53,7 +50,6 @@ namespace ElectronicObserver.Data
 		/// </summary>
 		public int ShipClass => (int)RawData.api_ctype;
 
-
 		/// <summary>
 		/// 改装Lv.
 		/// </summary>
@@ -69,7 +65,6 @@ namespace ElectronicObserver.Data
 		/// 改装後の艦船
 		/// </summary>
 		public ShipDataMaster RemodelAfterShip => RemodelAfterShipID > 0 ? KCDatabase.Instance.MasterShips[RemodelAfterShipID] : null;
-
 
 		/// <summary>
 		/// 改装前の艦船ID
@@ -180,8 +175,6 @@ namespace ElectronicObserver.Data
 		/// 改装に必要な 新型兵装資材 の個数
 		/// </summary>
 		public int NeedArmamentMaterial { get; internal set; }
-
-
 
 		#region Parameters
 
@@ -443,7 +436,6 @@ namespace ElectronicObserver.Data
 		}
 		#endregion
 
-
 		/// <summary>
 		/// 装備スロットの数
 		/// </summary>
@@ -476,7 +468,6 @@ namespace ElectronicObserver.Data
 		/// </summary>
 		public int AircraftTotal => Aircraft.Sum(a => Math.Max(a, 0));
 
-
 		/// <summary>
 		/// 初期装備のID
 		/// </summary>
@@ -491,7 +482,6 @@ namespace ElectronicObserver.Data
 					return null;
 			}
 		}
-
 
 		internal int[] specialEquippableCategory = null;
 		/// <summary>
@@ -513,12 +503,10 @@ namespace ElectronicObserver.Data
 			}
 		}
 
-
 		/// <summary>
 		/// 建造時間(分)
 		/// </summary>
 		public int BuildingTime => !RawData.api_buildtime() ? 0 : (int)RawData.api_buildtime;
-
 
 		/// <summary>
 		/// 解体資材
@@ -545,7 +533,6 @@ namespace ElectronicObserver.Data
 		/// </summary>
 		public string MessageAlbum => GetParameterElement()?.MessageAlbum?.Replace("<br>", "\r\n") ?? "";
 
-
 		/// <summary>
 		/// 搭載燃料
 		/// </summary>
@@ -556,12 +543,10 @@ namespace ElectronicObserver.Data
 		/// </summary>
 		public int Ammo => !RawData.api_bull_max() ? 0 : (int)RawData.api_bull_max;
 
-
 		/// <summary>
 		/// ボイス再生フラグ
 		/// </summary>
 		public int VoiceFlag => !RawData.api_voicef() ? 0 : (int)RawData.api_voicef;
-
 
 		/// <summary>
 		/// グラフィック設定データへの参照
@@ -588,20 +573,14 @@ namespace ElectronicObserver.Data
 		/// </summary>
 		public string ResourcePortVoiceVersion => GraphicData?.PortVoiceVersion ?? "";
 
-
-
 		/// <summary>
 		/// 衣替え艦：ベースとなる艦船ID
 		/// </summary>
 		public int OriginalCostumeShipID => GetParameterElement()?.OriginalCostumeShipID ?? -1;
 
-
-
 		//以下、自作計算プロパティ群
-
 		public static readonly int HPModernizableLimit = 2;
 		public static readonly int ASWModernizableLimit = 9;
-
 
 		/// <summary>
 		/// ケッコンカッコカリ後のHP
@@ -637,25 +616,20 @@ namespace ElectronicObserver.Data
 		/// </summary>
 		public int HPMaxModernized => Math.Min(HPMin + HPMaxModernizable, HPMax);
 
-
 		/// <summary>
 		/// 近代化改修後のHP(既婚時)
 		/// </summary>
 		public int HPMaxMarriedModernized => Math.Min(HPMaxMarried + HPMaxModernizable, HPMax);
-
-
 
 		/// <summary>
 		/// 対潜改修可能値
 		/// </summary>
 		public int ASWModernizable => ASW == null || ASW.Maximum == 0 ? 0 : ASWModernizableLimit;
 
-
 		/// <summary>
 		/// 深海棲艦かどうか
 		/// </summary>
 		public bool IsAbyssalShip => ShipID > 1500;
-
 
 		/// <summary>
 		/// クラスも含めた艦名
@@ -681,13 +655,10 @@ namespace ElectronicObserver.Data
 		/// </summary>
 		public bool IsLandBase => Speed == 0;
 
-
-
 		/// <summary>
 		/// 図鑑に載っているか
 		/// </summary>
 		public bool IsListedInAlbum => 0 < AlbumNo && AlbumNo <= 420;
-
 
 		/// <summary>
 		/// 改装段階
@@ -709,12 +680,10 @@ namespace ElectronicObserver.Data
 			}
 		}
 
-
 		/// <summary>
 		/// 艦種名
 		/// </summary>
 		public string ShipTypeName => KCDatabase.Instance.ShipTypes[(int)ShipType].Name;
-
 
 		/// <summary>
 		/// 潜水艦系か (潜水艦/潜水空母)
@@ -731,6 +700,15 @@ namespace ElectronicObserver.Data
 		/// </summary>
 		public bool IsEscortAircraftCarrier => ShipType == ShipTypes.LightAircraftCarrier && ASW.Minimum > 0;
 
+		/// <summary>
+		/// 攻撃型軽空母か
+		/// ※今のところ使う機会がないが、一応追加しておく
+		/// </summary>
+		public bool IsAttackLightAircraftCarrier => 
+			(
+				ShipID == 508 ||	//鈴谷航改二
+				ShipID == 509		//熊野航改二
+			);
 
 		/// <summary>
 		/// 自身のパラメータレコードを取得します。
@@ -740,8 +718,6 @@ namespace ElectronicObserver.Data
 		{
 			return RecordManager.Instance.ShipParameter[ShipID];
 		}
-
-
 
 		private static readonly Color[] ShipNameColors = new Color[] {
 			Color.FromArgb( 0x00, 0x00, 0x00 ),
@@ -802,20 +778,14 @@ namespace ElectronicObserver.Data
 			}
 		}
 
-
 		public ShipDataMaster()
 		{
 			RemodelBeforeShipID = 0;
 		}
 
-
-
 		public int ID => ShipID;
 
-
 		public override string ToString() => $"[{ShipID}] {NameWithClass}";
-
-
 	}
 
 }

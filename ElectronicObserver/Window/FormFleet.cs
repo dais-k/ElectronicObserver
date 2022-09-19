@@ -684,6 +684,7 @@ namespace ElectronicObserver.Window
 					int torpedo = ship.TorpedoPower;
 					int asw = ship.AntiSubmarinePower;
 
+
 					if (torpedo > 0)
 					{
 						sb.AppendFormat("雷撃: {0}", torpedo);
