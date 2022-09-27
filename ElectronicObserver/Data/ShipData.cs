@@ -1393,7 +1393,6 @@ namespace ElectronicObserver.Data
                     case ShipTypes.FleetOiler:
 						//対潜値がある
                         return ASWBase > 0;
-
                     case ShipTypes.AviationCruiser:
                     case ShipTypes.LightAircraftCarrier:
                     case ShipTypes.AviationBattleship:
@@ -1401,13 +1400,12 @@ namespace ElectronicObserver.Data
                     case ShipTypes.AmphibiousAssaultShip:
 						//対潜攻撃可能な航空機を装備している
 						return AllSlotInstanceMaster.Any(eq => eq != null && eq.IsAntiSubmarineAircraft);
-
 					case ShipTypes.AircraftCarrier:
 						// 加賀改二護かつ対潜攻撃可能な航空機を装備している
 						return ShipID == 646 &&	AllSlotInstanceMaster.Any(eq => eq != null && eq.IsAntiSubmarineAircraft);
 					case ShipTypes.Battlecruiser:
-						//大和改二かつ対潜値がある(改二重にコンバート後対潜改修をして改二に戻したケース)
-						return ShipID == 911 && ASWBase > 0;
+						//大和改二かつ対潜改修済(改二重にコンバート後、対潜改修をして改二に戻したケース)
+						return ShipID == 911 && ASWModernized > 1;
                     default:
                         return false;
                 }
