@@ -1391,6 +1391,7 @@ namespace ElectronicObserver.Data
                     case ShipTypes.TorpedoCruiser:
                     case ShipTypes.TrainingCruiser:
                     case ShipTypes.FleetOiler:
+						//対潜値がある
                         return ASWBase > 0;
 
                     case ShipTypes.AviationCruiser:
@@ -1398,12 +1399,15 @@ namespace ElectronicObserver.Data
                     case ShipTypes.AviationBattleship:
                     case ShipTypes.SeaplaneTender:
                     case ShipTypes.AmphibiousAssaultShip:
-                        return AllSlotInstanceMaster.Any(eq => eq != null && eq.IsAntiSubmarineAircraft);
+						//対潜攻撃可能な航空機を装備している
+						return AllSlotInstanceMaster.Any(eq => eq != null && eq.IsAntiSubmarineAircraft);
 
 					case ShipTypes.AircraftCarrier:
-						return ShipID == 646 &&			// 加賀改二護
-							AllSlotInstanceMaster.Any(eq => eq != null && eq.IsAntiSubmarineAircraft);
-
+						// 加賀改二護かつ対潜攻撃可能な航空機を装備している
+						return ShipID == 646 &&	AllSlotInstanceMaster.Any(eq => eq != null && eq.IsAntiSubmarineAircraft);
+					case ShipTypes.Battlecruiser:
+						//大和改二かつ対潜値がある(改二重にコンバート後対潜改修をして改二に戻したケース)
+						return ShipID == 911 && ASWBase > 0;
                     default:
                         return false;
                 }
@@ -1418,10 +1422,20 @@ namespace ElectronicObserver.Data
             get
             {
 				//============================================================
-				//絶対に先制対潜出来ない艦(フラグを持っていない)
+				//絶対に先制対潜出来ない艦(最低条件を満たしていない)
 				//============================================================
 				if (!CanAttackSubmarine)
                     return false;
+				
+				//============================================================
+				//攻撃型軽空母(例外的に一切の先制対潜不可能)
+				//============================================================
+				switch (ShipID)
+				{
+					case 508:   // 鈴谷航改二
+					case 509:   // 熊野航改二
+						return false;
+				}
 
 				//============================================================
 				//無条件先制対潜の軽巡・駆逐
@@ -1442,16 +1456,6 @@ namespace ElectronicObserver.Data
                     case 624:       // 夕張改二丁
                         return true;
                 }
-				//============================================================
-				//攻撃型軽空母
-				//============================================================
-				switch (ShipID)
-				{
-					case 508:   // 鈴谷航改二
-					case 509:   // 熊野航改二
-						//一切の先制対潜不可能
-						return false;
-				}
 
 				//ここから装備を見る必要があるので装備の取得を行う
                 var eqs = AllSlotInstance.Where(eq => eq != null);
