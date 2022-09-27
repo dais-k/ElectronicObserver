@@ -10,16 +10,11 @@ using System.Threading.Tasks;
 
 namespace ElectronicObserver.Data
 {
-
-
     /// <summary>
     /// 個別の艦娘データを保持します。
     /// </summary>
     public class ShipData : APIWrapper, IIdentifiable
     {
-
-
-
         /// <summary>
         /// 艦娘を一意に識別するID
         /// </summary>
@@ -50,7 +45,6 @@ namespace ElectronicObserver.Data
         /// </summary>
         public int ExpNext => (int)RawData.api_exp[1];
 
-
         /// <summary>
         /// 耐久現在値
         /// </summary>
@@ -60,7 +54,6 @@ namespace ElectronicObserver.Data
         /// 耐久最大値
         /// </summary>
         public int HPMax => (int)RawData.api_maxhp;
-
 
         /// <summary>
         /// 速力
@@ -72,12 +65,10 @@ namespace ElectronicObserver.Data
         /// </summary>
         public int Range => (int)RawData.api_leng;
 
-
         /// <summary>
         /// 装備スロット(ID)
         /// </summary>
         public ReadOnlyCollection<int> Slot { get; private set; }
-
 
         /// <summary>
         /// 装備スロット(マスターID)
@@ -93,7 +84,6 @@ namespace ElectronicObserver.Data
         /// 装備スロット(装備マスターデータ)
         /// </summary>
         public ReadOnlyCollection<EquipmentDataMaster> SlotInstanceMaster => Array.AsReadOnly(Slot.Select(id => KCDatabase.Instance.Equipments[id]?.MasterEquipment).ToArray());
-
 
         /// <summary>
         /// 補強装備スロット(ID)
@@ -116,7 +106,6 @@ namespace ElectronicObserver.Data
         /// </summary>
         public EquipmentDataMaster ExpansionSlotInstanceMaster => KCDatabase.Instance.Equipments[ExpansionSlot]?.MasterEquipment;
 
-
         /// <summary>
         /// 全てのスロット(ID)
         /// </summary>
@@ -137,20 +126,17 @@ namespace ElectronicObserver.Data
         /// </summary>
         public ReadOnlyCollection<EquipmentDataMaster> AllSlotInstanceMaster => Array.AsReadOnly(AllSlot.Select(id => KCDatabase.Instance.Equipments[id]?.MasterEquipment).ToArray());
 
-
-
         private int[] _aircraft;
+
         /// <summary>
         /// 各スロットの航空機搭載量
         /// </summary>
         public ReadOnlyCollection<int> Aircraft => Array.AsReadOnly(_aircraft);
 
-
         /// <summary>
         /// 現在の航空機搭載量
         /// </summary>
         public int AircraftTotal => _aircraft.Sum(a => Math.Max(a, 0));
-
 
         /// <summary>
         /// 搭載燃料
@@ -161,7 +147,6 @@ namespace ElectronicObserver.Data
         /// 搭載弾薬
         /// </summary>
         public int Ammo { get; internal set; }
-
 
         /// <summary>
         /// スロットのサイズ
@@ -187,7 +172,6 @@ namespace ElectronicObserver.Data
         /// コンディション
         /// </summary>
         public int Condition { get; internal set; }
-
 
         #region Parameters
 
@@ -233,7 +217,6 @@ namespace ElectronicObserver.Data
         /// </summary>
         public int ASWModernized => _modernized.Length >= 7 ? _modernized[6] : 0;
 
-
         /// <summary>
         /// 火力改修残り
         /// </summary>
@@ -268,7 +251,6 @@ namespace ElectronicObserver.Data
         /// 対潜改修残り
         /// </summary>
         public int ASWRemain => ASWMax <= 0 ? 0 : MasterShip.ASWModernizable - ASWModernized;
-
 
         /// <summary>
         /// 火力総合値
@@ -320,30 +302,25 @@ namespace ElectronicObserver.Data
         /// </summary>
         public int AccuracyTotal => AllSlotInstanceMaster.Sum(eq => eq?.Accuracy ?? 0);
 
-
         /// <summary>
         /// 火力基本値
         /// </summary>
         public int FirepowerBase => MasterShip.FirepowerMin + FirepowerModernized;
-
 
         /// <summary>
         /// 雷装基本値
         /// </summary>
         public int TorpedoBase => MasterShip.TorpedoMin + TorpedoModernized;
 
-
         /// <summary>
         /// 対空基本値
         /// </summary>
         public int AABase => MasterShip.AAMin + AAModernized;
 
-
         /// <summary>
         /// 装甲基本値
         /// </summary>
         public int ArmorBase => MasterShip.ArmorMin + ArmorModernized;
-
 
         /// <summary>
         /// 回避基本値
@@ -394,8 +371,6 @@ namespace ElectronicObserver.Data
         /// </summary>
         public int LuckBase => MasterShip.LuckMin + LuckModernized;
 
-
-
         /// <summary>
         /// 回避最大値
         /// </summary>
@@ -413,7 +388,6 @@ namespace ElectronicObserver.Data
 
         #endregion
 
-
         /// <summary>
         /// 保護ロックの有無
         /// </summary>
@@ -424,32 +398,25 @@ namespace ElectronicObserver.Data
         /// </summary>
         public bool IsLockedByEquipment => (int)RawData.api_locked_equip != 0;
 
-
         /// <summary>
         /// 出撃海域
         /// </summary>
         public int SallyArea => RawData.api_sally_area() ? (int)RawData.api_sally_area : -1;
-
-
 
         /// <summary>
         /// 艦船のマスターデータへの参照
         /// </summary>
         public ShipDataMaster MasterShip => KCDatabase.Instance.MasterShips[ShipID];
 
-
         /// <summary>
         /// 入渠中のドックID　非入渠時は-1
         /// </summary>
         public int RepairingDockID => KCDatabase.Instance.Docks.Values.FirstOrDefault(dock => dock.ShipID == MasterID)?.DockID ?? -1;
 
-
         /// <summary>
         /// 所属艦隊　-1=なし
         /// </summary>
         public int Fleet => KCDatabase.Instance.Fleet.Fleets.Values.FirstOrDefault(f => f.Members.Contains(MasterID))?.FleetID ?? -1;
-
-
 
         /// <summary>
         /// 所属艦隊及びその位置
@@ -474,12 +441,10 @@ namespace ElectronicObserver.Data
 
         }
 
-
         /// <summary>
         /// ケッコン済みかどうか
         /// </summary>
         public bool IsMarried => Level > 99;
-
 
         /// <summary>
         /// 次の改装まで必要な経験値
@@ -514,19 +479,15 @@ namespace ElectronicObserver.Data
 		/// </summary>
 		public string Name => MasterShip.Name;
 
-
         /// <summary>
         /// 艦名(レベルを含む)
         /// </summary>
         public string NameWithLevel => $"{MasterShip.Name} Lv. {Level}";
 
-
         /// <summary>
         /// HP/HPmax
         /// </summary>
         public double HPRate => HPMax > 0 ? (double)HPCurrent / HPMax : 0;
-
-
 
         /// <summary>
         /// 最大搭載燃料
@@ -538,7 +499,6 @@ namespace ElectronicObserver.Data
         /// </summary>
         public int AmmoMax => MasterShip.Ammo;
 
-
         /// <summary>
         /// 燃料残量割合
         /// </summary>
@@ -549,7 +509,6 @@ namespace ElectronicObserver.Data
         /// </summary>
         public double AmmoRate => (double)Ammo / Math.Max(AmmoMax, 1);
 
-
         /// <summary>
         /// 補給で消費する燃料
         /// </summary>
@@ -559,7 +518,6 @@ namespace ElectronicObserver.Data
         /// 補給で消費する弾薬
         /// </summary>
         public int SupplyAmmo => (AmmoMax - Ammo) == 0 ? 0 : Math.Max((int)Math.Floor((AmmoMax - Ammo) * (IsMarried ? 0.85 : 1)), 1);
-
 
         /// <summary>
         /// 搭載機残量割合
@@ -585,14 +543,10 @@ namespace ElectronicObserver.Data
         /// </summary>
         public double AircraftTotalRate => (double)AircraftTotal / Math.Max(MasterShip.AircraftTotal, 1);
 
-
-
         /// <summary>
         /// 補強装備スロットが使用可能か
         /// </summary>
         public bool IsExpansionSlotAvailable => ExpansionSlot != 0;
-
-
 
         #region ダメージ威力計算
 
@@ -634,14 +588,11 @@ namespace ElectronicObserver.Data
         /// </summary>
         public int NightBattlePower { get; private set; }
 
-
-
         /// <summary>
         /// 装備改修補正(砲撃戦)
         /// </summary>
         private double GetDayBattleEquipmentLevelBonus()
         {
-
             double basepower = 0;
             foreach (var slot in AllSlotInstance)
             {
@@ -697,13 +648,10 @@ namespace ElectronicObserver.Data
                         if (!slot.MasterEquipment.IsDepthCharge)
                             basepower += Math.Sqrt(slot.Level) * 0.75;
                         break;
-
                 }
             }
             return basepower;
         }
-
-
 
         /// <summary>
         /// 装備改修補正(雷撃戦)
@@ -971,7 +919,6 @@ namespace ElectronicObserver.Data
                 return max + Math.Sqrt(damage - max);
         }
 
-
         /// <summary>
         /// 航空戦での威力を求めます。
         /// </summary>
@@ -1137,12 +1084,9 @@ namespace ElectronicObserver.Data
                 basepower += 13;
             }
 
-
             basepower *= GetHPDamageBonus() * GetEngagementFormDamageRate(engagementForm);
 
-
             //対潜シナジー
-
             int depthChargeCount = 0;
             int depthChargeProjectorCount = 0;
 			int otherDepthChargeCount = 0;
@@ -1184,7 +1128,6 @@ namespace ElectronicObserver.Data
 
 			basepower *= synergy;
 
-
 			//キャップ
 			basepower = Math.Floor(CapDamage(basepower, 170));
 
@@ -1206,7 +1149,6 @@ namespace ElectronicObserver.Data
 
             //キャップ
             basepower = Math.Floor(CapDamage(basepower, 180));
-
 
             return (int)(basepower * GetAmmoDamageRate());
         }
@@ -1299,7 +1241,6 @@ namespace ElectronicObserver.Data
             {
                 basepower = FirepowerTotal + TorpedoTotal + GetNightBattleEquipmentLevelBonus();
             }
-
 
             basepower *= GetHPDamageBonus();
 
@@ -1413,10 +1354,8 @@ namespace ElectronicObserver.Data
             //キャップ
             basepower = Math.Floor(CapDamage(basepower, 360));
 
-
             return (int)(basepower * GetAmmoDamageRate());
         }
-
 
         /// <summary>
         /// 威力系の計算をまとめて行い、プロパティを更新します。
@@ -1435,10 +1374,7 @@ namespace ElectronicObserver.Data
 
         }
 
-
         #endregion
-
-
 
         /// <summary>
         /// 対潜攻撃可能か
@@ -1481,10 +1417,16 @@ namespace ElectronicObserver.Data
         {
             get
             {
-                if (!CanAttackSubmarine)
+				//============================================================
+				//絶対に先制対潜出来ない艦(フラグを持っていない)
+				//============================================================
+				if (!CanAttackSubmarine)
                     return false;
 
-                switch (ShipID)
+				//============================================================
+				//無条件先制対潜の軽巡・駆逐
+				//============================================================
+				switch (ShipID)
                 {
                     case 141:       // 五十鈴改二
                     case 394:       // Jervis改
@@ -1500,18 +1442,24 @@ namespace ElectronicObserver.Data
                     case 624:       // 夕張改二丁
                         return true;
                 }
-
-				//攻撃型軽空母は先制対潜不可能
+				//============================================================
+				//攻撃型軽空母
+				//============================================================
 				switch (ShipID)
 				{
 					case 508:   // 鈴谷航改二
 					case 509:   // 熊野航改二
+						//一切の先制対潜不可能
 						return false;
 				}
 
+				//ここから装備を見る必要があるので装備の取得を行う
                 var eqs = AllSlotInstance.Where(eq => eq != null);
 
-                switch (ShipID)
+				//============================================================
+				//その他艦固有
+				//============================================================
+				switch (ShipID)
                 {
                     case 380:   // 大鷹改
                     case 529:   // 大鷹改二
@@ -1520,7 +1468,10 @@ namespace ElectronicObserver.Data
 					case 382:   // 雲鷹改
 					case 889:	// 雲鷹改二
 					case 646:	// 加賀改二護
-                        return true;
+						//対潜値1以上の艦攻/艦爆 or 対潜哨戒機 or 回転翼機を装備
+                        return eqs.Any(eq => ((eq.MasterEquipment.CategoryType == EquipmentTypes.CarrierBasedTorpedo || eq.MasterEquipment.CategoryType == EquipmentTypes.CarrierBasedBomber) && eq.MasterEquipment.ASW >= 1) ||
+											   eq.MasterEquipment.CategoryType == EquipmentTypes.ASPatrol ||
+											   eq.MasterEquipment.CategoryType == EquipmentTypes.Autogyro);
 
                     case 554:   // 日向改二
                         // カ号観測機, オ号観測機改, オ号観測機改二
@@ -1531,49 +1482,66 @@ namespace ElectronicObserver.Data
                             return true;
 
                         return false;
-                }
 
-                if (MasterShip.ShipType == ShipTypes.LightAircraftCarrier && ASWBase > 0)      // 護衛空母
+					case 626:	//神州丸改
+					case 411:	//扶桑改二
+					case 412:	//山城改二
+					case 916:	//大和改二重
+						//水上爆撃機 or 回転翼機 + ソナーを装備 かつ 対潜合計値100以上
+						return eqs.Any(eq => (eq.MasterEquipment.CategoryType == EquipmentTypes.SeaplaneBomber || eq.MasterEquipment.CategoryType == EquipmentTypes.Autogyro)) && 
+							   eqs.Any(eq => eq.MasterEquipment.IsSonar) &&
+							   ASWTotal >= 100;
+				}
+
+				//============================================================
+				//その他軽空母および護衛空母
+				//※ガンビア・ベイMk.IIが全ソナー装備できるため、小型ソナーも判定に入れている
+				//============================================================
+				if (MasterShip.ShipType == ShipTypes.LightAircraftCarrier)
                 {
-                    bool hasASWAircraft = eqs.Any(eq =>
+					//対潜値7以上の艦攻 or 対潜哨戒機 or 回転翼機を装備(条件1)
+					bool hasASWAircraft50_65 = eqs.Any(eq =>
                         (eq.MasterEquipment.CategoryType == EquipmentTypes.CarrierBasedTorpedo && eq.MasterEquipment.ASW >= 7) ||
                         eq.MasterEquipment.CategoryType == EquipmentTypes.ASPatrol ||
                         eq.MasterEquipment.CategoryType == EquipmentTypes.Autogyro);
+					//対潜値1以上の艦攻/艦爆を装備(条件2)
+					bool hasASWAircraft100 = eqs.Any(eq =>
+						((eq.MasterEquipment.CategoryType == EquipmentTypes.CarrierBasedTorpedo || eq.MasterEquipment.CategoryType == EquipmentTypes.CarrierBasedBomber) && eq.MasterEquipment.ASW >= 1));
 
-                    if (hasASWAircraft && ASWTotal >= 65)
-                        return true;
-
-                    if (hasASWAircraft && ASWTotal >= 50 && eqs.Any(eq => eq.MasterEquipment.CategoryType == EquipmentTypes.SonarLarge))
-                        return true;
+					//対潜合計値50以上の場合は条件1かつ要ソナー
+					if (hasASWAircraft50_65 && ASWTotal >= 50 && eqs.Any(eq => eq.MasterEquipment.IsSonar))
+						return true;
+					//対潜合計値65以上の場合は条件1かつソナー不要
+					if (hasASWAircraft50_65 && ASWTotal >= 65)
+						return true;
+					//対潜合計値100以上の場合は条件2かつ要ソナー
+					if (hasASWAircraft100 && ASWTotal >= 100 && eqs.Any(eq => eq.MasterEquipment.IsSonar))
+						return true;
                 }
 
-				if (MasterShip.ShipType == ShipTypes.LightAircraftCarrier)	//通常の軽空母
-				{
-					bool hasASWAircraft = eqs.Any(eq =>
-						(eq.MasterEquipment.CategoryType == EquipmentTypes.CarrierBasedTorpedo && eq.MasterEquipment.ASW >= 7) ||
-						eq.MasterEquipment.CategoryType == EquipmentTypes.ASPatrol ||
-						eq.MasterEquipment.CategoryType == EquipmentTypes.Autogyro);
-
-					if (hasASWAircraft && ASWTotal >= 50 && eqs.Any(eq => eq.MasterEquipment.CategoryType == EquipmentTypes.SonarLarge))
-						return true;
-				}
-
-                bool hasSonar = eqs.Any(eq => eq.MasterEquipment.IsSonar);
-                bool needSonar = !(
+				//============================================================
+				//上記以外の艦(海防艦や駆逐等)
+				//※伊勢改二もここで判定される。現状対潜値100を超えることが不可能なので必ずfalseになる
+				//============================================================
+				bool hasSonar = eqs.Any(eq => eq.MasterEquipment.IsSonar);
+				//ソナーがいらないのは海防艦かつ装備の対潜値が合計4以上
+				bool needSonar = !(
                     MasterShip.ShipType == ShipTypes.Escort &&
                     ASWTotal >= 75 &&
                     (ASWTotal - ASWBase) >= 4);
 
+				//要ソナーかつソナーを装備していない
                 if (needSonar && !hasSonar)
                     return false;
 
                 if (MasterShip.ShipType == ShipTypes.Escort)
+					//海防艦は60以上
                     return ASWTotal >= 60;
                 else
+					//それ以外は100以上
                     return ASWTotal >= 100;
             }
         }
-
 
         /// <summary>
         /// 夜戦攻撃可能か
@@ -1617,7 +1585,6 @@ namespace ElectronicObserver.Data
             }
         }
 
-
         /// <summary>
         /// 発動可能なダメコンのID -1=なし, 42=要員, 43=女神
         /// </summary>
@@ -1638,11 +1605,8 @@ namespace ElectronicObserver.Data
             }
         }
 
-
-
         public int ID => MasterID;
         public override string ToString() => $"[{MasterID}] {NameWithLevel}";
-
 
         public override void LoadFromResponse(string apiname, dynamic data)
         {
@@ -1672,7 +1636,6 @@ namespace ElectronicObserver.Data
             CalculatePowers();
         }
 
-
         public override void LoadFromRequest(string apiname, Dictionary<string, string> data)
         {
             base.LoadFromRequest(apiname, data);
@@ -1699,24 +1662,18 @@ namespace ElectronicObserver.Data
             }
         }
 
-
         /// <summary>
         /// 入渠完了時の処理を行います。
         /// </summary>
         internal void Repair()
         {
-
             HPCurrent = HPMax;
             Condition = Math.Max(Condition, 40);
 
             RawData.api_ndock_time = 0;
             RawData.api_ndock_item[0] = 0;
             RawData.api_ndock_item[1] = 0;
-
         }
-
-
     }
-
 }
 
