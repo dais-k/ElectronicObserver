@@ -559,7 +559,7 @@ namespace ElectronicObserver.Window
             if (KCDatabase.Instance.Ships.Count > 0)
             {
                 int levelsum = group.MembersInstance.Sum(s => s?.Level ?? 0);
-                int expsum = group.MembersInstance.Sum(s => s?.ExpTotal ?? 0);
+                ulong expsum = (ulong)group.MembersInstance.Sum(s => s?.ExpTotal ?? 0);
                 int membersCount = group.MembersInstance.Count(s => s != null);
 
                 Status_ShipCount.Text = $"所属: {membersCount}隻";

@@ -105,7 +105,7 @@ namespace ElectronicObserver.Window.Dialog
 			//Lv1でない艦の取得経験値合計を算出する
 			var shipTypeExpSum = ships.GroupBy(s => s.MasterShip.ShipTypeName).ToDictionary(group => group.Key, group => group.Where(s => s.Level != 1 && s.IsLocked).Sum(s => s.ExpTotal));
 
-			int allSumExp = 0;
+			ulong allSumExp = 0;
 			labelAllSumExp.Text = "経験値合計：0";
 
 			foreach (var st in shipTypeCount.Keys)
@@ -120,7 +120,7 @@ namespace ElectronicObserver.Window.Dialog
 				dataGridView_ShipTypes.Rows[maxRowNum - 1].Cells[4].Value = shipTypeLevelMin[st];
 				dataGridView_ShipTypes.Rows[maxRowNum - 1].Cells[5].Value = shipTypeLevelMax[st];
 				dataGridView_ShipTypes.Rows[maxRowNum - 1].Cells[6].Value = shipTypeExpSum[st];
-				allSumExp += shipTypeExpSum[st];
+				allSumExp += (ulong)shipTypeExpSum[st];
 			}
 			labelAllSumExp.Text = "経験値合計：" + String.Format("{0:#,0}", allSumExp);
 
@@ -341,11 +341,11 @@ namespace ElectronicObserver.Window.Dialog
 
 		private void UpdateAllSumExp(DataGridView dataGridView)
 		{
-			int allSumExp = 0;
+			ulong allSumExp = 0;
 
 			for (int i = 0; i < dataGridView.Rows.Count - 1;i++)
 			{
-				allSumExp += Int32.Parse(dataGridView.Rows[i].Cells[dataGridView.Columns.Count - 1].Value.ToString());
+				allSumExp += UInt64.Parse(dataGridView.Rows[i].Cells[dataGridView.Columns.Count - 1].Value.ToString());
 			}
 
 			labelAllSumExp.Text = "経験値合計：" + String.Format("{0:#,0}", allSumExp);
