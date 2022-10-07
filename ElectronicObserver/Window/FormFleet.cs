@@ -1069,7 +1069,7 @@ namespace ElectronicObserver.Window
 			ContextMenuFleet_Capture.Visible = Utility.Configuration.Config.Debug.EnableDebugMenu;
 		}
 
-		private string CreateDeciBuilderData(int areaId)
+		private string CreateDeciBuilderData(int areaId, bool[] fleetExportFlags)
 		{
 			StringBuilder sb = new StringBuilder();
 			KCDatabase db = KCDatabase.Instance;
@@ -1081,40 +1081,43 @@ namespace ElectronicObserver.Window
 			{
 				if (fleet == null || fleet.MembersInstance.All(m => m == null)) continue;
 
-				sb.AppendFormat(@"""f{0}"":{{", fleet.FleetID);
-
-				int shipcount = 1;
-				foreach (var ship in fleet.MembersInstance)
+				if (fleetExportFlags[fleet.FleetID-1])
 				{
-					if (ship == null) break;
+					sb.AppendFormat(@"""f{0}"":{{", fleet.FleetID);
 
-					sb.AppendFormat(@"""s{0}"":{{""id"":{1},""lv"":{2},""asw"":{3},""luck"":{4},""items"":{{",
-						shipcount,
-						ship.ShipID,
-						ship.Level,
-						ship.ASWBase,
-						ship.LuckBase);
-
-					int eqcount = 1;
-					foreach (var eq in ship.AllSlotInstance.Where(eq => eq != null))
+					int shipcount = 1;
+					foreach (var ship in fleet.MembersInstance)
 					{
-						if (eq == null) break;
+						if (ship == null) break;
 
-						sb.AppendFormat(@"""i{0}"":{{""id"":{1},""rf"":{2},""mas"":{3}}},", eqcount >= 6 ? "x" : eqcount.ToString(), eq.EquipmentID, eq.Level, eq.AircraftLevel);
+						sb.AppendFormat(@"""s{0}"":{{""id"":{1},""lv"":{2},""asw"":{3},""luck"":{4},""items"":{{",
+							shipcount,
+							ship.ShipID,
+							ship.Level,
+							ship.ASWBase,
+							ship.LuckBase);
 
-						eqcount++;
+						int eqcount = 1;
+						foreach (var eq in ship.AllSlotInstance.Where(eq => eq != null))
+						{
+							if (eq == null) break;
+
+							sb.AppendFormat(@"""i{0}"":{{""id"":{1},""rf"":{2},""mas"":{3}}},", eqcount >= 6 ? "x" : eqcount.ToString(), eq.EquipmentID, eq.Level, eq.AircraftLevel);
+
+							eqcount++;
+						}
+
+						if (eqcount > 1)
+							sb.Remove(sb.Length - 1, 1);        // remove ","
+						sb.Append(@"}},");
+
+						shipcount++;
 					}
 
-					if (eqcount > 1)
+					if (shipcount > 0)
 						sb.Remove(sb.Length - 1, 1);        // remove ","
-					sb.Append(@"}},");
-
-					shipcount++;
+					sb.Append(@"},");
 				}
-
-				if (shipcount > 0)
-					sb.Remove(sb.Length - 1, 1);        // remove ","
-				sb.Append(@"},");
 			}
 
 			//基地航空隊
@@ -1167,6 +1170,17 @@ namespace ElectronicObserver.Window
 			return sb.ToString();
 		}
 
+		private bool[] GetFleetExportFlag(DialogChooseAirBase dca)
+		{
+			bool[] fleet = new bool[] { true, true, true, true };
+			fleet[0] = dca.fleet1;
+			fleet[1] = dca.fleet2;
+			fleet[2] = dca.fleet3;
+			fleet[3] = dca.fleet4;
+
+			return fleet;
+		}
+
 		/// <summary>
 		/// 「艦隊デッキビルダー」用編成コピー
 		/// <see cref="http://www.kancolle-calc.net/deckbuilder.html"/>
@@ -1174,12 +1188,14 @@ namespace ElectronicObserver.Window
 		private void ContextMenuFleet_CopyFleetDeckBuilder_Click(object sender, EventArgs e)
 		{
 			int areaId = 0;
+			bool[] fleet;
 			DialogChooseAirBase dca = new DialogChooseAirBase();
 			DialogResult dr = dca.ShowDialog();
 			if (dr == DialogResult.OK)
 			{
 				areaId = dca.areaId;
-				Clipboard.SetData(DataFormats.StringFormat, CreateDeciBuilderData(areaId));
+				fleet = GetFleetExportFlag(dca);
+				Clipboard.SetData(DataFormats.StringFormat, CreateDeciBuilderData(areaId, fleet));
 			}
 		}
 
@@ -1308,9 +1324,9 @@ namespace ElectronicObserver.Window
 		/// <param name="baseUrl"></param>
 		/// <param name="areaId"></param>
 		/// <returns></returns>
-		private Process OpenUrlWithDeciBuilderData(string baseUrl, int areaId)
+		private Process OpenUrlWithDeciBuilderData(string baseUrl, int areaId, bool[] fleet)
 		{
-			string data = CreateDeciBuilderData(areaId);
+			string data = CreateDeciBuilderData(areaId, fleet);
 			string url = $@"{baseUrl}?predeck={data.Replace("\"", "\\\"")}";
 
 			ProcessStartInfo pi = new ProcessStartInfo()
@@ -1329,12 +1345,14 @@ namespace ElectronicObserver.Window
 		private void ContextMenuFleet_OpenAirControlSimulator_Click(object sender, EventArgs e)
 		{
 			int areaId = 0;
+			bool[] fleet;
 			DialogChooseAirBase dca = new DialogChooseAirBase();
 			DialogResult dr = dca.ShowDialog();
 			if (dr == DialogResult.OK)
 			{
 				areaId = dca.areaId;
-				OpenUrlWithDeciBuilderData("https://noro6.github.io/kc-web", areaId);
+				fleet = GetFleetExportFlag(dca);
+				OpenUrlWithDeciBuilderData("https://noro6.github.io/kc-web", areaId, fleet);
 			}
 		}
 
@@ -1346,12 +1364,14 @@ namespace ElectronicObserver.Window
 		private void ContextMenuFleet_OpenTacticalRoom_Click(object sender, EventArgs e)
 		{
 			int areaId = 0;
+			bool[] fleet;
 			DialogChooseAirBase dca = new DialogChooseAirBase();
 			DialogResult dr = dca.ShowDialog();
 			if(dr == DialogResult.OK)
 			{
 				areaId = dca.areaId;
-				OpenUrlWithDeciBuilderData("https://jervis.vercel.app", areaId);
+				fleet = GetFleetExportFlag(dca);
+				OpenUrlWithDeciBuilderData("https://jervis.vercel.app", areaId, fleet);
 			}
 		}
 
@@ -1362,8 +1382,8 @@ namespace ElectronicObserver.Window
 		/// <param name="e"></param>
 		private void ContextMenuFleet_OpenDeckBuilder_Click(object sender, EventArgs e)
 		{
-			//デッキビルダーは基地のデータを読み取る必要がない
-			OpenUrlWithDeciBuilderData("http://kancolle-calc.net/deckbuilder.html", 0);
+			//全艦隊固定出力かつ基地のデータなし
+			OpenUrlWithDeciBuilderData("http://kancolle-calc.net/deckbuilder.html", 0, new bool[] { true,true,true,true,} );
 		}
 
 		private void ContextMenuFleet_AntiAirDetails_Click(object sender, EventArgs e)
