@@ -243,7 +243,7 @@ namespace ElectronicObserver.Window.Dialog
 			{
 				int asw = aswmin + ((aswmax - aswmin) * lv / 99) + aswmod;
 
-				int needexp = ExpTable.ShipExp[lv].Total - selectedShip.ExpTotal;
+				long needexp = ExpTable.ShipExp[lv].Total - selectedShip.ExpTotal;
 
 				var row = new DataGridViewRow();
 				row.CreateCells(LevelView);

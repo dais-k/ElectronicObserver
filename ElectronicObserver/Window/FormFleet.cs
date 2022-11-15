@@ -1303,7 +1303,7 @@ namespace ElectronicObserver.Window
 					double tmpExpProgress = ((double)ExpTable.ShipExp[ship.Level].Next - (double)ship.ExpNext) / (double)ExpTable.ShipExp[ship.Level].Next * 100;
 					expProgress = (int)Math.Truncate(tmpExpProgress);
 				}
-				int[] apiExp = { ship.ExpTotal, ship.ExpNext, expProgress };
+				long[] apiExp = { ship.ExpTotal, (long)ship.ExpNext, (long)expProgress };
 
 				sb.AppendFormat(@"{{""api_ship_id"":{0},""api_lv"":{1},""api_kyouka"":[{2}],""api_exp"":[{3}],""api_slot_ex"":{4},""api_sally_area"":{5}}},",
 					ship.ShipID, ship.Level, 

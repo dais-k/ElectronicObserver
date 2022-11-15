@@ -559,7 +559,7 @@ namespace ElectronicObserver.Window
             if (KCDatabase.Instance.Ships.Count > 0)
             {
                 int levelsum = group.MembersInstance.Sum(s => s?.Level ?? 0);
-                ulong expsum = (ulong)group.MembersInstance.Sum(s => s?.ExpTotal ?? 0);
+				long expsum = (long)group.MembersInstance.Sum(s => s?.ExpTotal ?? 0);
                 int membersCount = group.MembersInstance.Count(s => s != null);
 
                 Status_ShipCount.Text = $"所属: {membersCount}隻";
@@ -828,7 +828,9 @@ namespace ElectronicObserver.Window
             }
             else if (e.Column.Index == ShipView_Exp.Index)
             {
-                e.SortResult = (int)e.CellValue1 - (int)e.CellValue2;
+				//[Note]
+				//longになったことでキャストエラーが出るようになったため、強引に文字列にしてからParseすることで回避
+                e.SortResult = Int32.Parse(e.CellValue1.ToString()) - Int32.Parse(e.CellValue2.ToString());
                 if (e.SortResult == 0)  //for Lv.99-100
                     e.SortResult = (int)ShipView[ShipView_Level.Index, e.RowIndex1].Value - (int)ShipView[ShipView_Level.Index, e.RowIndex2].Value;
 

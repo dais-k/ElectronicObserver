@@ -108,13 +108,13 @@ namespace ElectronicObserver.Utility.Data
 		/// <param name="expTable">経験値テーブル。</param>
 		/// <param name="current">現在の累積経験値。</param>
 		/// <param name="level">対象のレベル。</param>
-		private static int GetExpToLevel(ReadOnlyDictionary<int, Experience> expTable, int current, int level)
+		private static long GetExpToLevel(ReadOnlyDictionary<int, Experience> expTable, long current, int level)
 		{
 
 			if (!expTable.ContainsKey(level))
 				return 0;
 
-			return expTable[level].Total - current;
+			return (long)(expTable[level].Total - current);
 		}
 
 		/// <summary>
@@ -122,7 +122,7 @@ namespace ElectronicObserver.Utility.Data
 		/// </summary>
 		/// <param name="current">現在の累積経験値。</param>
 		/// <param name="level">対象のレベル。</param>
-		public static int GetExpToLevelShip(int current, int level)
+		public static long GetExpToLevelShip(long current, int level)
 		{
 			return GetExpToLevel(ShipExp, current, level);
 		}
@@ -132,7 +132,7 @@ namespace ElectronicObserver.Utility.Data
 		/// </summary>
 		/// <param name="current">現在の累積経験値。</param>
 		/// <param name="level">対象のレベル。</param>
-		public static int GetExpToLevelAdmiral(int current, int level)
+		public static long GetExpToLevelAdmiral(int current, int level)
 		{
 			return GetExpToLevel(AdmiralExp, current, level);
 		}

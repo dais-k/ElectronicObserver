@@ -340,7 +340,7 @@ namespace ElectronicObserver.Data
 				case 46: return "三式潜航輸送艇";
 				case 47: return "Bismarck級";
 				case 48: return "Z1型";
-				case 49: return "明石型";　//20210703 変更(艦これwikiに合わせた)
+				case 49: return "明石型";		//20210703 変更(艦これwikiに合わせた)
 				case 50: return "大鯨型";
 				case 51: return "龍鳳型";
 				case 52: return "大淀型";
@@ -395,18 +395,21 @@ namespace ElectronicObserver.Data
 				case 101: return "松型";
 				case 102: return "South Dakota級";
 				case 103: return "巡潜丙型";
-				case 104: return "丁型";       // 20210703 変更
+				case 104: return "丁型";		// 20210703 変更
 				case 105: return "Yorktown級";
 				case 106: return "St. Louis級";
 				case 107: return "North Carolina級";
 				case 108: return "Town級";
 				case 109: return "潜高型";
 				case 110: return "Brooklyn級";
-				case 111: return "宗谷型"; //宗谷のコンバート改装先の2つも同じIDなので便宜上の命名
+				case 111: return "宗谷型";		//宗谷のコンバート改装先の2つも同じIDなので便宜上の命名
 				case 112: return "Illustrious級";
 				case 113: return "Conte di Cavour級";
 				case 114: return "Gato級";
 				case 115: return "特2TL型";
+				case 116: return "Independence級";
+				case 117: return "鵜来型";
+				case 118: return "Ranger級";
 				default: 
 					return "不明";
 			}

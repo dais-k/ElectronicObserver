@@ -38,7 +38,7 @@ namespace ElectronicObserver.Data
         /// <summary>
         /// 累積経験値
         /// </summary>
-        public int ExpTotal => (int)RawData.api_exp[0];
+        public long ExpTotal => (long)RawData.api_exp[0];
 
         /// <summary>
         /// 次のレベルに達するために必要な経験値
@@ -449,7 +449,7 @@ namespace ElectronicObserver.Data
         /// <summary>
         /// 次の改装まで必要な経験値
         /// </summary>
-        public int ExpNextRemodel
+        public long ExpNextRemodel
         {
             get
             {
@@ -463,7 +463,7 @@ namespace ElectronicObserver.Data
 		/// <summary>
 		/// 最終改装まで必要な経験値
 		/// </summary>
-		public int ExpFinalRemodel
+		public long ExpFinalRemodel
 		{
 			get
 			{
