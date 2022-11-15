@@ -142,8 +142,7 @@
             // 
             // DialogChooseAirBase
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(249, 132);
             this.Controls.Add(this.labelAirBase);
             this.Controls.Add(this.groupBoxFleet);
@@ -157,6 +156,7 @@
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "艦隊と基地航空隊の選択";
+            this.TopMost = true;
             this.Shown += new System.EventHandler(this.DialogChooseAirBase_Shown);
             this.groupBoxFleet.ResumeLayout(false);
             this.groupBoxFleet.PerformLayout();
