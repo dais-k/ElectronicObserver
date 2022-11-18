@@ -551,10 +551,9 @@ namespace ElectronicObserver.Window.Dialog
 						RightOperand_NumericUpDown.Minimum = 1;
 						RightOperand_NumericUpDown.Maximum = ExpTable.ShipMaximumLevel;
 						break;
-					case ".ExpTotal":
 					case ".ExpNextRemodel":
 						RightOperand_NumericUpDown.Minimum = 0;
-						RightOperand_NumericUpDown.Maximum = 4360000;
+						RightOperand_NumericUpDown.Maximum = 10950000; //Lv175までの必要経験値
 						break;
 					case ".ExpNext":
 						RightOperand_NumericUpDown.Minimum = 0;
@@ -611,7 +610,7 @@ namespace ElectronicObserver.Window.Dialog
 				{
 					case ".ExpTotal":
 						RightOperand_NumericUpDown.Minimum = 0;
-						RightOperand_NumericUpDown.Maximum = 4360000;
+						RightOperand_NumericUpDown.Maximum = 10950000; //Lv175までの必要経験値
 						break;
 					default:
 						RightOperand_NumericUpDown.Minimum = 0;
