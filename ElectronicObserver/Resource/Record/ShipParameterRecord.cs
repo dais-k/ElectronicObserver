@@ -550,12 +550,24 @@ namespace ElectronicObserver.Resource.Record
 				TryToUpdate(e => e.LuckMax, (e, i) => e.LuckMax = i);
 				TryToUpdate(e => e.Range, (e, i) => e.Range = i);
 
-
+				//初期装備の更新
 				if (DefaultSlot == null && other.DefaultSlot != null)
 				{
 					DefaultSlot = other.DefaultSlot.ToArray();
 					isChanged = true;
 				}
+				if (DefaultSlot != null && other.DefaultSlot != null)
+				{
+					for (int i = 0; i < DefaultSlot.Length; i++)
+					{
+						if (DefaultSlot[i] != other.DefaultSlot[i])
+						{
+							DefaultSlot[i] = other.DefaultSlot[i];
+							isChanged = true;
+						}
+					}
+				}
+
 				if (Aircraft == null && other.Aircraft != null)
 				{
 					Aircraft = other.Aircraft.ToArray();

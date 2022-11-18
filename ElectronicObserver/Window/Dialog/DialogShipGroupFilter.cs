@@ -592,6 +592,35 @@ namespace ElectronicObserver.Window.Dialog
 				UpdateDescriptionFromNumericUpDown();
 
 			}
+			else if (lefttype == typeof(long))
+			{
+				RightOperand_ComboBox.Visible = false;
+				RightOperand_ComboBox.Enabled = false;
+				RightOperand_ComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+				RightOperand_NumericUpDown.Visible = true;
+				RightOperand_NumericUpDown.Enabled = true;
+				RightOperand_TextBox.Visible = false;
+				RightOperand_TextBox.Enabled = false;
+				Operator.Enabled = true;
+				Operator.DataSource = _dtOperator_number;
+
+				RightOperand_NumericUpDown.DecimalPlaces = 0;
+				RightOperand_NumericUpDown.Increment = 1m;
+
+				switch (left)
+				{
+					case ".ExpTotal":
+						RightOperand_NumericUpDown.Minimum = 0;
+						RightOperand_NumericUpDown.Maximum = 4360000;
+						break;
+					default:
+						RightOperand_NumericUpDown.Minimum = 0;
+						RightOperand_NumericUpDown.Maximum = 9999;
+						break;
+				}
+				RightOperand_NumericUpDown.Value = right == null ? RightOperand_NumericUpDown.Minimum : (long)right;
+				UpdateDescriptionFromNumericUpDown();
+			}
 			else if (lefttype == typeof(double))
 			{
 				RightOperand_ComboBox.Visible = false;
