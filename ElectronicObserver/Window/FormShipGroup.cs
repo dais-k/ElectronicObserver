@@ -23,15 +23,11 @@ namespace ElectronicObserver.Window
 {
     public partial class FormShipGroup : DockContent
     {
-
-
         /// <summary>タブ背景色(アクティブ)</summary>
         private readonly Color TabActiveColor = Color.FromArgb(0xFF, 0xFF, 0xCC);
 
         /// <summary>タブ背景色(非アクティブ)</summary>
         private readonly Color TabInactiveColor = SystemColors.Control;
-
-
 
         // セル背景色
         private readonly Color CellColorRed = Color.FromArgb(0xFF, 0xBB, 0xBB);
@@ -52,11 +48,9 @@ namespace ElectronicObserver.Window
         /// <summary>選択中のグループ</summary>
         private ShipGroupData CurrentGroup => SelectedTab == null ? null : KCDatabase.Instance.ShipGroup[(int)SelectedTab.Tag];
 
-
         private bool IsRowsUpdating;
         private int _splitterDistance;
         private int _shipNameSortMethod;
-
 
         public FormShipGroup(FormMain parent)
         {
@@ -71,7 +65,6 @@ namespace ElectronicObserver.Window
             {
                 column.MinimumWidth = 2;
             }
-
 
             #region set CellStyle
 
@@ -124,7 +117,6 @@ namespace ElectronicObserver.Window
             CSIsLocked.ForeColor =
             CSIsLocked.SelectionForeColor = Color.FromArgb(0xFF, 0x88, 0x88);
 
-
             ShipView.DefaultCellStyle = CSDefaultRight;
             ShipView_Name.DefaultCellStyle = CSDefaultLeft;
             ShipView_Slot1.DefaultCellStyle = CSDefaultLeft;
@@ -136,16 +128,12 @@ namespace ElectronicObserver.Window
 
             #endregion
 
-
             SystemEvents.SystemShuttingDown += SystemShuttingDown;
         }
 
-
         private void FormShipGroup_Load(object sender, EventArgs e)
         {
-
             ShipGroupManager groups = KCDatabase.Instance.ShipGroup;
-
 
             // 空(≒初期状態)の時、おなじみ全所属艦を追加
             if (groups.ShipGroups.Count == 0)
@@ -165,12 +153,10 @@ namespace ElectronicObserver.Window
                 }
             }
 
-
             foreach (var g in groups.ShipGroups.Values)
             {
                 TabPanel.Controls.Add(CreateTabLabel(g.GroupID));
             }
-
 
             //*/
             {
@@ -182,9 +168,7 @@ namespace ElectronicObserver.Window
             }
             //*/
 
-
             ConfigurationChanged();
-
 
             APIObserver o = APIObserver.Instance;
 
@@ -192,15 +176,11 @@ namespace ElectronicObserver.Window
             o.APIList["api_get_member/ship2"].ResponseReceived += APIUpdated;
             o.APIList["api_get_member/ship_deck"].ResponseReceived += APIUpdated;
 
-
             Utility.Configuration.Instance.ConfigurationChanged += ConfigurationChanged;
 
             IsRowsUpdating = false;
             Icon = ResourceManager.ImageToIcon(ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormShipGroup]);
-
         }
-
-
         void ConfigurationChanged()
         {
 
@@ -253,7 +233,6 @@ namespace ElectronicObserver.Window
 
         }
 
-
         // レイアウトロード時に呼ばれる
         public void ConfigureFromPersistString(string persistString)
         {
@@ -274,10 +253,7 @@ namespace ElectronicObserver.Window
             }
         }
 
-
         protected override string GetPersistString() => "ShipGroup?SplitterDistance=" + splitContainer1.SplitterDistance;
-
-
 
         /// <summary>
         /// 指定したグループIDに基づいてタブ ラベルを生成します。
@@ -310,9 +286,6 @@ namespace ElectronicObserver.Window
             return label;
         }
 
-
-
-
         void TabLabel_Click(object sender, EventArgs e)
         {
             ChangeShipView(sender as ImageLabel);
@@ -324,18 +297,12 @@ namespace ElectronicObserver.Window
                 ChangeShipView(SelectedTab);
         }
 
-
-
-
-
-
         /// <summary>
         /// ShipView用の新しい行のインスタンスを作成します。
         /// </summary>
         /// <param name="ship">追加する艦娘データ。</param>
         private DataGridViewRow CreateShipViewRow(ShipData ship)
         {
-
             if (ship == null) return null;
 
             DataGridViewRow row = new DataGridViewRow();
@@ -403,7 +370,6 @@ namespace ElectronicObserver.Window
                 ship.IsLocked ? 1 : ship.IsLockedByEquipment ? 2 : 0,
                 ship.SallyArea
                 );
-
 
             row.Cells[ShipView_Name.Index].Tag = ship.ShipID;
             //row.Cells[ShipView_Level.Index].Tag = ship.ExpTotal;
@@ -476,7 +442,6 @@ namespace ElectronicObserver.Window
             return row;
         }
 
-
         /// <summary>
         /// 指定したタブのグループのShipViewを作成します。
         /// </summary>
@@ -511,8 +476,6 @@ namespace ElectronicObserver.Window
 
             ShipView.Rows.AddRange(rows.ToArray());
 
-
-
             // 設定に抜けがあった場合補充
             if (group.ViewColumns == null)
             {
@@ -522,7 +485,6 @@ namespace ElectronicObserver.Window
             {
                 foreach (DataGridViewColumn column in ShipView.Columns)
                 {
-
                     if (!group.ViewColumns.ContainsKey(column.Name))
                     {
                         var newdata = new ShipGroupData.ViewColumnData(column)
@@ -535,10 +497,8 @@ namespace ElectronicObserver.Window
                 }
             }
 
-
             ApplyViewData(group);
             ApplyAutoSort(group);
-
 
             // 高さ設定(追加直後に実行すると高さが0になることがあるのでここで実行)
             int rowHeight = 21;
@@ -550,7 +510,6 @@ namespace ElectronicObserver.Window
 
             foreach (DataGridViewRow row in ShipView.Rows)
                 row.Height = rowHeight;
-
 
             ShipView.ResumeLayout();
             IsRowsUpdating = false;
@@ -568,15 +527,12 @@ namespace ElectronicObserver.Window
             }
         }
 
-
         /// <summary>
         /// ShipViewを指定したタブに切り替えます。
         /// </summary>
         private void ChangeShipView(ImageLabel target)
         {
-
             if (target == null) return;
-
 
             var group = KCDatabase.Instance.ShipGroup[(int)target.Tag];
             var currentGroup = CurrentGroup;
@@ -592,7 +548,6 @@ namespace ElectronicObserver.Window
 
             if (currentGroup != null)
             {
-
                 UpdateMembers(currentGroup);
 
                 if (CurrentGroup.GroupID != group.GroupID)
@@ -607,23 +562,19 @@ namespace ElectronicObserver.Window
                 }
             }
 
-
             if (SelectedTab != null)
                 SelectedTab.BackColor = TabInactiveColor;
 
             SelectedTab = target;
 
-
             BuildShipView(SelectedTab);
             SelectedTab.BackColor = TabActiveColor;
-
 
             if (0 <= headIndex && headIndex < ShipView.Rows.Count)
             {
                 try
                 {
                     ShipView.FirstDisplayedScrollingRowIndex = headIndex;
-
                 }
                 catch (InvalidOperationException)
                 {
@@ -643,13 +594,10 @@ namespace ElectronicObserver.Window
                     }
                 }
             }
-
         }
-
 
         private string GetEquipmentString(ShipData ship, int index)
         {
-
             if (index < 5)
             {
                 return (index >= ship.SlotSize && ship.Slot[index] == -1) ? "" :
@@ -660,9 +608,7 @@ namespace ElectronicObserver.Window
                 return ship.ExpansionSlot == 0 ? "" :
                     ship.ExpansionSlotInstance?.NameWithLevel ?? "(なし)";
             }
-
         }
-
 
         /// <summary>
         /// 現在選択している艦船のIDリストを求めます。
@@ -672,7 +618,6 @@ namespace ElectronicObserver.Window
             return ShipView.SelectedRows.Cast<DataGridViewRow>().OrderBy(r => r.Index).Select(r => (int)r.Cells[ShipView_ID.Index].Value);
         }
 
-
         /// <summary>
         /// 現在の表を基に、グループメンバーを更新します。
         /// </summary>
@@ -681,10 +626,8 @@ namespace ElectronicObserver.Window
             group.UpdateMembers(ShipView.Rows.Cast<DataGridViewRow>().Select(r => (int)r.Cells[ShipView_ID.Index].Value));
         }
 
-
         private void ShipView_SelectionChanged(object sender, EventArgs e)
         {
-
             var group = CurrentGroup;
             if (KCDatabase.Instance.Ships.Count > 0 && group != null)
             {
@@ -694,8 +637,6 @@ namespace ElectronicObserver.Window
                     Status_ShipCount.Text = string.Format("選択: {0} / {1}隻", ShipView.Rows.GetRowCount(DataGridViewElementStates.Selected), group.Members.Count);
                     Status_LevelTotal.Text = string.Format("合計Lv: {0}", levels.Sum());
                     Status_LevelAverage.Text = string.Format("平均Lv: {0:F2}", levels.Average());
-
-
                 }
                 else
                 {
@@ -703,7 +644,6 @@ namespace ElectronicObserver.Window
                     Status_LevelTotal.Text = string.Format("合計Lv: {0}", group.MembersInstance.Where(s => s != null).Sum(s => s.Level));
                     Status_LevelAverage.Text = string.Format("平均Lv: {0:F2}", group.Members.Count > 0 ? group.MembersInstance.Where(s => s != null).Average(s => s.Level) : 0);
                 }
-
             }
             else
             {
@@ -713,26 +653,21 @@ namespace ElectronicObserver.Window
             }
         }
 
-
         private void ShipView_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
         {
-
             if (e.ColumnIndex == ShipView_ShipType.Index)
             {
                 e.Value = KCDatabase.Instance.ShipTypes[(int)e.Value].Name;
                 e.FormattingApplied = true;
-
             }
             else if (e.ColumnIndex == ShipView_Fleet.Index)
             {
                 if (e.Value == null)
                     e.Value = "";
                 e.FormattingApplied = true;
-
             }
             else if (e.ColumnIndex == ShipView_RepairTime.Index)
             {
-
                 if ((int)e.Value < 0)
                 {
                     e.Value = "入渠 #" + ((int)e.Value + 1000);
@@ -742,7 +677,6 @@ namespace ElectronicObserver.Window
                     e.Value = DateTimeHelper.ToTimeRemainString(DateTimeHelper.FromAPITimeSpan((int)e.Value));
                 }
                 e.FormattingApplied = true;
-
             }
             else if ((
               e.ColumnIndex == ShipView_FirepowerRemain.Index ||
@@ -754,7 +688,6 @@ namespace ElectronicObserver.Window
             {
                 e.Value = "MAX";
                 e.FormattingApplied = true;
-
             }
             else if (e.ColumnIndex == ShipView_Aircraft1.Index ||
                e.ColumnIndex == ShipView_Aircraft2.Index ||
@@ -767,42 +700,33 @@ namespace ElectronicObserver.Window
                     e.Value = "";
                     e.FormattingApplied = true;
                 }
-
             }
             else if (e.ColumnIndex == ShipView_Locked.Index)
             {
                 e.Value = (int)e.Value == 1 ? "❤" : (int)e.Value == 2 ? "■" : "";
                 e.FormattingApplied = true;
-
             }
             else if (e.ColumnIndex == ShipView_SallyArea.Index && (int)e.Value == -1)
             {
                 e.Value = "";
                 e.FormattingApplied = true;
-
             }
             else if (e.ColumnIndex == ShipView_Range.Index)
             {
                 e.Value = Constants.GetRange((int)e.Value);
                 e.FormattingApplied = true;
-
             }
             else if (e.ColumnIndex == ShipView_Speed.Index)
             {
                 e.Value = Constants.GetSpeed((int)e.Value);
                 e.FormattingApplied = true;
-
             }
-
         }
-
 
         private void ShipView_SortCompare(object sender, DataGridViewSortCompareEventArgs e)
         {
-
             if (e.Column.Index == ShipView_Name.Index)
             {
-
                 ShipDataMaster ship1 = KCDatabase.Instance.MasterShips[(int)ShipView.Rows[e.RowIndex1].Cells[e.Column.Index].Tag],
                                 ship2 = KCDatabase.Instance.MasterShips[(int)ShipView.Rows[e.RowIndex2].Cells[e.Column.Index].Tag];
 
@@ -824,7 +748,6 @@ namespace ElectronicObserver.Window
 						e.SortResult = ship1.SortID - ship2.SortID;
 						break;
                 }
-
             }
             else if (e.Column.Index == ShipView_Exp.Index)
             {
@@ -833,19 +756,18 @@ namespace ElectronicObserver.Window
                 e.SortResult = Int32.Parse(e.CellValue1.ToString()) - Int32.Parse(e.CellValue2.ToString());
                 if (e.SortResult == 0)  //for Lv.99-100
                     e.SortResult = (int)ShipView[ShipView_Level.Index, e.RowIndex1].Value - (int)ShipView[ShipView_Level.Index, e.RowIndex2].Value;
-
             }
             else if (
-              e.Column.Index == ShipView_HP.Index ||
-              e.Column.Index == ShipView_Fuel.Index ||
-              e.Column.Index == ShipView_Ammo.Index ||
-              e.Column.Index == ShipView_Aircraft1.Index ||
-              e.Column.Index == ShipView_Aircraft2.Index ||
-              e.Column.Index == ShipView_Aircraft3.Index ||
-              e.Column.Index == ShipView_Aircraft4.Index ||
-              e.Column.Index == ShipView_Aircraft5.Index ||
-              e.Column.Index == ShipView_AircraftTotal.Index
-              )
+				e.Column.Index == ShipView_HP.Index ||
+				e.Column.Index == ShipView_Fuel.Index ||
+				e.Column.Index == ShipView_Ammo.Index ||
+				e.Column.Index == ShipView_Aircraft1.Index ||
+				e.Column.Index == ShipView_Aircraft2.Index ||
+				e.Column.Index == ShipView_Aircraft3.Index ||
+				e.Column.Index == ShipView_Aircraft4.Index ||
+				e.Column.Index == ShipView_Aircraft5.Index ||
+				e.Column.Index == ShipView_AircraftTotal.Index
+			)
             {
                 Fraction frac1 = (Fraction)e.CellValue1, frac2 = (Fraction)e.CellValue2;
 
@@ -875,14 +797,20 @@ namespace ElectronicObserver.Window
                     else
                         e.SortResult = ((string)e.CellValue1).CompareTo(e.CellValue2);
                 }
-
             }
             else
             {
-                e.SortResult = (int)e.CellValue1 - (int)e.CellValue2;
-            }
-
-
+				//[Note]
+				//longになったことでキャストエラーが出るようになったため、強引に文字列にしてからParseすることで回避
+				if (e.CellValue1.GetType().Name == "Int64")
+				{
+					e.SortResult = Int32.Parse(e.CellValue1.ToString()) - Int32.Parse(e.CellValue2.ToString());
+				}
+				else
+				{
+					e.SortResult = (int)e.CellValue1 - (int)e.CellValue2;
+				}
+			}
 
             if (e.SortResult == 0)
             {
@@ -895,27 +823,18 @@ namespace ElectronicObserver.Window
             e.Handled = true;
         }
 
-
-
         private void ShipView_Sorted(object sender, EventArgs e)
         {
-
             int count = ShipView.Rows.Count;
             var direction = ShipView.SortOrder;
 
             for (int i = 0; i < count; i++)
                 ShipView.Rows[i].Tag = i;
-
         }
-
-
-
-
 
         // 列のサイズ変更関連
         private void ShipView_ColumnWidthChanged(object sender, DataGridViewColumnEventArgs e)
         {
-
             if (IsRowsUpdating)
                 return;
 
@@ -928,43 +847,32 @@ namespace ElectronicObserver.Window
                     group.ViewColumns[e.Column.Name].Width = e.Column.Width;
                 }
             }
-
         }
 
         private void ShipView_ColumnDisplayIndexChanged(object sender, DataGridViewColumnEventArgs e)
         {
-
             if (IsRowsUpdating)
                 return;
 
             var group = CurrentGroup;
             if (group != null)
             {
-
                 foreach (DataGridViewColumn column in ShipView.Columns)
                 {
                     group.ViewColumns[column.Name].DisplayIndex = column.DisplayIndex;
                 }
             }
-
         }
-
-
-
 
         #region メニュー:グループ操作
 
         private void MenuGroup_Add_Click(object sender, EventArgs e)
         {
-
             using (var dialog = new DialogTextInput("グループを追加", "グループ名を入力してください："))
             {
-
                 if (dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
                 {
-
                     var group = KCDatabase.Instance.ShipGroup.Add();
-
 
                     group.Name = dialog.InputtedText.Trim();
 
@@ -977,26 +885,20 @@ namespace ElectronicObserver.Window
                     }
 
                     TabPanel.Controls.Add(CreateTabLabel(group.GroupID));
-
                 }
-
             }
-
         }
 
         private void MenuGroup_Copy_Click(object sender, EventArgs e)
         {
-
             ImageLabel senderLabel = MenuGroup.SourceControl as ImageLabel;
             if (senderLabel == null)
                 return;     //想定外
 
             using (var dialog = new DialogTextInput("グループをコピー", "グループ名を入力してください："))
             {
-
                 if (dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
                 {
-
                     var group = KCDatabase.Instance.ShipGroup[(int)senderLabel.Tag].Clone();
 
                     group.GroupID = KCDatabase.Instance.ShipGroup.GetUniqueID();
@@ -1005,15 +907,12 @@ namespace ElectronicObserver.Window
                     KCDatabase.Instance.ShipGroup.ShipGroups.Add(group);
 
                     TabPanel.Controls.Add(CreateTabLabel(group.GroupID));
-
                 }
             }
-
         }
 
         private void MenuGroup_Delete_Click(object sender, EventArgs e)
         {
-
             ImageLabel senderLabel = MenuGroup.SourceControl as ImageLabel;
             if (senderLabel == null)
                 return;     //想定外
@@ -1026,7 +925,6 @@ namespace ElectronicObserver.Window
                     MessageBoxButtons.YesNo, MessageBoxIcon.Question, MessageBoxDefaultButton.Button2)
                     == System.Windows.Forms.DialogResult.Yes)
                 {
-
                     if (SelectedTab == senderLabel)
                     {
                         ShipView.Rows.Clear();
@@ -1036,7 +934,6 @@ namespace ElectronicObserver.Window
                     TabPanel.Controls.Remove(senderLabel);
                     senderLabel.Dispose();
                 }
-
             }
             else
             {
@@ -1046,7 +943,6 @@ namespace ElectronicObserver.Window
 
         private void MenuGroup_Rename_Click(object sender, EventArgs e)
         {
-
             ImageLabel senderLabel = MenuGroup.SourceControl as ImageLabel;
             if (senderLabel == null) return;
 
@@ -1054,45 +950,32 @@ namespace ElectronicObserver.Window
 
             if (group != null)
             {
-
                 using (var dialog = new DialogTextInput("グループ名の変更", "グループ名を入力してください："))
                 {
-
                     dialog.InputtedText = group.Name;
 
                     if (dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
                     {
-
                         group.Name = senderLabel.Text = dialog.InputtedText.Trim();
-
                     }
                 }
-
             }
             else
             {
                 MessageBox.Show("このグループの名前を変更することはできません。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
-
         }
-
 
         private void TabPanel_DoubleClick(object sender, EventArgs e)
         {
-
             MenuGroup_Add.PerformClick();
-
         }
 
-
-
         #endregion
-
 
         #region メニューON/OFF操作
         private void MenuGroup_Opening(object sender, CancelEventArgs e)
         {
-
             if (MenuGroup.SourceControl == TabPanel || SelectedTab == null)
             {
                 MenuGroup_Add.Enabled = true;
@@ -1107,15 +990,12 @@ namespace ElectronicObserver.Window
                 MenuGroup_Rename.Enabled = true;
                 MenuGroup_Delete.Enabled = true;
             }
-
         }
 
         private void MenuMember_Opening(object sender, CancelEventArgs e)
         {
-
             if (SelectedTab == null)
             {
-
                 e.Cancel = true;
                 return;
             }
@@ -1124,7 +1004,6 @@ namespace ElectronicObserver.Window
             {
                 MenuMember_Filter.Enabled = false;
                 MenuMember_CSVOutput.Enabled = false;
-
             }
             else
             {
@@ -1137,25 +1016,20 @@ namespace ElectronicObserver.Window
                 MenuMember_AddToGroup.Enabled = false;
                 MenuMember_CreateGroup.Enabled = false;
                 MenuMember_Exclude.Enabled = false;
-
             }
             else
             {
                 MenuMember_AddToGroup.Enabled = true;
                 MenuMember_CreateGroup.Enabled = true;
                 MenuMember_Exclude.Enabled = true;
-
             }
-
         }
         #endregion
-
 
         #region メニュー:メンバー操作
 
         private void MenuMember_ColumnFilter_Click(object sender, EventArgs e)
         {
-
             ShipGroupData group = CurrentGroup;
 
             if (group == null)
@@ -1164,12 +1038,10 @@ namespace ElectronicObserver.Window
                 return;
             }
 
-
             try
             {
                 using (var dialog = new DialogShipGroupColumnFilter(ShipView, group))
                 {
-
                     if (dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
                     {
 
@@ -1178,9 +1050,6 @@ namespace ElectronicObserver.Window
 
                         ApplyViewData(group);
                     }
-
-
-
                 }
             }
             catch (Exception ex)
@@ -1190,17 +1059,11 @@ namespace ElectronicObserver.Window
             }
         }
 
-
-
-
-
         private void MenuMember_Filter_Click(object sender, EventArgs e)
         {
-
             var group = CurrentGroup;
             if (group != null)
             {
-
                 try
                 {
                     if (group.Expressions == null)
@@ -1208,10 +1071,8 @@ namespace ElectronicObserver.Window
 
                     using (var dialog = new DialogShipGroupFilter(group))
                     {
-
                         if (dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
                         {
-
                             // replace
                             int id = group.GroupID;
                             group = dialog.ExportGroupData();
@@ -1227,21 +1088,16 @@ namespace ElectronicObserver.Window
                 }
                 catch (Exception ex)
                 {
-
                     Utility.ErrorReporter.SendErrorReport(ex, "ShipGroup: フィルタダイアログでエラーが発生しました。");
                 }
-
             }
         }
-
-
 
         /// <summary>
         /// 表示設定を反映します。
         /// </summary>
         private void ApplyViewData(ShipGroupData group)
         {
-
             IsRowsUpdating = true;
 
             // いったん解除しないと列入れ替え時にエラーが起きる
@@ -1268,26 +1124,21 @@ namespace ElectronicObserver.Window
 
         private void MenuMember_SortOrder_Click(object sender, EventArgs e)
         {
-
             var group = CurrentGroup;
 
             if (group != null)
             {
-
                 try
                 {
                     using (var dialog = new DialogShipGroupSortOrder(ShipView, group))
                     {
-
                         if (dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
                         {
-
                             group.AutoSortEnabled = dialog.AutoSortEnabled;
                             group.SortOrder = dialog.Result;
 
                             ApplyAutoSort(group);
                         }
-
                     }
                 }
                 catch (Exception ex)
@@ -1296,44 +1147,32 @@ namespace ElectronicObserver.Window
                     Utility.ErrorReporter.SendErrorReport(ex, "ShipGroup: 自動ソート順設定ダイアログでエラーが発生しました。");
                 }
             }
-
         }
 
 
         private void ApplyAutoSort(ShipGroupData group)
         {
-
             if (!group.AutoSortEnabled || group.SortOrder == null)
                 return;
 
             // 一番上/最後に実行したほうが優先度が高くなるので逆順で
             for (int i = group.SortOrder.Count - 1; i >= 0; i--)
             {
-
                 var order = group.SortOrder[i];
                 ListSortDirection dir = order.Value;
 
                 if (ShipView.Columns[order.Key].SortMode != DataGridViewColumnSortMode.NotSortable)
                     ShipView.Sort(ShipView.Columns[order.Key], dir);
             }
-
-
         }
-
-
-
-
 
         private void MenuMember_AddToGroup_Click(object sender, EventArgs e)
         {
-
             using (var dialog = new DialogTextSelect("グループの選択", "追加するグループを選択してください：",
                 KCDatabase.Instance.ShipGroup.ShipGroups.Values.ToArray()))
             {
-
                 if (dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
                 {
-
                     var group = (ShipGroupData)dialog.SelectedItem;
                     if (group != null)
                     {
@@ -1342,15 +1181,12 @@ namespace ElectronicObserver.Window
                         if (group.ID == CurrentGroup.ID)
                             ChangeShipView(SelectedTab);
                     }
-
                 }
             }
-
         }
 
         private void MenuMember_CreateGroup_Click(object sender, EventArgs e)
         {
-
             var ships = GetSelectedShipID();
             if (ships.Count() == 0)
                 return;
@@ -1381,39 +1217,27 @@ namespace ElectronicObserver.Window
                     group.AddInclusionFilter(ships);
 
                     TabPanel.Controls.Add(CreateTabLabel(group.GroupID));
-
                 }
-
             }
         }
 
         private void MenuMember_Exclude_Click(object sender, EventArgs e)
         {
-
             var group = CurrentGroup;
             if (group != null)
             {
-
                 group.AddExclusionFilter(GetSelectedShipID());
 
                 ChangeShipView(SelectedTab);
             }
-
         }
-
-
-
-
-
 
         private static readonly string ShipCSVHeaderUser = "固有ID,艦種,艦名,Lv,Exp,next,改装まで,耐久現在,耐久最大,Cond,燃料,弾薬,装備1,装備2,装備3,装備4,装備5,補強装備,入渠,火力,火力改修,火力合計,雷装,雷装改修,雷装合計,対空,対空改修,対空合計,装甲,装甲改修,装甲合計,対潜,対潜合計,回避,回避合計,索敵,索敵合計,運,運改修,運合計,射程,速力,ロック,出撃先,母港ソートID,航空威力,砲撃威力,空撃威力,対潜威力,雷撃威力,夜戦威力";
 
         private static readonly string ShipCSVHeaderData = "固有ID,艦種,艦名,艦船ID,Lv,Exp,next,改装まで,耐久現在,耐久最大,Cond,燃料,弾薬,装備1,装備2,装備3,装備4,装備5,補強装備,装備ID1,装備ID2,装備ID3,装備ID4,装備ID5,補強装備ID,艦載機1,艦載機2,艦載機3,艦載機4,艦載機5,入渠,入渠燃料,入渠鋼材,火力,火力改修,火力合計,雷装,雷装改修,雷装合計,対空,対空改修,対空合計,装甲,装甲改修,装甲合計,対潜,対潜合計,回避,回避合計,索敵,索敵合計,運,運改修,運合計,射程,速力,ロック,出撃先,母港ソートID,航空威力,砲撃威力,空撃威力,対潜威力,雷撃威力,夜戦威力";
 
-
         private void MenuMember_CSVOutput_Click(object sender, EventArgs e)
         {
-
             IEnumerable<ShipData> ships;
 
             if (SelectedTab == null)
@@ -1433,29 +1257,21 @@ namespace ElectronicObserver.Window
 				//*/
             }
 
-
             using (var dialog = new DialogShipGroupCSVOutput())
             {
-
                 if (dialog.ShowDialog(this) == System.Windows.Forms.DialogResult.OK)
                 {
-
                     try
                     {
-
                         using (StreamWriter sw = new StreamWriter(dialog.OutputPath, false, Utility.Configuration.Config.Log.FileEncoding))
                         {
-
                             string header = dialog.OutputFormat == DialogShipGroupCSVOutput.OutputFormatConstants.User ? ShipCSVHeaderUser : ShipCSVHeaderData;
                             sw.WriteLine(header);
 
-
                             foreach (ShipData ship in ships.Where(s => s != null))
                             {
-
                                 if (dialog.OutputFormat == DialogShipGroupCSVOutput.OutputFormatConstants.User)
                                 {
-
                                     sw.WriteLine(string.Join(",",
                                         ship.MasterID,
                                         ship.MasterShip.ShipTypeName,
@@ -1509,11 +1325,9 @@ namespace ElectronicObserver.Window
                                         ship.TorpedoPower,
                                         ship.NightBattlePower
                                         ));
-
                                 }
                                 else
                                 {       //data
-
                                     sw.WriteLine(string.Join(",",
                                         ship.MasterID,
                                         (int)ship.MasterShip.ShipType,
@@ -1581,32 +1395,22 @@ namespace ElectronicObserver.Window
                                         ship.TorpedoPower,
                                         ship.NightBattlePower
                                         ));
-
                                 }
-
                             }
-
                         }
 
                         Utility.Logger.Add(2, "艦船グループ CSVを " + dialog.OutputPath + " に保存しました。");
-
                     }
                     catch (Exception ex)
                     {
                         Utility.ErrorReporter.SendErrorReport(ex, "艦船グループ CSV の出力に失敗しました。");
                         MessageBox.Show("艦船グループ CSVの出力に失敗しました。\r\n" + ex.Message, "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-
                 }
             }
-
         }
 
-
-
-
         #endregion
-
 
         #region タブ操作系
 
@@ -1625,10 +1429,8 @@ namespace ElectronicObserver.Window
 
         void TabLabel_MouseMove(object sender, MouseEventArgs e)
         {
-
             if (_tempMouse != null)
             {
-
                 Rectangle move = new Rectangle(
                     _tempMouse.Value.X - SystemInformation.DragSize.Width / 2,
                     _tempMouse.Value.Y - SystemInformation.DragSize.Height / 2,
@@ -1642,7 +1444,6 @@ namespace ElectronicObserver.Window
                     _tempMouse = null;
                 }
             }
-
         }
 
         void TabLabel_MouseUp(object sender, MouseEventArgs e)
@@ -1650,10 +1451,8 @@ namespace ElectronicObserver.Window
             _tempMouse = null;
         }
 
-
         private void TabPanel_DragEnter(object sender, DragEventArgs e)
         {
-
             if (e.Data.GetDataPresent(typeof(ImageLabel)))
             {
                 e.Effect = DragDropEffects.Move;
@@ -1662,7 +1461,6 @@ namespace ElectronicObserver.Window
             {
                 e.Effect = DragDropEffects.None;
             }
-
         }
 
         private void TabPanel_QueryContinueDrag(object sender, QueryContinueDragEventArgs e)
@@ -1675,7 +1473,6 @@ namespace ElectronicObserver.Window
             }
 
         }
-
 
         private void TabPanel_DragDrop(object sender, DragEventArgs e)
         {
@@ -1691,45 +1488,31 @@ namespace ElectronicObserver.Window
             TabPanel.Controls.SetChildIndex((System.Windows.Forms.Control)e.Data.GetData(typeof(ImageLabel)), index);
 
             TabPanel.Invalidate();
-
         }
 
         #endregion
 
-
-
         private void MenuGroup_ShowStatusBar_CheckedChanged(object sender, EventArgs e)
         {
-
             StatusBar.Visible = MenuGroup_ShowStatusBar.Checked;
-
         }
-
-
 
         void SystemShuttingDown()
         {
-
             Utility.Configuration.Config.FormShipGroup.AutoUpdate = MenuGroup_AutoUpdate.Checked;
             Utility.Configuration.Config.FormShipGroup.ShowStatusBar = MenuGroup_ShowStatusBar.Checked;
 
-
-
             ShipGroupManager groups = KCDatabase.Instance.ShipGroup;
-
 
             List<ImageLabel> list = TabPanel.Controls.OfType<ImageLabel>().OrderBy(c => TabPanel.Controls.GetChildIndex(c)).ToList();
 
             for (int i = 0; i < list.Count; i++)
             {
-
                 ShipGroupData group = groups[(int)list[i].Tag];
                 if (group != null)
                     group.GroupID = i + 1;
             }
-
         }
-
 
         private void FormShipGroup_Resize(object sender, EventArgs e)
         {
@@ -1739,7 +1522,6 @@ namespace ElectronicObserver.Window
                 {
                     splitContainer1.SplitterDistance = _splitterDistance;
                     _splitterDistance = -1;
-
                 }
                 catch (Exception)
                 {
@@ -1747,7 +1529,5 @@ namespace ElectronicObserver.Window
                 }
             }
         }
-
-
     }
 }
