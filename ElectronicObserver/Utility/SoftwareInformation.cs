@@ -36,7 +36,7 @@ namespace ElectronicObserver.Utility
 		/// <summary>
 		/// 更新日時
 		/// </summary>
-		public static DateTime UpdateTime => DateTimeHelper.CSVStringToTime("2022/11/18 21:00:00");
+		public static DateTime UpdateTime => DateTimeHelper.CSVStringToTime("2022/11/20 23:00:00");
 		
 		private static System.Net.WebClient client;
 		private static readonly Uri uri = new Uri("https://raw.githubusercontent.com/yosxpeee/ElectronicObserver/develop/ElectronicObserver/version.txt");
