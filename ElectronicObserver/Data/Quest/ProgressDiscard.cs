@@ -223,6 +223,5 @@ namespace ElectronicObserver.Data.Quest
 		{
 			CategoryIndex = 2;
 		}
-
 	}
 }

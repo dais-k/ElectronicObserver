@@ -960,6 +960,13 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressDiscard(q, 4, true, new[]{ 3 }),
 							}));
 							break;
+						case 1120:  //|1120|【機種整理統合】新型戦闘機の量産計画|「艦上戦闘機」「艦上爆撃機」「艦上攻撃機」各x4を廃棄、「零式艦戦21型」x3「零式艦戦52型」x3ボーキサイト1800を保有
+							Progresses.Add(new ProgressMultiDiscard(q, new[]{
+								new ProgressDiscard(q, 4, true, new[]{ 6 }),
+								new ProgressDiscard(q, 4, true, new[]{ 7 }),
+								new ProgressDiscard(q, 4, true, new[]{ 8 }),
+							}));
+							break;
 					}
 
 					#endregion
