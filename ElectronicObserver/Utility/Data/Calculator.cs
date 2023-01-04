@@ -832,13 +832,10 @@ namespace ElectronicObserver.Utility.Data
 					return DayAttackKind.CutinAirAttack;
 			}
 
-
 			if (attacker != null)
 			{
-
 				if (defender != null)
 				{
-
 					int landingID = GetLandingAttackKind(slot, attacker, defender);
 					if (landingID > 0)
 					{
@@ -849,27 +846,41 @@ namespace ElectronicObserver.Utility.Data
 						return DayAttackKind.Rocket;
 				}
 
-
-				if (attackerShipID == 352)
-				{   //速吸改
-
+				if (attackerShipID == 352) //速吸改
+				{
 					if (defender != null && (defender.IsSubmarine))
 					{
 						// 対潜攻撃において、( 対潜 > 0 の艦上攻撃機 or 水上爆撃機 or オートジャイロ ) を装備している場合は空撃
 						if (slotmaster.Any(eq =>
 								(eq.CategoryType == EquipmentTypes.CarrierBasedTorpedo && eq.ASW > 0) ||
-								eq.CategoryType == EquipmentTypes.SeaplaneBomber ||
-								eq.CategoryType == EquipmentTypes.Autogyro))
+								 eq.CategoryType == EquipmentTypes.SeaplaneBomber ||
+								 eq.CategoryType == EquipmentTypes.Autogyro))
 							return DayAttackKind.AirAttack;
 						else
 							return DayAttackKind.DepthCharge;
-
 					}
 					else if (slotmaster.Any(eq => eq.CategoryType == EquipmentTypes.CarrierBasedTorpedo))
 						return DayAttackKind.AirAttack;
 					else
 						return DayAttackKind.Shelling;
-
+				}
+				if(attackerShipID == 717) //山汐丸改
+				{
+					if (defender != null && (defender.IsSubmarine))
+					{
+						// 対潜攻撃において、( 対潜 > 0 の艦上爆撃機 or 対潜哨戒機 or オートジャイロ ) を装備している場合は空撃
+						if (slotmaster.Any(eq =>
+								(eq.CategoryType == EquipmentTypes.CarrierBasedBomber && eq.ASW > 0) ||
+								 eq.CategoryType == EquipmentTypes.ASPatrol ||
+								 eq.CategoryType == EquipmentTypes.Autogyro))
+							return DayAttackKind.AirAttack;
+						else
+							return DayAttackKind.DepthCharge;
+					}
+					else if (slotmaster.Any(eq => eq.CategoryType == EquipmentTypes.CarrierBasedBomber))
+						return DayAttackKind.AirAttack;
+					else
+						return DayAttackKind.Shelling;
 				}
 				else if (attacker.IsAircraftCarrier)
 				{
