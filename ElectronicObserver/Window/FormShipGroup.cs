@@ -1415,7 +1415,22 @@ namespace ElectronicObserver.Window
         #region タブ操作系
 
         private Point? _tempMouse = null;
-        void TabLabel_MouseDown(object sender, MouseEventArgs e)
+
+		private void ShipView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+		{
+			//ダブルクリックなので必ず1行選択になる
+			int selectedId = GetSelectedShipID().First();
+
+			foreach (ShipData ship in KCDatabase.Instance.Ships.Values)
+			{
+				if (ship.ID == selectedId)
+				{
+					new DialogAlbumMasterShip(ship.MasterShip.ID).Show(Parent);
+				}
+			}
+		}
+
+		void TabLabel_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == System.Windows.Forms.MouseButtons.Left)
             {

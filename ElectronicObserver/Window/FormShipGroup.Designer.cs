@@ -218,6 +218,7 @@
 			this.ShipView.Size = new System.Drawing.Size(300, 134);
 			this.ShipView.TabIndex = 0;
 			this.ShipView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.ShipView_CellFormatting);
+			this.ShipView.CellMouseDoubleClick += new System.Windows.Forms.DataGridViewCellMouseEventHandler(this.ShipView_CellMouseDoubleClick);
 			this.ShipView.ColumnDisplayIndexChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.ShipView_ColumnDisplayIndexChanged);
 			this.ShipView.ColumnWidthChanged += new System.Windows.Forms.DataGridViewColumnEventHandler(this.ShipView_ColumnWidthChanged);
 			this.ShipView.SelectionChanged += new System.EventHandler(this.ShipView_SelectionChanged);
