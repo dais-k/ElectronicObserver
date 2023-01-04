@@ -355,16 +355,17 @@ namespace ElectronicObserver.Data
 		public bool IsDepthCharge =>
 			EquipmentID == 226 ||       // 九五式爆雷 
 			EquipmentID == 227 ||       // 二式爆雷
+			EquipmentID == 378 ||       // 対潜短魚雷(試作初期型)
 			EquipmentID == 439 ||       // Hedgehog(初期型)
-			EquipmentID == 378;         // 対潜短魚雷(試作初期型)
+			EquipmentID == 488;         // 二式爆雷改二
 
 		/// <summary> 爆雷投射機かどうか(爆雷/対潜迫撃砲は含まない) </summary>
 		public bool IsDepthChargeProjector =>
 			EquipmentID == 44  ||       // 九四式爆雷投射機
 			EquipmentID == 45  ||       // 三式爆雷投射機
 			EquipmentID == 288 ||       // 試製15cm9連装対潜噴進砲
-			EquipmentID == 377 ||       // RUR-4A Weapon Alpha改
 			EquipmentID == 287 ||       // 三式爆雷投射機 集中配備
+			EquipmentID == 377 ||       // RUR-4A Weapon Alpha改
 			EquipmentID == 472;			// Mk.32 対潜魚雷(Mk.2落射機)
 
 		/// <summary> 夜間作戦航空要員かどうか </summary>
