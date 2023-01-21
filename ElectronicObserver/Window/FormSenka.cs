@@ -18,13 +18,14 @@ namespace ElectronicObserver.Window
 		//各EOの戦果リスト
 		public Dictionary<Tuple<int, int>, int> EOSenka = new Dictionary<Tuple<int, int>, int>()
 		{
-			{ Tuple.Create( 1, 5 ), 75},
-			{ Tuple.Create( 1, 6 ), 75},
+			{ Tuple.Create( 1, 5 ), 75 },
+			{ Tuple.Create( 1, 6 ), 75 },
 			{ Tuple.Create( 2, 5 ), 100},
 			{ Tuple.Create( 3, 5 ), 150},
 			{ Tuple.Create( 4, 5 ), 180},
 			{ Tuple.Create( 5, 5 ), 200},
 			{ Tuple.Create( 6, 5 ), 250},
+			{ Tuple.Create( 7, 5 ), 170},
 		};
 
 		public FormSenka(FormMain parent)
