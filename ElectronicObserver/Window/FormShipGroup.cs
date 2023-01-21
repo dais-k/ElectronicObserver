@@ -1416,16 +1416,20 @@ namespace ElectronicObserver.Window
 
         private Point? _tempMouse = null;
 
-		private void ShipView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
+		private void ShipView_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
 		{
-			//ダブルクリックなので必ず1行選択になる
-			int selectedId = GetSelectedShipID().First();
-
-			foreach (ShipData ship in KCDatabase.Instance.Ships.Values)
+			//ロードされる前だったら何もしない
+			if (ShipView.SelectedRows.Count != 0)
 			{
-				if (ship.ID == selectedId)
+				//ダブルクリックなので必ず1行選択になる
+				int selectedId = GetSelectedShipID().First();
+
+				foreach (ShipData ship in KCDatabase.Instance.Ships.Values)
 				{
-					new DialogAlbumMasterShip(ship.MasterShip.ID).Show(Parent);
+					if (ship.ID == selectedId)
+					{
+						new DialogAlbumMasterShip(ship.MasterShip.ID).Show(Parent);
+					}
 				}
 			}
 		}
