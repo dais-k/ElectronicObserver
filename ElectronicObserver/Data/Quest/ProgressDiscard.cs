@@ -180,6 +180,13 @@ namespace ElectronicObserver.Data.Quest
 								  members.FirstOrDefault().SlotInstance[0].EquipmentID == 166 &&
 								  members.FirstOrDefault().SlotInstance[0].Level == 10) ? 1 : 0;
 					break;
+				case 1123:	//|1123|改良三座水上偵察機の増備|秘書艦「利根改二」または「由良改二」に零式水上偵察機★10を装備した状態で九七式艦攻(九三一空)x2を破棄、ボーキ950、新型航空兵装資材x2、開発資材x35、熟練搭乗員x2を保有
+					isAccepted = (((members.FirstOrDefault()?.MasterShip?.ShipID == 188) ||		//利根改二
+						           (members.FirstOrDefault()?.MasterShip?.ShipID == 488)) &&	//由良改二
+								  members.FirstOrDefault().SlotInstance[0] != null &&
+								  members.FirstOrDefault().SlotInstance[0].EquipmentID == 25 &&
+								  members.FirstOrDefault().SlotInstance[0].Level == 10) ? 1 : 0;
+					break;
 				default:
 					//任務IDが当てはまらないなら-1のまま、つまりチェックの必要なし
 					break;
