@@ -1416,10 +1416,10 @@ namespace ElectronicObserver.Window
 
         private Point? _tempMouse = null;
 
-		private void ShipView_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+		private void ShipView_CellMouseDoubleClick(object sender, DataGridViewCellMouseEventArgs e)
 		{
-			//ロードされる前だったら何もしない
-			if (ShipView.SelectedRows.Count != 0)
+			//ロードされる前やダブルクリックされたのがヘッダだったら何もしない
+			if (ShipView.SelectedRows.Count != 0 && e.RowIndex != -1)
 			{
 				//ダブルクリックなので必ず1行選択になる
 				int selectedId = GetSelectedShipID().First();
