@@ -768,6 +768,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Window\Dialog\DialogEquipmentList.resx">
       <DependentUpon>DialogEquipmentList.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Window\Dialog\DialogExpChecker.resx">
       <DependentUpon>DialogExpChecker.cs</DependentUpon>

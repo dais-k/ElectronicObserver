@@ -46,7 +46,7 @@ namespace ElectronicObserver.Resource
 		public enum IconContent
 		{
 			Nothing = -1,
-			AppIcon,
+			AppIcon,						//0
 			ResourceFuel,
 			ResourceAmmo,
 			ResourceSteel,
@@ -56,7 +56,7 @@ namespace ElectronicObserver.Resource
 			ConditionLittleTired,
 			ConditionTired,
 			ConditionVeryTired,
-			ItemInstantRepair,
+			ItemInstantRepair,				//10
 			ItemInstantConstruction,
 			ItemDevelopmentMaterial,
 			ItemModdingMaterial,
@@ -66,7 +66,7 @@ namespace ElectronicObserver.Resource
 			ItemPresentBox,
 			ItemActionReport,
 			ItemAviationMaterial,
-			FormArsenal,
+			FormArsenal,					//20
 			FormBattle,
 			FormCompass,
 			FormDock,
@@ -76,7 +76,7 @@ namespace ElectronicObserver.Resource
 			FormLog,
 			FormMain,
 			FormQuest,
-			FormShipGroup,
+			FormShipGroup,					//30
 			FormBrowser,
 			FormAlbumShip,
 			FormAlbumEquipment,
@@ -86,7 +86,7 @@ namespace ElectronicObserver.Resource
 			FormDropRecord,
 			FormDevelopmentRecord,
 			FormConstructionRecord,
-			FormResourceChart,
+			FormResourceChart,				//40
 			FormBaseAirCorps,
 			FormJson,
 			FormAntiAirDefense,
@@ -96,7 +96,7 @@ namespace ElectronicObserver.Resource
 			FormFleetPreset,
 			FormTwitter,
 			FleetNoShip,
-			FleetDocking,
+			FleetDocking,					//50
 			FleetSortieDamaged,
 			FleetSortie,
 			FleetExpedition,
@@ -106,7 +106,7 @@ namespace ElectronicObserver.Resource
 			FleetReady,
 			FleetCombined,
 			HeadQuartersShip,
-			HeadQuartersEquipment,
+			HeadQuartersEquipment,			//60
 			BrowserScreenShot,
 			BrowserZoom,
 			BrowserZoomIn,
@@ -116,7 +116,7 @@ namespace ElectronicObserver.Resource
 			BrowserRefresh,
 			BrowserNavigate,
 			BrowserOther,
-			RarityBlack,
+			RarityBlack,					//70
 			RarityRed,
 			RarityBlueC,
 			RarityBlueB,
@@ -126,7 +126,7 @@ namespace ElectronicObserver.Resource
 			RarityHoloB,
 			RarityHoloA,
 			RarityCherry,
-			ParameterHP,
+			ParameterHP,					//80
 			ParameterFirepower,
 			ParameterTorpedo,
 			ParameterAA,
@@ -136,7 +136,7 @@ namespace ElectronicObserver.Resource
 			ParameterLOS,
 			ParameterLuck,
 			ParameterBomber,
-			ParameterAccuracy,
+			ParameterAccuracy,				//90
 			ParameterAircraft,
 			ParameterSpeed,
 			ParameterRange,
@@ -146,7 +146,7 @@ namespace ElectronicObserver.Resource
 			ParameterAircraftDistance,
 			BattleFormationEnemyLineAhead,
 			BattleFormationEnemyDoubleLine,
-			BattleFormationEnemyDiamond,
+			BattleFormationEnemyDiamond,    //100
 			BattleFormationEnemyEchelon,
 			BattleFormationEnemyLineAbreast,
 			AircraftLevel0,
@@ -156,7 +156,7 @@ namespace ElectronicObserver.Resource
 			AircraftLevel4,
 			AircraftLevel5,
 			AircraftLevel6,
-			AircraftLevel7,
+			AircraftLevel7,                 //110
 			AircraftLevelTop0,
 			AircraftLevelTop1,
 			AircraftLevelTop2,
@@ -220,6 +220,7 @@ namespace ElectronicObserver.Resource
 			LandAssaultPlane,
 			HeavyBomber,
 			NightSeaplane,          //50
+			NightSeaplane2,
 			Locked,					
 			Unknown,				//不明な場合はこれ
 		}
@@ -468,6 +469,7 @@ namespace ElectronicObserver.Resource
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/LandAssaultPlane.png", "Equipment_LandAssaultPlane");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/HeavyBomber.png", "Equipment_HeavyBomber");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/NightSeaplane.png", "Equipment_NightSeaplane");
+				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/NightSeaplane2.png", "Equipment_NightSeaplane2");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/Locked.png", "Equipment_Locked");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/Unknown.png", "Equipment_Unknown");
 			}

@@ -10,13 +10,11 @@ using System.Threading.Tasks;
 
 namespace ElectronicObserver.Utility.Data
 {
-
 	/// <summary>
 	/// 汎用計算クラス
 	/// </summary>
 	public static class Calculator
 	{
-
 		/// <summary>
 		/// レベルに依存するパラメータ値を求めます。
 		/// </summary>
@@ -28,8 +26,6 @@ namespace ElectronicObserver.Utility.Data
 		{
 			return min + (max - min) * lv / 99;
 		}
-
-
 
 		/// <summary>
 		/// 各装備カテゴリにおける制空値の熟練度ボーナス
@@ -46,6 +42,8 @@ namespace ElectronicObserver.Utility.Data
 			{ EquipmentTypes.JetFighter,             new int[] { 0, 0, 2, 5, 9, 14, 14, 22, 22 } },
 			{ EquipmentTypes.JetBomber,              new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 } },
 			{ EquipmentTypes.JetTorpedo,             new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 } },
+			{ EquipmentTypes.Autogyro,               new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 } },
+			{ EquipmentTypes.ASPatrol,               new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0 } },
 		};
 
 		/// <summary>
@@ -67,8 +65,6 @@ namespace ElectronicObserver.Utility.Data
 			{ EquipmentTypes.HeavyBomber,		    0.5 },
 		};
 
-
-
 		/// <summary>
 		/// 制空戦力を求めます。
 		/// </summary>
@@ -81,7 +77,6 @@ namespace ElectronicObserver.Utility.Data
 		/// <returns></returns>
 		public static int GetAirSuperiority(int equipmentID, int count, int aircraftLevel = 0, int level = 0, int baseAirCorpsActionKind = -1, bool isAircraftExpMaximum = false)
 		{
-
 			if (count <= 0)
 				return 0;
 
@@ -99,16 +94,22 @@ namespace ElectronicObserver.Utility.Data
 					return 0;
 			}
 
-
-			double levelBonus = LevelBonus.ContainsKey(category) ? LevelBonus[category] : 0;    // 改修レベル補正
+			//====================
+			//改修レベル補正
+			//====================
+			double levelBonus = LevelBonus.ContainsKey(category) ? LevelBonus[category] : 0;
+			double interceptorBonus = 0;
 
 			if (category == EquipmentTypes.LandBasedAttacker || category == EquipmentTypes.HeavyBomber)
+			{
 				levelBonus *= Math.Sqrt(level);
+			}
 			else
+			{
 				levelBonus *= level;
+			}
 
-
-			double interceptorBonus = 0;    // 局地戦闘機の迎撃補正
+			//局地戦闘機の迎撃補正
 			if (category == EquipmentTypes.Interceptor)
 			{
 				if (baseAirCorpsActionKind == 2)        // 防空の場合
@@ -117,7 +118,11 @@ namespace ElectronicObserver.Utility.Data
 					interceptorBonus = eq.Evasion * 1.5;
 			}
 
+			//======================
+			//熟練度経験値ボーナスの計算
+			//======================
 			int aircraftExp;
+			double aircraftExpBonus = 0;
 			if (isAircraftExpMaximum)
 			{
 				if (aircraftLevel < 7)
@@ -130,12 +135,48 @@ namespace ElectronicObserver.Utility.Data
 				aircraftExp = AircraftExpTable[aircraftLevel];
 			}
 
-			return (int)((eq.AA + levelBonus + interceptorBonus) * Math.Sqrt(count)
-				+ Math.Sqrt(aircraftExp / 10.0)
+			//オートジャイロの熟練度は制空に寄与しないため省く
+			if (eq.CategoryType == EquipmentTypes.Autogyro)
+			{
+				aircraftExpBonus = 0;
+			}
+			//対潜哨戒機の熟練度も基本的には制空に寄与しないため省くが、
+			//対空値を持っている装備の場合は計算に入れる
+			//(例：一式戦 隼II型改(20戦隊))
+			else if (eq.CategoryType == EquipmentTypes.ASPatrol)
+			{
+				if (eq.AA >= 1)
+				{
+					aircraftExpBonus = Math.Sqrt(aircraftExp / 10.0);
+				}
+				else
+				{
+					aircraftExpBonus = 0;
+				}
+			}
+			//それ以外の装備は計算に入れる
+			else
+			{
+				aircraftExpBonus = Math.Sqrt(aircraftExp / 10.0);
+			}
+
+			//対潜哨戒機 かつ 対空が1以上の装備である場合、
+			//熟練度レベルボーナスは艦戦と同じものを適用する
+			int result = 0;
+			if(eq.CategoryType == EquipmentTypes.ASPatrol && eq.AA >= 1)
+			{
+				result = (int)((eq.AA + levelBonus + interceptorBonus) * Math.Sqrt(count)
+				+ aircraftExpBonus
+				+ (AircraftLevelBonus.ContainsKey(category) ? AircraftLevelBonus[EquipmentTypes.CarrierBasedFighter][aircraftLevel] : 0));
+			}
+			else
+			{
+				result = (int)((eq.AA + levelBonus + interceptorBonus) * Math.Sqrt(count)
+				+ aircraftExpBonus
 				+ (AircraftLevelBonus.ContainsKey(category) ? AircraftLevelBonus[category][aircraftLevel] : 0));
+			}
+			return result;
 		}
-
-
 
 		/// <summary>
 		/// 制空戦力を求めます。
@@ -146,8 +187,6 @@ namespace ElectronicObserver.Utility.Data
 		{
 			return slot.Select((eq, i) => GetAirSuperiority(eq, aircraft[i])).Sum();
 		}
-
-
 
 		/// <summary>
 		/// 制空戦力を求めます。
@@ -180,8 +219,6 @@ namespace ElectronicObserver.Utility.Data
 
 			return air;
 		}
-
-
 
 		/// <summary>
 		/// 制空戦力を求めます。
@@ -264,7 +301,6 @@ namespace ElectronicObserver.Utility.Data
 			return (int)(air * reconBonus * highAltitudeBonus);
 		}
 
-
 		/// <summary>
 		/// 基地航空隊での出撃時における、偵察機による制空値ボーナス係数を求めます。
 		/// </summary>
@@ -331,7 +367,6 @@ namespace ElectronicObserver.Utility.Data
 			return GetAirSuperiority(eq.EquipmentID, squadron.AircraftCurrent, eq.AircraftLevel, eq.Level, actionKind, isAircraftLevelMaximum);
 		}
 
-
 		/// <summary>
 		/// 最大練度の艦載機を搭載している場合の制空戦力を求めます。
 		/// </summary>
@@ -344,7 +379,6 @@ namespace ElectronicObserver.Utility.Data
 				.Select((ship, i) => ship == null ? 0 :
 				   slot[i].Select((eqid, k) => GetAirSuperiority(eqid, ship.Aircraft[k], 7, 10, -1, true)).Sum()).Sum();
 		}
-
 
 		/// <summary>
 		/// 艦載機熟練度・改修レベルを無視した制空戦力を求めます。
@@ -367,8 +401,6 @@ namespace ElectronicObserver.Utility.Data
 				return 0;
 			return fleet.MembersWithoutEscaped.Select(ship => GetAirSuperiorityIgnoreLevel(ship)).Sum();
 		}
-
-
 
 		/// <summary>
 		/// 索敵能力を求めます。「新判定式(33)」です。
@@ -474,14 +506,12 @@ namespace ElectronicObserver.Utility.Data
 			return ret;
 		}
 
-
 		/// <summary>
 		/// 艦隊の触接開始率を求めます。
 		/// </summary>
 		/// <param name="fleet">対象の艦隊。</param>
 		public static double GetContactProbability(FleetData fleet)
 		{
-
 			double successProb = 0.0;
 
 			foreach (var ship in fleet.MembersWithoutEscaped)
@@ -518,7 +548,6 @@ namespace ElectronicObserver.Utility.Data
 		/// <returns>機体の命中をキー, 触接選択率を値とした Dictionary 。</returns>
 		public static Dictionary<int, double> GetContactSelectionProbability(FleetData fleet)
 		{
-
 			var probs = new Dictionary<int, double>();
 
 			foreach (var ship in fleet.MembersWithoutEscaped)
@@ -556,7 +585,6 @@ namespace ElectronicObserver.Utility.Data
 			return probs;
 		}
 
-
 		/// <summary>
 		/// 輸送作戦成功時の輸送量(減少TP)を求めます。
 		/// (S勝利時のもの。A勝利時は int( value * 0.7 ) )
@@ -565,12 +593,10 @@ namespace ElectronicObserver.Utility.Data
 		/// <returns>減少TP。</returns>
 		public static int GetTPDamage(FleetData fleet)
 		{
-
 			int tp = 0;
 
 			foreach (var ship in fleet.MembersWithoutEscaped.Where(s => s != null && s.HPRate > 0.25))
 			{
-
 				// 装備ボーナス
 				foreach (var eq in ship.AllSlotInstanceMaster.Where(q => q != null))
 				{
@@ -598,7 +624,6 @@ namespace ElectronicObserver.Utility.Data
 							break;
 					}
 				}
-
 
 				// 艦種ボーナス
 				switch (ship.MasterShip.ShipType)
@@ -647,7 +672,6 @@ namespace ElectronicObserver.Utility.Data
 						break;
 				}
 			}
-
 
 			return tp;
 		}
@@ -706,8 +730,6 @@ namespace ElectronicObserver.Utility.Data
 			return normalBonus + levelBonus + tokuBonus;
 		}
 
-
-
 		/// <summary>
 		/// ハードスキン型陸上基地の名前リスト
 		/// IDではなく名前なのは本家の処理に倣ったため
@@ -719,8 +741,6 @@ namespace ElectronicObserver.Utility.Data
 			"集積地棲姫-壊",
 		};
 
-
-
 		/// <summary>
 		/// 昼戦における攻撃種別を取得します。
 		/// </summary>
@@ -730,7 +750,6 @@ namespace ElectronicObserver.Utility.Data
 		/// <param name="includeSpecialAttack">弾着観測砲撃を含むか。falseなら除外して計算</param>
 		public static DayAttackKind GetDayAttackKind(int[] slot, int attackerShipID, int defenderShipID, bool includeSpecialAttack = true)
 		{
-
 			int reconCount = 0;
 			int mainGunCount = 0;
 			int subGunCount = 0;
@@ -745,9 +764,7 @@ namespace ElectronicObserver.Utility.Data
 			if (slot == null)
 				return DayAttackKind.Unknown;
 
-
 			var slotmaster = slot.Select(s => KCDatabase.Instance.MasterEquipments[s]).Where(eq => eq != null).ToArray();
-
 
 			foreach (var eq in slotmaster)
 			{
@@ -905,7 +922,6 @@ namespace ElectronicObserver.Utility.Data
 			return DayAttackKind.Shelling;      //砲撃
 		}
 
-
 		/// <summary>
 		/// 昼戦空母カットインの種別を取得します。
 		/// </summary>
@@ -948,7 +964,6 @@ namespace ElectronicObserver.Utility.Data
 			return DayAirAttackCutinKind.None;
 		}
 
-
 		/// <summary>
 		/// 夜戦における攻撃種別を取得します。
 		/// </summary>
@@ -979,10 +994,8 @@ namespace ElectronicObserver.Utility.Data
 			if (slot == null)
 				return NightAttackKind.Unknown;
 
-
 			ShipDataMaster attacker = KCDatabase.Instance.MasterShips[attackerShipID];
 			ShipDataMaster defender = KCDatabase.Instance.MasterShips[defenderShipID];
-
 
 			var slotmaster = slot.Select(id => KCDatabase.Instance.MasterEquipments[id]).Where(eq => eq != null).ToArray();
 
@@ -1084,7 +1097,6 @@ namespace ElectronicObserver.Utility.Data
 				|| attackerShipID == 599 || attackerShipID == 610 || attackerShipID == 883)      // Saratoga Mk.II/赤城改二戊/加賀改二戊/龍鳳改二戊
 				nightPersonnelCount++;
 
-
 			if (includeSpecialAttack)
 			{
 
@@ -1148,14 +1160,11 @@ namespace ElectronicObserver.Utility.Data
 				}
 			}
 
-
 			if (attacker != null)
 			{
-
 				// 対地攻撃系
 				if (defender != null)
 				{
-
 					int landingID = GetLandingAttackKind(slot, attacker, defender);
 					if (landingID > 0)
 					{
@@ -1174,7 +1183,6 @@ namespace ElectronicObserver.Utility.Data
 
 				if (attacker.IsAircraftCarrier)
 				{
-
 					if (attackerShipID == 432 || attackerShipID == 353 || attackerShipID == 433)        // Graf Zeppelin(改), Saratoga
 						return NightAttackKind.Shelling;
 					else if (attacker.Name == "リコリス棲姫" || attacker.Name == "深海海月姫")
@@ -1211,7 +1219,6 @@ namespace ElectronicObserver.Utility.Data
 							return NightAttackKind.Torpedo;
 					}
 				}
-
 			}
 
 			return NightAttackKind.Shelling;
@@ -1240,8 +1247,6 @@ namespace ElectronicObserver.Utility.Data
 			return NightTorpedoCutinKind.None;
 		}
 
-
-
 		/// <summary>
 		/// 揚陸攻撃における攻撃種別を取得します。
 		/// </summary>
@@ -1250,7 +1255,6 @@ namespace ElectronicObserver.Utility.Data
 		/// <param name="defenerShipID">防御艦の艦船ID。</param>
 		public static int GetLandingAttackKind(IEnumerable<int> slot, ShipDataMaster attacker, ShipDataMaster defender)
 		{
-
 			if (defender == null)
 				return 0;
 
@@ -1284,14 +1288,11 @@ namespace ElectronicObserver.Utility.Data
 			return 0;
 		}
 
-
-
 		/// <summary>
 		/// 対空カットイン種別を取得します。
 		/// </summary>
 		public static int GetAACutinKind(int shipID, int[] slot)
 		{
-
 			int highangle = 0;
 			int highangle_director = 0;
 			int director = 0;
@@ -1317,7 +1318,6 @@ namespace ElectronicObserver.Utility.Data
 			int highangle_atlanta_gfcs = 0;
 
 			var slotmaster = slot.Select(id => KCDatabase.Instance.MasterEquipments[id]).Where(eq => eq != null).ToArray();
-
 
 			foreach (var eq in slotmaster)
 			{
@@ -1673,8 +1673,6 @@ namespace ElectronicObserver.Utility.Data
 			return 0;
 		}
 
-
-
 		/// <summary>
 		/// 加重対空値を求めます。
 		/// </summary>
@@ -1734,7 +1732,6 @@ namespace ElectronicObserver.Utility.Data
 
 			return equippedModifier * Math.Floor(x / equippedModifier);
 		}
-
 
 		/// <summary>
 		/// 艦隊防空値を求めます。
@@ -1872,9 +1869,6 @@ namespace ElectronicObserver.Utility.Data
 			return (int)Math.Floor((adjustedAAValue + adjustedFleetAAValue) * GetAirDefenseCombinedFleetCoefficient(combinedFleetFlag) * cutinBonus / 10);
 		}
 
-
-
-
 		/// <summary>
 		/// 対空カットイン固定ボーナス
 		/// </summary>
@@ -1925,7 +1919,6 @@ namespace ElectronicObserver.Utility.Data
 			{ 44, 6 },
 			{ 45, 5 },
 		});
-
 
 		/// <summary>
 		/// 対空カットイン変動ボーナス
@@ -1978,7 +1971,6 @@ namespace ElectronicObserver.Utility.Data
 			{ 45, 1.55 },
 		});
 
-
 		/// <summary>
 		/// 撃墜数の推定値を求めます。
 		/// </summary>
@@ -1990,7 +1982,6 @@ namespace ElectronicObserver.Utility.Data
 		{
 			return (int)Math.Floor(enemyAircraftCount * proportionalAirDefense) + fixedAirDefense + 1 + (AACutinFixedBonus.ContainsKey(aaCutinKind) ? AACutinFixedBonus[aaCutinKind] : 0);
 		}
-
 
 		/// <summary>
 		/// 対空噴進弾幕の発動確率を求めます。
@@ -2026,8 +2017,6 @@ namespace ElectronicObserver.Utility.Data
 			}
 		}
 
-
-
 		/// <summary>
 		/// HP を 1 回復するために必要な入渠時間を求めます。
 		/// </summary>
@@ -2039,8 +2028,6 @@ namespace ElectronicObserver.Utility.Data
 
 			return new TimeSpan(DateTimeHelper.FromAPITimeSpan(ship.RepairTime).Add(TimeSpan.FromSeconds(-30)).Ticks / damage);
 		}
-
-
 
 		/// <summary>
 		/// 泊地修理において、指定時間修理したときの回復量を求めます。
@@ -2067,7 +2054,6 @@ namespace ElectronicObserver.Utility.Data
 			int heal = (int)Math.Floor(Math.Floor(repairTime.TotalMinutes) * 60 / (dockingSeconds / damage));
 			return Math.Min(Math.Max(heal, 1), damage);
 		}
-
 
 		/// <summary>
 		/// 泊地修理において、指定した量の HP を回復するために必要な時間を求めます。
@@ -2110,10 +2096,6 @@ namespace ElectronicObserver.Utility.Data
 					return time;
 			}
 		}
-
-
-
-
 
 		#region roma-to-hira table
 		static Dictionary<string, string> RomaToHiraTable = new Dictionary<string, string> {
@@ -2479,8 +2461,6 @@ namespace ElectronicObserver.Utility.Data
 
 			return new string(chars);
 		}
-
-
 		static bool IsVowel(char c)
 		{
 			return c == 'a' || c == 'i' || c == 'u' || c == 'e' || c == 'o' || c == 'n';
@@ -2548,8 +2528,6 @@ namespace ElectronicObserver.Utility.Data
 
 			return sb.ToString();
 		}
-
-
 	}
 
 
@@ -2560,7 +2538,6 @@ namespace ElectronicObserver.Utility.Data
 	{
 		/// <summary> 不明 </summary>
 		Unknown = -1,
-
 
 		/// <summary> 通常攻撃 (API上でのみ使用されます) </summary>
 		NormalAttack,
@@ -2634,10 +2611,8 @@ namespace ElectronicObserver.Utility.Data
 		/// <summary> 雷撃 </summary>
 		Torpedo,
 
-
 		/// <summary> ロケット攻撃 </summary>
 		Rocket = 2000,
-
 
 		/// <summary> 揚陸攻撃(大発動艇) </summary>
 		LandingDaihatsu = 3000,
@@ -2653,9 +2628,7 @@ namespace ElectronicObserver.Utility.Data
 
 		/// <summary> 揚陸攻撃(特大発動艇+戦車第11連隊) </summary>
 		LandingTokuDaihatsuTank,
-
 	}
-
 
 	/// <summary>
 	/// 夜戦攻撃種別を表します。
@@ -2726,6 +2699,9 @@ namespace ElectronicObserver.Utility.Data
 		/// <summary> 僚艦夜戦突撃 </summary>
 		SpecialKongo = 104,
 
+		/// <summary> 夜間瑞雲攻撃 </summary>
+		SpecialNightZuiun = 200,
+
 		/// <summary> 潜水艦隊攻撃 (2,3) </summary>
 		SpecialSubmarineAttack1 = 300,
 
@@ -2753,10 +2729,8 @@ namespace ElectronicObserver.Utility.Data
 		/// <summary> 雷撃 </summary>
 		Torpedo,
 
-
 		/// <summary> ロケット攻撃 </summary>
 		Rocket = 2000,
-
 
 		/// <summary> 揚陸攻撃(大発動艇) </summary>
 		LandingDaihatsu = 3000,
@@ -2772,9 +2746,7 @@ namespace ElectronicObserver.Utility.Data
 
 		/// <summary> 揚陸攻撃(特大発動艇+戦車第11連隊) </summary>
 		LandingTokuDaihatsuTank,
-
 	}
-
 
 	/// <summary>
 	/// 昼戦空母カットインの種別を表します。
@@ -2787,7 +2759,6 @@ namespace ElectronicObserver.Utility.Data
 		BomberBomberAttacker,
 		BomberAttacker,
 	}
-
 
 	/// <summary>
 	/// 夜戦魚雷カットインの種別を表します。
