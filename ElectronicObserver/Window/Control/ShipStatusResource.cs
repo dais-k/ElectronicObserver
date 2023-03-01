@@ -91,7 +91,6 @@ namespace ElectronicObserver.Window.Control
 			Invalidate();
 		}
 
-
 		/// <summary>
 		/// 資源を一度に設定します。
 		/// </summary>
@@ -110,17 +109,12 @@ namespace ElectronicObserver.Window.Control
 			PropertyChanged();
 		}
 
-
-
 		private void ShipStatusResource_Paint(object sender, PaintEventArgs e)
 		{
-
 			const int margin = 3;
 
-			BarFuel.Paint(e.Graphics, new Rectangle(0, margin, this.Width, BarFuel.GetPreferredSize().Height));
-			BarAmmo.Paint(e.Graphics, new Rectangle(0, this.Height - margin - BarFuel.GetPreferredSize().Height, this.Width, BarFuel.GetPreferredSize().Height));
-
+			BarFuel.Paint(e.Graphics, new Rectangle(0, margin, this.Width, BarFuel.GetPreferredSize().Height), true);
+			BarAmmo.Paint(e.Graphics, new Rectangle(0, this.Height - margin - BarFuel.GetPreferredSize().Height, this.Width, BarFuel.GetPreferredSize().Height), true);
 		}
-
 	}
 }

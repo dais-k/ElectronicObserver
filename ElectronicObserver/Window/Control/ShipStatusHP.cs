@@ -13,15 +13,12 @@ namespace ElectronicObserver.Window.Control
 {
 	public partial class ShipStatusHP : UserControl
 	{
-
-
 		private const TextFormatFlags TextFormatTime = TextFormatFlags.NoPadding | TextFormatFlags.Bottom | TextFormatFlags.HorizontalCenter;
 		private const TextFormatFlags TextFormatText = TextFormatFlags.NoPadding | TextFormatFlags.Bottom | TextFormatFlags.Left;
 		private const TextFormatFlags TextFormatHP = TextFormatFlags.NoPadding | TextFormatFlags.Bottom | TextFormatFlags.Right;
-
 		private static readonly Size MaxSize = new Size(int.MaxValue, int.MaxValue);
 		private const string SlashText = " / ";
-
+		public bool IsTargetable { get; set; } = true;
 
 		private StatusBarModule _HPBar;
 
@@ -357,9 +354,6 @@ namespace ElectronicObserver.Window.Control
 
 		#endregion
 
-
-
-
 		public ShipStatusHP()
 		{
 			InitializeComponent();
@@ -389,18 +383,13 @@ namespace ElectronicObserver.Window.Control
 			_showDifference = false;
 			_repairTimeShowMode = ShipStatusHPRepairTimeShowMode.Invisible;
 			_showHPBar = true;
-
 		}
-
 
 		private void ShipStatusHP_Paint(object sender, PaintEventArgs e)
 		{
-
 			Graphics g = e.Graphics;
 			Rectangle basearea = new Rectangle(Padding.Left, Padding.Top, Width - Padding.Horizontal, Height - Padding.Vertical);
 			Size barSize = ShowHPBar ? _HPBar.GetPreferredSize(new Size(basearea.Width, 0)) : Size.Empty;
-
-
 
 			if (RepairTimeShowMode == ShipStatusHPRepairTimeShowMode.Visible ||
 				(RepairTimeShowMode == ShipStatusHPRepairTimeShowMode.MouseOver && _onMouse))
@@ -415,11 +404,9 @@ namespace ElectronicObserver.Window.Control
 					font = SubFont;
 
 				TextRenderer.DrawText(g, timestr, font, rect, RepairFontColor, TextFormatTime);
-
 			}
 			else
 			{
-
 				Point p = new Point(basearea.X, basearea.Bottom - barSize.Height - Math.Max(TextSizeCache.Height, MaximumValueSizeCache.Height) + 1);
 				TextRenderer.DrawText(g, Text, SubFont, new Rectangle(p, TextSizeCache), SubFontColor, TextFormatText);
 				//g.DrawRectangle( Pens.Orange, new Rectangle( p, TextSizeCache ) );
@@ -436,14 +423,11 @@ namespace ElectronicObserver.Window.Control
 				p.Y = basearea.Bottom - barSize.Height - ValueSizeCache.Height + 1;
 				TextRenderer.DrawText(g, Math.Max(Value, 0).ToString(), MainFont, new Rectangle(p, ValueSizeCache), MainFontColor, TextFormatHP);
 				//g.DrawRectangle( Pens.Orange, new Rectangle( p, ValueSizeCache ) );
-
 			}
 
 			if (ShowHPBar)
-				_HPBar.Paint(g, new Rectangle(basearea.X, basearea.Bottom - barSize.Height, barSize.Width, barSize.Height));
+				_HPBar.Paint(g, new Rectangle(basearea.X, basearea.Bottom - barSize.Height, barSize.Width, barSize.Height), IsTargetable);
 		}
-
-
 
 		public override Size GetPreferredSize(Size proposedSize)
 		{
@@ -461,8 +445,6 @@ namespace ElectronicObserver.Window.Control
 			return _preferredSizeCache.Value;
 		}
 
-
-
 		private void PropertyChanged()
 		{
 			if (!IsRefreshSuspended)
@@ -477,7 +459,6 @@ namespace ElectronicObserver.Window.Control
 				Refresh();
 			}
 		}
-
 
 		private static Color FromArgb(uint color)
 		{
@@ -503,9 +484,7 @@ namespace ElectronicObserver.Window.Control
 			if (RepairTimeShowMode == ShipStatusHPRepairTimeShowMode.MouseOver)
 				PropertyChanged();
 		}
-
 	}
-
 
 	public enum ShipStatusHPRepairTimeShowMode
 	{

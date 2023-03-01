@@ -1025,7 +1025,6 @@ namespace ElectronicObserver.Resource.Record
 		/// </summary>
 		private void BattleStart(string apiname, dynamic data)
 		{
-
 			var battle = KCDatabase.Instance.Battle.FirstBattle;
 			var binit = battle.Initial;
 
@@ -1037,7 +1036,13 @@ namespace ElectronicObserver.Resource.Record
 					param = new ShipParameterElement { ShipID = id };
 				}
 
-				param.HPMin = param.HPMax = maxhp;
+				param.HPMin = param.HPMax = maxhp switch
+				{
+					// hack: -2 is used as a magic number for untargetable enemies
+					// don't use that value to update the master data
+					-2 => param.HPMax,
+					_ => maxhp,
+				};
 
 				if (status != null)
 				{

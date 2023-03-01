@@ -423,7 +423,7 @@ namespace ElectronicObserver.Window.Control
 		/// </summary>
 		/// <param name="g">描画するための Graphics。</param>
 		/// <param name="rect">描画する領域。</param>
-		public void Paint(Graphics g, Rectangle rect)
+		public void Paint(Graphics g, Rectangle rect, bool isTargatable)
 		{
 
 			using (var b = new SolidBrush(BarColorBackground))
@@ -441,33 +441,43 @@ namespace ElectronicObserver.Window.Control
 
 			if (!ColorMorphing)
 			{
-
-				if (p <= 0.25)
-					barColor = BarColor0Begin;
-				else if (p <= 0.50)
-					barColor = BarColor1Begin;
-				else if (p <= 0.75)
-					barColor = BarColor2Begin;
-				else if (p < 1.00)
-					barColor = BarColor3Begin;
+				if (!isTargatable)
+				{
+					barColor = _barColorBackground;
+				}
 				else
-					barColor = BarColor4;
-
+				{
+					if (p <= 0.25)
+						barColor = BarColor0Begin;
+					else if (p <= 0.50)
+						barColor = BarColor1Begin;
+					else if (p <= 0.75)
+						barColor = BarColor2Begin;
+					else if (p < 1.00)
+						barColor = BarColor3Begin;
+					else
+						barColor = BarColor4;
+				}
 			}
 			else
 			{
-
-				if (p <= 0.25)
-					barColor = BlendColor(BarColor0Begin, BarColor0End, p * 4.0);
-				else if (p <= 0.50)
-					barColor = BlendColor(BarColor1Begin, BarColor1End, (p - 0.25) * 4.0);
-				else if (p <= 0.75)
-					barColor = BlendColor(BarColor2Begin, BarColor2End, (p - 0.50) * 4.0);
-				else if (p < 1.00)
-					barColor = BlendColor(BarColor3Begin, BarColor3End, (p - 0.75) * 4.0);
+				if (!isTargatable)
+				{
+					barColor = _barColorBackground;
+				}
 				else
-					barColor = BarColor4;
-
+				{
+					if (p <= 0.25)
+						barColor = BlendColor(BarColor0Begin, BarColor0End, p * 4.0);
+					else if (p <= 0.50)
+						barColor = BlendColor(BarColor1Begin, BarColor1End, (p - 0.25) * 4.0);
+					else if (p <= 0.75)
+						barColor = BlendColor(BarColor2Begin, BarColor2End, (p - 0.50) * 4.0);
+					else if (p < 1.00)
+						barColor = BlendColor(BarColor3Begin, BarColor3End, (p - 0.75) * 4.0);
+					else
+						barColor = BarColor4;
+				}
 			}
 
 			using (var b = new SolidBrush(barColor))

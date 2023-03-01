@@ -651,7 +651,9 @@ namespace ElectronicObserver.Data.Battle
 
 				enemybefore += initial;
 				enemyafter += Math.Max(result, 0);
-				enemycount++;
+				//攻撃できない敵艦はカウント外とする
+				if (firstInitial.IsEnemyTargetable[i] == true)
+					enemycount++;
 
 				if (result <= 0)
 					enemysunk++;
@@ -669,7 +671,9 @@ namespace ElectronicObserver.Data.Battle
 
 					enemybefore += initial;
 					enemyafter += Math.Max(result, 0);
-					enemycount++;
+					//攻撃できない敵艦はカウント外とする
+					if (firstInitial.IsEnemyTargetableEscort[i] == true)
+						enemycount++;
 
 					if (result <= 0)
 						enemysunk++;
@@ -688,9 +692,7 @@ namespace ElectronicObserver.Data.Battle
 			else
 				return GetWinRank(friendcount, enemycount, friendsunk, enemysunk, friendrate, enemyrate,
 					friend[0].HPRate <= 0.25, resultHPs[BattleIndex.EnemyMain1] <= 0);
-
 		}
-
 
 		/// <summary>
 		/// 勝利ランクを計算します。連合艦隊は情報が少ないので正確ではありません。

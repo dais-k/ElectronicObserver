@@ -744,13 +744,14 @@ namespace ElectronicObserver.Window
 				bar.SuspendUpdate();
 
 
-			void EnableHPBar(int index, int initialHP, int resultHP, int maxHP)
+			void EnableHPBar(int index, int initialHP, int resultHP, int maxHP, bool isTargetable)
 			{
 				HPBars[index].Value = resultHP;
 				HPBars[index].PrevValue = initialHP;
 				HPBars[index].MaximumValue = maxHP;
 				HPBars[index].BackColor = SystemColors.Control;
 				HPBars[index].Visible = true;
+				HPBars[index].IsTargetable = isTargetable;
 			}
 
 			void DisableHPBar(int index)
@@ -767,7 +768,7 @@ namespace ElectronicObserver.Window
 
 				if (initial.FriendInitialHPs[i] != -1)
 				{
-					EnableHPBar(refindex, initial.FriendInitialHPs[i], resultHPs[refindex], initial.FriendMaxHPs[i]);
+					EnableHPBar(refindex, initial.FriendInitialHPs[i], resultHPs[refindex], initial.FriendMaxHPs[i], true);
 
 					string name;
 					bool isEscaped;
@@ -821,7 +822,7 @@ namespace ElectronicObserver.Window
 
 				if (initial.EnemyInitialHPs[i] != -1)
 				{
-					EnableHPBar(refindex, initial.EnemyInitialHPs[i], resultHPs[refindex], initial.EnemyMaxHPs[i]);
+					EnableHPBar(refindex, initial.EnemyInitialHPs[i], resultHPs[refindex], initial.EnemyMaxHPs[i], initial.IsEnemyTargetable[i]);
 					ShipDataMaster ship = bd.Initial.EnemyMembersInstance[i];
 
 					var bar = HPBars[refindex];
@@ -858,7 +859,7 @@ namespace ElectronicObserver.Window
 
 					if (initial.FriendInitialHPsEscort[i] != -1)
 					{
-						EnableHPBar(refindex, initial.FriendInitialHPsEscort[i], resultHPs[refindex], initial.FriendMaxHPsEscort[i]);
+						EnableHPBar(refindex, initial.FriendInitialHPsEscort[i], resultHPs[refindex], initial.FriendMaxHPsEscort[i], true);
 
 						ShipData ship = bd.Initial.FriendFleetEscort.MembersInstance[i];
 						bool isEscaped = bd.Initial.FriendFleetEscort.EscapedShipList.Contains(ship.MasterID);
@@ -912,7 +913,7 @@ namespace ElectronicObserver.Window
 
 					if (initial.EnemyInitialHPsEscort[i] != -1)
 					{
-						EnableHPBar(refindex, initial.EnemyInitialHPsEscort[i], resultHPs[refindex], initial.EnemyMaxHPsEscort[i]);
+						EnableHPBar(refindex, initial.EnemyInitialHPsEscort[i], resultHPs[refindex], initial.EnemyMaxHPsEscort[i], initial.IsEnemyTargetableEscort[i]);
 
 						ShipDataMaster ship = bd.Initial.EnemyMembersEscortInstance[i];
 
