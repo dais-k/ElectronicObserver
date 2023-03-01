@@ -1309,13 +1309,15 @@ namespace ElectronicObserver.Data
 				case NightAttackKind.CutinTorpedoRadar:
 					{
 						double baseModifier = 1.3;
-						int typeDmod2 = AllSlotInstanceMaster.Count(eq => eq?.EquipmentID == 267);  // 12.7cm連装砲D型改二
-						int typeDmod3 = AllSlotInstanceMaster.Count(eq => eq?.EquipmentID == 366);  // 12.7cm連装砲D型改三
-						var modifierTable = new double[] { 1, 1.25, 1.4 };
 
-						baseModifier *= modifierTable[Math.Min(typeDmod2 + typeDmod3, modifierTable.Length - 1)] * (1 + typeDmod3 * 0.05);
-
-						basepower *= baseModifier;
+						basepower = CalcTorpedoRaderPicket(basepower, baseModifier);
+						//int typeDmod2 = AllSlotInstanceMaster.Count(eq => eq?.EquipmentID == 267);  // 12.7cm連装砲D型改二
+						//int typeDmod3 = AllSlotInstanceMaster.Count(eq => eq?.EquipmentID == 366);  // 12.7cm連装砲D型改三
+						//var modifierTable = new double[] { 1, 1.25, 1.4 };
+						//
+						//baseModifier *= modifierTable[Math.Min(typeDmod2 + typeDmod3, modifierTable.Length - 1)] * (1 + typeDmod3 * 0.05);
+						//
+						//basepower *= baseModifier;
 					}
                     
                     break;
@@ -1323,14 +1325,16 @@ namespace ElectronicObserver.Data
 				//魚見電
                 case NightAttackKind.CutinTorpedoPicket:
 					{
-						double baseModifier = 1.25;		// TODO: 処理の共通化
-						int typeDmod2 = AllSlotInstanceMaster.Count(eq => eq?.EquipmentID == 267);  // 12.7cm連装砲D型改二
-						int typeDmod3 = AllSlotInstanceMaster.Count(eq => eq?.EquipmentID == 366);  // 12.7cm連装砲D型改三
-						var modifierTable = new double[] { 1, 1.25, 1.4 };
+						double baseModifier = 1.25;
 
-						baseModifier *= modifierTable[Math.Min(typeDmod2 + typeDmod3, modifierTable.Length - 1)] * (1 + typeDmod3 * 0.05);
-
-						basepower *= baseModifier;
+						basepower = CalcTorpedoRaderPicket(basepower, baseModifier);
+						//int typeDmod2 = AllSlotInstanceMaster.Count(eq => eq?.EquipmentID == 267);  // 12.7cm連装砲D型改二
+						//int typeDmod3 = AllSlotInstanceMaster.Count(eq => eq?.EquipmentID == 366);  // 12.7cm連装砲D型改三
+						//var modifierTable = new double[] { 1, 1.25, 1.4 };
+						//
+						//baseModifier *= modifierTable[Math.Min(typeDmod2 + typeDmod3, modifierTable.Length - 1)] * (1 + typeDmod3 * 0.05);
+						//
+						//basepower *= baseModifier;
 					}
 					break;
 
@@ -1347,6 +1351,38 @@ namespace ElectronicObserver.Data
 						basepower *= 1.3;
 					}
 					break;
+
+				//夜間瑞雲攻撃
+				case NightAttackKind.SpecialNightZuiun:
+					{
+						double zuiunCountHosei = 0;
+						double raderHosei = 0;
+
+						int nightZuiunCount = AllSlotInstanceMaster.Count(eq => eq?.IsNightZuiun ?? false);
+						int surfaceRaderCount = AllSlotInstanceMaster.Count(eq => eq?.IsSurfaceRadar ?? false);
+
+						if (nightZuiunCount >= 2)
+						{
+							zuiunCountHosei += 0.12;
+						}
+						else if (nightZuiunCount >= 1)
+						{
+							zuiunCountHosei += 0.04;
+						}
+						else
+						{
+							//ここにきている時点で0はありえないのだが、一応…
+							zuiunCountHosei = 0;
+						}
+
+						if(surfaceRaderCount >= 1)
+						{
+							raderHosei += 0.04;
+						}
+						
+						basepower *= (1.2 + zuiunCountHosei + raderHosei);
+					}
+					break;
 			}
 
             basepower += GetLightCruiserDamageBonus() + GetItalianDamageBonus();
@@ -1357,10 +1393,36 @@ namespace ElectronicObserver.Data
             return (int)(basepower * GetAmmoDamageRate());
         }
 
-        /// <summary>
-        /// 威力系の計算をまとめて行い、プロパティを更新します。
-        /// </summary>
-        private void CalculatePowers()
+		/// <summary>
+		/// 主魚電/魚見電カットイン火力計算サブルーチン
+		/// </summary>
+		/// <param name="basepower"></param>
+		/// <param name="baseModifier"></param>
+		/// <returns></returns>
+		private double CalcTorpedoRaderPicket(double basepower, double baseModifier)
+		{
+			int typeDmod2 = AllSlotInstanceMaster.Count(eq => eq?.EquipmentID == 267);  // 12.7cm連装砲D型改二
+			int typeDmod3 = AllSlotInstanceMaster.Count(eq => eq?.EquipmentID == 366);  // 12.7cm連装砲D型改三
+			var modifierTable = new double[] { 1, 1.25, 1.4 };
+
+			//[Note]
+			//D2もD3もないならmodifierTableの0番目(すなわち1)が選ばれるように計算している
+			Console.WriteLine("CalcTorpedoRaderPicket: {0}x{1}x{2}", 
+				baseModifier, 
+				modifierTable[Math.Min(typeDmod2 + typeDmod3, modifierTable.Length - 1)],
+				1 + (typeDmod3 * 0.05)
+			);
+
+			//2023/02/28 D三2本積みでこれはどうかわるか？
+			//           単純に0.05+0.05ではなさそう
+			baseModifier *= modifierTable[Math.Min(typeDmod2 + typeDmod3, modifierTable.Length - 1)] * (1 + (typeDmod3 * 0.05));
+			return basepower *= baseModifier;
+		}
+
+		/// <summary>
+		/// 威力系の計算をまとめて行い、プロパティを更新します。
+		/// </summary>
+		private void CalculatePowers()
         {
 
             int form = Utility.Configuration.Config.Control.PowerEngagementForm;

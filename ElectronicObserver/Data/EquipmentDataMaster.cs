@@ -329,6 +329,9 @@ namespace ElectronicObserver.Data
 		/// <summary> 夜間攻撃機かどうか </summary>
 		public bool IsNightAttacker => IconType == 46;
 
+		/// <summary> 夜間瑞雲かどうか </summary>
+		public bool IsNightZuiun => IconType == 51;
+
 		/// <summary> Swordfish 系艦上攻撃機かどうか </summary>
 		public bool IsSwordfish => CategoryType == EquipmentTypes.CarrierBasedTorpedo && Name.Contains("Swordfish");
 

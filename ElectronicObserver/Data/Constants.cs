@@ -1019,13 +1019,13 @@ namespace ElectronicObserver.Data
 				case 33:
 					return "高角砲/機銃(非集中)<Gotland>";
 				case 34:
-					return "Fletcher砲改+GFCSx2<Johnston>";
+					return "Fletcher砲改+GFCSx2<Fletcher級>";
 				case 35:
-					return "Fletcher砲改+GFCS/Fletcher砲改<Johnston>";
+					return "Fletcher砲改+GFCS/Fletcher砲改<Fletcher級>";
 				case 36:
-					return "Fletcher砲改x2/GFCS<Johnston>";
+					return "Fletcher砲改x2/GFCS<Fletcher級>";
 				case 37:
-					return "Fletcher砲改x2<Johnston>";
+					return "Fletcher砲改x2<Fletcher級>";
 				case 38:
 					return "Atlanta砲+GFCSx2<Atlanta>";
 				case 39:

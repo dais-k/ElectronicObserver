@@ -990,6 +990,7 @@ namespace ElectronicObserver.Utility.Data
 			int picketCrewCount = 0;
 			int masterPicketCrewCount = 0;
 			int drumCount = 0;
+			int nightZuiunCount = 0;
 
 			if (slot == null)
 				return NightAttackKind.Unknown;
@@ -1023,6 +1024,12 @@ namespace ElectronicObserver.Utility.Data
 
 						if (eq.IsLateModelTorpedo)
 							lateModelTorpedoCount++;
+						break;
+
+					// 夜間瑞雲
+					case EquipmentTypes.SeaplaneBomber:
+						if (eq.IsNightZuiun)
+							nightZuiunCount++;
 						break;
 
 					// 夜間戦闘機
@@ -1099,7 +1106,6 @@ namespace ElectronicObserver.Utility.Data
 
 			if (includeSpecialAttack)
 			{
-
 				// 駆逐艦カットイン
 				if (attacker?.ShipType == ShipTypes.Destroyer)
 				{
@@ -1123,6 +1129,12 @@ namespace ElectronicObserver.Utility.Data
 				// 潜水艦カットイン
 				if (torpedoCount >= 2 || (lateModelTorpedoCount >= 1 && submarineEquipmentCount >= 1))
 					return NightAttackKind.CutinTorpedoTorpedo;
+
+				//夜間瑞雲攻撃
+				if (nightZuiunCount >= 1 && mainGunCount >= 2 && attacker.CanNightZuiunAttack)
+				{
+					return NightAttackKind.SpecialNightZuiun;
+				}
 
 				// 汎用カットイン
 				else if (mainGunCount >= 3)
@@ -1219,6 +1231,8 @@ namespace ElectronicObserver.Utility.Data
 							return NightAttackKind.Torpedo;
 					}
 				}
+
+
 			}
 
 			return NightAttackKind.Shelling;

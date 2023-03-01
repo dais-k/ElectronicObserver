@@ -711,6 +711,18 @@ namespace ElectronicObserver.Data
 			);
 
 		/// <summary>
+		/// 夜間瑞雲攻撃が可能な艦種であるか
+		/// (航空戦艦/航空巡洋艦/軽巡洋艦/水上機母艦)
+		/// </summary>
+		public bool CanNightZuiunAttack =>
+			(
+				ShipType == ShipTypes.AviationBattleship ||
+				ShipType == ShipTypes.AviationCruiser ||
+				ShipType == ShipTypes.LightCruiser ||
+				ShipType == ShipTypes.SeaplaneTender
+			);
+
+		/// <summary>
 		/// 自身のパラメータレコードを取得します。
 		/// </summary>
 		/// <returns></returns>
