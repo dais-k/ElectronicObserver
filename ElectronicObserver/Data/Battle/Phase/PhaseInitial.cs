@@ -140,11 +140,13 @@ namespace ElectronicObserver.Data.Battle.Phase
 
 			int[] GetArrayOrDefault(string objectName, int length)
 			{
+#pragma warning disable CS8632 // '#nullable' 注釈コンテキスト内のコードでのみ、Null 許容参照型の注釈を使用する必要があります。
 				object[]? values = RawData.IsDefined(objectName) switch
 				{
 					true => RawData[objectName].Deserialize<object[]>(),
 					_ => null,
 				};
+#pragma warning restore CS8632 // '#nullable' 注釈コンテキスト内のコードでのみ、Null 許容参照型の注釈を使用する必要があります。
 
 				if (values == null) return null;
 
@@ -180,6 +182,7 @@ namespace ElectronicObserver.Data.Battle.Phase
 				return ret;
 			}
 
+#pragma warning disable CS8632 // '#nullable' 注釈コンテキスト内のコードでのみ、Null 許容参照型の注釈を使用する必要があります。
 			int[]? HandleTargetability(int[]? hps, ShipDataMaster[] ships, bool[] isTargetable)
 			{
 				if (hps is null) return null;
@@ -195,6 +198,7 @@ namespace ElectronicObserver.Data.Battle.Phase
 
 				return hps;
 			}
+#pragma warning restore CS8632 // '#nullable' 注釈コンテキスト内のコードでのみ、Null 許容参照型の注釈を使用する必要があります。
 
 			int mainMemberCount = 7;
 			int escortMemberCount = 6;

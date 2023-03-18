@@ -325,6 +325,11 @@ namespace ElectronicObserver.Window.Dialog
 				{
 					ShipType.Text = "特2TL型特設護衛空母";
 				}
+				//固有対応：第百一号型輸送艦
+				if (ShipType.Text == "第百一号型揚陸艦")
+				{
+					ShipType.Text = "第百一号型輸送艦";
+				}
 
 				var tip = new StringBuilder();
 				if (ship.IsAbyssalShip)

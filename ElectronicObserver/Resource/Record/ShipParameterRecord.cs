@@ -1036,13 +1036,7 @@ namespace ElectronicObserver.Resource.Record
 					param = new ShipParameterElement { ShipID = id };
 				}
 
-				param.HPMin = param.HPMax = maxhp switch
-				{
-					// hack: -2 is used as a magic number for untargetable enemies
-					// don't use that value to update the master data
-					-2 => param.HPMax,
-					_ => maxhp,
-				};
+				param.HPMin = param.HPMax = maxhp;
 
 				if (status != null)
 				{

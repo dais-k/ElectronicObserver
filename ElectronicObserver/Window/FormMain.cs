@@ -273,8 +273,10 @@ namespace ElectronicObserver.Window
 			Font = c.UI.MainFont;
 			//StripMenu.Font = Font;
 			StripStatus.Font = Font;
+#pragma warning disable CS0618 // 型またはメンバーが旧型式です
 			MainDockPanel.Skin.AutoHideStripSkin.TextFont = Font;
 			MainDockPanel.Skin.DockPaneStripSkin.TextFont = Font;
+#pragma warning restore CS0618 // 型またはメンバーが旧型式です
 
 
 			if (c.Life.LockLayout)

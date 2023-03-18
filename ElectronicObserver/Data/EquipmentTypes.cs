@@ -157,6 +157,9 @@ namespace ElectronicObserver.Data
 		/// <summary>潜水艦装備</summary>
 		SubmarineEquipment = 51,
 
+		/// <summary>陸戦部隊</summary>
+		ArmyInfantry = 52,
+
 		/// <summary>大型陸上機</summary>
 		HeavyBomber = 53,
 

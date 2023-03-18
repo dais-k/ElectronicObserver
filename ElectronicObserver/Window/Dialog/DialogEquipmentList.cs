@@ -426,6 +426,10 @@ namespace ElectronicObserver.Window.Dialog
 				{
 					continue;
 				}
+				if (masterEquipments[id].CategoryTypeInstance.Name == "陸戦部隊" && !ArmyInfantry_ToolStripMenuItem.Checked)
+				{
+					continue;
+				}
 				if (masterEquipments[id].CategoryTypeInstance.Name == "水上艦要員" && !PicketCrew_ToolStripMenuItem.Checked)
 				{
 					continue;
@@ -954,6 +958,9 @@ namespace ElectronicObserver.Window.Dialog
 			LandPatrol_ToolStripMenuItem.Checked = true;
 			LandPatrol_ToolStripMenuItem.CheckState = CheckState.Checked;
 
+			ArmyInfantry_ToolStripMenuItem.Checked = true;
+			ArmyInfantry_ToolStripMenuItem.CheckState = CheckState.Checked;
+
 			FilterFinish();
 		}
 		//すべてオフ
@@ -1109,6 +1116,9 @@ namespace ElectronicObserver.Window.Dialog
 			LandPatrol_ToolStripMenuItem.Checked = false;
 			LandPatrol_ToolStripMenuItem.CheckState = CheckState.Unchecked;
 
+			ArmyInfantry_ToolStripMenuItem.Checked = false;
+			ArmyInfantry_ToolStripMenuItem.CheckState = CheckState.Unchecked;
+
 			FilterFinish();
 		}
 		//艦載砲
@@ -1263,6 +1273,10 @@ namespace ElectronicObserver.Window.Dialog
 			FilterFinish();
 		}
 		//その他
+		private void ArmyInfantry_ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			FilterFinish();
+		}
 		private void Engine_ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			FilterFinish();

@@ -221,6 +221,7 @@ namespace ElectronicObserver.Resource
 			HeavyBomber,
 			NightSeaplane,          //50
 			NightSeaplane2,
+			ArmyInfantry,
 			Locked,					
 			Unknown,				//不明な場合はこれ
 		}
@@ -470,6 +471,7 @@ namespace ElectronicObserver.Resource
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/HeavyBomber.png", "Equipment_HeavyBomber");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/NightSeaplane.png", "Equipment_NightSeaplane");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/NightSeaplane2.png", "Equipment_NightSeaplane2");
+				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/ArmyInfantry.png", "Equipment_ArmyInfantry");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/Locked.png", "Equipment_Locked");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/Unknown.png", "Equipment_Unknown");
 			}
