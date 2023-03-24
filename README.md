@@ -3,7 +3,8 @@
 
 現在鋭意開発中の艦これ補助ブラウザです。  
 
-**本リポジトリ(https://github.com/yosxpeee/ElectronicObserver)は管理者の艦これ引退に伴い更新停止となります。**  
+**本リポジトリ(https://github.com/yosxpeee/ElectronicObserver)**  
+**は管理者の艦これ引退に伴い更新停止となります。**
 
 ## 実装されている機能
 
