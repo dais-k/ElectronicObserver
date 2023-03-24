@@ -680,7 +680,7 @@ namespace ElectronicObserver.Utility.Data
 		/// 大発系遠征ボーナステーブル
 		/// </summary>
 		private static readonly Dictionary<int, double> EquipmentExpeditionBonus = new Dictionary<int, double>() {
-			//士魂隊、シャーマン、3号戦車(アフリカ)は0なので登録なし
+			//士魂隊、シャーマン、3号戦車(アフリカ)、チハ、チハ改は0なので登録なし
 			{  68, 0.05 },	// 大発動艇
 			{ 166, 0.02 },	// 大発戦車
 			{ 167, 0.01 },	// 特二式内火艇

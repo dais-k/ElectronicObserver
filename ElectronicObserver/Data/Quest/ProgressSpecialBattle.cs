@@ -106,15 +106,24 @@ namespace ElectronicObserver.Data.Quest
 									break;
 
 								case ShipTypes.Battlecruiser:
-									battleships = -9999;
-									break;
+									//大和改二のみ例外（艦種優先でカウント対象）
+									if(ship?.MasterShip?.ShipID == 911)
+									{
+										battleships++;
+										break;
+									}
+									else
+									{
+										battleships = -9999;
+										break;
+									}
 
 								case ShipTypes.LightCruiser:
 									hasLightCruiser = true;
 									break;
 							}
 						}
-						isAccepted = battleships == 3 && hasLightCruiser;
+						isAccepted = battleships >= 3 && hasLightCruiser;
 					}
 					break;
 				// |264|月|「空母機動部隊」西へ！|4-2ボスS勝利1|要(空母or軽母or装母)2/駆逐2

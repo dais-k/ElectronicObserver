@@ -1506,15 +1506,17 @@ namespace ElectronicObserver.Data
                     case 394:       // Jervis改
                     case 478:       // 龍田改二
                     case 681:       // Samuel B.Roberts改
-                    case 562:       // Johnston
+					case 920:       // Samuel B.Roberts Mk.II
+					case 562:       // Johnston
                     case 689:       // Johnston改
                     case 596:       // Fletcher
                     case 692:       // Fletcher改
-                    case 628:       // Fletcher改 Mod.2
+					case 628:       // Fletcher改 Mod.2
                     case 629:       // Fletcher Mk.II
                     case 893:       // Janus改
-                    case 624:       // 夕張改二丁
-                        return true;
+					case 624:       // 夕張改二丁
+					case 726:		// Heywood L.E.改
+						return true;
                 }
 
 				//ここから装備を見る必要があるので装備の取得を行う

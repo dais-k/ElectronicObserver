@@ -134,7 +134,7 @@ namespace ElectronicObserver.Data.Quest
 							||
 						((ships.Count(s => s.MasterShip.ShipType == ShipTypes.Destroyer || s.MasterShip.ShipType == ShipTypes.Escort)) >= 3
 								&&
-						 (ships.Count(s => s.MasterShip.ShipType == ShipTypes.LightCruiser || ships.FirstOrDefault().MasterShip.ShipType == ShipTypes.TrainingCruiser || ships.FirstOrDefault().MasterShip.ShipType == ShipTypes.TorpedoCruiser)) >= 1)
+						 (ships.Count(s => s.MasterShip.ShipType == ShipTypes.LightCruiser || s.MasterShip.ShipType == ShipTypes.TrainingCruiser || s.MasterShip.ShipType == ShipTypes.TorpedoCruiser)) >= 1)
 					)
 					{
 						ret = true;
