@@ -4,14 +4,15 @@
 現在鋭意開発中の艦これ補助ブラウザです。  
 
 パラオ版が開発中止になってから幾つか自分で追加、修正したものです。
-プログラム組むのはド素人なので更新はあまり期待しないでください。
+プログラム組むのはド素人なので更新は期待しないでください。
+wikiを丸ごと移植する方法がわかりません。
 
 ## 実装されている機能
 
 ![](https://user-images.githubusercontent.com/29325179/179132233-a94d0b42-06e6-48ed-b23f-fb544dec1a31.png)
 
 各機能はそれぞれウィンドウとして独立しており、自由にドッキング・タブ化するなどしてレイアウト可能です。  
-以下では概略を紹介します。**詳しくは[Wikiを参照](https://github.com/dais-k/ElectronicObserver/wiki)してください。**  
+以下では概略を紹介します。**詳しくは[Wikiを参照](https://github.com/yosxpeee/ElectronicObserver/wiki)してください。**  
 
 * 内蔵ブラウザ(スクリーンショット, ズーム, ミュートなど)
 * 艦隊(状態(遠征中, 未補給など), 制空戦力, 索敵能力)
@@ -38,7 +39,7 @@
 
 [リリースページ](https://github.com/dais-k/ElectronicObserver/releases) を参照してください。
 
-[更新内容・履歴はこちらで確認できます。](https://github.com/dais-k/ElectronicObserver/wiki/ChangeLog)  
+[更新内容・履歴はこちらで確認できます。](https://github.com/yosxpeee/ElectronicObserver/wiki/ChangeLog)  
 
 
 ## 開発者の皆様へ
@@ -66,5 +67,5 @@
 	
 ## このリポジトリでの更新履歴
 
-[更新履歴](https://github.com/dais-k/ElectronicObserver/wiki/ChangeLog) を参照ください。
+[更新履歴](https://github.com/yosxpeee/ElectronicObserver/wiki/ChangeLog) を参照ください。
 
