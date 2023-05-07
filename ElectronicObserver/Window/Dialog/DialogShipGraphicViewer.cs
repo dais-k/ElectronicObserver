@@ -151,7 +151,7 @@ namespace ElectronicObserver.Window.Dialog
 				}
 				catch (Exception ex)
 				{
-					Utility.Logger.Add(3, $"画像ビューア：画像ロード時にエラーが発生しました。{ex.Message}");
+					Utility.Logger.Add(4, $"画像ビューア：画像ロード時にエラーが発生しました。{ex.Message}");
 				}
 				ImageOffset = new Point();
 				ZoomRate = 1;

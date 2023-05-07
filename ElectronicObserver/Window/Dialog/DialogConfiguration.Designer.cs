@@ -29,8 +29,8 @@
 		private void InitializeComponent()
 		{
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             ElectronicObserver.Window.Control.StatusBarModule statusBarModule1 = new ElectronicObserver.Window.Control.StatusBarModule();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.label19 = new System.Windows.Forms.Label();
@@ -57,6 +57,7 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.UI_RenderingTestChanger = new System.Windows.Forms.TrackBar();
+            this.UI_RenderingTest = new ElectronicObserver.Window.Control.ShipStatusHP();
             this.UI_IsLayoutFixed = new System.Windows.Forms.CheckBox();
             this.UI_BarColorMorphing = new System.Windows.Forms.CheckBox();
             this.UI_SubFontSelect = new System.Windows.Forms.Button();
@@ -93,6 +94,11 @@
             this.Debug_LoadAPIListOnLoad = new System.Windows.Forms.CheckBox();
             this.Debug_APIListPathSearch = new System.Windows.Forms.Button();
             this.Debug_EnableDebugMenu = new System.Windows.Forms.CheckBox();
+            this.tabPage14 = new System.Windows.Forms.TabPage();
+            this.Tool_C2TwitterURL = new System.Windows.Forms.TextBox();
+            this.label22 = new System.Windows.Forms.Label();
+            this.Tool_MCTwitterURL = new System.Windows.Forms.TextBox();
+            this.label21 = new System.Windows.Forms.Label();
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.Life_CanCloseFloatWindowInLock = new System.Windows.Forms.CheckBox();
             this.Life_LockLayout = new System.Windows.Forms.CheckBox();
@@ -215,6 +221,7 @@
             this.FormJson_UpdatesTree = new System.Windows.Forms.CheckBox();
             this.FormJson_AutoUpdateFilter = new System.Windows.Forms.TextBox();
             this.label31 = new System.Windows.Forms.Label();
+            this.FormJson_ViewJSONResult = new System.Windows.Forms.CheckBox();
             this.label33 = new System.Windows.Forms.Label();
             this.tabPage11 = new System.Windows.Forms.TabPage();
             this.Notification_BaseAirCorps = new System.Windows.Forms.Button();
@@ -246,12 +253,6 @@
             this.APIListBrowser = new System.Windows.Forms.OpenFileDialog();
             this.Log_PlayTime = new System.Windows.Forms.Label();
             this.PlayTimeTimer = new System.Windows.Forms.Timer(this.components);
-            this.tabPage14 = new System.Windows.Forms.TabPage();
-            this.label21 = new System.Windows.Forms.Label();
-            this.Tool_MCTwitterURL = new System.Windows.Forms.TextBox();
-            this.UI_RenderingTest = new ElectronicObserver.Window.Control.ShipStatusHP();
-            this.label22 = new System.Windows.Forms.Label();
-            this.Tool_C2TwitterURL = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Connection_UpstreamProxyPort)).BeginInit();
@@ -266,6 +267,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.Control_ConditionBorder)).BeginInit();
             this.tabPage5.SuspendLayout();
             this.Debug_SealingPanel.SuspendLayout();
+            this.tabPage14.SuspendLayout();
             this.tabPage6.SuspendLayout();
             this.tabPage7.SuspendLayout();
             this.tabControl2.SuspendLayout();
@@ -293,7 +295,6 @@
             this.tabPage17.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BGMPlayer_VolumeAll)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.BGMPlayer_ControlGrid)).BeginInit();
-            this.tabPage14.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -587,10 +588,10 @@
             this.tabPage2.Controls.Add(this.UI_MainFontSelect);
             this.tabPage2.Controls.Add(this.UI_MainFont);
             this.tabPage2.Controls.Add(this.label5);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Location = new System.Drawing.Point(4, 24);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(696, 374);
+            this.tabPage2.Size = new System.Drawing.Size(696, 372);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "UI";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -624,6 +625,31 @@
             this.UI_RenderingTestChanger.TabIndex = 14;
             this.UI_RenderingTestChanger.TickStyle = System.Windows.Forms.TickStyle.None;
             this.UI_RenderingTestChanger.Scroll += new System.EventHandler(this.UI_RenderingTestChanger_Scroll);
+            // 
+            // UI_RenderingTest
+            // 
+            this.UI_RenderingTest.AutoSize = true;
+            this.UI_RenderingTest.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            statusBarModule1.BarColor0Begin = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            statusBarModule1.BarColor0End = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            statusBarModule1.MaximumValue = 500;
+            statusBarModule1.PrevValue = 401;
+            statusBarModule1.Value = 401;
+            this.UI_RenderingTest.HPBar = statusBarModule1;
+            this.UI_RenderingTest.IsTargetable = true;
+            this.UI_RenderingTest.Location = new System.Drawing.Point(16, 3);
+            this.UI_RenderingTest.MainFontColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.UI_RenderingTest.Margin = new System.Windows.Forms.Padding(16, 3, 16, 3);
+            this.UI_RenderingTest.MaximumValue = 500;
+            this.UI_RenderingTest.Name = "UI_RenderingTest";
+            this.UI_RenderingTest.PrevValue = 401;
+            this.UI_RenderingTest.RepairTime = new System.DateTime(2017, 6, 18, 0, 0, 59, 159);
+            this.UI_RenderingTest.RepairTimeShowMode = ElectronicObserver.Window.Control.ShipStatusHPRepairTimeShowMode.Invisible;
+            this.UI_RenderingTest.Size = new System.Drawing.Size(136, 20);
+            this.UI_RenderingTest.TabIndex = 12;
+            this.UI_RenderingTest.Text = "Rendering Test: ";
+            this.ToolTipInfo.SetToolTip(this.UI_RenderingTest, "描画プレビューです。\r\n下のバーから値を調整できます。");
+            this.UI_RenderingTest.Value = 401;
             // 
             // UI_IsLayoutFixed
             // 
@@ -725,10 +751,10 @@
             this.tabPage3.Controls.Add(this.Log_SaveLogFlag);
             this.tabPage3.Controls.Add(this.Log_LogLevel);
             this.tabPage3.Controls.Add(this.label6);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Location = new System.Drawing.Point(4, 24);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(696, 374);
+            this.tabPage3.Size = new System.Drawing.Size(696, 372);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "ログ";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -828,7 +854,7 @@
             // 
             this.Log_LogLevel.Location = new System.Drawing.Point(111, 31);
             this.Log_LogLevel.Maximum = new decimal(new int[] {
-            3,
+            4,
             0,
             0,
             0});
@@ -836,7 +862,8 @@
             this.Log_LogLevel.Size = new System.Drawing.Size(80, 23);
             this.Log_LogLevel.TabIndex = 2;
             this.Log_LogLevel.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.ToolTipInfo.SetToolTip(this.Log_LogLevel, "小さい値では詳細なログを、大きな値では重要なログのみを表示します。\r\n1: デバッグレベル\r\n2: 通常(推奨)\r\n3: エラーのみ");
+            this.ToolTipInfo.SetToolTip(this.Log_LogLevel, "小さい値では詳細なログを、大きな値では重要なログのみを表示します。\r\n1: デバッグレベル\r\n2: 通常(推奨)\r\n3: Responseの受信のみ\r\n4: エラ" +
+        "ーのみ");
             // 
             // label6
             // 
@@ -858,10 +885,10 @@
             this.tabPage4.Controls.Add(this.label9);
             this.tabPage4.Controls.Add(this.Control_ConditionBorder);
             this.tabPage4.Controls.Add(this.label7);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Location = new System.Drawing.Point(4, 24);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(696, 374);
+            this.tabPage4.Size = new System.Drawing.Size(696, 372);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "動作";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -975,10 +1002,10 @@
             this.tabPage5.Controls.Add(this.Debug_AlertOnError);
             this.tabPage5.Controls.Add(this.Debug_SealingPanel);
             this.tabPage5.Controls.Add(this.Debug_EnableDebugMenu);
-            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Location = new System.Drawing.Point(4, 24);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(696, 374);
+            this.tabPage5.Size = new System.Drawing.Size(696, 372);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "デバッグ";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -1003,7 +1030,7 @@
             this.Debug_SealingPanel.Controls.Add(this.Debug_APIListPathSearch);
             this.Debug_SealingPanel.Location = new System.Drawing.Point(0, 56);
             this.Debug_SealingPanel.Name = "Debug_SealingPanel";
-            this.Debug_SealingPanel.Size = new System.Drawing.Size(696, 243);
+            this.Debug_SealingPanel.Size = new System.Drawing.Size(696, 241);
             this.Debug_SealingPanel.TabIndex = 1;
             // 
             // Debug_APIListPath
@@ -1051,6 +1078,52 @@
             this.Debug_EnableDebugMenu.UseVisualStyleBackColor = true;
             this.Debug_EnableDebugMenu.CheckedChanged += new System.EventHandler(this.Debug_EnableDebugMenu_CheckedChanged);
             // 
+            // tabPage14
+            // 
+            this.tabPage14.Controls.Add(this.Tool_C2TwitterURL);
+            this.tabPage14.Controls.Add(this.label22);
+            this.tabPage14.Controls.Add(this.Tool_MCTwitterURL);
+            this.tabPage14.Controls.Add(this.label21);
+            this.tabPage14.Location = new System.Drawing.Point(4, 24);
+            this.tabPage14.Name = "tabPage14";
+            this.tabPage14.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage14.Size = new System.Drawing.Size(696, 372);
+            this.tabPage14.TabIndex = 10;
+            this.tabPage14.Text = "ツール";
+            this.tabPage14.UseVisualStyleBackColor = true;
+            // 
+            // Tool_C2TwitterURL
+            // 
+            this.Tool_C2TwitterURL.Location = new System.Drawing.Point(118, 30);
+            this.Tool_C2TwitterURL.Name = "Tool_C2TwitterURL";
+            this.Tool_C2TwitterURL.Size = new System.Drawing.Size(456, 23);
+            this.Tool_C2TwitterURL.TabIndex = 3;
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(8, 33);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(88, 15);
+            this.label22.TabIndex = 2;
+            this.label22.Text = "C2機関Twitter";
+            // 
+            // Tool_MCTwitterURL
+            // 
+            this.Tool_MCTwitterURL.Location = new System.Drawing.Point(118, 3);
+            this.Tool_MCTwitterURL.Name = "Tool_MCTwitterURL";
+            this.Tool_MCTwitterURL.Size = new System.Drawing.Size(456, 23);
+            this.Tool_MCTwitterURL.TabIndex = 1;
+            // 
+            // label21
+            // 
+            this.label21.AutoSize = true;
+            this.label21.Location = new System.Drawing.Point(8, 6);
+            this.label21.Name = "label21";
+            this.label21.Size = new System.Drawing.Size(104, 15);
+            this.label21.TabIndex = 0;
+            this.label21.Text = "艦これ運営Twitter";
+            // 
             // tabPage6
             // 
             this.tabPage6.Controls.Add(this.Life_CanCloseFloatWindowInLock);
@@ -1064,10 +1137,10 @@
             this.tabPage6.Controls.Add(this.label14);
             this.tabPage6.Controls.Add(this.Life_TopMost);
             this.tabPage6.Controls.Add(this.Life_ConfirmOnClosing);
-            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Location = new System.Drawing.Point(4, 24);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(696, 374);
+            this.tabPage6.Size = new System.Drawing.Size(696, 372);
             this.tabPage6.TabIndex = 5;
             this.tabPage6.Text = "ウィンドウ";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -1189,10 +1262,10 @@
             // tabPage7
             // 
             this.tabPage7.Controls.Add(this.tabControl2);
-            this.tabPage7.Location = new System.Drawing.Point(4, 22);
+            this.tabPage7.Location = new System.Drawing.Point(4, 24);
             this.tabPage7.Name = "tabPage7";
             this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage7.Size = new System.Drawing.Size(696, 374);
+            this.tabPage7.Size = new System.Drawing.Size(696, 372);
             this.tabPage7.TabIndex = 6;
             this.tabPage7.Text = "サブウィンドウ";
             this.tabPage7.UseVisualStyleBackColor = true;
@@ -1214,7 +1287,7 @@
             this.tabControl2.Location = new System.Drawing.Point(3, 3);
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(690, 368);
+            this.tabControl2.Size = new System.Drawing.Size(690, 366);
             this.tabControl2.TabIndex = 0;
             // 
             // tabPage8
@@ -1246,7 +1319,7 @@
             this.tabPage8.Location = new System.Drawing.Point(4, 24);
             this.tabPage8.Name = "tabPage8";
             this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage8.Size = new System.Drawing.Size(682, 340);
+            this.tabPage8.Size = new System.Drawing.Size(682, 338);
             this.tabPage8.TabIndex = 0;
             this.tabPage8.Text = "艦隊";
             this.tabPage8.UseVisualStyleBackColor = true;
@@ -1548,7 +1621,7 @@
             this.tabPage9.Location = new System.Drawing.Point(4, 22);
             this.tabPage9.Name = "tabPage9";
             this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage9.Size = new System.Drawing.Size(682, 340);
+            this.tabPage9.Size = new System.Drawing.Size(682, 342);
             this.tabPage9.TabIndex = 1;
             this.tabPage9.Text = "工廠";
             this.tabPage9.UseVisualStyleBackColor = true;
@@ -1624,7 +1697,7 @@
             this.tabPage19.Location = new System.Drawing.Point(4, 22);
             this.tabPage19.Name = "tabPage19";
             this.tabPage19.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage19.Size = new System.Drawing.Size(682, 340);
+            this.tabPage19.Size = new System.Drawing.Size(682, 342);
             this.tabPage19.TabIndex = 8;
             this.tabPage19.Text = "入渠";
             this.tabPage19.UseVisualStyleBackColor = true;
@@ -1691,7 +1764,7 @@
             this.tabPage16.Location = new System.Drawing.Point(4, 22);
             this.tabPage16.Name = "tabPage16";
             this.tabPage16.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage16.Size = new System.Drawing.Size(682, 340);
+            this.tabPage16.Size = new System.Drawing.Size(682, 342);
             this.tabPage16.TabIndex = 6;
             this.tabPage16.Text = "司令部";
             this.tabPage16.UseVisualStyleBackColor = true;
@@ -1731,7 +1804,7 @@
             this.FormHeadquarters_Visibility.IntegralHeight = false;
             this.FormHeadquarters_Visibility.Location = new System.Drawing.Point(6, 46);
             this.FormHeadquarters_Visibility.Name = "FormHeadquarters_Visibility";
-            this.FormHeadquarters_Visibility.Size = new System.Drawing.Size(150, 286);
+            this.FormHeadquarters_Visibility.Size = new System.Drawing.Size(150, 288);
             this.FormHeadquarters_Visibility.TabIndex = 1;
             // 
             // FormHeadquarters_BlinkAtMaximum
@@ -1756,7 +1829,7 @@
             this.tabPage18.Location = new System.Drawing.Point(4, 22);
             this.tabPage18.Name = "tabPage18";
             this.tabPage18.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage18.Size = new System.Drawing.Size(682, 340);
+            this.tabPage18.Size = new System.Drawing.Size(682, 342);
             this.tabPage18.TabIndex = 7;
             this.tabPage18.Text = "羅針盤";
             this.tabPage18.UseVisualStyleBackColor = true;
@@ -1842,7 +1915,7 @@
             this.FormCompass_DoMergeByFormation.AutoSize = true;
             this.FormCompass_DoMergeByFormation.Location = new System.Drawing.Point(6, 85);
             this.FormCompass_DoMergeByFormation.Name = "FormCompass_DoMergeByFormation";
-            this.FormCompass_DoMergeByFormation.Size = new System.Drawing.Size(144, 19);
+            this.FormCompass_DoMergeByFormation.Size = new System.Drawing.Size(218, 19);
             this.FormCompass_DoMergeByFormation.TabIndex = 14;
             this.FormCompass_DoMergeByFormation.Text = "陣形のみ違う同一艦隊の編成をまとめる";
             this.ToolTipInfo.SetToolTip(this.FormCompass_DoMergeByFormation, "陣形のみ違う同一艦隊の編成をまとめて表示するかを指定します。");
@@ -1867,7 +1940,7 @@
             this.tabPage10.Location = new System.Drawing.Point(4, 22);
             this.tabPage10.Name = "tabPage10";
             this.tabPage10.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage10.Size = new System.Drawing.Size(682, 340);
+            this.tabPage10.Size = new System.Drawing.Size(682, 342);
             this.tabPage10.TabIndex = 2;
             this.tabPage10.Text = "任務";
             this.tabPage10.UseVisualStyleBackColor = true;
@@ -1987,7 +2060,7 @@
             this.tabPage13.Location = new System.Drawing.Point(4, 22);
             this.tabPage13.Name = "tabPage13";
             this.tabPage13.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage13.Size = new System.Drawing.Size(682, 340);
+            this.tabPage13.Size = new System.Drawing.Size(682, 342);
             this.tabPage13.TabIndex = 4;
             this.tabPage13.Text = "グループ";
             this.tabPage13.UseVisualStyleBackColor = true;
@@ -2046,7 +2119,7 @@
             this.tabPage20.Location = new System.Drawing.Point(4, 22);
             this.tabPage20.Name = "tabPage20";
             this.tabPage20.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage20.Size = new System.Drawing.Size(682, 340);
+            this.tabPage20.Size = new System.Drawing.Size(682, 342);
             this.tabPage20.TabIndex = 10;
             this.tabPage20.Text = "戦闘";
             this.tabPage20.UseVisualStyleBackColor = true;
@@ -2130,7 +2203,7 @@
             this.tabPage12.Location = new System.Drawing.Point(4, 22);
             this.tabPage12.Name = "tabPage12";
             this.tabPage12.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage12.Size = new System.Drawing.Size(682, 340);
+            this.tabPage12.Size = new System.Drawing.Size(682, 342);
             this.tabPage12.TabIndex = 3;
             this.tabPage12.Text = "ブラウザ";
             this.tabPage12.UseVisualStyleBackColor = true;
@@ -2442,7 +2515,7 @@
             this.tabPage21.Location = new System.Drawing.Point(4, 22);
             this.tabPage21.Name = "tabPage21";
             this.tabPage21.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage21.Size = new System.Drawing.Size(682, 340);
+            this.tabPage21.Size = new System.Drawing.Size(682, 342);
             this.tabPage21.TabIndex = 11;
             this.tabPage21.Text = "基地航空隊";
             this.tabPage21.UseVisualStyleBackColor = true;
@@ -2462,10 +2535,10 @@
             // 
             this.SubWindow_Json.Controls.Add(this.SubWindow_Json_SealingPanel);
             this.SubWindow_Json.Controls.Add(this.label33);
-            this.SubWindow_Json.Location = new System.Drawing.Point(4, 22);
+            this.SubWindow_Json.Location = new System.Drawing.Point(4, 24);
             this.SubWindow_Json.Name = "SubWindow_Json";
             this.SubWindow_Json.Padding = new System.Windows.Forms.Padding(3);
-            this.SubWindow_Json.Size = new System.Drawing.Size(682, 340);
+            this.SubWindow_Json.Size = new System.Drawing.Size(682, 338);
             this.SubWindow_Json.TabIndex = 9;
             this.SubWindow_Json.Text = "JSON";
             this.SubWindow_Json.UseVisualStyleBackColor = true;
@@ -2478,11 +2551,12 @@
             this.SubWindow_Json_SealingPanel.Controls.Add(this.FormJson_UpdatesTree);
             this.SubWindow_Json_SealingPanel.Controls.Add(this.FormJson_AutoUpdateFilter);
             this.SubWindow_Json_SealingPanel.Controls.Add(this.label31);
+            this.SubWindow_Json_SealingPanel.Controls.Add(this.FormJson_ViewJSONResult);
             this.SubWindow_Json_SealingPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.SubWindow_Json_SealingPanel.Location = new System.Drawing.Point(3, 3);
             this.SubWindow_Json_SealingPanel.Margin = new System.Windows.Forms.Padding(0);
             this.SubWindow_Json_SealingPanel.Name = "SubWindow_Json_SealingPanel";
-            this.SubWindow_Json_SealingPanel.Size = new System.Drawing.Size(676, 334);
+            this.SubWindow_Json_SealingPanel.Size = new System.Drawing.Size(676, 332);
             this.SubWindow_Json_SealingPanel.TabIndex = 6;
             // 
             // FormJson_AutoUpdate
@@ -2524,7 +2598,7 @@
             this.FormJson_AutoUpdateFilter.Location = new System.Drawing.Point(109, 53);
             this.FormJson_AutoUpdateFilter.Name = "FormJson_AutoUpdateFilter";
             this.FormJson_AutoUpdateFilter.Size = new System.Drawing.Size(564, 23);
-            this.FormJson_AutoUpdateFilter.TabIndex = 3;
+            this.FormJson_AutoUpdateFilter.TabIndex = 2;
             this.ToolTipInfo.SetToolTip(this.FormJson_AutoUpdateFilter, "自動更新時に読み込む API を選択するフィルタです。\r\n正規表現も利用可能です。");
             // 
             // label31
@@ -2533,8 +2607,19 @@
             this.label31.Location = new System.Drawing.Point(3, 56);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(100, 15);
-            this.label31.TabIndex = 2;
+            this.label31.TabIndex = 4;
             this.label31.Text = "自動更新フィルタ：";
+            // 
+            // FormJson_ViewJSONResult
+            // 
+            this.FormJson_ViewJSONResult.AutoSize = true;
+            this.FormJson_ViewJSONResult.Location = new System.Drawing.Point(3, 84);
+            this.FormJson_ViewJSONResult.Name = "FormJson_ViewJSONResult";
+            this.FormJson_ViewJSONResult.Size = new System.Drawing.Size(143, 19);
+            this.FormJson_ViewJSONResult.TabIndex = 3;
+            this.FormJson_ViewJSONResult.Text = "JSONの中身を表示する";
+            this.ToolTipInfo.SetToolTip(this.FormJson_ViewJSONResult, "API の送受信時に、JSONの中身を表示するかを指定します。");
+            this.FormJson_ViewJSONResult.UseVisualStyleBackColor = true;
             // 
             // label33
             // 
@@ -2557,10 +2642,10 @@
             this.tabPage11.Controls.Add(this.Notification_Repair);
             this.tabPage11.Controls.Add(this.Notification_Construction);
             this.tabPage11.Controls.Add(this.Notification_Expedition);
-            this.tabPage11.Location = new System.Drawing.Point(4, 22);
+            this.tabPage11.Location = new System.Drawing.Point(4, 24);
             this.tabPage11.Name = "tabPage11";
             this.tabPage11.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage11.Size = new System.Drawing.Size(696, 374);
+            this.tabPage11.Size = new System.Drawing.Size(696, 372);
             this.tabPage11.TabIndex = 7;
             this.tabPage11.Text = "通知";
             this.tabPage11.UseVisualStyleBackColor = true;
@@ -2612,7 +2697,7 @@
             // 
             this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(3, 314);
+            this.label10.Location = new System.Drawing.Point(3, 312);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(238, 15);
             this.label10.TabIndex = 5;
@@ -2675,10 +2760,10 @@
             this.tabPage17.Controls.Add(this.BGMPlayer_VolumeAll);
             this.tabPage17.Controls.Add(this.BGMPlayer_Enabled);
             this.tabPage17.Controls.Add(this.BGMPlayer_ControlGrid);
-            this.tabPage17.Location = new System.Drawing.Point(4, 22);
+            this.tabPage17.Location = new System.Drawing.Point(4, 24);
             this.tabPage17.Name = "tabPage17";
             this.tabPage17.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage17.Size = new System.Drawing.Size(696, 374);
+            this.tabPage17.Size = new System.Drawing.Size(696, 372);
             this.tabPage17.TabIndex = 9;
             this.tabPage17.Text = "BGM";
             this.tabPage17.UseVisualStyleBackColor = true;
@@ -2757,7 +2842,7 @@
             this.BGMPlayer_ControlGrid.RowHeadersVisible = false;
             this.BGMPlayer_ControlGrid.RowTemplate.Height = 21;
             this.BGMPlayer_ControlGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.BGMPlayer_ControlGrid.Size = new System.Drawing.Size(684, 263);
+            this.BGMPlayer_ControlGrid.Size = new System.Drawing.Size(684, 261);
             this.BGMPlayer_ControlGrid.TabIndex = 0;
             this.BGMPlayer_ControlGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.BGMPlayer_ControlGrid_CellContentClick);
             this.BGMPlayer_ControlGrid.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.BGMPlayer_ControlGrid_CellFormatting);
@@ -2855,76 +2940,6 @@
             this.PlayTimeTimer.Interval = 1000;
             this.PlayTimeTimer.Tick += new System.EventHandler(this.PlayTimeTimer_Tick);
             // 
-            // tabPage14
-            // 
-            this.tabPage14.Controls.Add(this.Tool_C2TwitterURL);
-            this.tabPage14.Controls.Add(this.label22);
-            this.tabPage14.Controls.Add(this.Tool_MCTwitterURL);
-            this.tabPage14.Controls.Add(this.label21);
-            this.tabPage14.Location = new System.Drawing.Point(4, 24);
-            this.tabPage14.Name = "tabPage14";
-            this.tabPage14.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage14.Size = new System.Drawing.Size(696, 372);
-            this.tabPage14.TabIndex = 10;
-            this.tabPage14.Text = "ツール";
-            this.tabPage14.UseVisualStyleBackColor = true;
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Location = new System.Drawing.Point(8, 6);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(104, 15);
-            this.label21.TabIndex = 0;
-            this.label21.Text = "艦これ運営Twitter";
-            // 
-            // Tool_MCTwitterURL
-            // 
-            this.Tool_MCTwitterURL.Location = new System.Drawing.Point(118, 3);
-            this.Tool_MCTwitterURL.Name = "Tool_MCTwitterURL";
-            this.Tool_MCTwitterURL.Size = new System.Drawing.Size(456, 23);
-            this.Tool_MCTwitterURL.TabIndex = 1;
-            // 
-            // UI_RenderingTest
-            // 
-            this.UI_RenderingTest.AutoSize = true;
-            this.UI_RenderingTest.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            statusBarModule1.BarColor0Begin = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            statusBarModule1.BarColor0End = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            statusBarModule1.MaximumValue = 500;
-            statusBarModule1.PrevValue = 401;
-            statusBarModule1.Value = 401;
-            this.UI_RenderingTest.HPBar = statusBarModule1;
-            this.UI_RenderingTest.Location = new System.Drawing.Point(16, 3);
-            this.UI_RenderingTest.MainFontColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.UI_RenderingTest.Margin = new System.Windows.Forms.Padding(16, 3, 16, 3);
-            this.UI_RenderingTest.MaximumValue = 500;
-            this.UI_RenderingTest.Name = "UI_RenderingTest";
-            this.UI_RenderingTest.PrevValue = 401;
-            this.UI_RenderingTest.RepairTime = new System.DateTime(2017, 6, 18, 0, 0, 59, 159);
-            this.UI_RenderingTest.RepairTimeShowMode = ElectronicObserver.Window.Control.ShipStatusHPRepairTimeShowMode.Invisible;
-            this.UI_RenderingTest.Size = new System.Drawing.Size(136, 20);
-            this.UI_RenderingTest.TabIndex = 12;
-            this.UI_RenderingTest.Text = "Rendering Test: ";
-            this.ToolTipInfo.SetToolTip(this.UI_RenderingTest, "描画プレビューです。\r\n下のバーから値を調整できます。");
-            this.UI_RenderingTest.Value = 401;
-            // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(8, 33);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(88, 15);
-            this.label22.TabIndex = 2;
-            this.label22.Text = "C2機関Twitter";
-            // 
-            // Tool_C2TwitterURL
-            // 
-            this.Tool_C2TwitterURL.Location = new System.Drawing.Point(118, 30);
-            this.Tool_C2TwitterURL.Name = "Tool_C2TwitterURL";
-            this.Tool_C2TwitterURL.Size = new System.Drawing.Size(456, 23);
-            this.Tool_C2TwitterURL.TabIndex = 3;
-            // 
             // DialogConfiguration
             // 
             this.AcceptButton = this.ButtonOK;
@@ -2967,6 +2982,8 @@
             this.tabPage5.PerformLayout();
             this.Debug_SealingPanel.ResumeLayout(false);
             this.Debug_SealingPanel.PerformLayout();
+            this.tabPage14.ResumeLayout(false);
+            this.tabPage14.PerformLayout();
             this.tabPage6.ResumeLayout(false);
             this.tabPage6.PerformLayout();
             this.tabPage7.ResumeLayout(false);
@@ -3011,8 +3028,6 @@
             this.tabPage17.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BGMPlayer_VolumeAll)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.BGMPlayer_ControlGrid)).EndInit();
-            this.tabPage14.ResumeLayout(false);
-            this.tabPage14.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -3176,6 +3191,7 @@
 		private System.Windows.Forms.TabPage SubWindow_Json;
 		private System.Windows.Forms.CheckBox FormJson_AutoUpdate;
 		private System.Windows.Forms.CheckBox FormJson_UpdatesTree;
+		private System.Windows.Forms.CheckBox FormJson_ViewJSONResult;
 		private System.Windows.Forms.TextBox FormJson_AutoUpdateFilter;
 		private System.Windows.Forms.Label label31;
 		private System.Windows.Forms.Label label32;

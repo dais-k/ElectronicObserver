@@ -85,7 +85,7 @@ namespace ElectronicObserver.Resource.Record
 				if (succeeded)
 					Utility.Logger.Add(2, "レコードをロードしました。");
 				else
-					Utility.Logger.Add(3, "レコードのロードに失敗しました。");
+					Utility.Logger.Add(4, "レコードのロードに失敗しました。");
 			}
 
 			return succeeded;
@@ -185,7 +185,7 @@ namespace ElectronicObserver.Resource.Record
 					}
 					else
 					{
-						Utility.Logger.Add(3, "レコードのオートセーブに失敗しました。");
+						Utility.Logger.Add(4, "レコードのオートセーブに失敗しました。");
 					}
 				}
 			}

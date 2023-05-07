@@ -212,7 +212,7 @@ namespace ElectronicObserver.Window
 				catch (Exception ex)
 				{
 
-					Utility.Logger.Add(3, "API読み込みに失敗しました。" + ex.Message);
+					Utility.Logger.Add(4, "API読み込みに失敗しました。" + ex.Message);
 				}
 			}
 
@@ -231,7 +231,7 @@ namespace ElectronicObserver.Window
 			UIUpdateTimer.Start();
 
 
-			Utility.Logger.Add(3, "起動処理が完了しました。");
+			Utility.Logger.Add(4, "起動処理が完了しました。");
 
 		}
 
@@ -621,7 +621,7 @@ namespace ElectronicObserver.Window
 			catch (FileNotFoundException)
 			{
 
-				Utility.Logger.Add(3, string.Format("ウィンドウ レイアウト ファイルは存在しません。"));
+				Utility.Logger.Add(4, string.Format("ウィンドウ レイアウト ファイルは存在しません。"));
 				MessageBox.Show("レイアウトが初期化されました。\r\n「表示」メニューからお好みのウィンドウを追加してください。", "ウィンドウ レイアウト ファイルが存在しません",
 					MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -631,7 +631,7 @@ namespace ElectronicObserver.Window
 			catch (DirectoryNotFoundException)
 			{
 
-				Utility.Logger.Add(3, string.Format("ウィンドウ レイアウト ファイルは存在しません。"));
+				Utility.Logger.Add(4, string.Format("ウィンドウ レイアウト ファイルは存在しません。"));
 				MessageBox.Show("レイアウトが初期化されました。\r\n「表示」メニューからお好みのウィンドウを追加してください。", "ウィンドウ レイアウト ファイルが存在しません",
 					MessageBoxButtons.OK, MessageBoxIcon.Information);
 

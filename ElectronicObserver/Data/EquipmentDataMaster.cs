@@ -188,7 +188,9 @@ namespace ElectronicObserver.Data
 			CategoryType == EquipmentTypes.MainGunLarge2;
 
 		/// <summary> 副砲系かどうか </summary>
-		public bool IsSecondaryGun => CategoryType == EquipmentTypes.SecondaryGun;
+		public bool IsSecondaryGun => 
+			CategoryType == EquipmentTypes.SecondaryGun ||
+			CategoryType == EquipmentTypes.SecondaryGun2;
 
 		/// <summary> 魚雷系かどうか </summary>
 		public bool IsTorpedo => CategoryType == EquipmentTypes.Torpedo || CategoryType == EquipmentTypes.SubmarineTorpedo;

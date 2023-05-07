@@ -459,7 +459,7 @@ namespace ElectronicObserver.Window
 				}
 				catch (Exception ex)
 				{
-					Utility.Logger.Add(3, "資源のクリップボードへのコピーに失敗しました。" + ex.Message);
+					Utility.Logger.Add(4, "資源のクリップボードへのコピーに失敗しました。" + ex.Message);
 				}
 			}
 		}

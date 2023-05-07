@@ -498,6 +498,7 @@ namespace ElectronicObserver.Window.Dialog
 			FormJson_AutoUpdate.Checked = config.FormJson.AutoUpdate;
 			FormJson_UpdatesTree.Checked = config.FormJson.UpdatesTree;
 			FormJson_AutoUpdateFilter.Text = config.FormJson.AutoUpdateFilter;
+			FormJson_ViewJSONResult.Checked = config.FormJson.ViewJSONResult;
 
 			FormBaseAirCorps_ShowEventMapOnly.Checked = config.FormBaseAirCorps.ShowEventMapOnly;
 
@@ -731,6 +732,7 @@ namespace ElectronicObserver.Window.Dialog
 			config.FormJson.AutoUpdate = FormJson_AutoUpdate.Checked;
 			config.FormJson.UpdatesTree = FormJson_UpdatesTree.Checked;
 			config.FormJson.AutoUpdateFilter = FormJson_AutoUpdateFilter.Text;
+			config.FormJson.ViewJSONResult = FormJson_ViewJSONResult.Checked;
 
 			config.FormBaseAirCorps.ShowEventMapOnly = FormBaseAirCorps_ShowEventMapOnly.Checked;
 

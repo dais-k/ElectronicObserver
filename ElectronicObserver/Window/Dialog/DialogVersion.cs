@@ -41,6 +41,10 @@ namespace ElectronicObserver.Window.Dialog
 		{
 			System.Diagnostics.Process.Start("https://github.com/yosxpeee/ElectronicObserver");
 		}
+		private void TextInformation3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			System.Diagnostics.Process.Start("https://github.com/dais-k/ElectronicObserver/");
+		}
 
 		private void DialogVersion_Load(object sender, EventArgs e)
 		{

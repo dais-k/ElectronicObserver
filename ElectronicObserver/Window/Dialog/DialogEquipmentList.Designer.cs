@@ -95,7 +95,8 @@
             this.ArmyInfantry_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.PicketCrew_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MaintenanceTeam_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.SubmarineEquipment_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.SurfaceShipEquipment_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.SubmarineEquipment_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.CommandFacility_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DamageControl_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Ration_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -797,7 +798,8 @@
             this.ArmyInfantry_ToolStripMenuItem,
             this.PicketCrew_ToolStripMenuItem,
             this.MaintenanceTeam_ToolStripMenuItem,
-            this.SubmarineEquipment_ToolStripMenuItem,
+			this.SurfaceShipEquipment_ToolStripMenuItem,
+			this.SubmarineEquipment_ToolStripMenuItem,
             this.CommandFacility_ToolStripMenuItem,
             this.DamageControl_ToolStripMenuItem,
             this.Ration_ToolStripMenuItem,
@@ -866,10 +868,21 @@
             this.MaintenanceTeam_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.MaintenanceTeam_ToolStripMenuItem.Text = "航空要員";
             this.MaintenanceTeam_ToolStripMenuItem.Click += new System.EventHandler(this.MaintenanceTeam_ToolStripMenuItem_Click);
-            // 
-            // SubmarineEquipment_ToolStripMenuItem
-            // 
-            this.SubmarineEquipment_ToolStripMenuItem.Checked = true;
+			// 
+			// SurfaceShipEquipment_ToolStripMenuItem
+			// 
+			this.SurfaceShipEquipment_ToolStripMenuItem.Checked = true;
+			this.SurfaceShipEquipment_ToolStripMenuItem.CheckOnClick = true;
+			this.SurfaceShipEquipment_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.SurfaceShipEquipment_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+			this.SurfaceShipEquipment_ToolStripMenuItem.Name = "SurfaceShipEquipment_ToolStripMenuItem";
+			this.SurfaceShipEquipment_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+			this.SurfaceShipEquipment_ToolStripMenuItem.Text = "水上艦装備";
+			this.SurfaceShipEquipment_ToolStripMenuItem.Click += new System.EventHandler(this.SurfaceShipEquipment_ToolStripMenuItem_Click);
+			// 
+			// SubmarineEquipment_ToolStripMenuItem
+			// 
+			this.SubmarineEquipment_ToolStripMenuItem.Checked = true;
             this.SubmarineEquipment_ToolStripMenuItem.CheckOnClick = true;
             this.SubmarineEquipment_ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.SubmarineEquipment_ToolStripMenuItem.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
@@ -1240,6 +1253,7 @@
 		private System.Windows.Forms.ToolStripMenuItem Rocket_ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem PicketCrew_ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem MaintenanceTeam_ToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem SurfaceShipEquipment_ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem SubmarineEquipment_ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem DamageControl_ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem Ration_ToolStripMenuItem;

@@ -222,6 +222,8 @@ namespace ElectronicObserver.Resource
 			NightSeaplane,          //50
 			NightSeaplane2,
 			ArmyInfantry,
+			Reserved53, 
+			SmokeGenerator,
 			Locked,					
 			Unknown,				//不明な場合はこれ
 		}
@@ -472,6 +474,8 @@ namespace ElectronicObserver.Resource
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/NightSeaplane.png", "Equipment_NightSeaplane");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/NightSeaplane2.png", "Equipment_NightSeaplane2");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/ArmyInfantry.png", "Equipment_ArmyInfantry");
+				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/Unknown.png", "Equipment_Reserved53"); 
+				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/SmokeGenerator.png", "Equipment_SmokeGenerator");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/Locked.png", "Equipment_Locked");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/Unknown.png", "Equipment_Unknown");
 			}
@@ -484,7 +488,7 @@ namespace ElectronicObserver.Resource
 
 			if (entry == null)
 			{
-				Utility.Logger.Add(3, string.Format("画像リソース {0} は存在しません。", path));
+				Utility.Logger.Add(4, string.Format("画像リソース {0} は存在しません。", path));
 				imglist.Images.Add(name, new Bitmap(imglist.ImageSize.Width, imglist.ImageSize.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb));
 				return;
 			}
@@ -510,7 +514,7 @@ namespace ElectronicObserver.Resource
 			catch (Exception)
 			{
 
-				Utility.Logger.Add(3, string.Format("画像リソース {0} の読み込みに失敗しました。", path));
+				Utility.Logger.Add(4, string.Format("画像リソース {0} の読み込みに失敗しました。", path));
 				imglist.Images.Add(name, CreateBlankImage());
 				return;
 			}
@@ -524,7 +528,7 @@ namespace ElectronicObserver.Resource
 
 			if (entry == null)
 			{
-				Utility.Logger.Add(3, string.Format("画像リソース {0} は存在しません。", path));
+				Utility.Logger.Add(4, string.Format("画像リソース {0} は存在しません。", path));
 				return null;
 			}
 
@@ -551,7 +555,7 @@ namespace ElectronicObserver.Resource
 			catch (Exception)
 			{
 
-				Utility.Logger.Add(3, string.Format("画像リソース {0} の読み込みに失敗しました。", path));
+				Utility.Logger.Add(4, string.Format("画像リソース {0} の読み込みに失敗しました。", path));
 			}
 
 			return null;
@@ -585,7 +589,7 @@ namespace ElectronicObserver.Resource
 
 				if (entry == null)
 				{
-					Utility.Logger.Add(3, string.Format("{0} は存在しません。", entrypath));
+					Utility.Logger.Add(4, string.Format("{0} は存在しません。", entrypath));
 					return false;
 				}
 
@@ -615,7 +619,7 @@ namespace ElectronicObserver.Resource
 				catch (Exception ex)
 				{
 
-					Utility.Logger.Add(3, string.Format("{0} のコピーに失敗しました。{1}", entrypath, ex.Message));
+					Utility.Logger.Add(4, string.Format("{0} のコピーに失敗しました。{1}", entrypath, ex.Message));
 					return false;
 				}
 			}
@@ -667,7 +671,7 @@ namespace ElectronicObserver.Resource
 
 				if (entry == null)
 				{
-					Utility.Logger.Add(3, string.Format("{0} は存在しません。", entrypath));
+					Utility.Logger.Add(4, string.Format("{0} は存在しません。", entrypath));
 					return null;
 				}
 
@@ -690,7 +694,7 @@ namespace ElectronicObserver.Resource
 				catch (Exception ex)
 				{
 
-					Utility.Logger.Add(3, string.Format("{0} の展開に失敗しました。{1}", entrypath, ex.Message));
+					Utility.Logger.Add(4, string.Format("{0} の展開に失敗しました。{1}", entrypath, ex.Message));
 					return null;
 				}
 			}

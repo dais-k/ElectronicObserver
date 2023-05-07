@@ -71,7 +71,7 @@ namespace ElectronicObserver.Resource
 		/// <returns></returns>
 		private static string GetEquipmentResourcePath(int equipmentID, string resourceType)
 		{
-			return $@"kcs2\resources\slot\{resourceType}\{equipmentID:d3}_";
+			return $@"kcs2\resources\slot\{resourceType}\{equipmentID:d4}_";
 		}
 
 

@@ -92,7 +92,7 @@ namespace ElectronicObserver.Resource.Record
 				{
 					string backupDestination = Path.Combine(Path.GetDirectoryName(path), Path.GetFileNameWithoutExtension(path) + "_backup_" + DateTimeHelper.GetTimeStamp() + Path.GetExtension(path));
 					File.Copy(path, backupDestination);
-					Utility.Logger.Add(3, $"修復前のレコードを {backupDestination} に退避しました。復旧に失敗した場合はこのファイルから復元を試みてください。");
+					Utility.Logger.Add(4, $"修復前のレコードを {backupDestination} に退避しました。復旧に失敗した場合はこのファイルから復元を試みてください。");
 
 					SaveAll(RecordManager.Instance.MasterPath);
 				}

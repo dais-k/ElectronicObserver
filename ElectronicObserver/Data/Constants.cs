@@ -1045,6 +1045,8 @@ namespace ElectronicObserver.Data
 					return "測距儀付き電探+10cm連装高角砲群+対空機銃<大和型>";
 				case 45:
 					return "測距儀付き電探+10cm連装高角砲群<大和型>";
+				case 46:
+					return "35.6cm連装砲改三 or 改四/機銃/電探<榛名改二乙>";
 				default:
 					return "不明(" + id + ")";
 			}

@@ -1099,12 +1099,17 @@ namespace ElectronicObserver.Utility
 				/// </summary>
 				public string AutoUpdateFilter { get; set; }
 
+				/// <summary>
+				/// JSONの中身を表示するか
+				/// </summary>
+				public bool ViewJSONResult { get; set; }
 
 				public ConfigFormJson()
 				{
 					AutoUpdate = false;
 					UpdatesTree = true;
 					AutoUpdateFilter = "";
+					ViewJSONResult = true;
 				}
 			}
 			/// <summary>[JSON]ウィンドウ</summary>

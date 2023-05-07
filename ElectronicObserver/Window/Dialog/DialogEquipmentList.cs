@@ -438,6 +438,10 @@ namespace ElectronicObserver.Window.Dialog
 				{
 					continue;
 				}
+				if (masterEquipments[id].CategoryTypeInstance.Name == "水上艦装備" && !SurfaceShipEquipment_ToolStripMenuItem.Checked)
+				{
+					continue;
+				}
 				if (masterEquipments[id].CategoryTypeInstance.Name == "潜水艦装備" && !SubmarineEquipment_ToolStripMenuItem.Checked)
 				{
 					continue;
@@ -961,6 +965,9 @@ namespace ElectronicObserver.Window.Dialog
 			ArmyInfantry_ToolStripMenuItem.Checked = true;
 			ArmyInfantry_ToolStripMenuItem.CheckState = CheckState.Checked;
 
+			SurfaceShipEquipment_ToolStripMenuItem.Checked = true;
+			SurfaceShipEquipment_ToolStripMenuItem.CheckState = CheckState.Checked;
+
 			FilterFinish();
 		}
 		//すべてオフ
@@ -1118,6 +1125,9 @@ namespace ElectronicObserver.Window.Dialog
 
 			ArmyInfantry_ToolStripMenuItem.Checked = false;
 			ArmyInfantry_ToolStripMenuItem.CheckState = CheckState.Unchecked;
+
+			SurfaceShipEquipment_ToolStripMenuItem.Checked = false;
+			SurfaceShipEquipment_ToolStripMenuItem.CheckState = CheckState.Unchecked;
 
 			FilterFinish();
 		}
@@ -1293,6 +1303,11 @@ namespace ElectronicObserver.Window.Dialog
 		{
 			FilterFinish();
 		}
+		private void SurfaceShipEquipment_ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			FilterFinish();
+		}
+		
 		private void SubmarineEquipment_ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			FilterFinish();

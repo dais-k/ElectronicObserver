@@ -1314,6 +1314,7 @@ namespace ElectronicObserver.Utility.Data
 			int aaradar = 0;
 			int maingunl = 0;
 			int maingunl_fcr = 0;
+			int maingunl_356 = 0;
 			int aashell = 0;
 			int aagun_total = 0;
 			int aagun_medium = 0;
@@ -1387,6 +1388,12 @@ namespace ElectronicObserver.Utility.Data
 
 					if (eq.EquipmentID == 300)       // 16inch Mk.I三連装砲改+FCR type284
 						maingunl_fcr++;
+
+					if (eq.EquipmentID == 502)       // 35.6cm連装砲改三(ダズル迷彩仕様)
+						maingunl_356++;
+
+					if (eq.EquipmentID == 503)       // 35.6cm連装砲改四
+						maingunl_356++;
 				}
 				else if (eq.CategoryType == EquipmentTypes.AAShell)
 				{
@@ -1603,6 +1610,12 @@ namespace ElectronicObserver.Utility.Data
 						}
 					}
 					break;
+
+				case 593:   // 榛名改二乙
+					if (maingunl_356 >= 1 && aagun_concentrated >= 1 && aaradar >= 1)
+						return 46;
+					break;
+
 				case 557:   // 磯風乙改
 				case 558:   // 浜風乙改
 					if (highangle >= 1 && aaradar >= 1)
@@ -1932,6 +1945,7 @@ namespace ElectronicObserver.Utility.Data
 			{ 43, 8 },
 			{ 44, 6 },
 			{ 45, 5 },
+			{ 46, 8 },      
 		});
 
 		/// <summary>
@@ -1983,6 +1997,7 @@ namespace ElectronicObserver.Utility.Data
 			{ 43, 1.6 },
 			{ 44, 1.6 },
 			{ 45, 1.55 },
+			{ 46, 1.55 },
 		});
 
 		/// <summary>

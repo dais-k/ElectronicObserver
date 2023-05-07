@@ -27,7 +27,10 @@ namespace ElectronicObserver.Window
 		private Regex _apiPattern;
 
 		private string _currentAPIPath;
-
+		private string _NowAccessTime;
+		private string _LastAccessTime;
+		private string _4hoursInterval = "4時間経過不明";
+		private string _LaterTime;
 
 		public FormJson(FormMain parent)
 		{
@@ -81,8 +84,15 @@ namespace ElectronicObserver.Window
 
 		private void LoadRequest(string apiname, Dictionary<string, string> data)
 		{
+			DateTime now = DateTime.Now;
+			_NowAccessTime = now.ToString();
 
-			JsonRawData.Text = apiname + " : Request\r\n" + string.Join("\r\n", data.Select(p => p.Key + "=" + p.Value));
+			if (ViewJSONResult.Checked)
+			{
+				JsonRawData.Text = apiname + " : Request [" + _NowAccessTime + "]\r\n" + string.Join("\r\n", data.Select(p => p.Key + "=" + p.Value));
+			}
+			else
+				JsonRawData.Text = apiname + " : Request\r\n[" + _NowAccessTime + "]";
 
 
 			if (!UpdatesTree.Checked)
@@ -110,9 +120,30 @@ namespace ElectronicObserver.Window
 
 		private void LoadResponse(string apiname, dynamic data)
 		{
+			DateTime now = DateTime.Now;
+			
+			if (_LastAccessTime == null || _LastAccessTime == "") //起動後チェック
+			{
+				_LastAccessTime = now.ToString();
+			}
+			
+			DateTime last = DateTime.Parse(_LastAccessTime);
+			TimeSpan _AccessInterval = now - last;
+			
+			if (_AccessInterval.TotalHours >= 4)
+			{
+				_4hoursInterval = "最後に艦これを4時間以上操作しなかった時刻：\r\n[" + now.ToString() + "]";
 
+			}
 
-			JsonRawData.Text = (_currentAPIPath == apiname ? JsonRawData.Text + "\r\n\r\n" : "") + apiname + " : Response\r\n" + (data == null ? "" : data.ToString());
+			if (ViewJSONResult.Checked)
+			{ 
+				JsonRawData.Text = (_currentAPIPath == apiname ? JsonRawData.Text + "\r\n\r\n" : "") + apiname + " : Response [" + _NowAccessTime + "]\r\n" + (data == null ? "" : data.ToString());
+			}
+			else
+				JsonRawData.Text = (_currentAPIPath == apiname ? JsonRawData.Text + "\r\n\r\n" : "") + apiname + " : Response\r\n[" + _NowAccessTime + "]\r\n" + _4hoursInterval;
+
+			_LastAccessTime = now.ToString();
 
 			if (!UpdatesTree.Checked)
 				return;
@@ -307,7 +338,7 @@ namespace ElectronicObserver.Window
 			AutoUpdate.Checked = c.FormJson.AutoUpdate;
 			UpdatesTree.Checked = c.FormJson.UpdatesTree;
 			AutoUpdateFilter.Text = c.FormJson.AutoUpdateFilter;
-
+			ViewJSONResult.Checked = c.FormJson.ViewJSONResult;
 
 			JsonTreeView.Nodes.Clear();
 
@@ -358,6 +389,18 @@ namespace ElectronicObserver.Window
 
 
 			Utility.Configuration.Config.FormJson.UpdatesTree = UpdatesTree.Checked;
+		}
+
+		private void ViewJSONResult_CheckedChanged(object sender, EventArgs e)
+		{
+
+			JsonTreeView.Nodes.Clear();
+
+			if (!AutoUpdate.Checked || !UpdatesTree.Checked || !ViewJSONResult.Checked)
+				JsonTreeView.Nodes.Add(AutoUpdateDisabledMessage);
+
+
+			Utility.Configuration.Config.FormJson.ViewJSONResult = ViewJSONResult.Checked;
 		}
 
 		private void AutoUpdate_CheckedChanged(object sender, EventArgs e)

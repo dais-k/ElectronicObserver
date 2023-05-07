@@ -163,6 +163,9 @@ namespace ElectronicObserver.Data
 		/// <summary>大型陸上機</summary>
 		HeavyBomber = 53,
 
+		/// <summary>水上艦装備</summary>
+		SurfaceShipEquipment = 54,
+
 		/// <summary>噴式戦闘機</summary>
 		JetFighter = 56,
 
@@ -180,6 +183,9 @@ namespace ElectronicObserver.Data
 
 		/// <summary>艦上偵察機(II)</summary>
 		CarrierBasedRecon2 = 94,
+
+		/// <summary>副砲(II)</summary>
+		SecondaryGun2 = 95,
 
 	}
 }
