@@ -11,7 +11,7 @@
 ![](https://user-images.githubusercontent.com/29325179/179132233-a94d0b42-06e6-48ed-b23f-fb544dec1a31.png)
 
 各機能はそれぞれウィンドウとして独立しており、自由にドッキング・タブ化するなどしてレイアウト可能です。  
-以下では概略を紹介します。**詳しくは[Wikiを参照](https://github.com/yosxpeee/ElectronicObserver/wiki)してください。**  
+以下では概略を紹介します。**詳しくは[Wikiを参照](https://github.com/dais-k/ElectronicObserver/wiki)してください。**  
 
 * 内蔵ブラウザ(スクリーンショット, ズーム, ミュートなど)
 * 艦隊(状態(遠征中, 未補給など), 制空戦力, 索敵能力)
