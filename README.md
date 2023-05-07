@@ -36,14 +36,14 @@
 
 ## ダウンロード
 
-[リリースページ](https://github.com/yosxpeee/ElectronicObserver/releases) を参照してください。
+[リリースページ](https://github.com/dais-k/ElectronicObserver/releases) を参照してください。
 
-[更新内容・履歴はこちらで確認できます。](https://github.com/yosxpeee/ElectronicObserver/wiki/ChangeLog)  
+[更新内容・履歴はこちらで確認できます。](https://github.com/dais-k/ElectronicObserver/wiki/ChangeLog)  
 
 
 ## 開発者の皆様へ
 
-ライセンスは [MIT License](https://github.com/yosxpeee/ElectronicObserver/blob/master/LICENSE) です。
+ライセンスは [MIT License](https://github.com/dais-k/ElectronicObserver/blob/master/LICENSE) です。
 
 
 ## 使用しているライブラリ
@@ -58,10 +58,13 @@
 ## Fork元について
 
 * 下記Fork元の方は開発対応の終了を正式に宣言されておりますので、直接の連絡はお控えください
+	<オリジナル>
 	* 配布サイト:[ブルネイ工廠電気実験部](http://electronicobserver.blog.fc2.com/)
 	* 開発:[Andante](https://twitter.com/andanteyk)
-
+	<後継>
+	* 開発:[yosxpeee](https://github.com/yosxpeee/ElectronicObserver)
+	
 ## このリポジトリでの更新履歴
 
-[更新履歴](https://github.com/yosxpeee/ElectronicObserver/wiki/ChangeLog) を参照ください。
+[更新履歴](https://github.com/dais-k/ElectronicObserver/wiki/ChangeLog) を参照ください。
 
