@@ -139,7 +139,7 @@ namespace ElectronicObserver.Window
             if (groups.ShipGroups.Count == 0)
             {
 
-                Utility.Logger.Add(4, "ShipGroup: グループが見つかりませんでした。デフォルトに戻すには、一旦終了後 " + ShipGroupManager.DefaultFilePath + " を削除してください。");
+                Utility.Logger.Add(3, "ShipGroup: グループが見つかりませんでした。デフォルトに戻すには、一旦終了後 " + ShipGroupManager.DefaultFilePath + " を削除してください。");
 
                 var group = KCDatabase.Instance.ShipGroup.Add();
                 group.Name = "全所属艦";
@@ -542,7 +542,7 @@ namespace ElectronicObserver.Window
 
             if (group == null)
             {
-                Utility.Logger.Add(4, "エラー：存在しないグループを参照しようとしました。開発者に連絡してください");
+                Utility.Logger.Add(3, "エラー：存在しないグループを参照しようとしました。開発者に連絡してください");
                 return;
             }
 

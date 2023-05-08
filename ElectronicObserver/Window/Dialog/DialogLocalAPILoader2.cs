@@ -179,7 +179,7 @@ namespace ElectronicObserver.Window.Dialog
 				}
 				catch (Exception ex)
 				{
-					Utility.Logger.Add(4, string.Format("APIファイル {0} の読み込みに失敗しました。{1}", filename, ex.Message));
+					Utility.Logger.Add(3, string.Format("APIファイル {0} の読み込みに失敗しました。{1}", filename, ex.Message));
 					return;
 				}
 

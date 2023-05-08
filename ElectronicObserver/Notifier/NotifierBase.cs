@@ -230,7 +230,7 @@ namespace ElectronicObserver.Notifier
 			catch (Exception ex)
 			{
 
-				Utility.Logger.Add(4, "通知システム: 通知音の再生に失敗しました。" + ex.Message);
+				Utility.Logger.Add(3, "通知システム: 通知音の再生に失敗しました。" + ex.Message);
 			}
 		}
 

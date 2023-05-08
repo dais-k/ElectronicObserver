@@ -25,7 +25,7 @@ namespace ElectronicObserver.Utility
 		public static void SendErrorReport(Exception ex, string message, string connectionName = null, string connectionData = null)
 		{
 
-			Utility.Logger.Add(4, string.Format("{0} : {1}", message, ex.Message));
+			Utility.Logger.Add(3, string.Format("{0} : {1}", message, ex.Message));
 
 			if (Utility.Configuration.Config.Debug.AlertOnError)
 				System.Media.SystemSounds.Hand.Play();
@@ -67,7 +67,7 @@ namespace ElectronicObserver.Utility
 			catch (Exception)
 			{
 
-				Utility.Logger.Add(4, string.Format("エラーレポートの書き込みに失敗しました。\r\n{0}\r\n{1}", ex.Message, ex.StackTrace));
+				Utility.Logger.Add(3, string.Format("エラーレポートの書き込みに失敗しました。\r\n{0}\r\n{1}", ex.Message, ex.StackTrace));
 			}
 
 		}

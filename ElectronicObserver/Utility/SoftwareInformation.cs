@@ -71,7 +71,7 @@ namespace ElectronicObserver.Utility
 
 			if (e.Result.StartsWith("<!DOCTYPE html>"))
 			{
-				Utility.Logger.Add(4, "アップデート情報の URI が無効です。");
+				Utility.Logger.Add(3, "アップデート情報の URI が無効です。");
 				return;
 			}
 
@@ -85,7 +85,7 @@ namespace ElectronicObserver.Utility
 
 					if (UpdateTime < date)
 					{
-						Utility.Logger.Add(4, "新しいバージョンがリリースされています！ : " + version);
+						Utility.Logger.Add(3, "新しいバージョンがリリースされています！ : " + version);
 
 						var result = System.Windows.Forms.MessageBox.Show(
 							string.Format("新しいバージョンがリリースされています！ : {0}\r\n更新内容 : \r\n{1}\r\nダウンロードページを開きますか？\r\n(キャンセルすると以降表示しません)",

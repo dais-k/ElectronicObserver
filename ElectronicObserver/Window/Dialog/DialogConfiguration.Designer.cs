@@ -854,7 +854,7 @@
             // 
             this.Log_LogLevel.Location = new System.Drawing.Point(111, 31);
             this.Log_LogLevel.Maximum = new decimal(new int[] {
-            4,
+            3,
             0,
             0,
             0});
@@ -862,8 +862,7 @@
             this.Log_LogLevel.Size = new System.Drawing.Size(80, 23);
             this.Log_LogLevel.TabIndex = 2;
             this.Log_LogLevel.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-            this.ToolTipInfo.SetToolTip(this.Log_LogLevel, "小さい値では詳細なログを、大きな値では重要なログのみを表示します。\r\n1: デバッグレベル\r\n2: 通常(推奨)\r\n3: Responseの受信のみ\r\n4: エラ" +
-        "ーのみ");
+            this.ToolTipInfo.SetToolTip(this.Log_LogLevel, "小さい値では詳細なログを、大きな値では重要なログのみを表示します。\r\n1: デバッグレベル\r\n2: 通常(推奨)\r\n3: エラーのみ");
             // 
             // label6
             // 

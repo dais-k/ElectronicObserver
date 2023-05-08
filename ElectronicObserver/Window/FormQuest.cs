@@ -615,7 +615,7 @@ namespace ElectronicObserver.Window
 				}
 				catch (Exception)
 				{
-					Utility.Logger.Add(4, string.Format("任務『{0}』の進捗を変更することはできません。", quest.Name));
+					Utility.Logger.Add(3, string.Format("任務『{0}』の進捗を変更することはできません。", quest.Name));
 					System.Media.SystemSounds.Hand.Play();
 				}
 			}
@@ -639,7 +639,7 @@ namespace ElectronicObserver.Window
 				}
 				catch (Exception)
 				{
-					Utility.Logger.Add(4, string.Format("任務『{0}』の進捗を変更することはできません。", quest.Name));
+					Utility.Logger.Add(3, string.Format("任務『{0}』の進捗を変更することはできません。", quest.Name));
 					System.Media.SystemSounds.Hand.Play();
 				}
 			}

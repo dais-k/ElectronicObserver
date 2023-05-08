@@ -488,7 +488,7 @@ namespace ElectronicObserver.Resource
 
 			if (entry == null)
 			{
-				Utility.Logger.Add(4, string.Format("画像リソース {0} は存在しません。", path));
+				Utility.Logger.Add(3, string.Format("画像リソース {0} は存在しません。", path));
 				imglist.Images.Add(name, new Bitmap(imglist.ImageSize.Width, imglist.ImageSize.Height, System.Drawing.Imaging.PixelFormat.Format32bppArgb));
 				return;
 			}
@@ -514,7 +514,7 @@ namespace ElectronicObserver.Resource
 			catch (Exception)
 			{
 
-				Utility.Logger.Add(4, string.Format("画像リソース {0} の読み込みに失敗しました。", path));
+				Utility.Logger.Add(3, string.Format("画像リソース {0} の読み込みに失敗しました。", path));
 				imglist.Images.Add(name, CreateBlankImage());
 				return;
 			}
@@ -528,7 +528,7 @@ namespace ElectronicObserver.Resource
 
 			if (entry == null)
 			{
-				Utility.Logger.Add(4, string.Format("画像リソース {0} は存在しません。", path));
+				Utility.Logger.Add(3, string.Format("画像リソース {0} は存在しません。", path));
 				return null;
 			}
 
@@ -555,7 +555,7 @@ namespace ElectronicObserver.Resource
 			catch (Exception)
 			{
 
-				Utility.Logger.Add(4, string.Format("画像リソース {0} の読み込みに失敗しました。", path));
+				Utility.Logger.Add(3, string.Format("画像リソース {0} の読み込みに失敗しました。", path));
 			}
 
 			return null;
@@ -589,7 +589,7 @@ namespace ElectronicObserver.Resource
 
 				if (entry == null)
 				{
-					Utility.Logger.Add(4, string.Format("{0} は存在しません。", entrypath));
+					Utility.Logger.Add(3, string.Format("{0} は存在しません。", entrypath));
 					return false;
 				}
 
@@ -619,7 +619,7 @@ namespace ElectronicObserver.Resource
 				catch (Exception ex)
 				{
 
-					Utility.Logger.Add(4, string.Format("{0} のコピーに失敗しました。{1}", entrypath, ex.Message));
+					Utility.Logger.Add(3, string.Format("{0} のコピーに失敗しました。{1}", entrypath, ex.Message));
 					return false;
 				}
 			}
@@ -671,7 +671,7 @@ namespace ElectronicObserver.Resource
 
 				if (entry == null)
 				{
-					Utility.Logger.Add(4, string.Format("{0} は存在しません。", entrypath));
+					Utility.Logger.Add(3, string.Format("{0} は存在しません。", entrypath));
 					return null;
 				}
 
@@ -694,7 +694,7 @@ namespace ElectronicObserver.Resource
 				catch (Exception ex)
 				{
 
-					Utility.Logger.Add(4, string.Format("{0} の展開に失敗しました。{1}", entrypath, ex.Message));
+					Utility.Logger.Add(3, string.Format("{0} の展開に失敗しました。{1}", entrypath, ex.Message));
 					return null;
 				}
 			}

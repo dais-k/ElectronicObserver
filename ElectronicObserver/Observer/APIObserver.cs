@@ -191,7 +191,7 @@ namespace ElectronicObserver.Observer
 			catch (Exception ex)
 			{
 
-				Utility.Logger.Add(4, "APIObserver: 受信開始に失敗しました。" + ex.Message);
+				Utility.Logger.Add(3, "APIObserver: 受信開始に失敗しました。" + ex.Message);
 				ProxyPort = 0;
 			}
 
@@ -341,7 +341,7 @@ namespace ElectronicObserver.Observer
 							catch (IOException ex)
 							{   //ファイルがロックされている; 頻繁に出るのでエラーレポートを残さない
 
-								Utility.Logger.Add(4, "通信内容の保存に失敗しました。 " + ex.Message);
+								Utility.Logger.Add(3, "通信内容の保存に失敗しました。 " + ex.Message);
 							}
 						}));
 
@@ -430,7 +430,7 @@ namespace ElectronicObserver.Observer
 			try
 			{
 
-				Utility.Logger.Add(3, "Responseを受信しました : " + shortpath);
+				Utility.Logger.Add(1, "Responseを受信しました : " + shortpath);
 
 				SystemEvents.UpdateTimerEnabled = false;
 

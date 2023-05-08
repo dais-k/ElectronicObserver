@@ -100,13 +100,13 @@ namespace ElectronicObserver.Utility.Storage
 			catch (FileNotFoundException)
 			{
 
-				Utility.Logger.Add(4, string.Format("{0}: {1} は存在しません。", GetType().Name, path));
+				Utility.Logger.Add(3, string.Format("{0}: {1} は存在しません。", GetType().Name, path));
 
 			}
 			catch (DirectoryNotFoundException)
 			{
 
-				Utility.Logger.Add(4, string.Format("{0}: {1} は存在しません。", GetType().Name, path));
+				Utility.Logger.Add(3, string.Format("{0}: {1} は存在しません。", GetType().Name, path));
 
 			}
 			catch (Exception ex)
@@ -170,13 +170,13 @@ namespace ElectronicObserver.Utility.Storage
 			catch (FileNotFoundException)
 			{
 
-				Utility.Logger.Add(4, GetType().Name + ": ファイルは存在しません。");
+				Utility.Logger.Add(3, GetType().Name + ": ファイルは存在しません。");
 
 			}
 			catch (DirectoryNotFoundException)
 			{
 
-				Utility.Logger.Add(4, GetType().Name + ": ファイルは存在しません。");
+				Utility.Logger.Add(3, GetType().Name + ": ファイルは存在しません。");
 
 			}
 			catch (Exception ex)
@@ -203,7 +203,7 @@ namespace ElectronicObserver.Utility.Storage
 			catch (DirectoryNotFoundException)
 			{
 
-				Utility.Logger.Add(4, GetType().Name + ": ファイルは存在しません。");
+				Utility.Logger.Add(3, GetType().Name + ": ファイルは存在しません。");
 
 			}
 			catch (Exception ex)
