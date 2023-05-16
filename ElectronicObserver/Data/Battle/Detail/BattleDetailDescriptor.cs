@@ -319,6 +319,11 @@ namespace ElectronicObserver.Data.Battle.Detail
 						sb.Append("自軍索敵: ").Append(Constants.GetSearchingResult(p.SearchingFriend));
 						sb.Append(" / 敵軍索敵: ").AppendLine(Constants.GetSearchingResult(p.SearchingEnemy));
 
+						if (p.SmokeCount > 0)
+						{
+							sb.AppendFormat("煙幕展開: {0}重\r\n", p.SmokeCount);
+						}
+
 						sb.AppendLine();
 
 						break;

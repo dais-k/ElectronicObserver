@@ -58,6 +58,16 @@ namespace ElectronicObserver.Data.Battle.Phase
 		/// 交戦形態
 		/// </summary>
 		public int EngagementForm => (int)RawData.api_formation[2];
+
+		/// <summary>
+		/// 煙幕展開
+		/// </summary>
+		public int? SmokeCount => RawData.api_smoke_type() switch
+		{
+			true => (int)RawData.api_smoke_type,
+			_ => null,
+		};
+
 	}
 }
 
