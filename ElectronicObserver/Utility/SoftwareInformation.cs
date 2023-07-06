@@ -39,7 +39,7 @@ namespace ElectronicObserver.Utility
 		public static DateTime UpdateTime => DateTimeHelper.CSVStringToTime("2023/05/02 12:00:00");
 		
 		private static System.Net.WebClient client;
-		private static readonly Uri uri = new Uri("https://raw.githubusercontent.com/yosxpeee/ElectronicObserver/develop/ElectronicObserver/version.txt");
+		private static readonly Uri uri = new Uri("https://raw.githubusercontent.com/dais-k/ElectronicObserver/develop/ElectronicObserver/version.txt");
 
 		public static void CheckUpdate()
 		{
@@ -95,7 +95,7 @@ namespace ElectronicObserver.Utility
 
 						if (result == System.Windows.Forms.DialogResult.Yes)
 						{
-							System.Diagnostics.Process.Start("https://github.com/yosxpeee/ElectronicObserver/releases");
+							System.Diagnostics.Process.Start("https://github.com/dais-k/ElectronicObserver/releases");
 						}
 						else if (result == System.Windows.Forms.DialogResult.Cancel)
 						{
