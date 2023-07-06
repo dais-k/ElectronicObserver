@@ -589,6 +589,21 @@ namespace ElectronicObserver.Data
         public int NightBattlePower { get; private set; }
 
         /// <summary>
+        /// 秋刀魚装備数
+        /// </summary>
+        public int SanmaEquipCount => GetSanmaEquipCount();
+
+		/// <summary>
+		/// 秋刀魚装備数(爆雷分)
+		/// </summary>
+		public int SanmaEquipCountBomb => GetSanmaEquipCountBomb();
+
+        /// <summary>
+        /// 対潜シナジー種
+        /// </summary>
+        public int SynergyCount => GetSynergyCount();
+
+        /// <summary>
         /// 装備改修補正(砲撃戦)
         /// </summary>
         private double GetDayBattleEquipmentLevelBonus()
@@ -880,6 +895,12 @@ namespace ElectronicObserver.Data
                         case 65:    // 15.2cm連装砲
                         case 119:   // 14cm連装砲
                         case 139:   // 15.2cm連装砲改
+                        case 310:   // 14cm連装砲改
+                        case 407:   // 15.2cm連装砲改二
+                        case 359:   // 6inch 連装速射砲 Mk.XXI
+                        case 303:   // Bofors15.2cm連装砲 Model1930
+                        case 360:   // Bofors 15cm連装速射砲 Mk.9 Model 1938
+                        case 361:   // Bofors 15cm連装速射砲 Mk.9改＋単装速射砲 Mk.10改 Model 1938
                             twin++;
                             break;
                     }
@@ -1434,6 +1455,141 @@ namespace ElectronicObserver.Data
             TorpedoPower = CalculateTorpedoPower(form);
             NightBattlePower = CalculateNightBattlePower();
 
+        }
+
+        /// <summary>
+        /// 秋刀魚用装備カウント
+        /// </summary>
+        private int GetSanmaEquipCount()
+        {
+            int SanmaEquip = 0;
+            foreach (var slot in AllSlotInstance)
+            {
+                if (slot == null)
+                    continue;
+                switch (slot.MasterEquipment.CategoryType)
+                {
+                    case EquipmentTypes.SeaplaneBomber:
+                    case EquipmentTypes.Autogyro:
+                    case EquipmentTypes.ASPatrol:
+                    case EquipmentTypes.SeaplaneRecon:
+                    case EquipmentTypes.FlyingBoat:
+                    case EquipmentTypes.Searchlight:
+                    case EquipmentTypes.SearchlightLarge:
+                    case EquipmentTypes.SurfaceShipPersonnel:
+                    case EquipmentTypes.Ration:
+                        SanmaEquip++;
+                        break;
+                    case EquipmentTypes.Sonar:
+                    	switch (slot.EquipmentID)
+                        {
+                            case 47:        // 三式水中探信儀
+                            case 438:       // 三式水中探信儀改
+                            case 260:       // Type124 ASDIC
+                            case 261:       // Type144/147 ASDIC
+                            case 262:       // HF/DF + Type144/147 ASDIC
+                                SanmaEquip++;
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    case EquipmentTypes.AviationPersonnel:
+                        switch (slot.EquipmentID)
+                        {
+                            case 258:       // 夜間作戦航空要員
+                            case 259:       // 夜間作戦航空要員+熟練甲板員
+                                SanmaEquip++;
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    case EquipmentTypes.CarrierBasedTorpedo:
+                        switch (slot.EquipmentID)
+                        {
+                            case 242:       // Swordfish
+                            case 243:       // Swordfish Mk.II(熟練)
+                            case 244:       // Swordfish Mk.III(熟練)
+                                SanmaEquip++;
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    case EquipmentTypes.DepthCharge:
+                        SanmaEquip++;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return SanmaEquip;
+        }
+
+        /// <summary>
+        /// 秋刀魚用装備カウント(爆雷分)
+        /// </summary>
+        private int GetSanmaEquipCountBomb()
+        {
+            int BombEquip = 0;
+            foreach (var slot in AllSlotInstance)
+            {
+                if (slot == null)
+                    continue;
+                switch (slot.MasterEquipment.CategoryType)
+                {
+                    case EquipmentTypes.DepthCharge:
+                        BombEquip++;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return BombEquip;
+        }
+
+        /// <summary>
+        /// 対潜シナジー装備の種類数を求めます。
+        /// </summary>
+        private int GetSynergyCount()
+        {
+            int depthChargeCount2 = 0;
+            int depthChargeProjectorCount2 = 0;
+            int otherDepthChargeCount2 = 0;
+            int sonarCount2 = 0;         // ソナーと大型ソナーの合算
+            int largeSonarCount2 = 0;
+            foreach (var slot in AllSlotInstanceMaster)
+            {
+                if (slot == null)
+                    continue;
+                switch (slot.CategoryType)
+                {
+                    case EquipmentTypes.Sonar:
+                    	sonarCount2++;
+                        break;
+                    case EquipmentTypes.DepthCharge:
+                        if (slot.IsDepthCharge)
+                            depthChargeCount2++;
+                        else if (slot.IsDepthChargeProjector)
+                            depthChargeProjectorCount2++;
+                        else
+                            otherDepthChargeCount2++;
+                        break;
+                    case EquipmentTypes.SonarLarge:
+                    	largeSonarCount2++;
+                        sonarCount2++;
+                        break;
+                }
+            }
+
+            if (sonarCount2 > 0 && depthChargeProjectorCount2 > 0 && depthChargeCount2 > 0)
+                return 3;
+            else if (sonarCount2 > 0 && (depthChargeCount2 + depthChargeProjectorCount2 + otherDepthChargeCount2) > 0)
+                return 2;
+            else if (depthChargeProjectorCount2 > 0 && depthChargeCount2 > 0)
+                return 1;
+            return 0;
         }
 
         #endregion

@@ -683,7 +683,7 @@ namespace ElectronicObserver.Window
 				{
 					int torpedo = ship.TorpedoPower;
 					int asw = ship.AntiSubmarinePower;
-
+					int syn = ship.SynergyCount;
 
 					if (torpedo > 0)
 					{
@@ -694,7 +694,21 @@ namespace ElectronicObserver.Window
 						if (torpedo > 0)
 							sb.Append(" / ");
 
-						sb.AppendFormat("対潜: {0}", asw);
+						switch(syn)
+						{
+							case 3:
+								sb.AppendFormat("対潜: {0} ※3種", asw);
+								break;
+							case 2:
+								sb.AppendFormat("対潜: {0} ※2種", asw);
+								break;
+							case 1:
+								sb.AppendFormat("対潜: {0} ※2種弱", asw);
+								break;
+							default:
+								sb.AppendFormat("対潜: {0}", asw);
+								break;
+						}
 
 						if (ship.CanOpeningASW)
 							sb.Append(" (先制可能)");
@@ -756,6 +770,12 @@ namespace ElectronicObserver.Window
 						sb.AppendFormat("航空威力: {0}\r\n", airbattle);
 				}
 
+				{
+					int sanma = ship.SanmaEquipCount;
+					int sanmaB = ship.SanmaEquipCountBomb;
+					if (sanma > 0)
+						sb.AppendFormat("秋刀魚漁有効装備: {0}  ※爆雷: {1}", sanma,sanmaB);
+				}
 				return sb.ToString();
 			}
 

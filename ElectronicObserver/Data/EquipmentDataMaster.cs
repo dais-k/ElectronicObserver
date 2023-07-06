@@ -356,7 +356,7 @@ namespace ElectronicObserver.Data
 		/// <summary> ソナーかどうか </summary>
 		public bool IsSonar => CategoryType == EquipmentTypes.Sonar || CategoryType == EquipmentTypes.SonarLarge;
 
-		/// <summary> 爆雷かどうか(投射機は含まない) </summary>
+		/// <summary> 爆雷かどうか(投射機/対潜迫撃砲は含まない) </summary>
 		public bool IsDepthCharge =>
 			EquipmentID == 226 ||       // 九五式爆雷 
 			EquipmentID == 227 ||       // 二式爆雷
@@ -371,7 +371,12 @@ namespace ElectronicObserver.Data
 			EquipmentID == 288 ||       // 試製15cm9連装対潜噴進砲
 			EquipmentID == 287 ||       // 三式爆雷投射機 集中配備
 			EquipmentID == 377 ||       // RUR-4A Weapon Alpha改
-			EquipmentID == 472;			// Mk.32 対潜魚雷(Mk.2落射機)
+			EquipmentID == 472;         // Mk.32 対潜魚雷(Mk.2落射機)
+
+		/// <summary> 対潜迫撃砲かどうか(爆雷/爆雷投射機は含まない) </summary>
+		public bool IsAntiSubmarineMortar =>
+			EquipmentID == 346 ||       // 二式12cm迫撃砲
+			EquipmentID == 347;         // 二式12cm迫撃砲改
 
 		/// <summary> 夜間作戦航空要員かどうか </summary>
 		public bool IsNightAviationPersonnel =>
@@ -393,7 +398,6 @@ namespace ElectronicObserver.Data
 			CategoryType == EquipmentTypes.Ration ||
 			CategoryType == EquipmentTypes.DamageControl ||
 			CategoryType == EquipmentTypes.Supplies;
-
 		public int ID => EquipmentID;
 
 		public override string ToString() => $"[{EquipmentID}] {Name}";
