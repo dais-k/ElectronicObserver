@@ -40,11 +40,12 @@ namespace ElectronicObserver.Observer.kcsapi.api_get_member
 
 
 				// 装備シナジー検出カッコカリ
-				if (!isRemodeled &&
-					ship.MasterShip.ASW.IsDetermined &&
-					ship.MasterShip.Evasion.IsDetermined &&
-					ship.MasterShip.LOS.IsDetermined)
-				{
+//				if (!isRemodeled &&
+//					ship.MasterShip.ASW.IsDetermined &&
+//					ship.MasterShip.Evasion.IsDetermined &&
+//					ship.MasterShip.LOS.IsDetermined)
+				if (!isRemodeled )
+					{
 					int firepower = ship.FirepowerTotal - ship.FirepowerBase;
 					int torpedo = ship.TorpedoTotal - ship.TorpedoBase;
 					int aa = ship.AATotal - ship.AABase;
@@ -81,7 +82,7 @@ namespace ElectronicObserver.Observer.kcsapi.api_get_member
 						range != 0)
 					{
 						var sb = new StringBuilder();
-						sb.Append("装備シナジーを検出しました：");
+						sb.Append("装備ボーナスを検出しました：");
 
 						var a = new List<string>();
 						if (firepower != 0)
