@@ -553,11 +553,11 @@ namespace ElectronicObserver.Window.Dialog
 						break;
 					case ".ExpNextRemodel":
 						RightOperand_NumericUpDown.Minimum = 0;
-						RightOperand_NumericUpDown.Maximum = 10950000; //Lv175までの必要経験値
+						RightOperand_NumericUpDown.Maximum = 13000000; //Lv180までの必要経験値
 						break;
 					case ".ExpNext":
 						RightOperand_NumericUpDown.Minimum = 0;
-						RightOperand_NumericUpDown.Maximum = 195000;
+						RightOperand_NumericUpDown.Maximum = 900000;
 						break;
 					case ".HPCurrent":
 					case ".HPMax":
