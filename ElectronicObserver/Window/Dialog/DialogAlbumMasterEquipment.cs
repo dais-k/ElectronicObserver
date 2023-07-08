@@ -433,8 +433,8 @@ namespace ElectronicObserver.Window.Dialog
 				}
 			}
 
-			if (eq.EquippableShipsAtExpansion.Any())
-				sb.Append("[拡張スロット] ").AppendLine(string.Join(", ", eq.EquippableShipsAtExpansion.Select(id => db.MasterShips[id].NameWithClass)));
+			//if (eq.EquippableShipsAtExpansion.Any())
+				//sb.Append("[拡張スロット] ").AppendLine(string.Join(", ", eq.EquippableShipsAtExpansion.Select(id => db.MasterShips[id].NameWithClass)));
 
 			return sb.ToString();
 		}

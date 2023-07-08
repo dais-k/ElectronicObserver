@@ -214,11 +214,12 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 				db.MasterShips[id].specialEquippableCategory = (int[])elem.api_equip_type;
 			}
 
-			foreach (var elem in data.api_mst_equip_exslot_ship)
-			{
-				int id = (int)elem.api_slotitem_id;
-				db.MasterEquipments[id].equippableShipsAtExpansion = (int[])elem.api_ship_ids;
-			}
+			//foreach (var elem in data.api_mst_equip_exslot_ship)
+			//{
+			//int id = (int)elem.api_slotitem_id;
+			//db.MasterEquipments[id].equippableShipsAtExpansion = (int[])elem.api_ship_ids;
+			//}
+			//※JSONが変わった？api_slotitem_idが無くなっているっぽい
 
 
 			//api_mst_shipgraph

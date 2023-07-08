@@ -329,7 +329,7 @@ namespace ElectronicObserver.Data
         {
             get
             {
-                if (MasterShip.Evasion.IsDetermined)
+                if (MasterShip.Evasion?.IsDetermined ?? false)
                     return MasterShip.Evasion.GetParameter(Level);
 
                 // パラメータ上限下限が分かっていれば上ので確実に取れる
@@ -345,7 +345,7 @@ namespace ElectronicObserver.Data
         {
             get
             {
-                if (MasterShip.ASW.IsDetermined)
+                if (MasterShip.ASW?.IsDetermined ?? false)
                     return MasterShip.ASW.GetParameter(Level) + ASWModernized;
 
                 return ASWTotal - AllSlotInstance.Sum(eq => eq?.MasterEquipment?.ASW ?? 0);
@@ -359,7 +359,7 @@ namespace ElectronicObserver.Data
         {
             get
             {
-                if (MasterShip.LOS.IsDetermined)
+                if (MasterShip.LOS?.IsDetermined ?? false)
                     return MasterShip.LOS.GetParameter(Level);
 
                 return LOSTotal - AllSlotInstance.Sum(eq => eq?.MasterEquipment?.LOS ?? 0);
