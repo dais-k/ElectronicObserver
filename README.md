@@ -39,7 +39,7 @@ wikiを丸ごと移植する方法がわかりません。
 
 [リリースページ](https://github.com/dais-k/ElectronicObserver/releases) を参照してください。
 
-[更新内容・履歴はこちらで確認できます。](https://github.com/yosxpeee/ElectronicObserver/wiki/ChangeLog)  
+更新内容・履歴はリリースページを確認してください。
 
 
 ## 開発者の皆様へ
@@ -65,7 +65,5 @@ wikiを丸ごと移植する方法がわかりません。
 	<後継>
 	* 開発:[yosxpeee](https://github.com/yosxpeee/ElectronicObserver)
 	
-## このリポジトリでの更新履歴
 
-[更新履歴](https://github.com/yosxpeee/ElectronicObserver/wiki/ChangeLog) を参照ください。
 
