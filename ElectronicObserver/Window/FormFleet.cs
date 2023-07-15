@@ -436,24 +436,69 @@ namespace ElectronicObserver.Window
 
 					Name.Text = ship.MasterShip.NameWithClass;
 					Name.Tag = ship.ShipID;
-					ToolTipInfo.SetToolTip(Name,
-						string.Format(
-							"{0}{1} {2}\r\n火力: {3}/{4}\r\n雷装: {5}/{6}\r\n対空: {7}/{8}\r\n装甲: {9}/{10}\r\n対潜: {11}/{12}\r\n回避: {13}/{14}\r\n索敵: {15}/{16}\r\n運: {17}\r\n命中: {18:+#;-#;+0}\r\n爆装: {19:+#;-#;+0}\r\n射程: {20} / 速力: {21}\r\n(右クリックで図鑑)\n",
-							ship.SallyArea > 0 ? $"[{ship.SallyArea}] " : "",
-							ship.MasterShip.ShipTypeName, ship.NameWithLevel,
-							ship.FirepowerBase, ship.FirepowerTotal,
-							ship.TorpedoBase, ship.TorpedoTotal,
-							ship.AABase, ship.AATotal,
-							ship.ArmorBase, ship.ArmorTotal,
-							ship.ASWBase, ship.ASWTotal,
-							ship.EvasionBase, ship.EvasionTotal,
-							ship.LOSBase, ship.LOSTotal,
-							ship.LuckTotal,
-							equipments.Any() ? equipments.Sum(eq => eq.MasterEquipment.Accuracy) : 0,
-							equipments.Any() ? equipments.Sum(eq => eq.MasterEquipment.Bomber) : 0,
-							Constants.GetRange(ship.Range),
-							Constants.GetSpeed(ship.Speed)
-							));
+					switch(ship.SpItemKind)
+					{
+						case 0:
+							ToolTipInfo.SetToolTip(Name,
+							string.Format(
+								"{0}{1} {2}\r\n火力: {3}/{4}\r\n雷装: {5}/{6}\r\n対空: {7}/{8}\r\n装甲: {9}/{10}\r\n対潜: {11}/{12}\r\n回避: {13}/{14}\r\n索敵: {15}/{16}\r\n運: {17}\r\n命中: {18:+#;-#;+0}\r\n爆装: {19:+#;-#;+0}\r\n射程: {20} / 速力: {21}\r\n(右クリックで図鑑)\n",
+								ship.SallyArea > 0 ? $"[{ship.SallyArea}] " : "",
+								ship.MasterShip.ShipTypeName, ship.NameWithLevel,
+								ship.FirepowerBase, ship.FirepowerTotal,
+								ship.TorpedoBase, ship.TorpedoTotal,
+								ship.AABase, ship.AATotal,
+								ship.ArmorBase, ship.ArmorTotal,
+								ship.ASWBase, ship.ASWTotal,
+								ship.EvasionBase, ship.EvasionTotal,
+								ship.LOSBase, ship.LOSTotal,
+								ship.LuckTotal,
+								equipments.Any() ? equipments.Sum(eq => eq.MasterEquipment.Accuracy) : 0,
+								equipments.Any() ? equipments.Sum(eq => eq.MasterEquipment.Bomber) : 0,
+								Constants.GetRange(ship.Range),
+								Constants.GetSpeed(ship.Speed)
+								));
+							break;
+						case 1: 
+							ToolTipInfo.SetToolTip(Name,
+							string.Format(
+								"{0}{1} {2}★\r\n火力: {3}/{4}\r\n雷装: {5}/{6}+{7}\r\n対空: {8}/{9}\r\n装甲: {10}/{11}+{12}\r\n対潜: {13}/{14}\r\n回避: {15}/{16}\r\n索敵: {17}/{18}\r\n運: {19}\r\n命中: {20:+#;-#;+0}\r\n爆装: {21:+#;-#;+0}\r\n射程: {22} / 速力: {23}\r\n(右クリックで図鑑)\n",
+								ship.SallyArea > 0 ? $"[{ship.SallyArea}] " : "",
+								ship.MasterShip.ShipTypeName, ship.NameWithLevel,
+								ship.FirepowerBase, ship.FirepowerTotal,
+								ship.TorpedoBase, ship.TorpedoTotal,ship.SpItemRaig,
+								ship.AABase, ship.AATotal,
+								ship.ArmorBase, ship.ArmorTotal,ship.SpItemSouk,
+								ship.ASWBase, ship.ASWTotal,
+								ship.EvasionBase, ship.EvasionTotal,
+								ship.LOSBase, ship.LOSTotal,
+								ship.LuckTotal,
+								equipments.Any() ? equipments.Sum(eq => eq.MasterEquipment.Accuracy) : 0,
+								equipments.Any() ? equipments.Sum(eq => eq.MasterEquipment.Bomber) : 0,
+								Constants.GetRange(ship.Range),
+								Constants.GetSpeed(ship.Speed)
+								));
+							break;
+						case 2:
+							ToolTipInfo.SetToolTip(Name,
+							string.Format(
+								"{0}{1} {2}☆\r\n火力: {3}/{4}+{5}\r\n雷装: {6}/{7}\r\n対空: {8}/{9}\r\n装甲: {10}/{11}\r\n対潜: {12}/{13}\r\n回避: {14}/{15}+{16}\r\n索敵: {17}/{18}\r\n運: {19}\r\n命中: {20:+#;-#;+0}\r\n爆装: {21:+#;-#;+0}\r\n射程: {22} / 速力: {23}\r\n(右クリックで図鑑)\n",
+								ship.SallyArea > 0 ? $"[{ship.SallyArea}] " : "",
+								ship.MasterShip.ShipTypeName, ship.NameWithLevel,
+								ship.FirepowerBase, ship.FirepowerTotal,ship.SpItemHoug,
+								ship.TorpedoBase, ship.TorpedoTotal,
+								ship.AABase, ship.AATotal,
+								ship.ArmorBase, ship.ArmorTotal,
+								ship.ASWBase, ship.ASWTotal,
+								ship.EvasionBase, ship.EvasionTotal,ship.SpItemKaih,
+								ship.LOSBase, ship.LOSTotal,
+								ship.LuckTotal,
+								equipments.Any() ? equipments.Sum(eq => eq.MasterEquipment.Accuracy) : 0,
+								equipments.Any() ? equipments.Sum(eq => eq.MasterEquipment.Bomber) : 0,
+								Constants.GetRange(ship.Range),
+								Constants.GetSpeed(ship.Speed)
+								));
+							break;
+					}
 					{
 						var colorscheme = Utility.Configuration.Config.FormFleet.SallyAreaColorScheme;
 

@@ -182,10 +182,11 @@ namespace ElectronicObserver.Data
 		 ********************************************************/
 
         private int[] _modernized;
-        /// <summary>
-        /// 火力強化値
-        /// </summary>
-        public int FirepowerModernized => _modernized.Length >= 5 ? _modernized[0] : 0;
+
+		/// <summary>
+		/// 火力強化値
+		/// </summary>
+		public int FirepowerModernized => _modernized.Length >= 5 ? _modernized[0] : 0;
 
         /// <summary>
         /// 雷装強化値
@@ -548,13 +549,53 @@ namespace ElectronicObserver.Data
         /// </summary>
         public bool IsExpansionSlotAvailable => ExpansionSlot != 0;
 
-        #region ダメージ威力計算
+		/// <summary>
+		/// 秋刀魚装備数
+		/// </summary>
+		public int SanmaEquipCount => GetSanmaEquipCount();
 
-        /// <summary>
-        /// 航空戦威力
-        /// 本来スロットごとのものであるが、ここでは最大火力を採用する
-        /// </summary>
-        public int AirBattlePower => _airbattlePowers.Max();
+		/// <summary>
+		/// 秋刀魚装備数(爆雷分)
+		/// </summary>
+		public int SanmaEquipCountBomb => GetSanmaEquipCountBomb();
+
+		/// <summary>
+		/// 対潜シナジー種
+		/// </summary>
+		public int SynergyCount => GetSynergyCount();
+
+		/// <summary>
+		/// ステータスアップアイテム【1:海色リボン】【2:白たすき】
+		/// </summary>
+		public int SpItemKind { get; internal set; }
+
+		/// <summary>
+		/// ステータスアップアイテム【1:海色リボン】【2:白たすき】の火力増加分
+		/// </summary>
+		public int SpItemHoug { get; internal set; }
+
+		/// <summary>
+		/// ステータスアップアイテム【1:海色リボン】【2:白たすき】の雷撃増加分
+		/// </summary>
+		public int SpItemRaig { get; internal set; }
+
+		/// <summary>
+		/// ステータスアップアイテム【1:海色リボン】【2:白たすき】の装甲増加分
+		/// </summary>
+		public int SpItemSouk { get; internal set; }
+
+		/// <summary>
+		/// ステータスアップアイテム【1:海色リボン】【2:白たすき】の回避増加分
+		/// </summary>
+		public int SpItemKaih { get; internal set; }
+
+		#region ダメージ威力計算
+
+		/// <summary>
+		/// 航空戦威力
+		/// 本来スロットごとのものであるが、ここでは最大火力を採用する
+		/// </summary>
+		public int AirBattlePower => _airbattlePowers.Max();
 
         private int[] _airbattlePowers;
         /// <summary>
@@ -587,21 +628,6 @@ namespace ElectronicObserver.Data
         /// 夜戦威力
         /// </summary>
         public int NightBattlePower { get; private set; }
-
-        /// <summary>
-        /// 秋刀魚装備数
-        /// </summary>
-        public int SanmaEquipCount => GetSanmaEquipCount();
-
-		/// <summary>
-		/// 秋刀魚装備数(爆雷分)
-		/// </summary>
-		public int SanmaEquipCountBomb => GetSanmaEquipCountBomb();
-
-        /// <summary>
-        /// 対潜シナジー種
-        /// </summary>
-        public int SynergyCount => GetSynergyCount();
 
         /// <summary>
         /// 装備改修補正(砲撃戦)
@@ -987,7 +1013,7 @@ namespace ElectronicObserver.Data
                 return 0;
 
 
-            double basepower = FirepowerTotal + GetDayBattleEquipmentLevelBonus() + GetCombinedFleetShellingDamageBonus() + 5;
+            double basepower = FirepowerTotal + SpItemHoug + GetDayBattleEquipmentLevelBonus() + GetCombinedFleetShellingDamageBonus() + 5;
 
             basepower *= GetHPDamageBonus() * GetEngagementFormDamageRate(engagementForm);
 
@@ -1164,7 +1190,7 @@ namespace ElectronicObserver.Data
             if (TorpedoBase == 0)
                 return 0;       //雷撃不能艦は除外
 
-            double basepower = TorpedoTotal + GetTorpedoEquipmentLevelBonus() + GetCombinedFleetTorpedoDamageBonus() + 5;
+            double basepower = TorpedoTotal + SpItemRaig + GetTorpedoEquipmentLevelBonus() + GetCombinedFleetTorpedoDamageBonus() + 5;
 
             basepower *= GetTorpedoHPDamageBonus() * GetEngagementFormDamageRate(engagementForm);
 
@@ -1833,7 +1859,7 @@ namespace ElectronicObserver.Data
         public override void LoadFromResponse(string apiname, dynamic data)
         {
 
-            switch (apiname)
+			switch (apiname)
             {
                 default:
                     base.LoadFromResponse(apiname, (object)data);
@@ -1846,7 +1872,24 @@ namespace ElectronicObserver.Data
                     ExpansionSlot = (int)RawData.api_slot_ex;
                     _aircraft = (int[])RawData.api_onslot;
                     _modernized = (int[])RawData.api_kyouka;
-                    break;
+
+					if (data.api_sp_effect_items()) // 海色リボンか白タスキを持っているかどうか
+					{
+						SpItemKind = (int)RawData.api_sp_effect_items[0].api_kind;
+						switch(SpItemKind)
+						{
+							case 1: //海色リボン
+								SpItemRaig = (int)RawData.api_sp_effect_items[0].api_raig;
+								SpItemSouk = (int)RawData.api_sp_effect_items[0].api_souk;
+								break;
+							case 2: //白タスキ
+								SpItemHoug = (int)RawData.api_sp_effect_items[0].api_houg;
+								SpItemKaih = (int)RawData.api_sp_effect_items[0].api_kaih;
+								break;
+						}
+
+					}
+					break;
 
                 case "api_req_hokyu/charge":
                     Fuel = (int)data.api_fuel;
