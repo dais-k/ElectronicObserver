@@ -340,7 +340,7 @@ namespace ElectronicObserver.Window.Dialog
 					tip.AppendLine($"{shipClassName}: {ship.ShipClass}");
 
 				tip.AppendLine();
-				tip.AppendLine("装備可能：");
+				tip.AppendLine("[装備可能]");
 				tip.AppendLine(GetEquippableString(shipID));
 
 				ToolTipInfo.SetToolTip(ShipType, tip.ToString());
@@ -814,10 +814,8 @@ namespace ElectronicObserver.Window.Dialog
 			if (ship == null)
 				return "";
 
-			//return string.Join("\r\n", ship.EquippableCategories.Select(id => db.EquipmentTypes[id].Name)
-			//	.Concat(db.MasterEquipments.Values.Where(eq => eq.EquippableShipsAtExpansion.Contains(shipID)).Select(eq => eq.Name + " (補強スロット)")));
-			return string.Join("\r\n", ship.EquippableCategories.Select(id => db.EquipmentTypes[id].Name));
-
+			return string.Join("\r\n", ship.EquippableCategories.Select(id => db.EquipmentTypes[id].Name)
+				.Concat(db.MasterEquipments.Values.Where(eq => eq.EquippableShipsAtExpansion.Contains(shipID)).Select(eq => eq.Name + " (補強スロット)")));
 		}
 
 
@@ -1712,7 +1710,7 @@ namespace ElectronicObserver.Window.Dialog
 
 				foreach (var eq in KCDatabase.Instance.MasterEquipments.Values)
 				{
-					/*if (!(eq.EquippableShipsAtExpansion?.Any() ?? false))
+					if (!(eq.EquippableShipsAtExpansion?.Any() ?? false))
 						continue;
 
 					foreach (var shipid in eq.EquippableShipsAtExpansion)
@@ -1721,7 +1719,7 @@ namespace ElectronicObserver.Window.Dialog
 							nyan[shipid].Add(eq.EquipmentID);
 						else
 							nyan.Add(shipid, new List<int>() { eq.EquipmentID });
-					}*/
+					}
 				}
 
 				sb.AppendLine("|対象艦ID|対象艦|装備可能ID|装備可能|");

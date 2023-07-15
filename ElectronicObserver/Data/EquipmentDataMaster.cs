@@ -161,12 +161,17 @@ namespace ElectronicObserver.Data
 		public int IconType => (int)RawData.api_type[3];
 
 
-		//internal int[] equippableShipsAtExpansion = new int[0];
 		/// <summary>
-		/// 拡張スロットに装備可能な艦船IDのリスト
+		/// 拡張スロットに装備可能な艦船ID、艦種ID、艦型IDのリスト
 		/// </summary>
-		//public IEnumerable<int> EquippableShipsAtExpansion => equippableShipsAtExpansion;
-		
+		internal int[] equippableShipsAtExpansion = new int[0];
+		internal int[] equippableStypeAtExpansion = new int[0];
+		internal int[] equippableCtypeAtExpansion = new int[0];
+		public IEnumerable<int> EquippableShipsAtExpansion => equippableShipsAtExpansion;
+		public IEnumerable<int> EquippableStypeAtExpansion => equippableStypeAtExpansion;
+		public IEnumerable<int> EquippableCtypeAtExpansion => equippableCtypeAtExpansion;
+
+
 		// 以降自作判定
 		// note: icontype の扱いについては再考の余地あり
 
@@ -396,6 +401,7 @@ namespace ElectronicObserver.Data
 			CategoryType == EquipmentTypes.Ration ||
 			CategoryType == EquipmentTypes.DamageControl ||
 			CategoryType == EquipmentTypes.Supplies;
+	
 		public int ID => EquipmentID;
 
 		public override string ToString() => $"[{EquipmentID}] {Name}";

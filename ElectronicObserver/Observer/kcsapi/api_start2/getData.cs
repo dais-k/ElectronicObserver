@@ -1,12 +1,34 @@
 ﻿using ElectronicObserver.Data;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.Json;
 
 namespace ElectronicObserver.Observer.kcsapi.api_start2
 {
+	public class RootObject
+	{
+		public int api_slotitem_id { get; set; }
+		public List<int> api_ship_ids { get; set; }
+		public List<int> api_stypes { get; set; }
+		public List<int> api_ctypes { get; set; }
+	}
+
+	public class Api_mst_equip_exslot_ship_decode
+	{
+		public int api_slotitem_id { get; set; }
+		public int[] api_ship_ids { get; set; }
+		public int[] api_stypes { get; set; }
+		public int[] api_ctypes { get; set; }
+
+		public Api_mst_equip_exslot_ship_decode(int api_slotitem_id, int[] api_ship_ids, int[] api_stypes, int[] api_ctypes)
+		{
+			this.api_slotitem_id = api_slotitem_id;
+			this.api_ship_ids = api_ship_ids;
+			this.api_stypes = api_stypes;
+			this.api_ctypes = api_ctypes;
+		}	
+	}
+
 	public class getData : APIBase
 	{
 
@@ -207,20 +229,113 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 				}
 			}
 
-
+			
 			foreach (var elem in data.api_mst_equip_ship)
 			{
 				int id = (int)elem.api_ship_id;
 				db.MasterShips[id].specialEquippableCategory = (int[])elem.api_equip_type;
 			}
 
-			//foreach (var elem in data.api_mst_equip_exslot_ship)
-			//{
-			//int id = (int)elem.api_slotitem_id;
-			//db.MasterEquipments[id].equippableShipsAtExpansion = (int[])elem.api_ship_ids;
-			//}
-			//※JSONが変わった？api_slotitem_idが無くなっているっぽい
+			//api_mst_equip_exslot_ship (うんこJSONを変換)
+			RootObject rootObject = new RootObject();
+			string amees = "";
+			string damees = data.api_mst_equip_exslot_ship.ToString(); //元データを文字列に変換
+			foreach (var elem in data.api_mst_equip_exslot_ship)
+			{
+				//api_slotitem_idを作り直す
+				JsonElement jelem0 = JsonSerializer.Deserialize<JsonElement>(damees); 
+				JsonProperty root0 = jelem0.EnumerateObject().First();
+				JsonElement value = root0.Value;
+				rootObject.api_slotitem_id = int.Parse(root0.Name);
+				string jsons = root0.ToString();
+				string shipids = root0.Value.ToString();
 
+				//api_ship_ids取得
+				JsonElement jelem1 = JsonSerializer.Deserialize<JsonElement>(shipids);
+				JsonProperty root1 = jelem1.EnumerateObject().First();
+				JsonElement value1 = root1.Value;
+				List<int> list1 = new List<int>();
+				string apishipids = root1.Value.ToString();
+				if (apishipids != "")
+				{
+					foreach (JsonProperty jprop in value1.EnumerateObject())
+					{
+						list1.Add(int.Parse(jprop.Name));
+					}
+					rootObject.api_ship_ids = list1;
+				}
+				string stypes = shipids.Replace(root1.ToString() + ",", "");
+
+				//api_stypes取得
+				JsonElement jelem2 = JsonSerializer.Deserialize<JsonElement>(stypes);
+				JsonProperty root2 = jelem2.EnumerateObject().First();
+				JsonElement value2 = root2.Value;
+				List<int> list2 = new List<int>();
+				string apistypes = root2.Value.ToString();
+				if (apistypes != "")
+				{
+					foreach (JsonProperty jprop in value2.EnumerateObject())
+					{
+						list2.Add(int.Parse(jprop.Name));
+					}
+					rootObject.api_stypes = list2;
+				}
+				string ctypes = stypes.Replace(root2.ToString() + ",", "");
+
+				//api_ctypes取得
+				JsonElement jelem3 = JsonSerializer.Deserialize<JsonElement>(ctypes);
+				JsonProperty root3 = jelem3.EnumerateObject().First();
+				JsonElement value3 = root3.Value;
+				List<int> list3 = new List<int>();
+				string apictypes = root3.Value.ToString();
+				if (apictypes != "")
+				{
+					foreach (JsonProperty jprop in value3.EnumerateObject())
+					{
+						list3.Add(int.Parse(jprop.Name));
+					}
+					rootObject.api_ctypes = list3;
+				}
+				damees = damees.Replace(jsons + ",", "");
+
+				// 一旦一装備のみでJSONデータをシリアライズで作成
+				amees = JsonSerializer.Serialize<RootObject>(rootObject);
+
+				//JSONデータを作成したらrootObjectのデータをnull化する
+				if(rootObject.api_ship_ids != null) rootObject.api_ship_ids = null;
+				if(rootObject.api_stypes != null) rootObject.api_stypes = null;
+				if(rootObject.api_ctypes != null) rootObject.api_ctypes = null;
+
+				//作ったJSONデータをJsonSerializerでDeserializeしてデータを取りだす
+				Api_mst_equip_exslot_ship_decode api_mst_equip_exslot_ship_decode = JsonSerializer.Deserialize<Api_mst_equip_exslot_ship_decode>(amees);
+				//装備ID
+				int id = api_mst_equip_exslot_ship_decode.api_slotitem_id;
+				//搭載可能艦娘個別指定
+				if (api_mst_equip_exslot_ship_decode.api_ship_ids is not null)
+				{
+					foreach (var cnt_ship in api_mst_equip_exslot_ship_decode.api_ship_ids)
+					{
+						db.MasterEquipments[id].equippableShipsAtExpansion = api_mst_equip_exslot_ship_decode.api_ship_ids;
+					}
+				}
+				//装備可能艦種（駆逐艦、軽巡とか）
+				if (api_mst_equip_exslot_ship_decode.api_stypes is not null)
+				{
+					foreach (var cnt_stype in api_mst_equip_exslot_ship_decode.api_stypes)
+					{
+						db.MasterEquipments[id].equippableStypeAtExpansion = api_mst_equip_exslot_ship_decode.api_stypes;
+					}
+				}
+				//装備可能艦型（綾波型、秋月型とか）
+				if (api_mst_equip_exslot_ship_decode.api_ctypes is not null)
+				{ 
+					foreach(var cnt_ctype in api_mst_equip_exslot_ship_decode.api_ctypes)
+					{
+						db.MasterEquipments[id].equippableCtypeAtExpansion = api_mst_equip_exslot_ship_decode.api_ctypes;
+					}
+				}
+
+			}
 
 			//api_mst_shipgraph
 			foreach (var elem in data.api_mst_shipgraph)

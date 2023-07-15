@@ -387,7 +387,7 @@ namespace ElectronicObserver.Window.Dialog
 			var db = KCDatabase.Instance;
 
 			var sb = new StringBuilder();
-			sb.AppendLine("装備可能:");
+			sb.AppendLine("[装備可能]");
 
 			var eq = db.MasterEquipments[equipmentID];
 			if (eq == null)
@@ -433,9 +433,18 @@ namespace ElectronicObserver.Window.Dialog
 				}
 			}
 
-			//if (eq.EquippableShipsAtExpansion.Any())
-				//sb.Append("[拡張スロット] ").AppendLine(string.Join(", ", eq.EquippableShipsAtExpansion.Select(id => db.MasterShips[id].NameWithClass)));
-
+			if (eq.EquippableShipsAtExpansion.Any()
+				|| eq.EquippableStypeAtExpansion.Any()
+				|| eq.EquippableCtypeAtExpansion.Any())
+			{
+				sb.AppendLine("\n[拡張スロット] ");
+			if (eq.EquippableShipsAtExpansion.Any())
+				sb.AppendLine(string.Join(", ", eq.EquippableShipsAtExpansion.Select(id => db.MasterShips[id].NameWithClass)));
+			if (eq.EquippableStypeAtExpansion.Any())
+				sb.AppendLine(string.Join(",",eq.EquippableStypeAtExpansion.Select(id => db.ShipTypes[id]?.Name)));
+			if (eq.EquippableCtypeAtExpansion.Any())
+				sb.AppendLine(string.Join(",", eq.EquippableCtypeAtExpansion.Select(id => Constants.GetShipClass(id))));
+			}
 			return sb.ToString();
 		}
 

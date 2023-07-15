@@ -30,7 +30,6 @@ namespace ElectronicObserver.Window
 		private string _NowAccessTime;
 		private string _LastAccessTime;
 		private string _4hoursInterval = "未操作時間経過不明";
-		private string _LaterTime;
 
 		public FormJson(FormMain parent)
 		{
