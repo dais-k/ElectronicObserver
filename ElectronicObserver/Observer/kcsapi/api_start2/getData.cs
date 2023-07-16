@@ -5,30 +5,6 @@ using System.Text.Json;
 
 namespace ElectronicObserver.Observer.kcsapi.api_start2
 {
-	public class RootObject
-	{
-		public int api_slotitem_id { get; set; }
-		public List<int> api_ship_ids { get; set; }
-		public List<int> api_stypes { get; set; }
-		public List<int> api_ctypes { get; set; }
-	}
-
-	public class Api_mst_equip_exslot_ship_decode
-	{
-		public int api_slotitem_id { get; set; }
-		public int[] api_ship_ids { get; set; }
-		public int[] api_stypes { get; set; }
-		public int[] api_ctypes { get; set; }
-
-		public Api_mst_equip_exslot_ship_decode(int api_slotitem_id, int[] api_ship_ids, int[] api_stypes, int[] api_ctypes)
-		{
-			this.api_slotitem_id = api_slotitem_id;
-			this.api_ship_ids = api_ship_ids;
-			this.api_stypes = api_stypes;
-			this.api_ctypes = api_ctypes;
-		}	
-	}
-
 	public class getData : APIBase
 	{
 
@@ -237,77 +213,76 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 			}
 
 			//api_mst_equip_exslot_ship (うんこJSONを変換)
-			RootObject rootObject = new RootObject();
-			string amees = "";
-			string damees = data.api_mst_equip_exslot_ship.ToString(); //元データを文字列に変換
-			foreach (var elem in data.api_mst_equip_exslot_ship)
+			RootObject rootObject = new();
+			string text_api_mst_equip_exslot_ship = data.api_mst_equip_exslot_ship.ToString(); //元データを文字列に変換
+			foreach (var elem in data.api_mst_equip_exslot_ship) //元データを使ってループ処理 
 			{
 				//api_slotitem_idを作り直す
-				JsonElement jelem0 = JsonSerializer.Deserialize<JsonElement>(damees); 
-				JsonProperty root0 = jelem0.EnumerateObject().First();
-				JsonElement value = root0.Value;
-				rootObject.api_slotitem_id = int.Parse(root0.Name);
-				string jsons = root0.ToString();
-				string shipids = root0.Value.ToString();
+				JsonElement jelem_id = JsonSerializer.Deserialize<JsonElement>(text_api_mst_equip_exslot_ship); //変換した文字列をJsonElement にデシリアライズ
+				JsonProperty root_id = jelem_id.EnumerateObject().First(); //最初の要素を取りだす
+				rootObject.api_slotitem_id = int.Parse(root_id.Name);
+				string text_equip_exslot = root_id.ToString();
+				string text_shipids = root_id.Value.ToString();
 
 				//api_ship_ids取得
-				JsonElement jelem1 = JsonSerializer.Deserialize<JsonElement>(shipids);
-				JsonProperty root1 = jelem1.EnumerateObject().First();
-				JsonElement value1 = root1.Value;
-				List<int> list1 = new List<int>();
-				string apishipids = root1.Value.ToString();
-				if (apishipids != "")
+				JsonElement jelem_ship_ids = JsonSerializer.Deserialize<JsonElement>(text_shipids);
+				JsonProperty root_ship_ids = jelem_ship_ids.EnumerateObject().First();
+				JsonElement value_ship_ids = root_ship_ids.Value; //foreach処理用のデータ
+				List<int> list_ship_ids = new List<int>();
+				string text_value_ship_ids = root_ship_ids.Value.ToString(); //データ変換用作業テキスト
+				if (text_value_ship_ids != "")
 				{
-					foreach (JsonProperty jprop in value1.EnumerateObject())
+					foreach (JsonProperty jprop in value_ship_ids.EnumerateObject())
 					{
-						list1.Add(int.Parse(jprop.Name));
+						list_ship_ids.Add(int.Parse(jprop.Name));
 					}
-					rootObject.api_ship_ids = list1;
+					rootObject.api_ship_ids = list_ship_ids;
 				}
-				string stypes = shipids.Replace(root1.ToString() + ",", "");
+				string text_stypes = text_shipids.Replace(root_ship_ids.ToString() + ",", ""); 
 
 				//api_stypes取得
-				JsonElement jelem2 = JsonSerializer.Deserialize<JsonElement>(stypes);
-				JsonProperty root2 = jelem2.EnumerateObject().First();
-				JsonElement value2 = root2.Value;
-				List<int> list2 = new List<int>();
-				string apistypes = root2.Value.ToString();
-				if (apistypes != "")
+				JsonElement jelem_stypes = JsonSerializer.Deserialize<JsonElement>(text_stypes);
+				JsonProperty root_stypes = jelem_stypes.EnumerateObject().First();
+				JsonElement value_stypes = root_stypes.Value;
+				List<int> list_stypes = new List<int>();
+				string text_value_stypes = root_stypes.Value.ToString();
+				if (text_value_stypes != "")
 				{
-					foreach (JsonProperty jprop in value2.EnumerateObject())
+					foreach (JsonProperty jprop in value_stypes.EnumerateObject())
 					{
-						list2.Add(int.Parse(jprop.Name));
+						list_stypes.Add(int.Parse(jprop.Name));
 					}
-					rootObject.api_stypes = list2;
+					rootObject.api_stypes = list_stypes;
 				}
-				string ctypes = stypes.Replace(root2.ToString() + ",", "");
+				string text_ctypes = text_stypes.Replace(root_stypes.ToString() + ",", "");
 
 				//api_ctypes取得
-				JsonElement jelem3 = JsonSerializer.Deserialize<JsonElement>(ctypes);
-				JsonProperty root3 = jelem3.EnumerateObject().First();
-				JsonElement value3 = root3.Value;
-				List<int> list3 = new List<int>();
-				string apictypes = root3.Value.ToString();
-				if (apictypes != "")
+				JsonElement jelem_ctypes = JsonSerializer.Deserialize<JsonElement>(text_ctypes);
+				JsonProperty root_ctypes = jelem_ctypes.EnumerateObject().First();
+				JsonElement value_ctypes = root_ctypes.Value;
+				List<int> list_ctypes = new List<int>();
+				string text_value_ctypes = root_ctypes.Value.ToString();
+				if (text_value_ctypes != "")
 				{
-					foreach (JsonProperty jprop in value3.EnumerateObject())
+					foreach (JsonProperty jprop in value_ctypes.EnumerateObject())
 					{
-						list3.Add(int.Parse(jprop.Name));
+						list_ctypes.Add(int.Parse(jprop.Name));
 					}
-					rootObject.api_ctypes = list3;
+					rootObject.api_ctypes = list_ctypes;
 				}
-				damees = damees.Replace(jsons + ",", "");
+				
+				text_api_mst_equip_exslot_ship = text_api_mst_equip_exslot_ship.Replace(text_equip_exslot + ",", ""); //大本のテキストから今作業した要素を削除
 
 				// 一旦一装備のみでJSONデータをシリアライズで作成
-				amees = JsonSerializer.Serialize<RootObject>(rootObject);
+				string mst_equip_exslot_ship_temp = JsonSerializer.Serialize<RootObject>(rootObject);
 
 				//JSONデータを作成したらrootObjectのデータをnull化する
-				if(rootObject.api_ship_ids != null) rootObject.api_ship_ids = null;
-				if(rootObject.api_stypes != null) rootObject.api_stypes = null;
-				if(rootObject.api_ctypes != null) rootObject.api_ctypes = null;
+				if (rootObject.api_ship_ids != null) rootObject.api_ship_ids = null;
+				if (rootObject.api_stypes != null) rootObject.api_stypes = null;
+				if (rootObject.api_ctypes != null) rootObject.api_ctypes = null;
 
 				//作ったJSONデータをJsonSerializerでDeserializeしてデータを取りだす
-				Api_mst_equip_exslot_ship_decode api_mst_equip_exslot_ship_decode = JsonSerializer.Deserialize<Api_mst_equip_exslot_ship_decode>(amees);
+				Api_mst_equip_exslot_ship_decode api_mst_equip_exslot_ship_decode = JsonSerializer.Deserialize<Api_mst_equip_exslot_ship_decode>(mst_equip_exslot_ship_temp);
 				//装備ID
 				int id = api_mst_equip_exslot_ship_decode.api_slotitem_id;
 				//搭載可能艦娘個別指定
@@ -334,7 +309,6 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 						db.MasterEquipments[id].equippableCtypeAtExpansion = api_mst_equip_exslot_ship_decode.api_ctypes;
 					}
 				}
-
 			}
 
 			//api_mst_shipgraph
@@ -364,5 +338,27 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 		public override string APIName => "api_start2/getData";
 	}
 
+	public class RootObject
+	{
+		public int api_slotitem_id { get; set; }
+		public List<int> api_ship_ids { get; set; }
+		public List<int> api_stypes { get; set; }
+		public List<int> api_ctypes { get; set; }
+	}
 
+	public class Api_mst_equip_exslot_ship_decode
+	{
+		public int api_slotitem_id { get; set; }
+		public int[] api_ship_ids { get; set; }
+		public int[] api_stypes { get; set; }
+		public int[] api_ctypes { get; set; }
+
+		public Api_mst_equip_exslot_ship_decode(int api_slotitem_id, int[] api_ship_ids, int[] api_stypes, int[] api_ctypes)
+		{
+			this.api_slotitem_id = api_slotitem_id;
+			this.api_ship_ids = api_ship_ids;
+			this.api_stypes = api_stypes;
+			this.api_ctypes = api_ctypes;
+		}
+	}
 }
