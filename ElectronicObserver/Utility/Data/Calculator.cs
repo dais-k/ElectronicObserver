@@ -1100,7 +1100,7 @@ namespace ElectronicObserver.Utility.Data
 				}
 			}
 
-			if (attackerShipID == 5
+			if (attackerShipID == 545
 				|| attackerShipID == 599 || attackerShipID == 610 || attackerShipID == 883)      // Saratoga Mk.II/赤城改二戊/加賀改二戊/龍鳳改二戊
 				nightPersonnelCount++;
 
@@ -1420,7 +1420,7 @@ namespace ElectronicObserver.Utility.Data
 			}
 
 			// 固有カットイン
-			switch (KCDatabase.Instance.MasterShips[shipID]?.ShipClass)
+			switch (KCDatabase.Instance.MasterShips[shipID]?.ShipClass) //艦型別
 			{
 				case 54:    // 秋月型
 					if (highangle >= 2 && radar >= 1)
@@ -1449,17 +1449,23 @@ namespace ElectronicObserver.Utility.Data
 						return 37;
 					}
 					break;
-			}
 
-			switch (shipID)
-			{
-				case 321:	//大淀改
-					if (aaradar >= 1 && highangle_musashi >= 1 && aarocket_mod >= 1)
+				case 99:   // Atlanta級
+					if (highangle_atlanta_gfcs >= 2)
+						return 38;
+					if (highangle_atlanta_gfcs >= 1 && highangle_atlanta >= 1)
+						return 39;
+					if (highangle_atlanta_gfcs + highangle_atlanta >= 2)
 					{
-						return 27;
+						if (radar_gfcs >= 1)
+							return 40;
+						return 41;
 					}
 					break;
+			}
 
+			switch (shipID) //艦娘個別
+			{
 				case 428:   // 摩耶改二
 					if (highangle >= 1 && aagun_concentrated >= 1)
 					{
@@ -1481,7 +1487,6 @@ namespace ElectronicObserver.Utility.Data
 					break;
 
 				case 470:   // 霞改二乙
-				case 622:   // 夕張改二
 					if (highangle >= 1 && aagun_total >= 1)
 					{
 						if (aaradar >= 1)
@@ -1489,6 +1494,11 @@ namespace ElectronicObserver.Utility.Data
 						else
 							return 17;
 					}
+					break;
+
+				case 622:   // 夕張改二
+					if (highangle >= 1 && aagun_total >= 1 && aaradar >= 1)
+							return 16;
 					break;
 
 				case 418:   // 皐月改二
@@ -1526,6 +1536,8 @@ namespace ElectronicObserver.Utility.Data
 						return 30;
 					if (highangle >= 2)
 						return 31;
+					if (highangle >= 1 && aagun_medium >= 1)
+						return 24;
 					break;
 
 				case 478:   // 龍田改二
@@ -1546,13 +1558,25 @@ namespace ElectronicObserver.Utility.Data
 					}
 					break;
 
+				case 321:   //大淀改
+					if (aaradar >= 1 && highangle_musashi >= 1 && aarocket_mod >= 1)
+					{
+						return 27;
+					}
+					break;
+
 				case 148:   // 武蔵改
 					if (aarocket_mod >= 1 && aaradar >= 1)
 						return 28;
 					break;
 
+				case 557:   // 磯風乙改
+				case 558:   // 浜風乙改
+					if (highangle >= 1 && aaradar >= 1)
+						return 29;
+					break;
+
 				case 546:   // 武蔵改二
-				case 911:   // 大和改二
 					if (highangle_musashi >= 1 && aaradar >= 1)
 						return 26;
 					if (aarocket_mod >= 1 && aaradar >= 1)
@@ -1582,6 +1606,8 @@ namespace ElectronicObserver.Utility.Data
 						}
 					}
 					break;
+
+				case 911:   // 大和改二
 				case 916:   // 大和改二重
 					if (highangle_musashi >= 1 && aaradar >= 1)
 						return 26;
@@ -1614,15 +1640,13 @@ namespace ElectronicObserver.Utility.Data
 				case 593:   // 榛名改二乙
 					if (maingunl_356 >= 1 && aagun_concentrated >= 1 && aaradar >= 1)
 						return 46;
+					if (aarocket_english >= 2)
+						return 32;
+					if (aagun_pompom >= 1 && (maingunl_fcr >= 1 || aarocket_english >= 1))
+						return 32;
 					break;
 
-				case 557:   // 磯風乙改
-				case 558:   // 浜風乙改
-					if (highangle >= 1 && aaradar >= 1)
-						return 29;
-					break;
-
-				case 149:   // 金剛改二
+				case 149:   // 金剛改二 (英国艦+金剛型改二)
 				case 591:   // 金剛改二丙
 				case 150:   // 比叡改二
 				case 592:   // 比叡改二丙
@@ -1638,6 +1662,10 @@ namespace ElectronicObserver.Utility.Data
 				case 393:   // Ark Royal改
 				case 520:   // Janus
 				case 893:   // Janus改
+				case 514:   // Sheffield
+				case 705:   // Sheffield改
+				case 885:   // Victorious
+				case 713:   // Victorious改
 					if (aarocket_english >= 2)
 						return 32;
 					if (aagun_pompom >= 1 && (maingunl_fcr >= 1 || aarocket_english >= 1))
@@ -1652,41 +1680,34 @@ namespace ElectronicObserver.Utility.Data
 						return 33;
 					break;
 
-				case 597:   // Atlanta
-				case 696:   // Atlanta改
-					if (highangle_atlanta_gfcs >= 2)
-						return 38;
-					if (highangle_atlanta_gfcs >= 1 && highangle_atlanta >= 1)
-						return 39;
-					if (highangle_atlanta_gfcs + highangle_atlanta >= 2)
-					{
-						if (radar_gfcs >= 1)
-							return 40;
-						return 41;
-					}
-					break;
 			}
 
+			//以下汎用カットイン
 			if (maingunl >= 1 && aashell >= 1 && director >= 1 && aaradar >= 1)
 			{
 				return 4;
 			}
+			
 			if (highangle_director >= 2 && aaradar >= 1)
 			{
 				return 5;
 			}
+			
 			if (maingunl >= 1 && aashell >= 1 && director >= 1)
 			{
 				return 6;
 			}
+			
 			if (highangle >= 1 && director >= 1 && aaradar >= 1)
 			{
 				return 7;
 			}
+			
 			if (highangle_director >= 1 && aaradar >= 1)
 			{
 				return 8;
 			}
+			
 			if (highangle >= 1 && director >= 1)
 			{
 				return 9;
@@ -1695,6 +1716,11 @@ namespace ElectronicObserver.Utility.Data
 			if (aagun_concentrated >= 1 && (aagun_concentrated + aagun_medium) >= 2 && aaradar >= 1)
 			{
 				return 12;
+			}
+
+			if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1)
+			{
+				return 13;
 			}
 
 			return 0;
@@ -2640,6 +2666,15 @@ namespace ElectronicObserver.Utility.Data
 		/// <summary> 雷撃 </summary>
 		Torpedo,
 
+		/// <summary> 空母カットイン(FBA) </summary>
+		CutinFighterBomberAttacker,
+
+		/// <summary> 空母カットイン(BBA) </summary>
+		CutinBomberBomberAttacker,
+
+		/// <summary> 空母カットイン(BA) </summary>
+		CutinBomberAttacker,
+
 		/// <summary> ロケット攻撃 </summary>
 		Rocket = 2000,
 
@@ -2677,7 +2712,7 @@ namespace ElectronicObserver.Utility.Data
 		/// <summary> カットイン(主砲/魚雷) </summary>
 		CutinMainTorpedo,
 
-		/// <summary> カットイン(魚雷/魚雷) </summary>
+		/// <summary> カットイン(魚雷/魚雷/魚雷) </summary>
 		CutinTorpedoTorpedo,
 
 		/// <summary> カットイン(主砲/主砲/副砲) </summary>
@@ -2712,6 +2747,12 @@ namespace ElectronicObserver.Utility.Data
 
 		/// <summary> 駆逐カットイン(魚雷/ドラム缶/水雷見張員) 2Hit </summary>
 		CutinTorpedoDrumMasterPicket2,
+
+		/// <summary> 潜水艦カットイン(電探/魚雷/魚雷) </summary>
+		CutinTorpedoMasterPicketSubmarine,
+
+		/// <summary> 潜水艦カットイン(魚雷/魚雷/魚雷) </summary>
+		CutinTorpedoTorpedoSubmarine,
 
 		/// <summary> Nelson Touch </summary>
 		SpecialNelson = 100,
@@ -2775,6 +2816,39 @@ namespace ElectronicObserver.Utility.Data
 
 		/// <summary> 揚陸攻撃(特大発動艇+戦車第11連隊) </summary>
 		LandingTokuDaihatsuTank,
+
+		/// <summary> 夜襲カットイン(戦戦攻) </summary>
+		CutinNightAirAttackFFA = 5000,
+
+		/// <summary> 夜襲カットイン(戦攻) </summary>
+		CutinNightAirAttackFA,
+
+		/// <summary> 夜襲カットイン(戦彗) </summary>
+		CutinNightAirAttackFS,
+
+		/// <summary> 夜襲カットイン(攻彗) </summary>
+		CutinNightAirAttackAS,
+
+		/// <summary> 夜襲カットイン(戦他他) </summary>
+		CutinNightAirAttackFOther,
+
+		/// <summary> 夜間航空攻撃 </summary>
+		NightAirAttack,
+
+		/// <summary> Swordfish </summary>
+		NightSwordfish,
+
+		/// <summary> 駆逐カットイン(主砲/魚雷/電探) </summary>
+		CutinTorpedoRadar_,
+
+		/// <summary> 駆逐カットイン(魚雷/見張員/電探) </summary>
+		CutinTorpedoPicket_,
+
+		/// <summary> 駆逐カットイン(魚雷/魚雷/水雷見張員) </summary>
+		CutinTorpedoTorpedoMasterPicket_,
+
+		/// <summary> 駆逐カットイン(魚雷/ドラム缶/水雷見張員) </summary>
+		CutinTorpedoDrumMasterPicket_,
 	}
 
 	/// <summary>

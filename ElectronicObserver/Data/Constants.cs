@@ -286,7 +286,7 @@ namespace ElectronicObserver.Data
 
 
 		/// <summary>
-		/// 艦型を表す文字列を取得します。
+		/// 艦型を表す文字列を取得します。(ShipClass)
 		/// </summary>
 		public static string GetShipClass(int id)
 		{
@@ -789,7 +789,6 @@ namespace ElectronicObserver.Data
 		}
 
 
-
 		/// <summary>
 		/// 昼戦攻撃種別を表す文字列を取得します。
 		/// </summary>
@@ -845,6 +844,12 @@ namespace ElectronicObserver.Data
 					return "爆雷攻撃";
 				case DayAttackKind.Torpedo:
 					return "雷撃";
+				case DayAttackKind.CutinFighterBomberAttacker:
+					return "空母カットイン(FBA)";
+				case DayAttackKind.CutinBomberBomberAttacker:
+					return "空母カットイン(BBA)";
+				case DayAttackKind.CutinBomberAttacker:
+					return "空母カットイン(BA)";
 				case DayAttackKind.Rocket:
 					return "ロケット砲撃";
 				case DayAttackKind.LandingDaihatsu:
@@ -877,11 +882,11 @@ namespace ElectronicObserver.Data
 				case NightAttackKind.CutinMainTorpedo:
 					return "カットイン(主砲/魚雷)";
 				case NightAttackKind.CutinTorpedoTorpedo:
-					return "カットイン(魚雷x2)";
+					return "カットイン(魚雷/魚雷/魚雷)";
 				case NightAttackKind.CutinMainSub:
-					return "カットイン(主砲x2/副砲)";
+					return "カットイン(主砲/主砲/副砲)";
 				case NightAttackKind.CutinMainMain:
-					return "カットイン(主砲x3)";
+					return "カットイン(主砲/主砲/主砲)";
 				case NightAttackKind.CutinAirAttack:
 					return "空母カットイン";
 				case NightAttackKind.CutinTorpedoRadar:
@@ -900,6 +905,10 @@ namespace ElectronicObserver.Data
 					return "駆逐カットイン(魚雷/魚雷/水雷見張員) 2Hit";
 				case NightAttackKind.CutinTorpedoDrumMasterPicket2:
 					return "駆逐カットイン(魚雷/ドラム缶/水雷見張員) 2Hit";
+				case NightAttackKind.CutinTorpedoMasterPicketSubmarine:
+					return "潜水艦カットイン(電探/魚雷/魚雷)";
+				case NightAttackKind.CutinTorpedoTorpedoSubmarine:
+					return "潜水艦カットイン(魚雷/魚雷/魚雷)";
 				case NightAttackKind.SpecialNelson:
 					return "Nelson Touch";
 				case NightAttackKind.SpecialNagato:
@@ -942,6 +951,30 @@ namespace ElectronicObserver.Data
 					return "揚陸攻撃(内火艇)";
 				case NightAttackKind.LandingTokuDaihatsuTank:
 					return "揚陸攻撃(特大発戦車)";
+				case NightAttackKind.CutinNightAirAttackFFA:
+					return "夜襲カットイン(戦戦攻)";
+				case NightAttackKind.CutinNightAirAttackFA:
+					return "夜襲カットイン(戦攻)";
+				case NightAttackKind.CutinNightAirAttackFS:
+					return "夜襲カットイン(戦彗)";
+				case NightAttackKind.CutinNightAirAttackAS:
+					return "夜襲カットイン(攻彗)";
+				case NightAttackKind.CutinNightAirAttackFOther:
+					return "夜襲カットイン(戦他他)";
+				case NightAttackKind.NightAirAttack:
+					return "夜間航空攻撃";
+				case NightAttackKind.NightSwordfish:
+					return " Swordfish";
+				case NightAttackKind.CutinTorpedoRadar_:
+					return "駆逐カットイン(主砲/魚雷/電探)";
+				case NightAttackKind.CutinTorpedoPicket_:
+					return "駆逐カットイン(魚雷/見張員/電探)";
+				case NightAttackKind.CutinTorpedoTorpedoMasterPicket_:
+					return "駆逐カットイン(魚雷/魚雷/水雷見張員)";
+				case NightAttackKind.CutinTorpedoDrumMasterPicket_:
+					return "駆逐カットイン(魚雷/ドラム缶/水雷見張員)";
+
+
 				default:
 					return "不明(" + (int)id + ")";
 			}
@@ -981,6 +1014,8 @@ namespace ElectronicObserver.Data
 					return "高角砲/集中機銃<摩耶>";
 				case 12:
 					return "集中機銃/機銃/電探";
+				case 13:
+					return "特殊高角砲/集中機銃/対空電探";
 				case 14:
 					return "高角砲/機銃/電探<五十鈴>";
 				case 15:

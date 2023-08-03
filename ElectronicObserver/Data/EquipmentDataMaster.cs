@@ -331,6 +331,9 @@ namespace ElectronicObserver.Data
 		/// <summary> 夜間戦闘機かどうか </summary>
 		public bool IsNightFighter => IconType == 45;
 
+		/// <summary> 夜間爆撃機かどうか </summary>
+		public bool IsNightBomber => EquipmentID == 154 || EquipmentID == 320;
+
 		/// <summary> 夜間攻撃機かどうか </summary>
 		public bool IsNightAttacker => IconType == 46;
 
@@ -350,7 +353,7 @@ namespace ElectronicObserver.Data
 		/// <summary> 水上電探かどうか </summary>
 		public bool IsSurfaceRadar => IsRadar && LOS >= 5;
 
-		/// <summary> 測距儀付き電探かどうか </summary>
+		/// <summary> 測距儀付き電探(大和型電探)かどうか </summary>
 		public bool IsRadarWithRangeFinder =>
 			EquipmentID == 142 ||       //15m二重測距儀+21号電探改二
 			EquipmentID == 460;			//15m二重測距儀改+21号電探改二+熟練射撃指揮所

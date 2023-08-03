@@ -603,16 +603,21 @@ namespace ElectronicObserver.Data
         /// </summary>
         public ReadOnlyCollection<int> AirBattlePowers => Array.AsReadOnly(_airbattlePowers);
 
-        /// <summary>
-        /// 砲撃威力
-        /// </summary>
-        public int ShellingPower { get; private set; }
+		/// <summary>
+		/// 昼戦威力
+		/// </summary>
+		public int[] ShellingPowers;
 
-        //todo: ShellingPower に統合予定
-        /// <summary>
-        /// 空撃威力
-        /// </summary>
-        public int AircraftPower { get; private set; }
+		/// <summary>
+		/// 砲撃威力(最大)
+		/// </summary>
+		public int ShellingPower { get; private set; }
+
+		//todo: ShellingPower に統合予定 
+		/// <summary>
+		/// 空撃威力(最大)
+		/// </summary>
+		public int AircraftPower { get; private set; }
 
         /// <summary>
         /// 対潜威力
@@ -625,14 +630,19 @@ namespace ElectronicObserver.Data
         public int TorpedoPower { get; private set; }
 
         /// <summary>
-        /// 夜戦威力
+        /// 夜戦威力(最大)
         /// </summary>
         public int NightBattlePower { get; private set; }
 
-        /// <summary>
-        /// 装備改修補正(砲撃戦)
-        /// </summary>
-        private double GetDayBattleEquipmentLevelBonus()
+		/// <summary>
+		/// 夜戦威力
+		/// </summary>
+		public int[] NightBattlePowers { get; private set; }
+		
+		/// <summary>
+		/// 装備改修補正(砲撃戦)
+		/// </summary>
+		private double GetDayBattleEquipmentLevelBonus()
         {
             double basepower = 0;
             foreach (var slot in AllSlotInstance)
@@ -651,7 +661,8 @@ namespace ElectronicObserver.Data
                     case EquipmentTypes.AAGun:
                     case EquipmentTypes.LandingCraft:
                     case EquipmentTypes.SpecialAmphibiousTank:
-                        basepower += Math.Sqrt(slot.Level);
+					case EquipmentTypes.AviationPersonnel:
+						basepower += Math.Sqrt(slot.Level);
                         break;
 
                     case EquipmentTypes.MainGunLarge:
@@ -694,10 +705,33 @@ namespace ElectronicObserver.Data
             return basepower;
         }
 
-        /// <summary>
-        /// 装備改修補正(雷撃戦)
-        /// </summary>
-        private double GetTorpedoEquipmentLevelBonus()
+		/// <summary>
+		/// 装備改修補正(砲撃戦・航空要員の爆装ボーナス)
+		/// </summary>
+		private double GetDayBattleEquipmentBomberLevelBonus()
+		{
+			double basepower = 0;
+			foreach (var slot in AllSlotInstance)
+			{
+				if (slot == null)
+					continue;
+
+				switch (slot.MasterEquipment.CategoryType)
+				{
+
+					case EquipmentTypes.AviationPersonnel:
+
+						if(slot.Level >= 4) basepower = 1;
+						break;
+				}
+			}
+			return basepower;
+		}
+
+		/// <summary>
+		/// 装備改修補正(雷撃戦)
+		/// </summary>
+		private double GetTorpedoEquipmentLevelBonus()
         {
             double basepower = 0;
             foreach (var slot in AllSlotInstance)
@@ -1060,7 +1094,7 @@ namespace ElectronicObserver.Data
             if (attackKind != DayAttackKind.AirAttack && attackKind != DayAttackKind.CutinAirAttack)
                 return 0;
 
-            double basepower = Math.Floor((FirepowerTotal + TorpedoTotal + Math.Floor(BomberTotal * 1.3) + GetDayBattleEquipmentLevelBonus() + GetCombinedFleetShellingDamageBonus()) * 1.5) + 55;
+            double basepower = Math.Floor((FirepowerTotal + SpItemHoug + TorpedoTotal + Math.Floor((BomberTotal+ GetDayBattleEquipmentBomberLevelBonus()) * 1.3) + GetDayBattleEquipmentLevelBonus() + GetCombinedFleetShellingDamageBonus()) * 1.5) + 55;
 
             basepower *= GetHPDamageBonus() * GetEngagementFormDamageRate(engagementForm);
 
@@ -1091,11 +1125,11 @@ namespace ElectronicObserver.Data
             return (int)(basepower * GetAmmoDamageRate());
         }
 
-        /// <summary>
-        /// 砲撃戦での対潜威力を求めます。
-        /// </summary>
-        /// <param name="engagementForm">交戦形態。既定値は 1 (同航戦) です。</param>
-        private int CalculateAntiSubmarinePower(int engagementForm = 1)
+		/// <summary>
+		/// 砲撃戦での対潜威力を求めます。
+		/// </summary>
+		/// <param name="engagementForm">交戦形態。既定値は 1 (同航戦) です。</param>
+		private int CalculateAntiSubmarinePower(int engagementForm = 1)
         {
             if (!CanAttackSubmarine)
                 return 0;
@@ -1475,155 +1509,22 @@ namespace ElectronicObserver.Data
             int form = Utility.Configuration.Config.Control.PowerEngagementForm;
 
             _airbattlePowers = Slot.Select((_, i) => CalculateAirBattlePower(i)).ToArray();
-            ShellingPower = CalculateShellingPower(form);
-            AircraftPower = CalculateAircraftPower(form);
+			ShellingPower = CalculateShellingPower(form);
+			ShellingPowers = CalculateShellingPowerAll(form);
+			AircraftPower = CalculateAircraftPower(form);
             AntiSubmarinePower = CalculateAntiSubmarinePower(form);
             TorpedoPower = CalculateTorpedoPower(form);
             NightBattlePower = CalculateNightBattlePower();
+			NightBattlePowers = CalculateNightBattlePowers();
 
-        }
+		}
 
-        /// <summary>
-        /// 秋刀魚用装備カウント
-        /// </summary>
-        private int GetSanmaEquipCount()
-        {
-            int SanmaEquip = 0;
-            foreach (var slot in AllSlotInstance)
-            {
-                if (slot == null)
-                    continue;
-                switch (slot.MasterEquipment.CategoryType)
-                {
-                    case EquipmentTypes.SeaplaneBomber:
-                    case EquipmentTypes.Autogyro:
-                    case EquipmentTypes.ASPatrol:
-                    case EquipmentTypes.SeaplaneRecon:
-                    case EquipmentTypes.FlyingBoat:
-                    case EquipmentTypes.Searchlight:
-                    case EquipmentTypes.SearchlightLarge:
-                    case EquipmentTypes.SurfaceShipPersonnel:
-                    case EquipmentTypes.Ration:
-                        SanmaEquip++;
-                        break;
-                    case EquipmentTypes.Sonar:
-                    	switch (slot.EquipmentID)
-                        {
-                            case 47:        // 三式水中探信儀
-                            case 438:       // 三式水中探信儀改
-                            case 260:       // Type124 ASDIC
-                            case 261:       // Type144/147 ASDIC
-                            case 262:       // HF/DF + Type144/147 ASDIC
-                                SanmaEquip++;
-                                break;
-                            default:
-                                break;
-                        }
-                        break;
-                    case EquipmentTypes.AviationPersonnel:
-                        switch (slot.EquipmentID)
-                        {
-                            case 258:       // 夜間作戦航空要員
-                            case 259:       // 夜間作戦航空要員+熟練甲板員
-                                SanmaEquip++;
-                                break;
-                            default:
-                                break;
-                        }
-                        break;
-                    case EquipmentTypes.CarrierBasedTorpedo:
-                        switch (slot.EquipmentID)
-                        {
-                            case 242:       // Swordfish
-                            case 243:       // Swordfish Mk.II(熟練)
-                            case 244:       // Swordfish Mk.III(熟練)
-                                SanmaEquip++;
-                                break;
-                            default:
-                                break;
-                        }
-                        break;
-                    case EquipmentTypes.DepthCharge:
-                        SanmaEquip++;
-                        break;
-                    default:
-                        break;
-                }
-            }
-            return SanmaEquip;
-        }
+		#endregion
 
-        /// <summary>
-        /// 秋刀魚用装備カウント(爆雷分)
-        /// </summary>
-        private int GetSanmaEquipCountBomb()
-        {
-            int BombEquip = 0;
-            foreach (var slot in AllSlotInstance)
-            {
-                if (slot == null)
-                    continue;
-                switch (slot.MasterEquipment.CategoryType)
-                {
-                    case EquipmentTypes.DepthCharge:
-                        BombEquip++;
-                        break;
-                    default:
-                        break;
-                }
-            }
-            return BombEquip;
-        }
-
-        /// <summary>
-        /// 対潜シナジー装備の種類数を求めます。
-        /// </summary>
-        private int GetSynergyCount()
-        {
-            int depthChargeCount2 = 0;
-            int depthChargeProjectorCount2 = 0;
-            int otherDepthChargeCount2 = 0;
-            int sonarCount2 = 0;         // ソナーと大型ソナーの合算
-            int largeSonarCount2 = 0;
-            foreach (var slot in AllSlotInstanceMaster)
-            {
-                if (slot == null)
-                    continue;
-                switch (slot.CategoryType)
-                {
-                    case EquipmentTypes.Sonar:
-                    	sonarCount2++;
-                        break;
-                    case EquipmentTypes.DepthCharge:
-                        if (slot.IsDepthCharge)
-                            depthChargeCount2++;
-                        else if (slot.IsDepthChargeProjector)
-                            depthChargeProjectorCount2++;
-                        else
-                            otherDepthChargeCount2++;
-                        break;
-                    case EquipmentTypes.SonarLarge:
-                    	largeSonarCount2++;
-                        sonarCount2++;
-                        break;
-                }
-            }
-
-            if (sonarCount2 > 0 && depthChargeProjectorCount2 > 0 && depthChargeCount2 > 0)
-                return 3;
-            else if (sonarCount2 > 0 && (depthChargeCount2 + depthChargeProjectorCount2 + otherDepthChargeCount2) > 0)
-                return 2;
-            else if (depthChargeProjectorCount2 > 0 && depthChargeCount2 > 0)
-                return 1;
-            return 0;
-        }
-
-        #endregion
-
-        /// <summary>
-        /// 対潜攻撃可能か
-        /// </summary>
-        public bool CanAttackSubmarine
+		/// <summary>
+		/// 対潜攻撃可能か
+		/// </summary>
+		public bool CanAttackSubmarine
         {
             get
             {
@@ -1853,7 +1754,142 @@ namespace ElectronicObserver.Data
             }
         }
 
-        public int ID => MasterID;
+		/// <summary>
+		/// 秋刀魚用装備カウント
+		/// </summary>
+		private int GetSanmaEquipCount()
+		{
+			int SanmaEquip = 0;
+			foreach (var slot in AllSlotInstance)
+			{
+				if (slot == null)
+					continue;
+				switch (slot.MasterEquipment.CategoryType)
+				{
+					case EquipmentTypes.SeaplaneBomber:
+					case EquipmentTypes.Autogyro:
+					case EquipmentTypes.ASPatrol:
+					case EquipmentTypes.SeaplaneRecon:
+					case EquipmentTypes.FlyingBoat:
+					case EquipmentTypes.Searchlight:
+					case EquipmentTypes.SearchlightLarge:
+					case EquipmentTypes.SurfaceShipPersonnel:
+					case EquipmentTypes.Ration:
+						SanmaEquip++;
+						break;
+					case EquipmentTypes.Sonar:
+						switch (slot.EquipmentID)
+						{
+							case 47:        // 三式水中探信儀
+							case 438:       // 三式水中探信儀改
+							case 260:       // Type124 ASDIC
+							case 261:       // Type144/147 ASDIC
+							case 262:       // HF/DF + Type144/147 ASDIC
+								SanmaEquip++;
+								break;
+							default:
+								break;
+						}
+						break;
+					case EquipmentTypes.AviationPersonnel:
+						switch (slot.EquipmentID)
+						{
+							case 258:       // 夜間作戦航空要員
+							case 259:       // 夜間作戦航空要員+熟練甲板員
+								SanmaEquip++;
+								break;
+							default:
+								break;
+						}
+						break;
+					case EquipmentTypes.CarrierBasedTorpedo:
+						switch (slot.EquipmentID)
+						{
+							case 242:       // Swordfish
+							case 243:       // Swordfish Mk.II(熟練)
+							case 244:       // Swordfish Mk.III(熟練)
+								SanmaEquip++;
+								break;
+							default:
+								break;
+						}
+						break;
+					case EquipmentTypes.DepthCharge:
+						SanmaEquip++;
+						break;
+					default:
+						break;
+				}
+			}
+			return SanmaEquip;
+		}
+
+		/// <summary>
+		/// 秋刀魚用装備カウント(爆雷分)
+		/// </summary>
+		private int GetSanmaEquipCountBomb()
+		{
+			int BombEquip = 0;
+			foreach (var slot in AllSlotInstance)
+			{
+				if (slot == null)
+					continue;
+				switch (slot.MasterEquipment.CategoryType)
+				{
+					case EquipmentTypes.DepthCharge:
+						BombEquip++;
+						break;
+					default:
+						break;
+				}
+			}
+			return BombEquip;
+		}
+
+		/// <summary>
+		/// 対潜シナジー装備の種類数を求めます。
+		/// </summary>
+		private int GetSynergyCount()
+		{
+			int depthChargeCount2 = 0;
+			int depthChargeProjectorCount2 = 0;
+			int otherDepthChargeCount2 = 0;
+			int sonarCount2 = 0;         // ソナーと大型ソナーの合算
+			int largeSonarCount2 = 0;
+			foreach (var slot in AllSlotInstanceMaster)
+			{
+				if (slot == null)
+					continue;
+				switch (slot.CategoryType)
+				{
+					case EquipmentTypes.Sonar:
+						sonarCount2++;
+						break;
+					case EquipmentTypes.DepthCharge:
+						if (slot.IsDepthCharge)
+							depthChargeCount2++;
+						else if (slot.IsDepthChargeProjector)
+							depthChargeProjectorCount2++;
+						else
+							otherDepthChargeCount2++;
+						break;
+					case EquipmentTypes.SonarLarge:
+						largeSonarCount2++;
+						sonarCount2++;
+						break;
+				}
+			}
+
+			if (sonarCount2 > 0 && depthChargeProjectorCount2 > 0 && depthChargeCount2 > 0)
+				return 3;
+			else if (sonarCount2 > 0 && (depthChargeCount2 + depthChargeProjectorCount2 + otherDepthChargeCount2) > 0)
+				return 2;
+			else if (depthChargeProjectorCount2 > 0 && depthChargeCount2 > 0)
+				return 1;
+			return 0;
+		}
+
+		public int ID => MasterID;
         public override string ToString() => $"[{MasterID}] {NameWithLevel}";
 
         public override void LoadFromResponse(string apiname, dynamic data)
@@ -1939,6 +1975,266 @@ namespace ElectronicObserver.Data
             RawData.api_ndock_item[0] = 0;
             RawData.api_ndock_item[1] = 0;
         }
-    }
+		
+		#region 昼戦威力計算
+		/// <summary>
+		/// 昼戦での各種砲撃・空撃威力を求めます。
+		/// </summary>
+		/// <param name="engagementForm">交戦形態。既定値は 1 (同航戦) です。</param>
+		private int[] CalculateShellingPowerAll(int engagementForm = 1)
+		{
+			double basepower = 0;
+			var attackKind = Calculator2.GetDayAttackKindList(AllSlotMaster.ToArray(), ShipID);
+			int[] returnBasepower = new int[attackKind.Count()];
+			foreach (var attack in attackKind.Select((name, number) => new { name, number }))
+			{
+				if (attack.name == DayAttackKind.AirAttack
+						|| attack.name == DayAttackKind.CutinAirAttack
+						|| attack.name == DayAttackKind.CutinFighterBomberAttacker
+						|| attack.name == DayAttackKind.CutinBomberBomberAttacker
+						|| attack.name == DayAttackKind.CutinBomberAttacker)
+				{
+					basepower = Math.Floor((FirepowerTotal + SpItemHoug + TorpedoTotal + Math.Floor((BomberTotal + GetDayBattleEquipmentBomberLevelBonus()) * 1.3) + GetDayBattleEquipmentLevelBonus() + GetCombinedFleetShellingDamageBonus()) * 1.5) + 55;
+
+					basepower *= GetHPDamageBonus() * GetEngagementFormDamageRate(engagementForm);
+
+					// キャップ
+					basepower = Math.Floor(CapDamage(basepower, 220));
+				}
+				else
+				{
+					basepower = FirepowerTotal + SpItemHoug + GetDayBattleEquipmentLevelBonus() + GetCombinedFleetShellingDamageBonus() + 5;
+
+					basepower *= GetHPDamageBonus() * GetEngagementFormDamageRate(engagementForm);
+
+					basepower += GetLightCruiserDamageBonus() + GetItalianDamageBonus();
+
+					// キャップ
+					basepower = Math.Floor(CapDamage(basepower, 220));
+				}
+				// カットイン攻撃
+				switch (attack.name)
+				{
+					case DayAttackKind.DoubleShelling:
+					case DayAttackKind.CutinMainRadar:
+						basepower *= 1.2;
+						break;
+					case DayAttackKind.CutinMainSub:
+						basepower *= 1.1;
+						break;
+					case DayAttackKind.CutinMainAP:
+						basepower *= 1.3;
+						break;
+					case DayAttackKind.CutinMainMain:
+						basepower *= 1.5;
+						break;
+					case DayAttackKind.ZuiunMultiAngle:
+						basepower *= 1.35;
+						break;
+					case DayAttackKind.SeaAirMultiAngle:
+						basepower *= 1.3;
+						break;
+
+					case DayAttackKind.CutinFighterBomberAttacker:
+						basepower *= 1.25;
+						break;
+					case DayAttackKind.CutinBomberBomberAttacker:
+						basepower *= 1.20;
+						break;
+					case DayAttackKind.CutinBomberAttacker:
+						basepower *= 1.15;
+						break;
+
+				}
+				returnBasepower[attack.number] = (int)(basepower * GetAmmoDamageRate());
+			}
+			return returnBasepower;
+		}
+		#endregion
+
+		#region 夜戦威力計算
+		/// <summary>
+		/// 夜間航空攻撃の基本攻撃力
+		/// </summary>
+		private double CalculateNightAirAttackBasepower () 
+		{
+			var airs = SlotInstance.Zip(Aircraft, (eq, count) => new { eq, master = eq?.MasterEquipment, count }).Where(a => a.eq != null);
+
+			return FirepowerBase +
+				airs.Where(p => p.master.IsNightAircraft)
+					.Sum(p => p.master.Firepower + p.master.Torpedo + p.master.Bomber +
+						3 * p.count +
+						0.45 * (p.master.Firepower + p.master.Torpedo + p.master.Bomber + p.master.ASW) * Math.Sqrt(p.count) + Math.Sqrt(p.eq.Level)) +
+				airs.Where(p => p.master.IsSwordfish || p.master.EquipmentID == 154 || p.master.EquipmentID == 320)   // 零戦62型(爆戦/岩井隊)、彗星一二型(三一号光電管爆弾搭載機)
+					.Sum(p => p.master.Firepower + p.master.Torpedo + p.master.Bomber +
+						0.3 * (p.master.Firepower + p.master.Torpedo + p.master.Bomber + p.master.ASW) * Math.Sqrt(p.count) + Math.Sqrt(p.eq.Level));
+		
+		}
+		/// <summary>
+		/// 夜戦での攻撃種別ごとの威力を求めます。
+		/// </summary>
+		private int[] CalculateNightBattlePowers()
+		{
+			var nightKind = Calculator2.GetNightAttackKindList(AllSlotMaster.ToArray(), ShipID);
+			double basepower = 0;
+			int[] returnBasepower = new int[nightKind.Count()];
+			foreach (var kind in nightKind.Select((name, number) => new { name, number }))
+			{
+
+				basepower = FirepowerTotal + TorpedoTotal + GetNightBattleEquipmentLevelBonus();
+				basepower *= GetHPDamageBonus();
+
+				switch (kind.name)
+				{
+					//連撃
+					case NightAttackKind.DoubleShelling:
+						basepower *= 1.2;
+						break;
+
+					//主魚
+					case NightAttackKind.CutinMainTorpedo:
+						basepower *= 1.3;
+						break;
+
+					//魚雷
+					case NightAttackKind.CutinTorpedoTorpedo:
+						basepower *= 1.5;
+						break;
+					case NightAttackKind.CutinTorpedoMasterPicketSubmarine:
+						basepower *= 1.75;
+						break;
+					case NightAttackKind.CutinTorpedoTorpedoSubmarine:
+						basepower *= 1.6;
+						break;
+
+					//主副
+					case NightAttackKind.CutinMainSub:
+						basepower *= 1.75;
+						break;
+
+					//主砲
+					case NightAttackKind.CutinMainMain:
+						basepower *= 2.0;
+						break;
+
+					//空母夜襲カットイン
+					case NightAttackKind.CutinNightAirAttackFFA:
+						basepower = CalculateNightAirAttackBasepower() * 1.25;
+						break;
+					case NightAttackKind.CutinNightAirAttackFA:
+					case NightAttackKind.CutinNightAirAttackFS:
+					case NightAttackKind.CutinNightAirAttackAS:
+						basepower = CalculateNightAirAttackBasepower() * 1.2;
+						break;
+					case NightAttackKind.CutinNightAirAttackFOther:
+						basepower = CalculateNightAirAttackBasepower() * 1.18;
+						break;
+					case NightAttackKind.NightAirAttack:
+						basepower = CalculateNightAirAttackBasepower();
+						break;
+
+					case NightAttackKind.NightSwordfish:
+						// ソードフィッシュ系に限り装備の火力/雷装/改修値が加算される
+						// 改修値はルート計算
+						// ※熟練度による威力補正はクリティカル時の火力を表示していないので含まない
+						basepower = FirepowerBase
+							+ SlotInstanceMaster.Where(eq => eq?.IsSwordfish ?? false).Sum(eq => eq.Firepower + eq.Torpedo)
+							+ SlotInstance.Where(eq => eq?.MasterEquipment.IsSwordfish ?? false).Sum(eq => Math.Sqrt(eq.Level));
+						break;
+					case NightAttackKind.AirAttack:
+						// ソードフィッシュ系に限らずすべての装備の火力/雷装/改修値が加算される
+						// (艦載機の改修値は暫定でルート計算)
+						basepower = FirepowerBase
+							+ SlotInstanceMaster.Where(eq => eq?.IsAvailable ?? false).Sum(eq => eq.Firepower + eq.Torpedo)
+							+ GetNightBattleEquipmentLevelBonus()
+							+ SlotInstance.Where(eq => eq?.MasterEquipment.IsAircraft ?? false).Sum(eq => Math.Sqrt(eq.Level));
+						break;
+
+					//主魚電
+					case NightAttackKind.CutinTorpedoRadar_:
+						{
+							double baseModifier = 1.3;
+
+							basepower = CalcTorpedoRaderPicket(basepower, baseModifier);
+							//int typeDmod2 = AllSlotInstanceMaster.Count(eq => eq?.EquipmentID == 267);  // 12.7cm連装砲D型改二
+							//int typeDmod3 = AllSlotInstanceMaster.Count(eq => eq?.EquipmentID == 366);  // 12.7cm連装砲D型改三
+							//var modifierTable = new double[] { 1, 1.25, 1.4 };
+							//
+							//baseModifier *= modifierTable[Math.Min(typeDmod2 + typeDmod3, modifierTable.Length - 1)] * (1 + typeDmod3 * 0.05);
+							//
+							//basepower *= baseModifier;
+						}
+
+						break;
+
+					//魚見電
+					case NightAttackKind.CutinTorpedoPicket_:
+						{
+							double baseModifier = 1.25;
+
+							basepower = CalcTorpedoRaderPicket(basepower, baseModifier);
+							//int typeDmod2 = AllSlotInstanceMaster.Count(eq => eq?.EquipmentID == 267);  // 12.7cm連装砲D型改二
+							//int typeDmod3 = AllSlotInstanceMaster.Count(eq => eq?.EquipmentID == 366);  // 12.7cm連装砲D型改三
+							//var modifierTable = new double[] { 1, 1.25, 1.4 };
+							//
+							//baseModifier *= modifierTable[Math.Min(typeDmod2 + typeDmod3, modifierTable.Length - 1)] * (1 + typeDmod3 * 0.05);
+							//
+							//basepower *= baseModifier;
+						}
+						break;
+
+					//魚魚水
+					case NightAttackKind.CutinTorpedoTorpedoMasterPicket_:
+						basepower *= 1.5;
+						break;
+
+					//ド水魚
+					case NightAttackKind.CutinTorpedoDrumMasterPicket_:
+						basepower *= 1.3;
+						break;
+
+					//夜間瑞雲攻撃
+					case NightAttackKind.SpecialNightZuiun:
+						{
+							double zuiunCountHosei = 0;
+							double raderHosei = 0;
+
+							int nightZuiunCount = AllSlotInstanceMaster.Count(eq => eq?.IsNightZuiun ?? false);
+							int surfaceRaderCount = AllSlotInstanceMaster.Count(eq => eq?.IsSurfaceRadar ?? false);
+
+							if (nightZuiunCount >= 2)
+							{
+								zuiunCountHosei += 0.12;
+							}
+							else if (nightZuiunCount >= 1)
+							{
+								zuiunCountHosei += 0.04;
+							}
+							else
+							{
+								//ここにきている時点で0はありえないのだが、一応…
+								zuiunCountHosei = 0;
+							}
+
+							if (surfaceRaderCount >= 1)
+							{
+								raderHosei += 0.04;
+							}
+
+							basepower *= (1.2 + zuiunCountHosei + raderHosei);
+						}
+						break;
+				}
+				basepower += GetLightCruiserDamageBonus() + GetItalianDamageBonus();
+
+				//キャップ
+				basepower = Math.Floor(CapDamage(basepower, 360));
+
+				returnBasepower[kind.number] = (int)(basepower * GetAmmoDamageRate());
+			}
+			return returnBasepower;
+		}
+		#endregion
+	}
 }
 

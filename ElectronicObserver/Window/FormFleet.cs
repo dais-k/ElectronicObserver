@@ -691,41 +691,49 @@ namespace ElectronicObserver.Window
 				{
 					var exslot = ship.ExpansionSlotInstance;
 					if (exslot != null)
-						sb.AppendFormat("補強: {0}\r\n", exslot.NameWithLevel);
+						sb.AppendFormat("[補強] {0}\r\n", exslot.NameWithLevel);
 				}
 
 				int[] slotmaster = ship.AllSlotMaster.ToArray();
-
-				sb.AppendFormat("\r\n昼戦: {0}", Constants.GetDayAttackKind(Calculator.GetDayAttackKind(slotmaster, ship.ShipID, -1)));
+				var dayAttackList = Calculator2.GetDayAttackKindList(slotmaster, ship.ShipID);
+				sb.AppendFormat("\r\n【昼戦】");
+				if (dayAttackList.Length != 0)
 				{
-					int shelling = ship.ShellingPower;
-					int aircraft = ship.AircraftPower;
-					if (shelling > 0)
+					foreach (var attack in dayAttackList.Select((name, num) => new { name, num }))
 					{
-						if (aircraft > 0)
-							sb.AppendFormat(" - 砲撃: {0} / 空撃: {1}", shelling, aircraft);
-						else
-							sb.AppendFormat(" - 威力: {0}", shelling);
+						sb.AppendFormat("\r\n {0}: {1} - 威力: {2}", 
+							attack.num + 1, Constants.GetDayAttackKind(attack.name), ship.ShellingPowers[attack.num]);
 					}
-					else if (aircraft > 0)
-						sb.AppendFormat(" - 威力: {0}", aircraft);
+					//sb.AppendLine();
 				}
-				sb.AppendLine();
+				else sb.AppendFormat("\r\n 攻撃不可");
 
 				if (ship.CanAttackAtNight)
 				{
-					sb.AppendFormat("夜戦: {0}", Constants.GetNightAttackKind(Calculator.GetNightAttackKind(slotmaster, ship.ShipID, -1)));
-					{
-						int night = ship.NightBattlePower;
-						if (night > 0)
+					var nightAttackList = Calculator2.GetNightAttackKindList(slotmaster, ship.ShipID);
+					sb.AppendFormat("\r\n【夜戦】");
+					if (nightAttackList.Length != 0) 
+					{ 
+						foreach (var nightAttack in nightAttackList.Select((name, num) => new { name, num })) 
 						{
-							sb.AppendFormat(" - 威力: {0}", night);
+							sb.AppendFormat("\r\n {0}: {1}", nightAttack.num + 1, Constants.GetNightAttackKind(nightAttack.name));
+							int night = ship.NightBattlePowers[nightAttack.num];
+							if (night > 0)
+							{
+								sb.AppendFormat(" - 威力: {0}", night);
+							}
 						}
+						sb.AppendLine();
 					}
+					else sb.AppendLine("\r\n 攻撃不可");
+				}
+				else
+				{
+					sb.AppendFormat("\r\n【夜戦】\r\n 攻撃不可");
 					sb.AppendLine();
 				}
-
 				{
+					sb.AppendLine();
 					int torpedo = ship.TorpedoPower;
 					int asw = ship.AntiSubmarinePower;
 					int syn = ship.SynergyCount;
@@ -819,8 +827,9 @@ namespace ElectronicObserver.Window
 					int sanma = ship.SanmaEquipCount;
 					int sanmaB = ship.SanmaEquipCountBomb;
 					if (sanma > 0)
-						sb.AppendFormat("秋刀魚漁有効装備: {0}  ※爆雷: {1}", sanma,sanmaB);
+						sb.AppendFormat("秋刀魚漁有効装備: {0}  ※爆雷: {1}\r\n", sanma,sanmaB);
 				}
+				sb.AppendFormat("\r\n※攻撃威力は同航戦・制空権確保時の値");
 				return sb.ToString();
 			}
 
