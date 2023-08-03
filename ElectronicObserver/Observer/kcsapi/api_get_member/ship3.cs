@@ -40,10 +40,10 @@ namespace ElectronicObserver.Observer.kcsapi.api_get_member
 
 
 				// 装備シナジー検出カッコカリ
-//				if (!isRemodeled &&
-//					ship.MasterShip.ASW.IsDetermined &&
-//					ship.MasterShip.Evasion.IsDetermined &&
-//					ship.MasterShip.LOS.IsDetermined)
+				//if (!isRemodeled &&
+				//	ship.MasterShip.ASW.IsDetermined &&
+				//	ship.MasterShip.Evasion.IsDetermined &&
+				//	ship.MasterShip.LOS.IsDetermined)
 				if (!isRemodeled )
 					{
 					int firepower = ship.FirepowerTotal - ship.FirepowerBase;
