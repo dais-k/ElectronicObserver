@@ -431,6 +431,8 @@ namespace ElectronicObserver.Window
 				if (ship != null)
 				{
 
+					FleetData fleet = db.Fleet[ship.Fleet];
+
 					bool isEscaped = KCDatabase.Instance.Fleet[Parent.FleetID].EscapedShipList.Contains(shipMasterID);
 					var equipments = ship.AllSlotInstance.Where(eq => eq != null);
 
@@ -640,7 +642,7 @@ namespace ElectronicObserver.Window
 					ShipResource.SetResources(ship.Fuel, ship.FuelMax, ship.Ammo, ship.AmmoMax);
 
 					Equipments.SetSlotList(ship);
-					ToolTipInfo.SetToolTip(Equipments, GetEquipmentString(ship));
+					ToolTipInfo.SetToolTip(Equipments, GetEquipmentString(ship, fleet));
 				}
 				else
 				{
@@ -677,7 +679,7 @@ namespace ElectronicObserver.Window
 				}
 			}
 
-			private string GetEquipmentString(ShipData ship)
+			private string GetEquipmentString(ShipData ship , FleetData fleet)
 			{
 				StringBuilder sb = new StringBuilder();
 
@@ -732,6 +734,7 @@ namespace ElectronicObserver.Window
 					sb.AppendFormat("\r\n【夜戦】\r\n 攻撃不可");
 					sb.AppendLine();
 				}
+
 				{
 					sb.AppendLine();
 					int torpedo = ship.TorpedoPower;
@@ -815,21 +818,77 @@ namespace ElectronicObserver.Window
 						}
 
 						if (airbattle > 0)
-							sb.AppendFormat("制空戦力: {0} / 航空威力: {1}\r\n", airsup_str, airbattle);
+							sb.AppendFormat("制空戦力: {0} / 航空戦威力: {1}\r\n", airsup_str, airbattle);
 						else
 							sb.AppendFormat("制空戦力: {0}\r\n", airsup_str);
 					}
 					else if (airbattle > 0)
-						sb.AppendFormat("航空威力: {0}\r\n", airbattle);
+						sb.AppendFormat("航空戦威力: {0}\r\n", airbattle);
+				}
+
+				{
+					switch (fleet.SupportType) 
+					{
+						case 2:
+							sb.AppendFormat("砲撃支援威力: {0}\r\n", ship.SupportShellingPower);
+							break;
+						case 1:
+						sb.AppendFormat("航空支援威力: ");
+						foreach(var sa in ship.SupportAircraftPowers.Select((name, num) => new { name, num }))
+						{
+							if (sa.name == -1)
+							{
+								if(sa.num == 0)
+								{
+									sb.AppendFormat("装備無し");
+								}
+								break;
+							}
+							if (sa.num == 0)
+							{
+								sb.AppendFormat("{0}", sa.name);
+							}
+							else
+							{
+								sb.AppendFormat(" / {0}", sa.name);
+							}
+						}
+						sb.AppendLine();
+
+						sb.AppendFormat("対潜支援威力: ");
+						foreach (var sasw in ship.SupportAntiSubmarinePower.Select((name,num) => new { name, num }))
+						{
+							if (sasw.name == -1)
+							{
+								if (sasw.num == 0)
+								{
+									sb.AppendFormat("装備無し");
+								}
+								break;
+							}
+							if (sasw.num == 0)
+							{
+								sb.AppendFormat("{0}", sasw.name);
+							}
+							else
+							{
+								sb.AppendFormat(" / {0}", sasw.name);
+							}
+						}
+						sb.AppendLine();
+						break;
+					}
 				}
 
 				{
 					int sanma = ship.SanmaEquipCount;
 					int sanmaB = ship.SanmaEquipCountBomb;
 					if (sanma > 0)
-						sb.AppendFormat("秋刀魚漁有効装備: {0}  ※爆雷: {1}\r\n", sanma,sanmaB);
+						sb.AppendFormat("\r\n秋刀魚漁有効装備: {0}  ※爆雷: {1}\r\n", sanma,sanmaB);
 				}
 				sb.AppendFormat("\r\n※攻撃威力は同航戦・制空権確保時の値");
+				if (fleet.SupportType == 1) 
+					sb.AppendFormat("\r\n※対潜支援威力は変動倍率x2.0(発動率50%)の値\r\n　エリソ確定大破/撃沈にはそれぞれ威力73/84が必要");
 				return sb.ToString();
 			}
 

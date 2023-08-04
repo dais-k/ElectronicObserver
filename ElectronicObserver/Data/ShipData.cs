@@ -1,4 +1,5 @@
-﻿using ElectronicObserver.Utility.Data;
+﻿using ElectronicObserver.Data;
+using ElectronicObserver.Utility.Data;
 using ElectronicObserver.Utility.Mathematics;
 using System;
 using System.Collections.Generic;
@@ -30,10 +31,10 @@ namespace ElectronicObserver.Data
         /// </summary>
         public int ShipID => (int)RawData.api_ship_id;
 
-        /// <summary>
-        /// レベル
-        /// </summary>
-        public int Level => (int)RawData.api_lv;
+		/// <summary>
+		/// レベル
+		/// </summary>
+		public int Level => (int)RawData.api_lv;
 
         /// <summary>
         /// 累積経験値
@@ -418,7 +419,7 @@ namespace ElectronicObserver.Data
         /// 所属艦隊　-1=なし
         /// </summary>
         public int Fleet => KCDatabase.Instance.Fleet.Fleets.Values.FirstOrDefault(f => f.Members.Contains(MasterID))?.FleetID ?? -1;
-
+		//public int FleetSupportType = 
         /// <summary>
         /// 所属艦隊及びその位置
         /// ex. 1-3 (位置も1から始まる)
@@ -604,7 +605,7 @@ namespace ElectronicObserver.Data
         public ReadOnlyCollection<int> AirBattlePowers => Array.AsReadOnly(_airbattlePowers);
 
 		/// <summary>
-		/// 昼戦威力
+		/// 昼戦威力(攻撃別)
 		/// </summary>
 		public int[] ShellingPowers;
 
@@ -635,10 +636,27 @@ namespace ElectronicObserver.Data
         public int NightBattlePower { get; private set; }
 
 		/// <summary>
-		/// 夜戦威力
+		/// 夜戦威力(攻撃別)
 		/// </summary>
 		public int[] NightBattlePowers { get; private set; }
-		
+
+		/// <summary>
+		/// 砲撃支援威力
+		/// </summary>
+		public int SupportShellingPower { get; private set; }
+
+		/// <summary>
+		/// 航空支援威力
+		/// </summary>
+		public int[] _supportAircraftPowers;
+		public ReadOnlyCollection<int> SupportAircraftPowers => Array.AsReadOnly(_supportAircraftPowers);
+
+		/// <summary>
+		/// 支援艦隊対潜威力
+		/// </summary>
+		public double[] _supportAntiSubmarinePowers;
+		public ReadOnlyCollection<double> SupportAntiSubmarinePower => Array.AsReadOnly(_supportAntiSubmarinePowers);
+
 		/// <summary>
 		/// 装備改修補正(砲撃戦)
 		/// </summary>
@@ -1036,11 +1054,11 @@ namespace ElectronicObserver.Data
             return (int)(basepower * GetAmmoDamageRate());
         }
 
-        /// <summary>
-        /// 砲撃戦での砲撃威力を求めます。
-        /// </summary>
-        /// <param name="engagementForm">交戦形態。既定値は 1 (同航戦) です。</param>
-        private int CalculateShellingPower(int engagementForm = 1)
+		/// <summary>
+		/// 砲撃戦での砲撃威力を求めます。
+		/// </summary>
+		/// <param name="engagementForm">交戦形態。既定値は 1 (同航戦) です。</param>
+		private int CalculateShellingPower(int engagementForm = 1)
         {
             var attackKind = Calculator.GetDayAttackKind(AllSlotMaster.ToArray(), ShipID, -1);
             if (attackKind == DayAttackKind.AirAttack || attackKind == DayAttackKind.CutinAirAttack)
@@ -1516,6 +1534,9 @@ namespace ElectronicObserver.Data
             TorpedoPower = CalculateTorpedoPower(form);
             NightBattlePower = CalculateNightBattlePower();
 			NightBattlePowers = CalculateNightBattlePowers();
+			SupportShellingPower = CalculateSupportShellingPower();
+			_supportAircraftPowers = Slot.Select((_, i) => CalculateSupportAirclaftPower(i)).ToArray();
+			_supportAntiSubmarinePowers = Slot.Select((_, i) => CalculateSupportAntiSubmarinePower(i)).ToArray();
 
 		}
 
@@ -2235,6 +2256,96 @@ namespace ElectronicObserver.Data
 			return returnBasepower;
 		}
 		#endregion
+
+		/// <summary>
+		/// 砲撃支援での威力を求めます
+		/// </summary>
+		private int CalculateSupportShellingPower()
+		{
+			ShipDataMaster attacker = KCDatabase.Instance.MasterShips[ShipID];
+			double basepower = 0;
+			if (attacker?.ShipType == ShipTypes.AircraftCarrier
+				|| attacker?.ShipType == ShipTypes.ArmoredAircraftCarrier
+				|| attacker?.ShipType == ShipTypes.LightAircraftCarrier)
+			{
+				basepower = Math.Floor((FirepowerTotal + SpItemHoug + TorpedoTotal + SpItemRaig + Math.Floor(BomberTotal + GetDayBattleEquipmentBomberLevelBonus() * 1.3) - 1) * 1.5) + 55;
+			}
+			else
+			{
+				basepower = FirepowerTotal + SpItemHoug + 4;
+			}
+			basepower = Math.Floor(CapDamage(basepower, 170));
+			return (int)basepower;
+		}
+
+		/// <summary>
+		/// 航空支援での威力を求めます。
+		/// </summary>
+		/// <param name="slotIndex">スロットのインデックス。 0 起点です。</param>
+		private int CalculateSupportAirclaftPower(int slotIndex)
+		{
+			double basepower = 0;
+			var eq = SlotInstance[slotIndex];
+
+			if (eq == null)
+				return -1;
+			if (_aircraft[slotIndex] == 0)
+				return 0;
+
+			switch (eq.MasterEquipment.CategoryType)
+			{
+				case EquipmentTypes.CarrierBasedBomber:
+				case EquipmentTypes.SeaplaneBomber:
+				case EquipmentTypes.JetBomber:              // 通常航空戦においては /√2 されるが、とりあえず考えない
+					basepower = eq.MasterEquipment.Bomber * Math.Sqrt(_aircraft[slotIndex]) + 3;
+					break;
+				case EquipmentTypes.CarrierBasedTorpedo:
+				case EquipmentTypes.JetTorpedo:
+					// 150% 補正を引いたとする
+					basepower = (eq.MasterEquipment.Torpedo * Math.Sqrt(_aircraft[slotIndex]) + 3) * 1.5;
+					break;
+				default:
+					return 0;
+			}
+
+			//キャップ
+			basepower = Math.Floor(CapDamage(basepower, 170));
+			//キャップ後補正
+			return (int)(basepower * 1.35);
+		}
+
+		/// <summary>
+		/// 航空支援での対潜威力を求めます。
+		/// </summary>
+		/// <param name="slotIndex">スロットのインデックス。 0 起点です。</param>
+		private double CalculateSupportAntiSubmarinePower(int slotIndex)
+		{
+			int basepower = 0;
+			var eq = SlotInstance[slotIndex];
+
+			if (eq == null)
+				return -1;
+			if (_aircraft[slotIndex] == 0)
+				return 0;
+
+			switch (eq.MasterEquipment.CategoryType)
+			{
+				case EquipmentTypes.CarrierBasedBomber:
+				case EquipmentTypes.SeaplaneBomber:
+				case EquipmentTypes.CarrierBasedTorpedo:
+				case EquipmentTypes.ASPatrol:
+				case EquipmentTypes.Autogyro:
+					basepower = (int)(Math.Floor(eq.MasterEquipment.ASW * 0.6) * Math.Sqrt(_aircraft[slotIndex]) + 3);
+					break;
+				default:
+					return 0;
+			}
+
+			//キャップ
+			basepower = (int)Math.Floor(CapDamage(basepower, 170));
+			//キャップ後補正
+			return basepower * 1.75 * 2.0;
+		}
+
 	}
 }
-
