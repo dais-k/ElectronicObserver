@@ -982,6 +982,7 @@ namespace ElectronicObserver.Window
 			TableFleet.BorderStyle = BorderStyle.FixedSingle;
 			ControlFleet = new TableFleetControl(this, TableFleet);
 			TableFleet.ResumeLayout();
+			TableFleet.Refresh();
 
 			TableMember.SuspendLayout();
 			ControlMember = new TableMemberControl[7];
@@ -990,6 +991,7 @@ namespace ElectronicObserver.Window
 				ControlMember[i] = new TableMemberControl(this, TableMember, i);
 			}
 			TableMember.ResumeLayout();
+			TableMember.Refresh();
 
 			ConfigurationChanged();     //fixme: 苦渋の決断
 
@@ -1063,6 +1065,7 @@ namespace ElectronicObserver.Window
 			ControlFleet.Update(fleet);
 			TableFleet.Visible = true;
 			TableFleet.ResumeLayout();
+			TableFleet.Refresh();
 
 			AnchorageRepairBound = fleet.CanAnchorageRepair ? 2 + fleet.MembersInstance[0].SlotInstance.Count(eq => eq != null && eq.MasterEquipment.CategoryType == EquipmentTypes.RepairFacility) : 0;
 
@@ -1073,6 +1076,7 @@ namespace ElectronicObserver.Window
 				ControlMember[i].Update(i < fleet.Members.Count ? fleet.Members[i] : -1);
 			}
 			TableMember.ResumeLayout();
+			TableMember.Refresh();
 
 
 			if (Icon != null) ResourceManager.DestroyIcon(Icon);

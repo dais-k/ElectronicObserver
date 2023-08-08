@@ -638,7 +638,7 @@ namespace ElectronicObserver.Data
 		/// <summary>
 		/// 夜戦威力(攻撃別)
 		/// </summary>
-		public int[] NightBattlePowers { get; private set; }
+		public int[] NightBattlePowers;
 
 		/// <summary>
 		/// 砲撃支援威力
@@ -724,9 +724,9 @@ namespace ElectronicObserver.Data
         }
 
 		/// <summary>
-		/// 装備改修補正(砲撃戦・航空要員の爆装ボーナス)
+		/// 装備改修補正(航空要員の爆装ボーナス)
 		/// </summary>
-		private double GetDayBattleEquipmentBomberLevelBonus()
+		private double GetAviationPersonnelBomberLevelBonus()
 		{
 			double basepower = 0;
 			foreach (var slot in AllSlotInstance)
@@ -740,6 +740,54 @@ namespace ElectronicObserver.Data
 					case EquipmentTypes.AviationPersonnel:
 
 						if(slot.Level >= 4) basepower = 1;
+						break;
+				}
+			}
+			return basepower;
+		}
+
+		/// <summary>
+		/// 装備改修補正(航空要員の雷撃ボーナス・航空戦で加算)
+		/// </summary>
+		private double GetAviationPersonnelTorpedoLevelBonus()
+		{
+			double basepower = 0;
+			foreach (var slot in AllSlotInstance)
+			{
+				if (slot == null)
+					continue;
+
+				switch (slot.MasterEquipment.CategoryType)
+				{
+
+					case EquipmentTypes.AviationPersonnel:
+
+						if (slot.Level >= 5) basepower = 1;
+						break;
+				}
+			}
+			return basepower;
+		}
+
+		/// <summary>
+		/// 装備改修補正(航空要員の火力ボーナス・夜間航空攻撃で加算)
+		/// </summary>
+		private double GetAviationPersonnelFirepowerLevelBonus()
+		{
+			double basepower = 0;
+			foreach (var slot in AllSlotInstance)
+			{
+				if (slot == null)
+					continue;
+
+				switch (slot.MasterEquipment.CategoryType)
+				{
+
+					case EquipmentTypes.AviationPersonnel:
+
+						if (slot.Level >= 10) basepower = 3;
+						else if (slot.Level >= 7) basepower = 2;
+						else if (slot.Level >= 1) basepower = 1;
 						break;
 				}
 			}
@@ -816,7 +864,8 @@ namespace ElectronicObserver.Data
                     case EquipmentTypes.MainGunLarge2:
                     case EquipmentTypes.SearchlightLarge:
                     case EquipmentTypes.SpecialAmphibiousTank:
-                        basepower += Math.Sqrt(slot.Level);
+					case EquipmentTypes.AviationPersonnel:
+						basepower += Math.Sqrt(slot.Level);
                         break;
 
                     case EquipmentTypes.SecondaryGun:
@@ -1037,12 +1086,12 @@ namespace ElectronicObserver.Data
                 case EquipmentTypes.CarrierBasedBomber:
                 case EquipmentTypes.SeaplaneBomber:
                 case EquipmentTypes.JetBomber:              // 通常航空戦においては /√2 されるが、とりあえず考えない
-                    basepower = eq.MasterEquipment.Bomber * Math.Sqrt(_aircraft[slotIndex]) + 25;
+                    basepower = (eq.MasterEquipment.Bomber + GetAviationPersonnelBomberLevelBonus()) * Math.Sqrt(_aircraft[slotIndex]) + 25;
                     break;
                 case EquipmentTypes.CarrierBasedTorpedo:
                 case EquipmentTypes.JetTorpedo:
                     // 150% 補正を引いたとする
-                    basepower = (eq.MasterEquipment.Torpedo * Math.Sqrt(_aircraft[slotIndex]) + 25) * 1.5;
+                    basepower = ((eq.MasterEquipment.Torpedo + GetAviationPersonnelTorpedoLevelBonus()) * Math.Sqrt(_aircraft[slotIndex]) + 25) * 1.5;
                     break;
                 default:
                     return 0;
@@ -1112,7 +1161,7 @@ namespace ElectronicObserver.Data
             if (attackKind != DayAttackKind.AirAttack && attackKind != DayAttackKind.CutinAirAttack)
                 return 0;
 
-            double basepower = Math.Floor((FirepowerTotal + SpItemHoug + TorpedoTotal + Math.Floor((BomberTotal+ GetDayBattleEquipmentBomberLevelBonus()) * 1.3) + GetDayBattleEquipmentLevelBonus() + GetCombinedFleetShellingDamageBonus()) * 1.5) + 55;
+            double basepower = Math.Floor((FirepowerTotal + SpItemHoug + TorpedoTotal + SpItemRaig + Math.Floor((BomberTotal+ GetAviationPersonnelBomberLevelBonus()) * 1.3) + GetDayBattleEquipmentLevelBonus() + GetCombinedFleetShellingDamageBonus()) * 1.5) + 55;
 
             basepower *= GetHPDamageBonus() * GetEngagementFormDamageRate(engagementForm);
 
@@ -1266,7 +1315,7 @@ namespace ElectronicObserver.Data
             {
                 var airs = SlotInstance.Zip(Aircraft, (eq, count) => new { eq, master = eq?.MasterEquipment, count }).Where(a => a.eq != null);
 
-                basepower = FirepowerBase +
+                basepower = FirepowerBase + GetAviationPersonnelBomberLevelBonus()+ GetAviationPersonnelFirepowerLevelBonus() + GetAviationPersonnelTorpedoLevelBonus() +
                     airs.Where(p => p.master.IsNightAircraft)
                         .Sum(p => p.master.Firepower + p.master.Torpedo + p.master.Bomber +
                             3 * p.count +
@@ -1306,7 +1355,7 @@ namespace ElectronicObserver.Data
 				{
 					var airs = SlotInstance.Zip(Aircraft, (eq, count) => new { eq, master = eq?.MasterEquipment, count }).Where(a => a.eq != null);
 
-					basepower = FirepowerBase +
+					basepower = FirepowerBase + GetAviationPersonnelBomberLevelBonus() + GetAviationPersonnelFirepowerLevelBonus() + GetAviationPersonnelTorpedoLevelBonus() +
 						airs.Where(p => p.master.IsNightAircraft)
 							.Sum(p => p.master.Firepower + p.master.Torpedo + p.master.Bomber +
 								3 * p.count +
@@ -2015,15 +2064,17 @@ namespace ElectronicObserver.Data
 						|| attack.name == DayAttackKind.CutinBomberBomberAttacker
 						|| attack.name == DayAttackKind.CutinBomberAttacker)
 				{
-					basepower = Math.Floor((FirepowerTotal + SpItemHoug + TorpedoTotal + Math.Floor((BomberTotal + GetDayBattleEquipmentBomberLevelBonus()) * 1.3) + GetDayBattleEquipmentLevelBonus() + GetCombinedFleetShellingDamageBonus()) * 1.5) + 55;
+					//空撃の基本火力
+					basepower = Math.Floor((FirepowerTotal + SpItemHoug + TorpedoTotal + SpItemRaig + Math.Floor((BomberTotal + GetAviationPersonnelBomberLevelBonus()) * 1.3) + GetDayBattleEquipmentLevelBonus() + GetCombinedFleetShellingDamageBonus()) * 1.5) + 55;
 
 					basepower *= GetHPDamageBonus() * GetEngagementFormDamageRate(engagementForm);
 
 					// キャップ
 					basepower = Math.Floor(CapDamage(basepower, 220));
 				}
-				else
+				else 
 				{
+					//砲撃の基本火力
 					basepower = FirepowerTotal + SpItemHoug + GetDayBattleEquipmentLevelBonus() + GetCombinedFleetShellingDamageBonus() + 5;
 
 					basepower *= GetHPDamageBonus() * GetEngagementFormDamageRate(engagementForm);
@@ -2081,7 +2132,7 @@ namespace ElectronicObserver.Data
 		{
 			var airs = SlotInstance.Zip(Aircraft, (eq, count) => new { eq, master = eq?.MasterEquipment, count }).Where(a => a.eq != null);
 
-			return FirepowerBase +
+			return FirepowerBase + GetAviationPersonnelBomberLevelBonus() + GetAviationPersonnelFirepowerLevelBonus() + GetAviationPersonnelTorpedoLevelBonus() +
 				airs.Where(p => p.master.IsNightAircraft)
 					.Sum(p => p.master.Firepower + p.master.Torpedo + p.master.Bomber +
 						3 * p.count +
@@ -2102,7 +2153,7 @@ namespace ElectronicObserver.Data
 			foreach (var kind in nightKind.Select((name, number) => new { name, number }))
 			{
 
-				basepower = FirepowerTotal + TorpedoTotal + GetNightBattleEquipmentLevelBonus();
+				basepower = FirepowerTotal + TorpedoTotal + GetNightBattleEquipmentLevelBonus() ;
 				basepower *= GetHPDamageBonus();
 
 				switch (kind.name)
@@ -2268,7 +2319,7 @@ namespace ElectronicObserver.Data
 				|| attacker?.ShipType == ShipTypes.ArmoredAircraftCarrier
 				|| attacker?.ShipType == ShipTypes.LightAircraftCarrier)
 			{
-				basepower = Math.Floor((FirepowerTotal + SpItemHoug + TorpedoTotal + SpItemRaig + Math.Floor(BomberTotal + GetDayBattleEquipmentBomberLevelBonus() * 1.3) - 1) * 1.5) + 55;
+				basepower = Math.Floor((FirepowerTotal + SpItemHoug + TorpedoTotal + SpItemRaig + Math.Floor(BomberTotal + GetAviationPersonnelBomberLevelBonus() * 1.3) - 1) * 1.5) + 55;
 			}
 			else
 			{

@@ -442,7 +442,6 @@ namespace ElectronicObserver.Utility.Data
 				&& attackerShipID != 645
 				&& attackerShipID != 650)
 			{
-				if (mainGunCount + subGunCount + torpedoCount >= 1)
 					nightAttackList.Add(NightAttackKind.NormalAttack);
 			}
 			NightAttackKind[] getNightAtkName = nightAttackList.ToArray();
