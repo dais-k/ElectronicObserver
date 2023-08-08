@@ -413,6 +413,7 @@ namespace ElectronicObserver.Data
 				case 119: return "特種船M丙型";
 				case 120: return "第百一号型";
 				case 121: return "New Orleans級";
+				case 122: return "Salmon級";
 				default: 
 					return "不明";
 			}
