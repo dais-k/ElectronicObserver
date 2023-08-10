@@ -2314,12 +2314,29 @@ namespace ElectronicObserver.Data
 		private int CalculateSupportShellingPower()
 		{
 			ShipDataMaster attacker = KCDatabase.Instance.MasterShips[ShipID];
+			int aircraftcheck = 0;
 			double basepower = 0;
 			if (attacker?.ShipType == ShipTypes.AircraftCarrier
 				|| attacker?.ShipType == ShipTypes.ArmoredAircraftCarrier
 				|| attacker?.ShipType == ShipTypes.LightAircraftCarrier)
 			{
-				basepower = Math.Floor((FirepowerTotal + SpItemHoug + TorpedoTotal + SpItemRaig + Math.Floor(BomberTotal + GetAviationPersonnelBomberLevelBonus() * 1.3) - 1) * 1.5) + 55;
+				foreach (var slot in AllSlotInstance)
+				{
+					if (slot == null)
+						continue;
+					switch (slot.MasterEquipment.CategoryType)
+					{
+						case EquipmentTypes.CarrierBasedBomber:
+						case EquipmentTypes.CarrierBasedTorpedo:
+						case EquipmentTypes.JetBomber:
+						case EquipmentTypes.JetTorpedo:
+							aircraftcheck++;
+							break;
+					}
+				}
+				if (aircraftcheck > 0)
+					basepower = Math.Floor((FirepowerTotal + SpItemHoug + TorpedoTotal + SpItemRaig + Math.Floor(BomberTotal + GetAviationPersonnelBomberLevelBonus() * 1.3) - 1) * 1.5) + 55;
+				else basepower = 0;
 			}
 			else
 			{
@@ -2395,7 +2412,7 @@ namespace ElectronicObserver.Data
 			//キャップ
 			basepower = (int)Math.Floor(CapDamage(basepower, 170));
 			//キャップ後補正
-			return basepower * 1.75 * 2.0;
+			return basepower * 1.75;
 		}
 
 	}

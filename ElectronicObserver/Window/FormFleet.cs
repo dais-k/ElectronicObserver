@@ -431,8 +431,6 @@ namespace ElectronicObserver.Window
 				if (ship != null)
 				{
 
-					FleetData fleet = db.Fleet[ship.Fleet];
-
 					bool isEscaped = KCDatabase.Instance.Fleet[Parent.FleetID].EscapedShipList.Contains(shipMasterID);
 					var equipments = ship.AllSlotInstance.Where(eq => eq != null);
 
@@ -642,7 +640,7 @@ namespace ElectronicObserver.Window
 					ShipResource.SetResources(ship.Fuel, ship.FuelMax, ship.Ammo, ship.AmmoMax);
 
 					Equipments.SetSlotList(ship);
-					ToolTipInfo.SetToolTip(Equipments, GetEquipmentString(ship, fleet));
+					ToolTipInfo.SetToolTip(Equipments, GetEquipmentString(ship));
 				}
 				else
 				{
@@ -679,7 +677,7 @@ namespace ElectronicObserver.Window
 				}
 			}
 
-			private string GetEquipmentString(ShipData ship , FleetData fleet)
+			private string GetEquipmentString(ShipData ship)
 			{
 				StringBuilder sb = new StringBuilder();
 
@@ -827,57 +825,55 @@ namespace ElectronicObserver.Window
 				}
 
 				{
-					switch (fleet.SupportType) 
+					sb.AppendLine();
+					sb.AppendFormat("砲撃支援威力:");
+					if (ship.SupportShellingPower == 0)
+						sb.AppendFormat("攻撃不可\r\n");
+					else
+						sb.AppendFormat("{0}\r\n", ship.SupportShellingPower);
+					sb.AppendFormat("航空支援威力: ");
+					foreach(var sair in ship.SupportAircraftPowers.Select((name, num) => new { name, num }))
 					{
-						case 2:
-							sb.AppendFormat("砲撃支援威力: {0}\r\n", ship.SupportShellingPower);
+						if (sair.name == -1)
+						{
+							if(sair.num == 0)
+							{
+								sb.AppendFormat("攻撃不可");
+							}
 							break;
-						case 1:
-						sb.AppendFormat("航空支援威力: ");
-						foreach(var sa in ship.SupportAircraftPowers.Select((name, num) => new { name, num }))
-						{
-							if (sa.name == -1)
-							{
-								if(sa.num == 0)
-								{
-									sb.AppendFormat("装備無し");
-								}
-								break;
-							}
-							if (sa.num == 0)
-							{
-								sb.AppendFormat("{0}", sa.name);
-							}
-							else
-							{
-								sb.AppendFormat(" / {0}", sa.name);
-							}
 						}
-						sb.AppendLine();
-
-						sb.AppendFormat("対潜支援威力: ");
-						foreach (var sasw in ship.SupportAntiSubmarinePower.Select((name,num) => new { name, num }))
+						if (sair.num == 0)
 						{
-							if (sasw.name == -1)
-							{
-								if (sasw.num == 0)
-								{
-									sb.AppendFormat("装備無し");
-								}
-								break;
-							}
+							sb.AppendFormat("{0}", sair.name);
+						}
+						else
+						{
+							sb.AppendFormat(" / {0}", sair.name);
+						}
+					}
+					sb.AppendLine();
+
+					sb.AppendFormat("対潜支援威力: ");
+					foreach (var sasw in ship.SupportAntiSubmarinePower.Select((name,num) => new { name, num }))
+					{
+						if (sasw.name == -1)
+						{
 							if (sasw.num == 0)
 							{
-								sb.AppendFormat("{0}", sasw.name);
+								sb.AppendFormat("攻撃不可");
 							}
-							else
-							{
-								sb.AppendFormat(" / {0}", sasw.name);
-							}
+							break;
 						}
-						sb.AppendLine();
-						break;
+						if (sasw.num == 0)
+						{
+							sb.AppendFormat("{0}({1})", sasw.name * 1.2, sasw.name * 2.0);
+						}
+						else
+						{
+							sb.AppendFormat(" / {0}({1})", sasw.name * 1.2, sasw.name * 2.0);
+						}
 					}
+					sb.AppendLine();
 				}
 
 				{
@@ -887,8 +883,8 @@ namespace ElectronicObserver.Window
 						sb.AppendFormat("\r\n秋刀魚漁有効装備: {0}  ※爆雷: {1}\r\n", sanma,sanmaB);
 				}
 				sb.AppendFormat("\r\n※攻撃威力は同航戦・制空権確保時の値");
-				if (fleet.SupportType == 1) 
-					sb.AppendFormat("\r\n※対潜支援威力は変動倍率x2.0(発動率50%)の値\r\n　エリソ確定大破/撃沈にはそれぞれ威力73/84が必要");
+				//if (fleet.SupportType == 1) 
+					sb.AppendFormat("\r\n※対潜支援威力の()内の値は変動倍率x2.0(発動率50%)の値\r\n　エリソ確定大破/撃沈にはそれぞれ威力73/84が必要");
 				return sb.ToString();
 			}
 
@@ -982,7 +978,6 @@ namespace ElectronicObserver.Window
 			TableFleet.BorderStyle = BorderStyle.FixedSingle;
 			ControlFleet = new TableFleetControl(this, TableFleet);
 			TableFleet.ResumeLayout();
-			TableFleet.Refresh();
 
 			TableMember.SuspendLayout();
 			ControlMember = new TableMemberControl[7];
@@ -991,7 +986,6 @@ namespace ElectronicObserver.Window
 				ControlMember[i] = new TableMemberControl(this, TableMember, i);
 			}
 			TableMember.ResumeLayout();
-			TableMember.Refresh();
 
 			ConfigurationChanged();     //fixme: 苦渋の決断
 
