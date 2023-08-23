@@ -404,7 +404,23 @@ namespace ElectronicObserver.Data
 			CategoryType == EquipmentTypes.Ration ||
 			CategoryType == EquipmentTypes.DamageControl ||
 			CategoryType == EquipmentTypes.Supplies;
-	
+
+		/// <summary> 対地艦爆かどうか</summary>
+		public bool IsAntiGroundBomber =>
+			EquipmentID == 319 ||       // 彗星一二型(六三四空/三号爆弾搭載機)
+			EquipmentID == 320 ||       // 彗星一二型(三一号光電管爆弾搭載機)
+			EquipmentID == 391 ||       // 九九式艦爆二二型
+			EquipmentID == 392 ||       // 九九式艦爆二二型(熟練)
+			EquipmentID == 148 ||       // 試製南山
+			EquipmentID == 277 ||       // FM-2
+			EquipmentID == 233 ||       // F4U-1D
+			EquipmentID == 474 ||       // F4U-4
+			EquipmentID == 420 ||       // SB2C-3
+			EquipmentID == 421 ||       // SB2C-5
+			EquipmentID == 64 ||       // Ju87C改
+			EquipmentID == 305 ||       // Ju87C改二(KMX搭載機)
+			EquipmentID == 306;         // Ju87C改二(KMX搭載機/熟練)
+
 		public int ID => EquipmentID;
 
 		public override string ToString() => $"[{EquipmentID}] {Name}";

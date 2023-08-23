@@ -733,6 +733,11 @@ namespace ElectronicObserver.Utility
 				public int FleetStateDisplayMode { get; set; }
 
 				/// <summary>
+				/// 対地攻撃力を表示させる
+				/// </summary>
+				public bool ShowAntiGroundPower { get; set; }
+
+				/// <summary>
 				/// 出撃海域によって色分けするか
 				/// </summary>
 				public bool AppliesSallyAreaColor { get; set; }
@@ -782,6 +787,7 @@ namespace ElectronicObserver.Utility
 					EmphasizesSubFleetInPort = false;
 					BlinkAtDamaged = true;
 					FleetStateDisplayMode = 2;
+					ShowAntiGroundPower = false;
 					AppliesSallyAreaColor = false;
 					SallyAreaColorScheme = DefaultSallyAreaColorScheme.ToList();
 				}

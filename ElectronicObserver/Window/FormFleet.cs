@@ -694,16 +694,28 @@ namespace ElectronicObserver.Window
 						sb.AppendFormat("[補強] {0}\r\n", exslot.NameWithLevel);
 				}
 
-				int[] slotmaster = ship.AllSlotMaster.ToArray();
+				var slotmaster = ship.AllSlotMaster.ToArray();
 				var dayAttackList = Calculator2.GetDayAttackKindList(slotmaster, ship.ShipID);
+				var dayAttackPower = CalcShipAttackPower.CalculateDayAttackPowers(ship);
+				var dayBunker = CalcShipAttackPower.CaliculateDayGroundAtttackPower(ship, 0);
+				var dayHardskin = CalcShipAttackPower.CaliculateDayGroundAtttackPower(ship, 1);
+				var daySoftskin = CalcShipAttackPower.CaliculateDayGroundAtttackPower(ship, 2);
+				var dayMegane = CalcShipAttackPower.CaliculateDayGroundAtttackPower(ship, 3);
+				var nightBunker = CalcShipAttackPower.CaliculateNightGroundAtttackPower(ship, 0);
+				var nightHardskin = CalcShipAttackPower.CaliculateNightGroundAtttackPower(ship, 1);
+				var nightSoftskin = CalcShipAttackPower.CaliculateNightGroundAtttackPower(ship, 2);
+				var nightMegane = CalcShipAttackPower.CaliculateNightGroundAtttackPower(ship, 3);
+				var showAntiGroundPower = Utility.Configuration.Config.FormFleet.ShowAntiGroundPower;
 				sb.AppendFormat("\r\n【昼戦】");
 				if (dayAttackList.Length != 0)
 				{
 					foreach (var attack in dayAttackList.Select((name, num) => new { name, num }))
 					{
-						sb.AppendFormat("\r\n {0}: {1} - 威力: {2}", 
-							attack.num + 1, Constants.GetDayAttackKind(attack.name), ship.ShellingPowers[attack.num]);
+						sb.AppendFormat("\r\n {0}: {1} - 威力: {2}",
+							attack.num + 1, Constants.GetDayAttackKind(attack.name), dayAttackPower[attack.num]);
 					}
+					if (showAntiGroundPower)
+						sb.AppendFormat("\r\n 0: 対地 - 威力: {0} / {1} / {2} / {3}", dayBunker, dayHardskin, daySoftskin, dayMegane);
 					//sb.AppendLine();
 				}
 				else sb.AppendFormat("\r\n 攻撃不可");
@@ -711,13 +723,14 @@ namespace ElectronicObserver.Window
 				if (ship.CanAttackAtNight)
 				{
 					var nightAttackList = Calculator2.GetNightAttackKindList(slotmaster, ship.ShipID);
+					var nightAttackPower = CalcShipAttackPower.CalculateNightAttackPowers(ship);
 					sb.AppendFormat("\r\n【夜戦】");
-					if (nightAttackList.Length != 0) 
-					{ 
-						foreach (var nightAttack in nightAttackList.Select((name, num) => new { name, num })) 
+					if (nightAttackList.Length != 0)
+					{
+						foreach (var nightAttack in nightAttackList.Select((name, num) => new { name, num }))
 						{
 							sb.AppendFormat("\r\n {0}: {1}", nightAttack.num + 1, Constants.GetNightAttackKind(nightAttack.name));
-							int night = ship.NightBattlePowers[nightAttack.num];
+							int night = nightAttackPower[nightAttack.num];
 							if (night > 0)
 							{
 								sb.AppendFormat(" - 威力: {0}", night);
@@ -732,7 +745,11 @@ namespace ElectronicObserver.Window
 					sb.AppendFormat("\r\n【夜戦】\r\n 攻撃不可");
 					sb.AppendLine();
 				}
-
+				if (showAntiGroundPower)
+				{ 
+					sb.AppendFormat(" 0: 対地 - 威力: {0} / {1} / {2} / {3}", nightBunker, nightHardskin, nightSoftskin, nightMegane);
+					sb.AppendLine();
+				}
 				{
 					sb.AppendLine();
 					int torpedo = ship.TorpedoPower;
@@ -826,13 +843,15 @@ namespace ElectronicObserver.Window
 
 				{
 					sb.AppendLine();
-					sb.AppendFormat("砲撃支援威力:");
-					if (ship.SupportShellingPower == 0)
+					sb.AppendFormat("砲撃支援威力: ");
+					var supportShellingPower = CalcShipAttackPower.CalculateSupportShellingPower(ship);
+					if (supportShellingPower == 0)
 						sb.AppendFormat("攻撃不可\r\n");
 					else
-						sb.AppendFormat("{0}\r\n", ship.SupportShellingPower);
+						sb.AppendFormat("{0}\r\n", supportShellingPower);
 					sb.AppendFormat("航空支援威力: ");
-					foreach(var sair in ship.SupportAircraftPowers.Select((name, num) => new { name, num }))
+					var supportAircraftPowers = ship.Slot.Select((_, i) => CalcShipAttackPower.CalculateSupportAirclaftPower(i, ship)).ToArray();
+					foreach (var sair in supportAircraftPowers.Select((name, num) => new { name, num }))
 					{
 						if (sair.name == -1)
 						{
@@ -854,7 +873,8 @@ namespace ElectronicObserver.Window
 					sb.AppendLine();
 
 					sb.AppendFormat("対潜支援威力: ");
-					foreach (var sasw in ship.SupportAntiSubmarinePower.Select((name,num) => new { name, num }))
+					var supportAntiSubmarinePower = ship.Slot.Select((_, i) => CalcShipAttackPower.CalculateSupportAntiSubmarinePower(i, ship)).ToArray();
+					foreach (var sasw in supportAntiSubmarinePower.Select((name,num) => new { name, num }))
 					{
 						if (sasw.name == -1)
 						{
@@ -883,8 +903,9 @@ namespace ElectronicObserver.Window
 						sb.AppendFormat("\r\n秋刀魚漁有効装備: {0}  ※爆雷: {1}\r\n", sanma,sanmaB);
 				}
 				sb.AppendFormat("\r\n※攻撃威力は同航戦・制空権確保時の値");
-				//if (fleet.SupportType == 1) 
-					sb.AppendFormat("\r\n※対潜支援威力の()内の値は変動倍率x2.0(発動率50%)の値\r\n　エリソ確定大破/撃沈にはそれぞれ威力73/84が必要");
+				if(showAntiGroundPower)
+					sb.AppendFormat("\r\n※対地攻撃の威力値は(砲台/離島/ソフトスキン/集積地)の並び");
+				sb.AppendFormat("\r\n※対潜支援威力の()内の値は変動倍率x2.0(発動率50%)の値\r\n　エリソ確定大破/撃沈にはそれぞれ威力73/84が必要");
 				return sb.ToString();
 			}
 
@@ -1200,7 +1221,7 @@ namespace ElectronicObserver.Window
 			ContextMenuFleet_Capture.Visible = Utility.Configuration.Config.Debug.EnableDebugMenu;
 		}
 
-		private string CreateDeciBuilderData(int areaId, bool[] fleetExportFlags)
+		private string CreateDeciBuilderData(int areaId, bool[] fleetExportFlags,bool withID)
 		{
 			StringBuilder sb = new StringBuilder();
 			KCDatabase db = KCDatabase.Instance;
@@ -1220,14 +1241,25 @@ namespace ElectronicObserver.Window
 					foreach (var ship in fleet.MembersInstance)
 					{
 						if (ship == null) break;
-
-						sb.AppendFormat(@"""s{0}"":{{""id"":{1},""lv"":{2},""asw"":{3},""luck"":{4},""items"":{{",
-							shipcount,
-							ship.ShipID,
-							ship.Level,
-							ship.ASWBase,
-							ship.LuckBase);
-
+						if (!withID)
+						{ 
+							sb.AppendFormat(@"""s{0}"":{{""id"":{1},""lv"":{2},""asw"":{3},""luck"":{4},""items"":{{",
+								shipcount,
+								ship.ShipID,
+								ship.Level,
+								ship.ASWBase,
+								ship.LuckBase);
+						}
+						else
+						{
+							sb.AppendFormat(@"""s{0}"":{{""api_id"":{1},""id"":{2},""lv"":{3},""asw"":{4},""luck"":{5},""items"":{{",
+								shipcount,
+								ship.MasterID,
+								ship.ShipID,
+								ship.Level,
+								ship.ASWBase,
+								ship.LuckBase);
+						}
 						int eqcount = 1;
 						foreach (var eq in ship.AllSlotInstance.Where(eq => eq != null))
 						{
@@ -1326,7 +1358,7 @@ namespace ElectronicObserver.Window
 			{
 				areaId = dca.areaId;
 				fleet = GetFleetExportFlag(dca);
-				Clipboard.SetData(DataFormats.StringFormat, CreateDeciBuilderData(areaId, fleet));
+				Clipboard.SetData(DataFormats.StringFormat, CreateDeciBuilderData(areaId, fleet, false));
 			}
 		}
 
@@ -1435,13 +1467,60 @@ namespace ElectronicObserver.Window
 					expProgress = (int)Math.Truncate(tmpExpProgress);
 				}
 				long[] apiExp = { ship.ExpTotal, (long)ship.ExpNext, (long)expProgress };
-
 				sb.AppendFormat(@"{{""api_ship_id"":{0},""api_lv"":{1},""api_kyouka"":[{2}],""api_exp"":[{3}],""api_slot_ex"":{4},""api_sally_area"":{5}}},",
 					ship.ShipID, ship.Level, 
 					string.Join(",", (int[])ship.RawData.api_kyouka), 
 					string.Join(",", apiExp), 
 					ship.ExpansionSlot, 
 					(ship.SallyArea >= 0 ? ship.SallyArea : 0));
+			}
+			sb.Remove(sb.Length - 1, 1);        // remove ","
+			sb.Append("]");
+
+			Clipboard.SetData(DataFormats.StringFormat, sb.ToString());
+		}
+
+		/// <summary>
+		/// 「艦隊分析 -艦これ-」の艦隊情報反映用フォーマットにapi_idを追加してコピー
+		/// メモ
+		/// https://kancolle-fleetanalysis.firebaseapp.com/#/ はサービス終了閉鎖済み
+		/// 制空権シミュレータ：https://noro6.github.io/kcTools/list/ で本フォーマットを使用できる
+		/// </summary>
+		private void ContextMenuFleet_CopyToFleetAnalysisWithID_Click(object sender, EventArgs e)
+		{
+			var sb = new StringBuilder();
+
+			sb.Append("[");
+			foreach (var ship in KCDatabase.Instance.Ships.Values.Where(s => s.IsLocked))
+			{
+				//現在の進捗計算
+				int expProgress = 0;
+				if (ExpTable.ShipExp.ContainsKey(ship.Level + 1) && ship.Level != 99)
+				{
+					double tmpExpProgress = ((double)ExpTable.ShipExp[ship.Level].Next - (double)ship.ExpNext) / (double)ExpTable.ShipExp[ship.Level].Next * 100;
+					expProgress = (int)Math.Truncate(tmpExpProgress);
+				}
+				long[] apiExp = { ship.ExpTotal, (long)ship.ExpNext, (long)expProgress };
+				sb.AppendFormat(@"{{""api_id"":{0},""api_ship_id"":{1},""api_lv"":{2},""api_kyouka"":[{3}],""api_exp"":[{4}],""api_slot_ex"":{5},""api_sally_area"":{6}",
+					ship.MasterID,ship.ShipID, ship.Level,
+					string.Join(",", (int[])ship.RawData.api_kyouka),
+					string.Join(",", apiExp),
+					ship.ExpansionSlot,
+					(ship.SallyArea >= 0 ? ship.SallyArea : 0));
+				if (ship.SpItemKind > 0)
+				{
+					switch (ship.SpItemKind)
+					{
+						case 1:
+							sb.AppendFormat(@",""api_sp_effect_items"": [{{""api_kind"":{0},""api_raig"":{1},""api_souk"":{2}}}]}},", ship.SpItemKind, ship.SpItemRaig, ship.SpItemSouk);
+							break;
+						case 2:
+							sb.AppendFormat(@",""api_sp_effect_items"": [{{""api_kind"":{0},""api_houg"":{1},""api_kaih"":{2}}}]}},", ship.SpItemKind, ship.SpItemHoug, ship.SpItemKaih);
+							break;
+					}
+				}
+				else
+					sb.AppendFormat("}},");
 			}
 			sb.Remove(sb.Length - 1, 1);        // remove ","
 			sb.Append("]");
@@ -1457,7 +1536,7 @@ namespace ElectronicObserver.Window
 		/// <returns></returns>
 		private Process OpenUrlWithDeciBuilderData(string baseUrl, int areaId, bool[] fleet)
 		{
-			string data = CreateDeciBuilderData(areaId, fleet);
+			string data = CreateDeciBuilderData(areaId, fleet, false);
 			string url = $@"{baseUrl}?predeck={data.Replace("\"", "\\\"")}";
 
 			ProcessStartInfo pi = new ProcessStartInfo()
