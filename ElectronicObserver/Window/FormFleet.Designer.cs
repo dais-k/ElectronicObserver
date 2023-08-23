@@ -92,93 +92,93 @@
             this.ContextMenuFleet_Capture,
             this.ContextMenuFleet_OutputFleetImage});
             this.ContextMenuFleet.Name = "ContextMenuFleet";
-            this.ContextMenuFleet.Size = new System.Drawing.Size(362, 280);
+            this.ContextMenuFleet.Size = new System.Drawing.Size(374, 280);
             this.ContextMenuFleet.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenuFleet_Opening);
             // 
             // ContextMenuFleet_CopyFleet
             // 
             this.ContextMenuFleet_CopyFleet.Name = "ContextMenuFleet_CopyFleet";
-            this.ContextMenuFleet_CopyFleet.Size = new System.Drawing.Size(361, 22);
+            this.ContextMenuFleet_CopyFleet.Size = new System.Drawing.Size(373, 22);
             this.ContextMenuFleet_CopyFleet.Text = "編成テキストをコピー(&C)";
             this.ContextMenuFleet_CopyFleet.Click += new System.EventHandler(this.ContextMenuFleet_CopyFleet_Click);
             // 
             // ContextMenuFleet_CopyFleetDeckBuilder
             // 
             this.ContextMenuFleet_CopyFleetDeckBuilder.Name = "ContextMenuFleet_CopyFleetDeckBuilder";
-            this.ContextMenuFleet_CopyFleetDeckBuilder.Size = new System.Drawing.Size(361, 22);
+            this.ContextMenuFleet_CopyFleetDeckBuilder.Size = new System.Drawing.Size(373, 22);
             this.ContextMenuFleet_CopyFleetDeckBuilder.Text = "編成をコピー(デッキビルダーフォーマット)(&D)";
             this.ContextMenuFleet_CopyFleetDeckBuilder.Click += new System.EventHandler(this.ContextMenuFleet_CopyFleetDeckBuilder_Click);
             // 
             // ContextMenuFleet_CopyKanmusuList
             // 
             this.ContextMenuFleet_CopyKanmusuList.Name = "ContextMenuFleet_CopyKanmusuList";
-            this.ContextMenuFleet_CopyKanmusuList.Size = new System.Drawing.Size(361, 22);
+            this.ContextMenuFleet_CopyKanmusuList.Size = new System.Drawing.Size(373, 22);
             this.ContextMenuFleet_CopyKanmusuList.Text = "編成をコピー(艦隊晒しページフォーマット)(&R)";
             this.ContextMenuFleet_CopyKanmusuList.Click += new System.EventHandler(this.ContextMenuFleet_CopyKanmusuList_Click);
             // 
             // ContextMenuFleet_CopyToFleetAnalysis
             // 
             this.ContextMenuFleet_CopyToFleetAnalysis.Name = "ContextMenuFleet_CopyToFleetAnalysis";
-            this.ContextMenuFleet_CopyToFleetAnalysis.Size = new System.Drawing.Size(361, 22);
+            this.ContextMenuFleet_CopyToFleetAnalysis.Size = new System.Drawing.Size(373, 22);
             this.ContextMenuFleet_CopyToFleetAnalysis.Text = "全艦娘をコピー(艦隊分析フォーマット)(&F)";
             this.ContextMenuFleet_CopyToFleetAnalysis.Click += new System.EventHandler(this.ContextMenuFleet_CopyToFleetAnalysis_Click);
             // 
             // ContextMenuFleet_CopyToFleetAnalysisWithID
             // 
             this.ContextMenuFleet_CopyToFleetAnalysisWithID.Name = "ContextMenuFleet_CopyToFleetAnalysisWithID";
-            this.ContextMenuFleet_CopyToFleetAnalysisWithID.Size = new System.Drawing.Size(361, 22);
-            this.ContextMenuFleet_CopyToFleetAnalysisWithID.Text = "ID付きの全艦娘をピー(制空権シミュレータV2用)(&T)";
+            this.ContextMenuFleet_CopyToFleetAnalysisWithID.Size = new System.Drawing.Size(373, 22);
+            this.ContextMenuFleet_CopyToFleetAnalysisWithID.Text = "ID付きの全艦娘をコピー(制空権シミュレータV2用)(&T)";
             this.ContextMenuFleet_CopyToFleetAnalysisWithID.Click += new System.EventHandler(this.ContextMenuFleet_CopyToFleetAnalysisWithID_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(358, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(370, 6);
             // 
             // ContextMenuFleet_OpenTacticalRoom
             // 
             this.ContextMenuFleet_OpenTacticalRoom.Name = "ContextMenuFleet_OpenTacticalRoom";
-            this.ContextMenuFleet_OpenTacticalRoom.Size = new System.Drawing.Size(361, 22);
+            this.ContextMenuFleet_OpenTacticalRoom.Size = new System.Drawing.Size(373, 22);
             this.ContextMenuFleet_OpenTacticalRoom.Text = "作戦室を開く(&W)";
             this.ContextMenuFleet_OpenTacticalRoom.Click += new System.EventHandler(this.ContextMenuFleet_OpenTacticalRoom_Click);
             // 
             // ContextMenuFleet_OpenAirControlSimulator
             // 
             this.ContextMenuFleet_OpenAirControlSimulator.Name = "ContextMenuFleet_OpenAirControlSimulator";
-            this.ContextMenuFleet_OpenAirControlSimulator.Size = new System.Drawing.Size(361, 22);
+            this.ContextMenuFleet_OpenAirControlSimulator.Size = new System.Drawing.Size(373, 22);
             this.ContextMenuFleet_OpenAirControlSimulator.Text = "制空権シミュレータを開く(&V)";
             this.ContextMenuFleet_OpenAirControlSimulator.Click += new System.EventHandler(this.ContextMenuFleet_OpenAirControlSimulator_Click);
             // 
             // ContextMenuFleet_OpenDeckBuilder
             // 
             this.ContextMenuFleet_OpenDeckBuilder.Name = "ContextMenuFleet_OpenDeckBuilder";
-            this.ContextMenuFleet_OpenDeckBuilder.Size = new System.Drawing.Size(361, 22);
+            this.ContextMenuFleet_OpenDeckBuilder.Size = new System.Drawing.Size(373, 22);
             this.ContextMenuFleet_OpenDeckBuilder.Text = "デッキビルダーを開く(&X)";
             this.ContextMenuFleet_OpenDeckBuilder.Click += new System.EventHandler(this.ContextMenuFleet_OpenDeckBuilder_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(358, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(370, 6);
             // 
             // ContextMenuFleet_AntiAirDetails
             // 
             this.ContextMenuFleet_AntiAirDetails.Name = "ContextMenuFleet_AntiAirDetails";
-            this.ContextMenuFleet_AntiAirDetails.Size = new System.Drawing.Size(361, 22);
+            this.ContextMenuFleet_AntiAirDetails.Size = new System.Drawing.Size(373, 22);
             this.ContextMenuFleet_AntiAirDetails.Text = "対空砲火の詳細表示(&A)";
             this.ContextMenuFleet_AntiAirDetails.Click += new System.EventHandler(this.ContextMenuFleet_AntiAirDetails_Click);
             // 
             // ContextMenuFleet_Capture
             // 
             this.ContextMenuFleet_Capture.Name = "ContextMenuFleet_Capture";
-            this.ContextMenuFleet_Capture.Size = new System.Drawing.Size(361, 22);
+            this.ContextMenuFleet_Capture.Size = new System.Drawing.Size(373, 22);
             this.ContextMenuFleet_Capture.Text = "この画面をキャプチャ(&S)";
             this.ContextMenuFleet_Capture.Click += new System.EventHandler(this.ContextMenuFleet_Capture_Click);
             // 
             // ContextMenuFleet_OutputFleetImage
             // 
             this.ContextMenuFleet_OutputFleetImage.Name = "ContextMenuFleet_OutputFleetImage";
-            this.ContextMenuFleet_OutputFleetImage.Size = new System.Drawing.Size(361, 22);
+            this.ContextMenuFleet_OutputFleetImage.Size = new System.Drawing.Size(373, 22);
             this.ContextMenuFleet_OutputFleetImage.Text = "編成画像を出力(&I)";
             this.ContextMenuFleet_OutputFleetImage.Click += new System.EventHandler(this.ContextMenuFleet_OutputFleetImage_Click);
             // 
