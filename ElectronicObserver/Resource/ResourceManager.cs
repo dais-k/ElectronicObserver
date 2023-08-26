@@ -224,6 +224,8 @@ namespace ElectronicObserver.Resource
 			ArmyInfantry,
 			Reserved53, 
 			SmokeGenerator,
+			BarrageBalloon,
+			JetInterceptor,
 			Locked,					
 			Unknown,				//不明な場合はこれ
 		}
@@ -476,6 +478,8 @@ namespace ElectronicObserver.Resource
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/ArmyInfantry.png", "Equipment_ArmyInfantry");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/Unknown.png", "Equipment_Reserved53"); 
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/SmokeGenerator.png", "Equipment_SmokeGenerator");
+				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/BarrageBalloon.png", "Equipment_BarrageBalloon");
+				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/JetInterceptor.png", "Equipment_JetInterceptor");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/Locked.png", "Equipment_Locked");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/Unknown.png", "Equipment_Unknown");
 			}

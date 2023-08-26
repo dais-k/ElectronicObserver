@@ -415,6 +415,8 @@ namespace ElectronicObserver.Data
 				case 121: return "New Orleans級";
 				case 122: return "Salmon級";
 				case 123: return "改敷島型";
+				case 124: return "Marcello級";
+				case 125: return "Nevada級";
 				default: 
 					return "不明";
 			}
