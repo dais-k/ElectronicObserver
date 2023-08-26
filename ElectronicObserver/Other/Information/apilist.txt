@@ -365,6 +365,8 @@ api_start2/getData	：艦娘・装備固有データその他
 				51=夜間水上爆撃機
 				52=陸戦部隊
 				54=艦載発煙装置
+				55=阻塞気球
+				56=ジェット局地戦闘機
 
 			[4]: 航空機カテゴリ
 				 0=非航空機
@@ -410,12 +412,13 @@ api_start2/getData	：艦娘・装備固有データその他
 				46=Corsair
 				47=双発戦闘機
 				48=B25
-				49=Loire130M
+				49=英仏夜間偵察機
 				50=高性能艦上戦闘機
 				51=Mosquito
 				52=一式戦隼
 				53=オートジャイロ（回転翼機）
 				54=三式指揮連絡機
+				55=Me262
 
 		api_taik		：耐久(0)
 		api_souk		：装甲
@@ -1116,7 +1119,21 @@ api_get_member/picture_book	：艦船図鑑　図鑑登録済みのもののみ�
 			108=Town級
 			109=潜高型
 			110=Brooklyn級
-			110=宗谷型
+			111=宗谷型
+			112=Illustrious級
+			113=Conte di Cavour級
+			114=Gato級
+			115=特2TL型
+			116=Independence級
+			117=鵜来型
+			118=Ranger級
+			119=特種船M丙型
+			120=第百一号型
+			121=New Orleans級
+			122=Salmon級
+			123=改敷島型
+			124=Marcello級
+			125=Nevada級
 		api_cnum			：艦番
 		api_taik			：耐久
 		api_souk			：装甲
