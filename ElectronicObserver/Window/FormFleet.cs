@@ -162,6 +162,8 @@ namespace ElectronicObserver.Window
 							supporttype = "支援射撃"; break;
 						case 3:
 							supporttype = "支援長距離雷撃"; break;
+						case 4:
+							supporttype = "対潜支援哨戒"; break;
 					}
 
 					double expeditionBonus = Calculator.GetExpeditionBonus(fleet);
@@ -1530,14 +1532,18 @@ namespace ElectronicObserver.Window
 
 		/// <summary>
 		/// 外部サイトをデッキビルダー形式指定で開く
+		/// =>デッキビルダー形式のデータをクリップボードにコピーして外部サイトを開く
 		/// </summary>
 		/// <param name="baseUrl"></param>
 		/// <param name="areaId"></param>
 		/// <returns></returns>
 		private Process OpenUrlWithDeciBuilderData(string baseUrl, int areaId, bool[] fleet)
 		{
-			string data = CreateDeciBuilderData(areaId, fleet, false);
-			string url = $@"{baseUrl}?predeck={data.Replace("\"", "\\\"")}";
+			//string data = CreateDeciBuilderData(areaId, fleet, false);
+			Clipboard.SetData(DataFormats.StringFormat, CreateDeciBuilderData(areaId, fleet, false));
+			//string url = $@"{baseUrl}?predeck={data.Replace("\"", "\\\"")}";
+			string url = baseUrl;
+
 
 			ProcessStartInfo pi = new ProcessStartInfo()
 			{

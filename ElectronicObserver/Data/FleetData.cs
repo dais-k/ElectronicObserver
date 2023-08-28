@@ -434,6 +434,9 @@ namespace ElectronicObserver.Data
 				int shellingCount = 0;
 				int battleshipCount = 0;
 				int heavyCruiserCount = 0;
+				int antiSubmarineCount = 0;
+				int antiSubmarineCountEsc = 0;
+				int lightAircraftCarrierCount = 0;
 				int otherCount = 0;
 
 				foreach (var s in MembersInstance.Where(ss => ss != null))
@@ -445,14 +448,23 @@ namespace ElectronicObserver.Data
 							break;
 
 						case ShipTypes.AircraftCarrier:
-						case ShipTypes.LightAircraftCarrier:
 						case ShipTypes.ArmoredAircraftCarrier:
 							aircraftCarrierCount++;
 							break;
 
+						case ShipTypes.LightAircraftCarrier:
+							aircraftCarrierCount++;
+							lightAircraftCarrierCount++;
+							break;
+
 						case ShipTypes.SeaplaneTender:
+							aircraftAuxiliaryCount++;
+							antiSubmarineCount++;
+							break;
+
 						case ShipTypes.AmphibiousAssaultShip:
 							aircraftAuxiliaryCount++;
+							antiSubmarineCount++;
 							break;
 
 						case ShipTypes.AviationBattleship:
@@ -480,6 +492,20 @@ namespace ElectronicObserver.Data
 							heavyCruiserCount++;
 							break;
 
+						case ShipTypes.LightCruiser:
+						case ShipTypes.TrainingCruiser:
+							otherCount++;
+							antiSubmarineCount++;
+							break;
+
+						case ShipTypes.FleetOiler:
+							antiSubmarineCount++;
+							break;
+
+						case ShipTypes.Escort:
+							antiSubmarineCountEsc++;
+							break;
+
 						default:
 							otherCount++;
 							break;
@@ -493,6 +519,12 @@ namespace ElectronicObserver.Data
 
 				if (shellingCount == 0)
 				{
+					if (lightAircraftCarrierCount >= 1)
+					{
+						if (lightAircraftCarrierCount >= 2 || antiSubmarineCount >= 1 || antiSubmarineCountEsc >= 2)
+								return 4; //対潜支援
+					}
+
 					if (aircraftCarrierCount >= 1 ||
 						aircraftAuxiliaryCount >= 2 ||
 						aircraftShellingCount >= 2)
