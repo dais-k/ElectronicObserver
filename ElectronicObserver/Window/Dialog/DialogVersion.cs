@@ -41,6 +41,12 @@ namespace ElectronicObserver.Window.Dialog
 		{
 			System.Diagnostics.Process.Start("https://github.com/yosxpeee/ElectronicObserver");
 		}
+
+		private void label9_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+		{
+			System.Diagnostics.Process.Start("https://twitter.com/74EO_iwakawa");
+		}
+
 		private void TextInformation3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
 		{
 			System.Diagnostics.Process.Start("https://github.com/dais-k/ElectronicObserver/");
@@ -58,5 +64,6 @@ namespace ElectronicObserver.Window.Dialog
 
 			sr.Close();
 		}
+
 	}
 }

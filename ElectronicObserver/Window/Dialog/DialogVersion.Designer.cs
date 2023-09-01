@@ -42,7 +42,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.LinkLabel();
             this.label10 = new System.Windows.Forms.Label();
             this.TextInformation3 = new System.Windows.Forms.LinkLabel();
             this.label12 = new System.Windows.Forms.Label();
@@ -195,9 +195,12 @@
             this.label9.Location = new System.Drawing.Point(74, 171);
             this.label9.Margin = new System.Windows.Forms.Padding(3);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(77, 15);
+            this.label9.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.label9.Size = new System.Drawing.Size(65, 15);
             this.label9.TabIndex = 18;
-            this.label9.Text = "岩川鯖の住人";
+            this.label9.TabStop = true;
+            this.label9.Text = "岩川鯖の人";
+            this.label9.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.label9_LinkClicked);
             // 
             // label10
             // 
@@ -282,9 +285,9 @@
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.Label label8;
-		private System.Windows.Forms.Label label9;
 		private System.Windows.Forms.Label label10;
 		private System.Windows.Forms.LinkLabel TextInformation3;
 		private System.Windows.Forms.Label label12;
+		private System.Windows.Forms.LinkLabel label9;
 	}
 }
