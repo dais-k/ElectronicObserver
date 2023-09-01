@@ -9,6 +9,7 @@ using System.Linq;
 using System.Runtime;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ElectronicObserver.Utility.Data
 {
@@ -855,8 +856,8 @@ namespace ElectronicObserver.Utility.Data
 			var slotInstanceMaster = ship.SlotInstanceMaster;
 			var allSlotInstance = ship.AllSlotInstance.ToArray();
 			var antiGroundBomber = 0;
-			double[] rateDD = new double[4] { 1.4, 1.0, 1.0, 1.0 };
-			double[] bonusSub = new double[4] { 30, 30, 30, 30 };
+			double[] rateDD = new double[5] { 1.4, 1.0, 1.0, 1.0, 1.0 };
+			double[] bonusSub = new double[5] { 30, 30, 30, 30, 30 };
 			double basepower = 0;
 
 			ShipDataMaster attacker = KCDatabase.Instance.MasterShips[shipID];
@@ -905,6 +906,7 @@ namespace ElectronicObserver.Utility.Data
 			}
 			else
 			{
+				basepower = spItemHoug + firepowerTotal + GetDayBattleEquipmentLevelBonus(allSlotInstance) + 5 + GetCombinedFleetShellingDamageBonus(fleet);
 				if (attacker?.ShipType == ShipTypes.Destroyer)
 				{
 					basepower *= rateDD[skin];
@@ -913,8 +915,6 @@ namespace ElectronicObserver.Utility.Data
 				{
 					basepower += bonusSub[skin];
 				}
-				basepower = spItemHoug + firepowerTotal + GetDayBattleEquipmentLevelBonus(allSlotInstance) + 5 + GetCombinedFleetShellingDamageBonus(fleet);
-
 				basepower = GetGroundEnemyAttackPower(ship, skin, basepower, true);
 				basepower = Math.Floor(CapDamage(basepower, 220));
 				if (skin == 3)
@@ -940,8 +940,8 @@ namespace ElectronicObserver.Utility.Data
 			var aircraft = ship.Aircraft;
 			var airs = slotInstance.Zip(aircraft, (eq, count) => new { eq, master = eq?.MasterEquipment, count }).Where(a => a.eq != null); 
 			
-			double[] rateDD = new double[4] { 1.4, 1.0, 1.0, 1.0 };
-			double[] bonusSub = new double[4] { 30, 30, 30, 30 };
+			double[] rateDD = new double[5] { 1.4, 1.0, 1.0, 1.0, 1.0 };
+			double[] bonusSub = new double[5] { 30, 30, 30, 30, 30 };
 			double basepower = 0;
 
 			ShipDataMaster attacker = KCDatabase.Instance.MasterShips[shipID];
@@ -957,6 +957,7 @@ namespace ElectronicObserver.Utility.Data
 			}
 			else
 			{
+				basepower = spItemHoug + firepowerTotal + GetNightBattleEquipmentLevelBonus(allSlotInstance) + 5;
 				if (attacker?.ShipType == ShipTypes.Destroyer)
 				{
 					basepower *= rateDD[skin];
@@ -965,9 +966,8 @@ namespace ElectronicObserver.Utility.Data
 				{
 					basepower += bonusSub[skin];
 				}
-				basepower = spItemHoug + firepowerTotal + GetNightBattleEquipmentLevelBonus(allSlotInstance) + 5;
 				basepower = GetGroundEnemyAttackPower(ship, skin, basepower, false);
-				basepower = Math.Floor(CapDamage(basepower, 220));
+				basepower = Math.Floor(CapDamage(basepower, 360));
 				if (skin == 3)
 					basepower = GetDayGroundAttackAfterCAP(ship, basepower);
 			}
@@ -977,7 +977,7 @@ namespace ElectronicObserver.Utility.Data
 
 		#region 対地補正計算
 		/// <summary>
-		/// 対地攻撃補正(配列は砲台、ハードスキン、ソフトスキン、集積地キャップ前)
+		/// 対地攻撃補正(配列は砲台、離島棲姫、ソフトスキン、集積地キャップ前)
 		/// </summary>
 		private static double GetGroundEnemyAttackPower(ShipData ship, int skin, double basepower, bool ifday)
 		{
@@ -987,30 +987,32 @@ namespace ElectronicObserver.Utility.Data
 			var allSlotInstance = ship.AllSlotInstance.ToArray();
 			var hpRate = ship.HPRate;
 
-			double landigCraftLevel = 0; double[] rate_landigCraft = new double[4] { 1.8, 1.8, 1.4, 1.4 };
+			double landigCraftLevel = 0; double[] rate_landigCraft = new double[5] { 1.8, 1.8, 1.4, 1.4, 1.7 };
 			double spAmphibiousTankLevel = 0;
 
-			var aaShell = 0; double[] rate_aaShell = new double[4] { 1.0, 1.75, 2.5, 2.5 };
-			var rocketWG = 0; double[] rate_rocketWG1 = new double[4] { 1.6 ,1.4, 1.3, 1.3}; double[] rate_rocketWG2 = new double[4] { 2.72, 2.1, 1.82, 1.82 };
-			var rocket20 = 0; double[] rate_rocket201 = new double[4] { 1.5, 1.3, 1.25, 1.25 }; double[] rate_rocket202 = new double[4] { 2.7, 2.145, 1.875, 1.875 };
+			var landigCraft = 0;
+			var aaShell = 0; double[] rate_aaShell = new double[5] { 1.0, 1.75, 2.5, 2.5, 1.75 };
+			var rocketWG = 0; double[] rate_rocketWG1 = new double[5] { 1.6 ,1.4, 1.3, 1.3, 1.4 }; double[] rate_rocketWG2 = new double[5] { 2.72, 2.1, 1.82, 1.82, 1.68 };
+			var rocket20 = 0; double[] rate_rocket201 = new double[5] { 1.5, 1.3, 1.25, 1.25, 1.25 }; double[] rate_rocket202 = new double[5] { 2.7, 2.145, 1.875, 1.875, 1.75 };
 			var rocket20S = 0;
-			var depthCharge = 0; double[] rate_depthCharge1 = new double[4] { 1.3, 1.2, 1.2, 1.2 }; double[] rate_depthCharge2 = new double[4] { 1.95, 1.68, 1.56, 1.56 };
+			var depthCharge = 0; double[] rate_depthCharge1 = new double[5] { 1.3, 1.2, 1.2, 1.2, 1.1 }; double[] rate_depthCharge2 = new double[5] { 1.95, 1.8, 1.56, 1.56, 1.265 };
 			var depthChargeS = 0; 
-			var daihatsu = 0; double[] rate_daihatsu1 = new double[4] { 1.0, 1.0, 1.0, 1.0 };
-			var tokudaihatsu = 0; double[] rate_tokudaihatsu1 = new double[4] { 1.15, 1.15, 1.15, 1.15 };
-			var rikusen = 0; double[] rate_rikusenisshiki1 = new double[4] { 1.5, 1.2, 1.5, 1.5 }; double[] rate_rikusenisshiki2 = new double[4] { 2.1, 1.68, 1.95, 1.95 };
-			var isshiki = 0; 
-			var elevenReg = 0; double[] rate_elevenReg1 = new double[4] { 1.0, 1.0, 1.0, 1.0 };
-			var no2Tank = 0; double[] rate_no2Tank1 = new double[4] { 1.5, 1.2, 1.5, 1.5 }; double[] rate_no2Tank2 = new double[4] { 2.1, 1.68, 1.95, 1.95 };
-			var no3Tank = 0; double[] rate_no3Tank1 = new double[4] { 1.0, 1.0, 1.0, 1.0 };
-			var m4A1DD = 0; double[] rate_m4A1DD = new double[4] { 2.0, 1.8, 1.1, 1.1 };
-			var busouDaihatsu = 0; double[] rate_busouAB1 = new double[4] { 1.3, 1.3, 1.1, 1.1 }; double[] rate_busouAB2 = new double[4] { 1.56, 1.43, 1.21, 1.21 };
+			var daihatsu = 0; double[] rate_daihatsu1 = new double[5] { 1.0, 1.0, 1.0, 1.0, 1.0 };
+			var tokudaihatsu = 0; double[] rate_tokudaihatsu1 = new double[5] { 1.15, 1.15, 1.15, 1.15, 1.2 };
+			var rikusen = 0; double[] rate_rikusenisshiki1 = new double[5] { 1.5, 1.2, 1.5, 1.5, 1.6 }; double[] rate_rikusenisshiki2 = new double[5] { 2.1, 1.68, 1.95, 1.95, 2.4 };
+			var isshiki = 0;
+			var chiha = 0; double[] rate_chiha1 = new double[5] { 1.0, 1.0, 1.0, 1.0, 1.0 }; double[] rate_chiha2 = new double[5] { 1.4, 1.4, 1.3, 1.3, 1.5 };
+			var chihaKai = 0; 
+			var elevenReg = 0; double[] rate_elevenReg1 = new double[5] { 1.0, 1.0, 1.0, 1.0, 1.0 };
+			var no2Tank = 0; double[] rate_no2Tank1 = new double[5] { 1.5, 1.2, 1.5, 1.5, 1.6 }; double[] rate_no2Tank2 = new double[5] { 2.1, 1.68, 1.95, 1.95, 2.4 };
+			var no3Tank = 0; double[] rate_no3Tank1 = new double[5] { 1.15, 1.15, 1.15, 1.15, 1.2 };
+			var m4A1DD = 0; double[] rate_m4A1DDchihaKai = new double[5] { 2.0, 1.8, 1.1, 1.1, 2.0};
+			var busouDaihatsu = 0; double[] rate_busouAB1 = new double[5] { 1.3, 1.3, 1.1, 1.1, 1.5 }; double[] rate_busouAB2 = new double[5] { 1.56, 1.43, 1.21, 1.21, 1.65 };
 			var daihaysuAB = 0;
-			var chiha = 0;
-			var spAmphibiousTank = 0; double[] rate_spAmphibiousTank1 = new double[4] { 2.4, 2.4, 1.5, 1.5 }; double[] rate_spAmphibiousTank2 = new double[4] { 3.24, 3.24, 1.8, 1.8 };
-			var apShell = 0; double[] rate_apShell = new double[4] { 1.85, 1.0, 1.0, 1.0 };
-			var seaPlane = 0; double[] rate_seaPlane = new double[4] { 1.5, 1.0, 1.2, 1.2 };
-			var Bomber = 0; double[] rate_Bomber1 = new double[4] { 1.5, 1.4, 1.0, 1.0 }; double[] rate_Bomber2 = new double[4] { 3.0, 2.45, 1.0, 1.0 };
+			var spAmphibiousTank = 0; double[] rate_spAmphibiousTank1 = new double[5] { 2.4, 2.4, 1.5, 1.5, 2.8 }; double[] rate_spAmphibiousTank2 = new double[5] { 3.24, 3.24, 1.8, 1.8, 4.2 };
+			var apShell = 0; double[] rate_apShell = new double[5] { 1.85, 1.0, 1.0, 1.0, 1.3 };
+			var seaPlane = 0; double[] rate_seaPlane = new double[5] { 1.5, 1.0, 1.2, 1.2, 1.3 };
+			var Bomber = 0; double[] rate_Bomber1 = new double[5] { 1.5, 1.4, 1.0, 1.0, 1.3 }; double[] rate_Bomber2 = new double[5] { 3.0, 2.45, 1.0, 1.0, 1.62 };
 
 			foreach (var slot in allSlotInstance)
 			{
@@ -1025,6 +1027,7 @@ namespace ElectronicObserver.Utility.Data
 						apShell++;
 						break;
 					case EquipmentTypes.LandingCraft:
+						landigCraft++;
 						landigCraftLevel += slot.Level;
 						break;
 					case EquipmentTypes.SeaplaneFighter:
@@ -1053,10 +1056,12 @@ namespace ElectronicObserver.Utility.Data
 						break;
 					case 346:
 						depthCharge++;
-						if (depthCharge > 4) depthCharge = 4; break;
+						if (depthCharge > 4) depthCharge = 4;
+						break;
 					case 347:
 						depthChargeS++;
-						if (depthChargeS > 4) depthChargeS = 4; break;
+						if (depthChargeS > 4) depthChargeS = 4;
+						break;
 					case 68:
 						daihatsu++;
 						break;
@@ -1087,71 +1092,123 @@ namespace ElectronicObserver.Utility.Data
 					case 409:
 						busouDaihatsu++;
 						break;
-					//case 494:
-					//case 495:
-					//chiha++;
-					//break;
+					case 494:
+						chiha++;
+						break;
+					case 495:
+						chihaKai++;
+						break;
 					case 167:
 						spAmphibiousTank++;
 						spAmphibiousTankLevel += slot.Level;
 						break;
 				}
-			}	
+			}
 
 			//一般対地乗算補正
-			{ 
-				if (aaShell != 0)
+			{
+				if (aaShell != 0) //三式弾
+				{
 					basepower *= rate_aaShell[skin];
-				if (rocketWG != 0)
+				}
+
+				if (rocketWG != 0) //WG42ロケット
+				{
 					if (rocketWG >= 2)
 						basepower *= rate_rocketWG2[skin];
 					else
 						basepower *= rate_rocketWG1[skin];
-				if (rocket20 + rocket20S != 0)
+				}
+
+				if (rocket20 + rocket20S != 0) //20cm対地砲
+				{
 					if (rocket20 + rocket20S >= 2)
 						basepower *= rate_rocket202[skin];
 					else
 						basepower *= rate_rocket201[skin];
-				if (depthCharge + depthChargeS != 0)
+				}
+
+				if (depthCharge + depthChargeS != 0) //二式迫撃砲
+				{
 					if (depthCharge + depthChargeS >= 2)
 						basepower *= rate_depthCharge2[skin];
 					else
 						basepower *= rate_depthCharge1[skin];
-				if ((daihatsu + tokudaihatsu + rikusen + isshiki + elevenReg + no2Tank + no3Tank + m4A1DD + daihaysuAB + busouDaihatsu) != 0)
+				}
+
+				if (landigCraft != 0) //上陸用舟艇
 				{
 					basepower *= rate_landigCraft[skin];
-					if (daihatsu != 0)
+
+					if (daihatsu != 0) //大発
+					{
 						basepower *= rate_daihatsu1[skin];
-					if (tokudaihatsu != 0)
+					}
+
+					if (tokudaihatsu != 0) //特大発
+					{
 						basepower *= rate_tokudaihatsu1[skin];
-					if (rikusen + isshiki != 0)
-						if (rikusen + isshiki >= 2)
+					}
+
+					if (rikusen + isshiki != 0) //陸戦隊+一式砲戦車
+					{
+						if (rikusen + isshiki >= 2) //2積み
+							basepower *= rate_rikusenisshiki2[skin];
+						else if (chiha + chihaKai + no3Tank >= 1) //チハ、チハ改、Ⅲ号のどれか混載
 							basepower *= rate_rikusenisshiki2[skin];
 						else
 							basepower *= rate_rikusenisshiki1[skin];
-					if (elevenReg != 0)
+					}
+
+					if (chiha + chihaKai != 0 && rikusen + isshiki == 0) //チハ+チハ改
+					{
+						if (chiha + chihaKai >= 2)
+							basepower *= rate_chiha2[skin];
+						else
+							basepower *= rate_chiha1[skin];
+					}
+
+					if (elevenReg != 0) //11連隊
+					{
 						basepower *= rate_elevenReg1[skin];
-					if (no3Tank != 0)
+					}
+
+					if (no3Tank != 0) //Ⅲ号戦車
+					{
 						basepower *= rate_no3Tank1[skin];
-					if (no2Tank != 0)
+					}
+
+					if (no2Tank != 0) //Ⅱ号戦車
+					{
 						if (no2Tank >= 2)
 							basepower *= rate_no2Tank2[skin];
 						else
 							basepower *= rate_no2Tank1[skin];
-					if (m4A1DD != 0)
-						basepower *= rate_m4A1DD[skin];
-					if(ifday == true)
-					{ 
-						if (daihaysuAB + busouDaihatsu != 0)
+					}
+
+					if (m4A1DD + chihaKai != 0) //M4A1+チハ改
+					{
+						basepower *= rate_m4A1DDchihaKai[skin];
+					}
+
+					if (ifday == true)
+					{
+						if (daihaysuAB + busouDaihatsu != 0) //装甲艇(AB)+武装大発
+						{
 							if (daihaysuAB + busouDaihatsu >= 2)
 								basepower *= rate_busouAB2[skin];
 							else
 								basepower *= rate_busouAB1[skin];
+						}
 					}
-					if (landigCraftLevel != 0)
-						basepower *= (landigCraftLevel / (daihatsu + tokudaihatsu + rikusen + isshiki + elevenReg + no2Tank + no3Tank + m4A1DD + daihaysuAB + busouDaihatsu) / 50) + 1;
+
+					if (landigCraftLevel != 0) //改修レベル
+					{
+						basepower *= (landigCraftLevel / landigCraft / 50) + 1;
+					}
 				}
-				if (spAmphibiousTank != 0)
+
+				if (spAmphibiousTank != 0) //内火艇
 				{
 					if (spAmphibiousTank >= 2)
 						basepower *= rate_spAmphibiousTank2[skin];
@@ -1160,15 +1217,24 @@ namespace ElectronicObserver.Utility.Data
 					if (spAmphibiousTankLevel != 0)
 						basepower *= (spAmphibiousTankLevel / spAmphibiousTank / 30) + 1;
 				}
-				if (apShell != 0)
+
+				if (apShell != 0) //徹甲弾
+				{ 
 					basepower *= rate_apShell[skin];
-				if (seaPlane != 0)
+				}
+
+				if (seaPlane != 0) //水戦・水爆
+				{ 
 					basepower *= rate_seaPlane[skin];
-				if (Bomber != 0)
+				}
+
+				if (Bomber != 0) //対地攻撃可能艦爆
+				{ 
 					if (Bomber >= 2)
 						basepower *= rate_Bomber2[skin];
 					else
 						basepower *= rate_Bomber1[skin];
+				}
 			}
 
 			//11連隊・一式砲戦車・III号戦車補正
@@ -1198,8 +1264,26 @@ namespace ElectronicObserver.Utility.Data
 				}
 			}
 
+			//チハ特殊補正
+			{
+				if (chiha != 0)
+				{
+					basepower *= 1.4;
+					basepower += 28;
+				}
+			}
+
+			//チハ改特殊補正
+			{
+				if (chihaKai != 0)
+				{
+					basepower *= 1.5;
+					basepower += 33;
+				}
+			}
+
 			//上陸支援舟艇シナジー補正
-			{ 
+			{
 				var typeA = daihatsu + tokudaihatsu + rikusen + isshiki + no2Tank;
 				var typeB = elevenReg + no3Tank + spAmphibiousTank;
 				if (daihaysuAB != 0 && busouDaihatsu != 0)
@@ -1219,10 +1303,25 @@ namespace ElectronicObserver.Utility.Data
 						basepower *= 1.32;
 						basepower += 12;
 					}
+					else if (chiha != 0 && chihaKai != 0)
+					{
+						basepower *= 1.5;
+						basepower += 25;
+					}
+					else if (chiha == 0 && chihaKai != 0)
+					{
+						basepower *= 1.4;
+						basepower += 20;
+					}
+					else if (chiha != 0 && chihaKai == 0)
+					{
+						basepower *= 1.4;
+						basepower += 20;
+					}
 				}
 				else if (daihaysuAB + busouDaihatsu != 0)
 				{
-					if (typeA + typeB != 0)
+					if (typeA + typeB + chiha + chihaKai != 0)
 					{
 						basepower *= 1.2;
 						basepower += 10;
@@ -1239,6 +1338,7 @@ namespace ElectronicObserver.Utility.Data
 				int[] nisikisyu = new int[5] {0, 60, 110, 150, 180 };
 				basepower += wg42[rocketWG] + taichi[rocket20] + taichisyu[rocket20S] + nisiki[depthCharge] + nisikisyu[depthChargeS];
 			}
+
 			int engagementForm = 1;
 			basepower *= GetHPDamageBonus(hpRate) * GetEngagementFormDamageRate(engagementForm);
 			basepower += GetLightCruiserDamageBonus(masterShip, allSlotMaster) + GetItalianDamageBonus(shipID, allSlotMaster);
@@ -1251,12 +1351,10 @@ namespace ElectronicObserver.Utility.Data
 		/// </summary>
 		private static double GetDayGroundAttackAfterCAP(ShipData ship, double basepower)
 		{
-
-			var allSlotInstance = ship.AllSlotInstance.ToArray();
-
 			double landigCraftLevel = 0; 
 			double spAmphibiousTankLevel = 0;
-
+			var allSlotInstance = ship.AllSlotInstance.ToArray();
+			var landigCraft = 0;
 			var rocketWG = 0; 
 			var rocket20 = 0; 
 			var depthCharge = 0;
@@ -1271,14 +1369,18 @@ namespace ElectronicObserver.Utility.Data
 			var busouDaihatsu = 0;
 			var daihaysuAB = 0;
 			var spAmphibiousTank = 0;
+			var chiha = 0;
+			var chihaKai = 0;
 
 			foreach (var slot in allSlotInstance)
 			{
 				if (slot == null)
 					continue;
+
 				switch (slot.MasterEquipment.CategoryType)
 				{
 					case EquipmentTypes.LandingCraft:
+						landigCraft++;
 						landigCraftLevel += slot.Level;
 						break;
 				}
@@ -1326,6 +1428,12 @@ namespace ElectronicObserver.Utility.Data
 					case 409:
 						busouDaihatsu++;
 						break;
+					case 494:
+						chiha++;
+						break;
+					case 495:
+						chihaKai++;
+						break;
 					case 167:
 						spAmphibiousTank++;
 						spAmphibiousTankLevel += slot.Level;
@@ -1336,58 +1444,103 @@ namespace ElectronicObserver.Utility.Data
 			//一般対地乗算補正
 			{
 				if (rocketWG != 0)
+				{
 					if (rocketWG >= 2)
 						basepower *= 1.625;
 					else
 						basepower *= 1.25;
+				}
+
 				if (rocket20 != 0)
+				{
 					if (rocket20 >= 2)
 						basepower *= 1.68;
 					else
 						basepower *= 1.2;
+				}
+
 				if (depthCharge != 0)
+				{
 					if (depthCharge >= 2)
 						basepower *= 1.38;
 					else
 						basepower *= 1.15;
-				if ((daihatsu + tokudaihatsu + rikusen + isshiki + elevenReg + no2Tank + no3Tank + m4A1DD + daihaysuAB + busouDaihatsu) != 0)
+				}
+
+				if (landigCraft != 0)
 				{
 					basepower *= 1.7;
+
 					if (daihatsu != 0)
+					{
 						basepower *= 1.0;
+					}
+
 					if (tokudaihatsu != 0)
+					{
 						basepower *= 1.2;
+					}
+
 					if (rikusen + isshiki != 0)
+					{
 						if (rikusen + isshiki >= 2)
+							basepower *= 2.08;
+						else if (chiha + chihaKai + no3Tank >= 1)
 							basepower *= 2.08;
 						else
 							basepower *= 1.3;
+					}
+
+					if (chiha + chihaKai != 0 && rikusen + isshiki == 0)
+					{
+						if (chiha + chihaKai >= 2)
+							basepower *= 1.6;
+						else
+							basepower *= 1.3;
+					}
+
 					if (elevenReg != 0)
+					{
 						basepower *= 1.0;
+					}
+
 					if (no3Tank != 0)
-						basepower *= 1.0;
+					{
+						basepower *= 1.2;
+					}
+
 					if (no2Tank != 0)
+					{
 						if (no2Tank >= 2)
 							basepower *= 1.3;
 						else
 							basepower *= 1.3;
-					if (m4A1DD != 0)
+					}
+
+					if (m4A1DD + chihaKai != 0)
+					{
 						basepower *= 1.2;
+					}
+
 					if (daihaysuAB + busouDaihatsu != 0)
+					{
 						if (daihaysuAB + busouDaihatsu >= 2)
 							basepower *= 1.65;
 						else
 							basepower *= 1.5;
+					}
+
 					if (landigCraftLevel != 0)
 					{ 
 						if(rikusen>=1 && no2Tank >= 1)
-							basepower *= Math.Pow((landigCraftLevel / (daihatsu + tokudaihatsu + rikusen + isshiki + elevenReg + no2Tank + no3Tank + m4A1DD + daihaysuAB + busouDaihatsu) / 50) + 1,3);
-						else if(rikusen + isshiki + no2Tank != 0)
-							basepower *= Math.Pow((landigCraftLevel / (daihatsu + tokudaihatsu + rikusen + isshiki + elevenReg + no2Tank + no3Tank + m4A1DD + daihaysuAB + busouDaihatsu) / 50) + 1, 2);
+							basepower *= Math.Pow((landigCraftLevel / landigCraft / 50) + 1, 3);
+						else if(rikusen + isshiki + no2Tank + no3Tank != 0)
+							basepower *= Math.Pow((landigCraftLevel / landigCraft / 50) + 1, 2);
 						else
-							basepower *= (landigCraftLevel / (daihatsu + tokudaihatsu + rikusen + isshiki + elevenReg + no2Tank + no3Tank + m4A1DD + daihaysuAB + busouDaihatsu) / 50) + 1;
+							basepower *= (landigCraftLevel / landigCraft / 50) + 1;
 					}
 				}
+
 				if (spAmphibiousTank != 0)
 				{
 					if (spAmphibiousTank >= 2)

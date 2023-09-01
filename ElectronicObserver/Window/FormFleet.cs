@@ -703,10 +703,12 @@ namespace ElectronicObserver.Window
 				var dayHardskin = CalcShipAttackPower.CaliculateDayGroundAtttackPower(ship, 1);
 				var daySoftskin = CalcShipAttackPower.CaliculateDayGroundAtttackPower(ship, 2);
 				var dayMegane = CalcShipAttackPower.CaliculateDayGroundAtttackPower(ship, 3);
+				var dayNatsuki = CalcShipAttackPower.CaliculateDayGroundAtttackPower(ship , 4);
 				var nightBunker = CalcShipAttackPower.CaliculateNightGroundAtttackPower(ship, 0);
 				var nightHardskin = CalcShipAttackPower.CaliculateNightGroundAtttackPower(ship, 1);
 				var nightSoftskin = CalcShipAttackPower.CaliculateNightGroundAtttackPower(ship, 2);
 				var nightMegane = CalcShipAttackPower.CaliculateNightGroundAtttackPower(ship, 3);
+				var nightNatsuki = CalcShipAttackPower.CaliculateNightGroundAtttackPower(ship, 4);
 				var showAntiGroundPower = Utility.Configuration.Config.FormFleet.ShowAntiGroundPower;
 				sb.AppendFormat("\r\n【昼戦】");
 				if (dayAttackList.Length != 0)
@@ -717,7 +719,7 @@ namespace ElectronicObserver.Window
 							attack.num + 1, Constants.GetDayAttackKind(attack.name), dayAttackPower[attack.num]);
 					}
 					if (showAntiGroundPower)
-						sb.AppendFormat("\r\n 0: 対地 - 威力: {0} / {1} / {2} / {3}", dayBunker, dayHardskin, daySoftskin, dayMegane);
+						sb.AppendFormat("\r\n 0: 対地 - 威力: {0} / {1} / {2} / {3} / {4}", dayBunker, dayHardskin, daySoftskin, dayMegane, dayNatsuki);
 					//sb.AppendLine();
 				}
 				else sb.AppendFormat("\r\n 攻撃不可");
@@ -749,7 +751,7 @@ namespace ElectronicObserver.Window
 				}
 				if (showAntiGroundPower)
 				{ 
-					sb.AppendFormat(" 0: 対地 - 威力: {0} / {1} / {2} / {3}", nightBunker, nightHardskin, nightSoftskin, nightMegane);
+					sb.AppendFormat(" 0: 対地 - 威力: {0} / {1} / {2} / {3} / {4}", nightBunker, nightHardskin, nightSoftskin, nightMegane, nightNatsuki);
 					sb.AppendLine();
 				}
 				{
@@ -906,7 +908,7 @@ namespace ElectronicObserver.Window
 				}
 				sb.AppendFormat("\r\n※攻撃威力は同航戦・制空権確保時の値");
 				if(showAntiGroundPower)
-					sb.AppendFormat("\r\n※対地攻撃の威力値は(砲台/離島/ソフトスキン/集積地)の並び");
+					sb.AppendFormat("\r\n※対地攻撃の威力値は(砲台/離島/ソフトスキン/集積地/港湾夏姫)の並び");
 				sb.AppendFormat("\r\n※対潜支援威力の()内の値は変動倍率x2.0(発動率50%)の値\r\n　エリソ確定大破/撃沈にはそれぞれ威力73/84が必要");
 				return sb.ToString();
 			}
