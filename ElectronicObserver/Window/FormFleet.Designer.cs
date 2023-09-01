@@ -139,14 +139,14 @@
             // 
             this.ContextMenuFleet_OpenTacticalRoom.Name = "ContextMenuFleet_OpenTacticalRoom";
             this.ContextMenuFleet_OpenTacticalRoom.Size = new System.Drawing.Size(373, 22);
-            this.ContextMenuFleet_OpenTacticalRoom.Text = "作戦室を開く(&W)";
+            this.ContextMenuFleet_OpenTacticalRoom.Text = "編成をコピーし作戦室を開く(&W)";
             this.ContextMenuFleet_OpenTacticalRoom.Click += new System.EventHandler(this.ContextMenuFleet_OpenTacticalRoom_Click);
             // 
             // ContextMenuFleet_OpenAirControlSimulator
             // 
             this.ContextMenuFleet_OpenAirControlSimulator.Name = "ContextMenuFleet_OpenAirControlSimulator";
             this.ContextMenuFleet_OpenAirControlSimulator.Size = new System.Drawing.Size(373, 22);
-            this.ContextMenuFleet_OpenAirControlSimulator.Text = "制空権シミュレータを開く(&V)";
+            this.ContextMenuFleet_OpenAirControlSimulator.Text = "編成をコピーし制空権シミュレータを開く(&V)";
             this.ContextMenuFleet_OpenAirControlSimulator.Click += new System.EventHandler(this.ContextMenuFleet_OpenAirControlSimulator_Click);
             // 
             // ContextMenuFleet_OpenDeckBuilder
