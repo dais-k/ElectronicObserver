@@ -32,6 +32,7 @@ namespace ElectronicObserver.Utility.Data
 			int rocketCount = 0;
 			int attackerCount = 0;
 			int bomberCount = 0;
+			int jetbomberCount = 0;
 			int suisei634Count = 0;
 			int zuiunCount = 0;
 			int fighterCount = 0;
@@ -56,6 +57,9 @@ namespace ElectronicObserver.Utility.Data
 						subGunCount++;
 						break;
 
+					case EquipmentTypes.JetBomber:
+						jetbomberCount++;
+						break;
 					case EquipmentTypes.CarrierBasedBomber:
 						bomberCount++;
 						if (eq.Name.Contains("六三四空"))
@@ -109,16 +113,16 @@ namespace ElectronicObserver.Utility.Data
 
 				if (reconCount > 0) //砲撃判定
 				{
-					if (mainGunCount == 2 && apShellCount == 1)
+					if (mainGunCount >= 2 && apShellCount >= 1)
 					{
 						dayAttackList.Add(DayAttackKind.CutinMainMain);
 					}
 
-					if (mainGunCount == 1 && subGunCount == 1 && apShellCount == 1)
+					if (mainGunCount >= 1 && subGunCount >= 1 && apShellCount >= 1)
 					{
 						dayAttackList.Add(DayAttackKind.CutinMainAP);
 					}
-					if (mainGunCount == 1 && subGunCount == 1 && radarCount == 1)
+					if (mainGunCount >= 1 && subGunCount >= 1 && radarCount >= 1)
 					{
 						dayAttackList.Add(DayAttackKind.CutinMainRadar);
 					}
@@ -167,7 +171,7 @@ namespace ElectronicObserver.Utility.Data
 
 			if (attacker.IsAircraftCarrier)
 			{
-				if (bomberCount + attackerCount > 0) dayAttackList.Add(DayAttackKind.AirAttack); //空撃
+				if (bomberCount + attackerCount + jetbomberCount > 0) dayAttackList.Add(DayAttackKind.AirAttack); //空撃
 			}
 
 			if (attacker.IsSubmarine) 
@@ -363,7 +367,7 @@ namespace ElectronicObserver.Utility.Data
 						|| attackerShipID == 433 || attackerShipID == 646
 						|| attackerShipID == 889 || attackerShipID == 536
 						|| attackerShipID == 529)        // Graf Zeppelin(改), Saratoga,加賀改二護,大鷹型改二
-						nightAttackList.Add(NightAttackKind.AirAttack);
+						nightAttackList.Add(NightAttackKind.AirAttack); //空撃
 				}
 
 				// 潜水艦カットイン
