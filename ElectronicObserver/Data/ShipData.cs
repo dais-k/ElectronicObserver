@@ -641,58 +641,75 @@ namespace ElectronicObserver.Data
                 if (slot == null)
                     continue;
 
-                switch (slot.MasterEquipment.CategoryType)
-                {
-                    case EquipmentTypes.MainGunSmall:
-                    case EquipmentTypes.MainGunMedium:
-                    case EquipmentTypes.APShell:
-                    case EquipmentTypes.AADirector:
-                    case EquipmentTypes.Searchlight:
-                    case EquipmentTypes.SearchlightLarge:
-                    case EquipmentTypes.AAGun:
-                    case EquipmentTypes.LandingCraft:
-                    case EquipmentTypes.SpecialAmphibiousTank:
+				switch (slot.MasterEquipment.CategoryType)
+				{
+					case EquipmentTypes.MainGunSmall:
+					case EquipmentTypes.MainGunMedium:
+					case EquipmentTypes.AAShell:
+					case EquipmentTypes.APShell:
+					case EquipmentTypes.AAGun:
+					case EquipmentTypes.AADirector:
+					case EquipmentTypes.LandingCraft:
+					case EquipmentTypes.SpecialAmphibiousTank:
+					case EquipmentTypes.Rocket:
+					case EquipmentTypes.Searchlight:
+					case EquipmentTypes.SearchlightLarge:
 					case EquipmentTypes.AviationPersonnel:
+					case EquipmentTypes.SurfaceShipPersonnel:
+					case EquipmentTypes.CommandFacility:
 						basepower += Math.Sqrt(slot.Level);
-                        break;
+						break;
 
-                    case EquipmentTypes.MainGunLarge:
-                    case EquipmentTypes.MainGunLarge2:
-                        basepower += Math.Sqrt(slot.Level) * 1.5;
-                        break;
+					case EquipmentTypes.MainGunLarge:
+					case EquipmentTypes.MainGunLarge2:
+						basepower += Math.Sqrt(slot.Level) * 1.5;
+						break;
 
-                    case EquipmentTypes.SecondaryGun:
-                        switch (slot.EquipmentID)
-                        {
-                            case 10:        // 12.7cm連装高角砲
-                            case 66:        // 8cm高角砲
-                            case 220:       // 8cm高角砲改+増設機銃
-                            case 275:       // 10cm連装高角砲改+増設機銃
-                                basepower += 0.2 * slot.Level;
-                                break;
+					case EquipmentTypes.SecondaryGun:
+						switch (slot.EquipmentID)
+						{
+							case 10:        // 12.7cm連装高角砲
+							case 66:        // 8cm高角砲
+							case 220:       // 8cm高角砲改+増設機銃
+							case 275:       // 10cm連装高角砲改+増設機銃
+							case 464:       // 10cm連装高角砲群 集中配備
+								basepower += 0.2 * slot.Level;
+								break;
 
-                            case 12:        // 15.5cm三連装副砲
-                            case 234:       // 15.5cm三連装副砲改
-                                basepower += 0.3 * slot.Level;
-                                break;
+							case 12:        // 15.5cm三連装副砲
+							case 234:       // 15.5cm三連装副砲改
+							case 247:       // 15.2cm三連装砲
+							case 467:       // 5inch連装砲(副砲配置) 集中配備
+								basepower += 0.3 * slot.Level;
+								break;
 
-                            default:
-                                basepower += Math.Sqrt(slot.Level);
-                                break;
-                        }
-                        break;
+							default:
+								basepower += Math.Sqrt(slot.Level);
+								break;
+						}
+						break;
 
-                    case EquipmentTypes.Sonar:
-                    case EquipmentTypes.SonarLarge:
-                        basepower += Math.Sqrt(slot.Level) * 0.75;
-                        break;
+					case EquipmentTypes.Sonar:
+					case EquipmentTypes.SonarLarge:
+						basepower += Math.Sqrt(slot.Level) * 0.75;
+						break;
 
-                    case EquipmentTypes.DepthCharge:
-                        if (!slot.MasterEquipment.IsDepthCharge)
-                            basepower += Math.Sqrt(slot.Level) * 0.75;
-                        break;
-                }
-            }
+					case EquipmentTypes.DepthCharge:
+						if (!slot.MasterEquipment.IsDepthCharge)
+							basepower += Math.Sqrt(slot.Level) * 0.75;
+						break;
+
+					case EquipmentTypes.SurfaceShipEquipment:
+						switch (slot.EquipmentID)
+						{
+							case 500:
+							case 501:
+								basepower += Math.Sqrt(slot.Level);
+								break;
+						}
+						break;
+				}
+			}
             return basepower;
         }
 
@@ -823,46 +840,67 @@ namespace ElectronicObserver.Data
                 if (slot == null)
                     continue;
 
-                switch (slot.MasterEquipment.CategoryType)
-                {
-                    case EquipmentTypes.MainGunSmall:
-                    case EquipmentTypes.MainGunMedium:
-                    case EquipmentTypes.MainGunLarge:
-                    case EquipmentTypes.Torpedo:
-                    case EquipmentTypes.APShell:
-                    case EquipmentTypes.LandingCraft:
-                    case EquipmentTypes.Searchlight:
-                    case EquipmentTypes.SubmarineTorpedo:
-                    case EquipmentTypes.AADirector:
-                    case EquipmentTypes.MainGunLarge2:
-                    case EquipmentTypes.SearchlightLarge:
-                    case EquipmentTypes.SpecialAmphibiousTank:
+				switch (slot.MasterEquipment.CategoryType)
+				{
+					case EquipmentTypes.MainGunSmall:
+					case EquipmentTypes.MainGunMedium:
+					case EquipmentTypes.MainGunLarge:
+					case EquipmentTypes.MainGunLarge2:
+					case EquipmentTypes.Torpedo:
+					case EquipmentTypes.MidgetSubmarine:
+					case EquipmentTypes.AAShell:
+					case EquipmentTypes.APShell:
+					case EquipmentTypes.AADirector:
+					case EquipmentTypes.LandingCraft:
+					case EquipmentTypes.SpecialAmphibiousTank:
+					case EquipmentTypes.Rocket:
+					case EquipmentTypes.Searchlight:
+					case EquipmentTypes.SearchlightLarge:
 					case EquipmentTypes.AviationPersonnel:
+					case EquipmentTypes.SurfaceShipPersonnel:
+					case EquipmentTypes.CommandFacility:
 						basepower += Math.Sqrt(slot.Level);
-                        break;
+						break;
 
-                    case EquipmentTypes.SecondaryGun:
-                        switch (slot.EquipmentID)
-                        {
-                            case 10:        // 12.7cm連装高角砲
-                            case 66:        // 8cm高角砲
-                            case 220:       // 8cm高角砲改+増設機銃
-                            case 275:       // 10cm連装高角砲改+増設機銃
-                                basepower += 0.2 * slot.Level;
-                                break;
+					case EquipmentTypes.SubmarineTorpedo:
+						basepower += Math.Sqrt(slot.Level) * 0.2;
+						break;
 
-                            case 12:        // 15.5cm三連装副砲
-                            case 234:       // 15.5cm三連装副砲改
-                                basepower += 0.3 * slot.Level;
-                                break;
+					case EquipmentTypes.SecondaryGun:
+						switch (slot.EquipmentID)
+						{
+							case 10:        // 12.7cm連装高角砲
+							case 66:        // 8cm高角砲
+							case 220:       // 8cm高角砲改+増設機銃
+							case 275:       // 10cm連装高角砲改+増設機銃
+							case 464:       // 10cm連装高角砲群 集中配備
+								basepower += 0.2 * slot.Level;
+								break;
 
-                            default:
-                                basepower += Math.Sqrt(slot.Level);
-                                break;
-                        }
-                        break;
-                }
-            }
+							case 12:        // 15.5cm三連装副砲
+							case 234:       // 15.5cm三連装副砲改
+							case 247:       // 15.2cm三連装砲
+							case 467:       // 5inch連装砲(副砲配置) 集中配備
+								basepower += 0.3 * slot.Level;
+								break;
+
+							default:
+								basepower += Math.Sqrt(slot.Level);
+								break;
+						}
+						break;
+
+					case EquipmentTypes.SurfaceShipEquipment:
+						switch (slot.EquipmentID)
+						{
+							case 500:
+							case 501:
+								basepower += Math.Sqrt(slot.Level);
+								break;
+						}
+						break;
+				}
+			}
             return basepower;
         }
 
