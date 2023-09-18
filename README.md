@@ -1,11 +1,9 @@
 
 # 七四式電子観測儀
 
-現在鋭意開発中の艦これ補助ブラウザです。  
-
-パラオ版が開発中止になってから幾つか自分で追加、修正したものです。
-プログラム組むのはド素人なので更新は期待しないでください。
-wikiを丸ごと移植する方法がわかりません。
+パラオ版が開発中止になってから幾つか自分で追加、修正したものです。  
+プログラム組むのはド素人なので更新は期待しないでください。  
+wikiを丸ごと移植する方法がわかりません。  
 
 ## 実装されている機能
 
@@ -58,13 +56,9 @@ wikiを丸ごと移植する方法がわかりません。
 
 ## Fork元について
 
-  下記Fork元の方は開発対応の終了を正式に宣言されておりますので、直接の連絡はお控えください
-  
-  	<オリジナル>
-	* 配布サイト:[ブルネイ工廠電気実験部](http://electronicobserver.blog.fc2.com/)
-	* 開発:[Andante](https://twitter.com/andanteyk)
-	<後継>
-	* 開発:[yosxpeee](https://github.com/yosxpeee/ElectronicObserver)
-	
+下記Fork元の方は開発対応の終了を正式に宣言されておりますので、直接の連絡はお控えください
+* オリジナル版配布サイト:[ブルネイ工廠電気実験部](http://electronicobserver.blog.fc2.com/)
+* オリジナル版開発:[Andante](https://twitter.com/andanteyk)
+* パラオ版開発:[yosxpeee](https://github.com/yosxpeee/ElectronicObserver)	
 
 
