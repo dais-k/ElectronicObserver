@@ -696,20 +696,17 @@ namespace ElectronicObserver.Window
 						sb.AppendFormat("[補強] {0}\r\n", exslot.NameWithLevel);
 				}
 
+				var showAntiGroundPower = Utility.Configuration.Config.FormFleet.ShowAntiGroundPower;
 				var slotmaster = ship.AllSlotMaster.ToArray();
 				var dayAttackList = Calculator2.GetDayAttackKindList(slotmaster, ship.ShipID);
 				var dayAttackPower = CalcShipAttackPower.CalculateDayAttackPowers(ship);
+
 				var dayBunker = CalcShipAttackPower.CaliculateDayGroundAtttackPower(ship, 0);
 				var dayHardskin = CalcShipAttackPower.CaliculateDayGroundAtttackPower(ship, 1);
 				var daySoftskin = CalcShipAttackPower.CaliculateDayGroundAtttackPower(ship, 2);
 				var dayMegane = CalcShipAttackPower.CaliculateDayGroundAtttackPower(ship, 3);
-				var dayNatsuki = CalcShipAttackPower.CaliculateDayGroundAtttackPower(ship , 4);
-				var nightBunker = CalcShipAttackPower.CaliculateNightGroundAtttackPower(ship, 0);
-				var nightHardskin = CalcShipAttackPower.CaliculateNightGroundAtttackPower(ship, 1);
-				var nightSoftskin = CalcShipAttackPower.CaliculateNightGroundAtttackPower(ship, 2);
-				var nightMegane = CalcShipAttackPower.CaliculateNightGroundAtttackPower(ship, 3);
-				var nightNatsuki = CalcShipAttackPower.CaliculateNightGroundAtttackPower(ship, 4);
-				var showAntiGroundPower = Utility.Configuration.Config.FormFleet.ShowAntiGroundPower;
+				var dayNatsuki = CalcShipAttackPower.CaliculateDayGroundAtttackPower(ship, 4);
+				var dayMegane3 = CalcShipAttackPower.CaliculateDayGroundAtttackPower(ship, 5);
 				sb.AppendFormat("\r\n【昼戦】");
 				if (dayAttackList.Length != 0)
 				{
@@ -719,7 +716,16 @@ namespace ElectronicObserver.Window
 							attack.num + 1, Constants.GetDayAttackKind(attack.name), dayAttackPower[attack.num]);
 					}
 					if (showAntiGroundPower)
-						sb.AppendFormat("\r\n 0: 対地 - 威力: {0} / {1} / {2} / {3} / {4}", dayBunker, dayHardskin, daySoftskin, dayMegane, dayNatsuki);
+					{ 
+						if (dayBunker!=0)
+						{
+							sb.AppendFormat("\r\n 0: 対地 - 威力: {0} / {1} / {2} / {3} / {4} / {5}", dayBunker, dayHardskin, daySoftskin, dayMegane, dayNatsuki, dayMegane3);
+						}
+						else
+						{
+							sb.AppendFormat("\r\n 0: 対地 - 攻撃不可");
+						}
+					}
 					//sb.AppendLine();
 				}
 				else sb.AppendFormat("\r\n 攻撃不可");
@@ -728,6 +734,12 @@ namespace ElectronicObserver.Window
 				{
 					var nightAttackList = Calculator2.GetNightAttackKindList(slotmaster, ship.ShipID);
 					var nightAttackPower = CalcShipAttackPower.CalculateNightAttackPowers(ship);
+					var nightBunker = CalcShipAttackPower.CaliculateNightGroundAtttackPower(ship, 0, nightAttackList);
+					var nightHardskin = CalcShipAttackPower.CaliculateNightGroundAtttackPower(ship, 1, nightAttackList);
+					var nightSoftskin = CalcShipAttackPower.CaliculateNightGroundAtttackPower(ship, 2, nightAttackList);
+					var nightMegane = CalcShipAttackPower.CaliculateNightGroundAtttackPower(ship, 3, nightAttackList);
+					var nightNatsuki = CalcShipAttackPower.CaliculateNightGroundAtttackPower(ship, 4, nightAttackList);
+					var nightMegane3 = CalcShipAttackPower.CaliculateNightGroundAtttackPower(ship, 5, nightAttackList);
 					sb.AppendFormat("\r\n【夜戦】");
 					if (nightAttackList.Length != 0)
 					{
@@ -741,6 +753,11 @@ namespace ElectronicObserver.Window
 							}
 						}
 						sb.AppendLine();
+						if (showAntiGroundPower)
+						{
+							sb.AppendFormat(" 0: 対地 - 威力: {0} / {1} / {2} / {3} / {4} / {5}", nightBunker, nightHardskin, nightSoftskin, nightMegane, nightNatsuki, nightMegane3);
+							sb.AppendLine();
+						}
 					}
 					else sb.AppendLine("\r\n 攻撃不可");
 				}
@@ -749,11 +766,7 @@ namespace ElectronicObserver.Window
 					sb.AppendFormat("\r\n【夜戦】\r\n 攻撃不可");
 					sb.AppendLine();
 				}
-				if (showAntiGroundPower)
-				{ 
-					sb.AppendFormat(" 0: 対地 - 威力: {0} / {1} / {2} / {3} / {4}", nightBunker, nightHardskin, nightSoftskin, nightMegane, nightNatsuki);
-					sb.AppendLine();
-				}
+
 				{
 					sb.AppendLine();
 					int torpedo = ship.TorpedoPower;
@@ -908,7 +921,7 @@ namespace ElectronicObserver.Window
 				}
 				sb.AppendFormat("\r\n※攻撃威力は同航戦・制空権確保時の値");
 				if(showAntiGroundPower)
-					sb.AppendFormat("\r\n※対地攻撃の威力値は(砲台/離島/ソフトスキン/集積地/港湾夏姫)の並び");
+					sb.AppendFormat("\r\n※対地攻撃の威力値は(砲台/離島/ソフトスキン/集積地/港湾夏姫/集積地Ⅲ)の並び");
 				sb.AppendFormat("\r\n※対潜支援威力の()内の値は変動倍率x2.0(発動率50%)の値\r\n　エリソ確定大破/撃沈にはそれぞれ威力73/84が必要");
 				return sb.ToString();
 			}

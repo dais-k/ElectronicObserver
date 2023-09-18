@@ -1,4 +1,5 @@
 ﻿using ElectronicObserver.Data;
+using ElectronicObserver.Observer.kcsapi.api_req_air_corps;
 using ElectronicObserver.Utility.Data;
 using ElectronicObserver.Utility.Mathematics;
 using System;
@@ -43,7 +44,7 @@ namespace ElectronicObserver.Utility.Data
 			var allSlotInstanceMaster = ship.AllSlotInstanceMaster;
 			var attackKind = Calculator2.GetDayAttackKindList(allSlotMaster.ToArray(), shipID);
 
-			int engagementForm = 1;
+			//int engagementForm = 1;
 			double basepower = 0;
 			int[] returnBasepower = new int[attackKind.Count()];
 
@@ -58,7 +59,7 @@ namespace ElectronicObserver.Utility.Data
 					//空撃の基本火力
 					basepower = Math.Floor((firepowerTotal + spItemHoug + torpedoTotal + spItemRaig + Math.Floor((bomberTotal + GetAviationPersonnelBomberLevelBonus(allSlotInstance)) * 1.3) + GetDayBattleEquipmentLevelBonus(allSlotInstance) + GetCombinedFleetShellingDamageBonus(fleet)) * 1.5) + 55;
 
-					basepower *= GetHPDamageBonus(hpRate) * GetEngagementFormDamageRate(engagementForm);
+					//basepower *= GetHPDamageBonus(hpRate) * GetEngagementFormDamageRate(engagementForm);
 
 					// キャップ
 					basepower = Math.Floor(CapDamage(basepower, 220));
@@ -68,7 +69,7 @@ namespace ElectronicObserver.Utility.Data
 					//砲撃の基本火力
 					basepower = firepowerTotal + spItemHoug + GetDayBattleEquipmentLevelBonus(allSlotInstance) + GetCombinedFleetShellingDamageBonus(fleet) + 5;
 
-					basepower *= GetHPDamageBonus(hpRate) * GetEngagementFormDamageRate(engagementForm);
+					//basepower *= GetHPDamageBonus(hpRate) * GetEngagementFormDamageRate(engagementForm);
 
 					basepower += GetLightCruiserDamageBonus(masterShip, allSlotMaster) + GetItalianDamageBonus(shipID, allSlotMaster);
 
@@ -147,7 +148,7 @@ namespace ElectronicObserver.Utility.Data
 			{
 
 				basepower = firepowerTotal + torpedoTotal + spItemHoug + spItemRaig + GetNightBattleEquipmentLevelBonus(allSlotInstance);
-				basepower *= GetHPDamageBonus(hpRate);
+				//basepower *= GetHPDamageBonus(hpRate);
 
 				switch (kind.name)
 				{
@@ -489,14 +490,18 @@ namespace ElectronicObserver.Utility.Data
                 {
                     case EquipmentTypes.MainGunSmall:
                     case EquipmentTypes.MainGunMedium:
-                    case EquipmentTypes.APShell:
-                    case EquipmentTypes.AADirector:
-                    case EquipmentTypes.Searchlight:
+					case EquipmentTypes.AAShell:
+					case EquipmentTypes.APShell:
+					case EquipmentTypes.AAGun:
+					case EquipmentTypes.AADirector:
+					case EquipmentTypes.LandingCraft:
+					case EquipmentTypes.SpecialAmphibiousTank:
+					case EquipmentTypes.Rocket:
+					case EquipmentTypes.Searchlight:
                     case EquipmentTypes.SearchlightLarge:
-                    case EquipmentTypes.AAGun:
-                    case EquipmentTypes.LandingCraft:
-                    case EquipmentTypes.SpecialAmphibiousTank:
 					case EquipmentTypes.AviationPersonnel:
+					case EquipmentTypes.SurfaceShipPersonnel:
+					case EquipmentTypes.CommandFacility:
 						basepower += Math.Sqrt(slot.Level);
                         break;
 
@@ -512,12 +517,15 @@ namespace ElectronicObserver.Utility.Data
                             case 66:        // 8cm高角砲
                             case 220:       // 8cm高角砲改+増設機銃
                             case 275:       // 10cm連装高角砲改+増設機銃
-                                basepower += 0.2 * slot.Level;
+							case 464:       // 10cm連装高角砲群 集中配備
+								basepower += 0.2 * slot.Level;
                                 break;
 
                             case 12:        // 15.5cm三連装副砲
                             case 234:       // 15.5cm三連装副砲改
-                                basepower += 0.3 * slot.Level;
+							case 247:       // 15.2cm三連装砲
+							case 467:		// 5inch連装砲(副砲配置) 集中配備
+								basepower += 0.3 * slot.Level;
                                 break;
 
                             default:
@@ -535,8 +543,18 @@ namespace ElectronicObserver.Utility.Data
                         if (!slot.MasterEquipment.IsDepthCharge)
                             basepower += Math.Sqrt(slot.Level) * 0.75;
                         break;
-                }
-            }
+
+					case EquipmentTypes.SurfaceShipEquipment:
+						switch (slot.EquipmentID)
+						{
+							case 500:
+							case 501:
+								basepower += Math.Sqrt(slot.Level);
+								break;
+						}
+						break;
+				}
+			}
             return basepower;
         }
 
@@ -624,43 +642,64 @@ namespace ElectronicObserver.Utility.Data
 
                 switch (slot.MasterEquipment.CategoryType)
                 {
-                    case EquipmentTypes.MainGunSmall:
-                    case EquipmentTypes.MainGunMedium:
-                    case EquipmentTypes.MainGunLarge:
-                    case EquipmentTypes.Torpedo:
-                    case EquipmentTypes.APShell:
-                    case EquipmentTypes.LandingCraft:
-                    case EquipmentTypes.Searchlight:
-                    case EquipmentTypes.SubmarineTorpedo:
-                    case EquipmentTypes.AADirector:
-                    case EquipmentTypes.MainGunLarge2:
-                    case EquipmentTypes.SearchlightLarge:
-                    case EquipmentTypes.SpecialAmphibiousTank:
+					case EquipmentTypes.MainGunSmall:
+					case EquipmentTypes.MainGunMedium:
+					case EquipmentTypes.MainGunLarge:
+					case EquipmentTypes.MainGunLarge2:
+					case EquipmentTypes.Torpedo:
+					case EquipmentTypes.MidgetSubmarine:
+					case EquipmentTypes.AAShell:
+					case EquipmentTypes.APShell:
+					case EquipmentTypes.AADirector:
+					case EquipmentTypes.LandingCraft:
+					case EquipmentTypes.SpecialAmphibiousTank:
+					case EquipmentTypes.Rocket:
+					case EquipmentTypes.Searchlight:
+					case EquipmentTypes.SearchlightLarge:
 					case EquipmentTypes.AviationPersonnel:
+					case EquipmentTypes.SurfaceShipPersonnel:
+					case EquipmentTypes.CommandFacility:
 						basepower += Math.Sqrt(slot.Level);
                         break;
 
-                    case EquipmentTypes.SecondaryGun:
+					case EquipmentTypes.SubmarineTorpedo:
+						basepower += Math.Sqrt(slot.Level) * 0.2;
+						break;
+
+					case EquipmentTypes.SecondaryGun:
                         switch (slot.EquipmentID)
                         {
-                            case 10:        // 12.7cm連装高角砲
-                            case 66:        // 8cm高角砲
-                            case 220:       // 8cm高角砲改+増設機銃
-                            case 275:       // 10cm連装高角砲改+増設機銃
-                                basepower += 0.2 * slot.Level;
-                                break;
+							case 10:        // 12.7cm連装高角砲
+							case 66:        // 8cm高角砲
+							case 220:       // 8cm高角砲改+増設機銃
+							case 275:       // 10cm連装高角砲改+増設機銃
+							case 464:       // 10cm連装高角砲群 集中配備
+								basepower += 0.2 * slot.Level;
+								break;
 
-                            case 12:        // 15.5cm三連装副砲
-                            case 234:       // 15.5cm三連装副砲改
-                                basepower += 0.3 * slot.Level;
-                                break;
+							case 12:        // 15.5cm三連装副砲
+							case 234:       // 15.5cm三連装副砲改
+							case 247:       // 15.2cm三連装砲
+							case 467:       // 5inch連装砲(副砲配置) 集中配備
+								basepower += 0.3 * slot.Level;
+								break;
 
                             default:
                                 basepower += Math.Sqrt(slot.Level);
                                 break;
                         }
                         break;
-                }
+
+					case EquipmentTypes.SurfaceShipEquipment:
+						switch (slot.EquipmentID)
+						{
+							case 500:
+							case 501:
+								basepower += Math.Sqrt(slot.Level);
+								break;
+						}
+						break;
+				}
             }
             return basepower;
         }
@@ -852,10 +891,16 @@ namespace ElectronicObserver.Utility.Data
 			var shipID = ship.ShipID;
 			var fleet = ship.Fleet;
 			var firepowerTotal = ship.FirepowerTotal;
+			var torpedoTotal = ship.TorpedoTotal;
 			var spItemHoug = ship.SpItemHoug;
+			var spItemRaig = ship.SpItemRaig;
+			var bomberTotal = ship.BomberTotal;
 			var slotInstanceMaster = ship.SlotInstanceMaster;
 			var allSlotInstance = ship.AllSlotInstance.ToArray();
 			var antiGroundBomber = 0;
+			var antiGroundAttacker = 0;
+			var antiGroundEquip = 0;
+			var Bomber = 0;
 			double[] rateDD = new double[5] { 1.4, 1.0, 1.0, 1.0, 1.0 };
 			double[] bonusSub = new double[5] { 30, 30, 30, 30, 30 };
 			double basepower = 0;
@@ -888,58 +933,102 @@ namespace ElectronicObserver.Utility.Data
 							antiGroundBomber++;
 							break;
 					}
+
+					switch (slot.MasterEquipment.CategoryType)
+					{
+						case EquipmentTypes.AAShell:
+						case EquipmentTypes.APShell:
+						case EquipmentTypes.LandingCraft:
+						case EquipmentTypes.SeaplaneFighter:
+						case EquipmentTypes.SeaplaneBomber:
+							antiGroundEquip++;
+							break;
+						case EquipmentTypes.CarrierBasedTorpedo:
+							antiGroundAttacker++;
+							break;
+						case EquipmentTypes.CarrierBasedBomber:
+						case EquipmentTypes.JetBomber:
+							antiGroundEquip++;
+							Bomber++;
+							break;
+					}
 				}
 
-				var rateBomb = Math.Floor(slotInstanceMaster.Where(eq => eq?.IsAntiGroundBomber ?? false).Sum(eq => eq.Bomber) * 1.3);
-				if (antiGroundBomber != 0)
+				var rateBomb = Math.Floor(slotInstanceMaster.Where(eq => eq?.IsAntiGroundBomber ?? false).Sum(eq => eq.Bomber) * 1.3); //対地艦爆の爆装値
+				if (antiGroundBomber > 0 || (Bomber == 0 && antiGroundAttacker > 0))
 				{
-					basepower = spItemHoug + firepowerTotal + GetDayBattleEquipmentLevelBonus(allSlotInstance) + 5 + GetCombinedFleetShellingDamageBonus(fleet);
-					basepower = GetGroundEnemyAttackPower(ship, skin, basepower, true);
-					basepower = Math.Floor((basepower + rateBomb + 15) * 1.5) + 25;
-					basepower = Math.Floor(CapDamage(basepower, 220));
+					if (antiGroundEquip != 0)
+					{
+						if (skin != 5)
+						{
+							basepower = spItemHoug + firepowerTotal + GetDayBattleEquipmentLevelBonus(allSlotInstance) + 5 + GetCombinedFleetShellingDamageBonus(fleet);
+							basepower = GetGroundEnemyAttackPower(ship, skin, basepower, true);
+							basepower = Math.Floor((basepower + rateBomb + 15) * 1.5) + 25;
+						}
+						else
+						{
+							basepower = Math.Floor((firepowerTotal + spItemHoug + torpedoTotal + spItemRaig + Math.Floor((bomberTotal + GetAviationPersonnelBomberLevelBonus(allSlotInstance)) * 1.3) + GetDayBattleEquipmentLevelBonus(allSlotInstance) + GetCombinedFleetShellingDamageBonus(fleet)) * 1.5) + 55;
+						}
+						basepower = Math.Floor(CapDamage(basepower, 220));
+					}
+					else
+					{
+						if (skin != 5)
+						{
+							basepower = Math.Floor((spItemHoug + firepowerTotal + GetDayBattleEquipmentLevelBonus(allSlotInstance) + rateBomb + GetCombinedFleetShellingDamageBonus(fleet)) * 1.5) + 55;
+						}
+						else
+						{
+							basepower = Math.Floor((firepowerTotal + spItemHoug + torpedoTotal + spItemRaig + Math.Floor((bomberTotal + GetAviationPersonnelBomberLevelBonus(allSlotInstance)) * 1.3) + GetDayBattleEquipmentLevelBonus(allSlotInstance) + GetCombinedFleetShellingDamageBonus(fleet)) * 1.5) + 55;
+						}
+						basepower = Math.Floor(CapDamage(basepower, 220));
+					}
 				}
 				else
-				{
-					basepower = Math.Floor(spItemHoug + firepowerTotal + GetDayBattleEquipmentLevelBonus(allSlotInstance) + rateBomb + GetCombinedFleetShellingDamageBonus(fleet)*1.5) + 55;
-					basepower = Math.Floor(CapDamage(basepower, 220));
-				}
+					basepower = 0;
+					return (int)basepower;
 			}
 			else
 			{
 				basepower = spItemHoug + firepowerTotal + GetDayBattleEquipmentLevelBonus(allSlotInstance) + 5 + GetCombinedFleetShellingDamageBonus(fleet);
-				if (attacker?.ShipType == ShipTypes.Destroyer)
-				{
-					basepower *= rateDD[skin];
+				if (skin != 5)
+				{ 
+					if (attacker?.ShipType == ShipTypes.Destroyer)
+					{
+						basepower *= rateDD[skin];
+					}
+					if (attacker?.ShipType == ShipTypes.Submarine || attacker?.ShipType == ShipTypes.SubmarineAircraftCarrier)
+					{
+						basepower += bonusSub[skin];
+					}
+					basepower = GetGroundEnemyAttackPower(ship, skin, basepower, true);
 				}
-				if (attacker?.ShipType == ShipTypes.Submarine || attacker?.ShipType == ShipTypes.SubmarineAircraftCarrier)
-				{
-					basepower += bonusSub[skin];
-				}
-				basepower = GetGroundEnemyAttackPower(ship, skin, basepower, true);
 				basepower = Math.Floor(CapDamage(basepower, 220));
-				if (skin == 3)
-					basepower = GetDayGroundAttackAfterCAP(ship, basepower);
 			}
-
+			if (skin == 3 || skin == 5)
+				basepower = GetGroundAttackAfterCAP(ship, basepower);
 			return (int)basepower;
 		}
 
 		/// <summary>
 		/// 対地攻撃力(夜戦)
 		/// </summary>
-		public static int CaliculateNightGroundAtttackPower(ShipData ship, int skin)
+		public static int CaliculateNightGroundAtttackPower(ShipData ship, int skin, NightAttackKind[] nightAttackKind)
 		{
 			var shipID = ship.ShipID;
 			var fleet = ship.Fleet;
 			var firepowerBase = ship.FirepowerBase;
 			var firepowerTotal = ship.FirepowerTotal;
 			var spItemHoug = ship.SpItemHoug;
+			var torpedoTotal = ship.TorpedoTotal;
+			var spItemRaig = ship.SpItemRaig;
 			var allSlotInstance = ship.AllSlotInstance.ToArray();
 			var slotInstanceMaster = ship.SlotInstanceMaster;
 			var slotInstance = ship.SlotInstance;
 			var aircraft = ship.Aircraft;
-			var airs = slotInstance.Zip(aircraft, (eq, count) => new { eq, master = eq?.MasterEquipment, count }).Where(a => a.eq != null); 
-			
+			var airs = slotInstance.Zip(aircraft, (eq, count) => new { eq, master = eq?.MasterEquipment, count }).Where(a => a.eq != null);
+			var eqs = ship.AllSlotInstance.Where(eq => eq != null);
+
 			double[] rateDD = new double[5] { 1.4, 1.0, 1.0, 1.0, 1.0 };
 			double[] bonusSub = new double[5] { 30, 30, 30, 30, 30 };
 			double basepower = 0;
@@ -949,28 +1038,82 @@ namespace ElectronicObserver.Utility.Data
 				|| attacker?.ShipType == ShipTypes.ArmoredAircraftCarrier
 				|| attacker?.ShipType == ShipTypes.LightAircraftCarrier)
 			{
-				basepower = (firepowerBase + GetAviationPersonnelBomberLevelBonus(allSlotInstance) + GetAviationPersonnelFirepowerLevelBonus(allSlotInstance) + GetAviationPersonnelTorpedoLevelBonus(allSlotInstance)) +
-							airs.Where(p => p.master.IsNightAircraft).Sum(p => p.master.Firepower + p.master.Bomber +
-								3 * p.count + 0.45 * (p.master.Firepower + p.master.Torpedo + p.master.Bomber + p.master.ASW) * Math.Sqrt(p.count) + Math.Sqrt(p.eq.Level)) +
-						     airs.Where(p => p.master.IsSwordfish || p.master.EquipmentID == 154 || p.master.EquipmentID == 320)   // 零戦62型(爆戦/岩井隊)、彗星一二型(三一号光電管爆弾搭載機)
-								.Sum(p => p.master.Firepower + p.master.Torpedo + p.master.Bomber +	0.3 * (p.master.Firepower + p.master.Torpedo + p.master.Bomber + p.master.ASW) * Math.Sqrt(p.count) + Math.Sqrt(p.eq.Level));
+				if (nightAttackKind.Contains(NightAttackKind.NightAirAttack))
+				{
+					if (skin != 5)
+					{
+						//夜間航空攻撃(雷装抜き)
+						basepower = (firepowerBase + GetAviationPersonnelBomberLevelBonus(allSlotInstance) + GetAviationPersonnelFirepowerLevelBonus(allSlotInstance) + GetAviationPersonnelTorpedoLevelBonus(allSlotInstance)) +
+									airs.Where(p => p.master.IsNightAircraft).Sum(p => p.master.Firepower + p.master.Bomber +
+										3 * p.count + 0.45 * (p.master.Firepower + p.master.Torpedo + p.master.Bomber + p.master.ASW) * Math.Sqrt(p.count) + Math.Sqrt(p.eq.Level)) +
+									 airs.Where(p => p.master.IsSwordfish || p.master.EquipmentID == 154 || p.master.EquipmentID == 320)   // 零戦62型(爆戦/岩井隊)、彗星一二型(三一号光電管爆弾搭載機)
+										.Sum(p => p.master.Firepower + p.master.Torpedo + p.master.Bomber + 0.3 * (p.master.Firepower + p.master.Torpedo + p.master.Bomber + p.master.ASW) * Math.Sqrt(p.count) + Math.Sqrt(p.eq.Level));
+						basepower = GetGroundEnemyAttackPower(ship, skin, basepower, false);
+					}
+					else
+					{
+						basepower = CalculateNightAirAttackBasepower(ship);
+					}
+				}
+				else if (nightAttackKind.Contains(NightAttackKind.NightSwordfish))
+				{
+					if (skin !=5)
+					{
+						basepower = firepowerBase
+							+ slotInstanceMaster.Where(eq => eq?.IsSwordfish ?? false).Sum(eq => eq.Firepower)
+							+ slotInstance.Where(eq => eq?.MasterEquipment.IsSwordfish ?? false).Sum(eq => Math.Sqrt(eq.Level));
+						basepower = GetGroundEnemyAttackPower(ship, skin, basepower, false);
+					}
+					else
+					{
+						basepower = firepowerBase
+							+ slotInstanceMaster.Where(eq => eq?.IsSwordfish ?? false).Sum(eq => eq.Firepower + eq.Torpedo)
+							+ slotInstance.Where(eq => eq?.MasterEquipment.IsSwordfish ?? false).Sum(eq => Math.Sqrt(eq.Level));
+					}
+				}
+				else if (nightAttackKind.Contains(NightAttackKind.AirAttack))
+				{
+					if (skin != 5)
+					{
+						basepower = firepowerBase
+							+ slotInstanceMaster.Where(eq => eq?.IsAvailable ?? false).Sum(eq => eq.Firepower)
+							+ GetNightBattleEquipmentLevelBonus(allSlotInstance)
+							+ slotInstance.Where(eq => eq?.MasterEquipment.IsAircraft ?? false).Sum(eq => Math.Sqrt(eq.Level));
+						basepower = GetGroundEnemyAttackPower(ship, skin, basepower, false);
+					}
+					else
+					{
+						basepower = firepowerBase
+							+ slotInstanceMaster.Where(eq => eq?.IsAvailable ?? false).Sum(eq => eq.Firepower + eq.Torpedo)
+							+ GetNightBattleEquipmentLevelBonus(allSlotInstance)
+							+ slotInstance.Where(eq => eq?.MasterEquipment.IsAircraft ?? false).Sum(eq => Math.Sqrt(eq.Level));
+					}
+				}
+				basepower = Math.Floor(CapDamage(basepower, 360));
 			}
 			else
 			{
-				basepower = spItemHoug + firepowerTotal + GetNightBattleEquipmentLevelBonus(allSlotInstance) + 5;
-				if (attacker?.ShipType == ShipTypes.Destroyer)
+				if (skin != 5)
 				{
-					basepower *= rateDD[skin];
+					basepower = spItemHoug + firepowerTotal + GetNightBattleEquipmentLevelBonus(allSlotInstance) + 5;
+					if (attacker?.ShipType == ShipTypes.Destroyer)
+					{
+						basepower *= rateDD[skin];
+					}
+					if (attacker?.ShipType == ShipTypes.Submarine || attacker?.ShipType == ShipTypes.SubmarineAircraftCarrier)
+					{
+						basepower += bonusSub[skin];
+					}
+					basepower = GetGroundEnemyAttackPower(ship, skin, basepower, false);
 				}
-				if (attacker?.ShipType == ShipTypes.Submarine || attacker?.ShipType == ShipTypes.SubmarineAircraftCarrier)
+				else
 				{
-					basepower += bonusSub[skin];
+					basepower = firepowerTotal + torpedoTotal + spItemHoug + spItemRaig + GetNightBattleEquipmentLevelBonus(allSlotInstance);
 				}
-				basepower = GetGroundEnemyAttackPower(ship, skin, basepower, false);
 				basepower = Math.Floor(CapDamage(basepower, 360));
-				if (skin == 3)
-					basepower = GetDayGroundAttackAfterCAP(ship, basepower);
 			}
+			if (skin == 3 || skin == 5)
+				basepower = GetGroundAttackAfterCAP(ship, basepower);
 			return (int)basepower;
 		}
 		#endregion
@@ -1006,6 +1149,7 @@ namespace ElectronicObserver.Utility.Data
 			var elevenReg = 0; double[] rate_elevenReg1 = new double[5] { 1.0, 1.0, 1.0, 1.0, 1.0 };
 			var no2Tank = 0; double[] rate_no2Tank1 = new double[5] { 1.5, 1.2, 1.5, 1.5, 1.6 }; double[] rate_no2Tank2 = new double[5] { 2.1, 1.68, 1.95, 1.95, 2.4 };
 			var no3Tank = 0; double[] rate_no3Tank1 = new double[5] { 1.15, 1.15, 1.15, 1.15, 1.2 };
+			var no3TankJ = 0;
 			var m4A1DD = 0; double[] rate_m4A1DDchihaKai = new double[5] { 2.0, 1.8, 1.1, 1.1, 2.0};
 			var busouDaihatsu = 0; double[] rate_busouAB1 = new double[5] { 1.3, 1.3, 1.1, 1.1, 1.5 }; double[] rate_busouAB2 = new double[5] { 1.56, 1.43, 1.21, 1.21, 1.65 };
 			var daihaysuAB = 0;
@@ -1098,6 +1242,9 @@ namespace ElectronicObserver.Utility.Data
 					case 495:
 						chihaKai++;
 						break;
+					case 514:
+						no3TankJ++;
+						break;
 					case 167:
 						spAmphibiousTank++;
 						spAmphibiousTankLevel += slot.Level;
@@ -1150,19 +1297,19 @@ namespace ElectronicObserver.Utility.Data
 						basepower *= rate_tokudaihatsu1[skin];
 					}
 
-					if (rikusen + isshiki != 0) //陸戦隊+一式砲戦車
+					if (rikusen + isshiki + no3Tank + no3TankJ != 0) //陸戦隊+一式砲戦車+Ⅲ号+Ⅲ号J
 					{
-						if (rikusen + isshiki >= 2) //2積み
+						if (rikusen + isshiki + no3Tank + no3TankJ >= 2) //2積み
 							basepower *= rate_rikusenisshiki2[skin];
-						else if (chiha + chihaKai + no3Tank >= 1) //チハ、チハ改、Ⅲ号のどれか混載
+						else if (chiha + chihaKai >= 1) //チハ、チハ改のどれか混載
 							basepower *= rate_rikusenisshiki2[skin];
 						else
 							basepower *= rate_rikusenisshiki1[skin];
 					}
 
-					if (chiha + chihaKai != 0 && rikusen + isshiki == 0) //チハ+チハ改
+					if (chiha + chihaKai != 0 && rikusen + isshiki + no3Tank + no3TankJ == 0) //チハ+チハ改
 					{
-						if (chiha + chihaKai >= 2)
+						if (chiha != 0 && chihaKai != 0)
 							basepower *= rate_chiha2[skin];
 						else
 							basepower *= rate_chiha1[skin];
@@ -1178,6 +1325,11 @@ namespace ElectronicObserver.Utility.Data
 						basepower *= rate_no3Tank1[skin];
 					}
 
+					if (no3TankJ != 0) //Ⅲ号戦車J
+					{
+						basepower *= rate_no3Tank1[skin];
+					}
+
 					if (no2Tank != 0) //Ⅱ号戦車
 					{
 						if (no2Tank >= 2)
@@ -1186,7 +1338,7 @@ namespace ElectronicObserver.Utility.Data
 							basepower *= rate_no2Tank1[skin];
 					}
 
-					if (m4A1DD + chihaKai != 0) //M4A1+チハ改
+					if (m4A1DD + chihaKai + no3TankJ != 0) //M4A1+チハ改+Ⅲ号戦車J
 					{
 						basepower *= rate_m4A1DDchihaKai[skin];
 					}
@@ -1237,9 +1389,9 @@ namespace ElectronicObserver.Utility.Data
 				}
 			}
 
-			//11連隊・一式砲戦車・III号戦車補正
-			{ 
-				if (elevenReg + isshiki + no3Tank != 0)
+			//11連隊・一式砲戦車・III号戦車・Ⅲ号戦車J補正
+			{
+				if (elevenReg + isshiki + no3Tank + no3TankJ != 0)
 				{
 					basepower *= 1.8;
 					basepower += 25;
@@ -1285,7 +1437,7 @@ namespace ElectronicObserver.Utility.Data
 			//上陸支援舟艇シナジー補正
 			{
 				var typeA = daihatsu + tokudaihatsu + rikusen + isshiki + no2Tank;
-				var typeB = elevenReg + no3Tank + spAmphibiousTank;
+				var typeB = elevenReg + no3Tank + spAmphibiousTank + no3TankJ;
 				if (daihaysuAB != 0 && busouDaihatsu != 0)
 				{
 					if (typeA != 0 && typeB != 0)
@@ -1339,8 +1491,8 @@ namespace ElectronicObserver.Utility.Data
 				basepower += wg42[rocketWG] + taichi[rocket20] + taichisyu[rocket20S] + nisiki[depthCharge] + nisikisyu[depthChargeS];
 			}
 
-			int engagementForm = 1;
-			basepower *= GetHPDamageBonus(hpRate) * GetEngagementFormDamageRate(engagementForm);
+			//int engagementForm = 1;
+			//basepower *= GetHPDamageBonus(hpRate) * GetEngagementFormDamageRate(engagementForm);
 			basepower += GetLightCruiserDamageBonus(masterShip, allSlotMaster) + GetItalianDamageBonus(shipID, allSlotMaster);
 
 			return basepower;
@@ -1349,7 +1501,7 @@ namespace ElectronicObserver.Utility.Data
 		/// <summary>
 		/// 対地攻撃(集積地キャップ後)
 		/// </summary>
-		private static double GetDayGroundAttackAfterCAP(ShipData ship, double basepower)
+		private static double GetGroundAttackAfterCAP(ShipData ship, double basepower)
 		{
 			double landigCraftLevel = 0; 
 			double spAmphibiousTankLevel = 0;
@@ -1365,6 +1517,7 @@ namespace ElectronicObserver.Utility.Data
 			var elevenReg = 0; 
 			var no2Tank = 0;
 			var no3Tank = 0;
+			var no3TankJ = 0;
 			var m4A1DD = 0; 
 			var busouDaihatsu = 0;
 			var daihaysuAB = 0;
@@ -1434,6 +1587,9 @@ namespace ElectronicObserver.Utility.Data
 					case 495:
 						chihaKai++;
 						break;
+					case 514:
+						no3TankJ++;
+						break;
 					case 167:
 						spAmphibiousTank++;
 						spAmphibiousTankLevel += slot.Level;
@@ -1481,17 +1637,17 @@ namespace ElectronicObserver.Utility.Data
 						basepower *= 1.2;
 					}
 
-					if (rikusen + isshiki != 0)
+					if (rikusen + isshiki + no3Tank + no3TankJ != 0)
 					{
-						if (rikusen + isshiki >= 2)
+						if (rikusen + isshiki + no3Tank + no3TankJ >= 2)
 							basepower *= 2.08;
-						else if (chiha + chihaKai + no3Tank >= 1)
+						else if (chiha + chihaKai >= 1)
 							basepower *= 2.08;
 						else
 							basepower *= 1.3;
 					}
 
-					if (chiha + chihaKai != 0 && rikusen + isshiki == 0)
+					if (chiha + chihaKai != 0 && rikusen + isshiki + no3Tank + no3TankJ == 0)
 					{
 						if (chiha + chihaKai >= 2)
 							basepower *= 1.6;
@@ -1509,6 +1665,11 @@ namespace ElectronicObserver.Utility.Data
 						basepower *= 1.2;
 					}
 
+					if (no3TankJ != 0)
+					{
+						basepower *= 1.2;
+					}
+
 					if (no2Tank != 0)
 					{
 						if (no2Tank >= 2)
@@ -1517,7 +1678,7 @@ namespace ElectronicObserver.Utility.Data
 							basepower *= 1.3;
 					}
 
-					if (m4A1DD + chihaKai != 0)
+					if (m4A1DD + chihaKai + no3TankJ != 0)
 					{
 						basepower *= 1.2;
 					}
