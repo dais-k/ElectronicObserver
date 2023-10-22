@@ -264,7 +264,12 @@ namespace ElectronicObserver.Window
 				// 各艦ごとの ドラム缶 or 大発系 を搭載している個数
 				var transport = members.Select(s => s.AllSlotInstanceMaster.Count(eq => eq?.CategoryType == EquipmentTypes.TransportContainer));
 				var landing = members.Select(s => s.AllSlotInstanceMaster.Count(eq => eq?.CategoryType == EquipmentTypes.LandingCraft || eq?.CategoryType == EquipmentTypes.SpecialAmphibiousTank));
+				var kinu = members.Count(s => s.ShipID == 487);
 
+				if (kinu >= 2) //鬼怒改二が2人いたらTP合計から-8する
+				{
+					tp -= 8;
+				}
 
 				ToolTipInfo.SetToolTip(CombinedTag, string.Format("ドラム缶搭載: {0}個\r\n大発動艇搭載: {1}個\r\n輸送量(TP): S {2} / A {3}\r\n\r\n制空戦力合計: {4}\r\n索敵能力合計: {5:f2}\r\n新判定式(33):\r\n　分岐点係数1: {6:f2}\r\n　分岐点係数2: {7:f2}\r\n　分岐点係数3: {8:f2}\r\n　分岐点係数4: {9:f2}",
 					transport.Sum(),
