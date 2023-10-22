@@ -1120,7 +1120,7 @@ namespace ElectronicObserver.Utility.Data
 
 		#region 対地補正計算
 		/// <summary>
-		/// 対地攻撃補正(配列は砲台、離島棲姫、ソフトスキン、集積地キャップ前)
+		/// 対地攻撃補正(配列は砲台、離島棲姫、ソフトスキン、集積地キャップ前、港湾夏姫)
 		/// </summary>
 		private static double GetGroundEnemyAttackPower(ShipData ship, int skin, double basepower, bool ifday)
 		{
@@ -1130,10 +1130,10 @@ namespace ElectronicObserver.Utility.Data
 			var allSlotInstance = ship.AllSlotInstance.ToArray();
 			var hpRate = ship.HPRate;
 
-			double landigCraftLevel = 0; double[] rate_landigCraft = new double[5] { 1.8, 1.8, 1.4, 1.4, 1.7 };
+			double landingCraftLevel = 0; double[] rate_landingCraft = new double[5] { 1.8, 1.8, 1.4, 1.4, 1.7 };
 			double spAmphibiousTankLevel = 0;
 
-			var landigCraft = 0;
+			var landingCraft = 0;
 			var aaShell = 0; double[] rate_aaShell = new double[5] { 1.0, 1.75, 2.5, 2.5, 1.75 };
 			var rocketWG = 0; double[] rate_rocketWG1 = new double[5] { 1.6 ,1.4, 1.3, 1.3, 1.4 }; double[] rate_rocketWG2 = new double[5] { 2.72, 2.1, 1.82, 1.82, 1.68 };
 			var rocket20 = 0; double[] rate_rocket201 = new double[5] { 1.5, 1.3, 1.25, 1.25, 1.25 }; double[] rate_rocket202 = new double[5] { 2.7, 2.145, 1.875, 1.875, 1.75 };
@@ -1148,7 +1148,7 @@ namespace ElectronicObserver.Utility.Data
 			var chihaKai = 0; 
 			var elevenReg = 0; double[] rate_elevenReg1 = new double[5] { 1.0, 1.0, 1.0, 1.0, 1.0 };
 			var no2Tank = 0; double[] rate_no2Tank1 = new double[5] { 1.5, 1.2, 1.5, 1.5, 1.6 }; double[] rate_no2Tank2 = new double[5] { 2.1, 1.68, 1.95, 1.95, 2.4 };
-			var no3Tank = 0; double[] rate_no3Tank1 = new double[5] { 1.15, 1.15, 1.15, 1.15, 1.2 };
+			var no3Tank = 0;
 			var no3TankJ = 0;
 			var m4A1DD = 0; double[] rate_m4A1DDchihaKai = new double[5] { 2.0, 1.8, 1.1, 1.1, 2.0};
 			var busouDaihatsu = 0; double[] rate_busouAB1 = new double[5] { 1.3, 1.3, 1.1, 1.1, 1.5 }; double[] rate_busouAB2 = new double[5] { 1.56, 1.43, 1.21, 1.21, 1.65 };
@@ -1171,8 +1171,8 @@ namespace ElectronicObserver.Utility.Data
 						apShell++;
 						break;
 					case EquipmentTypes.LandingCraft:
-						landigCraft++;
-						landigCraftLevel += slot.Level;
+						landingCraft++;
+						landingCraftLevel += slot.Level;
 						break;
 					case EquipmentTypes.SeaplaneFighter:
 					case EquipmentTypes.SeaplaneBomber:
@@ -1283,16 +1283,16 @@ namespace ElectronicObserver.Utility.Data
 						basepower *= rate_depthCharge1[skin];
 				}
 
-				if (landigCraft != 0) //上陸用舟艇
+				if (landingCraft != 0) //上陸用舟艇
 				{
-					basepower *= rate_landigCraft[skin];
+					basepower *= rate_landingCraft[skin];
 
 					if (daihatsu != 0) //大発
 					{
 						basepower *= rate_daihatsu1[skin];
 					}
 
-					if (tokudaihatsu != 0) //特大発
+					if (tokudaihatsu + no3Tank+ no3TankJ != 0) //特大発+Ⅲ号+Ⅲ号J
 					{
 						basepower *= rate_tokudaihatsu1[skin];
 					}
@@ -1320,16 +1320,6 @@ namespace ElectronicObserver.Utility.Data
 						basepower *= rate_elevenReg1[skin];
 					}
 
-					if (no3Tank != 0) //Ⅲ号戦車
-					{
-						basepower *= rate_no3Tank1[skin];
-					}
-
-					if (no3TankJ != 0) //Ⅲ号戦車J
-					{
-						basepower *= rate_no3Tank1[skin];
-					}
-
 					if (no2Tank != 0) //Ⅱ号戦車
 					{
 						if (no2Tank >= 2)
@@ -1354,9 +1344,9 @@ namespace ElectronicObserver.Utility.Data
 						}
 					}
 
-					if (landigCraftLevel != 0) //改修レベル
+					if (landingCraftLevel != 0) //改修レベル
 					{
-						basepower *= (landigCraftLevel / landigCraft / 50) + 1;
+						basepower *= (landingCraftLevel / landingCraft / 50) + 1;
 					}
 				}
 
@@ -1503,10 +1493,10 @@ namespace ElectronicObserver.Utility.Data
 		/// </summary>
 		private static double GetGroundAttackAfterCAP(ShipData ship, double basepower)
 		{
-			double landigCraftLevel = 0; 
+			double landingCraftLevel = 0; 
 			double spAmphibiousTankLevel = 0;
 			var allSlotInstance = ship.AllSlotInstance.ToArray();
-			var landigCraft = 0;
+			var landingCraft = 0;
 			var rocketWG = 0; 
 			var rocket20 = 0; 
 			var depthCharge = 0;
@@ -1533,8 +1523,8 @@ namespace ElectronicObserver.Utility.Data
 				switch (slot.MasterEquipment.CategoryType)
 				{
 					case EquipmentTypes.LandingCraft:
-						landigCraft++;
-						landigCraftLevel += slot.Level;
+						landingCraft++;
+						landingCraftLevel += slot.Level;
 						break;
 				}
 
@@ -1623,7 +1613,7 @@ namespace ElectronicObserver.Utility.Data
 						basepower *= 1.15;
 				}
 
-				if (landigCraft != 0)
+				if (landingCraft != 0)
 				{
 					basepower *= 1.7;
 
@@ -1632,7 +1622,7 @@ namespace ElectronicObserver.Utility.Data
 						basepower *= 1.0;
 					}
 
-					if (tokudaihatsu != 0)
+					if (tokudaihatsu + no3Tank+ no3TankJ != 0)
 					{
 						basepower *= 1.2;
 					}
@@ -1652,22 +1642,12 @@ namespace ElectronicObserver.Utility.Data
 						if (chiha + chihaKai >= 2)
 							basepower *= 1.6;
 						else
-							basepower *= 1.3;
+							basepower *= 1.0;
 					}
 
 					if (elevenReg != 0)
 					{
 						basepower *= 1.0;
-					}
-
-					if (no3Tank != 0)
-					{
-						basepower *= 1.2;
-					}
-
-					if (no3TankJ != 0)
-					{
-						basepower *= 1.2;
 					}
 
 					if (no2Tank != 0)
@@ -1691,14 +1671,14 @@ namespace ElectronicObserver.Utility.Data
 							basepower *= 1.5;
 					}
 
-					if (landigCraftLevel != 0)
+					if (landingCraftLevel != 0)
 					{ 
 						if(rikusen>=1 && no2Tank >= 1)
-							basepower *= Math.Pow((landigCraftLevel / landigCraft / 50) + 1, 3);
-						else if(rikusen + isshiki + no2Tank + no3Tank != 0)
-							basepower *= Math.Pow((landigCraftLevel / landigCraft / 50) + 1, 2);
+							basepower *= Math.Pow((landingCraftLevel / landingCraft / 50) + 1, 3);
+						else if(rikusen + isshiki + no3Tank + no3TankJ != 0)
+							basepower *= Math.Pow((landingCraftLevel / landingCraft / 50) + 1, 2);
 						else
-							basepower *= (landigCraftLevel / landigCraft / 50) + 1;
+							basepower *= (landingCraftLevel / landingCraft / 50) + 1;
 					}
 				}
 
