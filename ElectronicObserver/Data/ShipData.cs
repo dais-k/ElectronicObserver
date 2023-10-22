@@ -1674,7 +1674,8 @@ namespace ElectronicObserver.Data
                     case 629:       // Fletcher Mk.II
                     case 893:       // Janus改
 					case 624:       // 夕張改二丁
-					case 726:		// Heywood L.E.改
+					case 726:       // Heywood L.E.改
+					case 901:		// Javelin改
 						return true;
                 }
 
