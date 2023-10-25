@@ -738,6 +738,16 @@ namespace ElectronicObserver.Utility
 				public bool ShowAntiGroundPower { get; set; }
 
 				/// <summary>
+				/// 支援攻撃力を表示させる
+				/// </summary>
+				public bool ShowSupportPower { get; set; }
+
+				/// <summary>
+				/// 秋刀魚漁有効装備数を表示させる
+				/// </summary>
+				public bool ShowSanmaEquip { get; set; }
+
+				/// <summary>
 				/// 出撃海域によって色分けするか
 				/// </summary>
 				public bool AppliesSallyAreaColor { get; set; }
@@ -788,6 +798,8 @@ namespace ElectronicObserver.Utility
 					BlinkAtDamaged = true;
 					FleetStateDisplayMode = 2;
 					ShowAntiGroundPower = false;
+					ShowSupportPower = false;
+					ShowSanmaEquip = false;
 					AppliesSallyAreaColor = false;
 					SallyAreaColorScheme = DefaultSallyAreaColorScheme.ToList();
 				}

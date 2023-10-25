@@ -423,6 +423,8 @@ namespace ElectronicObserver.Window.Dialog
 			FormFleet_FleetStateDisplayMode.SelectedIndex = config.FormFleet.FleetStateDisplayMode;
 			FormFleet_AppliesSallyAreaColor.Checked = config.FormFleet.AppliesSallyAreaColor;
 			FormFleet_ShowAntiGroundPower.Checked = config.FormFleet.ShowAntiGroundPower;
+			FormFleet_ShowSupportPower.Checked = config.FormFleet.ShowSupportPower;
+			FormFleet_ShowSanmaEquip.Checked = config.FormFleet.ShowSanmaEquip;
 
 			FormHeadquarters_BlinkAtMaximum.Checked = config.FormHeadquarters.BlinkAtMaximum;
 			FormHeadquarters_Visibility.Items.Clear();
@@ -645,6 +647,8 @@ namespace ElectronicObserver.Window.Dialog
 			config.FormFleet.FleetStateDisplayMode = FormFleet_FleetStateDisplayMode.SelectedIndex;
 			config.FormFleet.AppliesSallyAreaColor = FormFleet_AppliesSallyAreaColor.Checked;
 			config.FormFleet.ShowAntiGroundPower = FormFleet_ShowAntiGroundPower.Checked;
+			config.FormFleet.ShowSupportPower = FormFleet_ShowSupportPower.Checked;
+			config.FormFleet.ShowSanmaEquip = FormFleet_ShowSanmaEquip.Checked;
 
 			config.FormHeadquarters.BlinkAtMaximum = FormHeadquarters_BlinkAtMaximum.Checked;
 			{

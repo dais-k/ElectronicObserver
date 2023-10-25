@@ -697,6 +697,8 @@ namespace ElectronicObserver.Window
 				}
 
 				var showAntiGroundPower = Utility.Configuration.Config.FormFleet.ShowAntiGroundPower;
+				var showSupportPower = Utility.Configuration.Config.FormFleet.ShowSupportPower;
+				var showSanmaEquip = Utility.Configuration.Config.FormFleet.ShowSanmaEquip;
 				var slotmaster = ship.AllSlotMaster.ToArray();
 				var dayAttackList = Calculator2.GetDayAttackKindList(slotmaster, ship.ShipID);
 				var dayAttackPower = CalcShipAttackPower.CalculateDayAttackPowers(ship);
@@ -858,6 +860,7 @@ namespace ElectronicObserver.Window
 						sb.AppendFormat("航空戦威力: {0}\r\n", airbattle);
 				}
 
+				if(showSupportPower)
 				{
 					sb.AppendLine();
 					sb.AppendFormat("砲撃支援威力: ");
@@ -887,8 +890,8 @@ namespace ElectronicObserver.Window
 							sb.AppendFormat(" / {0}", sair.name);
 						}
 					}
+					
 					sb.AppendLine();
-
 					sb.AppendFormat("対潜支援威力: ");
 					var supportAntiSubmarinePower = ship.Slot.Select((_, i) => CalcShipAttackPower.CalculateSupportAntiSubmarinePower(i, ship)).ToArray();
 					foreach (var sasw in supportAntiSubmarinePower.Select((name,num) => new { name, num }))
@@ -913,15 +916,17 @@ namespace ElectronicObserver.Window
 					sb.AppendLine();
 				}
 
+				if (showSanmaEquip)
 				{
 					int sanma = ship.SanmaEquipCount;
 					int sanmaB = ship.SanmaEquipCountBomb;
-					if (sanma > 0)
-						sb.AppendFormat("\r\n秋刀魚漁有効装備: {0}  ※爆雷: {1}\r\n", sanma,sanmaB);
+					sb.AppendFormat("\r\n秋刀魚漁有効装備: {0}  ※爆雷: {1}\r\n", sanma,sanmaB);
 				}
+
 				sb.AppendFormat("\r\n※攻撃威力は同航戦・制空権確保時の値");
 				if(showAntiGroundPower)
 					sb.AppendFormat("\r\n※対地攻撃の威力値は(砲台/離島/ソフトスキン/集積地/港湾夏姫/集積地Ⅲ)の並び");
+				if(showSupportPower)
 				sb.AppendFormat("\r\n※対潜支援威力の()内の値は変動倍率x2.0(発動率50%)の値\r\n　エリソ確定大破/撃沈にはそれぞれ威力73/84が必要");
 				return sb.ToString();
 			}
