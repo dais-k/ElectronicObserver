@@ -2,7 +2,7 @@
 using BrowserLib;
 using CefSharp;
 using CefSharp.WinForms;
-using Nekoxy;
+//using Nekoxy;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -386,7 +386,7 @@ namespace Browser
 			var browser = Browser.GetBrowser();
 			var frame = browser.MainFrame;
 
-			if (frame?.Url?.Contains(@"http://www.dmm.com/netgame/social/") ?? false)
+			if (frame?.Url?.Contains(@"https://www.dmm.com/netgame/social/") ?? false)
 				return frame;
 
 			return null;
@@ -401,7 +401,7 @@ namespace Browser
 			var frames = browser.GetFrameIdentifiers()
 						.Select(id => browser.GetFrame(id));
 
-			return frames.FirstOrDefault(f => f?.Url?.Contains(@"http://osapi.dmm.com/gadgets/") ?? false);
+			return frames.FirstOrDefault(f => f?.Url?.Contains(@"https://osapi.dmm.com/gadgets/") ?? false);
 		}
 
 		private IFrame GetKanColleFrame()
@@ -772,12 +772,12 @@ namespace Browser
 			ushort port;
 			if (ushort.TryParse(proxy, out port))
 			{
-				WinInetUtil.SetProxyInProcessForNekoxy(port);
+				//WinInetUtil.SetProxyInProcessForNekoxy(port);
 				ProxySettings = "http=127.0.0.1:" + port;           // todo: 動くには動くが正しいかわからない
 			}
 			else
 			{
-				WinInetUtil.SetProxyInProcess(proxy, "local");
+				//WinInetUtil.SetProxyInProcess(proxy, "local");
 				ProxySettings = proxy;
 			}
 
