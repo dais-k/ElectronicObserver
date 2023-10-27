@@ -378,6 +378,9 @@ namespace ElectronicObserver.Data.Quest
 						case 357:   //|357|６|「大和型戦艦」第一戦隊演習、始め！|演習S勝利以上3|条件：大和、武蔵、軽巡1隻、駆逐2隻|イヤーリーだが1日で進捗リセット|
 							Progresses.Add(new ProgressPractice(q, 3, "S", true));
 							break;
+						case 368:   //|368|７|「十六駆」演習！|演習S勝利以上3|天津風、雪風、時津風、初風のうち2隻以上|イヤーリーだが1日で進捗リセット|
+							Progresses.Add(new ProgressPractice(q, 3, "S", true));
+							break;
 						//============================ 400～499 ============================
 						case 402:   //|402|「遠征」を3回成功させよう！|遠征成功3
 							Progresses.Add(new ProgressExpedition(q, 3, null));
@@ -918,6 +921,13 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressSpecialBattle(q, 1, "S", new[] { 53 }, true),
 							}));
 							break;
+						case 987:   //|987|週|【限定週間任務】10周年秋南瓜祭りおかわり！|6-1, 6-2, 6-3ボスA勝利各1回|条件：「阿武隈+伊201」「鵜来+稲木」「瑞穂+Brooklyn+Johnston」何れかの組み合わせ、南瓜イベント
+							Progresses.Add(new ProgressMultiBattle(q, new[] {
+								new ProgressSpecialBattle(q, 1, "A", new[] { 61 }, true),
+								new ProgressSpecialBattle(q, 1, "A", new[] { 62 }, true),
+								new ProgressSpecialBattle(q, 1, "A", new[] { 63 }, true),
+							}));
+							break;
 						//============================ 1000～1099 ============================
 						//============================ 1100～1199 ============================
 						case 1103:  //|1103|６|潜水艦強化兵装の量産|61cm三連装(酸素)魚雷x3を破棄し、開発資材60、九三式水中聴音機x2、13号対空電探改x2を所有|
@@ -958,6 +968,13 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressDiscard(q, 4, true, new[]{ 1 }),
 								new ProgressDiscard(q, 4, true, new[]{ 2 }),
 								new ProgressDiscard(q, 4, true, new[]{ 3 }),
+							}));
+							break;
+						case 1119:   //|1119|週|【期間限定】Halloweenはお掃除もね、ね？|(小口径主砲x6, 中口径主砲x6,  水上偵察機x6)廃棄, (35.6cm連装砲x3, 25mm連装機銃x3, 家具コインx1031)保有
+							Progresses.Add(new ProgressMultiDiscard(q, new[]{
+								new ProgressDiscard(q, 6, true, new[]{ 1 }),
+								new ProgressDiscard(q, 6, true, new[]{ 2 }),
+								new ProgressDiscard(q, 6, true, new[]{ 10 }),
 							}));
 							break;
 						case 1120:  //|1120|【機種整理統合】新型戦闘機の量産計画|「艦上戦闘機」「艦上爆撃機」「艦上攻撃機」各x4を廃棄、「零式艦戦21型」x3「零式艦戦52型」x3ボーキサイト1800を保有

@@ -473,6 +473,40 @@ namespace ElectronicObserver.Data.Quest
 							}
 						}) >= 4;
 					break;
+				case 987:   //|987|週|【限定週間任務】10周年秋南瓜祭りおかわり！|6-1, 6-2, 6-3ボスA勝利各1回|条件：「阿武隈+伊201」「鵜来+稲木」「瑞穂+Brooklyn+Johnston」何れかの組み合わせ、南瓜イベント
+					isAccepted = (members.Count(s =>
+					{
+						switch (s?.MasterShip?.NameReading)
+						{
+							case "あぶくま":
+							case "い201":
+								return true;
+							default:
+								return false;
+						}
+					}) >= 2) || (members.Count(s =>
+					{
+						switch (s?.MasterShip?.NameReading)
+						{
+							case "うくる":
+							case "いなぎ":
+								return true;
+							default:
+								return false;
+						}
+					}) >= 2) || (members.Count(s =>
+					{
+						switch (s?.MasterShip?.NameReading)
+						{
+							case "みずほ":
+							case "ブルックリン":
+							case "ジョンストン":
+								return true;
+							default:
+								return false;
+						}
+					}) >= 3);
+					break;
 			}
 
 			// 第二ゲージでも第一ボスに行ける場合があるので、個別対応が必要

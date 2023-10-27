@@ -266,6 +266,24 @@ namespace ElectronicObserver.Data.Quest
 						ret = true;
 					}
 					break;
+				case 368:   //|368|７|「十六駆」演習！|演習S勝利以上3|天津風、雪風、時津風、初風のうち2隻以上|イヤーリーだが1日で進捗リセット|
+					if (ships.Count(s =>
+					{
+						switch (s?.MasterShip?.NameReading)
+						{
+							case "あまつかぜ": 
+							case "ゆきかぜ": 
+							case "ときつかぜ": 
+							case "はつかぜ": 
+								return true;
+							default:
+								return false;
+						}
+					}) >= 2)
+					{
+						ret = true;
+					}
+					break;
 				default:
 					//ここに来たらバグ
 					ret = false;
