@@ -32,7 +32,7 @@ namespace ElectronicObserver.Observer
 		#endregion
 
 
-		#nullable enable
+
 		public APIDictionary APIList { get; private set; }
 
 		public string? ServerAddress { get; private set; }
@@ -49,7 +49,6 @@ namespace ElectronicObserver.Observer
 
 		private ProxyServer Proxy { get; }
 		private ExplicitProxyEndPoint Endpoint { get; set; }
-		#nullable disable
 
 		private APIObserver()
 		{
@@ -178,7 +177,7 @@ namespace ElectronicObserver.Observer
 		{
 
 			Utility.Configuration.ConfigurationData.ConfigConnection c = Utility.Configuration.Config.Connection;
-			#nullable enable
+
 
 			this.UIControl = UIControl;
 
@@ -219,7 +218,6 @@ namespace ElectronicObserver.Observer
 
 
 			return ProxyPort;
-			#nullable disable
 		}
 
 
