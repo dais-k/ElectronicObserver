@@ -386,7 +386,7 @@ namespace Browser
 			var browser = Browser.GetBrowser();
 			var frame = browser.MainFrame;
 
-			if (frame?.Url?.Contains(@"https://www.dmm.com/netgame/social/") ?? false)
+			if (frame?.Url?.Contains(@"http://www.dmm.com/netgame/social/") ?? false)
 				return frame;
 
 			return null;
@@ -401,7 +401,7 @@ namespace Browser
 			var frames = browser.GetFrameIdentifiers()
 						.Select(id => browser.GetFrame(id));
 
-			return frames.FirstOrDefault(f => f?.Url?.Contains(@"https://osapi.dmm.com/gadgets/") ?? false);
+			return frames.FirstOrDefault(f => f?.Url?.Contains(@"//osapi.dmm.com/gadgets/") ?? false);
 		}
 
 		private IFrame GetKanColleFrame()
