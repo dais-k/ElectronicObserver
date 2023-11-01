@@ -401,7 +401,7 @@ namespace Browser
 			var frames = browser.GetFrameIdentifiers()
 						.Select(id => browser.GetFrame(id));
 
-			return frames.FirstOrDefault(f => f?.Url?.Contains(@"//osapi.dmm.com/gadgets/") ?? false);
+			return frames.FirstOrDefault(f => f?.Url?.Contains(@"http://osapi.dmm.com/gadgets/") ?? false);
 		}
 
 		private IFrame GetKanColleFrame()
