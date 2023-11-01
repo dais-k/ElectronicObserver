@@ -507,6 +507,27 @@ namespace ElectronicObserver.Data.Quest
 						}
 					}) >= 3);
 					break;
+				//|1002|単|【期間限定任務】10周年秋南瓜祭り拡張作戦！|1-5、2-3、4-4、6-4ボスを各S勝利1回ずつ|条件：鵜来, 稲木, 朝潮, 夕立, 野分, 浜波, 早波, 阿武隈から2隻|
+				case 1002:
+					isAccepted =
+						members.Count(s =>
+						{
+							switch (s?.MasterShip?.NameReading)
+							{
+								case "うくる":
+								case "いなぎ":
+								case "あさしお":
+								case "ゆうだち":
+								case "のわき":
+								case "はまなみ":
+								case "はやなみ":
+								case "あぶくま":
+									return true;
+								default:
+									return false;
+							}
+						}) >= 2;
+					break;
 			}
 
 			// 第二ゲージでも第一ボスに行ける場合があるので、個別対応が必要

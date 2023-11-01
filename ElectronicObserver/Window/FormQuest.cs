@@ -85,11 +85,14 @@ namespace ElectronicObserver.Window
 					case 9:     //出撃(3)
 						c = Color.FromArgb(0xFF, 0xCC, 0xCC);
 						break;
-					case 10:    //その他
-						c = CSDefaultCenter.BackColor;
+					case 10:    //出撃(4)
+						c = Color.FromArgb(0xFF, 0xCC, 0xCC);
 						break;
 					case 11:    //工廠(2)
 						c = Color.FromArgb(0xDD, 0xCC, 0xBB);
+						break;
+					case 12:    //その他
+						c = CSDefaultCenter.BackColor;
 						break;
 					default:
 						c = CSDefaultCenter.BackColor;

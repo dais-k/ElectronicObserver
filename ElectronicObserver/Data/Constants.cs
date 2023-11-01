@@ -1277,6 +1277,7 @@ namespace ElectronicObserver.Data
 				case 2:
 				case 8:
 				case 9:
+				case 10:
 					return "出撃";
 				case 3:
 					return "演習";
@@ -1289,7 +1290,7 @@ namespace ElectronicObserver.Data
 					return "工廠";
 				case 7:
 					return "改装";
-				case 10:
+				case 12:
 					return "他";
 				default:
 					return "不明";

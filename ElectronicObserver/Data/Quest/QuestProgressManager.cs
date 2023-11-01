@@ -898,7 +898,7 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressSpecialBattle(q, 1, "S", new[] { 35 }, true),
 							}));
 							break;
-						case 961:   //|961|単|奮戦！精鋭「第十五駆逐隊」第一小隊|2-4、5-4、7-2-2ボスを各S勝利1回ずつ|条件：黒潮改二、親潮改二を編成に入れる|
+						case 961:   //|961|単|奮戦！精鋭「第十五駆逐隊」第一小隊|2-4、5-4、7-2-2ボスを各S勝利2回ずつ|条件：黒潮改二、親潮改二を編成に入れる|
 							Progresses.Add(new ProgressMultiBattle(q, new[] {
 								new ProgressSpecialBattle(q, 2, "S", new[] { 24 }, true),
 								new ProgressSpecialBattle(q, 2, "S", new[] { 54 }, true),
@@ -929,6 +929,14 @@ namespace ElectronicObserver.Data.Quest
 							}));
 							break;
 						//============================ 1000～1099 ============================
+						case 1002:  //|1002|単|【期間限定任務】10周年秋南瓜祭り拡張作戦！|1-5、2-3、4-4、6-4ボスを各S勝利1回ずつ|条件：鵜来, 稲木, 朝潮, 夕立, 野分, 浜波, 早波, 阿武隈から2隻|
+							Progresses.Add(new ProgressMultiBattle(q, new[] {
+								new ProgressSpecialBattle(q, 1, "S", new[] { 15 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 23 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 44 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 64 }, true),
+							}));
+							break;
 						//============================ 1100～1199 ============================
 						case 1103:  //|1103|６|潜水艦強化兵装の量産|61cm三連装(酸素)魚雷x3を破棄し、開発資材60、九三式水中聴音機x2、13号対空電探改x2を所有|
 							Progresses.Add(new ProgressDiscard(q, 3, true, new[] { 125 }, -1));
