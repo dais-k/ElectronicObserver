@@ -463,15 +463,24 @@ namespace ElectronicObserver.Window
 				return config.DownstreamProxy;
 
 			}
-			if (config.UseSystemProxy)
+			else if (config.UseSystemProxy)
 			{
 				return APIObserver.Instance.ProxyPort.ToString();
 
 			}
-			return string.Format("http=127.0.0.1:{0};https=127.0.0.1:{0}", APIObserver.Instance.ProxyPort);
+			else if (config.UseUpstreamProxy)
+			{
+				return string.Format(
+					"http=127.0.0.1:{0};https={1}:{2}",
+					APIObserver.Instance.ProxyPort,
+					config.UpstreamProxyAddress,
+					config.UpstreamProxyPort);
+			}
+			else
+			{
+				return string.Format("http=127.0.0.1:{0}", APIObserver.Instance.ProxyPort);
+			}
 		}
-
-	
 
 
 		public void SetProxyCompleted()
