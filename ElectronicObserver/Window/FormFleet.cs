@@ -1622,6 +1622,17 @@ namespace ElectronicObserver.Window
 			OpenUrlWithDeciBuilderData("http://kancolle-calc.net/deckbuilder.html", 0, new bool[] { true,true,true,true,} );
 		}
 
+		/// <summary>
+		/// 「艦隊分析」装備情報反映用
+		/// https://kancolle-fleetanalysis.firebaseapp.com/
+		/// </summary>
+		private void ContextMenuFleet_CopyToFleetAnalysisEquip_Click(object sender, EventArgs e)
+		{
+			Clipboard.SetText(
+				"[" + string.Join(",", KCDatabase.Instance.Equipments.Values.Where(eq => eq?.IsLocked ?? false)
+				.Select(eq => $"{{\"api_slotitem_id\":{eq.EquipmentID},\"api_level\":{eq.Level}}}")) + "]");
+		}
+
 		private void ContextMenuFleet_AntiAirDetails_Click(object sender, EventArgs e)
 		{
 			var dialog = new DialogAntiAirDefense();
