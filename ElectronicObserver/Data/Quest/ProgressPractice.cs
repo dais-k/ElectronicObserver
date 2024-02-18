@@ -85,6 +85,13 @@ namespace ElectronicObserver.Data.Quest
 						ret = true;
 					}
 					break;
+				case 329:   //|329|日|【節分任務:枡】節分演習！二〇二四|演習B勝利4|条件：重巡級(重巡・航巡)2+駆逐・海防3+自由枠1|節分イベントの期間限定デイリー任務
+					if ((ships.Count(s => s.MasterShip.ShipType == ShipTypes.HeavyCruiser || s.MasterShip.ShipType == ShipTypes.AviationCruiser) >= 2) &&
+						(ships.Count(s => s.MasterShip.ShipType == ShipTypes.Destroyer || s.MasterShip.ShipType == ShipTypes.Escort) >= 3))
+					{
+						ret = true;
+					}
+					break;
 				case 330:   //|330|Ｑ|空母機動部隊、演習始め！|演習B勝利以上4|条件：航空母艦旗艦他1隻計2隻以上及び駆逐艦2隻を含む|クォータリーだが1日で進捗リセット
 					if ((ships.FirstOrDefault().MasterShip.IsAircraftCarrier) &&
 						(ships.Count(s => s.MasterShip.IsAircraftCarrier) >= 2) &&
@@ -262,6 +269,24 @@ namespace ElectronicObserver.Data.Quest
 					}) >= 2) &&
 					(ships.Count(s => s.MasterShip.ShipType == ShipTypes.LightCruiser) >= 1) &&
 					(ships.Count(s => s.MasterShip.ShipType == ShipTypes.Destroyer) >= 2))
+					{
+						ret = true;
+					}
+					break;
+				case 362:   //|362|４|特型初代「第十一駆逐隊」演習スペシャル！|演習A勝利以上4|条件：吹雪、白雪、初雪、深雪|イヤーリーだが1日で進捗リセット|
+					if (ships.Count(s =>
+					{
+						switch (s?.MasterShip?.NameReading)
+						{
+							case "ふぶき":
+							case "しらゆき":
+							case "はつゆき":
+							case "みゆき":
+								return true;
+							default:
+								return false;
+						}
+					}) >= 4)
 					{
 						ret = true;
 					}
