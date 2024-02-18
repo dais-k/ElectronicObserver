@@ -31,6 +31,8 @@
             this.components = new System.ComponentModel.Container();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.JsonRawData = new System.Windows.Forms.TextBox();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.JsonTreeView = new System.Windows.Forms.TreeView();
             this.TreeContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.TreeContextMenu_Expand = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,8 +42,6 @@
             this.TreeContextMenu_OutputCSV = new System.Windows.Forms.ToolStripMenuItem();
             this.TreeContextMenu_CopyToClipboard = new System.Windows.Forms.ToolStripMenuItem();
             this.TreeContextMenu_CopyAsDocument = new System.Windows.Forms.ToolStripMenuItem();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.JsonRawData = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -53,8 +53,8 @@
             this.CSVSaver = new System.Windows.Forms.SaveFileDialog();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.TreeContextMenu.SuspendLayout();
             this.tabPage2.SuspendLayout();
+            this.TreeContextMenu.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -75,14 +75,38 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.JsonTreeView);
+            this.tabPage1.Controls.Add(this.JsonRawData);
             this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(292, 172);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Tree";
+            this.tabPage1.Text = "Raw";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // JsonRawData
+            // 
+            this.JsonRawData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.JsonRawData.Location = new System.Drawing.Point(3, 3);
+            this.JsonRawData.MaxLength = 0;
+            this.JsonRawData.Multiline = true;
+            this.JsonRawData.Name = "JsonRawData";
+            this.JsonRawData.ReadOnly = true;
+            this.JsonRawData.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.JsonRawData.Size = new System.Drawing.Size(286, 166);
+            this.JsonRawData.TabIndex = 0;
+            this.JsonRawData.WordWrap = false;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.JsonTreeView);
+            this.tabPage2.Location = new System.Drawing.Point(4, 24);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(292, 172);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Tree";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // JsonTreeView
             // 
@@ -160,30 +184,6 @@
             this.TreeContextMenu_CopyAsDocument.Text = "このノードをドキュメント化してコピー";
             this.TreeContextMenu_CopyAsDocument.Click += new System.EventHandler(this.TreeContextMenu_CopyAsDocument_Click);
             // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.JsonRawData);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(292, 174);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Raw";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // JsonRawData
-            // 
-            this.JsonRawData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.JsonRawData.Location = new System.Drawing.Point(3, 3);
-            this.JsonRawData.MaxLength = 0;
-            this.JsonRawData.Multiline = true;
-            this.JsonRawData.Name = "JsonRawData";
-            this.JsonRawData.ReadOnly = true;
-            this.JsonRawData.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.JsonRawData.Size = new System.Drawing.Size(286, 168);
-            this.JsonRawData.TabIndex = 0;
-            this.JsonRawData.WordWrap = false;
-            // 
             // tabPage3
             // 
             this.tabPage3.Controls.Add(this.label3);
@@ -205,7 +205,7 @@
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 148);
+            this.label3.Location = new System.Drawing.Point(6, 146);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(249, 15);
             this.label3.TabIndex = 5;
@@ -293,9 +293,9 @@
             this.Load += new System.EventHandler(this.FormJson_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.TreeContextMenu.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
+            this.TreeContextMenu.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             this.ResumeLayout(false);
