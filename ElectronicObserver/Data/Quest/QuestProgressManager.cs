@@ -662,9 +662,9 @@ namespace ElectronicObserver.Data.Quest
 							break;
 						case 840:   //|840|週|【節分任務:豆】節分作戦二〇二四|1-1・1-3・1-4ボスA勝利各1|鳳翔・阿賀野・浦波・深雪・朧・潮・清霜・風雲・朝霜・峯雲・迅鯨・長鯨から旗艦と二番艦, 期間限定
 							Progresses.Add(new ProgressMultiBattle(q, new[] {
-								new ProgressSpecialBattle(q, 1, "A", new[] { 11 }, true),
-								new ProgressSpecialBattle(q, 1, "A", new[] { 13 }, true),
-								new ProgressSpecialBattle(q, 1, "A", new[] { 14 }, true),
+								new ProgressSpecialBattle(q, 2, "A", new[] { 11 }, true),
+								new ProgressSpecialBattle(q, 2, "A", new[] { 13 }, true),
+								new ProgressSpecialBattle(q, 2, "A", new[] { 14 }, true),
 							}));
 							break;
 						case 841:   //|841|週|【節分任務:鬼】南西方面節分作戦二〇二四|2-1・2-2・7-4のボスA勝利各2|Ranger・Johnston・早霜・神鷹・大淀・明石・天霧・狭霧・瑞穂・Commandant Testeから旗艦と二番艦, 期間限定
