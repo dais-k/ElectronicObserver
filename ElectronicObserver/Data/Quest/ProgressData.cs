@@ -178,6 +178,9 @@ namespace ElectronicObserver.Data.Quest
 					//一部の任務で進捗がバグるので個別対策
 					switch (q.QuestID)
 					{
+						case 329:
+							Progress = 3;
+							break;
 						case 330:
 							Progress = 3;
 							break;
