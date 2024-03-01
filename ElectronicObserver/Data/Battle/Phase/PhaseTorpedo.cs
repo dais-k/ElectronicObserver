@@ -29,10 +29,18 @@ namespace ElectronicObserver.Data.Battle.Phase
 				return;
 
 			Damages = GetConcatArray("api_fdam", "api_edam", 0.0);
-			AttackDamages = GetConcatArray("api_fydam", "api_eydam", 0);
-			Targets = GetConcatArray("api_frai", "api_erai", -1);
-			CriticalFlags = GetConcatArray("api_fcl", "api_ecl", 0);
-
+			if (IsOpeningTorpedoPhase)
+			{
+				AttackDamages = GetConcatArray<int[]?>("api_fydam_list_items", "api_eydam_list_items", null);
+				Targets = GetConcatArray<int[]?>("api_frai_list_items", "api_erai_list_items", null);
+				CriticalFlags = GetConcatArray<int[]?>("api_fcl_list_items", "api_ecl_list_items", null);
+			}
+			else if (IsClosingTorpedoPhase)
+			{
+				AttackDamages = GetConcatArray("api_fydam", "api_eydam", 0).Select(i => new[] { i }).ToArray();
+				Targets = GetConcatArray("api_frai", "api_erai", -1).Select(i => new[] { i }).ToArray();
+				CriticalFlags = GetConcatArray("api_fcl", "api_ecl", 0).Select(i => new[] { i }).ToArray();
+			}
 		}
 
 
@@ -42,16 +50,18 @@ namespace ElectronicObserver.Data.Battle.Phase
 			{
 				if (phaseID == 0)
 				{
-					return RawData.api_opening_flag() ? (int)RawData.api_opening_flag != 0 : false;
+					return IsOpeningTorpedoPhase;
 
 				}
 				else
 				{
-					return (int)RawData.api_hourai_flag[phaseID - 1] != 0;
+					return IsClosingTorpedoPhase;
 				}
 			}
 		}
 
+		private bool IsOpeningTorpedoPhase => RawData.api_opening_flag() ? (int)RawData.api_opening_flag != 0 : false;
+		private bool IsClosingTorpedoPhase => (int)RawData.api_hourai_flag[phaseID - 1] != 0;
 
 		public override void EmulateBattle(int[] hps, int[] damages)
 		{
@@ -65,21 +75,21 @@ namespace ElectronicObserver.Data.Battle.Phase
 
 			for (int i = 0; i < Targets.Length; i++)
 			{
-				if (Targets[i] >= 0)
+				if (Targets[i]?[0] >= 0)
 				{
 					BattleIndex attacker = new BattleIndex(i, Battle.IsFriendCombined, Battle.IsEnemyCombined);
-					BattleIndex defender = new BattleIndex(Targets[i] + (i < 12 ? 12 : 0), Battle.IsFriendCombined, Battle.IsEnemyCombined);
+					BattleIndex defender = new BattleIndex(Targets[i][0] + (i < 12 ? 12 : 0), Battle.IsFriendCombined, Battle.IsEnemyCombined);
 
-					BattleDetails.Add(new BattleDayDetail(Battle, attacker, defender, new double[] { AttackDamages[i] + Damages[defender] - Math.Floor(Damages[defender]) },    //propagates "guards flagship" flag
-						new int[] { CriticalFlags[i] }, -1, null, currentHP[defender]));
-					currentHP[defender] -= Math.Max(AttackDamages[i], 0);
+					BattleDetails.Add(new BattleDayDetail(Battle, attacker, defender, new double[] { AttackDamages[i][0] + Damages[defender] - Math.Floor(Damages[defender]) },    //propagates "guards flagship" flag
+						new int[] { CriticalFlags[i][0] }, -1, null, currentHP[defender]));
+					currentHP[defender] -= Math.Max(AttackDamages[i][0], 0);
 				}
 			}
 
 			for (int i = 0; i < hps.Length; i++)
 			{
 				AddDamage(hps, i, (int)Damages[i]);
-				damages[i] += AttackDamages[i];
+				damages[i] += AttackDamages[i]?.Sum() ?? 0;
 			}
 
 		}
@@ -96,22 +106,22 @@ namespace ElectronicObserver.Data.Battle.Phase
 		/// <summary>
 		/// 各艦の与ダメージ
 		/// </summary>
-		public int[] AttackDamages { get; private set; }
+		public int[]?[] AttackDamages { get; private set; }
 
 		/// <summary>
 		/// 各艦のターゲットインデックス
 		/// </summary>
-		public int[] Targets { get; private set; }
+		public int[]?[] Targets { get; private set; }
 
 		/// <summary>
 		/// クリティカルフラグ(攻撃側)
 		/// </summary>
-		public int[] CriticalFlags { get; private set; }
+		public int[]?[] CriticalFlags { get; private set; }
 
 
 
 
-		private T[] GetConcatArray<T>(string friendName, string enemyName, T defaultValue) where T : struct
+		private T[] GetConcatArray<T>(string friendName, string enemyName, T defaultValue)
 		{
 			var friend = ConvertToArray<T>(TorpedoData[friendName], 12, defaultValue);
 			var enemy = ConvertToArray<T>(TorpedoData[enemyName], 12, defaultValue);
@@ -131,7 +141,7 @@ namespace ElectronicObserver.Data.Battle.Phase
 		/// 基本的には `(T[])json` と等価ですが、特定の状況下におけるデータエラーを回避するための実装が含まれています
 		/// https://github.com/andanteyk/ElectronicObserver/issues/294
 		/// </summary>
-		private static T[] ConvertToArray<T>(dynamic json, int maxLength, T defaultValue) where T : struct
+		private static T[] ConvertToArray<T>(dynamic json, int maxLength, T defaultValue)
 		{
 			var ret = Enumerable.Repeat(defaultValue, maxLength).ToArray();
 			int i = 0;
