@@ -388,7 +388,6 @@ namespace ElectronicObserver.Window.Dialog
 
 			var sb = new StringBuilder();
 			sb.AppendLine("[装備可能]");
-
 			var eq = db.MasterEquipments[equipmentID];
 			if (eq == null)
 				return sb.ToString();
@@ -437,9 +436,9 @@ namespace ElectronicObserver.Window.Dialog
 				|| eq.EquippableStypeAtExpansion.Any()
 				|| eq.EquippableCtypeAtExpansion.Any())
 			{
-				sb.AppendLine("\n[拡張スロット] ");
+				sb.AppendFormat("\n[拡張スロット]  改修LV★{0}から可能\n",eq.equippableRequestLevel);
 			if (eq.EquippableShipsAtExpansion.Any())
-				sb.AppendLine(string.Join(", ", eq.EquippableShipsAtExpansion.Select(id => db.MasterShips[id].NameWithClass)));
+				sb.AppendLine(string.Join(", ", eq.EquippableShipsAtExpansion.Select(id => db.MasterShips[id]?.NameWithClass ?? "未実装")));
 			if (eq.EquippableStypeAtExpansion.Any())
 				sb.AppendLine(string.Join(",",eq.EquippableStypeAtExpansion.Select(id => db.ShipTypes[id]?.Name)));
 			if (eq.EquippableCtypeAtExpansion.Any())

@@ -162,11 +162,12 @@ namespace ElectronicObserver.Data
 
 
 		/// <summary>
-		/// 拡張スロットに装備可能な艦船ID、艦種ID、艦型IDのリスト
+		/// 拡張スロットに装備可能な艦船ID、艦種ID、艦型ID、装備可能改修LVのリスト
 		/// </summary>
-		internal int[] equippableShipsAtExpansion = new int[0];
-		internal int[] equippableStypeAtExpansion = new int[0];
-		internal int[] equippableCtypeAtExpansion = new int[0];
+		public int[] equippableShipsAtExpansion = new int[0];
+		public int[] equippableStypeAtExpansion = new int[0];
+		public int[] equippableCtypeAtExpansion = new int[0];
+		public int equippableRequestLevel = 0;
 		public IEnumerable<int> EquippableShipsAtExpansion => equippableShipsAtExpansion;
 		public IEnumerable<int> EquippableStypeAtExpansion => equippableStypeAtExpansion;
 		public IEnumerable<int> EquippableCtypeAtExpansion => equippableCtypeAtExpansion;

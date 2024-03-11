@@ -270,8 +270,16 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 					}
 					rootObject.api_ctypes = list_ctypes;
 				}
-				
-				text_api_mst_equip_exslot_ship = text_api_mst_equip_exslot_ship.Replace(text_equip_exslot + ",", ""); //大本のテキストから今作業した要素を削除
+				string text_reqLV = text_ctypes.Replace(root_ctypes.ToString() + ",", "");
+
+				//api_req_level取得
+				JsonElement jelem_reqLV = JsonSerializer.Deserialize<JsonElement>(text_reqLV);
+				JsonProperty root_reqLV = jelem_reqLV.EnumerateObject().First();
+				JsonElement value_reqLV = root_reqLV.Value;
+				rootObject.api_req_level = value_reqLV.GetInt32();
+
+				//大本のテキストから今作業した要素を削除
+				text_api_mst_equip_exslot_ship = text_api_mst_equip_exslot_ship.Replace(text_equip_exslot + ",", "");
 
 				// 一旦一装備のみでJSONデータをシリアライズで作成
 				string mst_equip_exslot_ship_temp = JsonSerializer.Serialize<RootObject>(rootObject);
@@ -280,6 +288,7 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 				if (rootObject.api_ship_ids != null) rootObject.api_ship_ids = null;
 				if (rootObject.api_stypes != null) rootObject.api_stypes = null;
 				if (rootObject.api_ctypes != null) rootObject.api_ctypes = null;
+				if (rootObject.api_req_level != 0) rootObject.api_req_level = 0;
 
 				//作ったJSONデータをJsonSerializerでDeserializeしてデータを取りだす
 				Api_mst_equip_exslot_ship_decode api_mst_equip_exslot_ship_decode = JsonSerializer.Deserialize<Api_mst_equip_exslot_ship_decode>(mst_equip_exslot_ship_temp);
@@ -309,6 +318,8 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 						db.MasterEquipments[id].equippableCtypeAtExpansion = api_mst_equip_exslot_ship_decode.api_ctypes;
 					}
 				}
+				//装備可能改修レベル
+				db.MasterEquipments[id].equippableRequestLevel = api_mst_equip_exslot_ship_decode.api_req_level;
 			}
 
 			//api_mst_shipgraph
@@ -344,6 +355,7 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 		public List<int> api_ship_ids { get; set; }
 		public List<int> api_stypes { get; set; }
 		public List<int> api_ctypes { get; set; }
+		public int api_req_level { get; set; }
 	}
 
 	public class Api_mst_equip_exslot_ship_decode
@@ -352,13 +364,16 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 		public int[] api_ship_ids { get; set; }
 		public int[] api_stypes { get; set; }
 		public int[] api_ctypes { get; set; }
+		public int api_req_level { get; set; }
 
-		public Api_mst_equip_exslot_ship_decode(int api_slotitem_id, int[] api_ship_ids, int[] api_stypes, int[] api_ctypes)
+		public Api_mst_equip_exslot_ship_decode(int api_slotitem_id, int[] api_ship_ids, int[] api_stypes, int[] api_ctypes, int api_req_level)
 		{
 			this.api_slotitem_id = api_slotitem_id;
 			this.api_ship_ids = api_ship_ids;
 			this.api_stypes = api_stypes;
 			this.api_ctypes = api_ctypes;
+			this.api_req_level = api_req_level;
+
 		}
 	}
 }
