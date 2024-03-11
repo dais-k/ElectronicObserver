@@ -68,21 +68,6 @@ namespace ElectronicObserver.Data.Battle.Phase
 			_ => null,
 		};
 
-		/// <summary>
-		/// 気球展開対象セル
-		/// </summary>
-		public int BalloonCell => (int)RawData.api_balloon_cell;
-
-		/// <summary>
-		/// 環礁マス
-		/// </summary>
-		public int AtollCell => (int)RawData.api_atoll_cell;
-
-		/// <summary>
-		/// 装甲破砕状態
-		/// </summary>
-		public int Xal01Cell => (int)RawData.api_xal01;
-
 	}
 }
 
