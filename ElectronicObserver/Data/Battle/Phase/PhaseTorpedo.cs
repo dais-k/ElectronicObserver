@@ -61,14 +61,17 @@ namespace ElectronicObserver.Data.Battle.Phase
 
 			for (int i = 0; i < Targets.Length; i++)
 			{
-				if (Targets[i]?[0] >= 0)
-				{
-					BattleIndex attacker = new BattleIndex(i, Battle.IsFriendCombined, Battle.IsEnemyCombined);
-					BattleIndex defender = new BattleIndex(Targets[i][0] + (i < 12 ? 12 : 0), Battle.IsFriendCombined, Battle.IsEnemyCombined);
+				if (Targets[i] is null) continue;
 
-					BattleDetails.Add(new BattleDayDetail(Battle, attacker, defender, new double[] { AttackDamages[i][0] + Damages[defender] - Math.Floor(Damages[defender]) },    //propagates "guards flagship" flag
-						new int[] { CriticalFlags[i][0] }, -1, null, currentHP[defender]));
-					currentHP[defender] -= Math.Max(AttackDamages[i][0], 0);
+				for (int j = 0; j < Targets[i].Length; j++)
+				{
+					if (Targets[i][j] < 0) continue;
+					BattleIndex attacker = new BattleIndex(i, Battle.IsFriendCombined, Battle.IsEnemyCombined);
+					BattleIndex defender = new BattleIndex(Targets[i][j] + (i < 12 ? 12 : 0), Battle.IsFriendCombined, Battle.IsEnemyCombined);
+
+					BattleDetails.Add(new BattleDayDetail(Battle, attacker, defender, new double[] { AttackDamages[i][j] + Damages[defender] - Math.Floor(Damages[defender]) },    //propagates "guards flagship" flag
+						new int[] { CriticalFlags[i][j] }, -1, null, currentHP[defender]));
+					currentHP[defender] -= Math.Max(AttackDamages[i][j], 0);
 				}
 			}
 
