@@ -84,6 +84,9 @@ api_start2/getData	：艦娘・装備固有データその他
 	api_mst_equip_exslot_ship		：補強スロットへの特殊装備
 		api_slotitem_id		：装備ID
 		api_ship_ids		：対象となる艦娘ID []
+		api_stypes			：対象となる艦種（駆逐艦、軽巡とか）[]
+		api_ctypes			：対象となる艦型（綾波型、秋月型とか）[]
+		api_req_level		：補強増設に搭載可能になる改修LV
 
 	api_mst_stype		：艦船カテゴリ
 		api_id			：カテゴリID(艦船のstypeに対応)
@@ -1981,7 +1984,15 @@ api_req_sortie/battle	：通常艦隊　昼戦
 	api_opening_taisen_flag		：開幕対潜攻撃フラグ 0=なし 1=あり
 	api_opening_taisen			：開幕対潜攻撃　上の=0のとき null　メンバの配列はすべて [攻撃フェイズの回数]　フォーマットは砲撃戦と同じ
 	api_opening_flag	：開幕雷撃フラグ 0=発動せず, 1=発動
-	api_opening_atack	：開幕雷撃戦 api_opening_flag = 0 の時 null　中身はおそらく api_raigeki と同じ *スペルミス注意*
+	api_opening_atack	：開幕雷撃戦 *スペルミス注意* api_opening_flag = 0 の時 null　中身はおそらく api_raigeki と同じ 20240301メンテ以降仕様変更
+		api_frai_list_items			：味方雷撃ターゲットのインデックス　[7][] 特四式内火艇の2回攻撃に対応させるため 不発は null
+		api_fcl_list_items			：味方クリティカルフラグ　[7][] 特四式内火艇の2回攻撃に対応させるため null=ミス, 1=命中, 2=クリティカル
+		api_fdam					：味方被ダメージ　[7]　
+		api_fydam_list_items		：味方与ダメージ　[7][攻撃回数] 特四式内火艇の2回攻撃に対応させるため
+		api_erai_list_items			：敵雷撃ターゲットのインデックス　[7]
+		api_ecl_list_items			：敵クリティカルフラグ　[7]
+		api_edam					：敵被ダメージ　[7]
+		api_eydam_list_items		：敵与ダメージ　[7]
 	api_hourai_flag	：砲雷撃戦フラグ　[4]
 	api_hougeki1	：砲撃戦1巡目　api_hourai_flag[0] = 0 の時 null　メンバの配列はすべて [攻撃フェイズの回数]
 		api_at_eflag	：行動陣営フラグ 0=味方, 1=敵
