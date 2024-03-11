@@ -417,7 +417,8 @@ namespace ElectronicObserver.Data
 				case 123: return "改敷島型";
 				case 124: return "Marcello級";
 				case 125: return "Nevada級";
-				case 126: return "氷川丸級";
+				case 126: return "改氷川丸級";
+				case 127: return "巡潜乙型改一";
 				default: 
 					return "不明";
 			}
@@ -841,6 +842,8 @@ namespace ElectronicObserver.Data
 					return "大和、突撃します！二番艦も続いてください！";
 				case DayAttackKind.SpecialYamato2:
 					return "第一戦隊、突撃！主砲、全力斉射ッ！";
+				case DayAttackKind.Toku4Attack:
+					return "特四式内火艇攻撃";
 				case DayAttackKind.Shelling:
 					return "砲撃";
 				case DayAttackKind.AirAttack:
@@ -936,6 +939,8 @@ namespace ElectronicObserver.Data
 					return "大和、突撃します！二番艦も続いてください！";
 				case NightAttackKind.SpecialYamato2:
 					return "第一戦隊、突撃！主砲、全力斉射ッ！";
+				case NightAttackKind.Toku4Attack:
+					return "特四式内火艇攻撃";
 				case NightAttackKind.Shelling:
 					return "砲撃";
 				case NightAttackKind.AirAttack:

@@ -689,6 +689,8 @@ namespace ElectronicObserver.Utility.Data
 			{ 409, 0.03 },	// 武装大発
 			{ 436, 0.02 },  // 2号戦車/アフリカ仕様
 			{ 449, 0.02 },  // 一式砲戦車
+			{ 525, 0.04 },  // 特四式内火艇
+			{ 526, 0.05 },  // 特四式内火艇改
 		};
 
 		/// <summary>
@@ -2654,8 +2656,11 @@ namespace ElectronicObserver.Utility.Data
 		/// <summary> 第一戦隊、突撃！主砲、全力斉射ッ！ </summary>
 		SpecialYamato2 = 401,
 
+		/// <summary> 特四式内火艇攻撃 </summary>
+		Toku4Attack = 1000,
+
 		/// <summary> 砲撃 </summary>
-		Shelling = 1000,
+		Shelling = 1100,
 
 		/// <summary> 空撃 </summary>
 		AirAttack,
@@ -2787,8 +2792,11 @@ namespace ElectronicObserver.Utility.Data
 		/// <summary> 第一戦隊、突撃！主砲、全力斉射ッ！ </summary>
 		SpecialYamato2 = 401,
 
+		/// <summary> 特四式内火艇攻撃 </summary>
+		Toku4Attack = 1000,
+
 		/// <summary> 砲撃 </summary>
-		Shelling = 1000,
+		Shelling = 1100,
 
 		/// <summary> 空撃 </summary>
 		AirAttack,
