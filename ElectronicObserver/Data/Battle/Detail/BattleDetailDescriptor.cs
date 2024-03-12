@@ -324,8 +324,17 @@ namespace ElectronicObserver.Data.Battle.Detail
 							sb.AppendFormat("煙幕展開: {0}重\r\n", p.SmokeCount);
 						}
 
-						sb.AppendLine();
+						if (p.BalloonCell != 0)
+						{
+							sb.AppendLine("阻塞気球対象マス");
+						}
 
+						if (p.AtollCell != 0)
+						{
+							sb.AppendLine("環礁マス(開幕雷撃不可)");
+						}
+
+						sb.AppendLine();
 						break;
 
 					case PhaseSupport p:
