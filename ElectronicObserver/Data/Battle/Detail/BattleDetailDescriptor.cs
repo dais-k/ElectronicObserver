@@ -323,17 +323,17 @@ namespace ElectronicObserver.Data.Battle.Detail
 						{
 							sb.AppendFormat("煙幕展開: {0}重\r\n", p.SmokeCount);
 						}
-
-						if (p.BalloonCell != 0)
+						
+						if (p.IsBalloonCell)
 						{
-							sb.AppendLine("阻塞気球対象マス");
+							sb.AppendLine("対象マス");
 						}
 
-						if (p.AtollCell != 0)
+						if (p.IsAtollCell)
 						{
 							sb.AppendLine("環礁マス(開幕雷撃不可)");
 						}
-
+						
 						sb.AppendLine();
 						break;
 

@@ -67,17 +67,16 @@ namespace ElectronicObserver.Data.Battle.Phase
 			true => (int)RawData.api_smoke_type,
 			_ => null,
 		};
-
+		
 		/// <summary>
 		/// 気球展開対象セル
 		/// </summary>
-		public int BalloonCell => (int)RawData.api_balloon_cell;
+		public bool IsBalloonCell => RawData.api_balloon_cell() && (int)RawData.api_balloon_cell > 0;
 
 		/// <summary>
 		/// 環礁マス
 		/// </summary>
-		public int AtollCell => (int)RawData.api_atoll_cell;
-
+		public bool IsAtollCell => RawData.api_atoll_cell() && (int)RawData.api_atoll_cell > 0;
 	}
 }
 
