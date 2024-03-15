@@ -586,6 +586,109 @@ namespace ElectronicObserver.Utility.Data
 		}
 
 		/// <summary>
+		/// 煙幕発動
+		/// ※煙幕の発動率ではなく、煙幕が発動した場合に何重の煙幕になるかの格率
+		/// x.com/yukicacoon/status/1739480992090632669
+		/// </summary>
+		public static List<double> GetSmokeTriggerRates(FleetData fleet1, FleetData fleet2 )
+		{
+			var smokeReturn = new List<double>() { 0, 0, 0, 0 };
+
+			if (fleet1.MembersWithoutEscaped[0] == null)
+			{
+				return smokeReturn;
+			}
+
+			int smokecnt = 0;
+			int smokekaicnt = 0;
+			int smoketotal = 0;
+			int smokelevel = 0;
+			int smokekailevel = 0;
+			double p3 = 0;
+			double p2 = 0;
+			double p1 = 0;
+
+			double flagluck = fleet1.MembersInstance[0].LuckTotal;
+
+			foreach (var ship in fleet1.MembersWithoutEscaped)
+			{
+				if (ship == null)
+					continue;
+				foreach (var eq in ship.AllSlotInstance)
+				{
+					if (eq == null)
+						continue;
+					switch (eq.EquipmentID)
+					{
+						case 500:
+							smokecnt++;
+							smokelevel += eq.Level;
+							break;
+						case 501:
+							smokekaicnt++;
+							smokekailevel += eq.Level;
+							break;
+					}
+				}
+			}
+
+			if (fleet2 != null)
+			{
+				foreach (var ship in fleet2.MembersWithoutEscaped)
+				{
+					if (ship == null)
+						continue;
+					foreach (var eq in ship.AllSlotInstance)
+					{
+						if (eq == null)
+							continue;
+						switch (eq.EquipmentID)
+						{
+							case 500:
+								smokecnt++;
+								smokelevel += eq.Level;
+								break;
+							case 501:
+								smokekaicnt++;
+								smokekailevel += eq.Level;
+								break;
+						}
+					}
+				}
+			}
+			smoketotal = smokecnt + smokekaicnt * 2;
+			double smokeleveltotal = (double)0.3 * smokelevel + (double)0.5 * smokekailevel;
+			double modifier = Math.Ceiling(Math.Sqrt(flagluck) + smokeleveltotal);
+			double p0 = Math.Max(320 - 20 * modifier - 100 * modifier, 0);
+
+			if (smoketotal >= 3)
+			{
+				p3 = Math.Min(100, 4.2 * modifier + 15 * (smoketotal - 3));
+				p2 = Math.Min(30, 100 - p3);
+				p1 = Math.Max(100 - p2 - p3, 0);
+			}
+
+			if (smoketotal == 2)
+			{
+				p3 = 0;
+				p2 = Math.Min(100, (100 - p0) * 0.05 * (modifier + 2));
+				p1 = Math.Max(100 - p0 - p2, 0);
+			}
+
+			if (smoketotal == 1)
+			{
+				p3 = 0;
+				p2 = 0;
+				p1 = Math.Max(100 - p0, 0);
+			}
+			smokeReturn[0] = p3;
+			smokeReturn[1] = p2;
+			smokeReturn[2] = p1;
+			smokeReturn[3] = p0;
+			return smokeReturn; 
+		}
+
+		/// <summary>
 		/// 輸送作戦成功時の輸送量(減少TP)を求めます。
 		/// (S勝利時のもの。A勝利時は int( value * 0.7 ) )
 		/// </summary>

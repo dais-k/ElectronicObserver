@@ -172,7 +172,9 @@ namespace ElectronicObserver.Window
 					// 各艦ごとの ドラム缶 or 大発系 を搭載している個数
 					var transport = members.Select(s => s.AllSlotInstanceMaster.Count(eq => eq?.CategoryType == EquipmentTypes.TransportContainer));
 					var landing = members.Select(s => s.AllSlotInstanceMaster.Count(eq => eq?.CategoryType == EquipmentTypes.LandingCraft || eq?.CategoryType == EquipmentTypes.SpecialAmphibiousTank));
-
+					
+					// 煙幕発動率
+					var smokeGenrate = Calculator.GetSmokeTriggerRates(fleet, null);
 
 					ToolTipInfo.SetToolTip(Name, string.Format(
 						"Lv合計: {0} / 平均: {1:0.00}\r\n" +
@@ -183,7 +185,8 @@ namespace ElectronicObserver.Window
 						"大発動艇搭載: {10}個 ({11}艦, +{12:p1})\r\n" +
 						"輸送量(TP): S {13} / A {14}\r\n" +
 						"総積載: 燃 {15} / 弾 {16}\r\n" +
-						"(1戦当たり 燃 {17} / 弾 {18})",
+						"(1戦当たり 燃 {17} / 弾 {18})\r\n" +
+						"煙幕発動 3重:{19:0.0} / 2重:{20:0.0} / 1重:{21:0.0} / 0重:{22:0.0}",
 						levelSum,
 						(double)levelSum / Math.Max(fleet.Members.Count(id => id != -1), 1),
 						Constants.GetSpeed(speed),
@@ -202,7 +205,11 @@ namespace ElectronicObserver.Window
 						fueltotal,
 						ammototal,
 						fuelunit,
-						ammounit
+						ammounit,
+						smokeGenrate[0],
+						smokeGenrate[1],
+						smokeGenrate[2],
+						smokeGenrate[3]
 						));
 
 				}

@@ -258,6 +258,7 @@ namespace ElectronicObserver.Window
 				var fleet2 = KCDatabase.Instance.Fleet[2];
 
 				int tp = Calculator.GetTPDamage(fleet1) + Calculator.GetTPDamage(fleet2);
+				var smokeGenrate = Calculator.GetSmokeTriggerRates(fleet1, fleet2);
 
 				var members = fleet1.MembersWithoutEscaped.Concat(fleet2.MembersWithoutEscaped).Where(s => s != null);
 
@@ -271,7 +272,18 @@ namespace ElectronicObserver.Window
 					tp -= 8;
 				}
 
-				ToolTipInfo.SetToolTip(CombinedTag, string.Format("ドラム缶搭載: {0}個\r\n大発動艇搭載: {1}個\r\n輸送量(TP): S {2} / A {3}\r\n\r\n制空戦力合計: {4}\r\n索敵能力合計: {5:f2}\r\n新判定式(33):\r\n　分岐点係数1: {6:f2}\r\n　分岐点係数2: {7:f2}\r\n　分岐点係数3: {8:f2}\r\n　分岐点係数4: {9:f2}",
+				ToolTipInfo.SetToolTip(CombinedTag, string.Format(
+					"ドラム缶搭載: {0}個\r\n" +
+					"大発動艇搭載: {1}個\r\n" +
+					"輸送量(TP): S {2} / A {3}\r\n\r\n" +
+					"制空戦力合計: {4}\r\n" +
+					"索敵能力合計: {5:f2}\r\n" +
+					"新判定式(33):\r\n" +
+					"　分岐点係数1: {6:f2}\r\n" +
+					"　分岐点係数2: {7:f2}\r\n" +
+					"　分岐点係数3: {8:f2}\r\n" +
+					"　分岐点係数4: {9:f2}\r\n\r\n"+
+					"煙幕発動 3重:{10:0.0} / 2重:{11:0.0} / 1重:{12:0.0} / 0重:{13:0.0}",
 					transport.Sum(),
 					landing.Sum(),
 					tp,
@@ -281,7 +293,11 @@ namespace ElectronicObserver.Window
 					Math.Floor(Calculator.GetSearchingAbility_New33(fleet1, 1) * 100) / 100 + Math.Floor(Calculator.GetSearchingAbility_New33(fleet2, 1) * 100) / 100,
 					Math.Floor(Calculator.GetSearchingAbility_New33(fleet1, 2) * 100) / 100 + Math.Floor(Calculator.GetSearchingAbility_New33(fleet2, 2) * 100) / 100,
 					Math.Floor(Calculator.GetSearchingAbility_New33(fleet1, 3) * 100) / 100 + Math.Floor(Calculator.GetSearchingAbility_New33(fleet2, 3) * 100) / 100,
-					Math.Floor(Calculator.GetSearchingAbility_New33(fleet1, 4) * 100) / 100 + Math.Floor(Calculator.GetSearchingAbility_New33(fleet2, 4) * 100) / 100
+					Math.Floor(Calculator.GetSearchingAbility_New33(fleet1, 4) * 100) / 100 + Math.Floor(Calculator.GetSearchingAbility_New33(fleet2, 4) * 100) / 100,
+					smokeGenrate[0],
+					smokeGenrate[1],
+					smokeGenrate[2],
+					smokeGenrate[3]
 					));
 
 
