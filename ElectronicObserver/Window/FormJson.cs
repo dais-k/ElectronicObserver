@@ -28,8 +28,8 @@ namespace ElectronicObserver.Window
 
 		private string _currentAPIPath;
 		private string _NowAccessTime;
-		private string _LastAccessTime;
-		private string _4hoursInterval = "未操作時間経過不明";
+		private string _LastRequestReceivedTime;
+		private string _Last4hoursInterval;
 
 		public FormJson(FormMain parent)
 		{
@@ -48,6 +48,10 @@ namespace ElectronicObserver.Window
 
 			o.RequestReceived += RequestReceived;
 			o.ResponseReceived += ResponseReceived;
+
+			var c = Utility.Configuration.Config;
+			_Last4hoursInterval = (c.FormJson.Last4hoursInterval != "") ? c.FormJson.Last4hoursInterval : "不明";
+			_LastRequestReceivedTime = (c.FormJson.LastRequestReceivedTime != "") ? c.FormJson.LastRequestReceivedTime : "";
 
 			Utility.Configuration.Instance.ConfigurationChanged += ConfigurationChanged;
 		}
@@ -119,20 +123,21 @@ namespace ElectronicObserver.Window
 
 		private void LoadResponse(string apiname, dynamic data)
 		{
+			var c = Utility.Configuration.Config; 
 			DateTime now = DateTime.Now;
 			
-			if (_LastAccessTime == null || _LastAccessTime == "") //起動後チェック
+			if (_LastRequestReceivedTime == null || _LastRequestReceivedTime == "") //起動後チェック
 			{
-				_LastAccessTime = now.ToString();
+				_LastRequestReceivedTime = now.ToString();
 			}
 			
-			DateTime last = DateTime.Parse(_LastAccessTime);
+			DateTime last = DateTime.Parse(_LastRequestReceivedTime);
 			TimeSpan _AccessInterval = now - last;
 			
 			if (_AccessInterval.TotalHours >= 4)
 			{
-				_4hoursInterval = "最後に艦これを4時間以上操作しなかった時刻：\r\n[" + now.ToString() + "]";
-
+				_Last4hoursInterval = now.ToString();
+				c.FormJson.Last4hoursInterval = _Last4hoursInterval;
 			}
 
 			if (ViewJSONResult.Checked)
@@ -140,9 +145,10 @@ namespace ElectronicObserver.Window
 				JsonRawData.Text = (_currentAPIPath == apiname ? JsonRawData.Text + "\r\n\r\n" : "") + apiname + " : Response [" + _NowAccessTime + "]\r\n" + (data == null ? "" : data.ToString());
 			}
 			else
-				JsonRawData.Text = (_currentAPIPath == apiname ? JsonRawData.Text + "\r\n\r\n" : "") + apiname + " : Response\r\n[" + _NowAccessTime + "]\r\n" + _4hoursInterval;
+				JsonRawData.Text = (_currentAPIPath == apiname ? JsonRawData.Text + "\r\n\r\n" : "") + apiname + " : Response\r\n[" + _NowAccessTime + "]\r\n" + "最後に艦これを4時間以上操作しなかった時刻：\r\n[" + _Last4hoursInterval + "]";
 
-			_LastAccessTime = now.ToString();
+			_LastRequestReceivedTime = now.ToString();
+			c.FormJson.LastRequestReceivedTime = _LastRequestReceivedTime;
 
 			if (!UpdatesTree.Checked)
 				return;

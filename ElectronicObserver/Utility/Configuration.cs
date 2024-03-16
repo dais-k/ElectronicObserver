@@ -1122,12 +1122,24 @@ namespace ElectronicObserver.Utility
 				/// </summary>
 				public bool ViewJSONResult { get; set; }
 
+				/// <summary>
+				/// 最後にRequestを受信した時刻
+				/// </summary>
+				public string LastRequestReceivedTime { get; set; }
+
+				/// <summary>
+				/// 最後に4時間以上アクセスしなかった時刻
+				/// </summary>
+				public string Last4hoursInterval { get; set; }
+
 				public ConfigFormJson()
 				{
 					AutoUpdate = false;
 					UpdatesTree = true;
 					AutoUpdateFilter = "";
 					ViewJSONResult = true;
+					LastRequestReceivedTime = "";
+					Last4hoursInterval = "";
 				}
 			}
 			/// <summary>[JSON]ウィンドウ</summary>
