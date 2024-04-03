@@ -427,6 +427,10 @@ namespace ElectronicObserver.Window
 				label.ImageAlign = search > 0 ? ContentAlignment.MiddleLeft : ContentAlignment.MiddleCenter;
 				label.ImageIndex = search > 0 ? (int)(search < 4 ? ResourceManager.EquipmentContent.Seaplane : ResourceManager.EquipmentContent.Radar) : -1;
 				ToolTipInfo.SetToolTip(label, null);
+				if(label == SearchingFriend)
+				{
+					ToolTipInfo.SetToolTip(label, "煙幕展開:" + bd.Searching.SmokeCount.ToString() + "重");
+				}
 			}
 
 			SetResult(SearchingFriend, bd.Searching.SearchingFriend);
