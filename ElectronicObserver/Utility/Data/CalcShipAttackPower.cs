@@ -14,11 +14,11 @@ using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ElectronicObserver.Utility.Data
 {
-    /// <summary>
-    /// 個別の攻撃威力を計算します。
-    /// </summary>
-    public class CalcShipAttackPower
-    {
+	/// <summary>
+	/// 個別の攻撃威力を計算します。
+	/// </summary>
+	public class CalcShipAttackPower
+	{
 
 		#region 昼戦威力計算
 		/// <summary>
@@ -478,18 +478,18 @@ namespace ElectronicObserver.Utility.Data
 		/// 装備改修補正(砲撃戦)
 		/// </summary>
 		private static double GetDayBattleEquipmentLevelBonus(EquipmentData[] allSlotInstance)
-        {
-            double basepower = 0;
+		{
+			double basepower = 0;
 
 			foreach (var slot in allSlotInstance)
-            {
-                if (slot == null)
-                    continue;
+			{
+				if (slot == null)
+					continue;
 
-                switch (slot.MasterEquipment.CategoryType)
-                {
-                    case EquipmentTypes.MainGunSmall:
-                    case EquipmentTypes.MainGunMedium:
+				switch (slot.MasterEquipment.CategoryType)
+				{
+					case EquipmentTypes.MainGunSmall:
+					case EquipmentTypes.MainGunMedium:
 					case EquipmentTypes.AAShell:
 					case EquipmentTypes.APShell:
 					case EquipmentTypes.AAGun:
@@ -498,51 +498,51 @@ namespace ElectronicObserver.Utility.Data
 					case EquipmentTypes.SpecialAmphibiousTank:
 					case EquipmentTypes.Rocket:
 					case EquipmentTypes.Searchlight:
-                    case EquipmentTypes.SearchlightLarge:
+					case EquipmentTypes.SearchlightLarge:
 					case EquipmentTypes.AviationPersonnel:
 					case EquipmentTypes.SurfaceShipPersonnel:
 					case EquipmentTypes.CommandFacility:
 						basepower += Math.Sqrt(slot.Level);
-                        break;
+						break;
 
-                    case EquipmentTypes.MainGunLarge:
-                    case EquipmentTypes.MainGunLarge2:
-                        basepower += Math.Sqrt(slot.Level) * 1.5;
-                        break;
+					case EquipmentTypes.MainGunLarge:
+					case EquipmentTypes.MainGunLarge2:
+						basepower += Math.Sqrt(slot.Level) * 1.5;
+						break;
 
-                    case EquipmentTypes.SecondaryGun:
-                        switch (slot.EquipmentID)
-                        {
-                            case 10:        // 12.7cm連装高角砲
-                            case 66:        // 8cm高角砲
-                            case 220:       // 8cm高角砲改+増設機銃
-                            case 275:       // 10cm連装高角砲改+増設機銃
+					case EquipmentTypes.SecondaryGun:
+						switch (slot.EquipmentID)
+						{
+							case 10:        // 12.7cm連装高角砲
+							case 66:        // 8cm高角砲
+							case 220:       // 8cm高角砲改+増設機銃
+							case 275:       // 10cm連装高角砲改+増設機銃
 							case 464:       // 10cm連装高角砲群 集中配備
 								basepower += 0.2 * slot.Level;
-                                break;
+								break;
 
-                            case 12:        // 15.5cm三連装副砲
-                            case 234:       // 15.5cm三連装副砲改
+							case 12:        // 15.5cm三連装副砲
+							case 234:       // 15.5cm三連装副砲改
 							case 247:       // 15.2cm三連装砲
 							case 467:		// 5inch連装砲(副砲配置) 集中配備
 								basepower += 0.3 * slot.Level;
-                                break;
+								break;
 
-                            default:
-                                basepower += Math.Sqrt(slot.Level);
-                                break;
-                        }
-                        break;
+							default:
+								basepower += Math.Sqrt(slot.Level);
+								break;
+						}
+						break;
 
-                    case EquipmentTypes.Sonar:
-                    case EquipmentTypes.SonarLarge:
-                        basepower += Math.Sqrt(slot.Level) * 0.75;
-                        break;
+					case EquipmentTypes.Sonar:
+					case EquipmentTypes.SonarLarge:
+						basepower += Math.Sqrt(slot.Level) * 0.75;
+						break;
 
-                    case EquipmentTypes.DepthCharge:
-                        if (!slot.MasterEquipment.IsDepthCharge)
-                            basepower += Math.Sqrt(slot.Level) * 0.75;
-                        break;
+					case EquipmentTypes.DepthCharge:
+						if (!slot.MasterEquipment.IsDepthCharge)
+							basepower += Math.Sqrt(slot.Level) * 0.75;
+						break;
 
 					case EquipmentTypes.SurfaceShipEquipment:
 						switch (slot.EquipmentID)
@@ -555,8 +555,8 @@ namespace ElectronicObserver.Utility.Data
 						break;
 				}
 			}
-            return basepower;
-        }
+			return basepower;
+		}
 
 		/// <summary>
 		/// 装備改修補正(航空要員の爆装ボーナス)
@@ -629,19 +629,19 @@ namespace ElectronicObserver.Utility.Data
 			return basepower;
 		}
 
-        /// <summary>
-        /// 装備改修補正(夜戦)
-        /// </summary>
-        private static double GetNightBattleEquipmentLevelBonus(EquipmentData[] allSlotInstance)
-        {
-            double basepower = 0;
+		/// <summary>
+		/// 装備改修補正(夜戦)
+		/// </summary>
+		private static double GetNightBattleEquipmentLevelBonus(EquipmentData[] allSlotInstance)
+		{
+			double basepower = 0;
 			foreach (var slot in allSlotInstance)
-            {
-                if (slot == null)
-                    continue;
+			{
+				if (slot == null)
+					continue;
 
-                switch (slot.MasterEquipment.CategoryType)
-                {
+				switch (slot.MasterEquipment.CategoryType)
+				{
 					case EquipmentTypes.MainGunSmall:
 					case EquipmentTypes.MainGunMedium:
 					case EquipmentTypes.MainGunLarge:
@@ -660,15 +660,15 @@ namespace ElectronicObserver.Utility.Data
 					case EquipmentTypes.SurfaceShipPersonnel:
 					case EquipmentTypes.CommandFacility:
 						basepower += Math.Sqrt(slot.Level);
-                        break;
+						break;
 
 					case EquipmentTypes.SubmarineTorpedo:
 						basepower += Math.Sqrt(slot.Level) * 0.2;
 						break;
 
 					case EquipmentTypes.SecondaryGun:
-                        switch (slot.EquipmentID)
-                        {
+						switch (slot.EquipmentID)
+						{
 							case 10:        // 12.7cm連装高角砲
 							case 66:        // 8cm高角砲
 							case 220:       // 8cm高角砲改+増設機銃
@@ -684,11 +684,11 @@ namespace ElectronicObserver.Utility.Data
 								basepower += 0.3 * slot.Level;
 								break;
 
-                            default:
-                                basepower += Math.Sqrt(slot.Level);
-                                break;
-                        }
-                        break;
+							default:
+								basepower += Math.Sqrt(slot.Level);
+								break;
+						}
+						break;
 
 					case EquipmentTypes.SurfaceShipEquipment:
 						switch (slot.EquipmentID)
@@ -700,186 +700,186 @@ namespace ElectronicObserver.Utility.Data
 						}
 						break;
 				}
-            }
-            return basepower;
-        }
+			}
+			return basepower;
+		}
 
-        /// <summary>
-        /// 耐久値による攻撃力補正
-        /// </summary>
-        private static double GetHPDamageBonus(double hpRate)
-        {
-            if (hpRate <= 0.25)
-                return 0.4;
-            else if (hpRate <= 0.5)
-                return 0.7;
-            else
-                return 1.0;
-        }
+		/// <summary>
+		/// 耐久値による攻撃力補正
+		/// </summary>
+		private static double GetHPDamageBonus(double hpRate)
+		{
+			if (hpRate <= 0.25)
+				return 0.4;
+			else if (hpRate <= 0.5)
+				return 0.7;
+			else
+				return 1.0;
+		}
 
-        /// <summary>
-        /// 耐久値による攻撃力補正(雷撃戦)
-        /// </summary>
-        /// <returns></returns>
-        private static double GetTorpedoHPDamageBonus(double hpRate)
-        {
-            if (hpRate <= 0.25)
-                return 0.0;
-            else if (hpRate <= 0.5)
-                return 0.8;
-            else
-                return 1.0;
-        }
+		/// <summary>
+		/// 耐久値による攻撃力補正(雷撃戦)
+		/// </summary>
+		/// <returns></returns>
+		private static double GetTorpedoHPDamageBonus(double hpRate)
+		{
+			if (hpRate <= 0.25)
+				return 0.0;
+			else if (hpRate <= 0.5)
+				return 0.8;
+			else
+				return 1.0;
+		}
 
-        /// <summary>
-        /// 交戦形態による威力補正
-        /// </summary>
-        private static double GetEngagementFormDamageRate(int form = 1)
-        {
-            switch (form)
-            {
-                case 1:     // 同航戦
-                default:
-                    return 1.0;
-                case 2:     // 反航戦
-                    return 0.8;
-                case 3:     // T字有利
-                    return 1.2;
-                case 4:     // T字不利
-                    return 0.6;
-            }
-        }
+		/// <summary>
+		/// 交戦形態による威力補正
+		/// </summary>
+		private static double GetEngagementFormDamageRate(int form = 1)
+		{
+			switch (form)
+			{
+				case 1:     // 同航戦
+				default:
+					return 1.0;
+				case 2:     // 反航戦
+					return 0.8;
+				case 3:     // T字有利
+					return 1.2;
+				case 4:     // T字不利
+					return 0.6;
+			}
+		}
 
-        /// <summary>
-        /// 残り弾薬量による威力補正
-        /// <returns></returns>
-        private static double GetAmmoDamageRate(double ammoRate)
-        {
-            return Math.Min(Math.Floor(ammoRate * 100) / 50.0, 1.0);
-        }
+		/// <summary>
+		/// 残り弾薬量による威力補正
+		/// <returns></returns>
+		private static double GetAmmoDamageRate(double ammoRate)
+		{
+			return Math.Min(Math.Floor(ammoRate * 100) / 50.0, 1.0);
+		}
 
-        /// <summary>
-        /// 連合艦隊編成における砲撃戦火力補正
-        /// </summary>
-        private static double GetCombinedFleetShellingDamageBonus(int fleet)
-        {
-            
-            if (fleet == -1 || fleet > 2)
-                return 0;
+		/// <summary>
+		/// 連合艦隊編成における砲撃戦火力補正
+		/// </summary>
+		private static double GetCombinedFleetShellingDamageBonus(int fleet)
+		{
+			
+			if (fleet == -1 || fleet > 2)
+				return 0;
 
-            switch (KCDatabase.Instance.Fleet.CombinedFlag)
-            {
-                case 1:     //機動部隊
-                    if (fleet == 1)
-                        return +2;
-                    else
-                        return +10;
+			switch (KCDatabase.Instance.Fleet.CombinedFlag)
+			{
+				case 1:     //機動部隊
+					if (fleet == 1)
+						return +2;
+					else
+						return +10;
 
-                case 2:     //水上部隊
-                    if (fleet == 1)
-                        return +10;
-                    else
-                        return -5;
+				case 2:     //水上部隊
+					if (fleet == 1)
+						return +10;
+					else
+						return -5;
 
-                case 3:     //輸送部隊
-                    if (fleet == 1)
-                        return -5;
-                    else
-                        return +10;
+				case 3:     //輸送部隊
+					if (fleet == 1)
+						return -5;
+					else
+						return +10;
 
-                default:
-                    return 0;
-            }
-        }
+				default:
+					return 0;
+			}
+		}
 
-        /// <summary>
-        /// 連合艦隊編成における雷撃戦火力補正
-        /// </summary>
-        private static double GetCombinedFleetTorpedoDamageBonus(int fleet)
-        {
-            if (fleet == -1 || fleet > 2)
-                return 0;
+		/// <summary>
+		/// 連合艦隊編成における雷撃戦火力補正
+		/// </summary>
+		private static double GetCombinedFleetTorpedoDamageBonus(int fleet)
+		{
+			if (fleet == -1 || fleet > 2)
+				return 0;
 
-            if (KCDatabase.Instance.Fleet.CombinedFlag == 0)
-                return 0;
+			if (KCDatabase.Instance.Fleet.CombinedFlag == 0)
+				return 0;
 
-            return -5;
-        }
+			return -5;
+		}
 
-        /// <summary>
-        /// 軽巡軽量砲補正
-        /// </summary>
-        private static double GetLightCruiserDamageBonus(ShipDataMaster masterShip , int[] allSlotMaster)
-        {
-            if (masterShip.ShipType == ShipTypes.LightCruiser ||
-                masterShip.ShipType == ShipTypes.TorpedoCruiser ||
-                masterShip.ShipType == ShipTypes.TrainingCruiser)
-            {
+		/// <summary>
+		/// 軽巡軽量砲補正
+		/// </summary>
+		private static double GetLightCruiserDamageBonus(ShipDataMaster masterShip , int[] allSlotMaster)
+		{
+			if (masterShip.ShipType == ShipTypes.LightCruiser ||
+				masterShip.ShipType == ShipTypes.TorpedoCruiser ||
+				masterShip.ShipType == ShipTypes.TrainingCruiser)
+			{
 
-                int single = 0;
-                int twin = 0;
+				int single = 0;
+				int twin = 0;
 
-                foreach (var slot in allSlotMaster)
-                {
-                    if (slot == -1) continue;
+				foreach (var slot in allSlotMaster)
+				{
+					if (slot == -1) continue;
 
-                    switch (slot)
-                    {
-                        case 4:     // 14cm単装砲
-                        case 11:    // 15.2cm単装砲
-                            single++;
-                            break;
-                        case 65:    // 15.2cm連装砲
-                        case 119:   // 14cm連装砲
-                        case 139:   // 15.2cm連装砲改
-                        case 310:   // 14cm連装砲改
-                        case 407:   // 15.2cm連装砲改二
-                        case 359:   // 6inch 連装速射砲 Mk.XXI
-                        case 303:   // Bofors15.2cm連装砲 Model1930
-                        case 360:   // Bofors 15cm連装速射砲 Mk.9 Model 1938
-                        case 361:   // Bofors 15cm連装速射砲 Mk.9改＋単装速射砲 Mk.10改 Model 1938
-                            twin++;
-                            break;
-                    }
-                }
+					switch (slot)
+					{
+						case 4:     // 14cm単装砲
+						case 11:    // 15.2cm単装砲
+							single++;
+							break;
+						case 65:    // 15.2cm連装砲
+						case 119:   // 14cm連装砲
+						case 139:   // 15.2cm連装砲改
+						case 310:   // 14cm連装砲改
+						case 407:   // 15.2cm連装砲改二
+						case 359:   // 6inch 連装速射砲 Mk.XXI
+						case 303:   // Bofors15.2cm連装砲 Model1930
+						case 360:   // Bofors 15cm連装速射砲 Mk.9 Model 1938
+						case 361:   // Bofors 15cm連装速射砲 Mk.9改＋単装速射砲 Mk.10改 Model 1938
+							twin++;
+							break;
+					}
+				}
 
-                return Math.Sqrt(twin) * 2.0 + Math.Sqrt(single);
-            }
+				return Math.Sqrt(twin) * 2.0 + Math.Sqrt(single);
+			}
 
-            return 0;
-        }
+			return 0;
+		}
 
-        /// <summary>
-        /// イタリア重巡砲補正
-        /// </summary>
-        /// <returns></returns>
-        private static double GetItalianDamageBonus(int shipID, int[] allSlotMaster)
-        {
-            switch (shipID)
-            {
-                case 448:       // Zara
-                case 358:       // 改
-                case 496:       // due
-                case 449:       // Pola
-                case 361:       // 改
-                    return Math.Sqrt(allSlotMaster.Count(id => id == 162));     // √( 203mm/53 連装砲 装備数 )
+		/// <summary>
+		/// イタリア重巡砲補正
+		/// </summary>
+		/// <returns></returns>
+		private static double GetItalianDamageBonus(int shipID, int[] allSlotMaster)
+		{
+			switch (shipID)
+			{
+				case 448:       // Zara
+				case 358:       // 改
+				case 496:       // due
+				case 449:       // Pola
+				case 361:       // 改
+					return Math.Sqrt(allSlotMaster.Count(id => id == 162));     // √( 203mm/53 連装砲 装備数 )
 
-                default:
-                    return 0;
-            }
-        }
+				default:
+					return 0;
+			}
+		}
 
 		/// <summary>
 		/// キャップ処理
 		/// </summary>
 		/// <returns></returns>
 		private static double CapDamage(double damage, int max)
-        {
-            if (damage < max)
-                return damage;
-            else
-                return max + Math.Sqrt(damage - max);
-        }
+		{
+			if (damage < max)
+				return damage;
+			else
+				return max + Math.Sqrt(damage - max);
+		}
 		#endregion
 
 		#region 対地威力計算
@@ -931,6 +931,7 @@ namespace ElectronicObserver.Utility.Data
 						case 305:
 						case 306:
 							antiGroundBomber++;
+							antiGroundEquip++;
 							break;
 					}
 
@@ -948,7 +949,6 @@ namespace ElectronicObserver.Utility.Data
 							break;
 						case EquipmentTypes.CarrierBasedBomber:
 						case EquipmentTypes.JetBomber:
-							antiGroundEquip++;
 							Bomber++;
 							break;
 					}
@@ -1131,7 +1131,8 @@ namespace ElectronicObserver.Utility.Data
 			var hpRate = ship.HPRate;
 
 			double landingCraftLevel = 0; double[] rate_landingCraft = new double[5] { 1.8, 1.8, 1.4, 1.4, 1.7 };
-			double spAmphibiousTankLevel = 0;
+			double toku2tankLevel = 0;
+			double toku4tankLevel = 0;
 
 			var landingCraft = 0;
 			var aaShell = 0; double[] rate_aaShell = new double[5] { 1.0, 1.75, 2.5, 2.5, 1.75 };
@@ -1152,11 +1153,13 @@ namespace ElectronicObserver.Utility.Data
 			var no3TankJ = 0;
 			var m4A1DD = 0; double[] rate_m4A1DDchihaKai = new double[5] { 2.0, 1.8, 1.1, 1.1, 2.0};
 			var busouDaihatsu = 0; double[] rate_busouAB1 = new double[5] { 1.3, 1.3, 1.1, 1.1, 1.5 }; double[] rate_busouAB2 = new double[5] { 1.56, 1.43, 1.21, 1.21, 1.65 };
-			var daihaysuAB = 0;
-			var spAmphibiousTank = 0; double[] rate_spAmphibiousTank1 = new double[5] { 2.4, 2.4, 1.5, 1.5, 2.8 }; double[] rate_spAmphibiousTank2 = new double[5] { 3.24, 3.24, 1.8, 1.8, 4.2 };
+			var daihatsuAB = 0;
+			var toku2tank = 0; double[] rate_spAmphibiousTank1 = new double[5] { 2.4, 2.4, 1.5, 1.5, 2.8 }; double[] rate_spAmphibiousTank2 = new double[5] { 3.24, 3.24, 1.8, 1.8, 4.2 };
 			var apShell = 0; double[] rate_apShell = new double[5] { 1.85, 1.0, 1.0, 1.0, 1.3 };
 			var seaPlane = 0; double[] rate_seaPlane = new double[5] { 1.5, 1.0, 1.2, 1.2, 1.3 };
 			var Bomber = 0; double[] rate_Bomber1 = new double[5] { 1.5, 1.4, 1.0, 1.0, 1.3 }; double[] rate_Bomber2 = new double[5] { 3.0, 2.45, 1.0, 1.0, 1.62 };
+			var toku4tank = 0; double[] rate_toku4tank = new double[5] { 1.2, 1.1, 1.1, 1.1, 1.1 };
+			var toku4tankkai = 0; double[] rate_toku4tankkai1 = new double[5] { 1.35, 1.35, 1.2, 1.2, 1.5 };
 
 			foreach (var slot in allSlotInstance)
 			{
@@ -1177,10 +1180,6 @@ namespace ElectronicObserver.Utility.Data
 					case EquipmentTypes.SeaplaneFighter:
 					case EquipmentTypes.SeaplaneBomber:
 						seaPlane++;
-						break;
-					case EquipmentTypes.CarrierBasedBomber:
-					case EquipmentTypes.JetBomber:
-						Bomber++;
 						break;
 				}
 
@@ -1231,7 +1230,7 @@ namespace ElectronicObserver.Utility.Data
 						m4A1DD++;
 						break;
 					case 408:
-						daihaysuAB++;
+						daihatsuAB++;
 						break;
 					case 409:
 						busouDaihatsu++;
@@ -1246,9 +1245,35 @@ namespace ElectronicObserver.Utility.Data
 						no3TankJ++;
 						break;
 					case 167:
-						spAmphibiousTank++;
-						spAmphibiousTankLevel += slot.Level;
+						toku2tank++;
+						toku2tankLevel += slot.Level;
 						break;
+					case 525:
+						toku4tank++;
+						landingCraft++;
+						toku4tankLevel += slot.Level;
+						break;
+					case 526:
+						toku4tankkai++;
+						landingCraft++;
+						toku4tankLevel += slot.Level;
+						break;
+					case 319:
+					case 320:
+					case 391:
+					case 392:
+					case 148:
+					case 277:
+					case 233:
+					case 474:
+					case 420:
+					case 421:
+					case 64:
+					case 305:
+					case 306:
+						Bomber++;
+						break;
+
 				}
 			}
 
@@ -1292,6 +1317,11 @@ namespace ElectronicObserver.Utility.Data
 						basepower *= rate_daihatsu1[skin];
 					}
 
+					if (elevenReg != 0) //11連隊
+					{
+						basepower *= rate_elevenReg1[skin];
+					}
+
 					if (tokudaihatsu + no3Tank+ no3TankJ != 0) //特大発+Ⅲ号+Ⅲ号J
 					{
 						basepower *= rate_tokudaihatsu1[skin];
@@ -1315,11 +1345,6 @@ namespace ElectronicObserver.Utility.Data
 							basepower *= rate_chiha1[skin];
 					}
 
-					if (elevenReg != 0) //11連隊
-					{
-						basepower *= rate_elevenReg1[skin];
-					}
-
 					if (no2Tank != 0) //Ⅱ号戦車
 					{
 						if (no2Tank >= 2)
@@ -1335,29 +1360,38 @@ namespace ElectronicObserver.Utility.Data
 
 					if (ifday == true)
 					{
-						if (daihaysuAB + busouDaihatsu != 0) //装甲艇(AB)+武装大発
+						if (daihatsuAB + busouDaihatsu != 0) //装甲艇(AB)+武装大発
 						{
-							if (daihaysuAB + busouDaihatsu >= 2)
+							if (daihatsuAB + busouDaihatsu >= 2)
 								basepower *= rate_busouAB2[skin];
 							else
 								basepower *= rate_busouAB1[skin];
 						}
+						else if(toku4tank + toku4tankkai >= 2) //特四式内火艇+改
+						{
+							basepower *= rate_toku4tank[skin];
+						}
+					}
+
+					if (toku4tankkai != 0)
+					{
+						basepower *= rate_toku4tankkai1[skin];
 					}
 
 					if (landingCraftLevel != 0) //改修レベル
 					{
-						basepower *= (landingCraftLevel / landingCraft / 50) + 1;
+						basepower *= ((landingCraftLevel / landingCraft + toku4tankLevel / toku4tankkai) / 50) + 1;
 					}
 				}
 
-				if (spAmphibiousTank != 0) //内火艇
+				if (toku2tank != 0) //内火艇
 				{
-					if (spAmphibiousTank >= 2)
+					if (toku2tank >= 2)
 						basepower *= rate_spAmphibiousTank2[skin];
 					else
 						basepower *= rate_spAmphibiousTank1[skin];
-					if (spAmphibiousTankLevel != 0)
-						basepower *= (spAmphibiousTankLevel / spAmphibiousTank / 30) + 1;
+					if (toku2tankLevel != 0)
+						basepower *= (toku2tankLevel / toku2tank / 30) + 1;
 				}
 
 				if (apShell != 0) //徹甲弾
@@ -1424,46 +1458,49 @@ namespace ElectronicObserver.Utility.Data
 				}
 			}
 
+			//特四式内火艇+内火艇改特殊補正
+			{
+				if (toku4tank + toku4tankkai != 0)
+				{
+					basepower *= 1.2;
+					basepower += 42;
+				}
+			}
+
+			//特四式内火艇改特殊補正
+			{
+				if (toku4tankkai != 0)
+				{
+					basepower *= 1.1;
+					basepower += 28;
+				}
+			}
+
 			//上陸支援舟艇シナジー補正
 			{
-				var typeA = daihatsu + tokudaihatsu + rikusen + isshiki + no2Tank;
-				var typeB = elevenReg + no3Tank + spAmphibiousTank + no3TankJ;
-				if (daihaysuAB != 0 && busouDaihatsu != 0)
+				var typeA = daihatsu + tokudaihatsu + rikusen + isshiki + no2Tank + toku4tank + toku4tankkai;
+				var typeB = elevenReg + no3Tank + no3TankJ + chiha + chihaKai + toku2tank;
+				if (daihatsuAB != 0 && busouDaihatsu != 0)
 				{
 					if (typeA != 0 && typeB != 0)
-					{
-						basepower *= 1.56;
-						basepower += 15;
-					}
-					else if (typeA == 0 && typeB != 0)
-					{
-						basepower *= 1.44;
-						basepower += 13;
-					}
-					else if (typeA != 0 && typeB == 0)
-					{
-						basepower *= 1.32;
-						basepower += 12;
-					}
-					else if (chiha != 0 && chihaKai != 0)
 					{
 						basepower *= 1.5;
 						basepower += 25;
 					}
-					else if (chiha == 0 && chihaKai != 0)
+					else if (typeA == 0 && typeB != 0)
 					{
 						basepower *= 1.4;
-						basepower += 20;
+						basepower += 30;
 					}
-					else if (chiha != 0 && chihaKai == 0)
+					else if (typeA != 0 && typeB == 0)
 					{
-						basepower *= 1.4;
-						basepower += 20;
+						basepower *= 1.3;
+						basepower += 15;
 					}
 				}
-				else if (daihaysuAB + busouDaihatsu != 0)
+				else if (daihatsuAB + busouDaihatsu != 0)
 				{
-					if (typeA + typeB + chiha + chihaKai != 0)
+					if (typeA + typeB != 0)
 					{
 						basepower *= 1.2;
 						basepower += 10;
@@ -1494,7 +1531,8 @@ namespace ElectronicObserver.Utility.Data
 		private static double GetGroundAttackAfterCAP(ShipData ship, double basepower)
 		{
 			double landingCraftLevel = 0; 
-			double spAmphibiousTankLevel = 0;
+			double toku2tankLevel = 0;
+			double toku4tankLevel = 0;
 			var allSlotInstance = ship.AllSlotInstance.ToArray();
 			var landingCraft = 0;
 			var rocketWG = 0; 
@@ -1510,10 +1548,12 @@ namespace ElectronicObserver.Utility.Data
 			var no3TankJ = 0;
 			var m4A1DD = 0; 
 			var busouDaihatsu = 0;
-			var daihaysuAB = 0;
-			var spAmphibiousTank = 0;
+			var daihatsuAB = 0;
+			var toku2tank = 0;
 			var chiha = 0;
 			var chihaKai = 0;
+			var toku4tank = 0;
+			var toku4tankkai = 0;
 
 			foreach (var slot in allSlotInstance)
 			{
@@ -1566,7 +1606,7 @@ namespace ElectronicObserver.Utility.Data
 						m4A1DD++;
 						break;
 					case 408:
-						daihaysuAB++;
+						daihatsuAB++;
 						break;
 					case 409:
 						busouDaihatsu++;
@@ -1581,8 +1621,18 @@ namespace ElectronicObserver.Utility.Data
 						no3TankJ++;
 						break;
 					case 167:
-						spAmphibiousTank++;
-						spAmphibiousTankLevel += slot.Level;
+						toku2tank++;
+						toku2tankLevel += slot.Level;
+						break;
+					case 525:
+						toku4tank++;
+						landingCraft++;
+						toku4tankLevel += slot.Level;
+						break;
+					case 526:
+						toku4tankkai++;
+						landingCraft++;
+						toku4tankLevel += slot.Level;
 						break;
 				}
 			}
@@ -1622,6 +1672,11 @@ namespace ElectronicObserver.Utility.Data
 						basepower *= 1.0;
 					}
 
+					if (elevenReg != 0)
+					{
+						basepower *= 1.0;
+					}
+
 					if (tokudaihatsu + no3Tank+ no3TankJ != 0)
 					{
 						basepower *= 1.2;
@@ -1645,17 +1700,9 @@ namespace ElectronicObserver.Utility.Data
 							basepower *= 1.0;
 					}
 
-					if (elevenReg != 0)
-					{
-						basepower *= 1.0;
-					}
-
 					if (no2Tank != 0)
 					{
-						if (no2Tank >= 2)
-							basepower *= 1.3;
-						else
-							basepower *= 1.3;
+						basepower *= 1.3;
 					}
 
 					if (m4A1DD + chihaKai + no3TankJ != 0)
@@ -1663,33 +1710,41 @@ namespace ElectronicObserver.Utility.Data
 						basepower *= 1.2;
 					}
 
-					if (daihaysuAB + busouDaihatsu != 0)
+					if (daihatsuAB + busouDaihatsu != 0)
 					{
-						if (daihaysuAB + busouDaihatsu >= 2)
+						if (daihatsuAB + busouDaihatsu >= 2)
 							basepower *= 1.65;
 						else
 							basepower *= 1.5;
 					}
+					else if (toku4tank + toku4tankkai >= 2) //特四式内火艇+改
+					{
+						basepower *= 1.1;
+					}
 
+					if (toku4tankkai != 0)
+					{
+						basepower *= 1.5;
+					}
 					if (landingCraftLevel != 0)
 					{ 
 						if(rikusen>=1 && no2Tank >= 1)
-							basepower *= Math.Pow((landingCraftLevel / landingCraft / 50) + 1, 3);
+							basepower *= Math.Pow(((landingCraftLevel / landingCraft + toku4tankLevel / toku4tankkai) / 50) + 1, 3);
 						else if(rikusen + isshiki + no3Tank + no3TankJ != 0)
-							basepower *= Math.Pow((landingCraftLevel / landingCraft / 50) + 1, 2);
+							basepower *= Math.Pow(((landingCraftLevel / landingCraft + toku4tankLevel / toku4tankkai) / 50) + 1, 2);
 						else
-							basepower *= (landingCraftLevel / landingCraft / 50) + 1;
+							basepower *= ((landingCraftLevel / landingCraft + toku4tankLevel / toku4tankkai)/ 50) + 1;
 					}
 				}
 
-				if (spAmphibiousTank != 0)
+				if (toku2tank != 0)
 				{
-					if (spAmphibiousTank >= 2)
+					if (toku2tank >= 2)
 						basepower *= 2.55;
 					else
 						basepower *= 1.7;
-					if (spAmphibiousTankLevel != 0)
-						basepower *= (spAmphibiousTankLevel / spAmphibiousTank / 30) + 1;
+					if (toku2tankLevel != 0)
+						basepower *= (toku2tankLevel / toku2tank / 30) + 1;
 				}
 			}
 			return basepower;

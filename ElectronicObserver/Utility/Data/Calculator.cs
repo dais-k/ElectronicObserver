@@ -2744,13 +2744,13 @@ namespace ElectronicObserver.Utility.Data
 		/// <summary> 海空立体攻撃 </summary>
 		SeaAirMultiAngle = 201,
 
-		/// <summary> 潜水艦隊攻撃 (2,3) </summary>
+		/// <summary> 潜水艦隊攻撃 (2番艦,3番艦) </summary>
 		SpecialSubmarineAttack1 = 300,
 
-		/// <summary> 潜水艦隊攻撃 (3,4) </summary>
+		/// <summary> 潜水艦隊攻撃 (3番艦,4番艦) </summary>
 		SpecialSubmarineAttack2 = 301,
 
-		/// <summary> 潜水艦隊攻撃 (2,4) </summary>
+		/// <summary> 潜水艦隊攻撃 (2番艦,4番艦) </summary>
 		SpecialSubmarineAttack3 = 302,
 
 		/// <summary> 大和、突撃します！二番艦も続いてください！ </summary>
@@ -2880,13 +2880,13 @@ namespace ElectronicObserver.Utility.Data
 		/// <summary> 夜間瑞雲攻撃 </summary>
 		SpecialNightZuiun = 200,
 
-		/// <summary> 潜水艦隊攻撃 (2,3) </summary>
+		/// <summary> 潜水艦隊攻撃 (2番艦,3番艦) </summary>
 		SpecialSubmarineAttack1 = 300,
 
-		/// <summary> 潜水艦隊攻撃 (3,4) </summary>
+		/// <summary> 潜水艦隊攻撃 (3番艦,4番艦) </summary>
 		SpecialSubmarineAttack2 = 301,
 
-		/// <summary> 潜水艦隊攻撃 (2,4) </summary>
+		/// <summary> 潜水艦隊攻撃 (2番艦,4番艦) </summary>
 		SpecialSubmarineAttack3 = 302,
 
 		/// <summary> 大和、突撃します！二番艦も続いてください！ </summary>
