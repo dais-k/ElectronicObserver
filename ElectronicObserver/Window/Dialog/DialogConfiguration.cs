@@ -501,7 +501,8 @@ namespace ElectronicObserver.Window.Dialog
 			FormJson_AutoUpdate.Checked = config.FormJson.AutoUpdate;
 			FormJson_UpdatesTree.Checked = config.FormJson.UpdatesTree;
 			FormJson_AutoUpdateFilter.Text = config.FormJson.AutoUpdateFilter;
-			FormJson_ViewJSONResult.Checked = config.FormJson.ViewJSONResult;
+			FormJson_TimeCheck.Checked = config.FormJson.TimeCheck;
+			FormJson_ViewJSONContents.SelectedIndex = (int)config.FormJson.ViewJSONContents;
 
 			FormBaseAirCorps_ShowEventMapOnly.Checked = config.FormBaseAirCorps.ShowEventMapOnly;
 
@@ -738,7 +739,8 @@ namespace ElectronicObserver.Window.Dialog
 			config.FormJson.AutoUpdate = FormJson_AutoUpdate.Checked;
 			config.FormJson.UpdatesTree = FormJson_UpdatesTree.Checked;
 			config.FormJson.AutoUpdateFilter = FormJson_AutoUpdateFilter.Text;
-			config.FormJson.ViewJSONResult = FormJson_ViewJSONResult.Checked;
+			config.FormJson.TimeCheck = FormJson_TimeCheck.Checked;
+			config.FormJson.ViewJSONContents = FormJson_ViewJSONContents.SelectedIndex;
 
 			config.FormBaseAirCorps.ShowEventMapOnly = FormBaseAirCorps_ShowEventMapOnly.Checked;
 

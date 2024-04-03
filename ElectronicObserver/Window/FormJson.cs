@@ -29,7 +29,9 @@ namespace ElectronicObserver.Window
 		private string _currentAPIPath;
 		private string _NowAccessTime;
 		private string _LastRequestReceivedTime;
-		private string _Last4hoursInterval;
+		private string _Last4hoursIntervalUntil;
+		private string _Last4hoursIntervalTo;
+		private string _JsonRawDataText;
 
 		public FormJson(FormMain parent)
 		{
@@ -50,7 +52,8 @@ namespace ElectronicObserver.Window
 			o.ResponseReceived += ResponseReceived;
 
 			var c = Utility.Configuration.Config;
-			_Last4hoursInterval = (c.FormJson.Last4hoursInterval != "") ? c.FormJson.Last4hoursInterval : "不明";
+			_Last4hoursIntervalUntil = (c.FormJson.Last4hoursIntervalUntil != "") ? c.FormJson.Last4hoursIntervalUntil : "不明";
+			_Last4hoursIntervalTo = (c.FormJson.Last4hoursIntervalTo != "") ? c.FormJson.Last4hoursIntervalTo : "不明";
 			_LastRequestReceivedTime = (c.FormJson.LastRequestReceivedTime != "") ? c.FormJson.LastRequestReceivedTime : "";
 
 			Utility.Configuration.Instance.ConfigurationChanged += ConfigurationChanged;
@@ -90,13 +93,20 @@ namespace ElectronicObserver.Window
 			DateTime now = DateTime.Now;
 			_NowAccessTime = now.ToString();
 
-			if (ViewJSONResult.Checked)
+			switch(ViewJSONContents.SelectedIndex)
 			{
-				JsonRawData.Text = apiname + " : Request [" + _NowAccessTime + "]\r\n" + string.Join("\r\n", data.Select(p => p.Key + "=" + p.Value));
+				case 0:
+					JsonRawData.Text = apiname + " : Request [" + _NowAccessTime + "]\r\n" + string.Join("\r\n", data.Select(p => p.Key + "=" + p.Value));
+					break;
+				case 1:
+					JsonRawData.Text = apiname + " : Request\r\n[" + _NowAccessTime + "]";
+					break;
+				case 2:
+					JsonRawData.Text = "";
+					break;
 			}
-			else
-				JsonRawData.Text = apiname + " : Request\r\n[" + _NowAccessTime + "]";
 
+			_currentAPIPath = apiname;
 
 			if (!UpdatesTree.Checked)
 				return;
@@ -118,44 +128,63 @@ namespace ElectronicObserver.Window
 
 
 			JsonTreeView.EndUpdate();
-			_currentAPIPath = apiname;
 		}
 
 		private void LoadResponse(string apiname, dynamic data)
 		{
-			var c = Utility.Configuration.Config; 
+			var c = Utility.Configuration.Config;
 			DateTime now = DateTime.Now;
-			
+
 			if (_LastRequestReceivedTime == null || _LastRequestReceivedTime == "") //起動後チェック
 			{
 				_LastRequestReceivedTime = now.ToString();
 			}
-			
+
 			DateTime last = DateTime.Parse(_LastRequestReceivedTime);
 			TimeSpan _AccessInterval = now - last;
-			
+
 			if (_AccessInterval.TotalHours >= 4)
 			{
-				_Last4hoursInterval = now.ToString();
-				c.FormJson.Last4hoursInterval = _Last4hoursInterval;
+				_Last4hoursIntervalTo = _LastRequestReceivedTime;
+				c.FormJson.Last4hoursIntervalTo = _Last4hoursIntervalTo;
+				_Last4hoursIntervalUntil = now.ToString();
+				c.FormJson.Last4hoursIntervalUntil = _Last4hoursIntervalUntil;
 			}
 
-			if (ViewJSONResult.Checked)
-			{ 
-				JsonRawData.Text = (_currentAPIPath == apiname ? JsonRawData.Text + "\r\n\r\n" : "") + apiname + " : Response [" + _NowAccessTime + "]\r\n" + (data == null ? "" : data.ToString());
+			TimeSpan _TotalAccessTime = now - DateTime.Parse(_Last4hoursIntervalUntil);
+
+			switch(ViewJSONContents.SelectedIndex)
+			{
+				case 0:
+					JsonRawData.Text = (_currentAPIPath == apiname ? JsonRawData.Text += "\r\n\r\n" : "") + apiname + " : Response [" + _NowAccessTime + "]\r\n" + (data == null ? "" : data.ToString());
+					break;
+				case 1:
+					JsonRawData.Text = (_currentAPIPath == apiname ? JsonRawData.Text += "\r\n\r\n" : "") + apiname + " : Response\r\n[" + _NowAccessTime + "]";
+					break;
+				case 2:
+					JsonRawData.Text = "";
+					break;
 			}
-			else
-				JsonRawData.Text = (_currentAPIPath == apiname ? JsonRawData.Text + "\r\n\r\n" : "") + apiname + " : Response\r\n[" + _NowAccessTime + "]\r\n" + "最後に艦これを4時間以上操作しなかった時刻：\r\n[" + _Last4hoursInterval + "]";
+
+			if (TimeCheck.Checked)
+			{
+				if (ViewJSONContents.SelectedIndex < 2)
+				{
+					JsonRawData.Text += "\r\n\r\n";
+				}
+				JsonRawData.Text += (_TotalAccessTime.Days * 24 + _TotalAccessTime.Hours).ToString() + "時間" + _TotalAccessTime.Minutes.ToString() + "分" + _TotalAccessTime.Seconds.ToString() + "秒 連続稼働中"; 
+				JsonRawData.Text += "\r\n" + "最後に艦これを4時間以上アクセスしなかった期間：\r\n[" + _Last4hoursIntervalTo + "～" + _Last4hoursIntervalUntil + "]";
+			}
 
 			_LastRequestReceivedTime = now.ToString();
 			c.FormJson.LastRequestReceivedTime = _LastRequestReceivedTime;
 
+			_currentAPIPath = apiname;
+
 			if (!UpdatesTree.Checked)
 				return;
 
-
 			JsonTreeView.BeginUpdate();
-
 
 			if (JsonTreeView.Nodes.Count == 0 || JsonTreeView.Nodes[0].Text != apiname)
 			{
@@ -167,9 +196,8 @@ namespace ElectronicObserver.Window
 			CreateChildNode(node);
 			JsonTreeView.Nodes.Add(node);
 
-
 			JsonTreeView.EndUpdate();
-			_currentAPIPath = apiname;
+			
 		}
 
 
@@ -343,7 +371,8 @@ namespace ElectronicObserver.Window
 			AutoUpdate.Checked = c.FormJson.AutoUpdate;
 			UpdatesTree.Checked = c.FormJson.UpdatesTree;
 			AutoUpdateFilter.Text = c.FormJson.AutoUpdateFilter;
-			ViewJSONResult.Checked = c.FormJson.ViewJSONResult;
+			ViewJSONContents.SelectedIndex = c.FormJson.ViewJSONContents;
+			TimeCheck.Checked = c.FormJson.TimeCheck;
 
 			JsonTreeView.Nodes.Clear();
 
@@ -396,16 +425,14 @@ namespace ElectronicObserver.Window
 			Utility.Configuration.Config.FormJson.UpdatesTree = UpdatesTree.Checked;
 		}
 
-		private void ViewJSONResult_CheckedChanged(object sender, EventArgs e)
+		private void TimeCheck_CheckedChanged(object sender, EventArgs e)
 		{
+			Utility.Configuration.Config.FormJson.TimeCheck = TimeCheck.Checked;
+		}
 
-			JsonTreeView.Nodes.Clear();
-
-			if (!AutoUpdate.Checked || !UpdatesTree.Checked || !ViewJSONResult.Checked)
-				JsonTreeView.Nodes.Add(AutoUpdateDisabledMessage);
-
-
-			Utility.Configuration.Config.FormJson.ViewJSONResult = ViewJSONResult.Checked;
+		private void ViewJSONContents_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			Utility.Configuration.Config.FormJson.ViewJSONContents = ViewJSONContents.SelectedIndex;
 		}
 
 		private void AutoUpdate_CheckedChanged(object sender, EventArgs e)

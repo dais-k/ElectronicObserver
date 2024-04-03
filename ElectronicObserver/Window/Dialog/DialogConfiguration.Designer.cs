@@ -120,6 +120,8 @@
             this.FormFleet_BlinkAtDamaged = new System.Windows.Forms.CheckBox();
             this.FormFleet_ReflectAnchorageRepairHealing = new System.Windows.Forms.CheckBox();
             this.FormFleet_ShowAirSuperiorityRange = new System.Windows.Forms.CheckBox();
+            this.FormFleet_ShowSanmaEquip = new System.Windows.Forms.CheckBox();
+            this.FormFleet_ShowSupportPower = new System.Windows.Forms.CheckBox();
             this.FormFleet_ShowAntiGroundPower = new System.Windows.Forms.CheckBox();
             this.FormFleet_ShowAircraftLevelByNumber = new System.Windows.Forms.CheckBox();
             this.label35 = new System.Windows.Forms.Label();
@@ -130,6 +132,7 @@
             this.FormFleet_BlinkAtCompletion = new System.Windows.Forms.CheckBox();
             this.FormFleet_ShowAnchorageRepairingTimer = new System.Windows.Forms.CheckBox();
             this.FormFleet_AirSuperiorityMethod = new System.Windows.Forms.ComboBox();
+            this.label44 = new System.Windows.Forms.Label();
             this.label23 = new System.Windows.Forms.Label();
             this.FormFleet_ShowNextExp = new System.Windows.Forms.CheckBox();
             this.FormFleet_ShortenHPBar = new System.Windows.Forms.CheckBox();
@@ -216,12 +219,14 @@
             this.FormBaseAirCorps_ShowEventMapOnly = new System.Windows.Forms.CheckBox();
             this.SubWindow_Json = new System.Windows.Forms.TabPage();
             this.SubWindow_Json_SealingPanel = new System.Windows.Forms.Panel();
+            this.FormJson_ViewJSONContents = new System.Windows.Forms.ComboBox();
             this.FormJson_AutoUpdate = new System.Windows.Forms.CheckBox();
             this.label32 = new System.Windows.Forms.Label();
             this.FormJson_UpdatesTree = new System.Windows.Forms.CheckBox();
             this.FormJson_AutoUpdateFilter = new System.Windows.Forms.TextBox();
+            this.label45 = new System.Windows.Forms.Label();
             this.label31 = new System.Windows.Forms.Label();
-            this.FormJson_ViewJSONResult = new System.Windows.Forms.CheckBox();
+            this.FormJson_TimeCheck = new System.Windows.Forms.CheckBox();
             this.label33 = new System.Windows.Forms.Label();
             this.tabPage11 = new System.Windows.Forms.TabPage();
             this.Notification_BaseAirCorps = new System.Windows.Forms.Button();
@@ -253,10 +258,7 @@
             this.APIListBrowser = new System.Windows.Forms.OpenFileDialog();
             this.Log_PlayTime = new System.Windows.Forms.Label();
             this.PlayTimeTimer = new System.Windows.Forms.Timer(this.components);
-            this.label44 = new System.Windows.Forms.Label();
-            this.FormFleet_ShowSupportPower = new System.Windows.Forms.CheckBox();
             this.UI_RenderingTest = new ElectronicObserver.Window.Control.ShipStatusHP();
-            this.FormFleet_ShowSanmaEquip = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Connection_UpstreamProxyPort)).BeginInit();
@@ -1008,7 +1010,7 @@
             this.Debug_SealingPanel.Controls.Add(this.Debug_APIListPathSearch);
             this.Debug_SealingPanel.Location = new System.Drawing.Point(0, 56);
             this.Debug_SealingPanel.Name = "Debug_SealingPanel";
-            this.Debug_SealingPanel.Size = new System.Drawing.Size(696, 237);
+            this.Debug_SealingPanel.Size = new System.Drawing.Size(696, 229);
             this.Debug_SealingPanel.TabIndex = 1;
             // 
             // Debug_APIListPath
@@ -1384,6 +1386,26 @@
             this.ToolTipInfo.SetToolTip(this.FormFleet_ShowAirSuperiorityRange, "制空戦力の範囲を「内部熟練度最小～最大」として範囲表示するかを指定します。\r\n通常、制空戦力は最低の内部熟練度を持つとして計算されます。");
             this.FormFleet_ShowAirSuperiorityRange.UseVisualStyleBackColor = true;
             // 
+            // FormFleet_ShowSanmaEquip
+            // 
+            this.FormFleet_ShowSanmaEquip.AutoSize = true;
+            this.FormFleet_ShowSanmaEquip.Location = new System.Drawing.Point(358, 259);
+            this.FormFleet_ShowSanmaEquip.Name = "FormFleet_ShowSanmaEquip";
+            this.FormFleet_ShowSanmaEquip.Size = new System.Drawing.Size(186, 19);
+            this.FormFleet_ShowSanmaEquip.TabIndex = 18;
+            this.FormFleet_ShowSanmaEquip.Text = "秋刀魚漁有効装備数を表示する";
+            this.FormFleet_ShowSanmaEquip.UseVisualStyleBackColor = true;
+            // 
+            // FormFleet_ShowSupportPower
+            // 
+            this.FormFleet_ShowSupportPower.AutoSize = true;
+            this.FormFleet_ShowSupportPower.Location = new System.Drawing.Point(159, 259);
+            this.FormFleet_ShowSupportPower.Name = "FormFleet_ShowSupportPower";
+            this.FormFleet_ShowSupportPower.Size = new System.Drawing.Size(138, 19);
+            this.FormFleet_ShowSupportPower.TabIndex = 18;
+            this.FormFleet_ShowSupportPower.Text = "支援攻撃力を表示する";
+            this.FormFleet_ShowSupportPower.UseVisualStyleBackColor = true;
+            // 
             // FormFleet_ShowAntiGroundPower
             // 
             this.FormFleet_ShowAntiGroundPower.AutoSize = true;
@@ -1511,6 +1533,15 @@
             this.FormFleet_AirSuperiorityMethod.Name = "FormFleet_AirSuperiorityMethod";
             this.FormFleet_AirSuperiorityMethod.Size = new System.Drawing.Size(121, 23);
             this.FormFleet_AirSuperiorityMethod.TabIndex = 4;
+            // 
+            // label44
+            // 
+            this.label44.AutoSize = true;
+            this.label44.Location = new System.Drawing.Point(3, 241);
+            this.label44.Name = "label44";
+            this.label44.Size = new System.Drawing.Size(169, 15);
+            this.label44.TabIndex = 3;
+            this.label44.Text = "装備ツールチップに表示させる項目";
             // 
             // label23
             // 
@@ -2528,10 +2559,10 @@
             // 
             this.SubWindow_Json.Controls.Add(this.SubWindow_Json_SealingPanel);
             this.SubWindow_Json.Controls.Add(this.label33);
-            this.SubWindow_Json.Location = new System.Drawing.Point(4, 22);
+            this.SubWindow_Json.Location = new System.Drawing.Point(4, 24);
             this.SubWindow_Json.Name = "SubWindow_Json";
             this.SubWindow_Json.Padding = new System.Windows.Forms.Padding(3);
-            this.SubWindow_Json.Size = new System.Drawing.Size(682, 340);
+            this.SubWindow_Json.Size = new System.Drawing.Size(682, 338);
             this.SubWindow_Json.TabIndex = 9;
             this.SubWindow_Json.Text = "JSON";
             this.SubWindow_Json.UseVisualStyleBackColor = true;
@@ -2539,18 +2570,34 @@
             // SubWindow_Json_SealingPanel
             // 
             this.SubWindow_Json_SealingPanel.BackColor = System.Drawing.SystemColors.Window;
+            this.SubWindow_Json_SealingPanel.Controls.Add(this.FormJson_ViewJSONContents);
             this.SubWindow_Json_SealingPanel.Controls.Add(this.FormJson_AutoUpdate);
             this.SubWindow_Json_SealingPanel.Controls.Add(this.label32);
             this.SubWindow_Json_SealingPanel.Controls.Add(this.FormJson_UpdatesTree);
             this.SubWindow_Json_SealingPanel.Controls.Add(this.FormJson_AutoUpdateFilter);
+            this.SubWindow_Json_SealingPanel.Controls.Add(this.label45);
             this.SubWindow_Json_SealingPanel.Controls.Add(this.label31);
-            this.SubWindow_Json_SealingPanel.Controls.Add(this.FormJson_ViewJSONResult);
+            this.SubWindow_Json_SealingPanel.Controls.Add(this.FormJson_TimeCheck);
             this.SubWindow_Json_SealingPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.SubWindow_Json_SealingPanel.Location = new System.Drawing.Point(3, 3);
             this.SubWindow_Json_SealingPanel.Margin = new System.Windows.Forms.Padding(0);
             this.SubWindow_Json_SealingPanel.Name = "SubWindow_Json_SealingPanel";
-            this.SubWindow_Json_SealingPanel.Size = new System.Drawing.Size(676, 334);
+            this.SubWindow_Json_SealingPanel.Size = new System.Drawing.Size(676, 332);
             this.SubWindow_Json_SealingPanel.TabIndex = 6;
+            // 
+            // FormJson_ViewJSONContents
+            // 
+            this.FormJson_ViewJSONContents.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.FormJson_ViewJSONContents.FormattingEnabled = true;
+            this.FormJson_ViewJSONContents.Items.AddRange(new object[] {
+            "JSONのデータを全て表示する",
+            "APIにアクセスした時間のみを表示する",
+            "表示しない"});
+            this.FormJson_ViewJSONContents.Location = new System.Drawing.Point(109, 83);
+            this.FormJson_ViewJSONContents.Name = "FormJson_ViewJSONContents";
+            this.FormJson_ViewJSONContents.Size = new System.Drawing.Size(232, 23);
+            this.FormJson_ViewJSONContents.TabIndex = 3;
+            this.ToolTipInfo.SetToolTip(this.FormJson_ViewJSONContents, "RAWタブにAPIとJSONをどのように表示させるかどうかを指定します\r\n");
             // 
             // FormJson_AutoUpdate
             // 
@@ -2594,6 +2641,15 @@
             this.FormJson_AutoUpdateFilter.TabIndex = 2;
             this.ToolTipInfo.SetToolTip(this.FormJson_AutoUpdateFilter, "自動更新時に読み込む API を選択するフィルタです。\r\n正規表現も利用可能です。");
             // 
+            // label45
+            // 
+            this.label45.AutoSize = true;
+            this.label45.Location = new System.Drawing.Point(3, 86);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(108, 15);
+            this.label45.TabIndex = 4;
+            this.label45.Text = "JSONの表示方法：";
+            // 
             // label31
             // 
             this.label31.AutoSize = true;
@@ -2603,16 +2659,16 @@
             this.label31.TabIndex = 4;
             this.label31.Text = "自動更新フィルタ：";
             // 
-            // FormJson_ViewJSONResult
+            // FormJson_TimeCheck
             // 
-            this.FormJson_ViewJSONResult.AutoSize = true;
-            this.FormJson_ViewJSONResult.Location = new System.Drawing.Point(3, 84);
-            this.FormJson_ViewJSONResult.Name = "FormJson_ViewJSONResult";
-            this.FormJson_ViewJSONResult.Size = new System.Drawing.Size(143, 19);
-            this.FormJson_ViewJSONResult.TabIndex = 3;
-            this.FormJson_ViewJSONResult.Text = "JSONの中身を表示する";
-            this.ToolTipInfo.SetToolTip(this.FormJson_ViewJSONResult, "API の送受信時に、JSONの中身を表示するかを指定します。");
-            this.FormJson_ViewJSONResult.UseVisualStyleBackColor = true;
+            this.FormJson_TimeCheck.AutoSize = true;
+            this.FormJson_TimeCheck.Location = new System.Drawing.Point(3, 111);
+            this.FormJson_TimeCheck.Name = "FormJson_TimeCheck";
+            this.FormJson_TimeCheck.Size = new System.Drawing.Size(138, 19);
+            this.FormJson_TimeCheck.TabIndex = 4;
+            this.FormJson_TimeCheck.Text = "非稼働時間を表示する";
+            this.ToolTipInfo.SetToolTip(this.FormJson_TimeCheck, "4時間以上艦これにアクセスしなかった時間を表示します");
+            this.FormJson_TimeCheck.UseVisualStyleBackColor = true;
             // 
             // label33
             // 
@@ -2690,7 +2746,7 @@
             // 
             this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(3, 308);
+            this.label10.Location = new System.Drawing.Point(3, 300);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(238, 15);
             this.label10.TabIndex = 5;
@@ -2835,7 +2891,7 @@
             this.BGMPlayer_ControlGrid.RowHeadersVisible = false;
             this.BGMPlayer_ControlGrid.RowTemplate.Height = 21;
             this.BGMPlayer_ControlGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.BGMPlayer_ControlGrid.Size = new System.Drawing.Size(684, 257);
+            this.BGMPlayer_ControlGrid.Size = new System.Drawing.Size(684, 249);
             this.BGMPlayer_ControlGrid.TabIndex = 0;
             this.BGMPlayer_ControlGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.BGMPlayer_ControlGrid_CellContentClick);
             this.BGMPlayer_ControlGrid.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.BGMPlayer_ControlGrid_CellFormatting);
@@ -2933,25 +2989,6 @@
             this.PlayTimeTimer.Interval = 1000;
             this.PlayTimeTimer.Tick += new System.EventHandler(this.PlayTimeTimer_Tick);
             // 
-            // label44
-            // 
-            this.label44.AutoSize = true;
-            this.label44.Location = new System.Drawing.Point(3, 241);
-            this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(169, 15);
-            this.label44.TabIndex = 3;
-            this.label44.Text = "装備ツールチップに表示させる項目";
-            // 
-            // FormFleet_ShowSupportPower
-            // 
-            this.FormFleet_ShowSupportPower.AutoSize = true;
-            this.FormFleet_ShowSupportPower.Location = new System.Drawing.Point(159, 259);
-            this.FormFleet_ShowSupportPower.Name = "FormFleet_ShowSupportPower";
-            this.FormFleet_ShowSupportPower.Size = new System.Drawing.Size(138, 19);
-            this.FormFleet_ShowSupportPower.TabIndex = 18;
-            this.FormFleet_ShowSupportPower.Text = "支援攻撃力を表示する";
-            this.FormFleet_ShowSupportPower.UseVisualStyleBackColor = true;
-            // 
             // UI_RenderingTest
             // 
             this.UI_RenderingTest.AutoSize = true;
@@ -2976,16 +3013,6 @@
             this.UI_RenderingTest.Text = "Rendering Test: ";
             this.ToolTipInfo.SetToolTip(this.UI_RenderingTest, "描画プレビューです。\r\n下のバーから値を調整できます。");
             this.UI_RenderingTest.Value = 401;
-            // 
-            // FormFleet_ShowSanmaEquip
-            // 
-            this.FormFleet_ShowSanmaEquip.AutoSize = true;
-            this.FormFleet_ShowSanmaEquip.Location = new System.Drawing.Point(358, 259);
-            this.FormFleet_ShowSanmaEquip.Name = "FormFleet_ShowSanmaEquip";
-            this.FormFleet_ShowSanmaEquip.Size = new System.Drawing.Size(186, 19);
-            this.FormFleet_ShowSanmaEquip.TabIndex = 18;
-            this.FormFleet_ShowSanmaEquip.Text = "秋刀魚漁有効装備数を表示する";
-            this.FormFleet_ShowSanmaEquip.UseVisualStyleBackColor = true;
             // 
             // DialogConfiguration
             // 
@@ -3238,7 +3265,6 @@
 		private System.Windows.Forms.TabPage SubWindow_Json;
 		private System.Windows.Forms.CheckBox FormJson_AutoUpdate;
 		private System.Windows.Forms.CheckBox FormJson_UpdatesTree;
-		private System.Windows.Forms.CheckBox FormJson_ViewJSONResult;
 		private System.Windows.Forms.TextBox FormJson_AutoUpdateFilter;
 		private System.Windows.Forms.Label label31;
 		private System.Windows.Forms.Label label32;
@@ -3308,5 +3334,8 @@
 		private System.Windows.Forms.CheckBox FormFleet_ShowSupportPower;
 		private System.Windows.Forms.Label label44;
 		private System.Windows.Forms.CheckBox FormFleet_ShowSanmaEquip;
+		private System.Windows.Forms.CheckBox FormJson_TimeCheck;
+		private System.Windows.Forms.ComboBox FormJson_ViewJSONContents;
+		private System.Windows.Forms.Label label45;
 	}
 }

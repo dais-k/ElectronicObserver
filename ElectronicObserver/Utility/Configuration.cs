@@ -1117,10 +1117,10 @@ namespace ElectronicObserver.Utility
 				/// </summary>
 				public string AutoUpdateFilter { get; set; }
 
-				/// <summary>
-				/// JSONの中身を表示するか
+				///<summary>
+				/// 艦これにアクセス時間チェック
 				/// </summary>
-				public bool ViewJSONResult { get; set; }
+				public bool TimeCheck { get; set; }
 
 				/// <summary>
 				/// 最後にRequestを受信した時刻
@@ -1128,18 +1128,30 @@ namespace ElectronicObserver.Utility
 				public string LastRequestReceivedTime { get; set; }
 
 				/// <summary>
-				/// 最後に4時間以上アクセスしなかった時刻
+				/// 最後に4時間以上アクセスしなかった時刻 (～まで)
 				/// </summary>
-				public string Last4hoursInterval { get; set; }
+				public string Last4hoursIntervalUntil { get; set; }
+
+				/// <summary>
+				/// 最後に4時間以上アクセスしなかった時刻 (から～)
+				/// </summary>
+				public string Last4hoursIntervalTo { get; set; }
+
+				/// <summary>
+				/// RAWタブJSONの表示内容
+				/// </summary>
+				public int ViewJSONContents { get; set; }
 
 				public ConfigFormJson()
 				{
 					AutoUpdate = false;
 					UpdatesTree = true;
 					AutoUpdateFilter = "";
-					ViewJSONResult = true;
+					TimeCheck = false;
 					LastRequestReceivedTime = "";
-					Last4hoursInterval = "";
+					Last4hoursIntervalUntil = "";
+					Last4hoursIntervalTo = "";
+					ViewJSONContents= 0;
 				}
 			}
 			/// <summary>[JSON]ウィンドウ</summary>

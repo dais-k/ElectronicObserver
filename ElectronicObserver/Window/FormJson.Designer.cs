@@ -43,13 +43,15 @@
             this.TreeContextMenu_CopyToClipboard = new System.Windows.Forms.ToolStripMenuItem();
             this.TreeContextMenu_CopyAsDocument = new System.Windows.Forms.ToolStripMenuItem();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.ViewJSONContents = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.UpdatesTree = new System.Windows.Forms.CheckBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.AutoUpdateFilter = new System.Windows.Forms.TextBox();
             this.AutoUpdate = new System.Windows.Forms.CheckBox();
-            this.ViewJSONResult = new System.Windows.Forms.CheckBox();
+            this.TimeCheck = new System.Windows.Forms.CheckBox();
             this.CSVSaver = new System.Windows.Forms.SaveFileDialog();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -100,10 +102,10 @@
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.JsonTreeView);
-            this.tabPage2.Location = new System.Drawing.Point(4, 24);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(292, 172);
+            this.tabPage2.Size = new System.Drawing.Size(292, 174);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Tree";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -118,7 +120,7 @@
             this.JsonTreeView.Name = "JsonTreeView";
             this.JsonTreeView.PathSeparator = ".";
             this.JsonTreeView.ShowNodeToolTips = true;
-            this.JsonTreeView.Size = new System.Drawing.Size(286, 166);
+            this.JsonTreeView.Size = new System.Drawing.Size(286, 168);
             this.JsonTreeView.TabIndex = 0;
             this.JsonTreeView.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.JsonTreeView_BeforeExpand);
             this.JsonTreeView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.JsonTreeView_MouseClick);
@@ -186,13 +188,15 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.ViewJSONContents);
             this.tabPage3.Controls.Add(this.label3);
             this.tabPage3.Controls.Add(this.label2);
             this.tabPage3.Controls.Add(this.UpdatesTree);
+            this.tabPage3.Controls.Add(this.label4);
             this.tabPage3.Controls.Add(this.label1);
             this.tabPage3.Controls.Add(this.AutoUpdateFilter);
             this.tabPage3.Controls.Add(this.AutoUpdate);
-            this.tabPage3.Controls.Add(this.ViewJSONResult);
+            this.tabPage3.Controls.Add(this.TimeCheck);
             this.tabPage3.Location = new System.Drawing.Point(4, 24);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
@@ -201,11 +205,25 @@
             this.tabPage3.Text = "Config";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // ViewJSONContents
+            // 
+            this.ViewJSONContents.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.ViewJSONContents.FormattingEnabled = true;
+            this.ViewJSONContents.Items.AddRange(new object[] {
+            "JSONのデータを全て表示する",
+            "APIにアクセスした時間のみを表示する",
+            "表示しない"});
+            this.ViewJSONContents.Location = new System.Drawing.Point(80, 87);
+            this.ViewJSONContents.Name = "ViewJSONContents";
+            this.ViewJSONContents.Size = new System.Drawing.Size(204, 23);
+            this.ViewJSONContents.TabIndex = 3;
+            this.ViewJSONContents.SelectedIndexChanged += new System.EventHandler(this.ViewJSONContents_SelectedIndexChanged);
+            // 
             // label3
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 146);
+            this.label3.Location = new System.Drawing.Point(6, 136);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(249, 15);
             this.label3.TabIndex = 5;
@@ -228,10 +246,19 @@
             this.UpdatesTree.Location = new System.Drawing.Point(9, 32);
             this.UpdatesTree.Name = "UpdatesTree";
             this.UpdatesTree.Size = new System.Drawing.Size(104, 19);
-            this.UpdatesTree.TabIndex = 3;
+            this.UpdatesTree.TabIndex = 1;
             this.UpdatesTree.Text = "Treeも更新する";
             this.UpdatesTree.UseVisualStyleBackColor = true;
             this.UpdatesTree.CheckedChanged += new System.EventHandler(this.UpdatesTree_CheckedChanged);
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(8, 90);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(74, 15);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "JSON表示：";
             // 
             // label1
             // 
@@ -249,7 +276,7 @@
             this.AutoUpdateFilter.Location = new System.Drawing.Point(66, 57);
             this.AutoUpdateFilter.Name = "AutoUpdateFilter";
             this.AutoUpdateFilter.Size = new System.Drawing.Size(218, 23);
-            this.AutoUpdateFilter.TabIndex = 1;
+            this.AutoUpdateFilter.TabIndex = 2;
             this.AutoUpdateFilter.Validated += new System.EventHandler(this.AutoUpdateFilter_Validated);
             // 
             // AutoUpdate
@@ -263,16 +290,16 @@
             this.AutoUpdate.UseVisualStyleBackColor = true;
             this.AutoUpdate.CheckedChanged += new System.EventHandler(this.AutoUpdate_CheckedChanged);
             // 
-            // ViewJSONResult
+            // TimeCheck
             // 
-            this.ViewJSONResult.AutoSize = true;
-            this.ViewJSONResult.Location = new System.Drawing.Point(9, 87);
-            this.ViewJSONResult.Name = "ViewJSONResult";
-            this.ViewJSONResult.Size = new System.Drawing.Size(143, 19);
-            this.ViewJSONResult.TabIndex = 5;
-            this.ViewJSONResult.Text = "JSONの中身を表示する";
-            this.ViewJSONResult.UseVisualStyleBackColor = true;
-            this.ViewJSONResult.CheckedChanged += new System.EventHandler(this.ViewJSONResult_CheckedChanged);
+            this.TimeCheck.AutoSize = true;
+            this.TimeCheck.Location = new System.Drawing.Point(9, 114);
+            this.TimeCheck.Name = "TimeCheck";
+            this.TimeCheck.Size = new System.Drawing.Size(138, 19);
+            this.TimeCheck.TabIndex = 4;
+            this.TimeCheck.Text = "非稼働時間を表示する";
+            this.TimeCheck.UseVisualStyleBackColor = true;
+            this.TimeCheck.CheckedChanged += new System.EventHandler(this.TimeCheck_CheckedChanged);
             // 
             // CSVSaver
             // 
@@ -314,7 +341,6 @@
 		private System.Windows.Forms.TextBox AutoUpdateFilter;
 		private System.Windows.Forms.CheckBox AutoUpdate;
 		private System.Windows.Forms.CheckBox UpdatesTree;
-		private System.Windows.Forms.CheckBox ViewJSONResult;
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.ContextMenuStrip TreeContextMenu;
 		private System.Windows.Forms.ToolStripMenuItem TreeContextMenu_Expand;
@@ -326,5 +352,8 @@
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.ToolStripMenuItem TreeContextMenu_CopyToClipboard;
 		private System.Windows.Forms.ToolStripMenuItem TreeContextMenu_CopyAsDocument;
+		private System.Windows.Forms.CheckBox TimeCheck;
+		private System.Windows.Forms.ComboBox ViewJSONContents;
+		private System.Windows.Forms.Label label4;
 	}
 }
