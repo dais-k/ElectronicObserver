@@ -154,6 +154,7 @@ api_start2/getData	：艦娘・装備固有データその他
 				26=大型陸上機
 				27=陸戦部隊
 				28=艦載発煙装置
+				29=防空気球
 
 			[1]：図鑑表示
 				 1=Primary Armament
@@ -201,7 +202,8 @@ api_start2/getData	：艦娘・装備固有データその他
 				46=Heavy Bomber
 				47=Armored Daihatsu
 				48=Army Infantry
-				49=SurfaceShip Equipment
+				49=Smoke Generator
+				50=Barrage Balloon
 
 				 1=主砲
 				 2=副砲
@@ -248,7 +250,8 @@ api_start2/getData	：艦娘・装備固有データその他
 				46=大型陸上機
 				47=装甲大発
 				48=陸戦部隊
-				49=水上艦装備
+				49=艦載発煙装置
+				50=防空気球
 
 			[2]：カテゴリ
 				(api_mst_slotitem_equiptype にUnicodeで直接記載されている)
@@ -369,7 +372,7 @@ api_start2/getData	：艦娘・装備固有データその他
 				52=陸戦部隊
 				54=艦載発煙装置
 				55=防空気球
-				56=ジェット局地戦闘機
+				56=噴式局地戦闘機
 
 			[4]: 航空機カテゴリ
 				 0=非航空機
