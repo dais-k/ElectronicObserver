@@ -442,72 +442,56 @@ namespace ElectronicObserver.Window
 
 					bool isEscaped = KCDatabase.Instance.Fleet[Parent.FleetID].EscapedShipList.Contains(shipMasterID);
 					var equipments = ship.AllSlotInstance.Where(eq => eq != null);
-
+					string spitem ="";
+					string sphougeki = "";
+					string spraigeki = "";
+					string spsoukou = "";
+					string spkaihi = "";
 					Name.Text = ship.MasterShip.NameWithClass;
 					Name.Tag = ship.ShipID;
 					switch(ship.SpItemKind)
 					{
 						case 0:
-							ToolTipInfo.SetToolTip(Name,
-							string.Format(
-								"{0}{1} {2}\r\n火力: {3}/{4}\r\n雷装: {5}/{6}\r\n対空: {7}/{8}\r\n装甲: {9}/{10}\r\n対潜: {11}/{12}\r\n回避: {13}/{14}\r\n索敵: {15}/{16}\r\n運: {17}\r\n命中: {18:+#;-#;+0}\r\n爆装: {19:+#;-#;+0}\r\n射程: {20} / 速力: {21}\r\n(右クリックで図鑑)\n",
-								ship.SallyArea > 0 ? $"[{ship.SallyArea}] " : "",
-								ship.MasterShip.ShipTypeName, ship.NameWithLevel,
-								ship.FirepowerBase, ship.FirepowerTotal,
-								ship.TorpedoBase, ship.TorpedoTotal,
-								ship.AABase, ship.AATotal,
-								ship.ArmorBase, ship.ArmorTotal,
-								ship.ASWBase, ship.ASWTotal,
-								ship.EvasionBase, ship.EvasionTotal,
-								ship.LOSBase, ship.LOSTotal,
-								ship.LuckTotal,
-								equipments.Any() ? equipments.Sum(eq => eq.MasterEquipment.Accuracy) : 0,
-								equipments.Any() ? equipments.Sum(eq => eq.MasterEquipment.Bomber) : 0,
-								Constants.GetRange(ship.Range),
-								Constants.GetSpeed(ship.Speed)
-								));
+							spitem = "";
+							sphougeki = "";
+							spraigeki = "";
+							spsoukou = "";
+							spkaihi = "";
 							break;
-						case 1: 
-							ToolTipInfo.SetToolTip(Name,
-							string.Format(
-								"{0}{1} {2}★\r\n火力: {3}/{4}\r\n雷装: {5}/{6}+{7}\r\n対空: {8}/{9}\r\n装甲: {10}/{11}+{12}\r\n対潜: {13}/{14}\r\n回避: {15}/{16}\r\n索敵: {17}/{18}\r\n運: {19}\r\n命中: {20:+#;-#;+0}\r\n爆装: {21:+#;-#;+0}\r\n射程: {22} / 速力: {23}\r\n(右クリックで図鑑)\n",
-								ship.SallyArea > 0 ? $"[{ship.SallyArea}] " : "",
-								ship.MasterShip.ShipTypeName, ship.NameWithLevel,
-								ship.FirepowerBase, ship.FirepowerTotal,
-								ship.TorpedoBase, ship.TorpedoTotal,ship.SpItemRaig,
-								ship.AABase, ship.AATotal,
-								ship.ArmorBase, ship.ArmorTotal,ship.SpItemSouk,
-								ship.ASWBase, ship.ASWTotal,
-								ship.EvasionBase, ship.EvasionTotal,
-								ship.LOSBase, ship.LOSTotal,
-								ship.LuckTotal,
-								equipments.Any() ? equipments.Sum(eq => eq.MasterEquipment.Accuracy) : 0,
-								equipments.Any() ? equipments.Sum(eq => eq.MasterEquipment.Bomber) : 0,
-								Constants.GetRange(ship.Range),
-								Constants.GetSpeed(ship.Speed)
-								));
+						case 1:
+							spitem = "★";
+							sphougeki = "";
+							spraigeki = "+" + ship.SpItemRaig;
+							spsoukou = "+" + ship.SpItemSouk;
+							spkaihi = "";
 							break;
 						case 2:
-							ToolTipInfo.SetToolTip(Name,
-							string.Format(
-								"{0}{1} {2}☆\r\n火力: {3}/{4}+{5}\r\n雷装: {6}/{7}\r\n対空: {8}/{9}\r\n装甲: {10}/{11}\r\n対潜: {12}/{13}\r\n回避: {14}/{15}+{16}\r\n索敵: {17}/{18}\r\n運: {19}\r\n命中: {20:+#;-#;+0}\r\n爆装: {21:+#;-#;+0}\r\n射程: {22} / 速力: {23}\r\n(右クリックで図鑑)\n",
-								ship.SallyArea > 0 ? $"[{ship.SallyArea}] " : "",
-								ship.MasterShip.ShipTypeName, ship.NameWithLevel,
-								ship.FirepowerBase, ship.FirepowerTotal,ship.SpItemHoug,
-								ship.TorpedoBase, ship.TorpedoTotal,
-								ship.AABase, ship.AATotal,
-								ship.ArmorBase, ship.ArmorTotal,
-								ship.ASWBase, ship.ASWTotal,
-								ship.EvasionBase, ship.EvasionTotal,ship.SpItemKaih,
-								ship.LOSBase, ship.LOSTotal,
-								ship.LuckTotal,
-								equipments.Any() ? equipments.Sum(eq => eq.MasterEquipment.Accuracy) : 0,
-								equipments.Any() ? equipments.Sum(eq => eq.MasterEquipment.Bomber) : 0,
-								Constants.GetRange(ship.Range),
-								Constants.GetSpeed(ship.Speed)
-								));
+							spitem = "☆";
+							sphougeki = "+" + ship.SpItemHoug; 
+							spraigeki = "";
+							spsoukou = "";
+							spkaihi = "+" + ship.SpItemKaih;
 							break;
 					}
+					ToolTipInfo.SetToolTip(Name,
+					string.Format(
+						"{0}{1} {2}{3}\r\n火力: {4}/{5}{6}\r\n雷装: {7}/{8}{9}\r\n対空: {10}/{11}\r\n装甲: {12}/{13}{14}\r\n対潜: {15}/{16}\r\n回避: {17}/{18}{19}\r\n索敵: {20}/{21}\r\n運: {22}\r\n命中: {23:+#;-#;+0}\r\n爆装: {24:+#;-#;+0}\r\n射程: {25} / 速力: {26}\r\n(右クリックで図鑑)\n",
+						ship.SallyArea > 0 ? $"[{ship.SallyArea}] " : "",
+						ship.MasterShip.ShipTypeName, ship.NameWithLevel,
+						spitem,
+						ship.FirepowerBase, ship.FirepowerTotal, sphougeki,
+						ship.TorpedoBase, ship.TorpedoTotal, spraigeki,
+						ship.AABase, ship.AATotal,
+						ship.ArmorBase, ship.ArmorTotal, spsoukou,
+						ship.ASWBase, ship.ASWTotal,
+						ship.EvasionBase, ship.EvasionTotal, spkaihi,
+						ship.LOSBase, ship.LOSTotal,
+						ship.LuckTotal,
+						equipments.Any() ? equipments.Sum(eq => eq.MasterEquipment.Accuracy) : 0,
+						equipments.Any() ? equipments.Sum(eq => eq.MasterEquipment.Bomber) : 0,
+						Constants.GetRange(ship.Range),
+						Constants.GetSpeed(ship.Speed)
+						));
 					{
 						var colorscheme = Utility.Configuration.Config.FormFleet.SallyAreaColorScheme;
 
