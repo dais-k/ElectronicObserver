@@ -22,7 +22,7 @@ namespace ElectronicObserver.Window.Dialog
 	public partial class DialogAlbumMasterEquipment : Form
 	{
 
-
+		List<int> eqlist = new List<int>();	
 		public DialogAlbumMasterEquipment()
 		{
 			InitializeComponent();
@@ -316,10 +316,115 @@ namespace ElectronicObserver.Window.Dialog
 				}
 			}
 			DefaultSlots.EndUpdate();
+			
+			//装備対象
+			{
+				eqlist.Clear();
+				EquipSlots.BeginUpdate();
+				EquipSlots.Items.Clear();
+				EquipLevel.Text = "装備不可";
+				int eqCategory = (int)eq.CategoryType;
+				var specialShips = new Dictionary<ShipTypes, List<int>>();
+				foreach (var ship in db.MasterShips.Values.Where(s => s.SpecialEquippableCategories != null))
+				{
+					bool usual = ship.ShipTypeInstance.EquippableCategories.Contains(eqCategory);
+					bool special = ship.SpecialEquippableCategories.Contains(eqCategory);
+
+					if (usual != special)
+					{
+						if (specialShips.ContainsKey(ship.ShipType))
+							specialShips[ship.ShipType].Add(ship.ShipID);
+						else
+							specialShips.Add(ship.ShipType, new List<int>(new[] { ship.ShipID }));
+					}
+				}
+				EquipSlots.Items.Add($"[通常スロット]");
+				eqlist.Add(-1);
+
+				foreach (var shiptype in db.ShipTypes.Values)
+				{
+					if (shiptype.EquippableCategories.Contains(eqCategory))
+					{
+						if (specialShips.ContainsKey(shiptype.Type))
+						{
+							EquipSlots.Items.Add(" " + shiptype.Name + " (×は不可)");
+							eqlist.Add(-1);
+							foreach (var ss in specialShips[shiptype.Type])
+							{
+								EquipSlots.Items.Add("  ×" + db.MasterShips[ss]?.NameWithClass);
+								eqlist.Add(ss);
+							}
+						}
+						else
+						{ 
+							EquipSlots.Items.Add(" " + shiptype.Name);
+							eqlist.Add(-1);
+						}
+					}
+					else
+					{
+						if (specialShips.ContainsKey(shiptype.Type))
+						{
+							EquipSlots.Items.Add(" " + shiptype.Name + " (〇が対象)");
+							eqlist.Add(-1);
+							foreach (var ss in specialShips[shiptype.Type])
+							{
+								EquipSlots.Items.Add("  〇" + db.MasterShips[ss]?.NameWithClass);
+								eqlist.Add(ss);
+							}
+						}
+					}
+				}
+				if (eq.IsExslotEquipped)
+				{
+					EquipLevel.Text = "★0";
+					EquipSlots.Items.Add($""); eqlist.Add(-1);
+					EquipSlots.Items.Add($"[拡張スロット]"); eqlist.Add(-1);
+					EquipSlots.Items.Add($"上記艦種・艦娘が装備可"); eqlist.Add(-1);
+				}
+
+				if (eq.EquippableShipsAtExpansion.Any()
+					|| eq.EquippableStypeAtExpansion.Any()
+					|| eq.EquippableCtypeAtExpansion.Any())
+				{
+					EquipLevel.Text = "★" + eq.equippableRequestLevel;
+					EquipSlots.Items.Add($""); eqlist.Add(-1); ;
+					EquipSlots.Items.Add($"[拡張スロット]"); eqlist.Add(-1);
+					if (eq.EquippableStypeAtExpansion.Any())
+					{
+						foreach (var ss in eq.EquippableStypeAtExpansion)
+						{
+							EquipSlots.Items.Add(" " + db.ShipTypes[ss]?.Name);
+							eqlist.Add(-1);
+						}
+					}
+					if (eq.EquippableCtypeAtExpansion.Any())
+					{
+						foreach (var ss in eq.EquippableCtypeAtExpansion)
+						{
+							EquipSlots.Items.Add(" " + Constants.GetShipClass(ss));
+							eqlist.Add(-1);
+						}
+					}
+					if (eq.equippableShipsAtExpansion.Any())
+					{
+						foreach (var ss in eq.EquippableShipsAtExpansion)
+						{
+							if(db.MasterShips[ss]?.NameWithClass != null)
+							{ 
+								EquipSlots.Items.Add(" " + db.MasterShips[ss]?.NameWithClass);
+								eqlist.Add(ss);
+							}
+						}
+					}
+				}
+				EquipSlots.EndUpdate();
+			}
+
 
 
 			Description.Text = eq.Message;
-
+			
 
 			//arsenal
 			TableArsenal.SuspendLayout();
@@ -427,22 +532,28 @@ namespace ElectronicObserver.Window.Dialog
 				{
 					if (specialShips.ContainsKey(shiptype.Type))
 					{
-						sb.Append("○ ").AppendLine(string.Join(", ", specialShips[shiptype.Type]));
+						sb.Append(shiptype.Name + " (").Append(string.Join(", ", specialShips[shiptype.Type])).Append(")");
+						sb.AppendLine();
 					}
 				}
+			}
+
+			if (eq.IsExslotEquipped)
+			{
+				sb.AppendLine("\n[拡張スロット]  上記艦種・艦娘が装備可能\n");
 			}
 
 			if (eq.EquippableShipsAtExpansion.Any()
 				|| eq.EquippableStypeAtExpansion.Any()
 				|| eq.EquippableCtypeAtExpansion.Any())
 			{
-				sb.AppendFormat("\n[拡張スロット]  改修LV★{0}から可能\n",eq.equippableRequestLevel);
-			if (eq.EquippableShipsAtExpansion.Any())
-				sb.AppendLine(string.Join(", ", eq.EquippableShipsAtExpansion.Select(id => db.MasterShips[id]?.NameWithClass ?? "未実装")));
-			if (eq.EquippableStypeAtExpansion.Any())
-				sb.AppendLine(string.Join(",",eq.EquippableStypeAtExpansion.Select(id => db.ShipTypes[id]?.Name)));
-			if (eq.EquippableCtypeAtExpansion.Any())
-				sb.AppendLine(string.Join(",", eq.EquippableCtypeAtExpansion.Select(id => Constants.GetShipClass(id))));
+				sb.AppendFormat("\n[拡張スロット]  改修LV★{0}から装備可能\n",eq.equippableRequestLevel);
+				if (eq.EquippableStypeAtExpansion.Any())
+					sb.AppendLine(string.Join(", ",eq.EquippableStypeAtExpansion.Select(id => db.ShipTypes[id]?.Name)));
+				if (eq.EquippableCtypeAtExpansion.Any())
+					sb.AppendLine(string.Join(", ", eq.EquippableCtypeAtExpansion.Select(id => Constants.GetShipClass(id))));
+				if (eq.EquippableShipsAtExpansion.Any())
+					sb.AppendLine(string.Join(", ", eq.EquippableShipsAtExpansion.Select(id => db.MasterShips[id]?.NameWithClass ?? "？？")));
 			}
 			return sb.ToString();
 		}
@@ -463,6 +574,21 @@ namespace ElectronicObserver.Window.Dialog
 			}
 		}
 
+
+		private void EquipSlots_MouseDown(object sender, MouseEventArgs e)
+		{
+
+			if (e.Button == System.Windows.Forms.MouseButtons.Right)
+			{
+				int index = EquipSlots.IndexFromPoint(e.Location);
+				if (index >= 0 && eqlist[index] != -1)
+				{
+					Cursor = Cursors.AppStarting;
+					new DialogAlbumMasterShip(eqlist[index]).Show(Owner);
+					Cursor = Cursors.Default;
+				}
+			}
+		}
 
 
 		private void TableParameterMain_CellPaint(object sender, TableLayoutCellPaintEventArgs e)
@@ -835,6 +961,5 @@ namespace ElectronicObserver.Window.Dialog
 				Utility.ErrorReporter.SendErrorReport(ex, "艦船名の Google 検索に失敗しました。");
 			}
 		}
-
 	}
 }

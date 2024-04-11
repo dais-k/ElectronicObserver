@@ -422,6 +422,18 @@ namespace ElectronicObserver.Data
 			EquipmentID == 305 ||       // Ju87C改二(KMX搭載機)
 			EquipmentID == 306;         // Ju87C改二(KMX搭載機/熟練)
 
+		/// <summary> 拡張スロットに載るかどうか</summary>
+		public bool IsExslotEquipped =>
+			CategoryType == EquipmentTypes.ExtraArmor ||
+			CategoryType == EquipmentTypes.AAGun ||
+			CategoryType == EquipmentTypes.DamageControl ||
+			CategoryType == EquipmentTypes.ExtraArmorMedium ||
+			CategoryType == EquipmentTypes.ExtraArmorLarge ||
+			CategoryType == EquipmentTypes.AADirector ||
+			CategoryType == EquipmentTypes.SurfaceShipPersonnel ||
+			CategoryType == EquipmentTypes.Ration ||
+			CategoryType == EquipmentTypes.Supplies;
+
 		public int ID => EquipmentID;
 
 		public override string ToString() => $"[{EquipmentID}] {Name}";
