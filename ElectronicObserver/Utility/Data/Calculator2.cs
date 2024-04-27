@@ -144,7 +144,7 @@ namespace ElectronicObserver.Utility.Data
 					if (bomberCount >= 2 && attackerCount >= 1)
 						dayAttackList.Add(DayAttackKind.CutinBomberBomberAttacker);
 
-					if (bomberCount == 1 && attackerCount >= 1)
+					if (bomberCount >= 1 && attackerCount >= 1)
 						dayAttackList.Add(DayAttackKind.CutinBomberAttacker);
 				}
 
@@ -284,7 +284,7 @@ namespace ElectronicObserver.Utility.Data
 						if (eq.IsNightAttacker)
 							nightAttackerCount++;
 
-						if (eq.IsSwordfish)
+						if (eq.IsSwordfish) // Swordfish系
 							swordfishCount++;
 						break;
 
@@ -352,8 +352,11 @@ namespace ElectronicObserver.Utility.Data
 						nightAttackList.Add(NightAttackKind.CutinNightAirAttackAS);
 					nightFighterCountsub = nightFighterCount - 1;
 					nightFighterCount = nightFighterCount - nightFighterCountsub;
-					if (nightFighterCount == 1 && (nightFighterCountsub + nightAttackerCount + nightBomberCount + swordfishCount + nightCapableBomberCount >= 2))
-						nightAttackList.Add(NightAttackKind.CutinNightAirAttackFOther);
+					if (!nightAttackList.Contains(NightAttackKind.CutinNightAirAttackFFA))
+					{
+						if (nightFighterCount >= 1 && (nightFighterCountsub + nightAttackerCount + nightBomberCount + swordfishCount + nightCapableBomberCount >= 2))
+							nightAttackList.Add(NightAttackKind.CutinNightAirAttackFOther);
+					}
 					nightAttackList.Add(NightAttackKind.NightAirAttack);
 				}
 
@@ -380,8 +383,14 @@ namespace ElectronicObserver.Utility.Data
 				}
 
 				//夜間瑞雲攻撃
-				if (attacker.CanNightZuiunAttack && nightZuiunCount >= 1 && mainGunCount >= 2)
+				if (attacker.CanNightZuiunAttack && mainGunCount >= 2 && nightZuiunCount >= 1)
 				{
+					if (nightZuiunCount >= 2 && surfaceRadarCount >= 1)
+						nightAttackList.Add(NightAttackKind.SpecialNightZuiun2Rader);
+					if (nightZuiunCount >= 2)
+						nightAttackList.Add(NightAttackKind.SpecialNightZuiun2);
+					if (surfaceRadarCount >=1)
+						nightAttackList.Add(NightAttackKind.SpecialNightZuiunRader);
 					nightAttackList.Add(NightAttackKind.SpecialNightZuiun);
 				}
 
@@ -450,6 +459,719 @@ namespace ElectronicObserver.Utility.Data
 			}
 			NightAttackKind[] getNightAtkName = nightAttackList.ToArray();
 			return getNightAtkName;
+		}
+
+		/// <summary>
+		/// 対空カットイン種別を取得します。
+		/// </summary>
+		public static int[] GetAACutinKind(int shipID, int[] slot, int id)
+		{
+			int highangle = 0;
+			int highangle_director = 0;
+			int director = 0;
+			int radar = 0;
+			int aaradar = 0;
+			int maingunl = 0;
+			int maingunl_fcr = 0;
+			int maingunl_356 = 0;
+			int maingun_c3h = 0;
+			int aashell = 0;
+			int aagun_total = 0;
+			int aagun_medium3 = 0;
+			int aagun_medium4 = 0;
+			int aagun_high = 0;
+			int aagun_concentrated = 0;
+			int aagun_pompom = 0;
+			int aagun_25mmz = 0;
+			int aarocket_english = 0;
+			int aarocket_mod = 0;
+			int highangle_musashi = 0;
+			int highangle_america = 0;
+			int highangle_america_gfcs = 0;
+			int highangle_yamato = 0;
+			int radar_gfcs = 0;
+			int radar_mast = 0;
+			int radar_with_range_finder = 0;
+			int highangle_atlanta = 0;
+			int highangle_atlanta_gfcs = 0;
+
+			var aacutinlist = new List<int>();
+			var slotmaster = slot.Select(id => KCDatabase.Instance.MasterEquipments[id]).Where(eq => eq != null).ToArray();
+
+			foreach (var eq in slotmaster)
+			{
+				if (eq.IsHighAngleGun)
+				{
+					highangle++;
+
+					if (eq.IsHighAngleGunWithAADirector)
+						highangle_director++;
+
+					switch (eq.EquipmentID)
+					{
+						case 275:   // 10cm連装高角砲改+増設機銃
+							highangle_musashi++;
+							break;
+						case 313:   // 5inch単装砲 Mk.30改
+							highangle_america++;
+							break;
+						case 308:   // 5inch単装砲 Mk.30改+GFCS Mk.37
+							highangle_america_gfcs++;
+							break;
+						case 362:   // 5inch連装両用砲(集中配備)
+							highangle_atlanta++;
+							break;
+						case 363:   // GFCS Mk.37+5inch連装両用砲(集中配備)
+							highangle_atlanta_gfcs++;
+							break;
+						case 464:   // 10cm連装高角砲群 集中配備
+							highangle_yamato++;
+							break;
+					}
+				}
+				else if (eq.CategoryType == EquipmentTypes.AADirector)
+				{
+					director++;
+				}
+				else if (eq.IsRadar)
+				{
+					radar++;
+
+					if (eq.IsAirRadar)
+						aaradar++;
+
+					if (eq.EquipmentID == 307)   // GFCS Mk.37
+						radar_gfcs++;
+
+					if (eq.AA >= 4)   // 電探装備マスト(13号改+22号電探改四)
+						radar_mast++;
+
+					if (eq.IsRadarWithRangeFinder)
+						radar_with_range_finder++;
+				}
+				else if (eq.CategoryType == EquipmentTypes.MainGunLarge || eq.CategoryType == EquipmentTypes.MainGunLarge2)
+				{
+					maingunl++;
+
+					if (eq.EquipmentID == 300)       // 16inch Mk.I三連装砲改+FCR type284
+						maingunl_fcr++;
+
+					if (eq.EquipmentID == 502)       // 35.6cm連装砲改三(ダズル迷彩仕様)
+						maingunl_356++;
+
+					if (eq.EquipmentID == 503)       // 35.6cm連装砲改四
+						maingunl_356++;
+				}
+				else if (eq.CategoryType == EquipmentTypes.AAShell)
+				{
+					aashell++;
+				}
+				else if (eq.CategoryType == EquipmentTypes.AAGun)
+				{
+					aagun_total++;
+
+					if (eq.EquipmentID == 274)      // 12cm30連装噴進砲改二
+						aarocket_mod++;
+					if (eq.EquipmentID == 191)      // QF 2ポンド8連装ポンポン砲
+						aagun_pompom++;
+					if (eq.EquipmentID == 301)      // 20連装7inch UP Rocket Launchers
+						aarocket_english++;
+					if (eq.EquipmentID == 505)      // 25mm対空機銃増備
+						aagun_25mmz++;
+
+					if (eq.IsConcentratedAAGun)
+						aagun_concentrated++;
+					if (eq.AA >= 6)
+						aagun_high++;
+					if (eq.AA >= 4)
+						aagun_medium4++;
+					if (eq.AA >= 3)
+						aagun_medium3++;
+				}
+				else if (eq.EquipmentID == 529)
+				{
+					maingun_c3h++;
+				}
+			}
+
+			// 固有カットイン
+			switch (KCDatabase.Instance.MasterShips[shipID]?.ShipClass) //艦型別
+			{
+				case 54:    // 秋月型
+					if (highangle >= 2 && radar >= 1)
+						aacutinlist.Add(1);
+					if (highangle >= 1 && radar >= 1)
+						aacutinlist.Add(2);
+					if (highangle >= 2)
+						aacutinlist.Add(3);
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+						aacutinlist.Add(13);
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						aacutinlist.Add(12);
+					if (highangle >= 1 && director >= 1)
+						aacutinlist.Add(9);
+					
+					return aacutinlist.ToArray(); 
+
+				case 91:    // Fletcher級
+					if (highangle_america_gfcs >= 2)
+						aacutinlist.Add(34);
+					if (highangle_america_gfcs >= 1 && highangle_america >= 1)
+						aacutinlist.Add(35);
+					if (highangle_america >= 2 && radar_gfcs >= 1)
+						aacutinlist.Add(36);
+					if (highangle_director >= 2 && aaradar >= 1)
+						aacutinlist.Add(5);
+					if (highangle_america >= 2)
+						aacutinlist.Add(37);
+					if (highangle_director >= 1 && aaradar >= 1)
+						aacutinlist.Add(8);
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1)
+						aacutinlist.Add(13);
+					if (highangle >= 1 && director >= 1 && aaradar >= 1)
+						aacutinlist.Add(7);
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						aacutinlist.Add(12);
+					if (highangle >= 1 && director >= 1)
+						aacutinlist.Add(9);
+					
+					return aacutinlist.ToArray();
+
+				case 99:   // Atlanta級
+					if (highangle_atlanta_gfcs >= 2)
+						aacutinlist.Add(38);
+					if (highangle_atlanta_gfcs >= 1 && highangle_atlanta >= 1)
+						aacutinlist.Add(39);
+					if (highangle_atlanta_gfcs + highangle_atlanta >= 2)
+					{
+						if (radar_gfcs >= 1)
+							aacutinlist.Add(40);
+						aacutinlist.Add(41);
+					}
+					break;
+			}
+
+			switch (shipID) //艦娘個別
+			{
+				case 428:   // 摩耶改二
+					if (highangle >= 1 && aagun_concentrated >= 1)
+					{
+						if (aaradar >= 1)
+							aacutinlist.Add(10);
+
+						aacutinlist.Add(11);
+					}
+					break;
+
+				case 141:   // 五十鈴改二
+					if (highangle >= 1 && aagun_total >= 1 && aaradar >= 1)
+						aacutinlist.Add(14);
+					if (highangle_director >= 2 && aaradar >= 1)
+						aacutinlist.Add(5);
+					if (highangle_director >= 1 && aaradar >= 1)
+						aacutinlist.Add(8);
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+						aacutinlist.Add(13); 
+					if (highangle >= 1 && aagun_total >= 1)
+						aacutinlist.Add(15);
+					if (highangle >= 1 && director >= 1 && aaradar >= 1)
+						aacutinlist.Add(7);
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						aacutinlist.Add(12);
+					if (highangle >= 1 && director >= 1)
+						aacutinlist.Add(9);
+
+					return aacutinlist.ToArray();
+
+				case 470:   // 霞改二乙
+					if (highangle >= 1 && aagun_total >= 1 && aaradar >= 1)
+						aacutinlist.Add(16);
+					if (highangle_director >= 2 && aaradar >= 1)
+						aacutinlist.Add(5);
+					if (highangle_director >= 1 && aaradar >= 1)
+						aacutinlist.Add(8);
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+						aacutinlist.Add(13);
+					if (highangle >= 1 && director >= 1 && aaradar >= 1)
+						aacutinlist.Add(7);
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						aacutinlist.Add(12);
+					if (highangle >= 1 && aagun_total >= 1)
+						aacutinlist.Add(17);
+					if (highangle >= 1 && director >= 1)
+						aacutinlist.Add(9);
+
+					return aacutinlist.ToArray();
+
+				case 622:   // 夕張改二
+					if (highangle >= 1 && aagun_total >= 1 && aaradar >= 1)
+						aacutinlist.Add(16);
+					break;
+
+				case 418:   // 皐月改二
+					if (highangle_director >= 2 && aaradar >= 1)
+						aacutinlist.Add(5);
+					if (highangle_director >= 1 && aaradar >= 1)
+						aacutinlist.Add(8);
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+						aacutinlist.Add(13);
+					if (highangle >= 1 && director >= 1 && aaradar >= 1)
+						aacutinlist.Add(7);
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						aacutinlist.Add(12);
+					if (aagun_concentrated >= 1)
+						aacutinlist.Add(18);
+					if (highangle >= 1 && director >= 1)
+						aacutinlist.Add(9);
+
+					return aacutinlist.ToArray();
+
+				case 487:   // 鬼怒改二
+					if (aagun_concentrated >= 1 && (highangle - highangle_director >= 1))
+						aacutinlist.Add(19);
+					if (highangle_director >= 2 && aaradar >= 1)
+						aacutinlist.Add(5);
+					if (highangle_director >= 1 && aaradar >= 1)
+						aacutinlist.Add(8);
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+						aacutinlist.Add(13);
+					if (highangle >= 1 && director >= 1 && aaradar >= 1)
+						aacutinlist.Add(7);
+					if (aagun_concentrated >= 1)
+						aacutinlist.Add(20);
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						aacutinlist.Add(12);
+					if (highangle >= 1 && director >= 1)
+						aacutinlist.Add(9);
+
+					return aacutinlist.ToArray();
+
+				case 488:   // 由良改二
+					if (highangle >= 1 && aaradar >= 1)
+						aacutinlist.Add(21);
+					break;
+
+				case 548:   // 文月改二
+					if (highangle_director >= 2 && aaradar >= 1)
+						aacutinlist.Add(5);
+					if (highangle_director >= 1 && aaradar >= 1)
+						aacutinlist.Add(8);
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+						aacutinlist.Add(13);
+					if (highangle >= 1 && director >= 1 && aaradar >= 1)
+						aacutinlist.Add(7);
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						aacutinlist.Add(12);
+					if (aagun_concentrated >= 1)
+						aacutinlist.Add(22);
+					if (highangle >= 1 && director >= 1)
+						aacutinlist.Add(9);
+
+					return aacutinlist.ToArray();
+
+				case 539:   // UIT-25
+				case 530:   // 伊504
+					if (highangle_director >= 2 && aaradar >= 1)
+						aacutinlist.Add(5);
+					if (highangle_director >= 1 && aaradar >= 1)
+						aacutinlist.Add(8);
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+						aacutinlist.Add(13);
+					if (highangle >= 1 && director >= 1 && aaradar >= 1)
+						aacutinlist.Add(7);
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						aacutinlist.Add(12);
+					if (highangle >= 1 && director >= 1)
+						aacutinlist.Add(9);
+					if (aagun_medium3 >= 1)
+						aacutinlist.Add(23);
+
+					return aacutinlist.ToArray();
+					
+				case 477:   // 天龍改二
+					if (highangle_director >= 2 && aaradar >= 1)
+						aacutinlist.Add(5);
+					if (highangle >= 3)
+						aacutinlist.Add(30);
+					if (highangle_director >= 1 && aaradar >= 1)
+						aacutinlist.Add(8);
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+						aacutinlist.Add(13);
+					if (highangle >= 1 && director >= 1 && aaradar >= 1)
+						aacutinlist.Add(7);
+					if (highangle >= 1 && aagun_medium3 >= 1)
+						aacutinlist.Add(24);
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						aacutinlist.Add(12);
+					if (highangle >= 2)
+						aacutinlist.Add(31);
+					if (highangle >= 1 && director >= 1)
+						aacutinlist.Add(9);
+
+					return aacutinlist.ToArray();
+
+				case 478:   // 龍田改二
+					if (highangle_director >= 2 && aaradar >= 1)
+						aacutinlist.Add(5);
+					if (highangle >= 3)
+						aacutinlist.Add(8);
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+						aacutinlist.Add(13);
+					if (highangle >= 1 && director >= 1 && aaradar >= 1)
+						aacutinlist.Add(7);
+					if (highangle >= 1 && aagun_medium3 >= 1)
+						aacutinlist.Add(24);
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						aacutinlist.Add(12);
+					if (highangle >= 1 && director >= 1)
+						aacutinlist.Add(9);
+
+					return aacutinlist.ToArray();
+
+				case 82:    // 伊勢改
+				case 88:    // 日向改
+				case 553:   // 伊勢改二
+				case 554:   // 日向改二
+					if (aarocket_mod >= 1 && aaradar >= 1 && aashell >= 1)
+						aacutinlist.Add(25);
+					if (maingunl >= 1 && aashell >= 1 && director >= 1 && aaradar >= 1) //戦艦系汎用
+						aacutinlist.Add(4);
+					if (highangle_director >= 2 && aaradar >= 1)
+						aacutinlist.Add(5);
+					if (maingunl >= 1 && aashell >= 1 && director >= 1) //戦艦系汎用
+						aacutinlist.Add(6);
+					if (aarocket_mod >= 1 && aaradar >= 1)
+						aacutinlist.Add(28);
+					if (highangle_director >= 1 && aaradar >= 1)
+						aacutinlist.Add(8);
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+						aacutinlist.Add(13);
+					if (highangle >= 1 && director >= 1 && aaradar >= 1)
+						aacutinlist.Add(7);
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						aacutinlist.Add(12);
+					if (highangle >= 1 && director >= 1)
+						aacutinlist.Add(9);
+
+					return aacutinlist.ToArray();
+					
+				case 321:   //大淀改
+					if (aaradar >= 1 && highangle_musashi >= 1 && aarocket_mod >= 1)
+						aacutinlist.Add(27);
+					break;
+
+				case 557:   // 磯風乙改
+				case 558:   // 浜風乙改
+					if (highangle >= 1 && aaradar >= 1)
+						aacutinlist.Add(29);
+					break;
+
+				case 148:   // 武蔵改
+					if (maingunl >= 1 && aashell >= 1 && director >= 1 && aaradar >= 1) //戦艦系汎用
+						aacutinlist.Add(4);
+					if (highangle_director >= 2 && aaradar >= 1)
+						aacutinlist.Add(5);
+					if (maingunl >= 1 && aashell >= 1 && director >= 1) //戦艦系汎用
+						aacutinlist.Add(6); 
+					if (aarocket_mod >= 1 && aaradar >= 1)
+						aacutinlist.Add(28);
+					if (highangle_director >= 1 && aaradar >= 1)
+						aacutinlist.Add(8);
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+						aacutinlist.Add(13);
+					if (highangle >= 1 && director >= 1 && aaradar >= 1)
+						aacutinlist.Add(7);
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						aacutinlist.Add(12);
+					if (highangle >= 1 && director >= 1)
+						aacutinlist.Add(9);
+
+					return aacutinlist.ToArray();
+
+				case 546:   // 武蔵改二
+					if (radar_with_range_finder >= 1 && highangle_yamato >= 2 && aagun_high >= 1)
+						aacutinlist.Add(42); //42:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備*2、対空機銃
+					if (radar_with_range_finder >= 1 && highangle_yamato >= 2)
+						aacutinlist.Add(43); //43:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備*2
+					if (radar_with_range_finder >= 1 && highangle_yamato >= 1 && aagun_high >= 1)
+						aacutinlist.Add(44); //44:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備、対空機銃
+					if (highangle_musashi >= 1 && aaradar >= 1)
+						aacutinlist.Add(26);
+					if (maingunl >= 1 && aashell >= 1 && director >= 1 && aaradar >= 1) //戦艦系汎用
+						aacutinlist.Add(4);
+					if (radar_with_range_finder >= 1 && highangle_yamato >= 1)
+						aacutinlist.Add(45); //45:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備
+					if (highangle_director >= 2 && aaradar >= 1)
+						aacutinlist.Add(5);
+					if (maingunl >= 1 && aashell >= 1 && director >= 1) //戦艦系汎用
+						aacutinlist.Add(6);
+					if (aarocket_mod >= 1 && aaradar >= 1)
+						aacutinlist.Add(28);
+					if (highangle_director >= 1 && aaradar >= 1)
+						aacutinlist.Add(8);
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+						aacutinlist.Add(13);
+					if (highangle >= 1 && director >= 1 && aaradar >= 1)
+						aacutinlist.Add(7);
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						aacutinlist.Add(12);
+					if (highangle >= 1 && director >= 1)
+						aacutinlist.Add(9);
+
+					return aacutinlist.ToArray();
+
+				case 911:   // 大和改二
+				case 916:   // 大和改二重
+					if (radar_with_range_finder >= 1 && highangle_yamato >= 2 && aagun_high >= 1)
+						aacutinlist.Add(42); //42:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備*2、対空機銃
+					if (radar_with_range_finder >= 1 && highangle_yamato >= 2)
+						aacutinlist.Add(43); //43:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備*2
+					if (radar_with_range_finder >= 1 && highangle_yamato >= 1 && aagun_high >= 1)
+						aacutinlist.Add(44); //44:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備、対空機銃
+					if (highangle_musashi >= 1 && aaradar >= 1)
+						aacutinlist.Add(26);
+					if (maingunl >= 1 && aashell >= 1 && director >= 1 && aaradar >= 1) //戦艦系汎用
+						aacutinlist.Add(4);
+					if (radar_with_range_finder >= 1 && highangle_yamato >= 1)
+						aacutinlist.Add(45); //45:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備
+					if (highangle_director >= 2 && aaradar >= 1)
+						aacutinlist.Add(5);
+					if (maingunl >= 1 && aashell >= 1 && director >= 1) //戦艦系汎用
+						aacutinlist.Add(6);
+					if (highangle_director >= 1 && aaradar >= 1)
+						aacutinlist.Add(8);
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+						aacutinlist.Add(13);
+					if (highangle >= 1 && director >= 1 && aaradar >= 1)
+						aacutinlist.Add(7);
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						aacutinlist.Add(12);
+					if (highangle >= 1 && director >= 1)
+						aacutinlist.Add(9);
+
+					return aacutinlist.ToArray();
+
+				case 593:   // 榛名改二乙
+					if (maingunl_356 >= 1 && aagun_concentrated >= 1 && aaradar >= 1)
+						aacutinlist.Add(46);
+					if (maingunl >= 1 && aashell >= 1 && director >= 1 && aaradar >= 1) //戦艦系汎用
+						aacutinlist.Add(4);
+					if (highangle_director >= 2 && aaradar >= 1)
+						aacutinlist.Add(5);
+					if (maingunl >= 1 && aashell >= 1 && director >= 1) //戦艦系汎用
+						aacutinlist.Add(6);
+					if (highangle_director >= 1 && aaradar >= 1)
+						aacutinlist.Add(8);
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+						aacutinlist.Add(13);
+					if (highangle >= 1 && director >= 1 && aaradar >= 1)
+						aacutinlist.Add(7); 
+					if (aarocket_english >= 2)
+						aacutinlist.Add(32);
+					if (aagun_pompom >= 1 && (maingunl_fcr >= 1 || aarocket_english >= 1))
+						aacutinlist.Add(32);
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						aacutinlist.Add(12);
+					if (highangle >= 1 && director >= 1)
+						aacutinlist.Add(9);
+
+					return aacutinlist.ToArray();
+
+				case 149:   // 金剛改二 (英国艦+金剛型改二)
+				case 591:   // 金剛改二丙
+				case 150:   // 比叡改二
+				case 592:   // 比叡改二丙
+				case 151:   // 榛名改二
+				case 152:   // 霧島改二
+				case 519:   // Jervis
+				case 394:   // Jervis改
+				case 571:   // Nelson
+				case 576:   // Nelson改
+				case 439:   // Warspite
+				case 364:   // Warspite改
+				case 515:   // Ark Royal
+				case 393:   // Ark Royal改
+				case 520:   // Janus
+				case 893:   // Janus改
+				case 514:   // Sheffield
+				case 705:   // Sheffield改
+				case 885:   // Victorious
+				case 713:   // Victorious改
+					if (maingunl >= 1 && aashell >= 1 && director >= 1 && aaradar >= 1) //戦艦系汎用
+						aacutinlist.Add(4);
+					if (highangle_director >= 2 && aaradar >= 1)
+						aacutinlist.Add(5);
+					if (maingunl >= 1 && aashell >= 1 && director >= 1) //戦艦系汎用
+						aacutinlist.Add(6);
+					if (highangle_director >= 1 && aaradar >= 1)
+						aacutinlist.Add(8);
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+						aacutinlist.Add(13);
+					if (highangle >= 1 && director >= 1 && aaradar >= 1)
+						aacutinlist.Add(7);
+					if (aarocket_english >= 2)
+						aacutinlist.Add(32);
+					if (aagun_pompom >= 1 && (maingunl_fcr >= 1 || aarocket_english >= 1))
+						aacutinlist.Add(32);
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						aacutinlist.Add(12);
+					if (highangle >= 1 && director >= 1)
+						aacutinlist.Add(9);
+
+					return aacutinlist.ToArray();
+
+				case 579:   // Gotland改
+				case 630:   // Gotland andra
+					if (highangle_director >= 2 && aaradar >= 1)
+						aacutinlist.Add(5);
+					if (highangle >= 1 && aagun_medium4 >= 1)
+						aacutinlist.Add(33);
+					if (highangle >= 3)
+						aacutinlist.Add(30);
+					if (highangle_director >= 1 && aaradar >= 1)
+						aacutinlist.Add(8);
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+						aacutinlist.Add(13);
+					if (highangle >= 1 && director >= 1 && aaradar >= 1)
+						aacutinlist.Add(7);
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						aacutinlist.Add(12);
+					if (highangle >= 1 && director >= 1)
+						aacutinlist.Add(9);
+
+					return aacutinlist.ToArray();
+
+				case 961:   // 時雨改三
+				case 975:   // 春雨改二
+				case 145:   // 時雨改二
+				case 497:   // 白露改二
+				case 498:   // 村雨改二
+					if (highangle_director >= 2 && aaradar >= 1)
+						aacutinlist.Add(5);
+					if (highangle_director >= 1 && aaradar >= 1)
+						aacutinlist.Add(8);
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+						aacutinlist.Add(13);
+					if (highangle >= 1 && director >= 1 && aaradar >= 1)
+						aacutinlist.Add(7);
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						aacutinlist.Add(12);
+					if ((KCDatabase.Instance.Ships[id].AABase > 70) && (maingun_c3h >= 2 || (maingun_c3h >= 1 && (aagun_25mmz + radar_mast >= 1))))
+						aacutinlist.Add(47);
+					if (highangle >= 1 && director >= 1)
+						aacutinlist.Add(9);
+
+					return aacutinlist.ToArray();
+
+			}
+
+			//以下汎用カットイン
+			if (maingunl >= 1 && aashell >= 1 && director >= 1 && aaradar >= 1) //戦艦系汎用
+				aacutinlist.Add(4);
+			if (highangle_director >= 2 && aaradar >= 1)
+				aacutinlist.Add(5);
+			if (maingunl >= 1 && aashell >= 1 && director >= 1) //戦艦系汎用
+				aacutinlist.Add(6);
+			if (highangle_director >= 1 && aaradar >= 1)
+				aacutinlist.Add(8);
+			if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+				aacutinlist.Add(13);
+			if (highangle >= 1 && director >= 1 && aaradar >= 1)
+				aacutinlist.Add(7);
+			if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+				aacutinlist.Add(12);
+			if (highangle >= 1 && director >= 1)
+				aacutinlist.Add(9);
+
+			return aacutinlist.ToArray();
+		}
+
+
+		/// <summary>
+		/// 個別の輸送作戦成功時の輸送量(減少TP)を求めます。
+		/// (S勝利時のもの。A勝利時は int( value * 0.7 ) )
+		/// </summary>
+		/// <param name="ship">対象の艦娘。</param>
+		/// <returns>減少TP。</returns>
+		public static int GetTPDamage(ShipData ship)
+		{
+			int tp = 0;
+
+			// 装備ボーナス
+			foreach (var eq in ship.AllSlotInstanceMaster.Where(q => q != null))
+			{
+
+				switch (eq.CategoryType)
+				{
+
+					case EquipmentTypes.LandingCraft:
+						tp += 8;
+						break;
+
+					case EquipmentTypes.TransportContainer:
+						tp += 5;
+						break;
+
+					case EquipmentTypes.Ration:
+						tp += 1;
+						break;
+
+					case EquipmentTypes.SpecialAmphibiousTank:
+						tp += 2;
+						break;
+				}
+			}
+
+			// 艦種ボーナス
+			switch (ship.MasterShip.ShipType)
+			{
+
+				case ShipTypes.Destroyer:
+					tp += 5;
+					break;
+
+				case ShipTypes.LightCruiser:
+					tp += 2;
+					if (ship.ShipID == 487) // 鬼怒改二
+						tp += 8;
+					break;
+
+				case ShipTypes.AviationCruiser:
+					tp += 4;
+					break;
+
+				case ShipTypes.AviationBattleship:
+					tp += 7;
+					break;
+
+				case ShipTypes.SeaplaneTender:
+					tp += 9;
+					break;
+
+				case ShipTypes.AmphibiousAssaultShip:
+					tp += 12;
+					break;
+
+				case ShipTypes.SubmarineTender:
+					tp += 7;
+					break;
+
+				case ShipTypes.TrainingCruiser:
+					tp += 6;
+					break;
+
+				case ShipTypes.FleetOiler:
+					tp += 15;
+					break;
+
+				case ShipTypes.SubmarineAircraftCarrier:
+					tp += 1;
+					break;
+			}
+
+			if (ship.HPRate < 0.25)
+				return 0;
+			return tp;
 		}
 	}
 }

@@ -261,34 +261,16 @@ namespace ElectronicObserver.Utility.Data
 
 					//夜間瑞雲攻撃
 					case NightAttackKind.SpecialNightZuiun:
-						{
-							double zuiunCountHosei = 0;
-							double raderHosei = 0;
-
-							int nightZuiunCount = allSlotInstanceMaster.Count(eq => eq?.IsNightZuiun ?? false);
-							int surfaceRaderCount = allSlotInstanceMaster.Count(eq => eq?.IsSurfaceRadar ?? false);
-
-							if (nightZuiunCount >= 2)
-							{
-								zuiunCountHosei += 0.12;
-							}
-							else if (nightZuiunCount >= 1)
-							{
-								zuiunCountHosei += 0.04;
-							}
-							else
-							{
-								//ここにきている時点で0はありえないのだが、一応…
-								zuiunCountHosei = 0;
-							}
-
-							if (surfaceRaderCount >= 1)
-							{
-								raderHosei += 0.04;
-							}
-
-							basepower *= (1.2 + zuiunCountHosei + raderHosei);
-						}
+						basepower *= 1.24;
+						break;
+					case NightAttackKind.SpecialNightZuiunRader:
+						basepower *= 1.28;
+						break;
+					case NightAttackKind.SpecialNightZuiun2:
+						basepower *= 1.32;
+						break;
+					case NightAttackKind.SpecialNightZuiun2Rader:
+						basepower *= 1.36;
 						break;
 				}
 				basepower += GetLightCruiserDamageBonus(masterShip, allSlotMaster) + GetItalianDamageBonus(shipID, allSlotMaster);

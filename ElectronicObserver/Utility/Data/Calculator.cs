@@ -99,6 +99,8 @@ namespace ElectronicObserver.Utility.Data
 			//====================
 			double levelBonus = LevelBonus.ContainsKey(category) ? LevelBonus[category] : 0;
 			double interceptorBonus = 0;
+			if (equipmentID != 60 && equipmentID != 154 && equipmentID != 219 && equipmentID != 447 && equipmentID != 487)
+				levelBonus = 0;
 
 			if (category == EquipmentTypes.LandBasedAttacker || category == EquipmentTypes.HeavyBomber)
 			{
@@ -1236,9 +1238,16 @@ namespace ElectronicObserver.Utility.Data
 					return NightAttackKind.CutinTorpedoTorpedo;
 
 				//夜間瑞雲攻撃
-				if (nightZuiunCount >= 1 && mainGunCount >= 2 && attacker.CanNightZuiunAttack)
+				if (attacker.CanNightZuiunAttack && mainGunCount >= 2 && nightZuiunCount >= 1)
 				{
-					return NightAttackKind.SpecialNightZuiun;
+					if (nightZuiunCount >= 2 && surfaceRadarCount >= 1)
+						return NightAttackKind.SpecialNightZuiun2Rader;
+					if (nightZuiunCount >= 2)
+						return NightAttackKind.SpecialNightZuiun2;
+					if (surfaceRadarCount >= 1)
+						return NightAttackKind.SpecialNightZuiunRader;
+					else
+						return NightAttackKind.SpecialNightZuiun;
 				}
 
 				// 汎用カットイン
@@ -1420,12 +1429,15 @@ namespace ElectronicObserver.Utility.Data
 			int maingunl = 0;
 			int maingunl_fcr = 0;
 			int maingunl_356 = 0;
+			int maingun_c3h = 0;
 			int aashell = 0;
 			int aagun_total = 0;
-			int aagun_medium = 0;
+			int aagun_medium3 = 0;
+			int aagun_medium4 = 0;
 			int aagun_high = 0;
 			int aagun_concentrated = 0;
 			int aagun_pompom = 0;
+			int aagun_25mmz = 0;
 			int aarocket_english = 0;
 			int aarocket_mod = 0;
 			int highangle_musashi = 0;
@@ -1433,6 +1445,7 @@ namespace ElectronicObserver.Utility.Data
 			int highangle_america_gfcs = 0;
 			int highangle_yamato = 0;
 			int radar_gfcs = 0;
+			int radar_mast = 0;
 			int radar_with_range_finder = 0;
 			int highangle_atlanta = 0;
 			int highangle_atlanta_gfcs = 0;
@@ -1484,6 +1497,9 @@ namespace ElectronicObserver.Utility.Data
 					if (eq.EquipmentID == 307)   // GFCS Mk.37
 						radar_gfcs++;
 
+					if (eq.AA >= 4)   // 電探装備マスト(13号改+22号電探改四)
+						radar_mast++;
+
 					if (eq.IsRadarWithRangeFinder)
 						radar_with_range_finder++;
 				}
@@ -1514,13 +1530,21 @@ namespace ElectronicObserver.Utility.Data
 						aagun_pompom++;
 					if (eq.EquipmentID == 301)      // 20連装7inch UP Rocket Launchers
 						aarocket_english++;
+					if (eq.EquipmentID == 505)      // 25mm対空機銃増備
+						aagun_25mmz++;
 
 					if (eq.IsConcentratedAAGun)
 						aagun_concentrated++;
-					else if (eq.AA >= 6)
+					if (eq.AA >= 6)
 						aagun_high++;
-					else if (eq.AA >= 3)
-						aagun_medium++;
+					if (eq.AA >= 4)
+						aagun_medium4++;
+					if (eq.AA >= 3)
+						aagun_medium3++;
+				}
+				else if (eq.EquipmentID == 529)
+				{
+					maingun_c3h++;
 				}
 			}
 
@@ -1529,17 +1553,17 @@ namespace ElectronicObserver.Utility.Data
 			{
 				case 54:    // 秋月型
 					if (highangle >= 2 && radar >= 1)
-					{
 						return 1;
-					}
 					if (highangle >= 1 && radar >= 1)
-					{
 						return 2;
-					}
 					if (highangle >= 2)
-					{
 						return 3;
-					}
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+						return 13;
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						return 12;
+					if (highangle >= 1 && director >= 1)
+						return 9; 
 					break;
 
 				case 91:    // Fletcher級
@@ -1547,12 +1571,22 @@ namespace ElectronicObserver.Utility.Data
 						return 34;
 					if (highangle_america_gfcs >= 1 && highangle_america >= 1)
 						return 35;
+					if (highangle_america >= 2 && radar_gfcs >= 1)
+						return 36;
+					if (highangle_director >= 2 && aaradar >= 1)
+						return 5;
 					if (highangle_america >= 2)
-					{
-						if (radar_gfcs >= 1)
-							return 36;
 						return 37;
-					}
+					if (highangle_director >= 1 && aaradar >= 1)
+						return 8;
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1)
+						return 13;
+					if (highangle >= 1 && director >= 1 && aaradar >= 1)
+						return 7;
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						return 12;
+					if (highangle >= 1 && director >= 1)
+						return 9;
 					break;
 
 				case 99:   // Atlanta級
@@ -1582,23 +1616,41 @@ namespace ElectronicObserver.Utility.Data
 					break;
 
 				case 141:   // 五十鈴改二
+					if (highangle >= 1 && aagun_total >= 1 && aaradar >= 1)
+						return 14;
+					if (highangle_director >= 2 && aaradar >= 1)
+						return 5;
+					if (highangle_director >= 1 && aaradar >= 1)
+						return 8;
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+						return 13;
 					if (highangle >= 1 && aagun_total >= 1)
-					{
-						if (aaradar >= 1)
-							return 14;
-						else
-							return 15;
-					}
+						return 15;
+					if (highangle >= 1 && director >= 1 && aaradar >= 1)
+						return 7;
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						return 12;
+					if (highangle >= 1 && director >= 1)
+						return 9; 
 					break;
 
 				case 470:   // 霞改二乙
+					if (highangle >= 1 && aagun_total >= 1 && aaradar >= 1)
+						return 16;
+					if (highangle_director >= 2 && aaradar >= 1)
+						return 5;
+					if (highangle_director >= 1 && aaradar >= 1)
+						return 8;
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+						return 13;
+					if (highangle >= 1 && director >= 1 && aaradar >= 1)
+						return 7;
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						return 12;
 					if (highangle >= 1 && aagun_total >= 1)
-					{
-						if (aaradar >= 1)
-							return 16;
-						else
-							return 17;
-					}
+						return 17;
+					if (highangle >= 1 && director >= 1)
+						return 9;
 					break;
 
 				case 622:   // 夕張改二
@@ -1607,17 +1659,39 @@ namespace ElectronicObserver.Utility.Data
 					break;
 
 				case 418:   // 皐月改二
+					if (highangle_director >= 2 && aaradar >= 1)
+						return 5;
+					if (highangle_director >= 1 && aaradar >= 1)
+						return 8;
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+						return 13;
+					if (highangle >= 1 && director >= 1 && aaradar >= 1)
+						return 7;
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						return 12;
 					if (aagun_concentrated >= 1)
 						return 18;
+					if (highangle >= 1 && director >= 1)
+						return 9; 
 					break;
 
 				case 487:   // 鬼怒改二
+					if (aagun_concentrated >= 1 && (highangle - highangle_director >= 1))
+						return 19;
+					if (highangle_director >= 2 && aaradar >= 1)
+						return 5;
+					if (highangle_director >= 1 && aaradar >= 1)
+						return 8;
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+						return 13;
+					if (highangle >= 1 && director >= 1 && aaradar >= 1)
+						return 7;
 					if (aagun_concentrated >= 1)
-					{
-						if (highangle - highangle_director >= 1)
-							return 19;
 						return 20;
-					}
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						return 12;
+					if (highangle >= 1 && director >= 1)
+						return 9;
 					break;
 
 				case 488:   // 由良改二
@@ -1626,54 +1700,128 @@ namespace ElectronicObserver.Utility.Data
 					break;
 
 				case 548:   // 文月改二
+					if (highangle_director >= 2 && aaradar >= 1)
+						return 5;
+					if (highangle_director >= 1 && aaradar >= 1)
+						return 8;
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+						return 13;
+					if (highangle >= 1 && director >= 1 && aaradar >= 1)
+						return 7;
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						return 12;
 					if (aagun_concentrated >= 1)
 						return 22;
+					if (highangle >= 1 && director >= 1)
+						return 9; 
 					break;
 
 				case 539:   // UIT-25
 				case 530:   // 伊504
-					if (aagun_medium >= 1)
-						return 23;
+					if (highangle_director >= 2 && aaradar >= 1)
+						return 5;
+					if (highangle_director >= 1 && aaradar >= 1)
+						return 8;
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+						return 13;
+					if (highangle >= 1 && director >= 1 && aaradar >= 1)
+						return 7;
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						return 12;
+					if (highangle >= 1 && director >= 1)
+						return 9;
+					if (aagun_medium3 >= 1)
+						return 23; 
 					break;
 
 				case 477:   // 天龍改二
+					if (highangle_director >= 2 && aaradar >= 1)
+						return 5;
 					if (highangle >= 3)
 						return 30;
+					if (highangle_director >= 1 && aaradar >= 1)
+						return 8;
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+						return 13;
+					if (highangle >= 1 && director >= 1 && aaradar >= 1)
+						return 7;
+					if (highangle >= 1 && aagun_medium3 >= 1)
+						return 24;
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						return 12;
 					if (highangle >= 2)
 						return 31;
-					if (highangle >= 1 && aagun_medium >= 1)
-						return 24;
+					if (highangle >= 1 && director >= 1)
+						return 9;
 					break;
 
 				case 478:   // 龍田改二
-					if (highangle >= 1 && aagun_medium >= 1)
+					if (highangle_director >= 2 && aaradar >= 1)
+						return 5;
+					if (highangle >= 3)
+						return 8;
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+						return 13;
+					if (highangle >= 1 && director >= 1 && aaradar >= 1)
+						return 7;
+					if (highangle >= 1 && aagun_medium3 >= 1)
 						return 24;
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						return 12;
+					if (highangle >= 1 && director >= 1)
+						return 9; 
 					break;
 
 				case 82:    // 伊勢改
 				case 88:    // 日向改
 				case 553:   // 伊勢改二
 				case 554:   // 日向改二
+					if (aarocket_mod >= 1 && aaradar >= 1 && aashell >= 1)
+						return 25;
+					if (maingunl >= 1 && aashell >= 1 && director >= 1 && aaradar >= 1) //戦艦系汎用
+						return 4;
+					if (highangle_director >= 2 && aaradar >= 1)
+						return 5;
+					if (maingunl >= 1 && aashell >= 1 && director >= 1) //戦艦系汎用
+						return 6;
 					if (aarocket_mod >= 1 && aaradar >= 1)
-					{
-						if (aashell >= 1)
-							return 25;
-
 						return 28;
-					}
+					if (highangle_director >= 1 && aaradar >= 1)
+						return 8;
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+						return 13;
+					if (highangle >= 1 && director >= 1 && aaradar >= 1)
+						return 7;
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						return 12;
+					if (highangle >= 1 && director >= 1)
+						return 9;
 					break;
 
 				case 321:   //大淀改
 					if (aaradar >= 1 && highangle_musashi >= 1 && aarocket_mod >= 1)
-					{
 						return 27;
-					}
 					break;
 
 				case 148:   // 武蔵改
+					if (maingunl >= 1 && aashell >= 1 && director >= 1 && aaradar >= 1) //戦艦系汎用
+						return 4;
+					if (highangle_director >= 2 && aaradar >= 1)
+						return 5;
+					if (maingunl >= 1 && aashell >= 1 && director >= 1) //戦艦系汎用
+						return 6;
 					if (aarocket_mod >= 1 && aaradar >= 1)
 						return 28;
-					break;
+					if (highangle_director >= 1 && aaradar >= 1)
+						return 8;
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+						return 13;
+					if (highangle >= 1 && director >= 1 && aaradar >= 1)
+						return 7;
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						return 12;
+					if (highangle >= 1 && director >= 1)
+						return 9; break;
 
 				case 557:   // 磯風乙改
 				case 558:   // 浜風乙改
@@ -1682,73 +1830,89 @@ namespace ElectronicObserver.Utility.Data
 					break;
 
 				case 546:   // 武蔵改二
+					if (radar_with_range_finder >= 1 && highangle_yamato >= 2 && aagun_high >= 1)
+						return 42; //42:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備*2、対空機銃
+					if (radar_with_range_finder >= 1 && highangle_yamato >= 2)
+						return 43; //43:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備*2
+					if (radar_with_range_finder >= 1 && highangle_yamato >= 1 && aagun_high >= 1)
+						return 44; //44:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備、対空機銃
 					if (highangle_musashi >= 1 && aaradar >= 1)
 						return 26;
+					if (maingunl >= 1 && aashell >= 1 && director >= 1 && aaradar >= 1) //戦艦系汎用
+						return 4;
+					if (radar_with_range_finder >= 1 && highangle_yamato >= 1)
+						return 45; //45:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備
+					if (highangle_director >= 2 && aaradar >= 1)
+						return 5;
+					if (maingunl >= 1 && aashell >= 1 && director >= 1) //戦艦系汎用
+						return 6;
 					if (aarocket_mod >= 1 && aaradar >= 1)
 						return 28;
-
-					if (radar_with_range_finder >= 1)
-					{
-						if(highangle_yamato >= 2)
-						{
-							if (aagun_high >= 1)
-							{
-								//42:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備*2、対空機銃
-								return 42;
-							}
-							//43:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備*2
-							return 43;
-						}
-						if (highangle_yamato >= 1)
-						{
-							if (aagun_high >= 1)
-							{
-								//44:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備、対空機銃
-								return 44;
-							}
-							//45:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備
-							return 45;
-						}
-					}
+					if (highangle_director >= 1 && aaradar >= 1)
+						return 8;
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+						return 13;
+					if (highangle >= 1 && director >= 1 && aaradar >= 1)
+						return 7;
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						return 12;
+					if (highangle >= 1 && director >= 1)
+						return 9;
 					break;
 
 				case 911:   // 大和改二
 				case 916:   // 大和改二重
+					if (radar_with_range_finder >= 1 && highangle_yamato >= 2 && aagun_high >= 1)
+						return 42; //42:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備*2、対空機銃
+					if (radar_with_range_finder >= 1 && highangle_yamato >= 2)
+						return 43; //43:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備*2
+					if (radar_with_range_finder >= 1 && highangle_yamato >= 1 && aagun_high >= 1)
+						return 44; //44:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備、対空機銃
 					if (highangle_musashi >= 1 && aaradar >= 1)
 						return 26;
-
-					if (radar_with_range_finder >= 1)
-					{
-						if (highangle_yamato >= 2)
-						{
-							if (aagun_high >= 1)
-							{
-								//42:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備*2、対空機銃
-								return 42;
-							}
-							//43:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備*2
-							return 43;
-						}
-						if (highangle_yamato >= 1)
-						{
-							if (aagun_high >= 1)
-							{
-								//44:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備、対空機銃
-								return 44;
-							}
-							//45:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備
-							return 45;
-						}
-					}
+					if (maingunl >= 1 && aashell >= 1 && director >= 1 && aaradar >= 1) //戦艦系汎用
+						return 4;
+					if (radar_with_range_finder >= 1 && highangle_yamato >= 1)
+						return 45; //45:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備
+					if (highangle_director >= 2 && aaradar >= 1)
+						return 5;
+					if (maingunl >= 1 && aashell >= 1 && director >= 1) //戦艦系汎用
+						return 6;
+					if (highangle_director >= 1 && aaradar >= 1)
+						return 8;
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+						return 13;
+					if (highangle >= 1 && director >= 1 && aaradar >= 1)
+						return 7;
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						return 12;
+					if (highangle >= 1 && director >= 1)
+						return 9;
 					break;
 
 				case 593:   // 榛名改二乙
 					if (maingunl_356 >= 1 && aagun_concentrated >= 1 && aaradar >= 1)
 						return 46;
+					if (maingunl >= 1 && aashell >= 1 && director >= 1 && aaradar >= 1) //戦艦系汎用
+						return 4;
+					if (highangle_director >= 2 && aaradar >= 1)
+						return 5;
+					if (maingunl >= 1 && aashell >= 1 && director >= 1) //戦艦系汎用
+						return 6;
+					if (highangle_director >= 1 && aaradar >= 1)
+						return 8;
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+						return 13;
+					if (highangle >= 1 && director >= 1 && aaradar >= 1)
+						return 7;
 					if (aarocket_english >= 2)
 						return 32;
 					if (aagun_pompom >= 1 && (maingunl_fcr >= 1 || aarocket_english >= 1))
 						return 32;
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						return 12;
+					if (highangle >= 1 && director >= 1)
+						return 9;
 					break;
 
 				case 149:   // 金剛改二 (英国艦+金剛型改二)
@@ -1771,62 +1935,88 @@ namespace ElectronicObserver.Utility.Data
 				case 705:   // Sheffield改
 				case 885:   // Victorious
 				case 713:   // Victorious改
+					if (maingunl >= 1 && aashell >= 1 && director >= 1 && aaradar >= 1) //戦艦系汎用
+						return 4;
+					if (highangle_director >= 2 && aaradar >= 1)
+						return 5;
+					if (maingunl >= 1 && aashell >= 1 && director >= 1) //戦艦系汎用
+						return 6;
+					if (highangle_director >= 1 && aaradar >= 1)
+						return 8;
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+						return 13;
+					if (highangle >= 1 && director >= 1 && aaradar >= 1)
+						return 7;
 					if (aarocket_english >= 2)
 						return 32;
 					if (aagun_pompom >= 1 && (maingunl_fcr >= 1 || aarocket_english >= 1))
 						return 32;
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						return 12;
+					if (highangle >= 1 && director >= 1)
+						return 9; 
 					break;
 
 				case 579:   // Gotland改
 				case 630:   // Gotland andra
+					if (highangle_director >= 2 && aaradar >= 1)
+						return 5;
+					if (highangle >= 1 && aagun_medium4 >= 1)
+						return 33;
 					if (highangle >= 3)
 						return 30;
-					if (highangle >= 1 && aagun_medium >= 1)
-						return 33;
+					if (highangle_director >= 1 && aaradar >= 1)
+						return 8;
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+						return 13;
+					if (highangle >= 1 && director >= 1 && aaradar >= 1)
+						return 7;
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						return 12;
+					if (highangle >= 1 && director >= 1)
+						return 9; 
+					break;
+
+				case 961:	// 時雨改三
+				case 975:	// 春雨改二
+				case 145:	// 時雨改二
+				case 497:	// 白露改二
+				case 498:   // 村雨改二
+					if (highangle_director >= 2 && aaradar >= 1)
+						return 5;
+					if (highangle_director >= 1 && aaradar >= 1)
+						return 8;
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+						return 13;
+					if (highangle >= 1 && director >= 1 && aaradar >= 1)
+						return 7;
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						return 12;
+					if (maingun_c3h >= 2 || (maingun_c3h >= 1 && (aagun_25mmz + radar_mast >= 1)))
+						return 47;
+					if (highangle >= 1 && director >= 1)
+						return 9; 
 					break;
 
 			}
 
 			//以下汎用カットイン
-			if (maingunl >= 1 && aashell >= 1 && director >= 1 && aaradar >= 1)
-			{
+			if (maingunl >= 1 && aashell >= 1 && director >= 1 && aaradar >= 1) //戦艦系汎用
 				return 4;
-			}
-			
 			if (highangle_director >= 2 && aaradar >= 1)
-			{
 				return 5;
-			}
-			
-			if (maingunl >= 1 && aashell >= 1 && director >= 1)
-			{
+			if (maingunl >= 1 && aashell >= 1 && director >= 1) //戦艦系汎用
 				return 6;
-			}
-			
-			if (highangle >= 1 && director >= 1 && aaradar >= 1)
-			{
-				return 7;
-			}
-			
 			if (highangle_director >= 1 && aaradar >= 1)
-			{
 				return 8;
-			}
-			
-			if (highangle >= 1 && director >= 1)
-			{
-				return 9;
-			}
-
-			if (aagun_concentrated >= 1 && (aagun_concentrated + aagun_medium) >= 2 && aaradar >= 1)
-			{
-				return 12;
-			}
-
-			if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1)
-			{
+			if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
 				return 13;
-			}
+			if (highangle >= 1 && director >= 1 && aaradar >= 1)
+				return 7;
+			if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+				return 12;
+			if (highangle >= 1 && director >= 1)
+				return 9;
 
 			return 0;
 		}
@@ -2076,7 +2266,8 @@ namespace ElectronicObserver.Utility.Data
 			{ 43, 8 },
 			{ 44, 6 },
 			{ 45, 5 },
-			{ 46, 8 },      
+			{ 46, 8 },
+			{ 47, 2 },
 		});
 
 		/// <summary>
@@ -2129,6 +2320,7 @@ namespace ElectronicObserver.Utility.Data
 			{ 44, 1.6 },
 			{ 45, 1.55 },
 			{ 46, 1.55 },
+			{ 47, 1.2 },
 		});
 
 		/// <summary>
@@ -2960,6 +3152,15 @@ namespace ElectronicObserver.Utility.Data
 
 		/// <summary> 駆逐カットイン(魚雷/ドラム缶/水雷見張員) </summary>
 		CutinTorpedoDrumMasterPicket_,
+
+		/// <summary> 夜間瑞雲攻撃(瑞雲/電探) </summary>
+		SpecialNightZuiunRader,
+
+		/// <summary> 夜間瑞雲攻撃(瑞雲2) </summary>
+		SpecialNightZuiun2,
+
+		/// <summary> 夜間瑞雲攻撃(瑞雲2/電探) </summary>
+		SpecialNightZuiun2Rader,
 	}
 
 	/// <summary>

@@ -983,6 +983,13 @@ namespace ElectronicObserver.Data
 					return "駆逐カットイン(魚雷/魚雷/水雷見張員)";
 				case NightAttackKind.CutinTorpedoDrumMasterPicket_:
 					return "駆逐カットイン(魚雷/ドラム缶/水雷見張員)";
+				case NightAttackKind.SpecialNightZuiunRader:
+					return "夜間瑞雲攻撃(瑞雲/電探)";
+				case NightAttackKind.SpecialNightZuiun2:
+					return "夜間瑞雲攻撃(瑞雲2)";
+				case NightAttackKind.SpecialNightZuiun2Rader:
+					return "夜間瑞雲攻撃(瑞雲2/電探)";
+
 
 
 				default:
@@ -1083,15 +1090,17 @@ namespace ElectronicObserver.Data
 				case 41:
 					return "Atlanta砲x2<Atlanta>";
 				case 42:
-					return "測距儀付き電探+10cm連装高角砲群x2+対空機銃<大和型>";
+					return "測距儀付き電探/10cm連装高角砲群x2/対空機銃<大和型>";
 				case 43:
-					return "測距儀付き電探+10cm連装高角砲群x2<大和型>";
+					return "測距儀付き電探/10cm連装高角砲群x2<大和型>";
 				case 44:
-					return "測距儀付き電探+10cm連装高角砲群+対空機銃<大和型>";
+					return "測距儀付き電探/10cm連装高角砲群+対空機銃<大和型>";
 				case 45:
-					return "測距儀付き電探+10cm連装高角砲群<大和型>";
+					return "測距儀付き電探/10cm連装高角砲群<大和型>";
 				case 46:
 					return "35.6cm連装砲改三 or 改四/機銃/電探<榛名改二乙>";
+				case 47:
+					return "12.7cm連装砲C型改三H/電探装備マスト or 機銃増備<白露型>";
 				default:
 					return "不明(" + id + ")";
 			}
