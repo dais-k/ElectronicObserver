@@ -27,11 +27,7 @@ namespace ElectronicObserver.Window
 		private Regex _apiPattern;
 
 		private string _currentAPIPath;
-		private string _NowAccessTime;
-		private string _LastRequestReceivedTime;
-		private string _Last4hoursIntervalUntil;
-		private string _Last4hoursIntervalTo;
-		private string _JsonRawDataText;
+
 
 		public FormJson(FormMain parent)
 		{
@@ -50,11 +46,6 @@ namespace ElectronicObserver.Window
 
 			o.RequestReceived += RequestReceived;
 			o.ResponseReceived += ResponseReceived;
-
-			var c = Utility.Configuration.Config;
-			_Last4hoursIntervalUntil = (c.FormJson.Last4hoursIntervalUntil != "") ? c.FormJson.Last4hoursIntervalUntil : "不明";
-			_Last4hoursIntervalTo = (c.FormJson.Last4hoursIntervalTo != "") ? c.FormJson.Last4hoursIntervalTo : "不明";
-			_LastRequestReceivedTime = (c.FormJson.LastRequestReceivedTime != "") ? c.FormJson.LastRequestReceivedTime : "";
 
 			Utility.Configuration.Instance.ConfigurationChanged += ConfigurationChanged;
 		}
@@ -90,23 +81,9 @@ namespace ElectronicObserver.Window
 
 		private void LoadRequest(string apiname, Dictionary<string, string> data)
 		{
-			DateTime now = DateTime.Now;
-			_NowAccessTime = now.ToString();
 
-			switch(ViewJSONContents.SelectedIndex)
-			{
-				case 0:
-					JsonRawData.Text = apiname + " : Request [" + _NowAccessTime + "]\r\n" + string.Join("\r\n", data.Select(p => p.Key + "=" + p.Value));
-					break;
-				case 1:
-					JsonRawData.Text = apiname + " : Request\r\n[" + _NowAccessTime + "]";
-					break;
-				case 2:
-					JsonRawData.Text = "";
-					break;
-			}
+			JsonRawData.Text = apiname + " : Request\r\n" + string.Join("\r\n", data.Select(p => p.Key + "=" + p.Value));
 
-			_currentAPIPath = apiname;
 
 			if (!UpdatesTree.Checked)
 				return;
@@ -128,63 +105,21 @@ namespace ElectronicObserver.Window
 
 
 			JsonTreeView.EndUpdate();
+			_currentAPIPath = apiname;
 		}
 
 		private void LoadResponse(string apiname, dynamic data)
 		{
-			var c = Utility.Configuration.Config;
-			DateTime now = DateTime.Now;
 
-			if (_LastRequestReceivedTime == null || _LastRequestReceivedTime == "") //起動後チェック
-			{
-				_LastRequestReceivedTime = now.ToString();
-			}
 
-			DateTime last = DateTime.Parse(_LastRequestReceivedTime);
-			TimeSpan _AccessInterval = now - last;
-
-			if (_AccessInterval.TotalHours >= 4)
-			{
-				_Last4hoursIntervalTo = _LastRequestReceivedTime;
-				c.FormJson.Last4hoursIntervalTo = _Last4hoursIntervalTo;
-				_Last4hoursIntervalUntil = now.ToString();
-				c.FormJson.Last4hoursIntervalUntil = _Last4hoursIntervalUntil;
-			}
-
-			TimeSpan _TotalAccessTime = now - DateTime.Parse(_Last4hoursIntervalUntil);
-
-			switch(ViewJSONContents.SelectedIndex)
-			{
-				case 0:
-					JsonRawData.Text = (_currentAPIPath == apiname ? JsonRawData.Text += "\r\n\r\n" : "") + apiname + " : Response [" + _NowAccessTime + "]\r\n" + (data == null ? "" : data.ToString());
-					break;
-				case 1:
-					JsonRawData.Text = (_currentAPIPath == apiname ? JsonRawData.Text += "\r\n\r\n" : "") + apiname + " : Response\r\n[" + _NowAccessTime + "]";
-					break;
-				case 2:
-					JsonRawData.Text = "";
-					break;
-			}
-
-			if (TimeCheck.Checked)
-			{
-				if (ViewJSONContents.SelectedIndex < 2)
-				{
-					JsonRawData.Text += "\r\n\r\n";
-				}
-				JsonRawData.Text += (_TotalAccessTime.Days * 24 + _TotalAccessTime.Hours).ToString() + "時間" + _TotalAccessTime.Minutes.ToString() + "分" + _TotalAccessTime.Seconds.ToString() + "秒 連続稼働中"; 
-				JsonRawData.Text += "\r\n" + "最後に艦これを4時間以上アクセスしなかった期間：\r\n[" + _Last4hoursIntervalTo + "～" + _Last4hoursIntervalUntil + "]";
-			}
-
-			_LastRequestReceivedTime = now.ToString();
-			c.FormJson.LastRequestReceivedTime = _LastRequestReceivedTime;
-
-			_currentAPIPath = apiname;
+			JsonRawData.Text = (_currentAPIPath == apiname ? JsonRawData.Text + "\r\n\r\n" : "") + apiname + " : Response\r\n" + (data == null ? "" : data.ToString());
 
 			if (!UpdatesTree.Checked)
 				return;
 
+
 			JsonTreeView.BeginUpdate();
+
 
 			if (JsonTreeView.Nodes.Count == 0 || JsonTreeView.Nodes[0].Text != apiname)
 			{
@@ -196,8 +131,9 @@ namespace ElectronicObserver.Window
 			CreateChildNode(node);
 			JsonTreeView.Nodes.Add(node);
 
+
 			JsonTreeView.EndUpdate();
-			
+			_currentAPIPath = apiname;
 		}
 
 
@@ -371,8 +307,7 @@ namespace ElectronicObserver.Window
 			AutoUpdate.Checked = c.FormJson.AutoUpdate;
 			UpdatesTree.Checked = c.FormJson.UpdatesTree;
 			AutoUpdateFilter.Text = c.FormJson.AutoUpdateFilter;
-			ViewJSONContents.SelectedIndex = c.FormJson.ViewJSONContents;
-			TimeCheck.Checked = c.FormJson.TimeCheck;
+
 
 			JsonTreeView.Nodes.Clear();
 
@@ -423,16 +358,6 @@ namespace ElectronicObserver.Window
 
 
 			Utility.Configuration.Config.FormJson.UpdatesTree = UpdatesTree.Checked;
-		}
-
-		private void TimeCheck_CheckedChanged(object sender, EventArgs e)
-		{
-			Utility.Configuration.Config.FormJson.TimeCheck = TimeCheck.Checked;
-		}
-
-		private void ViewJSONContents_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			Utility.Configuration.Config.FormJson.ViewJSONContents = ViewJSONContents.SelectedIndex;
 		}
 
 		private void AutoUpdate_CheckedChanged(object sender, EventArgs e)
@@ -635,7 +560,7 @@ namespace ElectronicObserver.Window
 							sb.Append("\t");
 						sb.Append(p);
 
-						int tab = (int)Math.Ceiling( (24 - (p.Length /*+ indentLevel * 4*/)) / 4.0);
+						int tab = (int)Math.Ceiling((24 - (p.Length /*+ indentLevel * 4*/)) / 4.0);
 						for (int i = 0; i < tab; i++)
 							sb.Append("\t");
 						sb.Append("：");

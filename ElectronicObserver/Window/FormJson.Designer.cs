@@ -31,8 +31,6 @@
             this.components = new System.ComponentModel.Container();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.JsonRawData = new System.Windows.Forms.TextBox();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.JsonTreeView = new System.Windows.Forms.TreeView();
             this.TreeContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.TreeContextMenu_Expand = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,21 +40,20 @@
             this.TreeContextMenu_OutputCSV = new System.Windows.Forms.ToolStripMenuItem();
             this.TreeContextMenu_CopyToClipboard = new System.Windows.Forms.ToolStripMenuItem();
             this.TreeContextMenu_CopyAsDocument = new System.Windows.Forms.ToolStripMenuItem();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.JsonRawData = new System.Windows.Forms.TextBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.ViewJSONContents = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.UpdatesTree = new System.Windows.Forms.CheckBox();
-            this.label4 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.AutoUpdateFilter = new System.Windows.Forms.TextBox();
             this.AutoUpdate = new System.Windows.Forms.CheckBox();
-            this.TimeCheck = new System.Windows.Forms.CheckBox();
             this.CSVSaver = new System.Windows.Forms.SaveFileDialog();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
             this.TreeContextMenu.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -77,38 +74,14 @@
             // 
             // tabPage1
             // 
-            this.tabPage1.Controls.Add(this.JsonRawData);
+            this.tabPage1.Controls.Add(this.JsonTreeView);
             this.tabPage1.Location = new System.Drawing.Point(4, 24);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(292, 172);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Raw";
+            this.tabPage1.Text = "Tree";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // JsonRawData
-            // 
-            this.JsonRawData.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.JsonRawData.Location = new System.Drawing.Point(3, 3);
-            this.JsonRawData.MaxLength = 0;
-            this.JsonRawData.Multiline = true;
-            this.JsonRawData.Name = "JsonRawData";
-            this.JsonRawData.ReadOnly = true;
-            this.JsonRawData.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.JsonRawData.Size = new System.Drawing.Size(286, 166);
-            this.JsonRawData.TabIndex = 0;
-            this.JsonRawData.WordWrap = false;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.JsonTreeView);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(292, 174);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Tree";
-            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // JsonTreeView
             // 
@@ -120,7 +93,7 @@
             this.JsonTreeView.Name = "JsonTreeView";
             this.JsonTreeView.PathSeparator = ".";
             this.JsonTreeView.ShowNodeToolTips = true;
-            this.JsonTreeView.Size = new System.Drawing.Size(286, 168);
+            this.JsonTreeView.Size = new System.Drawing.Size(286, 166);
             this.JsonTreeView.TabIndex = 0;
             this.JsonTreeView.BeforeExpand += new System.Windows.Forms.TreeViewCancelEventHandler(this.JsonTreeView_BeforeExpand);
             this.JsonTreeView.MouseClick += new System.Windows.Forms.MouseEventHandler(this.JsonTreeView_MouseClick);
@@ -186,17 +159,38 @@
             this.TreeContextMenu_CopyAsDocument.Text = "このノードをドキュメント化してコピー";
             this.TreeContextMenu_CopyAsDocument.Click += new System.EventHandler(this.TreeContextMenu_CopyAsDocument_Click);
             // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.JsonRawData);
+            this.tabPage2.Location = new System.Drawing.Point(4, 24);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(292, 172);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Raw";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // JsonRawData
+            // 
+            this.JsonRawData.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.JsonRawData.Location = new System.Drawing.Point(3, 3);
+            this.JsonRawData.MaxLength = 0;
+            this.JsonRawData.Multiline = true;
+            this.JsonRawData.Name = "JsonRawData";
+            this.JsonRawData.ReadOnly = true;
+            this.JsonRawData.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.JsonRawData.Size = new System.Drawing.Size(286, 166);
+            this.JsonRawData.TabIndex = 0;
+            this.JsonRawData.WordWrap = false;
+            // 
             // tabPage3
             // 
-            this.tabPage3.Controls.Add(this.ViewJSONContents);
             this.tabPage3.Controls.Add(this.label3);
             this.tabPage3.Controls.Add(this.label2);
             this.tabPage3.Controls.Add(this.UpdatesTree);
-            this.tabPage3.Controls.Add(this.label4);
             this.tabPage3.Controls.Add(this.label1);
             this.tabPage3.Controls.Add(this.AutoUpdateFilter);
             this.tabPage3.Controls.Add(this.AutoUpdate);
-            this.tabPage3.Controls.Add(this.TimeCheck);
             this.tabPage3.Location = new System.Drawing.Point(4, 24);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
@@ -205,25 +199,11 @@
             this.tabPage3.Text = "Config";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // ViewJSONContents
-            // 
-            this.ViewJSONContents.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.ViewJSONContents.FormattingEnabled = true;
-            this.ViewJSONContents.Items.AddRange(new object[] {
-            "JSONのデータを全て表示する",
-            "APIにアクセスした時間のみを表示する",
-            "表示しない"});
-            this.ViewJSONContents.Location = new System.Drawing.Point(80, 87);
-            this.ViewJSONContents.Name = "ViewJSONContents";
-            this.ViewJSONContents.Size = new System.Drawing.Size(204, 23);
-            this.ViewJSONContents.TabIndex = 3;
-            this.ViewJSONContents.SelectedIndexChanged += new System.EventHandler(this.ViewJSONContents_SelectedIndexChanged);
-            // 
             // label3
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(6, 136);
+            this.label3.Location = new System.Drawing.Point(6, 150);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(249, 15);
             this.label3.TabIndex = 5;
@@ -246,19 +226,10 @@
             this.UpdatesTree.Location = new System.Drawing.Point(9, 32);
             this.UpdatesTree.Name = "UpdatesTree";
             this.UpdatesTree.Size = new System.Drawing.Size(104, 19);
-            this.UpdatesTree.TabIndex = 1;
+            this.UpdatesTree.TabIndex = 3;
             this.UpdatesTree.Text = "Treeも更新する";
             this.UpdatesTree.UseVisualStyleBackColor = true;
             this.UpdatesTree.CheckedChanged += new System.EventHandler(this.UpdatesTree_CheckedChanged);
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(8, 90);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(74, 15);
-            this.label4.TabIndex = 2;
-            this.label4.Text = "JSON表示：";
             // 
             // label1
             // 
@@ -276,7 +247,7 @@
             this.AutoUpdateFilter.Location = new System.Drawing.Point(66, 57);
             this.AutoUpdateFilter.Name = "AutoUpdateFilter";
             this.AutoUpdateFilter.Size = new System.Drawing.Size(218, 23);
-            this.AutoUpdateFilter.TabIndex = 2;
+            this.AutoUpdateFilter.TabIndex = 1;
             this.AutoUpdateFilter.Validated += new System.EventHandler(this.AutoUpdateFilter_Validated);
             // 
             // AutoUpdate
@@ -289,17 +260,6 @@
             this.AutoUpdate.Text = "自動更新する";
             this.AutoUpdate.UseVisualStyleBackColor = true;
             this.AutoUpdate.CheckedChanged += new System.EventHandler(this.AutoUpdate_CheckedChanged);
-            // 
-            // TimeCheck
-            // 
-            this.TimeCheck.AutoSize = true;
-            this.TimeCheck.Location = new System.Drawing.Point(9, 114);
-            this.TimeCheck.Name = "TimeCheck";
-            this.TimeCheck.Size = new System.Drawing.Size(138, 19);
-            this.TimeCheck.TabIndex = 4;
-            this.TimeCheck.Text = "非稼働時間を表示する";
-            this.TimeCheck.UseVisualStyleBackColor = true;
-            this.TimeCheck.CheckedChanged += new System.EventHandler(this.TimeCheck_CheckedChanged);
             // 
             // CSVSaver
             // 
@@ -320,9 +280,9 @@
             this.Load += new System.EventHandler(this.FormJson_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.tabPage1.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
             this.TreeContextMenu.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             this.ResumeLayout(false);
@@ -352,8 +312,5 @@
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.ToolStripMenuItem TreeContextMenu_CopyToClipboard;
 		private System.Windows.Forms.ToolStripMenuItem TreeContextMenu_CopyAsDocument;
-		private System.Windows.Forms.CheckBox TimeCheck;
-		private System.Windows.Forms.ComboBox ViewJSONContents;
-		private System.Windows.Forms.Label label4;
 	}
 }

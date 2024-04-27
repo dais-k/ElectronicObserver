@@ -29,8 +29,8 @@
 		private void InitializeComponent()
 		{
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             ElectronicObserver.Window.Control.StatusBarModule statusBarModule1 = new ElectronicObserver.Window.Control.StatusBarModule();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.label19 = new System.Windows.Forms.Label();
@@ -57,6 +57,7 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.UI_RenderingTestChanger = new System.Windows.Forms.TrackBar();
+            this.UI_RenderingTest = new ElectronicObserver.Window.Control.ShipStatusHP();
             this.UI_IsLayoutFixed = new System.Windows.Forms.CheckBox();
             this.UI_BarColorMorphing = new System.Windows.Forms.CheckBox();
             this.UI_SubFontSelect = new System.Windows.Forms.Button();
@@ -219,14 +220,11 @@
             this.FormBaseAirCorps_ShowEventMapOnly = new System.Windows.Forms.CheckBox();
             this.SubWindow_Json = new System.Windows.Forms.TabPage();
             this.SubWindow_Json_SealingPanel = new System.Windows.Forms.Panel();
-            this.FormJson_ViewJSONContents = new System.Windows.Forms.ComboBox();
             this.FormJson_AutoUpdate = new System.Windows.Forms.CheckBox();
             this.label32 = new System.Windows.Forms.Label();
             this.FormJson_UpdatesTree = new System.Windows.Forms.CheckBox();
             this.FormJson_AutoUpdateFilter = new System.Windows.Forms.TextBox();
-            this.label45 = new System.Windows.Forms.Label();
             this.label31 = new System.Windows.Forms.Label();
-            this.FormJson_TimeCheck = new System.Windows.Forms.CheckBox();
             this.label33 = new System.Windows.Forms.Label();
             this.tabPage11 = new System.Windows.Forms.TabPage();
             this.Notification_BaseAirCorps = new System.Windows.Forms.Button();
@@ -258,7 +256,6 @@
             this.APIListBrowser = new System.Windows.Forms.OpenFileDialog();
             this.Log_PlayTime = new System.Windows.Forms.Label();
             this.PlayTimeTimer = new System.Windows.Forms.Timer(this.components);
-            this.UI_RenderingTest = new ElectronicObserver.Window.Control.ShipStatusHP();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Connection_UpstreamProxyPort)).BeginInit();
@@ -594,10 +591,10 @@
             this.tabPage2.Controls.Add(this.UI_MainFontSelect);
             this.tabPage2.Controls.Add(this.UI_MainFont);
             this.tabPage2.Controls.Add(this.label5);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Location = new System.Drawing.Point(4, 24);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(696, 374);
+            this.tabPage2.Size = new System.Drawing.Size(696, 372);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "UI";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -631,6 +628,31 @@
             this.UI_RenderingTestChanger.TabIndex = 14;
             this.UI_RenderingTestChanger.TickStyle = System.Windows.Forms.TickStyle.None;
             this.UI_RenderingTestChanger.Scroll += new System.EventHandler(this.UI_RenderingTestChanger_Scroll);
+            // 
+            // UI_RenderingTest
+            // 
+            this.UI_RenderingTest.AutoSize = true;
+            this.UI_RenderingTest.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            statusBarModule1.BarColor0Begin = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            statusBarModule1.BarColor0End = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            statusBarModule1.MaximumValue = 500;
+            statusBarModule1.PrevValue = 401;
+            statusBarModule1.Value = 401;
+            this.UI_RenderingTest.HPBar = statusBarModule1;
+            this.UI_RenderingTest.IsTargetable = true;
+            this.UI_RenderingTest.Location = new System.Drawing.Point(16, 3);
+            this.UI_RenderingTest.MainFontColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.UI_RenderingTest.Margin = new System.Windows.Forms.Padding(16, 3, 16, 3);
+            this.UI_RenderingTest.MaximumValue = 500;
+            this.UI_RenderingTest.Name = "UI_RenderingTest";
+            this.UI_RenderingTest.PrevValue = 401;
+            this.UI_RenderingTest.RepairTime = new System.DateTime(2017, 6, 18, 0, 0, 59, 159);
+            this.UI_RenderingTest.RepairTimeShowMode = ElectronicObserver.Window.Control.ShipStatusHPRepairTimeShowMode.Invisible;
+            this.UI_RenderingTest.Size = new System.Drawing.Size(136, 20);
+            this.UI_RenderingTest.TabIndex = 12;
+            this.UI_RenderingTest.Text = "Rendering Test: ";
+            this.ToolTipInfo.SetToolTip(this.UI_RenderingTest, "描画プレビューです。\r\n下のバーから値を調整できます。");
+            this.UI_RenderingTest.Value = 401;
             // 
             // UI_IsLayoutFixed
             // 
@@ -732,10 +754,10 @@
             this.tabPage3.Controls.Add(this.Log_SaveLogFlag);
             this.tabPage3.Controls.Add(this.Log_LogLevel);
             this.tabPage3.Controls.Add(this.label6);
-            this.tabPage3.Location = new System.Drawing.Point(4, 22);
+            this.tabPage3.Location = new System.Drawing.Point(4, 24);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(696, 374);
+            this.tabPage3.Size = new System.Drawing.Size(696, 372);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "ログ";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -865,10 +887,10 @@
             this.tabPage4.Controls.Add(this.label9);
             this.tabPage4.Controls.Add(this.Control_ConditionBorder);
             this.tabPage4.Controls.Add(this.label7);
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Location = new System.Drawing.Point(4, 24);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(696, 374);
+            this.tabPage4.Size = new System.Drawing.Size(696, 372);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "動作";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -982,10 +1004,10 @@
             this.tabPage5.Controls.Add(this.Debug_AlertOnError);
             this.tabPage5.Controls.Add(this.Debug_SealingPanel);
             this.tabPage5.Controls.Add(this.Debug_EnableDebugMenu);
-            this.tabPage5.Location = new System.Drawing.Point(4, 22);
+            this.tabPage5.Location = new System.Drawing.Point(4, 24);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(696, 374);
+            this.tabPage5.Size = new System.Drawing.Size(696, 372);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "デバッグ";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -1010,7 +1032,7 @@
             this.Debug_SealingPanel.Controls.Add(this.Debug_APIListPathSearch);
             this.Debug_SealingPanel.Location = new System.Drawing.Point(0, 56);
             this.Debug_SealingPanel.Name = "Debug_SealingPanel";
-            this.Debug_SealingPanel.Size = new System.Drawing.Size(696, 229);
+            this.Debug_SealingPanel.Size = new System.Drawing.Size(696, 227);
             this.Debug_SealingPanel.TabIndex = 1;
             // 
             // Debug_APIListPath
@@ -1064,10 +1086,10 @@
             this.tabPage14.Controls.Add(this.label22);
             this.tabPage14.Controls.Add(this.Tool_MCTwitterURL);
             this.tabPage14.Controls.Add(this.label21);
-            this.tabPage14.Location = new System.Drawing.Point(4, 22);
+            this.tabPage14.Location = new System.Drawing.Point(4, 24);
             this.tabPage14.Name = "tabPage14";
             this.tabPage14.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage14.Size = new System.Drawing.Size(696, 374);
+            this.tabPage14.Size = new System.Drawing.Size(696, 372);
             this.tabPage14.TabIndex = 10;
             this.tabPage14.Text = "ツール";
             this.tabPage14.UseVisualStyleBackColor = true;
@@ -1117,10 +1139,10 @@
             this.tabPage6.Controls.Add(this.label14);
             this.tabPage6.Controls.Add(this.Life_TopMost);
             this.tabPage6.Controls.Add(this.Life_ConfirmOnClosing);
-            this.tabPage6.Location = new System.Drawing.Point(4, 22);
+            this.tabPage6.Location = new System.Drawing.Point(4, 24);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(696, 374);
+            this.tabPage6.Size = new System.Drawing.Size(696, 372);
             this.tabPage6.TabIndex = 5;
             this.tabPage6.Text = "ウィンドウ";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -2570,34 +2592,17 @@
             // SubWindow_Json_SealingPanel
             // 
             this.SubWindow_Json_SealingPanel.BackColor = System.Drawing.SystemColors.Window;
-            this.SubWindow_Json_SealingPanel.Controls.Add(this.FormJson_ViewJSONContents);
             this.SubWindow_Json_SealingPanel.Controls.Add(this.FormJson_AutoUpdate);
             this.SubWindow_Json_SealingPanel.Controls.Add(this.label32);
             this.SubWindow_Json_SealingPanel.Controls.Add(this.FormJson_UpdatesTree);
             this.SubWindow_Json_SealingPanel.Controls.Add(this.FormJson_AutoUpdateFilter);
-            this.SubWindow_Json_SealingPanel.Controls.Add(this.label45);
             this.SubWindow_Json_SealingPanel.Controls.Add(this.label31);
-            this.SubWindow_Json_SealingPanel.Controls.Add(this.FormJson_TimeCheck);
             this.SubWindow_Json_SealingPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.SubWindow_Json_SealingPanel.Location = new System.Drawing.Point(3, 3);
             this.SubWindow_Json_SealingPanel.Margin = new System.Windows.Forms.Padding(0);
             this.SubWindow_Json_SealingPanel.Name = "SubWindow_Json_SealingPanel";
             this.SubWindow_Json_SealingPanel.Size = new System.Drawing.Size(676, 332);
             this.SubWindow_Json_SealingPanel.TabIndex = 6;
-            // 
-            // FormJson_ViewJSONContents
-            // 
-            this.FormJson_ViewJSONContents.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.FormJson_ViewJSONContents.FormattingEnabled = true;
-            this.FormJson_ViewJSONContents.Items.AddRange(new object[] {
-            "JSONのデータを全て表示する",
-            "APIにアクセスした時間のみを表示する",
-            "表示しない"});
-            this.FormJson_ViewJSONContents.Location = new System.Drawing.Point(109, 83);
-            this.FormJson_ViewJSONContents.Name = "FormJson_ViewJSONContents";
-            this.FormJson_ViewJSONContents.Size = new System.Drawing.Size(232, 23);
-            this.FormJson_ViewJSONContents.TabIndex = 3;
-            this.ToolTipInfo.SetToolTip(this.FormJson_ViewJSONContents, "RAWタブにAPIとJSONをどのように表示させるかどうかを指定します\r\n");
             // 
             // FormJson_AutoUpdate
             // 
@@ -2641,15 +2646,6 @@
             this.FormJson_AutoUpdateFilter.TabIndex = 2;
             this.ToolTipInfo.SetToolTip(this.FormJson_AutoUpdateFilter, "自動更新時に読み込む API を選択するフィルタです。\r\n正規表現も利用可能です。");
             // 
-            // label45
-            // 
-            this.label45.AutoSize = true;
-            this.label45.Location = new System.Drawing.Point(3, 86);
-            this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(108, 15);
-            this.label45.TabIndex = 4;
-            this.label45.Text = "JSONの表示方法：";
-            // 
             // label31
             // 
             this.label31.AutoSize = true;
@@ -2658,17 +2654,6 @@
             this.label31.Size = new System.Drawing.Size(100, 15);
             this.label31.TabIndex = 4;
             this.label31.Text = "自動更新フィルタ：";
-            // 
-            // FormJson_TimeCheck
-            // 
-            this.FormJson_TimeCheck.AutoSize = true;
-            this.FormJson_TimeCheck.Location = new System.Drawing.Point(3, 111);
-            this.FormJson_TimeCheck.Name = "FormJson_TimeCheck";
-            this.FormJson_TimeCheck.Size = new System.Drawing.Size(138, 19);
-            this.FormJson_TimeCheck.TabIndex = 4;
-            this.FormJson_TimeCheck.Text = "非稼働時間を表示する";
-            this.ToolTipInfo.SetToolTip(this.FormJson_TimeCheck, "4時間以上艦これにアクセスしなかった時間を表示します");
-            this.FormJson_TimeCheck.UseVisualStyleBackColor = true;
             // 
             // label33
             // 
@@ -2691,10 +2676,10 @@
             this.tabPage11.Controls.Add(this.Notification_Repair);
             this.tabPage11.Controls.Add(this.Notification_Construction);
             this.tabPage11.Controls.Add(this.Notification_Expedition);
-            this.tabPage11.Location = new System.Drawing.Point(4, 22);
+            this.tabPage11.Location = new System.Drawing.Point(4, 24);
             this.tabPage11.Name = "tabPage11";
             this.tabPage11.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage11.Size = new System.Drawing.Size(696, 374);
+            this.tabPage11.Size = new System.Drawing.Size(696, 372);
             this.tabPage11.TabIndex = 7;
             this.tabPage11.Text = "通知";
             this.tabPage11.UseVisualStyleBackColor = true;
@@ -2746,7 +2731,7 @@
             // 
             this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(3, 300);
+            this.label10.Location = new System.Drawing.Point(3, 298);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(238, 15);
             this.label10.TabIndex = 5;
@@ -2809,10 +2794,10 @@
             this.tabPage17.Controls.Add(this.BGMPlayer_VolumeAll);
             this.tabPage17.Controls.Add(this.BGMPlayer_Enabled);
             this.tabPage17.Controls.Add(this.BGMPlayer_ControlGrid);
-            this.tabPage17.Location = new System.Drawing.Point(4, 22);
+            this.tabPage17.Location = new System.Drawing.Point(4, 24);
             this.tabPage17.Name = "tabPage17";
             this.tabPage17.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage17.Size = new System.Drawing.Size(696, 374);
+            this.tabPage17.Size = new System.Drawing.Size(696, 372);
             this.tabPage17.TabIndex = 9;
             this.tabPage17.Text = "BGM";
             this.tabPage17.UseVisualStyleBackColor = true;
@@ -2891,7 +2876,7 @@
             this.BGMPlayer_ControlGrid.RowHeadersVisible = false;
             this.BGMPlayer_ControlGrid.RowTemplate.Height = 21;
             this.BGMPlayer_ControlGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.BGMPlayer_ControlGrid.Size = new System.Drawing.Size(684, 249);
+            this.BGMPlayer_ControlGrid.Size = new System.Drawing.Size(684, 247);
             this.BGMPlayer_ControlGrid.TabIndex = 0;
             this.BGMPlayer_ControlGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.BGMPlayer_ControlGrid_CellContentClick);
             this.BGMPlayer_ControlGrid.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.BGMPlayer_ControlGrid_CellFormatting);
@@ -2988,31 +2973,6 @@
             this.PlayTimeTimer.Enabled = true;
             this.PlayTimeTimer.Interval = 1000;
             this.PlayTimeTimer.Tick += new System.EventHandler(this.PlayTimeTimer_Tick);
-            // 
-            // UI_RenderingTest
-            // 
-            this.UI_RenderingTest.AutoSize = true;
-            this.UI_RenderingTest.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            statusBarModule1.BarColor0Begin = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            statusBarModule1.BarColor0End = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            statusBarModule1.MaximumValue = 500;
-            statusBarModule1.PrevValue = 401;
-            statusBarModule1.Value = 401;
-            this.UI_RenderingTest.HPBar = statusBarModule1;
-            this.UI_RenderingTest.IsTargetable = true;
-            this.UI_RenderingTest.Location = new System.Drawing.Point(16, 3);
-            this.UI_RenderingTest.MainFontColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.UI_RenderingTest.Margin = new System.Windows.Forms.Padding(16, 3, 16, 3);
-            this.UI_RenderingTest.MaximumValue = 500;
-            this.UI_RenderingTest.Name = "UI_RenderingTest";
-            this.UI_RenderingTest.PrevValue = 401;
-            this.UI_RenderingTest.RepairTime = new System.DateTime(2017, 6, 18, 0, 0, 59, 159);
-            this.UI_RenderingTest.RepairTimeShowMode = ElectronicObserver.Window.Control.ShipStatusHPRepairTimeShowMode.Invisible;
-            this.UI_RenderingTest.Size = new System.Drawing.Size(136, 20);
-            this.UI_RenderingTest.TabIndex = 12;
-            this.UI_RenderingTest.Text = "Rendering Test: ";
-            this.ToolTipInfo.SetToolTip(this.UI_RenderingTest, "描画プレビューです。\r\n下のバーから値を調整できます。");
-            this.UI_RenderingTest.Value = 401;
             // 
             // DialogConfiguration
             // 
@@ -3334,8 +3294,5 @@
 		private System.Windows.Forms.CheckBox FormFleet_ShowSupportPower;
 		private System.Windows.Forms.Label label44;
 		private System.Windows.Forms.CheckBox FormFleet_ShowSanmaEquip;
-		private System.Windows.Forms.CheckBox FormJson_TimeCheck;
-		private System.Windows.Forms.ComboBox FormJson_ViewJSONContents;
-		private System.Windows.Forms.Label label45;
 	}
 }
