@@ -25,16 +25,17 @@
             this.ContextMenuFleet_CopyKanmusuList = new System.Windows.Forms.ToolStripMenuItem();
             this.ContextMenuFleet_CopyToFleetAnalysis = new System.Windows.Forms.ToolStripMenuItem();
             this.ContextMenuFleet_CopyToFleetAnalysisWithID = new System.Windows.Forms.ToolStripMenuItem();
-            this.ContextMenuFleet_CopyToFleetAnalysisEquip = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.ContextMenuFleet_OpenTacticalRoom = new System.Windows.Forms.ToolStripMenuItem();
             this.ContextMenuFleet_OpenAirControlSimulator = new System.Windows.Forms.ToolStripMenuItem();
             this.ContextMenuFleet_OpenDeckBuilder = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.ContextMenuFleet_CopyToFleetAnalysisEquip = new System.Windows.Forms.ToolStripMenuItem();
             this.ContextMenuFleet_AntiAirDetails = new System.Windows.Forms.ToolStripMenuItem();
             this.ContextMenuFleet_Capture = new System.Windows.Forms.ToolStripMenuItem();
             this.ContextMenuFleet_OutputFleetImage = new System.Windows.Forms.ToolStripMenuItem();
             this.ToolTipInfo = new System.Windows.Forms.ToolTip(this.components);
+            this.ContextMenuFleet_OpenCompassSimulator = new System.Windows.Forms.ToolStripMenuItem();
             this.ContextMenuFleet.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -87,6 +88,7 @@
             this.toolStripSeparator1,
             this.ContextMenuFleet_OpenTacticalRoom,
             this.ContextMenuFleet_OpenAirControlSimulator,
+            this.ContextMenuFleet_OpenCompassSimulator,
             this.ContextMenuFleet_OpenDeckBuilder,
             this.toolStripSeparator2,
             this.ContextMenuFleet_CopyToFleetAnalysisEquip,
@@ -94,7 +96,7 @@
             this.ContextMenuFleet_Capture,
             this.ContextMenuFleet_OutputFleetImage});
             this.ContextMenuFleet.Name = "ContextMenuFleet";
-            this.ContextMenuFleet.Size = new System.Drawing.Size(374, 302);
+            this.ContextMenuFleet.Size = new System.Drawing.Size(374, 324);
             this.ContextMenuFleet.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenuFleet_Opening);
             // 
             // ContextMenuFleet_CopyFleet
@@ -132,13 +134,6 @@
             this.ContextMenuFleet_CopyToFleetAnalysisWithID.Text = "ID付きの全艦娘をコピー(制空権シミュレータV2用)(&T)";
             this.ContextMenuFleet_CopyToFleetAnalysisWithID.Click += new System.EventHandler(this.ContextMenuFleet_CopyToFleetAnalysisWithID_Click);
             // 
-            // ContextMenuFleet_CopyToFleetAnalysisEquip
-            // 
-            this.ContextMenuFleet_CopyToFleetAnalysisEquip.Name = "ContextMenuFleet_CopyToFleetAnalysisEquip";
-            this.ContextMenuFleet_CopyToFleetAnalysisEquip.Size = new System.Drawing.Size(373, 22);
-            this.ContextMenuFleet_CopyToFleetAnalysisEquip.Text = "所有装備をコピー(艦隊分析フォーマット)(&E)";
-			this.ContextMenuFleet_CopyToFleetAnalysisEquip.Click += new System.EventHandler(this.ContextMenuFleet_CopyToFleetAnalysisEquip_Click);
-            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
@@ -170,6 +165,13 @@
             this.toolStripSeparator2.Name = "toolStripSeparator2";
             this.toolStripSeparator2.Size = new System.Drawing.Size(370, 6);
             // 
+            // ContextMenuFleet_CopyToFleetAnalysisEquip
+            // 
+            this.ContextMenuFleet_CopyToFleetAnalysisEquip.Name = "ContextMenuFleet_CopyToFleetAnalysisEquip";
+            this.ContextMenuFleet_CopyToFleetAnalysisEquip.Size = new System.Drawing.Size(373, 22);
+            this.ContextMenuFleet_CopyToFleetAnalysisEquip.Text = "所有装備をコピー(艦隊分析フォーマット)(&E)";
+            this.ContextMenuFleet_CopyToFleetAnalysisEquip.Click += new System.EventHandler(this.ContextMenuFleet_CopyToFleetAnalysisEquip_Click);
+            // 
             // ContextMenuFleet_AntiAirDetails
             // 
             this.ContextMenuFleet_AntiAirDetails.Name = "ContextMenuFleet_AntiAirDetails";
@@ -197,6 +199,13 @@
             this.ToolTipInfo.InitialDelay = 500;
             this.ToolTipInfo.ReshowDelay = 100;
             this.ToolTipInfo.ShowAlways = true;
+            // 
+            // ContextMenuFleet_OpenCompassSimulator
+            // 
+            this.ContextMenuFleet_OpenCompassSimulator.Name = "ContextMenuFleet_OpenCompassSimulator";
+            this.ContextMenuFleet_OpenCompassSimulator.Size = new System.Drawing.Size(373, 22);
+            this.ContextMenuFleet_OpenCompassSimulator.Text = "編成をコピーし羅針盤シミュレータを開く(&Y)";
+            this.ContextMenuFleet_OpenCompassSimulator.Click += new System.EventHandler(this.ContextMenuFleet_OpenCompassSimulator_Click);
             // 
             // FormFleet
             // 
@@ -241,5 +250,6 @@
 		private System.Windows.Forms.ToolStripMenuItem ContextMenuFleet_OpenDeckBuilder;
 		private System.Windows.Forms.ToolStripMenuItem ContextMenuFleet_CopyToFleetAnalysisWithID;
 		private System.Windows.Forms.ToolStripMenuItem ContextMenuFleet_CopyToFleetAnalysisEquip;
+		private System.Windows.Forms.ToolStripMenuItem ContextMenuFleet_OpenCompassSimulator;
 	}
 }

@@ -401,6 +401,7 @@ namespace ElectronicObserver.Window
 				Equipments.AutoSize = true;
 				Equipments.AutoSizeMode = AutoSizeMode.GrowAndShrink;
 				Equipments.Visible = false;
+				Equipments.MouseDown += Equipments_MouseDown;
 				Equipments.ResumeUpdate();
 
 				ConfigurationChanged(parent);
@@ -633,6 +634,7 @@ namespace ElectronicObserver.Window
 					ShipResource.SetResources(ship.Fuel, ship.FuelMax, ship.Ammo, ship.AmmoMax);
 
 					Equipments.SetSlotList(ship);
+					Equipments.Tag = ship.ID;
 					ToolTipInfo.SetToolTip(Equipments, GetEquipmentString(ship));
 				}
 				else
@@ -655,6 +657,17 @@ namespace ElectronicObserver.Window
 					if ((e.Button & MouseButtons.Right) != 0)
 					{
 						new DialogAlbumMasterShip(id).Show(Parent);
+					}
+				}
+			}
+
+			private void Equipments_MouseDown(object sender, MouseEventArgs e)
+			{
+				if (Equipments.Tag is int id && id != -1)
+				{
+					if ((e.Button & MouseButtons.Right) != 0)
+					{
+						new DialogShipAttackDetail(id).Show(Parent);
 					}
 				}
 			}
@@ -716,12 +729,12 @@ namespace ElectronicObserver.Window
 						}
 						else
 						{
-							sb.AppendFormat("\r\n 0: 対地 - 攻撃不可");
+							sb.AppendFormat("\r\n 0: 対地 - 攻撃不能");
 						}
 					}
 					//sb.AppendLine();
 				}
-				else sb.AppendFormat("\r\n 攻撃不可");
+				else sb.AppendFormat("\r\n 攻撃不能");
 
 				if (ship.CanAttackAtNight)
 				{
@@ -752,11 +765,11 @@ namespace ElectronicObserver.Window
 							sb.AppendLine();
 						}
 					}
-					else sb.AppendLine("\r\n 攻撃不可");
+					else sb.AppendLine("\r\n 攻撃不能");
 				}
 				else
 				{
-					sb.AppendFormat("\r\n【夜戦】\r\n 攻撃不可");
+					sb.AppendFormat("\r\n【夜戦】\r\n 攻撃不能");
 					sb.AppendLine();
 				}
 
@@ -857,7 +870,7 @@ namespace ElectronicObserver.Window
 					sb.AppendFormat("砲撃支援威力: ");
 					var supportShellingPower = CalcShipAttackPower.CalculateSupportShellingPower(ship);
 					if (supportShellingPower == 0)
-						sb.AppendFormat("攻撃不可\r\n");
+						sb.AppendFormat("攻撃不能\r\n");
 					else
 						sb.AppendFormat("{0}\r\n", supportShellingPower);
 					sb.AppendFormat("航空支援威力: ");
@@ -868,7 +881,7 @@ namespace ElectronicObserver.Window
 						{
 							if(sair.num == 0)
 							{
-								sb.AppendFormat("攻撃不可");
+								sb.AppendFormat("攻撃不能");
 							}
 							break;
 						}
@@ -891,7 +904,7 @@ namespace ElectronicObserver.Window
 						{
 							if (sasw.num == 0)
 							{
-								sb.AppendFormat("攻撃不可");
+								sb.AppendFormat("攻撃不能");
 							}
 							break;
 						}
@@ -1599,6 +1612,25 @@ namespace ElectronicObserver.Window
 				areaId = dca.areaId;
 				fleet = GetFleetExportFlag(dca);
 				OpenUrlWithDeciBuilderData("https://jervis.vercel.app", areaId, fleet);
+			}
+		}
+
+		/// <summary>
+		/// 現在の艦隊データで羅針盤シミュレータ(https://x-20a.github.io/compass/)を開く
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void ContextMenuFleet_OpenCompassSimulator_Click(object sender, EventArgs e)
+		{
+			int areaId = 0;
+			bool[] fleet;
+			DialogChooseAirBase dca = new DialogChooseAirBase();
+			DialogResult dr = dca.ShowDialog();
+			if (dr == DialogResult.OK)
+			{
+				areaId = dca.areaId;
+				fleet = GetFleetExportFlag(dca);
+				OpenUrlWithDeciBuilderData("https://x-20a.github.io/compass/", areaId, fleet);
 			}
 		}
 
