@@ -434,6 +434,12 @@
     <Compile Include="Window\Dialog\DialogAlbumMasterEquipment.Designer.cs">
       <DependentUpon>DialogAlbumMasterEquipment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Window\Dialog\DialogShipAttackDetail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Window\Dialog\DialogShipAttackDetail.Designer.cs">
+      <DependentUpon>DialogShipAttackDetail.cs</DependentUpon>
+    </Compile>
     <Compile Include="Window\Dialog\DialogAlbumMasterShip.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -624,6 +630,12 @@
     <Compile Include="Window\Dialog\DialogWhitecap.Designer.cs">
       <DependentUpon>DialogWhitecap.cs</DependentUpon>
     </Compile>
+    <Compile Include="Window\FormAccessTime.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Window\FormAccessTime.Designer.cs">
+      <DependentUpon>FormAccessTime.cs</DependentUpon>
+    </Compile>
     <Compile Include="Window\FormArsenal.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -758,6 +770,7 @@
     <Compile Include="Window\Support\WindowPlacementManager.cs" />
     <EmbeddedResource Include="Window\Control\FleetState.resx">
       <DependentUpon>FleetState.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Window\Control\ImageLabel.resx">
       <DependentUpon>ImageLabel.cs</DependentUpon>
@@ -779,6 +792,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Window\Dialog\DialogAlbumMasterEquipment.resx">
       <DependentUpon>DialogAlbumMasterEquipment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Window\Dialog\DialogShipAttackDetail.resx">
+      <DependentUpon>DialogShipAttackDetail.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Window\Dialog\DialogAlbumMasterShip.resx">
       <DependentUpon>DialogAlbumMasterShip.cs</DependentUpon>
@@ -873,6 +889,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Window\Dialog\DialogWhitecap.resx">
       <DependentUpon>DialogWhitecap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Window\FormAccessTime.resx">
+      <DependentUpon>FormAccessTime.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Window\FormArsenal.resx">
       <DependentUpon>FormArsenal.cs</DependentUpon>

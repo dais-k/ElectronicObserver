@@ -66,6 +66,7 @@ namespace ElectronicObserver.Window
 		public FormJson fJson;
 		public FormFleetPreset fFleetPreset;
 		public FormSenka fSenka;
+		public FormAccessTime fAccessTime;
 
 		#endregion
 
@@ -136,6 +137,7 @@ namespace ElectronicObserver.Window
 			StripMenu_View_BaseAirCorps.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormBaseAirCorps];
 			StripMenu_View_Json.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormJson];
 			StripMenu_View_FleetPreset.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormFleetPreset];
+			StripMenu_View_AccessTime.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormAccessTimer];
 
 			StripMenu_Tool_EquipmentList.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormEquipmentList];
 			StripMenu_Tool_DropRecord.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormDropRecord];
@@ -189,6 +191,7 @@ namespace ElectronicObserver.Window
 			SubForms.Add(fJson = new FormJson(this));
 			SubForms.Add(fFleetPreset = new FormFleetPreset(this));
 			SubForms.Add(fSenka = new FormSenka(this));
+			SubForms.Add(fAccessTime = new FormAccessTime(this));
 
 			ConfigurationChanged();     //設定から初期化
 
@@ -260,6 +263,7 @@ namespace ElectronicObserver.Window
 
 			StripMenu_Debug.Enabled = StripMenu_Debug.Visible =
 			StripMenu_View_Json.Enabled = StripMenu_View_Json.Visible =
+			StripMenu_View_AccessTime.Enabled = StripMenu_View_AccessTime.Visible =
 				c.Debug.EnableDebugMenu;
 
 			StripStatus.Visible = c.Life.ShowStatusBar;
@@ -519,6 +523,8 @@ namespace ElectronicObserver.Window
 					return fFleetPreset;
 				case "Senka":
 					return fSenka;
+				case "AccessTime":
+					return fAccessTime;
 				default:
 					if (persistString.StartsWith("ShipGroup"))
 					{
@@ -1596,6 +1602,11 @@ namespace ElectronicObserver.Window
 		private void StripMenu_View_Senka_Click(object sender, EventArgs e)
 		{
 			ShowForm(fSenka);
+		}
+
+		private void StripMenu_View_AccessTime_Click(object sender, EventArgs e)
+		{
+			ShowForm(fAccessTime);
 		}
 
 		#endregion

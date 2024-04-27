@@ -1117,10 +1117,23 @@ namespace ElectronicObserver.Utility
 				/// </summary>
 				public string AutoUpdateFilter { get; set; }
 
-				///<summary>
-				/// 艦これにアクセス時間チェック
-				/// </summary>
-				public bool TimeCheck { get; set; }
+				public ConfigFormJson()
+				{
+					AutoUpdate = false;
+					UpdatesTree = true;
+					AutoUpdateFilter = "";
+				}
+			}
+			/// <summary>[JSON]ウィンドウ</summary>
+			[DataMember]
+			public ConfigFormJson FormJson { get; private set; }
+
+
+			/// <summary>
+			/// [稼働時間]ウィンドウの設定を扱います。
+			/// </summary>
+			public class ConfigFormAccessTime : ConfigPartBase
+			{
 
 				/// <summary>
 				/// 最後にRequestを受信した時刻
@@ -1137,26 +1150,17 @@ namespace ElectronicObserver.Utility
 				/// </summary>
 				public string Last4hoursIntervalTo { get; set; }
 
-				/// <summary>
-				/// RAWタブJSONの表示内容
-				/// </summary>
-				public int ViewJSONContents { get; set; }
 
-				public ConfigFormJson()
+				public ConfigFormAccessTime()
 				{
-					AutoUpdate = false;
-					UpdatesTree = true;
-					AutoUpdateFilter = "";
-					TimeCheck = false;
 					LastRequestReceivedTime = "";
 					Last4hoursIntervalUntil = "";
 					Last4hoursIntervalTo = "";
-					ViewJSONContents= 0;
 				}
 			}
-			/// <summary>[JSON]ウィンドウ</summary>
+			/// <summary>[稼働時間]ウィンドウ</summary>
 			[DataMember]
-			public ConfigFormJson FormJson { get; private set; }
+			public ConfigFormAccessTime FormAccessTime { get; private set; }
 
 
 			/// <summary>
@@ -1592,6 +1596,7 @@ namespace ElectronicObserver.Utility
 				FormCompass = new ConfigFormCompass();
 				FormJson = new ConfigFormJson();
 				FormBaseAirCorps = new ConfigFormBaseAirCorps();
+				FormAccessTime = new ConfigFormAccessTime();
 
 				NotifierExpedition = new ConfigNotifierBase();
 				NotifierConstruction = new ConfigNotifierBase();

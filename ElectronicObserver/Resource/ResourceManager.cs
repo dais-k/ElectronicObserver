@@ -95,8 +95,9 @@ namespace ElectronicObserver.Resource
 			FormExpeditionCheck,
 			FormFleetPreset,
 			FormTwitter,
-			FleetNoShip,
-			FleetDocking,					//50
+			FormAccessTimer,
+			FleetNoShip,                    //50
+			FleetDocking,
 			FleetSortieDamaged,
 			FleetSortie,
 			FleetExpedition,
@@ -105,8 +106,8 @@ namespace ElectronicObserver.Resource
 			FleetAnchorageRepairing,
 			FleetReady,
 			FleetCombined,
-			HeadQuartersShip,
-			HeadQuartersEquipment,			//60
+			HeadQuartersShip,		        //60
+			HeadQuartersEquipment,
 			BrowserScreenShot,
 			BrowserZoom,
 			BrowserZoomIn,
@@ -115,8 +116,8 @@ namespace ElectronicObserver.Resource
 			BrowserMute,
 			BrowserRefresh,
 			BrowserNavigate,
-			BrowserOther,
-			RarityBlack,					//70
+			BrowserOther,                   //70
+			RarityBlack,
 			RarityRed,
 			RarityBlueC,
 			RarityBlueB,
@@ -125,8 +126,8 @@ namespace ElectronicObserver.Resource
 			RarityGold,
 			RarityHoloB,
 			RarityHoloA,
-			RarityCherry,
-			ParameterHP,					//80
+			RarityCherry,                   //80
+			ParameterHP,
 			ParameterFirepower,
 			ParameterTorpedo,
 			ParameterAA,
@@ -135,8 +136,8 @@ namespace ElectronicObserver.Resource
 			ParameterEvasion,
 			ParameterLOS,
 			ParameterLuck,
-			ParameterBomber,
-			ParameterAccuracy,				//90
+			ParameterBomber,                //90
+			ParameterAccuracy,
 			ParameterAircraft,
 			ParameterSpeed,
 			ParameterRange,
@@ -145,8 +146,8 @@ namespace ElectronicObserver.Resource
 			ParameterAircraftCost,
 			ParameterAircraftDistance,
 			BattleFormationEnemyLineAhead,
-			BattleFormationEnemyDoubleLine,
-			BattleFormationEnemyDiamond,    //100
+			BattleFormationEnemyDoubleLine, //100
+			BattleFormationEnemyDiamond,
 			BattleFormationEnemyEchelon,
 			BattleFormationEnemyLineAbreast,
 			AircraftLevel0,
@@ -155,8 +156,8 @@ namespace ElectronicObserver.Resource
 			AircraftLevel3,
 			AircraftLevel4,
 			AircraftLevel5,
-			AircraftLevel6,
-			AircraftLevel7,                 //110
+			AircraftLevel6,                 //110
+			AircraftLevel7,
 			AircraftLevelTop0,
 			AircraftLevelTop1,
 			AircraftLevelTop2,
@@ -342,6 +343,7 @@ namespace ElectronicObserver.Resource
 				LoadImageFromArchive(Icons, archive, mstpath + @"Form/ExpeditionCheck.png", "Form_ExpeditionCheck");
 				LoadImageFromArchive(Icons, archive, mstpath + @"Form/FleetPreset.png", "Form_FleetPreset");
 				LoadImageFromArchive(Icons, archive, mstpath + @"Form/Twitter.png", "Form_Twittert");
+				LoadImageFromArchive(Icons, archive, mstpath + @"Form/AccessTimer.png", "Form_AccessTimer");
 
 				LoadImageFromArchive(Icons, archive, mstpath + @"Fleet/NoShip.png", "Fleet_NoShip");
 				LoadImageFromArchive(Icons, archive, mstpath + @"Fleet/Docking.png", "Fleet_Docking");
