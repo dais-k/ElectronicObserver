@@ -530,6 +530,7 @@
             this.TableParameterMain.Controls.Add(this.Speed, 1, 5);
             this.TableParameterMain.Controls.Add(this.TitleHP, 0, 1);
             this.TableParameterMain.Controls.Add(this.TitleFirepower, 2, 1);
+            this.TableParameterMain.Controls.Add(this.Armor, 1, 2);
             this.TableParameterMain.Controls.Add(this.TitleTorpedo, 2, 2);
             this.TableParameterMain.Controls.Add(this.TitleArmor, 0, 2);
             this.TableParameterMain.Controls.Add(this.TitleEvasion, 0, 3);
@@ -551,9 +552,8 @@
             this.TableParameterMain.Controls.Add(this.Accuracy, 1, 7);
             this.TableParameterMain.Controls.Add(this.TitleBomber, 2, 7);
             this.TableParameterMain.Controls.Add(this.Bomber, 3, 7);
-            this.TableParameterMain.Controls.Add(this.Evasion, 1, 2);
-            this.TableParameterMain.Controls.Add(this.Armor, 1, 3);
             this.TableParameterMain.Controls.Add(this.HPCurrent, 1, 1);
+            this.TableParameterMain.Controls.Add(this.Evasion, 1, 3);
             this.TableParameterMain.Location = new System.Drawing.Point(19, 6);
             this.TableParameterMain.Name = "TableParameterMain";
             this.TableParameterMain.RowCount = 8;
@@ -844,7 +844,7 @@
             this.Evasion.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.Evasion.AutoSize = false;
             this.Evasion.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.Evasion.Location = new System.Drawing.Point(53, 25);
+            this.Evasion.Location = new System.Drawing.Point(53, 47);
             this.Evasion.Name = "Evasion";
             this.Evasion.Size = new System.Drawing.Size(26, 16);
             this.Evasion.TabIndex = 19;
@@ -856,7 +856,7 @@
             this.Armor.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.Armor.AutoSize = false;
             this.Armor.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.Armor.Location = new System.Drawing.Point(53, 47);
+            this.Armor.Location = new System.Drawing.Point(53, 25);
             this.Armor.Name = "Armor";
             this.Armor.Size = new System.Drawing.Size(26, 16);
             this.Armor.TabIndex = 17;
