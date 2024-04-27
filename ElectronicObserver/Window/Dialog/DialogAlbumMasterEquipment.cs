@@ -351,7 +351,7 @@ namespace ElectronicObserver.Window.Dialog
 							eqlist.Add(-1);
 							foreach (var ss in specialShips[shiptype.Type])
 							{
-								EquipSlots.Items.Add("  ×" + db.MasterShips[ss]?.NameWithClass);
+								EquipSlots.Items.Add("  ×" + db.MasterShips[ss]?.NameWithClass + SouyaSelect(ss));
 								eqlist.Add(ss);
 							}
 						}
@@ -369,7 +369,7 @@ namespace ElectronicObserver.Window.Dialog
 							eqlist.Add(-1);
 							foreach (var ss in specialShips[shiptype.Type])
 							{
-								EquipSlots.Items.Add("  〇" + db.MasterShips[ss]?.NameWithClass);
+								EquipSlots.Items.Add("  〇" + db.MasterShips[ss]?.NameWithClass + SouyaSelect(ss));
 								eqlist.Add(ss);
 							}
 						}
@@ -412,7 +412,7 @@ namespace ElectronicObserver.Window.Dialog
 						{
 							if(db.MasterShips[ss]?.NameWithClass != null)
 							{ 
-								EquipSlots.Items.Add(" " + db.MasterShips[ss]?.NameWithClass);
+								EquipSlots.Items.Add(" " + db.MasterShips[ss]?.NameWithClass + SouyaSelect(ss));
 								eqlist.Add(ss);
 							}
 						}
@@ -465,6 +465,20 @@ namespace ElectronicObserver.Window.Dialog
 
 		}
 
+		private string SouyaSelect(int shipID)
+		{
+			switch (shipID)
+			{
+				case 645:
+					return "(灯台)";	//宗谷
+				case 650:
+					return "(南極)";
+				case 699:
+					return "(特務)";
+				default:
+					return "";
+			}
+		}
 
 		private void SetParameterText(ImageLabel label, int value)
 		{

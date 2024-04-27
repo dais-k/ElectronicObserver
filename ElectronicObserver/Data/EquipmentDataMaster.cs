@@ -204,18 +204,19 @@ namespace ElectronicObserver.Data
 			EquipmentID == 213 ||   // 後期型艦首魚雷(6門)
 			EquipmentID == 214 ||   // 熟練聴音員+後期型艦首魚雷(6門)
 			EquipmentID == 383 ||   // 後期型53cm艦首魚雷(8門)
-			EquipmentID == 441 ||	// 21inch艦首魚雷発射管6門(後期型)
-			EquipmentID == 443 ||	// 潜水艦後部魚雷発射管4門(後期型)
+			EquipmentID == 441 ||   // 21inch艦首魚雷発射管6門(後期型)
+			EquipmentID == 443 ||   // 潜水艦後部魚雷発射管4門(後期型)
 			EquipmentID == 457 ||   // 後期型艦首魚雷(4門)
-			EquipmentID == 461;     // 熟練聴音員+後期型艦首魚雷(4門)
+			EquipmentID == 461 ||   // 熟練聴音員+後期型艦首魚雷(4門)
+			EquipmentID == 512;     // 21inch艦首魚雷発射管4門(後期型)
 
 		/// <summary> 高角砲かどうか </summary>
 		public bool IsHighAngleGun => IconType == 16;
 
-		/// <summary> 高角砲+高射装置かどうか </summary>
+		/// <summary> 高角砲+高射装置かどうか 素対空8以上</summary>
 		public bool IsHighAngleGunWithAADirector => IsHighAngleGun && AA >= 8;
 
-		/// <summary> 集中配備機銃かどうか </summary>
+		/// <summary> 集中配備機銃かどうか 素対空9以上</summary>
 		public bool IsConcentratedAAGun => CategoryType == EquipmentTypes.AAGun && AA >= 9;
 
 
@@ -422,6 +423,15 @@ namespace ElectronicObserver.Data
 			EquipmentID == 305 ||       // Ju87C改二(KMX搭載機)
 			EquipmentID == 306;         // Ju87C改二(KMX搭載機/熟練)
 
+		/// <summary> 改修値が制空に影響する艦爆かどうか</summary>
+		public bool IsAirLevelBonusedGroundBomber =>
+			EquipmentID == 60 ||       // 零式艦戦62型(爆戦)
+			EquipmentID == 154 ||       // 零戦62型(爆戦/岩井隊)
+			EquipmentID == 219 ||       // 零式艦戦63型(爆戦)
+			EquipmentID == 447 ||       // 零式艦戦64型(複座KMX搭載機)
+			EquipmentID == 487;         // 零式艦戦64型(熟練爆戦)
+
+		
 		/// <summary> 拡張スロットに載るかどうか</summary>
 		public bool IsExslotEquipped =>
 			CategoryType == EquipmentTypes.ExtraArmor ||

@@ -80,7 +80,7 @@ namespace ElectronicObserver.Data
 				var sb = new StringBuilder(Name);
 
 				if (Level > 0)
-					sb.Append("+").Append(Level);
+					sb.Append("★").Append(Level);
 				if (AircraftLevel > 0)
 					sb.Append(" ").Append(AircraftLevelString[AircraftLevel]);
 
