@@ -56,14 +56,14 @@ namespace ElectronicObserver.Window.Dialog
 
 			Aircrafts = new ImageLabel[] { Aircraft1, Aircraft2, Aircraft3, Aircraft4, Aircraft5 };
 			Equipments = new ImageLabel[] { Equipment1, Equipment2, Equipment3, Equipment4, Equipment5 };
-			DayAttackNames = new ImageLabel[] { DayAttackName1, DayAttackName2, DayAttackName3, DayAttackName4, DayAttackName5 };
-			NightAttackNames = new ImageLabel[] { NightAttackName1, NightAttackName2, NightAttackName3, NightAttackName4, NightAttackName5 };
-			DayAttackPowers = new ImageLabel[] { DayAttackPower1, DayAttackPower2, DayAttackPower3, DayAttackPower4, DayAttackPower5 };
-			NightAttackPowers = new ImageLabel[] { NightAttackPower1, NightAttackPower2, NightAttackPower3, NightAttackPower4, NightAttackPower5 };
-			MaxDayAttacksTriggerRates = new ImageLabel[] { MaxDayTriggerRate1, MaxDayTriggerRate2, MaxDayTriggerRate3, MaxDayTriggerRate4, MaxDayTriggerRate5 };
-			MaxNightAttacksTriggerRates = new ImageLabel[] { MaxNightTriggerRate1, MaxNightTriggerRate2, MaxNightTriggerRate3, MaxNightTriggerRate4, MaxNightTriggerRate5 };
-			MinDayAttacksTriggerRates = new ImageLabel[] { MinDayTriggerRate1, MinDayTriggerRate2, MinDayTriggerRate3, MinDayTriggerRate4, MinDayTriggerRate5 };
-			MinNightAttacksTriggerRates = new ImageLabel[] { MinNightTriggerRate1, MinNightTriggerRate2, MinNightTriggerRate3, MinNightTriggerRate4, MinNightTriggerRate5 };
+			DayAttackNames = new ImageLabel[] { DayAttackName1, DayAttackName2, DayAttackName3, DayAttackName4, DayAttackName5, DayAttackName6 };
+			NightAttackNames = new ImageLabel[] { NightAttackName1, NightAttackName2, NightAttackName3, NightAttackName4, NightAttackName5, NightAttackName6 };
+			DayAttackPowers = new ImageLabel[] { DayAttackPower1, DayAttackPower2, DayAttackPower3, DayAttackPower4, DayAttackPower5 , DayAttackPower6 };
+			NightAttackPowers = new ImageLabel[] { NightAttackPower1, NightAttackPower2, NightAttackPower3, NightAttackPower4, NightAttackPower5 , NightAttackPower6 };
+			MaxDayAttacksTriggerRates = new ImageLabel[] { MaxDayTriggerRate1, MaxDayTriggerRate2, MaxDayTriggerRate3, MaxDayTriggerRate4, MaxDayTriggerRate5 , MaxDayTriggerRate6 };
+			MaxNightAttacksTriggerRates = new ImageLabel[] { MaxNightTriggerRate1, MaxNightTriggerRate2, MaxNightTriggerRate3, MaxNightTriggerRate4, MaxNightTriggerRate5 , MaxNightTriggerRate6 };
+			MinDayAttacksTriggerRates = new ImageLabel[] { MinDayTriggerRate1, MinDayTriggerRate2, MinDayTriggerRate3, MinDayTriggerRate4, MinDayTriggerRate5 , MinDayTriggerRate6 };
+			MinNightAttacksTriggerRates = new ImageLabel[] { MinNightTriggerRate1, MinNightTriggerRate2, MinNightTriggerRate3, MinNightTriggerRate4, MinNightTriggerRate5 , MinNightTriggerRate6 };
 			DayGroundAttackPowers = new ImageLabel[] { DayGrdAtk1, DayGrdAtk2, DayGrdAtk3, DayGrdAtk4, DayGrdAtk5, DayGrdAtk6 };
 			NightGroundAttackPowers = new ImageLabel[] { NightGrdAtk1, NightGrdAtk2, NightGrdAtk3, NightGrdAtk4, NightGrdAtk5, NightGrdAtk6 };
 			AACutinTypes = new ImageLabel[] { AACutinType1, AACutinType2, AACutinType3, AACutinType4, AACutinType5, AACutinType6, AACutinType7, AACutinType8 };
@@ -349,6 +349,15 @@ namespace ElectronicObserver.Window.Dialog
 			//リスト初期化
 			for (int i = 0; i < 5; i++)
 			{
+				SupportAirclaftPowers[i].Text = "";
+				SupportAntiSubmarinePowers12[i].Text = "";
+				SupportAntiSubmarinePowers15[i].Text = "";
+				SupportAntiSubmarinePowers20[i].Text = "";
+				tempPlaneProf[i] = 0;
+			}
+
+			for (int i = 0; i < 6; i++)
+			{
 				DayAttackNames[i].Text = "";
 				NightAttackNames[i].Text = "";
 				DayAttackPowers[i].Text = "";
@@ -357,11 +366,6 @@ namespace ElectronicObserver.Window.Dialog
 				MaxNightAttacksTriggerRates[i].Text = "";
 				MinDayAttacksTriggerRates[i].Text = "";
 				MinNightAttacksTriggerRates[i].Text = "";
-				SupportAirclaftPowers[i].Text = "";
-				SupportAntiSubmarinePowers12[i].Text = "";
-				SupportAntiSubmarinePowers15[i].Text = "";
-				SupportAntiSubmarinePowers20[i].Text = "";
-				tempPlaneProf[i] = 0;
 			}
 
 			for (int i = 0; i < 8; i++)

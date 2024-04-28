@@ -55,6 +55,7 @@
             this.Speed = new ElectronicObserver.Window.Control.ImageLabel();
             this.TitleHP = new ElectronicObserver.Window.Control.ImageLabel();
             this.TitleFirepower = new ElectronicObserver.Window.Control.ImageLabel();
+            this.Armor = new ElectronicObserver.Window.Control.ImageLabel();
             this.TitleTorpedo = new ElectronicObserver.Window.Control.ImageLabel();
             this.TitleArmor = new ElectronicObserver.Window.Control.ImageLabel();
             this.TitleEvasion = new ElectronicObserver.Window.Control.ImageLabel();
@@ -76,9 +77,8 @@
             this.Accuracy = new ElectronicObserver.Window.Control.ImageLabel();
             this.TitleBomber = new ElectronicObserver.Window.Control.ImageLabel();
             this.Bomber = new ElectronicObserver.Window.Control.ImageLabel();
-            this.Evasion = new ElectronicObserver.Window.Control.ImageLabel();
-            this.Armor = new ElectronicObserver.Window.Control.ImageLabel();
             this.HPCurrent = new ElectronicObserver.Window.Control.ImageLabel();
+            this.Evasion = new ElectronicObserver.Window.Control.ImageLabel();
             this.TP = new ElectronicObserver.Window.Control.ImageLabel();
             this.NavalFreet = new ElectronicObserver.Window.Control.ImageLabel();
             this.TableDayAttack = new System.Windows.Forms.TableLayoutPanel();
@@ -87,9 +87,6 @@
             this.DayAttackName3 = new ElectronicObserver.Window.Control.ImageLabel();
             this.DayAttackName2 = new ElectronicObserver.Window.Control.ImageLabel();
             this.DayAttackName1 = new ElectronicObserver.Window.Control.ImageLabel();
-            this.TitleDayAttackkPower = new ElectronicObserver.Window.Control.ImageLabel();
-            this.imageLabel8 = new ElectronicObserver.Window.Control.ImageLabel();
-            this.AttackTitle = new ElectronicObserver.Window.Control.ImageLabel();
             this.DayAttackPower1 = new ElectronicObserver.Window.Control.ImageLabel();
             this.MaxDayTriggerRate1 = new ElectronicObserver.Window.Control.ImageLabel();
             this.MinDayTriggerRate1 = new ElectronicObserver.Window.Control.ImageLabel();
@@ -140,9 +137,6 @@
             this.NightAttackName3 = new ElectronicObserver.Window.Control.ImageLabel();
             this.NightAttackName2 = new ElectronicObserver.Window.Control.ImageLabel();
             this.NightAttackName1 = new ElectronicObserver.Window.Control.ImageLabel();
-            this.imageLabel16 = new ElectronicObserver.Window.Control.ImageLabel();
-            this.imageLabel17 = new ElectronicObserver.Window.Control.ImageLabel();
-            this.imageLabel18 = new ElectronicObserver.Window.Control.ImageLabel();
             this.NightAttackPower1 = new ElectronicObserver.Window.Control.ImageLabel();
             this.MaxNightTriggerRate1 = new ElectronicObserver.Window.Control.ImageLabel();
             this.MinNightTriggerRate1 = new ElectronicObserver.Window.Control.ImageLabel();
@@ -230,6 +224,14 @@
             this.SupportShellingPower = new ElectronicObserver.Window.Control.ImageLabel();
             this.Errorpanel = new System.Windows.Forms.Panel();
             this.ErrorMessage = new System.Windows.Forms.Label();
+            this.DayAttackName6 = new ElectronicObserver.Window.Control.ImageLabel();
+            this.DayAttackPower6 = new ElectronicObserver.Window.Control.ImageLabel();
+            this.MaxDayTriggerRate6 = new ElectronicObserver.Window.Control.ImageLabel();
+            this.MinDayTriggerRate6 = new ElectronicObserver.Window.Control.ImageLabel();
+            this.NightAttackName6 = new ElectronicObserver.Window.Control.ImageLabel();
+            this.NightAttackPower6 = new ElectronicObserver.Window.Control.ImageLabel();
+            this.MaxNightTriggerRate6 = new ElectronicObserver.Window.Control.ImageLabel();
+            this.MinNightTriggerRate6 = new ElectronicObserver.Window.Control.ImageLabel();
             this.BasePanelShipGirl.SuspendLayout();
             this.TableEquipment.SuspendLayout();
             this.TableParameterMain.SuspendLayout();
@@ -551,9 +553,9 @@
             this.TableParameterMain.Controls.Add(this.TitleAccuracy, 0, 7);
             this.TableParameterMain.Controls.Add(this.Accuracy, 1, 7);
             this.TableParameterMain.Controls.Add(this.TitleBomber, 2, 7);
-            this.TableParameterMain.Controls.Add(this.Bomber, 3, 7);
             this.TableParameterMain.Controls.Add(this.HPCurrent, 1, 1);
             this.TableParameterMain.Controls.Add(this.Evasion, 1, 3);
+            this.TableParameterMain.Controls.Add(this.Bomber, 3, 7);
             this.TableParameterMain.Location = new System.Drawing.Point(19, 6);
             this.TableParameterMain.Name = "TableParameterMain";
             this.TableParameterMain.RowCount = 8;
@@ -611,6 +613,18 @@
             this.TitleFirepower.TabIndex = 6;
             this.TitleFirepower.Text = "火力";
             this.TitleFirepower.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // Armor
+            // 
+            this.Armor.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.Armor.AutoSize = false;
+            this.Armor.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Armor.Location = new System.Drawing.Point(53, 25);
+            this.Armor.Name = "Armor";
+            this.Armor.Size = new System.Drawing.Size(26, 16);
+            this.Armor.TabIndex = 17;
+            this.Armor.Text = "123";
+            this.Armor.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // TitleTorpedo
             // 
@@ -839,30 +853,6 @@
             this.Bomber.Text = "123";
             this.Bomber.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // Evasion
-            // 
-            this.Evasion.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.Evasion.AutoSize = false;
-            this.Evasion.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.Evasion.Location = new System.Drawing.Point(53, 47);
-            this.Evasion.Name = "Evasion";
-            this.Evasion.Size = new System.Drawing.Size(26, 16);
-            this.Evasion.TabIndex = 19;
-            this.Evasion.Text = "123";
-            this.Evasion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // Armor
-            // 
-            this.Armor.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.Armor.AutoSize = false;
-            this.Armor.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.Armor.Location = new System.Drawing.Point(53, 25);
-            this.Armor.Name = "Armor";
-            this.Armor.Size = new System.Drawing.Size(26, 16);
-            this.Armor.TabIndex = 17;
-            this.Armor.Text = "123";
-            this.Armor.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
             // HPCurrent
             // 
             this.HPCurrent.Anchor = System.Windows.Forms.AnchorStyles.Left;
@@ -874,6 +864,18 @@
             this.HPCurrent.TabIndex = 3;
             this.HPCurrent.Text = "123";
             this.HPCurrent.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // Evasion
+            // 
+            this.Evasion.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.Evasion.AutoSize = false;
+            this.Evasion.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.Evasion.Location = new System.Drawing.Point(53, 47);
+            this.Evasion.Name = "Evasion";
+            this.Evasion.Size = new System.Drawing.Size(26, 16);
+            this.Evasion.TabIndex = 19;
+            this.Evasion.Text = "123";
+            this.Evasion.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // TP
             // 
@@ -901,30 +903,31 @@
             this.TableDayAttack.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 64F));
             this.TableDayAttack.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 83F));
             this.TableDayAttack.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 10F));
-            this.TableDayAttack.Controls.Add(this.DayAttackName5, 0, 5);
-            this.TableDayAttack.Controls.Add(this.DayAttackName4, 0, 4);
-            this.TableDayAttack.Controls.Add(this.DayAttackName3, 0, 3);
-            this.TableDayAttack.Controls.Add(this.DayAttackName2, 0, 2);
-            this.TableDayAttack.Controls.Add(this.DayAttackName1, 0, 1);
-            this.TableDayAttack.Controls.Add(this.TitleDayAttackkPower, 1, 0);
-            this.TableDayAttack.Controls.Add(this.imageLabel8, 2, 0);
-            this.TableDayAttack.Controls.Add(this.AttackTitle, 0, 0);
-            this.TableDayAttack.Controls.Add(this.DayAttackPower1, 1, 1);
-            this.TableDayAttack.Controls.Add(this.MaxDayTriggerRate1, 2, 1);
-            this.TableDayAttack.Controls.Add(this.MinDayTriggerRate1, 3, 1);
-            this.TableDayAttack.Controls.Add(this.MaxDayTriggerRate5, 2, 5);
-            this.TableDayAttack.Controls.Add(this.DayAttackPower5, 1, 5);
-            this.TableDayAttack.Controls.Add(this.MinDayTriggerRate5, 3, 5);
-            this.TableDayAttack.Controls.Add(this.DayAttackPower2, 1, 2);
-            this.TableDayAttack.Controls.Add(this.DayAttackPower3, 1, 3);
-            this.TableDayAttack.Controls.Add(this.DayAttackPower4, 1, 4);
-            this.TableDayAttack.Controls.Add(this.MaxDayTriggerRate2, 2, 2);
-            this.TableDayAttack.Controls.Add(this.MinDayTriggerRate2, 3, 2);
-            this.TableDayAttack.Controls.Add(this.MaxDayTriggerRate3, 2, 3);
-            this.TableDayAttack.Controls.Add(this.MinDayTriggerRate3, 3, 3);
-            this.TableDayAttack.Controls.Add(this.MaxDayTriggerRate4, 2, 4);
-            this.TableDayAttack.Controls.Add(this.MinDayTriggerRate4, 3, 4);
-            this.TableDayAttack.Location = new System.Drawing.Point(9, 3);
+            this.TableDayAttack.Controls.Add(this.DayAttackName1, 0, 0);
+            this.TableDayAttack.Controls.Add(this.DayAttackName2, 0, 1);
+            this.TableDayAttack.Controls.Add(this.DayAttackName3, 0, 2);
+            this.TableDayAttack.Controls.Add(this.DayAttackName4, 0, 3);
+            this.TableDayAttack.Controls.Add(this.DayAttackPower1, 1, 0);
+            this.TableDayAttack.Controls.Add(this.DayAttackPower2, 1, 1);
+            this.TableDayAttack.Controls.Add(this.DayAttackPower3, 1, 2);
+            this.TableDayAttack.Controls.Add(this.DayAttackPower4, 1, 3);
+            this.TableDayAttack.Controls.Add(this.DayAttackPower5, 1, 4);
+            this.TableDayAttack.Controls.Add(this.MaxDayTriggerRate1, 2, 0);
+            this.TableDayAttack.Controls.Add(this.MaxDayTriggerRate2, 2, 1);
+            this.TableDayAttack.Controls.Add(this.MaxDayTriggerRate3, 2, 2);
+            this.TableDayAttack.Controls.Add(this.MaxDayTriggerRate4, 2, 3);
+            this.TableDayAttack.Controls.Add(this.MaxDayTriggerRate5, 2, 4);
+            this.TableDayAttack.Controls.Add(this.MinDayTriggerRate1, 3, 0);
+            this.TableDayAttack.Controls.Add(this.MinDayTriggerRate2, 3, 1);
+            this.TableDayAttack.Controls.Add(this.MinDayTriggerRate3, 3, 2);
+            this.TableDayAttack.Controls.Add(this.MinDayTriggerRate4, 3, 3);
+            this.TableDayAttack.Controls.Add(this.MinDayTriggerRate5, 3, 4);
+            this.TableDayAttack.Controls.Add(this.DayAttackName5, 0, 4);
+            this.TableDayAttack.Controls.Add(this.DayAttackName6, 0, 5);
+            this.TableDayAttack.Controls.Add(this.DayAttackPower6, 1, 5);
+            this.TableDayAttack.Controls.Add(this.MaxDayTriggerRate6, 2, 5);
+            this.TableDayAttack.Controls.Add(this.MinDayTriggerRate6, 3, 5);
+            this.TableDayAttack.Location = new System.Drawing.Point(9, 25);
             this.TableDayAttack.Name = "TableDayAttack";
             this.TableDayAttack.RowCount = 6;
             this.TableDayAttack.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -940,7 +943,7 @@
             // 
             this.DayAttackName5.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.DayAttackName5.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.DayAttackName5.Location = new System.Drawing.Point(3, 113);
+            this.DayAttackName5.Location = new System.Drawing.Point(3, 91);
             this.DayAttackName5.Name = "DayAttackName5";
             this.DayAttackName5.Size = new System.Drawing.Size(25, 16);
             this.DayAttackName5.TabIndex = 19;
@@ -950,7 +953,7 @@
             // 
             this.DayAttackName4.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.DayAttackName4.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.DayAttackName4.Location = new System.Drawing.Point(3, 91);
+            this.DayAttackName4.Location = new System.Drawing.Point(3, 69);
             this.DayAttackName4.Name = "DayAttackName4";
             this.DayAttackName4.Size = new System.Drawing.Size(25, 16);
             this.DayAttackName4.TabIndex = 19;
@@ -960,7 +963,7 @@
             // 
             this.DayAttackName3.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.DayAttackName3.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.DayAttackName3.Location = new System.Drawing.Point(3, 69);
+            this.DayAttackName3.Location = new System.Drawing.Point(3, 47);
             this.DayAttackName3.Name = "DayAttackName3";
             this.DayAttackName3.Size = new System.Drawing.Size(25, 16);
             this.DayAttackName3.TabIndex = 19;
@@ -970,7 +973,7 @@
             // 
             this.DayAttackName2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.DayAttackName2.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.DayAttackName2.Location = new System.Drawing.Point(3, 47);
+            this.DayAttackName2.Location = new System.Drawing.Point(3, 25);
             this.DayAttackName2.Name = "DayAttackName2";
             this.DayAttackName2.Size = new System.Drawing.Size(25, 16);
             this.DayAttackName2.TabIndex = 19;
@@ -980,52 +983,17 @@
             // 
             this.DayAttackName1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.DayAttackName1.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.DayAttackName1.Location = new System.Drawing.Point(3, 25);
+            this.DayAttackName1.Location = new System.Drawing.Point(3, 3);
             this.DayAttackName1.Name = "DayAttackName1";
             this.DayAttackName1.Size = new System.Drawing.Size(25, 16);
             this.DayAttackName1.TabIndex = 19;
             this.DayAttackName1.Text = "連撃";
             // 
-            // TitleDayAttackkPower
-            // 
-            this.TitleDayAttackkPower.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.TitleDayAttackkPower.ForeColor = System.Drawing.Color.Transparent;
-            this.TitleDayAttackkPower.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.TitleDayAttackkPower.Location = new System.Drawing.Point(209, 3);
-            this.TitleDayAttackkPower.Name = "TitleDayAttackkPower";
-            this.TitleDayAttackkPower.Size = new System.Drawing.Size(37, 16);
-            this.TitleDayAttackkPower.TabIndex = 19;
-            this.TitleDayAttackkPower.Text = "攻撃力";
-            this.TitleDayAttackkPower.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // imageLabel8
-            // 
-            this.imageLabel8.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.imageLabel8.ForeColor = System.Drawing.Color.Transparent;
-            this.imageLabel8.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.imageLabel8.Location = new System.Drawing.Point(273, 3);
-            this.imageLabel8.Name = "imageLabel8";
-            this.imageLabel8.Size = new System.Drawing.Size(37, 16);
-            this.imageLabel8.TabIndex = 19;
-            this.imageLabel8.Text = "発動率";
-            this.imageLabel8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // AttackTitle
-            // 
-            this.AttackTitle.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.AttackTitle.ForeColor = System.Drawing.Color.Transparent;
-            this.AttackTitle.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.AttackTitle.Location = new System.Drawing.Point(3, 3);
-            this.AttackTitle.Name = "AttackTitle";
-            this.AttackTitle.Size = new System.Drawing.Size(49, 16);
-            this.AttackTitle.TabIndex = 19;
-            this.AttackTitle.Text = "昼戦攻撃";
-            // 
             // DayAttackPower1
             // 
             this.DayAttackPower1.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.DayAttackPower1.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.DayAttackPower1.Location = new System.Drawing.Point(245, 25);
+            this.DayAttackPower1.Location = new System.Drawing.Point(245, 3);
             this.DayAttackPower1.Name = "DayAttackPower1";
             this.DayAttackPower1.Size = new System.Drawing.Size(22, 16);
             this.DayAttackPower1.TabIndex = 19;
@@ -1036,7 +1004,7 @@
             // 
             this.MaxDayTriggerRate1.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.MaxDayTriggerRate1.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.MaxDayTriggerRate1.Location = new System.Drawing.Point(312, 25);
+            this.MaxDayTriggerRate1.Location = new System.Drawing.Point(312, 3);
             this.MaxDayTriggerRate1.Name = "MaxDayTriggerRate1";
             this.MaxDayTriggerRate1.Size = new System.Drawing.Size(38, 16);
             this.MaxDayTriggerRate1.TabIndex = 19;
@@ -1047,7 +1015,7 @@
             // 
             this.MinDayTriggerRate1.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.MinDayTriggerRate1.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.MinDayTriggerRate1.Location = new System.Drawing.Point(374, 25);
+            this.MinDayTriggerRate1.Location = new System.Drawing.Point(374, 3);
             this.MinDayTriggerRate1.Name = "MinDayTriggerRate1";
             this.MinDayTriggerRate1.Size = new System.Drawing.Size(38, 16);
             this.MinDayTriggerRate1.TabIndex = 19;
@@ -1058,7 +1026,7 @@
             // 
             this.MaxDayTriggerRate5.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.MaxDayTriggerRate5.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.MaxDayTriggerRate5.Location = new System.Drawing.Point(312, 113);
+            this.MaxDayTriggerRate5.Location = new System.Drawing.Point(312, 91);
             this.MaxDayTriggerRate5.Name = "MaxDayTriggerRate5";
             this.MaxDayTriggerRate5.Size = new System.Drawing.Size(38, 16);
             this.MaxDayTriggerRate5.TabIndex = 19;
@@ -1069,7 +1037,7 @@
             // 
             this.DayAttackPower5.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.DayAttackPower5.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.DayAttackPower5.Location = new System.Drawing.Point(245, 113);
+            this.DayAttackPower5.Location = new System.Drawing.Point(245, 91);
             this.DayAttackPower5.Name = "DayAttackPower5";
             this.DayAttackPower5.Size = new System.Drawing.Size(22, 16);
             this.DayAttackPower5.TabIndex = 19;
@@ -1080,7 +1048,7 @@
             // 
             this.MinDayTriggerRate5.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.MinDayTriggerRate5.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.MinDayTriggerRate5.Location = new System.Drawing.Point(374, 113);
+            this.MinDayTriggerRate5.Location = new System.Drawing.Point(374, 91);
             this.MinDayTriggerRate5.Name = "MinDayTriggerRate5";
             this.MinDayTriggerRate5.Size = new System.Drawing.Size(38, 16);
             this.MinDayTriggerRate5.TabIndex = 19;
@@ -1091,7 +1059,7 @@
             // 
             this.DayAttackPower2.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.DayAttackPower2.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.DayAttackPower2.Location = new System.Drawing.Point(245, 47);
+            this.DayAttackPower2.Location = new System.Drawing.Point(245, 25);
             this.DayAttackPower2.Name = "DayAttackPower2";
             this.DayAttackPower2.Size = new System.Drawing.Size(22, 16);
             this.DayAttackPower2.TabIndex = 19;
@@ -1102,7 +1070,7 @@
             // 
             this.DayAttackPower3.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.DayAttackPower3.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.DayAttackPower3.Location = new System.Drawing.Point(245, 69);
+            this.DayAttackPower3.Location = new System.Drawing.Point(245, 47);
             this.DayAttackPower3.Name = "DayAttackPower3";
             this.DayAttackPower3.Size = new System.Drawing.Size(22, 16);
             this.DayAttackPower3.TabIndex = 19;
@@ -1113,7 +1081,7 @@
             // 
             this.DayAttackPower4.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.DayAttackPower4.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.DayAttackPower4.Location = new System.Drawing.Point(245, 91);
+            this.DayAttackPower4.Location = new System.Drawing.Point(245, 69);
             this.DayAttackPower4.Name = "DayAttackPower4";
             this.DayAttackPower4.Size = new System.Drawing.Size(22, 16);
             this.DayAttackPower4.TabIndex = 19;
@@ -1124,7 +1092,7 @@
             // 
             this.MaxDayTriggerRate2.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.MaxDayTriggerRate2.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.MaxDayTriggerRate2.Location = new System.Drawing.Point(312, 47);
+            this.MaxDayTriggerRate2.Location = new System.Drawing.Point(312, 25);
             this.MaxDayTriggerRate2.Name = "MaxDayTriggerRate2";
             this.MaxDayTriggerRate2.Size = new System.Drawing.Size(38, 16);
             this.MaxDayTriggerRate2.TabIndex = 19;
@@ -1135,7 +1103,7 @@
             // 
             this.MinDayTriggerRate2.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.MinDayTriggerRate2.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.MinDayTriggerRate2.Location = new System.Drawing.Point(374, 47);
+            this.MinDayTriggerRate2.Location = new System.Drawing.Point(374, 25);
             this.MinDayTriggerRate2.Name = "MinDayTriggerRate2";
             this.MinDayTriggerRate2.Size = new System.Drawing.Size(38, 16);
             this.MinDayTriggerRate2.TabIndex = 19;
@@ -1146,7 +1114,7 @@
             // 
             this.MaxDayTriggerRate3.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.MaxDayTriggerRate3.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.MaxDayTriggerRate3.Location = new System.Drawing.Point(312, 69);
+            this.MaxDayTriggerRate3.Location = new System.Drawing.Point(312, 47);
             this.MaxDayTriggerRate3.Name = "MaxDayTriggerRate3";
             this.MaxDayTriggerRate3.Size = new System.Drawing.Size(38, 16);
             this.MaxDayTriggerRate3.TabIndex = 19;
@@ -1157,7 +1125,7 @@
             // 
             this.MinDayTriggerRate3.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.MinDayTriggerRate3.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.MinDayTriggerRate3.Location = new System.Drawing.Point(374, 69);
+            this.MinDayTriggerRate3.Location = new System.Drawing.Point(374, 47);
             this.MinDayTriggerRate3.Name = "MinDayTriggerRate3";
             this.MinDayTriggerRate3.Size = new System.Drawing.Size(38, 16);
             this.MinDayTriggerRate3.TabIndex = 19;
@@ -1168,7 +1136,7 @@
             // 
             this.MaxDayTriggerRate4.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.MaxDayTriggerRate4.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.MaxDayTriggerRate4.Location = new System.Drawing.Point(312, 91);
+            this.MaxDayTriggerRate4.Location = new System.Drawing.Point(312, 69);
             this.MaxDayTriggerRate4.Name = "MaxDayTriggerRate4";
             this.MaxDayTriggerRate4.Size = new System.Drawing.Size(38, 16);
             this.MaxDayTriggerRate4.TabIndex = 19;
@@ -1179,7 +1147,7 @@
             // 
             this.MinDayTriggerRate4.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.MinDayTriggerRate4.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.MinDayTriggerRate4.Location = new System.Drawing.Point(374, 91);
+            this.MinDayTriggerRate4.Location = new System.Drawing.Point(374, 69);
             this.MinDayTriggerRate4.Name = "MinDayTriggerRate4";
             this.MinDayTriggerRate4.Size = new System.Drawing.Size(38, 16);
             this.MinDayTriggerRate4.TabIndex = 19;
@@ -1196,7 +1164,7 @@
             this.TabAttackDetail.Location = new System.Drawing.Point(282, 6);
             this.TabAttackDetail.Name = "TabAttackDetail";
             this.TabAttackDetail.SelectedIndex = 0;
-            this.TabAttackDetail.Size = new System.Drawing.Size(438, 404);
+            this.TabAttackDetail.Size = new System.Drawing.Size(438, 441);
             this.TabAttackDetail.TabIndex = 21;
             // 
             // tabPage1
@@ -1210,7 +1178,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 27);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(430, 373);
+            this.tabPage1.Size = new System.Drawing.Size(430, 410);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "昼戦・夜戦・対地";
             // 
@@ -1224,7 +1192,7 @@
             this.TableNightAttackTitle.Controls.Add(this.imageLabel36, 1, 0);
             this.TableNightAttackTitle.Controls.Add(this.imageLabel37, 2, 0);
             this.TableNightAttackTitle.Controls.Add(this.imageLabel38, 0, 0);
-            this.TableNightAttackTitle.Location = new System.Drawing.Point(9, 144);
+            this.TableNightAttackTitle.Location = new System.Drawing.Point(9, 165);
             this.TableNightAttackTitle.Name = "TableNightAttackTitle";
             this.TableNightAttackTitle.RowCount = 1;
             this.TableNightAttackTitle.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
@@ -1276,6 +1244,7 @@
             this.TableDayAttackTitle.Location = new System.Drawing.Point(9, 3);
             this.TableDayAttackTitle.Name = "TableDayAttackTitle";
             this.TableDayAttackTitle.RowCount = 1;
+            this.TableDayAttackTitle.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.TableDayAttackTitle.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.TableDayAttackTitle.Size = new System.Drawing.Size(415, 23);
             this.TableDayAttackTitle.TabIndex = 23;
@@ -1345,7 +1314,7 @@
             this.GroundAttackList.Controls.Add(this.NightGrdAtk4, 4, 2);
             this.GroundAttackList.Controls.Add(this.NightGrdAtk5, 5, 2);
             this.GroundAttackList.Controls.Add(this.NightGrdAtk6, 6, 2);
-            this.GroundAttackList.Location = new System.Drawing.Point(9, 285);
+            this.GroundAttackList.Location = new System.Drawing.Point(9, 326);
             this.GroundAttackList.Name = "GroundAttackList";
             this.GroundAttackList.RowCount = 3;
             this.GroundAttackList.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -1550,30 +1519,31 @@
             this.TableNightAttack.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 64F));
             this.TableNightAttack.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 83F));
             this.TableNightAttack.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 10F));
-            this.TableNightAttack.Controls.Add(this.NightAttackName5, 0, 5);
-            this.TableNightAttack.Controls.Add(this.NightAttackName4, 0, 4);
-            this.TableNightAttack.Controls.Add(this.NightAttackName3, 0, 3);
-            this.TableNightAttack.Controls.Add(this.NightAttackName2, 0, 2);
-            this.TableNightAttack.Controls.Add(this.NightAttackName1, 0, 1);
-            this.TableNightAttack.Controls.Add(this.imageLabel16, 1, 0);
-            this.TableNightAttack.Controls.Add(this.imageLabel17, 2, 0);
-            this.TableNightAttack.Controls.Add(this.imageLabel18, 0, 0);
-            this.TableNightAttack.Controls.Add(this.NightAttackPower1, 1, 1);
-            this.TableNightAttack.Controls.Add(this.MaxNightTriggerRate1, 2, 1);
-            this.TableNightAttack.Controls.Add(this.MinNightTriggerRate1, 3, 1);
-            this.TableNightAttack.Controls.Add(this.MaxNightTriggerRate5, 2, 5);
-            this.TableNightAttack.Controls.Add(this.NightAttackPower5, 1, 5);
-            this.TableNightAttack.Controls.Add(this.MinNightTriggerRate5, 3, 5);
-            this.TableNightAttack.Controls.Add(this.NightAttackPower2, 1, 2);
-            this.TableNightAttack.Controls.Add(this.NightAttackPower3, 1, 3);
-            this.TableNightAttack.Controls.Add(this.NightAttackPower4, 1, 4);
-            this.TableNightAttack.Controls.Add(this.MaxNightTriggerRate2, 2, 2);
-            this.TableNightAttack.Controls.Add(this.MinNightTriggerRate2, 3, 2);
-            this.TableNightAttack.Controls.Add(this.MaxNightTriggerRate3, 2, 3);
-            this.TableNightAttack.Controls.Add(this.MinNightTriggerRate3, 3, 3);
-            this.TableNightAttack.Controls.Add(this.MaxNightTriggerRate4, 2, 4);
-            this.TableNightAttack.Controls.Add(this.MinNightTriggerRate4, 3, 4);
-            this.TableNightAttack.Location = new System.Drawing.Point(9, 144);
+            this.TableNightAttack.Controls.Add(this.NightAttackName1, 0, 0);
+            this.TableNightAttack.Controls.Add(this.NightAttackName2, 0, 1);
+            this.TableNightAttack.Controls.Add(this.NightAttackName3, 0, 2);
+            this.TableNightAttack.Controls.Add(this.NightAttackName4, 0, 3);
+            this.TableNightAttack.Controls.Add(this.NightAttackName5, 0, 4);
+            this.TableNightAttack.Controls.Add(this.NightAttackPower1, 1, 0);
+            this.TableNightAttack.Controls.Add(this.NightAttackPower2, 1, 1);
+            this.TableNightAttack.Controls.Add(this.NightAttackPower3, 1, 2);
+            this.TableNightAttack.Controls.Add(this.NightAttackPower4, 1, 3);
+            this.TableNightAttack.Controls.Add(this.NightAttackPower5, 1, 4);
+            this.TableNightAttack.Controls.Add(this.MaxNightTriggerRate1, 2, 0);
+            this.TableNightAttack.Controls.Add(this.MaxNightTriggerRate2, 2, 1);
+            this.TableNightAttack.Controls.Add(this.MinNightTriggerRate1, 3, 0);
+            this.TableNightAttack.Controls.Add(this.MinNightTriggerRate2, 3, 1);
+            this.TableNightAttack.Controls.Add(this.MinNightTriggerRate3, 3, 2);
+            this.TableNightAttack.Controls.Add(this.MinNightTriggerRate4, 3, 3);
+            this.TableNightAttack.Controls.Add(this.MinNightTriggerRate5, 3, 4);
+            this.TableNightAttack.Controls.Add(this.MaxNightTriggerRate3, 2, 2);
+            this.TableNightAttack.Controls.Add(this.MaxNightTriggerRate4, 2, 3);
+            this.TableNightAttack.Controls.Add(this.MaxNightTriggerRate5, 2, 4);
+            this.TableNightAttack.Controls.Add(this.NightAttackName6, 0, 5);
+            this.TableNightAttack.Controls.Add(this.NightAttackPower6, 1, 5);
+            this.TableNightAttack.Controls.Add(this.MaxNightTriggerRate6, 2, 5);
+            this.TableNightAttack.Controls.Add(this.MinNightTriggerRate6, 3, 5);
+            this.TableNightAttack.Location = new System.Drawing.Point(9, 187);
             this.TableNightAttack.Name = "TableNightAttack";
             this.TableNightAttack.RowCount = 6;
             this.TableNightAttack.RowStyles.Add(new System.Windows.Forms.RowStyle());
@@ -1589,7 +1559,7 @@
             // 
             this.NightAttackName5.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.NightAttackName5.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.NightAttackName5.Location = new System.Drawing.Point(3, 113);
+            this.NightAttackName5.Location = new System.Drawing.Point(3, 91);
             this.NightAttackName5.Name = "NightAttackName5";
             this.NightAttackName5.Size = new System.Drawing.Size(25, 16);
             this.NightAttackName5.TabIndex = 19;
@@ -1599,7 +1569,7 @@
             // 
             this.NightAttackName4.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.NightAttackName4.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.NightAttackName4.Location = new System.Drawing.Point(3, 91);
+            this.NightAttackName4.Location = new System.Drawing.Point(3, 69);
             this.NightAttackName4.Name = "NightAttackName4";
             this.NightAttackName4.Size = new System.Drawing.Size(25, 16);
             this.NightAttackName4.TabIndex = 19;
@@ -1609,7 +1579,7 @@
             // 
             this.NightAttackName3.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.NightAttackName3.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.NightAttackName3.Location = new System.Drawing.Point(3, 69);
+            this.NightAttackName3.Location = new System.Drawing.Point(3, 47);
             this.NightAttackName3.Name = "NightAttackName3";
             this.NightAttackName3.Size = new System.Drawing.Size(25, 16);
             this.NightAttackName3.TabIndex = 19;
@@ -1619,7 +1589,7 @@
             // 
             this.NightAttackName2.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.NightAttackName2.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.NightAttackName2.Location = new System.Drawing.Point(3, 47);
+            this.NightAttackName2.Location = new System.Drawing.Point(3, 25);
             this.NightAttackName2.Name = "NightAttackName2";
             this.NightAttackName2.Size = new System.Drawing.Size(25, 16);
             this.NightAttackName2.TabIndex = 19;
@@ -1629,52 +1599,17 @@
             // 
             this.NightAttackName1.Anchor = System.Windows.Forms.AnchorStyles.Left;
             this.NightAttackName1.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.NightAttackName1.Location = new System.Drawing.Point(3, 25);
+            this.NightAttackName1.Location = new System.Drawing.Point(3, 3);
             this.NightAttackName1.Name = "NightAttackName1";
             this.NightAttackName1.Size = new System.Drawing.Size(25, 16);
             this.NightAttackName1.TabIndex = 19;
             this.NightAttackName1.Text = "連撃";
             // 
-            // imageLabel16
-            // 
-            this.imageLabel16.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.imageLabel16.ForeColor = System.Drawing.Color.Transparent;
-            this.imageLabel16.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.imageLabel16.Location = new System.Drawing.Point(209, 3);
-            this.imageLabel16.Name = "imageLabel16";
-            this.imageLabel16.Size = new System.Drawing.Size(37, 16);
-            this.imageLabel16.TabIndex = 19;
-            this.imageLabel16.Text = "攻撃力";
-            this.imageLabel16.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // imageLabel17
-            // 
-            this.imageLabel17.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.imageLabel17.ForeColor = System.Drawing.Color.Transparent;
-            this.imageLabel17.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.imageLabel17.Location = new System.Drawing.Point(273, 3);
-            this.imageLabel17.Name = "imageLabel17";
-            this.imageLabel17.Size = new System.Drawing.Size(37, 16);
-            this.imageLabel17.TabIndex = 19;
-            this.imageLabel17.Text = "発動率";
-            this.imageLabel17.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // imageLabel18
-            // 
-            this.imageLabel18.Anchor = System.Windows.Forms.AnchorStyles.Left;
-            this.imageLabel18.ForeColor = System.Drawing.Color.Transparent;
-            this.imageLabel18.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.imageLabel18.Location = new System.Drawing.Point(3, 3);
-            this.imageLabel18.Name = "imageLabel18";
-            this.imageLabel18.Size = new System.Drawing.Size(49, 16);
-            this.imageLabel18.TabIndex = 19;
-            this.imageLabel18.Text = "昼戦攻撃";
-            // 
             // NightAttackPower1
             // 
             this.NightAttackPower1.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.NightAttackPower1.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.NightAttackPower1.Location = new System.Drawing.Point(245, 25);
+            this.NightAttackPower1.Location = new System.Drawing.Point(245, 3);
             this.NightAttackPower1.Name = "NightAttackPower1";
             this.NightAttackPower1.Size = new System.Drawing.Size(22, 16);
             this.NightAttackPower1.TabIndex = 19;
@@ -1685,7 +1620,7 @@
             // 
             this.MaxNightTriggerRate1.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.MaxNightTriggerRate1.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.MaxNightTriggerRate1.Location = new System.Drawing.Point(312, 25);
+            this.MaxNightTriggerRate1.Location = new System.Drawing.Point(312, 3);
             this.MaxNightTriggerRate1.Name = "MaxNightTriggerRate1";
             this.MaxNightTriggerRate1.Size = new System.Drawing.Size(38, 16);
             this.MaxNightTriggerRate1.TabIndex = 19;
@@ -1696,7 +1631,7 @@
             // 
             this.MinNightTriggerRate1.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.MinNightTriggerRate1.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.MinNightTriggerRate1.Location = new System.Drawing.Point(374, 25);
+            this.MinNightTriggerRate1.Location = new System.Drawing.Point(374, 3);
             this.MinNightTriggerRate1.Name = "MinNightTriggerRate1";
             this.MinNightTriggerRate1.Size = new System.Drawing.Size(38, 16);
             this.MinNightTriggerRate1.TabIndex = 19;
@@ -1708,7 +1643,7 @@
             // 
             this.MaxNightTriggerRate5.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.MaxNightTriggerRate5.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.MaxNightTriggerRate5.Location = new System.Drawing.Point(312, 113);
+            this.MaxNightTriggerRate5.Location = new System.Drawing.Point(312, 91);
             this.MaxNightTriggerRate5.Name = "MaxNightTriggerRate5";
             this.MaxNightTriggerRate5.Size = new System.Drawing.Size(38, 16);
             this.MaxNightTriggerRate5.TabIndex = 19;
@@ -1719,7 +1654,7 @@
             // 
             this.NightAttackPower5.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.NightAttackPower5.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.NightAttackPower5.Location = new System.Drawing.Point(245, 113);
+            this.NightAttackPower5.Location = new System.Drawing.Point(245, 91);
             this.NightAttackPower5.Name = "NightAttackPower5";
             this.NightAttackPower5.Size = new System.Drawing.Size(22, 16);
             this.NightAttackPower5.TabIndex = 19;
@@ -1730,7 +1665,7 @@
             // 
             this.MinNightTriggerRate5.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.MinNightTriggerRate5.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.MinNightTriggerRate5.Location = new System.Drawing.Point(374, 113);
+            this.MinNightTriggerRate5.Location = new System.Drawing.Point(374, 91);
             this.MinNightTriggerRate5.Name = "MinNightTriggerRate5";
             this.MinNightTriggerRate5.Size = new System.Drawing.Size(38, 16);
             this.MinNightTriggerRate5.TabIndex = 19;
@@ -1742,7 +1677,7 @@
             // 
             this.NightAttackPower2.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.NightAttackPower2.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.NightAttackPower2.Location = new System.Drawing.Point(245, 47);
+            this.NightAttackPower2.Location = new System.Drawing.Point(245, 25);
             this.NightAttackPower2.Name = "NightAttackPower2";
             this.NightAttackPower2.Size = new System.Drawing.Size(22, 16);
             this.NightAttackPower2.TabIndex = 19;
@@ -1753,7 +1688,7 @@
             // 
             this.NightAttackPower3.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.NightAttackPower3.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.NightAttackPower3.Location = new System.Drawing.Point(245, 69);
+            this.NightAttackPower3.Location = new System.Drawing.Point(245, 47);
             this.NightAttackPower3.Name = "NightAttackPower3";
             this.NightAttackPower3.Size = new System.Drawing.Size(22, 16);
             this.NightAttackPower3.TabIndex = 19;
@@ -1764,7 +1699,7 @@
             // 
             this.NightAttackPower4.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.NightAttackPower4.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.NightAttackPower4.Location = new System.Drawing.Point(245, 91);
+            this.NightAttackPower4.Location = new System.Drawing.Point(245, 69);
             this.NightAttackPower4.Name = "NightAttackPower4";
             this.NightAttackPower4.Size = new System.Drawing.Size(22, 16);
             this.NightAttackPower4.TabIndex = 19;
@@ -1775,7 +1710,7 @@
             // 
             this.MaxNightTriggerRate2.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.MaxNightTriggerRate2.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.MaxNightTriggerRate2.Location = new System.Drawing.Point(312, 47);
+            this.MaxNightTriggerRate2.Location = new System.Drawing.Point(312, 25);
             this.MaxNightTriggerRate2.Name = "MaxNightTriggerRate2";
             this.MaxNightTriggerRate2.Size = new System.Drawing.Size(38, 16);
             this.MaxNightTriggerRate2.TabIndex = 19;
@@ -1786,7 +1721,7 @@
             // 
             this.MinNightTriggerRate2.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.MinNightTriggerRate2.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.MinNightTriggerRate2.Location = new System.Drawing.Point(374, 47);
+            this.MinNightTriggerRate2.Location = new System.Drawing.Point(374, 25);
             this.MinNightTriggerRate2.Name = "MinNightTriggerRate2";
             this.MinNightTriggerRate2.Size = new System.Drawing.Size(38, 16);
             this.MinNightTriggerRate2.TabIndex = 19;
@@ -1798,7 +1733,7 @@
             // 
             this.MaxNightTriggerRate3.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.MaxNightTriggerRate3.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.MaxNightTriggerRate3.Location = new System.Drawing.Point(312, 69);
+            this.MaxNightTriggerRate3.Location = new System.Drawing.Point(312, 47);
             this.MaxNightTriggerRate3.Name = "MaxNightTriggerRate3";
             this.MaxNightTriggerRate3.Size = new System.Drawing.Size(38, 16);
             this.MaxNightTriggerRate3.TabIndex = 19;
@@ -1809,7 +1744,7 @@
             // 
             this.MinNightTriggerRate3.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.MinNightTriggerRate3.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.MinNightTriggerRate3.Location = new System.Drawing.Point(374, 69);
+            this.MinNightTriggerRate3.Location = new System.Drawing.Point(374, 47);
             this.MinNightTriggerRate3.Name = "MinNightTriggerRate3";
             this.MinNightTriggerRate3.Size = new System.Drawing.Size(38, 16);
             this.MinNightTriggerRate3.TabIndex = 19;
@@ -1821,7 +1756,7 @@
             // 
             this.MaxNightTriggerRate4.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.MaxNightTriggerRate4.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.MaxNightTriggerRate4.Location = new System.Drawing.Point(312, 91);
+            this.MaxNightTriggerRate4.Location = new System.Drawing.Point(312, 69);
             this.MaxNightTriggerRate4.Name = "MaxNightTriggerRate4";
             this.MaxNightTriggerRate4.Size = new System.Drawing.Size(38, 16);
             this.MaxNightTriggerRate4.TabIndex = 19;
@@ -1832,7 +1767,7 @@
             // 
             this.MinNightTriggerRate4.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.MinNightTriggerRate4.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.MinNightTriggerRate4.Location = new System.Drawing.Point(374, 91);
+            this.MinNightTriggerRate4.Location = new System.Drawing.Point(374, 69);
             this.MinNightTriggerRate4.Name = "MinNightTriggerRate4";
             this.MinNightTriggerRate4.Size = new System.Drawing.Size(38, 16);
             this.MinNightTriggerRate4.TabIndex = 19;
@@ -2761,17 +2696,104 @@
             this.ErrorMessage.Text = "この艦娘はもういません・・・";
             this.ErrorMessage.Visible = false;
             // 
+            // DayAttackName6
+            // 
+            this.DayAttackName6.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.DayAttackName6.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.DayAttackName6.Location = new System.Drawing.Point(3, 113);
+            this.DayAttackName6.Name = "DayAttackName6";
+            this.DayAttackName6.Size = new System.Drawing.Size(25, 16);
+            this.DayAttackName6.TabIndex = 19;
+            this.DayAttackName6.Text = "連撃";
+            // 
+            // DayAttackPower6
+            // 
+            this.DayAttackPower6.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.DayAttackPower6.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.DayAttackPower6.Location = new System.Drawing.Point(245, 113);
+            this.DayAttackPower6.Name = "DayAttackPower6";
+            this.DayAttackPower6.Size = new System.Drawing.Size(22, 16);
+            this.DayAttackPower6.TabIndex = 19;
+            this.DayAttackPower6.Text = "100";
+            this.DayAttackPower6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // MaxDayTriggerRate6
+            // 
+            this.MaxDayTriggerRate6.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.MaxDayTriggerRate6.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.MaxDayTriggerRate6.Location = new System.Drawing.Point(312, 113);
+            this.MaxDayTriggerRate6.Name = "MaxDayTriggerRate6";
+            this.MaxDayTriggerRate6.Size = new System.Drawing.Size(38, 16);
+            this.MaxDayTriggerRate6.TabIndex = 19;
+            this.MaxDayTriggerRate6.Text = "99.9％";
+            this.MaxDayTriggerRate6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // MinDayTriggerRate6
+            // 
+            this.MinDayTriggerRate6.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.MinDayTriggerRate6.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.MinDayTriggerRate6.Location = new System.Drawing.Point(374, 113);
+            this.MinDayTriggerRate6.Name = "MinDayTriggerRate6";
+            this.MinDayTriggerRate6.Size = new System.Drawing.Size(38, 16);
+            this.MinDayTriggerRate6.TabIndex = 19;
+            this.MinDayTriggerRate6.Text = "99.9％";
+            this.MinDayTriggerRate6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // NightAttackName6
+            // 
+            this.NightAttackName6.Anchor = System.Windows.Forms.AnchorStyles.Left;
+            this.NightAttackName6.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.NightAttackName6.Location = new System.Drawing.Point(3, 113);
+            this.NightAttackName6.Name = "NightAttackName6";
+            this.NightAttackName6.Size = new System.Drawing.Size(25, 16);
+            this.NightAttackName6.TabIndex = 19;
+            this.NightAttackName6.Text = "連撃";
+            // 
+            // NightAttackPower6
+            // 
+            this.NightAttackPower6.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.NightAttackPower6.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.NightAttackPower6.Location = new System.Drawing.Point(245, 113);
+            this.NightAttackPower6.Name = "NightAttackPower6";
+            this.NightAttackPower6.Size = new System.Drawing.Size(22, 16);
+            this.NightAttackPower6.TabIndex = 19;
+            this.NightAttackPower6.Text = "100";
+            this.NightAttackPower6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // MaxNightTriggerRate6
+            // 
+            this.MaxNightTriggerRate6.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.MaxNightTriggerRate6.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.MaxNightTriggerRate6.Location = new System.Drawing.Point(312, 113);
+            this.MaxNightTriggerRate6.Name = "MaxNightTriggerRate6";
+            this.MaxNightTriggerRate6.Size = new System.Drawing.Size(38, 16);
+            this.MaxNightTriggerRate6.TabIndex = 19;
+            this.MaxNightTriggerRate6.Text = "99.9％";
+            this.MaxNightTriggerRate6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // MinNightTriggerRate6
+            // 
+            this.MinNightTriggerRate6.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.MinNightTriggerRate6.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.MinNightTriggerRate6.Location = new System.Drawing.Point(374, 113);
+            this.MinNightTriggerRate6.Name = "MinNightTriggerRate6";
+            this.MinNightTriggerRate6.Size = new System.Drawing.Size(38, 16);
+            this.MinNightTriggerRate6.TabIndex = 19;
+            this.MinNightTriggerRate6.Text = "99.9％";
+            this.MinNightTriggerRate6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.MinNightTriggerRate6.Visible = false;
+            // 
             // DialogShipAttackDetail
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.ClientSize = new System.Drawing.Size(716, 410);
-            this.Controls.Add(this.Errorpanel);
+            this.ClientSize = new System.Drawing.Size(716, 446);
             this.Controls.Add(this.TabAttackDetail);
             this.Controls.Add(this.BasePanelShipGirl);
+            this.Controls.Add(this.Errorpanel);
             this.DoubleBuffered = true;
             this.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            this.MaximumSize = new System.Drawing.Size(732, 449);
-            this.MinimumSize = new System.Drawing.Size(732, 449);
+            this.MaximumSize = new System.Drawing.Size(732, 485);
+            this.MinimumSize = new System.Drawing.Size(732, 485);
             this.Name = "DialogShipAttackDetail";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "攻撃詳細";
@@ -2871,13 +2893,11 @@
 		private Control.ImageLabel DayAttackName3;
 		private Control.ImageLabel DayAttackName2;
 		private Control.ImageLabel DayAttackName1;
-		private Control.ImageLabel AttackTitle;
 		private Control.ImageLabel TitleEquipmenEX;
 		private System.Windows.Forms.TabControl TabAttackDetail;
 		private System.Windows.Forms.TabPage tabPage1;
 		private System.Windows.Forms.TabPage tabPage2;
 		private System.Windows.Forms.TabPage tabPage3;
-		private Control.ImageLabel TitleDayAttackkPower;
 		private Control.ImageLabel DayAttackPower1;
 		private Control.ImageLabel DayAttackPower2;
 		private Control.ImageLabel DayAttackPower3;
@@ -2901,7 +2921,6 @@
 		private Control.ImageLabel MaxDayTriggerRate2;
 		private Control.ImageLabel MaxDayTriggerRate3;
 		private Control.ImageLabel MaxDayTriggerRate4;
-		private Control.ImageLabel imageLabel8;
 		private System.Windows.Forms.TableLayoutPanel TableDayAttackTitle;
 		private Control.ImageLabel imageLabel14;
 		private Control.ImageLabel imageLabel25;
@@ -2927,9 +2946,6 @@
 		private Control.ImageLabel NightAttackName3;
 		private Control.ImageLabel NightAttackName2;
 		private Control.ImageLabel NightAttackName1;
-		private Control.ImageLabel imageLabel16;
-		private Control.ImageLabel imageLabel17;
-		private Control.ImageLabel imageLabel18;
 		private Control.ImageLabel NightAttackPower1;
 		private Control.ImageLabel MaxNightTriggerRate1;
 		private Control.ImageLabel MinNightTriggerRate1;
@@ -3024,5 +3040,13 @@
 		private Control.ImageLabel NavalFreet;
 		private System.Windows.Forms.Panel Errorpanel;
 		private System.Windows.Forms.Label ErrorMessage;
+		private Control.ImageLabel DayAttackName6;
+		private Control.ImageLabel DayAttackPower6;
+		private Control.ImageLabel MaxDayTriggerRate6;
+		private Control.ImageLabel MinDayTriggerRate6;
+		private Control.ImageLabel NightAttackName6;
+		private Control.ImageLabel NightAttackPower6;
+		private Control.ImageLabel MaxNightTriggerRate6;
+		private Control.ImageLabel MinNightTriggerRate6;
 	}
 }
