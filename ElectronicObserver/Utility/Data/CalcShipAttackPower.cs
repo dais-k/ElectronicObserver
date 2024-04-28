@@ -1360,9 +1360,11 @@ namespace ElectronicObserver.Utility.Data
 						basepower *= rate_toku4tankkai1[skin];
 					}
 
-					if (landingCraftLevel != 0) //改修レベル
+					if (landingCraftLevel != 0 || toku4tankLevel != 0) //改修レベル
 					{
-						basepower *= ((landingCraftLevel / landingCraft + toku4tankLevel / toku4tankkai) / 50) + 1;
+						double avglandingCraftLevel = landingCraftLevel != 0 ? landingCraftLevel / landingCraft : 0;
+						double avgtoku4Level = toku4tankLevel != 0 ? toku4tankLevel / (toku4tank + toku4tankkai) : 0;
+						basepower *= ((avglandingCraftLevel+ avgtoku4Level) / 50) + 1;
 					}
 				}
 
@@ -1708,14 +1710,18 @@ namespace ElectronicObserver.Utility.Data
 					{
 						basepower *= 1.5;
 					}
-					if (landingCraftLevel != 0)
-					{ 
-						if(rikusen>=1 && no2Tank >= 1)
-							basepower *= Math.Pow(((landingCraftLevel / landingCraft + toku4tankLevel / toku4tankkai) / 50) + 1, 3);
+
+					if (landingCraftLevel != 0 || toku4tankLevel != 0) //改修レベル
+					{
+						double avglandingCraftLevel = landingCraftLevel != 0 ? landingCraftLevel / landingCraft : 0;
+						double avgtoku4Level = toku4tankLevel != 0 ? toku4tankLevel / (toku4tank + toku4tankkai) : 0;
+
+						if (rikusen>=1 && no2Tank >= 1)
+							basepower *= Math.Pow(((avglandingCraftLevel + avgtoku4Level) / 50) + 1, 3);
 						else if(rikusen + isshiki + no3Tank + no3TankJ != 0)
-							basepower *= Math.Pow(((landingCraftLevel / landingCraft + toku4tankLevel / toku4tankkai) / 50) + 1, 2);
+							basepower *= Math.Pow(((avglandingCraftLevel + avgtoku4Level) / 50) + 1, 2);
 						else
-							basepower *= ((landingCraftLevel / landingCraft + toku4tankLevel / toku4tankkai)/ 50) + 1;
+							basepower *= ((avglandingCraftLevel + avgtoku4Level) / 50) + 1;
 					}
 				}
 
