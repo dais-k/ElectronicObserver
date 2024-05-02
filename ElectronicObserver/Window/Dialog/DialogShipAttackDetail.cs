@@ -658,7 +658,7 @@ namespace ElectronicObserver.Window.Dialog
 						ASWAttackComment.Text = "";
 						break;
 				}
-				ASWAttackComment.Text += ASWAttackComment?.Text != "" ? shipData.CanOpeningASW ? "・先制対潜：〇" : "先制対潜：×" : shipData.CanOpeningASW ? " ※先制対潜：〇" : " ※先制対潜：×";
+				ASWAttackComment.Text += ASWAttackComment?.Text != "" ? shipData.CanOpeningASW ? "・先制対潜：〇" : "・先制対潜：×" : shipData.CanOpeningASW ? " ※先制対潜：〇" : " ※先制対潜：×";
 			}
 			else
 				TableASWAttack.Visible = false;
@@ -669,16 +669,19 @@ namespace ElectronicObserver.Window.Dialog
 			if (Calculator.GetAirSuperiority(shipData) > 0)
 			{ 
 				TableAirsup.Visible = true;
-				double[] airsup = new double[5];
+				string airsup = "";
 				AirsupPower.Text = Calculator.GetAirSuperiority(shipData).ToString();
 				for(int i = 0; i < shipData.SlotInstance.Count(); i++)
 				{
-					if (shipData.SlotInstance[i] != null)
-						airsup[i] = Calculator.GetAirSuperiority(shipData.SlotInstance[i].EquipmentID, ship.Aircraft[i], shipData.SlotInstance[i].AircraftLevel, shipData.SlotInstance[i].Level, -1, false);
+					if (shipData.SlotInstance[i] == null)
+						continue;
+
+					if (i == 0)
+						airsup = " ( " + Calculator.GetAirSuperiority(shipData.SlotInstance[i].EquipmentID, ship.Aircraft[i], shipData.SlotInstance[i].AircraftLevel, shipData.SlotInstance[i].Level, -1, false);
 					else
-						airsup[i] = 0;
+						airsup += " ｜ " + Calculator.GetAirSuperiority(shipData.SlotInstance[i].EquipmentID, ship.Aircraft[i], shipData.SlotInstance[i].AircraftLevel, shipData.SlotInstance[i].Level, -1, false);
 				}
-				AirsupPowerDetail.Text = " ( " + airsup[0] + " ｜ " + airsup[1] + " ｜ " + airsup[2] + " ｜ " + airsup[3] + " ｜ " + airsup[4] + " )";
+				AirsupPowerDetail.Text = airsup + " )";
 			}
 			else
 				TableAirsup.Visible = false;
@@ -689,19 +692,23 @@ namespace ElectronicObserver.Window.Dialog
 			if (shipData.AirBattlePower > 0)
 			{
 				TableAirBattle.Visible = true;
-				double[] airbattle = new double[5];
+				string airbattle = "";
 				bool attacker = false;
 				AirBattlePower.Text = shipData.AirBattlePower.ToString();
 				for (int i = 0; i < shipData.SlotInstance.Count(); i++)
 				{
+					if (shipData.SlotInstance[i] == null)
+						continue;
+					
 					attacker = (attacker == true || shipData.SlotInstanceMaster[i]?.CategoryType == EquipmentTypes.CarrierBasedTorpedo); 
-					if (shipData.SlotInstance[i] != null)
-						airbattle[i] = shipData.AirBattlePowers[i];
+					
+					if (i == 0)
+						airbattle = " ( " + shipData.AirBattlePowers[i];
 					else
-						airbattle[i] = 0;
+						airbattle += " ｜ " + shipData.AirBattlePowers[i];
 				}
-				AirBattleDetail.Text = " ( " + airbattle[0] + " ｜ " + airbattle[1] + " ｜ " + airbattle[2] + " ｜ " + airbattle[3] + " ｜ " + airbattle[4] + " )"; 
-				AirBattleDetail.Text += attacker? " ※艦攻威力×1.5": "";
+				airbattle += attacker ? " ) ※艦攻威力×1.5" : " )";
+				AirBattleDetail.Text = airbattle;
 			}
 			else
 				TableAirBattle.Visible = false;
@@ -740,7 +747,22 @@ namespace ElectronicObserver.Window.Dialog
 				TableAACutinList.Visible = true;
 				foreach ( var aacut in aacutintypelist.Select((name, num) => new { name, num }))
 				{
-					AACutinTypes[aacut.num].Text = (aacut.name >= 4 && aacut.name <= 9)? aacut.name + "[汎用]" : aacut.name + "[固有]";
+					switch(aacut.name)
+					{
+						case 4:
+						case 5:
+						case 6:
+						case 7:
+						case 8:
+						case 9:
+						case 12:
+						case 13:
+							AACutinTypes[aacut.num].Text = aacut.name + "[汎用]";
+							break;
+						default:
+							AACutinTypes[aacut.num].Text = aacut.name + "[固有]";
+							break;
+					}
 					AACutinNames[aacut.num].Text = Constants.GetAACutinKind(aacut.name);
 				}
 			}
