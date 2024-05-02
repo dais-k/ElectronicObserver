@@ -384,6 +384,9 @@ namespace ElectronicObserver.Data.Quest
 						case 362:   //|362|４|特型初代「第十一駆逐隊」演習スペシャル！|演習A勝利以上4|条件：吹雪、白雪、初雪、深雪|イヤーリーだが1日で進捗リセット|
 							Progresses.Add(new ProgressPractice(q, 4, "A", true));
 							break;
+						case 363:   //|363|週|【艦隊11周年記念任務】記念艦隊演習！|演習A勝利以上5|条件：大和、翔鶴、吹雪、朧、Tuscaloosa、Houston、Northampton、山汐丸、熊野丸から3隻以上 | 1日で進捗リセット|
+							Progresses.Add(new ProgressPractice(q, 5, "A", true));
+							break;
 						case 368:   //|368|７|「十六駆」演習！|演習S勝利以上3|天津風、雪風、時津風、初風のうち2隻以上|イヤーリーだが1日で進捗リセット|
 							Progresses.Add(new ProgressPractice(q, 3, "S", true));
 							break;
@@ -510,6 +513,12 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressExpedition(q, 1, new[]{ 9 }),
 								new ProgressExpedition(q, 1, new[]{ 100 }),
 								new ProgressExpedition(q, 1, new[]{ 110 }),
+							})); break;
+						case 449:   //|449|週|【艦隊11周年記念任務】資源輸出|05「海上護衛任務」09「タンカー護衛任務」11「ボーキサイト輸送任務」(2回ずつ)|
+							Progresses.Add(new ProgressMultiExpedition(q, new[]{
+								new ProgressExpedition(q, 2, new[]{ 5 }),
+								new ProgressExpedition(q, 2, new[]{ 9 }),
+								new ProgressExpedition(q, 2, new[]{ 11 }),
 							})); break;
 						//============================ 500～599 ============================
 						case 503:   //|503|艦隊大整備！|入渠5
@@ -941,6 +950,21 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressSpecialBattle(q, 1, "A", new[] { 13 }, true),
 								new ProgressSpecialBattle(q, 1, "A", new[] { 15 }, true),
 								new ProgressSpecialBattle(q, 1, "A", new[] { 32 }, true),
+							}));
+							break;
+						case 1010:  //|1010|週|【期間限定任務】対潜掃討作戦|1-5 S勝利×3回,1-6×1回港到達|条件：(駆逐+海防)3|
+							Progresses.Add(new ProgressMultiBattle(q, new[] {
+								new ProgressSpecialBattle(q, 3, "S", new[] { 15 }, true),
+								new ProgressSpecialBattle(q, 1, "x", new[] { 16 }, true),
+							}));
+							break;
+						case 1011:  //|1011|週|【期間限定任務】精強海防艦、緊急近海防衛！|1-1, 1-2, 1-3, 1-5, 2-1 A勝利以上×1回|条件：海防3(旗艦含)|
+							Progresses.Add(new ProgressMultiBattle(q, new[] {
+								new ProgressSpecialBattle(q, 1, "A", new[] { 11 }, true),
+								new ProgressSpecialBattle(q, 1, "A", new[] { 12 }, true),
+								new ProgressSpecialBattle(q, 1, "A", new[] { 13 }, true),
+								new ProgressSpecialBattle(q, 1, "A", new[] { 15 }, true),
+								new ProgressSpecialBattle(q, 1, "A", new[] { 21 }, true),
 							}));
 							break;
 						//============================ 1100～1199 ============================

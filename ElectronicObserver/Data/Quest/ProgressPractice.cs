@@ -291,6 +291,29 @@ namespace ElectronicObserver.Data.Quest
 						ret = true;
 					}
 					break;
+				case 363:   //|363|週|【艦隊11周年記念任務】記念艦隊演習！|演習A勝利以上5|条件：大和、翔鶴、吹雪、朧、Tuscaloosa、Houston、Northampton、山汐丸、熊野丸から3隻以上 | 1日で進捗リセット|
+					if (ships.Count(s =>
+					{
+						switch (s?.MasterShip?.NameReading)
+						{
+							case "やまと":
+							case "しょうかく":
+							case "ふぶき":
+							case "おぼろ":
+							case "タスカルーサ":
+							case "ヒューストン":
+							case "ノーザンプトン":
+							case "やましおまる":
+							case "くまのまる":
+								return true;
+							default:
+								return false;
+						}
+					}) >= 3)
+					{
+						ret = true;
+					}
+					break;
 				case 368:   //|368|７|「十六駆」演習！|演習S勝利以上3|天津風、雪風、時津風、初風のうち2隻以上|イヤーリーだが1日で進捗リセット|
 					if (ships.Count(s =>
 					{

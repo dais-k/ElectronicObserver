@@ -580,6 +580,15 @@ namespace ElectronicObserver.Data.Quest
 							}
 						}) >= 4;
 					break;
+				case 1010:  //|1010|週|【期間限定任務】対潜掃討作戦|1-5 S勝利×3回,1-6×1回港到達|条件：(駆逐+海防)3|
+					isAccepted =
+						members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Destroyer || s?.MasterShip?.ShipType == ShipTypes.Escort) >= 3;
+					break;
+				case 1011:  //|1011|週|【期間限定任務】精強海防艦、緊急近海防衛！|1-1, 1-2, 1-3, 1-5, 2-1 A勝利以上×1回|条件：海防3(旗艦含)|
+					isAccepted =
+						(members.FirstOrDefault()?.MasterShip?.ShipType == ShipTypes.Escort &&
+						 members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Escort) >= 3);
+					break;
 			}
 
 			// 第二ゲージでも第一ボスに行ける場合があるので、個別対応が必要
