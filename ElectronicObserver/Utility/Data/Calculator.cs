@@ -99,7 +99,7 @@ namespace ElectronicObserver.Utility.Data
 			//====================
 			double levelBonus = LevelBonus.ContainsKey(category) ? LevelBonus[category] : 0;
 			double interceptorBonus = 0;
-			if (equipmentID != 60 && equipmentID != 154 && equipmentID != 219 && equipmentID != 447 && equipmentID != 487)
+			if (category == EquipmentTypes.CarrierBasedBomber && !eq.IsAirLevelBonusedGroundBomber)
 				levelBonus = 0;
 
 			if (category == EquipmentTypes.LandBasedAttacker || category == EquipmentTypes.HeavyBomber)
