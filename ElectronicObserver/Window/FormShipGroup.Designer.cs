@@ -121,6 +121,7 @@
             this.Status_ShipCount = new System.Windows.Forms.ToolStripStatusLabel();
             this.Status_LevelTotal = new System.Windows.Forms.ToolStripStatusLabel();
             this.Status_LevelAverage = new System.Windows.Forms.ToolStripStatusLabel();
+            this.MenuMember_OpenShipAttackDetail = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.ShipView)).BeginInit();
             this.MenuMember.SuspendLayout();
             this.MenuGroup.SuspendLayout();
@@ -667,67 +668,68 @@
             this.MenuMember_ColumnFilter,
             this.MenuMember_SortOrder,
             this.toolStripSeparator3,
-            this.MenuMember_CSVOutput});
+            this.MenuMember_CSVOutput,
+            this.MenuMember_OpenShipAttackDetail});
             this.MenuMember.Name = "MenuMember";
-            this.MenuMember.Size = new System.Drawing.Size(195, 170);
+            this.MenuMember.Size = new System.Drawing.Size(216, 214);
             this.MenuMember.Opening += new System.ComponentModel.CancelEventHandler(this.MenuMember_Opening);
             // 
             // MenuMember_AddToGroup
             // 
             this.MenuMember_AddToGroup.Name = "MenuMember_AddToGroup";
-            this.MenuMember_AddToGroup.Size = new System.Drawing.Size(194, 22);
+            this.MenuMember_AddToGroup.Size = new System.Drawing.Size(215, 22);
             this.MenuMember_AddToGroup.Text = "グループへ追加(&A)...";
             this.MenuMember_AddToGroup.Click += new System.EventHandler(this.MenuMember_AddToGroup_Click);
             // 
             // MenuMember_CreateGroup
             // 
             this.MenuMember_CreateGroup.Name = "MenuMember_CreateGroup";
-            this.MenuMember_CreateGroup.Size = new System.Drawing.Size(194, 22);
+            this.MenuMember_CreateGroup.Size = new System.Drawing.Size(215, 22);
             this.MenuMember_CreateGroup.Text = "新規グループの作成(&N)...";
             this.MenuMember_CreateGroup.Click += new System.EventHandler(this.MenuMember_CreateGroup_Click);
             // 
             // MenuMember_Exclude
             // 
             this.MenuMember_Exclude.Name = "MenuMember_Exclude";
-            this.MenuMember_Exclude.Size = new System.Drawing.Size(194, 22);
+            this.MenuMember_Exclude.Size = new System.Drawing.Size(215, 22);
             this.MenuMember_Exclude.Text = "除外(&E)";
             this.MenuMember_Exclude.Click += new System.EventHandler(this.MenuMember_Exclude_Click);
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(191, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(212, 6);
             // 
             // MenuMember_Filter
             // 
             this.MenuMember_Filter.Name = "MenuMember_Filter";
-            this.MenuMember_Filter.Size = new System.Drawing.Size(194, 22);
+            this.MenuMember_Filter.Size = new System.Drawing.Size(215, 22);
             this.MenuMember_Filter.Text = "フィルタ設定(&F)...";
             this.MenuMember_Filter.Click += new System.EventHandler(this.MenuMember_Filter_Click);
             // 
             // MenuMember_ColumnFilter
             // 
             this.MenuMember_ColumnFilter.Name = "MenuMember_ColumnFilter";
-            this.MenuMember_ColumnFilter.Size = new System.Drawing.Size(194, 22);
+            this.MenuMember_ColumnFilter.Size = new System.Drawing.Size(215, 22);
             this.MenuMember_ColumnFilter.Text = "列の表示設定(&C)...";
             this.MenuMember_ColumnFilter.Click += new System.EventHandler(this.MenuMember_ColumnFilter_Click);
             // 
             // MenuMember_SortOrder
             // 
             this.MenuMember_SortOrder.Name = "MenuMember_SortOrder";
-            this.MenuMember_SortOrder.Size = new System.Drawing.Size(194, 22);
+            this.MenuMember_SortOrder.Size = new System.Drawing.Size(215, 22);
             this.MenuMember_SortOrder.Text = "自動ソート設定(&S)...";
             this.MenuMember_SortOrder.Click += new System.EventHandler(this.MenuMember_SortOrder_Click);
             // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(191, 6);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(212, 6);
             // 
             // MenuMember_CSVOutput
             // 
             this.MenuMember_CSVOutput.Name = "MenuMember_CSVOutput";
-            this.MenuMember_CSVOutput.Size = new System.Drawing.Size(194, 22);
+            this.MenuMember_CSVOutput.Size = new System.Drawing.Size(215, 22);
             this.MenuMember_CSVOutput.Text = "CSV出力(&O)...";
             this.MenuMember_CSVOutput.Click += new System.EventHandler(this.MenuMember_CSVOutput_Click);
             // 
@@ -742,47 +744,47 @@
             this.MenuGroup_AutoUpdate,
             this.MenuGroup_ShowStatusBar});
             this.MenuGroup.Name = "MenuGroup";
-            this.MenuGroup.Size = new System.Drawing.Size(189, 142);
+            this.MenuGroup.Size = new System.Drawing.Size(221, 142);
             this.MenuGroup.Opening += new System.ComponentModel.CancelEventHandler(this.MenuGroup_Opening);
             // 
             // MenuGroup_Add
             // 
             this.MenuGroup_Add.Name = "MenuGroup_Add";
-            this.MenuGroup_Add.Size = new System.Drawing.Size(188, 22);
+            this.MenuGroup_Add.Size = new System.Drawing.Size(220, 22);
             this.MenuGroup_Add.Text = "グループを追加(&A)";
             this.MenuGroup_Add.Click += new System.EventHandler(this.MenuGroup_Add_Click);
             // 
             // MenuGroup_Copy
             // 
             this.MenuGroup_Copy.Name = "MenuGroup_Copy";
-            this.MenuGroup_Copy.Size = new System.Drawing.Size(188, 22);
+            this.MenuGroup_Copy.Size = new System.Drawing.Size(220, 22);
             this.MenuGroup_Copy.Text = "グループをコピー(&C)";
             this.MenuGroup_Copy.Click += new System.EventHandler(this.MenuGroup_Copy_Click);
             // 
             // MenuGroup_Rename
             // 
             this.MenuGroup_Rename.Name = "MenuGroup_Rename";
-            this.MenuGroup_Rename.Size = new System.Drawing.Size(188, 22);
+            this.MenuGroup_Rename.Size = new System.Drawing.Size(220, 22);
             this.MenuGroup_Rename.Text = "グループ名の変更(&R)...";
             this.MenuGroup_Rename.Click += new System.EventHandler(this.MenuGroup_Rename_Click);
             // 
             // MenuGroup_Delete
             // 
             this.MenuGroup_Delete.Name = "MenuGroup_Delete";
-            this.MenuGroup_Delete.Size = new System.Drawing.Size(188, 22);
+            this.MenuGroup_Delete.Size = new System.Drawing.Size(220, 22);
             this.MenuGroup_Delete.Text = "グループを削除(&D)";
             this.MenuGroup_Delete.Click += new System.EventHandler(this.MenuGroup_Delete_Click);
             // 
             // toolStripSeparator4
             // 
             this.toolStripSeparator4.Name = "toolStripSeparator4";
-            this.toolStripSeparator4.Size = new System.Drawing.Size(185, 6);
+            this.toolStripSeparator4.Size = new System.Drawing.Size(217, 6);
             // 
             // MenuGroup_AutoUpdate
             // 
             this.MenuGroup_AutoUpdate.CheckOnClick = true;
             this.MenuGroup_AutoUpdate.Name = "MenuGroup_AutoUpdate";
-            this.MenuGroup_AutoUpdate.Size = new System.Drawing.Size(188, 22);
+            this.MenuGroup_AutoUpdate.Size = new System.Drawing.Size(220, 22);
             this.MenuGroup_AutoUpdate.Text = "自動更新する";
             // 
             // MenuGroup_ShowStatusBar
@@ -791,7 +793,7 @@
             this.MenuGroup_ShowStatusBar.CheckOnClick = true;
             this.MenuGroup_ShowStatusBar.CheckState = System.Windows.Forms.CheckState.Checked;
             this.MenuGroup_ShowStatusBar.Name = "MenuGroup_ShowStatusBar";
-            this.MenuGroup_ShowStatusBar.Size = new System.Drawing.Size(188, 22);
+            this.MenuGroup_ShowStatusBar.Size = new System.Drawing.Size(220, 22);
             this.MenuGroup_ShowStatusBar.Text = "ステータスバーを表示する";
             this.MenuGroup_ShowStatusBar.CheckedChanged += new System.EventHandler(this.MenuGroup_ShowStatusBar_CheckedChanged);
             // 
@@ -860,6 +862,13 @@
             // 
             this.Status_LevelAverage.Name = "Status_LevelAverage";
             this.Status_LevelAverage.Size = new System.Drawing.Size(0, 17);
+            // 
+            // MenuMember_OpenShipAttackDetail
+            // 
+            this.MenuMember_OpenShipAttackDetail.Name = "MenuMember_OpenShipAttackDetail";
+            this.MenuMember_OpenShipAttackDetail.Size = new System.Drawing.Size(215, 22);
+            this.MenuMember_OpenShipAttackDetail.Text = "攻撃詳細を開く(&I)";
+            this.MenuMember_OpenShipAttackDetail.Click += new System.EventHandler(this.MenuMember_OpenShipAttackDetail_Click);
             // 
             // FormShipGroup
             // 
@@ -975,5 +984,6 @@
 		private System.Windows.Forms.ToolStripMenuItem MenuMember_CreateGroup;
 		private System.Windows.Forms.ToolStripMenuItem MenuMember_Exclude;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
+		private System.Windows.Forms.ToolStripMenuItem MenuMember_OpenShipAttackDetail;
 	}
 }
