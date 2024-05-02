@@ -1232,12 +1232,10 @@ namespace ElectronicObserver.Utility.Data
 						break;
 					case 525:
 						toku4tank++;
-						landingCraft++;
 						toku4tankLevel += slot.Level;
 						break;
 					case 526:
 						toku4tankkai++;
-						landingCraft++;
 						toku4tankLevel += slot.Level;
 						break;
 					case 319:
@@ -1290,7 +1288,7 @@ namespace ElectronicObserver.Utility.Data
 						basepower *= rate_depthCharge1[skin];
 				}
 
-				if (landingCraft != 0) //上陸用舟艇
+				if (landingCraft + toku4tank + toku4tankkai != 0) //上陸用舟艇 + 特四式内火艇・改
 				{
 					basepower *= rate_landingCraft[skin];
 
@@ -1349,7 +1347,8 @@ namespace ElectronicObserver.Utility.Data
 							else
 								basepower *= rate_busouAB1[skin];
 						}
-						else if(toku4tank + toku4tankkai >= 2) //特四式内火艇+改
+
+						if (toku4tank + toku4tankkai >= 2 && daihatsuAB + busouDaihatsu < 2) //特四式内火艇+改
 						{
 							basepower *= rate_toku4tank[skin];
 						}
@@ -1368,7 +1367,7 @@ namespace ElectronicObserver.Utility.Data
 					}
 				}
 
-				if (toku2tank != 0) //内火艇
+				if (toku2tank != 0) //特二式内火艇
 				{
 					if (toku2tank >= 2)
 						basepower *= rate_spAmphibiousTank2[skin];
@@ -1610,12 +1609,10 @@ namespace ElectronicObserver.Utility.Data
 						break;
 					case 525:
 						toku4tank++;
-						landingCraft++;
 						toku4tankLevel += slot.Level;
 						break;
 					case 526:
 						toku4tankkai++;
-						landingCraft++;
 						toku4tankLevel += slot.Level;
 						break;
 				}
@@ -1647,7 +1644,7 @@ namespace ElectronicObserver.Utility.Data
 						basepower *= 1.15;
 				}
 
-				if (landingCraft != 0)
+				if (landingCraft + toku4tank + toku4tankkai != 0)
 				{
 					basepower *= 1.7;
 
@@ -1701,7 +1698,8 @@ namespace ElectronicObserver.Utility.Data
 						else
 							basepower *= 1.5;
 					}
-					else if (toku4tank + toku4tankkai >= 2) //特四式内火艇+改
+
+					if (toku4tank + toku4tankkai >= 2 && daihatsuAB + busouDaihatsu < 2) //特四式内火艇+改
 					{
 						basepower *= 1.1;
 					}
