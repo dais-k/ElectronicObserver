@@ -387,8 +387,11 @@ namespace ElectronicObserver.Data.Quest
 						case 363:   //|363|週|【艦隊11周年記念任務】記念艦隊演習！|演習A勝利以上5|条件：大和、翔鶴、吹雪、朧、Tuscaloosa、Houston、Northampton、山汐丸、熊野丸から3隻以上 | 1日で進捗リセット|
 							Progresses.Add(new ProgressPractice(q, 5, "A", true));
 							break;
-						case 368:   //|368|７|「十六駆」演習！|演習S勝利以上3|天津風、雪風、時津風、初風のうち2隻以上|イヤーリーだが1日で進捗リセット|
+						case 368:   //|368|７|「十六駆」演習！|演習S勝利以上3|条件：天津風、雪風、時津風、初風のうち2隻以上|イヤーリーだが1日で進捗リセット|
 							Progresses.Add(new ProgressPractice(q, 3, "S", true));
+							break;
+						case 371:   //|371|４|春です！「春雨」、演習しますっ！|演習A勝利以上×4回|条件：春雨(旗艦)・村雨/夕立/五月雨/白露/時雨から3隻|イヤーリーだが1日で進捗リセット|
+							Progresses.Add(new ProgressPractice(q, 4, "A", true));
 							break;
 						//============================ 400～499 ============================
 						case 402:   //|402|「遠征」を3回成功させよう！|遠征成功3
@@ -944,7 +947,7 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressSpecialBattle(q, 1, "S", new[] { 64 }, true),
 							}));
 							break;
-						case 1005:  //|1005|単|精強「第七駆逐隊」緊急出動！|1-2、1-3、1-5、3-2ボスを各A勝利1回ずつ|条件：「朧改」「漣改」「曙改(二)」「潮改(二)」を編成に入れる|
+						case 1005:  //|1005|１|精強「第七駆逐隊」緊急出動！|1-2、1-3、1-5、3-2ボスを各A勝利1回ずつ|条件：「朧改」「漣改」「曙改(二)」「潮改(二)」を編成に入れる|
 							Progresses.Add(new ProgressMultiBattle(q, new[] {
 								new ProgressSpecialBattle(q, 1, "A", new[] { 12 }, true),
 								new ProgressSpecialBattle(q, 1, "A", new[] { 13 }, true),

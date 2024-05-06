@@ -332,6 +332,26 @@ namespace ElectronicObserver.Data.Quest
 						ret = true;
 					}
 					break;
+				case 371:   //|371|４|春です！「春雨」、演習しますっ！|演習A勝利以上×4回|条件：春雨(旗艦)・村雨/夕立/五月雨/白露/時雨から3隻|イヤーリーだが1日で進捗リセット|
+					if (ships.FirstOrDefault()?.MasterShip?.NameReading == "はるさめ" && 
+						ships.Count(s =>
+					{
+						switch (s?.MasterShip?.NameReading)
+						{
+							case "むらさめ":
+							case "ゆうだち":
+							case "さみだれ":
+							case "しらつゆ":
+							case "しぐれ":
+								return true;
+							default:
+								return false;
+						}
+					}) >= 3)
+					{
+						ret = true;
+					}
+					break;
 				default:
 					//ここに来たらバグ
 					ret = false;
