@@ -1,6 +1,7 @@
 ﻿using DynaJson;
 using ElectronicObserver.Observer;
 using ElectronicObserver.Resource;
+using ElectronicObserver.Utility.Mathematics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,18 +21,15 @@ namespace ElectronicObserver.Window
 	public partial class FormAccessTime : DockContent
 	{
 
-		private Regex _apiPattern;
 		private string _currentAPIPath; 
-		private string _LastAccessTime;
-		private string _LastRequestReceivedTime;
+		private DateTime _LastAccessTime;
+		private DateTime _LastRequestReceivedTime;
 		private string _Last4hoursIntervalUntil;
 		private string _Last4hoursIntervalTo;
-		private string _NowAccessTime;
 
 		public FormAccessTime(FormMain parent)
 		{
 			InitializeComponent();
-
 
 			ConfigurationChanged();
 
@@ -43,19 +41,20 @@ namespace ElectronicObserver.Window
 
 			var c = Utility.Configuration.Config; 
 			var o = APIObserver.Instance;
+			DateTime dateTime;
 
 			o.RequestReceived += RequestReceived;
 			o.ResponseReceived += ResponseReceived;
 
 
-			if (c.FormAccessTime.LastRequestReceivedTime != "")
-				_LastRequestReceivedTime = c.FormAccessTime.LastRequestReceivedTime;
+			if (c.FormAccessTime.LastRequestReceivedTime != "" && DateTime.TryParse(c.FormAccessTime.LastRequestReceivedTime, out dateTime))
+				_LastRequestReceivedTime = dateTime;
 			else
-				_LastRequestReceivedTime = DateTime.Now.ToString();
+				_LastRequestReceivedTime = DateTime.Now;
 
 			_LastAccessTime = _LastRequestReceivedTime;
-			_Last4hoursIntervalUntil = (c.FormAccessTime.Last4hoursIntervalUntil != "") ? c.FormAccessTime.Last4hoursIntervalUntil : "不明";
-			_Last4hoursIntervalTo = (c.FormAccessTime.Last4hoursIntervalTo != "") ? c.FormAccessTime.Last4hoursIntervalTo : "不明";
+			_Last4hoursIntervalUntil = (c.FormAccessTime.Last4hoursIntervalUntil != "" && DateTime.TryParse(c.FormAccessTime.Last4hoursIntervalUntil, out dateTime)) ? c.FormAccessTime.Last4hoursIntervalUntil : "不明";
+			_Last4hoursIntervalTo = (c.FormAccessTime.Last4hoursIntervalTo != "" && DateTime.TryParse(c.FormAccessTime.Last4hoursIntervalTo, out dateTime)) ? c.FormAccessTime.Last4hoursIntervalTo : "不明";
 
 
 			Utility.Configuration.Instance.ConfigurationChanged += ConfigurationChanged;
@@ -63,48 +62,40 @@ namespace ElectronicObserver.Window
 
 		void RequestReceived(string apiname, dynamic data)
 		{
-			if (_apiPattern != null && !_apiPattern.Match(apiname).Success)
-				return;
-
-			LoadRequest(apiname, data);
+			LoadRequest(apiname);
 		}
 
 		void ResponseReceived(string apiname, dynamic data)
 		{
-			if (_apiPattern != null && !_apiPattern.Match(apiname).Success)
-				return;
-
-
-			LoadResponse(apiname, data);
+			LoadResponse(apiname);
 		}
 
-		private void LoadRequest(string apiname, Dictionary<string, string> data)
+		private void LoadRequest(string apiname)
 		{
-			_NowAccessTime = DateTime.Now.ToString();
-			TimeViewer.Text = apiname + " : Request\r\n[" + _NowAccessTime + "]";
+			TimeViewer.Text = apiname + " : Request\r\n[" + DateTime.Now.ToString() + "]";
 			_currentAPIPath = apiname;
 
 		}
 
-		void LoadResponse(string apiname, dynamic data)
+		void LoadResponse(string apiname)
 		{
 			var c = Utility.Configuration.Config;
 			TimeSpan _TotalAccessTime;
 			DateTime now = DateTime.Now;
 
-			DateTime last = DateTime.Parse(_LastRequestReceivedTime);
+			DateTime last =_LastRequestReceivedTime;
 			TimeSpan _AccessInterval = now - last;
 
 			if (_AccessInterval.TotalHours >= 4)
 			{
-				_Last4hoursIntervalTo = _LastRequestReceivedTime;
+				_Last4hoursIntervalTo = DateTimeHelper.TimeToCSVString(_LastRequestReceivedTime);
 				c.FormAccessTime.Last4hoursIntervalTo = _Last4hoursIntervalTo;
-				_Last4hoursIntervalUntil = now.ToString();
+				_Last4hoursIntervalUntil = DateTimeHelper.TimeToCSVString(now);
 				c.FormAccessTime.Last4hoursIntervalUntil = _Last4hoursIntervalUntil;
 			}
 			
 			if (_Last4hoursIntervalUntil == "不明" || _Last4hoursIntervalTo == "不明")
-				_TotalAccessTime = now - DateTime.Parse(_LastAccessTime);
+				_TotalAccessTime = now -_LastAccessTime;
 			else
 				_TotalAccessTime = now - DateTime.Parse(_Last4hoursIntervalUntil);
 
@@ -112,8 +103,8 @@ namespace ElectronicObserver.Window
 			TimeViewer.Text += (_TotalAccessTime.Days * 24 + _TotalAccessTime.Hours).ToString() + "時間" + _TotalAccessTime.Minutes.ToString() + "分" + _TotalAccessTime.Seconds.ToString() + "秒 連続アクセス中...";
 			TimeViewer.Text += "\r\n" + "最後に艦これを4時間以上アクセスしなかった期間：\r\n[" + _Last4hoursIntervalTo + "～" + _Last4hoursIntervalUntil + "]";
 
-			_LastRequestReceivedTime = now.ToString();
-			c.FormAccessTime.LastRequestReceivedTime = _LastRequestReceivedTime;
+			_LastRequestReceivedTime = now;
+			c.FormAccessTime.LastRequestReceivedTime = DateTimeHelper.TimeToCSVString(_LastRequestReceivedTime);
 
 		}
 
