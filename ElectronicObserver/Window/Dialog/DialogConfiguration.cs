@@ -374,7 +374,7 @@ namespace ElectronicObserver.Window.Dialog
 			Control_UseSystemVolume.Checked = config.Control.UseSystemVolume;
 			Control_PowerEngagementForm.SelectedIndex = config.Control.PowerEngagementForm - 1;
 			Control_ShowSallyAreaAlertDialog.Checked = config.Control.ShowSallyAreaAlertDialog;
-            Control_ShowExpeditionAlertDialog.Checked = config.Control.ShowExpeditionAlertDialog;
+			Control_ShowExpeditionAlertDialog.Checked = config.Control.ShowExpeditionAlertDialog;
 
 			//[デバッグ]
 			Debug_EnableDebugMenu.Checked = config.Debug.EnableDebugMenu;
@@ -465,6 +465,7 @@ namespace ElectronicObserver.Window.Dialog
 			FormShipGroup_AutoUpdate.Checked = config.FormShipGroup.AutoUpdate;
 			FormShipGroup_ShowStatusBar.Checked = config.FormShipGroup.ShowStatusBar;
 			FormShipGroup_ShipNameSortMethod.SelectedIndex = config.FormShipGroup.ShipNameSortMethod;
+			FormShipGroup_WhichOpenDialogMethod.SelectedIndex = config.FormShipGroup.WhichOpenDialogMethod;
 
 			FormBattle_IsScrollable.Checked = config.FormBattle.IsScrollable;
 			FormBattle_HideDuringBattle.Checked = config.FormBattle.HideDuringBattle;
@@ -487,7 +488,7 @@ namespace ElectronicObserver.Window.Dialog
 			FormBrowser_HardwareAccelerationEnabled.Checked = config.FormBrowser.HardwareAccelerationEnabled;
 			FormBrowser_PreserveDrawingBuffer.Checked = config.FormBrowser.PreserveDrawingBuffer;
 			FormBrowser_ForceColorProfile.Checked = config.FormBrowser.ForceColorProfile;
-            FormBrowser_SavesBrowserLog.Checked = config.FormBrowser.SavesBrowserLog;
+			FormBrowser_SavesBrowserLog.Checked = config.FormBrowser.SavesBrowserLog;
 
 			if (!config.FormBrowser.IsToolMenuVisible)
 				FormBrowser_ToolMenuDockStyle.SelectedIndex = 4;
@@ -597,7 +598,7 @@ namespace ElectronicObserver.Window.Dialog
 			config.Control.UseSystemVolume = Control_UseSystemVolume.Checked;
 			config.Control.PowerEngagementForm = Control_PowerEngagementForm.SelectedIndex + 1;
 			config.Control.ShowSallyAreaAlertDialog = Control_ShowSallyAreaAlertDialog.Checked;
-            config.Control.ShowExpeditionAlertDialog = Control_ShowExpeditionAlertDialog.Checked;
+			config.Control.ShowExpeditionAlertDialog = Control_ShowExpeditionAlertDialog.Checked;
 
 			//[デバッグ]
 			config.Debug.EnableDebugMenu = Debug_EnableDebugMenu.Checked;
@@ -695,6 +696,7 @@ namespace ElectronicObserver.Window.Dialog
 			config.FormShipGroup.AutoUpdate = FormShipGroup_AutoUpdate.Checked;
 			config.FormShipGroup.ShowStatusBar = FormShipGroup_ShowStatusBar.Checked;
 			config.FormShipGroup.ShipNameSortMethod = FormShipGroup_ShipNameSortMethod.SelectedIndex;
+			config.FormShipGroup.WhichOpenDialogMethod = FormShipGroup_WhichOpenDialogMethod.SelectedIndex;
 
 			config.FormBattle.IsScrollable = FormBattle_IsScrollable.Checked;
 			config.FormBattle.HideDuringBattle = FormBattle_HideDuringBattle.Checked;
@@ -718,7 +720,7 @@ namespace ElectronicObserver.Window.Dialog
 			config.FormBrowser.HardwareAccelerationEnabled = FormBrowser_HardwareAccelerationEnabled.Checked;
 			config.FormBrowser.PreserveDrawingBuffer = FormBrowser_PreserveDrawingBuffer.Checked;
 			config.FormBrowser.ForceColorProfile = FormBrowser_ForceColorProfile.Checked;
-            config.FormBrowser.SavesBrowserLog = FormBrowser_SavesBrowserLog.Checked;
+			config.FormBrowser.SavesBrowserLog = FormBrowser_SavesBrowserLog.Checked;
 			if (FormBrowser_ToolMenuDockStyle.SelectedIndex == 4)
 			{
 				config.FormBrowser.IsToolMenuVisible = false;

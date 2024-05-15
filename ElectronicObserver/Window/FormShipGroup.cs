@@ -51,6 +51,7 @@ namespace ElectronicObserver.Window
 		private bool IsRowsUpdating;
 		private int _splitterDistance;
 		private int _shipNameSortMethod;
+		private int _whichOpenDialogMethod;
 
 		public FormShipGroup(FormMain parent)
 		{
@@ -206,6 +207,7 @@ namespace ElectronicObserver.Window
 			MenuGroup_AutoUpdate.Checked = config.FormShipGroup.AutoUpdate;
 			MenuGroup_ShowStatusBar.Checked = config.FormShipGroup.ShowStatusBar;
 			_shipNameSortMethod = config.FormShipGroup.ShipNameSortMethod;
+			_whichOpenDialogMethod = config.FormShipGroup.WhichOpenDialogMethod;
 
 
 			int rowHeight;
@@ -1426,13 +1428,19 @@ namespace ElectronicObserver.Window
 				//ダブルクリックなので必ず1行選択になる
 				int selectedId = GetSelectedShipID().First();
 
-				foreach (ShipData ship in KCDatabase.Instance.Ships.Values)
+				if (_whichOpenDialogMethod == 0)
 				{
-					if (ship.ID == selectedId)
+					foreach (ShipData ship in KCDatabase.Instance.Ships.Values)
 					{
-						new DialogAlbumMasterShip(ship.MasterShip.ID).Show(Parent);
+						if (ship.ID == selectedId)
+						{
+							new DialogAlbumMasterShip(ship.MasterShip.ID).Show(Parent);
+						}
 					}
 				}
+				else
+					new DialogShipAttackDetail(selectedId).Show(Parent);
+
 			}
 		}
 
@@ -1441,7 +1449,6 @@ namespace ElectronicObserver.Window
 			var group = CurrentGroup;
 			if (group != null)
 			{
-				group.AddExclusionFilter(GetSelectedShipID());
 				var ships = GetSelectedShipID();
 				foreach(int s in ships)
 				{

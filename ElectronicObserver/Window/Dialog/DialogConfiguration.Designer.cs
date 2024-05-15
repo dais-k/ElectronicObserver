@@ -256,6 +256,8 @@
             this.APIListBrowser = new System.Windows.Forms.OpenFileDialog();
             this.Log_PlayTime = new System.Windows.Forms.Label();
             this.PlayTimeTimer = new System.Windows.Forms.Timer(this.components);
+            this.label45 = new System.Windows.Forms.Label();
+            this.FormShipGroup_WhichOpenDialogMethod = new System.Windows.Forms.ComboBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Connection_UpstreamProxyPort)).BeginInit();
@@ -1032,7 +1034,7 @@
             this.Debug_SealingPanel.Controls.Add(this.Debug_APIListPathSearch);
             this.Debug_SealingPanel.Location = new System.Drawing.Point(0, 56);
             this.Debug_SealingPanel.Name = "Debug_SealingPanel";
-            this.Debug_SealingPanel.Size = new System.Drawing.Size(696, 227);
+            this.Debug_SealingPanel.Size = new System.Drawing.Size(696, 225);
             this.Debug_SealingPanel.TabIndex = 1;
             // 
             // Debug_APIListPath
@@ -2099,14 +2101,16 @@
             // 
             // tabPage13
             // 
+            this.tabPage13.Controls.Add(this.FormShipGroup_WhichOpenDialogMethod);
             this.tabPage13.Controls.Add(this.FormShipGroup_ShipNameSortMethod);
+            this.tabPage13.Controls.Add(this.label45);
             this.tabPage13.Controls.Add(this.label25);
             this.tabPage13.Controls.Add(this.FormShipGroup_ShowStatusBar);
             this.tabPage13.Controls.Add(this.FormShipGroup_AutoUpdate);
-            this.tabPage13.Location = new System.Drawing.Point(4, 22);
+            this.tabPage13.Location = new System.Drawing.Point(4, 24);
             this.tabPage13.Name = "tabPage13";
             this.tabPage13.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage13.Size = new System.Drawing.Size(682, 340);
+            this.tabPage13.Size = new System.Drawing.Size(682, 338);
             this.tabPage13.TabIndex = 4;
             this.tabPage13.Text = "グループ";
             this.tabPage13.UseVisualStyleBackColor = true;
@@ -2581,10 +2585,10 @@
             // 
             this.SubWindow_Json.Controls.Add(this.SubWindow_Json_SealingPanel);
             this.SubWindow_Json.Controls.Add(this.label33);
-            this.SubWindow_Json.Location = new System.Drawing.Point(4, 24);
+            this.SubWindow_Json.Location = new System.Drawing.Point(4, 22);
             this.SubWindow_Json.Name = "SubWindow_Json";
             this.SubWindow_Json.Padding = new System.Windows.Forms.Padding(3);
-            this.SubWindow_Json.Size = new System.Drawing.Size(682, 338);
+            this.SubWindow_Json.Size = new System.Drawing.Size(682, 340);
             this.SubWindow_Json.TabIndex = 9;
             this.SubWindow_Json.Text = "JSON";
             this.SubWindow_Json.UseVisualStyleBackColor = true;
@@ -2601,7 +2605,7 @@
             this.SubWindow_Json_SealingPanel.Location = new System.Drawing.Point(3, 3);
             this.SubWindow_Json_SealingPanel.Margin = new System.Windows.Forms.Padding(0);
             this.SubWindow_Json_SealingPanel.Name = "SubWindow_Json_SealingPanel";
-            this.SubWindow_Json_SealingPanel.Size = new System.Drawing.Size(676, 332);
+            this.SubWindow_Json_SealingPanel.Size = new System.Drawing.Size(676, 334);
             this.SubWindow_Json_SealingPanel.TabIndex = 6;
             // 
             // FormJson_AutoUpdate
@@ -2731,7 +2735,7 @@
             // 
             this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(3, 298);
+            this.label10.Location = new System.Drawing.Point(3, 296);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(238, 15);
             this.label10.TabIndex = 5;
@@ -2876,7 +2880,7 @@
             this.BGMPlayer_ControlGrid.RowHeadersVisible = false;
             this.BGMPlayer_ControlGrid.RowTemplate.Height = 21;
             this.BGMPlayer_ControlGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.BGMPlayer_ControlGrid.Size = new System.Drawing.Size(684, 247);
+            this.BGMPlayer_ControlGrid.Size = new System.Drawing.Size(684, 245);
             this.BGMPlayer_ControlGrid.TabIndex = 0;
             this.BGMPlayer_ControlGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.BGMPlayer_ControlGrid_CellContentClick);
             this.BGMPlayer_ControlGrid.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.BGMPlayer_ControlGrid_CellFormatting);
@@ -2973,6 +2977,27 @@
             this.PlayTimeTimer.Enabled = true;
             this.PlayTimeTimer.Interval = 1000;
             this.PlayTimeTimer.Tick += new System.EventHandler(this.PlayTimeTimer_Tick);
+            // 
+            // label45
+            // 
+            this.label45.AutoSize = true;
+            this.label45.Location = new System.Drawing.Point(6, 89);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(149, 15);
+            this.label45.TabIndex = 6;
+            this.label45.Text = "ダブルクリックで開くウインドウ：";
+            // 
+            // FormShipGroup_WhichOpenDialogMethod
+            // 
+            this.FormShipGroup_WhichOpenDialogMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.FormShipGroup_WhichOpenDialogMethod.FormattingEnabled = true;
+            this.FormShipGroup_WhichOpenDialogMethod.Items.AddRange(new object[] {
+            "艦船図鑑",
+            "攻撃詳細"});
+            this.FormShipGroup_WhichOpenDialogMethod.Location = new System.Drawing.Point(161, 86);
+            this.FormShipGroup_WhichOpenDialogMethod.Name = "FormShipGroup_WhichOpenDialogMethod";
+            this.FormShipGroup_WhichOpenDialogMethod.Size = new System.Drawing.Size(121, 23);
+            this.FormShipGroup_WhichOpenDialogMethod.TabIndex = 7;
             // 
             // DialogConfiguration
             // 
@@ -3294,5 +3319,7 @@
 		private System.Windows.Forms.CheckBox FormFleet_ShowSupportPower;
 		private System.Windows.Forms.Label label44;
 		private System.Windows.Forms.CheckBox FormFleet_ShowSanmaEquip;
+		private System.Windows.Forms.ComboBox FormShipGroup_WhichOpenDialogMethod;
+		private System.Windows.Forms.Label label45;
 	}
 }

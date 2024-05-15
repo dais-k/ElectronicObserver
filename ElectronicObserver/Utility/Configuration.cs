@@ -912,11 +912,18 @@ namespace ElectronicObserver.Utility
 				/// </summary>
 				public int ShipNameSortMethod { get; set; }
 
+				/// <summary>
+				/// ダブルクリックした時に開くダイアログ
+				/// 0 = 艦船図鑑, 1 = 攻撃詳細
+				/// </summary>
+				public int WhichOpenDialogMethod { get; set; }
+
 				public ConfigFormShipGroup()
 				{
 					AutoUpdate = true;
 					ShowStatusBar = true;
 					ShipNameSortMethod = 0;
+					WhichOpenDialogMethod = 0;
 				}
 			}
 			/// <summary>[艦船グループ]ウィンドウ</summary>
