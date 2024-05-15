@@ -723,6 +723,39 @@ namespace ElectronicObserver.Data
 			);
 
 		/// <summary>
+		/// 米英国籍であるか
+		/// </summary>
+		public bool IsGBandUSA =>
+			(
+				ShipClass == 65 ||      //Iowa級
+				ShipClass == 67 ||      //Queen Elizabeth級
+				ShipClass == 69 ||      //Lexington級
+				ShipClass == 78 ||      //Ark Royal級
+				ShipClass == 82 ||      //J級
+				ShipClass == 83 ||      //Casablanca級
+				ShipClass == 84 ||      //Essex級
+				ShipClass == 87 ||      //John C.Butler級
+				ShipClass == 88 ||      //Nelson級
+				ShipClass == 91 ||      //Fletcher級
+				ShipClass == 93 ||      //Colorado級
+				ShipClass == 95 ||      //Northampton級
+				ShipClass == 99 ||      //Atlanta級
+				ShipClass == 102 ||     //South Dakota級
+				ShipClass == 105 ||     //Yorktown級
+				ShipClass == 106 ||     //St. Louis級
+				ShipClass == 107 ||     //North Carolina級
+				ShipClass == 108 ||     //Town級
+				ShipClass == 110 ||     //Brooklyn級
+				ShipClass == 112 ||     //Illustrious級
+				ShipClass == 114 ||     //Gato級
+				ShipClass == 116 ||     //Independence級
+				ShipClass == 118 ||     //Ranger級
+				ShipClass == 121 ||     //New Orleans級
+				ShipClass == 122 ||     //Salmon級
+				ShipClass == 125		//Nevada級
+			);
+
+		/// <summary>
 		/// 自身のパラメータレコードを取得します。
 		/// </summary>
 		/// <returns></returns>
