@@ -91,7 +91,6 @@ namespace ElectronicObserver.Window.Dialog
 			TitleAccuracy.ImageList =
 			TitleCarry.ImageList=
 			NavalFreet.ImageList =
-			TP.ImageList =
 				ResourceManager.Instance.Icons;
 
 			Equipment1.ImageList =
@@ -101,6 +100,7 @@ namespace ElectronicObserver.Window.Dialog
 			Equipment5.ImageList =
 			EquipmentEx.ImageList =
 			TP.ImageList =
+			Sanma.ImageList =
 				ResourceManager.Instance.Equipments;
 
 			TitleHP.ImageIndex = (int)ResourceManager.IconContent.ParameterHP;
@@ -119,6 +119,7 @@ namespace ElectronicObserver.Window.Dialog
 			TitleCarry.ImageIndex = (int)ResourceManager.IconContent.ParameterAircraft;
 			NavalFreet.ImageIndex = (int)ResourceManager.IconContent.FormFleet;
 			TP.ImageIndex = (int)ResourceManager.EquipmentContent.Supplies;
+			Sanma.ImageIndex = (int)ResourceManager.EquipmentContent.Sonar;
 
 			ControlHelper.SetDoubleBuffered(TableDayAttack);
 			ControlHelper.SetDoubleBuffered(TableNightAttack);
@@ -136,6 +137,7 @@ namespace ElectronicObserver.Window.Dialog
 			ControlHelper.SetDoubleBuffered(TableTorpedoAttack);
 			ControlHelper.SetDoubleBuffered(NavalFreet);
 			ControlHelper.SetDoubleBuffered(TP);
+			ControlHelper.SetDoubleBuffered(Sanma);
 
 		}
 
@@ -174,9 +176,41 @@ namespace ElectronicObserver.Window.Dialog
 			Luck.Text = shipData.LuckTotal.ToString();
 			Accuracy.Text = shipData.AccuracyTotal.ToString("+0;-0");
 			Bomber.Text = shipData.BomberTotal.ToString("+0;-0");
-			Speed.Text = Constants.GetSpeed(shipData.Speed);
 			Range.Text = Constants.GetRange(shipData.Range);
 			Carry.Text = shipData.AircraftTotal.ToString();
+			if (shipData.Speed == 15)
+			{
+				Speed.Text = "高速";
+				SpeedPlus.Visible = true;
+			}
+			else
+				Speed.Text = Constants.GetSpeed(shipData.Speed);
+
+			switch (shipData.SpItemKind)
+			{
+				case 1:
+					SpItemRaig.Text = shipData.SpItemRaig.ToString("+0;-0");
+					SpItemSouk.Text = shipData.SpItemSouk.ToString("+0;-0");
+					SpItemRaig.Visible = true;
+					SpItemSouk.Visible = true;
+					break;
+				case 2:
+					SpItemHoug.Text = shipData.SpItemHoug.ToString("+0;-0");
+					SpItemKaih.Text = shipData.SpItemKaih.ToString("+0;-0");
+					SpItemHoug.Visible = true;
+					SpItemKaih.Visible = true;
+					break;
+				default:
+					SpItemRaig.Text = "";
+					SpItemSouk.Text = "";
+					SpItemHoug.Text = "";
+					SpItemKaih.Text = "";
+					SpItemRaig.Visible = false;
+					SpItemSouk.Visible = false;
+					SpItemKaih.Visible = false;
+					SpItemHoug.Visible = false;
+					break;
+			}
 
 			if (shipData.Fleet != -1)
 			{
@@ -315,8 +349,13 @@ namespace ElectronicObserver.Window.Dialog
 					equipID[5] = -1;
 				}
 			}
+			//TP輸送量
 			int tpdamage = Calculator2.GetTPDamage(shipData);
 			TP.Text = "TP輸送量：S " + tpdamage + " / A " + Math.Floor(tpdamage * 0.7);
+
+			//秋刀魚
+			Sanma.Text = "秋刀魚漁支援装備：" + shipData.SanmaEquipCount + " (※爆雷"+ shipData.SanmaEquipCountBomb +")";
+
 			TableEquipment.ResumeLayout();
 			BasePanelShipGirl.ResumeLayout();
 		}
@@ -921,6 +960,15 @@ namespace ElectronicObserver.Window.Dialog
 			}
 		}
 
+		private void TableParameterMain_MouseClick(object sender, MouseEventArgs e)
+		{
+			KCDatabase db = KCDatabase.Instance;
+			ShipData shipData = db.Ships[_shipID]; 
+			if (e.Button == System.Windows.Forms.MouseButtons.Right)
+			{
+				new DialogAlbumMasterShip(shipData.ShipID).Show(Owner);
+			}
+		}
 
 		private void EquipmenEX_MouseClick(object sender, MouseEventArgs e)
 		{
