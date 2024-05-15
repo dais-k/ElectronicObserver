@@ -931,7 +931,8 @@ namespace ElectronicObserver.Window
 				if(showAntiGroundPower)
 					sb.AppendFormat("\r\n※対地攻撃の威力値は(砲台/離島/ソフトスキン/集積地/港湾夏姫/集積地Ⅲ)の並び");
 				if(showSupportPower)
-				sb.AppendFormat("\r\n※対潜支援威力の()内の値は変動倍率x2.0(発動率50%)の値\r\n　エリソ確定大破/撃沈にはそれぞれ威力73/84が必要");
+					sb.AppendFormat("\r\n※対潜支援威力の()内の値は変動倍率x2.0(発動率50%)の値\r\n　エリソ確定大破/撃沈にはそれぞれ威力73/84が必要");
+				sb.AppendFormat("\r\n(右クリックで詳細ダイアログ起動)");
 				return sb.ToString();
 			}
 
