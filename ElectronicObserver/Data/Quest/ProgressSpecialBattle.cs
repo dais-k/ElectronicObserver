@@ -422,6 +422,31 @@ namespace ElectronicObserver.Data.Quest
 				case 952:   //|952|単|【作戦準備】第二段階任務(対地/対空整備)|1-3, 1-4, 2-1, 2-2ボスS勝利各1回|条件：駆逐3以上|
 					isAccepted = memberstype.Count(t => t == ShipTypes.Destroyer) >= 3;
 					break;
+				case 953:   //|953|週|【梅雨限定任務】雨の南西諸島防衛戦！|2-1, 2-2, 2-3ボスA勝利各1回|条件：巡洋艦を旗艦、駆逐艦x1、海防艦x1、水上機母艦x1|期間限定任務
+					isAccepted =
+						(members.FirstOrDefault()?.MasterShip?.ShipType == ShipTypes.HeavyCruiser ||
+						 members.FirstOrDefault()?.MasterShip?.ShipType == ShipTypes.LightCruiser ||
+						 members.FirstOrDefault()?.MasterShip?.ShipType == ShipTypes.TorpedoCruiser ||
+						 members.FirstOrDefault()?.MasterShip?.ShipType == ShipTypes.TrainingCruiser ||
+						 members.FirstOrDefault()?.MasterShip?.ShipType == ShipTypes.AviationCruiser)
+						 &&
+						 members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Destroyer) >= 1 &&
+						 members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Escort) >= 1 &&
+						 members.Count(s => s?.MasterShip?.ShipType == ShipTypes.SeaplaneTender) >= 1;
+					break;
+				case 954:   //|954|週|【梅雨拡張任務】梅雨の海上護衛強化！|1-2, 1-3, 1-5ボスS勝利各1回+1-6到達2回|条件：駆逐艦を旗艦、海防艦x2|期間限定任務
+					isAccepted =
+						(members.FirstOrDefault()?.MasterShip?.ShipType == ShipTypes.Destroyer)
+						 &&
+						(members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Escort) >= 2);
+					break;
+				case 955:   //|955|月|【梅雨限定月間任務】西方海域統合作戦|4-1, 4-2, 4-3, 4-4, 4-5ボスS勝利各1回|条件：空母2以上、(球磨型+大淀)1|期間限定任務
+					isAccepted =
+						(members.Count(s => s?.MasterShip?.ShipType == ShipTypes.LightAircraftCarrier ||
+											s?.MasterShip?.ShipType == ShipTypes.AircraftCarrier ||
+											s?.MasterShip?.ShipType == ShipTypes.ArmoredAircraftCarrier) >= 2) &&
+						members.Count(s => s?.MasterShip?.ShipClass == 4 || s?.MasterShip?.NameReading == "おおよど") >= 1;
+					break;
 				case 957:	//|957|単|「山風改二」、抜錨せよ！|1-2、1-3、1-4、1-5ボス各S勝利1改|条件：山風改二旗艦および随伴に駆逐/海防3|
 					isAccepted = 
 						(members[0]?.MasterShip?.ShipID == 588 || members[0]?.MasterShip?.ShipID == 667) && (memberstype.Count(t => t == ShipTypes.Destroyer) + memberstype.Count(t => t == ShipTypes.Escort)) >= 4;
@@ -480,18 +505,6 @@ namespace ElectronicObserver.Data.Quest
 						(memberstype.Count(t => t == ShipTypes.AircraftCarrier) == 0) &&
 						(memberstype.Count(t => t == ShipTypes.ArmoredAircraftCarrier) == 0) &&
 						members.Count(s => s?.MasterShip?.IsGBandUSA == true) >= 3;
-						/*members.Count
-						(s =>
-						 s?.MasterShip?.ShipClass == 67  ||										   //クイーンエリザベス級戦艦
-						 s?.MasterShip?.ShipClass == 88  || s?.MasterShip?.ShipClass == 65  ||     //ネルソン級戦艦、アイオワ級戦艦
-						 s?.MasterShip?.ShipClass == 106 || s?.MasterShip?.ShipClass == 93  ||     //セントルイス級軽巡洋艦、コロラド級戦艦
-						 s?.MasterShip?.ShipClass == 125 ||                                        //Nevada級戦艦
-						 s?.MasterShip?.ShipClass == 107 || s?.MasterShip?.ShipClass == 95  ||     //ノースカロライナ級戦艦、ノーザンプトン級重巡洋艦
-						 s?.MasterShip?.ShipClass == 108 || s?.MasterShip?.ShipClass == 99  ||     //タウン級軽巡洋艦、アトランタ級軽巡洋艦
-						 s?.MasterShip?.ShipClass == 110 || s?.MasterShip?.ShipClass == 102 ||     //ブルックリン級軽巡洋艦、サウスダコタ級戦艦
-						 s?.MasterShip?.ShipClass == 87  || s?.MasterShip?.ShipClass == 91  ||     //ジョンCバトラー級駆逐艦、フレッチャー級駆逐艦
-						 s?.MasterShip?.ShipClass == 122 || s?.MasterShip?.ShipClass == 114 ||     //Salmon級潜水艦、Gato級潜水艦
-						 ) >= 3;*/
 					break;
 				case 975:   //|975|５|精鋭「第十九駆逐隊」、全力出撃！|1-5、2-3、3-2、5-3ボスを各S勝利1回ずつ|条件：磯波改二、浦波改二、綾波改二、敷波改二を編成に入れる|
 					isAccepted =
@@ -591,6 +604,12 @@ namespace ElectronicObserver.Data.Quest
 					isAccepted =
 						(members.FirstOrDefault()?.MasterShip?.ShipType == ShipTypes.Escort &&
 						 members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Escort) >= 3);
+					break;
+				case 1012:  //|1012|５|鵜来型海防艦、静かな海を防衛せよ！|1-1S勝利3回、1-2, 1-5 A勝利2回以上|条件：鵜来型(旗艦), 海防1-3 (旗艦込最大4隻), 海防艦のみ|
+					isAccepted =
+						(members.FirstOrDefault()?.MasterShip?.ShipClass == 117 &&
+						 members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Escort) <= 4 &&
+						 members.Count(s => s?.MasterShip?.ShipType != ShipTypes.Escort) == 0);
 					break;
 			}
 

@@ -387,6 +387,9 @@ namespace ElectronicObserver.Data.Quest
 						case 363:   //|363|週|【艦隊11周年記念任務】記念艦隊演習！|演習A勝利以上5|条件：大和、翔鶴、吹雪、朧、Tuscaloosa、Houston、Northampton、山汐丸、熊野丸から3隻以上 | 1日で進捗リセット|
 							Progresses.Add(new ProgressPractice(q, 5, "A", true));
 							break;
+						case 367:   //|367|日|【梅雨限定任務】海上護衛隊、雨中演習！|演習A勝利4|条件：海防艦2隻以上または駆逐艦4隻以上|期間限定デイリー任務
+							Progresses.Add(new ProgressPractice(q, 4, "A", true));
+							break;
 						case 368:   //|368|７|「十六駆」演習！|演習S勝利以上3|条件：天津風、雪風、時津風、初風のうち2隻以上|イヤーリーだが1日で進捗リセット|
 							Progresses.Add(new ProgressPractice(q, 3, "S", true));
 							break;
@@ -874,6 +877,30 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressSpecialBattle(q, 1, "S", new[] { 22 }, true),
 							}));
 							break;
+						case 953:   //|953|週|【梅雨限定任務】雨の南西諸島防衛戦！|2-1, 2-2, 2-3ボスA勝利各1回|条件：巡洋艦を旗艦、駆逐艦x1、海防艦x1、水上機母艦x1|期間限定任務
+							Progresses.Add(new ProgressMultiBattle(q, new[]{
+								new ProgressSpecialBattle(q, 1, "A", new[] { 21 }, true),
+								new ProgressSpecialBattle(q, 1, "A", new[] { 22 }, true),
+								new ProgressSpecialBattle(q, 1, "A", new[] { 23 }, true),
+							}));
+							break;
+						case 954:   //|954|週|【梅雨拡張任務】梅雨の海上護衛強化！|1-2, 1-3, 1-5ボスS勝利各1回+1-6到達2回|条件：駆逐艦を旗艦、海防艦x2|期間限定任務
+							Progresses.Add(new ProgressMultiBattle(q, new[]{
+								new ProgressSpecialBattle(q, 1, "S", new[] { 12 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 13 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 15 }, true),
+								new ProgressSpecialBattle(q, 2, "x", new[] { 16 }, true),
+							}));
+							break;
+						case 955:   //|955|月|【梅雨限定月間任務】西方海域統合作戦|4-1, 4-2, 4-3, 4-4, 4-5ボスS勝利各1回|条件：空母2以上、(球磨型+大淀)1|期間限定任務
+							Progresses.Add(new ProgressMultiBattle(q, new[]{
+								new ProgressSpecialBattle(q, 1, "S", new[] { 41 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 42 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 43 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 44 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 45 }, true),
+							}));
+							break;
 						case 957:   //|957|単|「山風改二」、抜錨せよ！|1-2、1-3、1-4、1-5ボス各S勝利1改|条件：山風改二旗艦および随伴に駆逐/海防3|
 							Progresses.Add(new ProgressMultiBattle(q, new[]{
 								new ProgressSpecialBattle(q, 1, "S", new[] { 12 }, true),
@@ -968,6 +995,13 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressSpecialBattle(q, 1, "A", new[] { 13 }, true),
 								new ProgressSpecialBattle(q, 1, "A", new[] { 15 }, true),
 								new ProgressSpecialBattle(q, 1, "A", new[] { 21 }, true),
+							}));
+							break;
+						case 1012:  //|1012|５|鵜来型海防艦、静かな海を防衛せよ！|1-1S勝利3回、1-2, 1-5 A勝利2回以上|条件：鵜来型(旗艦), 海防1-3 (旗艦込最大4隻), 海防艦のみ|
+							Progresses.Add(new ProgressMultiBattle(q, new[] {
+								new ProgressSpecialBattle(q, 3, "S", new[] { 11 }, true),
+								new ProgressSpecialBattle(q, 2, "A", new[] { 12 }, true),
+								new ProgressSpecialBattle(q, 2, "A", new[] { 15 }, true),
 							}));
 							break;
 						//============================ 1100～1199 ============================

@@ -314,6 +314,13 @@ namespace ElectronicObserver.Data.Quest
 						ret = true;
 					}
 					break;
+				case 367:   //|367|日|【梅雨限定任務】海上護衛隊、雨中演習！|演習A勝利4|条件：海防艦2隻以上または駆逐艦4隻以上|期間限定デイリー任務
+					if ((ships.Count(s => s.MasterShip.ShipType == ShipTypes.Escort) >= 2) ||
+						(ships.Count(s => s.MasterShip.ShipType == ShipTypes.Destroyer) >= 4))
+					{
+						ret = true;
+					}
+					break;
 				case 368:   //|368|７|「十六駆」演習！|演習S勝利以上3|天津風、雪風、時津風、初風のうち2隻以上|イヤーリーだが1日で進捗リセット|
 					if (ships.Count(s =>
 					{
