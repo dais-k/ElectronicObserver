@@ -60,6 +60,7 @@ namespace ElectronicObserver.Data.ShipGroup
 			{ ".ShipID", "艦船ID" },
 			{ ".MasterShip.NameWithClass", "艦名" },
 			{ ".MasterShip.ShipType", "艦種" },
+			{ ".MasterShip.ShipClass", "艦型" },
 			{ ".Level", "レベル" },
 			{ ".ExpTotal", "経験値" },
 			{ ".ExpNext", "次のレベルまで" },
@@ -396,6 +397,15 @@ namespace ElectronicObserver.Data.ShipGroup
 				var shiptype = KCDatabase.Instance.ShipTypes[(int)RightOperand];
 				if (shiptype != null)
 					return shiptype.Name;
+				else
+					return $"{(int)RightOperand} (未定義)";
+
+			}
+			else if (LeftOperand == ".MasterShip.ShipClass")
+			{
+				var shipclass = Constants.GetShipClass((int)RightOperand);
+				if (shipclass != null)
+					return shipclass;
 				else
 					return $"{(int)RightOperand} (未定義)";
 

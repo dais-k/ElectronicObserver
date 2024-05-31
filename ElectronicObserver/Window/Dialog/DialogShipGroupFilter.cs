@@ -33,6 +33,7 @@ namespace ElectronicObserver.Window.Dialog
 		private DataTable _dtRightOperand_bool;
 		private DataTable _dtRightOperand_shipname;
 		private DataTable _dtRightOperand_shiptype;
+		private DataTable _dtRightOperand_shipclass; 
 		private DataTable _dtRightOperand_range;
 		private DataTable _dtRightOperand_speed;
 		private DataTable _dtRightOperand_rarity;
@@ -185,6 +186,17 @@ namespace ElectronicObserver.Window.Dialog
 					.Select(i => KCDatabase.Instance.ShipTypes[i]))
 					_dtRightOperand_shiptype.Rows.Add(st.TypeID, st.Name);
 				_dtRightOperand_shiptype.AcceptChanges();
+			}
+			{
+				_dtRightOperand_shipclass = new DataTable();
+				_dtRightOperand_shipclass.Columns.AddRange(new DataColumn[]{
+					new DataColumn( "Value", typeof( int ) ),
+					new DataColumn( "Display", typeof( string ) ) });
+				for(int i = 1; i < 128;  i++)
+				{
+					_dtRightOperand_shipclass.Rows.Add(i, Constants.GetShipClass(i));
+				}
+				_dtRightOperand_shipclass.AcceptChanges();
 			}
 			{
 				_dtRightOperand_range = new DataTable();
@@ -427,6 +439,22 @@ namespace ElectronicObserver.Window.Dialog
 
 				RightOperand_ComboBox.DataSource = _dtRightOperand_shiptype;
 				RightOperand_ComboBox.SelectedValue = right ?? 2;
+
+			}
+			else if (left == ".MasterShip.ShipClass")
+			{
+				RightOperand_ComboBox.Visible = true;
+				RightOperand_ComboBox.Enabled = true;
+				RightOperand_ComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+				RightOperand_NumericUpDown.Visible = false;
+				RightOperand_NumericUpDown.Enabled = false;
+				RightOperand_TextBox.Visible = false;
+				RightOperand_TextBox.Enabled = false;
+				Operator.Enabled = true;
+				Operator.DataSource = _dtOperator_bool;
+
+				RightOperand_ComboBox.DataSource = _dtRightOperand_shipclass;
+				RightOperand_ComboBox.SelectedValue = right ?? 1;
 
 			}
 			else if (left.Contains("SlotMaster"))
