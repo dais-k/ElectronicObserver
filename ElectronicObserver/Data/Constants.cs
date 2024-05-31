@@ -1040,9 +1040,9 @@ namespace ElectronicObserver.Data
 				case 16:
 					return "高角砲/機銃/電探<霞>";
 				case 17:
-					return "高角砲/機銃<霞>";
+					return "高角砲/機銃<霞・稲木改二>";
 				case 18:
-					return "集中機銃<皐月>";
+					return "集中機銃<皐月・稲木改二>";
 				case 19:
 					return "高角砲(非高射装置)/集中機銃<鬼怒>";
 				case 20:
@@ -1068,7 +1068,7 @@ namespace ElectronicObserver.Data
 				case 30:
 					return "高角砲x3<天龍>";
 				case 31:
-					return "高角砲x2<天龍>";
+					return "高角砲x2<天龍・稲木改二>";
 				case 32:
 					return "ロケランx2 or FCR/ポンポン砲 or ロケラン/ポンポン砲<英国>";
 				case 33:

@@ -201,6 +201,7 @@ namespace ElectronicObserver.Utility.Data
 			int rocketCount = 0;
 			int lateModelTorpedoCount = 0;
 			int submarineEquipmentCount = 0;
+			int nightAirplaneCount = 0;
 			int nightFighterCount = 0;
 			int nightFighterCountsub = 0;
 			int nightAttackerCount = 0;
@@ -268,23 +269,34 @@ namespace ElectronicObserver.Utility.Data
 					// 夜間戦闘機
 					case EquipmentTypes.CarrierBasedFighter:
 						if (eq.IsNightFighter)
+						{ 
 							nightFighterCount++;
+							nightAirplaneCount++;
+						}
 						break;
 
 					// (夜間)爆撃機
 					case EquipmentTypes.CarrierBasedBomber:
 						if (eq.EquipmentID == 154)      // 零戦62型(爆戦/岩井隊)
+						{
 							nightCapableBomberCount++;
+							nightAirplaneCount++;
+						}
 						else if (eq.EquipmentID == 320) // 彗星一二型(三一号光電管爆弾搭載機)
+						{
 							nightBomberCount++;
-						break;
+							nightAirplaneCount++;
+						}
+							break;
 
 					// 夜間攻撃機
 					case EquipmentTypes.CarrierBasedTorpedo:
 						if (eq.IsNightAttacker)
+						{
 							nightAttackerCount++;
-
-						if (eq.IsSwordfish) // Swordfish系
+							nightAirplaneCount++;
+						}
+							if (eq.IsSwordfish) // Swordfish系
 							swordfishCount++;
 						break;
 
@@ -357,7 +369,8 @@ namespace ElectronicObserver.Utility.Data
 						if (nightFighterCount >= 1 && (nightFighterCountsub + nightAttackerCount + nightBomberCount + swordfishCount + nightCapableBomberCount >= 2))
 							nightAttackList.Add(NightAttackKind.CutinNightAirAttackFOther);
 					}
-					nightAttackList.Add(NightAttackKind.NightAirAttack);
+					if (nightAirplaneCount != 0)
+						nightAttackList.Add(NightAttackKind.NightAirAttack);
 				}
 
 				//空母夜間特殊攻撃
@@ -1063,6 +1076,27 @@ namespace ElectronicObserver.Utility.Data
 
 					return aacutinlist.ToArray();
 
+				case 979:   // 稲木改二
+					if (highangle_director >= 2 && aaradar >= 1)
+						aacutinlist.Add(5);
+					if (highangle >= 3)
+						aacutinlist.Add(8);
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+						aacutinlist.Add(13);
+					if (highangle >= 1 && director >= 1 && aaradar >= 1)
+						aacutinlist.Add(7);
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						aacutinlist.Add(12);
+					if (highangle >= 2)
+						aacutinlist.Add(31);
+					if (highangle >= 1 && aagun_total >= 1)
+						aacutinlist.Add(17);
+					if (aagun_concentrated >= 1)
+						aacutinlist.Add(18);
+					if (highangle >= 1 && director >= 1)
+						aacutinlist.Add(9);
+
+					return aacutinlist.ToArray();
 			}
 
 			//以下汎用カットイン
