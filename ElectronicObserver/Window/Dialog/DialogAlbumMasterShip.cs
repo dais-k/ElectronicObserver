@@ -815,7 +815,9 @@ namespace ElectronicObserver.Window.Dialog
 				return "";
 
 			return string.Join("\r\n", ship.EquippableCategories.Select(id => db.EquipmentTypes[id].Name)
-				.Concat(db.MasterEquipments.Values.Where(eq => eq.EquippableShipsAtExpansion.Contains(shipID)).Select(eq => eq.Name + " (補強スロット)")));
+				.Concat(db.MasterEquipments.Values.Where(eq => eq.EquippableShipsAtExpansion.Contains(shipID)).Select(eq => eq.Name + " (補強スロット)"))
+				.Concat(db.MasterEquipments.Values.Where(eq => eq.EquippableStypeAtExpansion.Contains(ship.ShipTypeInstance.ID)).Select(eq => eq.Name + " (補強スロット)"))
+				.Concat(db.MasterEquipments.Values.Where(eq => eq.EquippableCtypeAtExpansion.Contains(ship.ShipClass)).Select(eq => eq.Name + " (補強スロット)")));
 		}
 
 
