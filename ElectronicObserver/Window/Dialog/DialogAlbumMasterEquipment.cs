@@ -394,8 +394,15 @@ namespace ElectronicObserver.Window.Dialog
 					{
 						foreach (var ss in eq.EquippableStypeAtExpansion)
 						{
-							EquipSlots.Items.Add(" " + db.ShipTypes[ss]?.Name);
-							eqlist.Add(-1);
+							if (equipmentID == 33)
+							{
+								EquipSlots.Items.Add($"上記艦種・艦娘が装備可"); eqlist.Add(-1);
+							}
+							else
+							{ 
+								EquipSlots.Items.Add(" " + db.ShipTypes[ss]?.Name);
+								eqlist.Add(-1);
+							}
 						}
 					}
 					if (eq.EquippableCtypeAtExpansion.Any())
