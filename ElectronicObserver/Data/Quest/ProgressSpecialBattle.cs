@@ -607,9 +607,9 @@ namespace ElectronicObserver.Data.Quest
 					break;
 				case 1012:  //|1012|５|鵜来型海防艦、静かな海を防衛せよ！|1-1S勝利3回、1-2, 1-5 A勝利2回以上|条件：鵜来型(旗艦), 海防1-3 (旗艦込最大4隻), 海防艦のみ|
 					isAccepted =
-						(members.FirstOrDefault()?.MasterShip?.ShipClass == 117 &&
+						(members[0]?.MasterShip?.ShipClass == 117 &&
 						 members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Escort) <= 4 &&
-						 members.Count(s => s?.MasterShip?.ShipType != ShipTypes.Escort) == 0);
+						 memberstype.All(t => t == ShipTypes.Escort || t == Empty));
 					break;
 			}
 
