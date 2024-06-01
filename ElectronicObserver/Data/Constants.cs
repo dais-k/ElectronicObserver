@@ -411,7 +411,7 @@ namespace ElectronicObserver.Data
 				case 117: return "鵜来型";
 				case 118: return "Ranger級";
 				case 119: return "特種船M丙型";
-				case 120: return "第百一号型";
+				case 120: return "二等輸送艦";
 				case 121: return "New Orleans級";
 				case 122: return "Salmon級";
 				case 123: return "改敷島型";
