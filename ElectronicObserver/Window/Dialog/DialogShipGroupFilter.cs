@@ -192,7 +192,7 @@ namespace ElectronicObserver.Window.Dialog
 				_dtRightOperand_shipclass.Columns.AddRange(new DataColumn[]{
 					new DataColumn( "Value", typeof( int ) ),
 					new DataColumn( "Display", typeof( string ) ) });
-				for(int i = 1; i < 128;  i++)
+				for(int i = 1; i < 130;  i++)
 				{
 					_dtRightOperand_shipclass.Rows.Add(i, Constants.GetShipClass(i));
 				}
