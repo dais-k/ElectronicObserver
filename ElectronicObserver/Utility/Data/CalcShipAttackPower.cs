@@ -884,7 +884,7 @@ namespace ElectronicObserver.Utility.Data
 			var antiGroundEquip = 0;
 			var Bomber = 0;
 			double[] rateDD = new double[5] { 1.4, 1.0, 1.0, 1.0, 1.0 };
-			double[] bonusSub = new double[5] { 30, 30, 30, 30, 30 };
+			double[] bonusSubmarine = new double[5] { 30, 30, 30, 30, 30 };
 			double basepower = 0;
 
 			ShipDataMaster attacker = KCDatabase.Instance.MasterShips[shipID];
@@ -967,8 +967,10 @@ namespace ElectronicObserver.Utility.Data
 					}
 				}
 				else
+				{ 
 					basepower = 0;
-					return (int)basepower;
+				}
+				return (int)basepower;
 			}
 			else
 			{
@@ -981,9 +983,30 @@ namespace ElectronicObserver.Utility.Data
 					}
 					if (attacker?.ShipType == ShipTypes.Submarine || attacker?.ShipType == ShipTypes.SubmarineAircraftCarrier)
 					{
-						basepower += bonusSub[skin];
+						foreach(var slot in allSlotInstance)
+						{
+							if (slot == null)
+								continue;
+							switch (slot.MasterEquipment.CategoryType)
+							{
+								case EquipmentTypes.SpecialAmphibiousTank:
+									antiGroundEquip++;
+									break;
+							}
+						}
+						if (skin != 5 && antiGroundEquip > 0)
+						{
+							basepower += bonusSubmarine[skin];
+						}
+						else
+							return 0;
 					}
 					basepower = GetGroundEnemyAttackPower(ship, skin, basepower, true);
+				}
+				else
+				{
+					if (attacker?.ShipType == ShipTypes.Submarine || attacker?.ShipType == ShipTypes.SubmarineAircraftCarrier)
+						return 0;
 				}
 				basepower = Math.Floor(CapDamage(basepower, 220));
 			}
@@ -1012,7 +1035,7 @@ namespace ElectronicObserver.Utility.Data
 			var eqs = ship.AllSlotInstance.Where(eq => eq != null);
 
 			double[] rateDD = new double[5] { 1.4, 1.0, 1.0, 1.0, 1.0 };
-			double[] bonusSub = new double[5] { 30, 30, 30, 30, 30 };
+			double[] bonusSubmarine = new double[5] { 30, 30, 30, 30, 30 };
 			double basepower = 0;
 
 			ShipDataMaster attacker = KCDatabase.Instance.MasterShips[shipID];
@@ -1084,7 +1107,7 @@ namespace ElectronicObserver.Utility.Data
 					}
 					if (attacker?.ShipType == ShipTypes.Submarine || attacker?.ShipType == ShipTypes.SubmarineAircraftCarrier)
 					{
-						basepower += bonusSub[skin];
+						basepower += bonusSubmarine[skin];
 					}
 					basepower = GetGroundEnemyAttackPower(ship, skin, basepower, false);
 				}
