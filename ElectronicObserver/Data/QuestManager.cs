@@ -81,7 +81,13 @@ namespace ElectronicObserver.Data
 					p.QuestID == 354 ||
 					p.QuestID == 355 ||
 					p.QuestID == 356 ||
-					p.QuestID == 357
+					p.QuestID == 357 ||
+					p.QuestID == 362 ||
+					p.QuestID == 363 ||
+					p.QuestID == 367 ||
+					p.QuestID == 368 ||
+					p.QuestID == 371 ||
+					p.QuestID == 372
 				));
 				Quests.RemoveAll(q => (q.Type == 1 || 
 					q.QuestID == 211 ||	/* 空母3 */
@@ -103,7 +109,13 @@ namespace ElectronicObserver.Data
 					q.QuestID == 354 ||
 					q.QuestID == 355 ||
 					q.QuestID == 356 ||
-					q.QuestID == 357
+					q.QuestID == 357 ||
+					q.QuestID == 362 ||
+					q.QuestID == 363 ||
+					q.QuestID == 367 ||
+					q.QuestID == 368 ||
+					q.QuestID == 371 ||
+					q.QuestID == 372
 				));
 			}
 			//ウィークリー

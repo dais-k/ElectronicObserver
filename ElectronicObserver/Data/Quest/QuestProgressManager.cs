@@ -396,6 +396,9 @@ namespace ElectronicObserver.Data.Quest
 						case 371:   //|371|４|春です！「春雨」、演習しますっ！|演習A勝利以上×4回|条件：春雨(旗艦)・村雨/夕立/五月雨/白露/時雨から3隻|イヤーリーだが1日で進捗リセット|
 							Progresses.Add(new ProgressPractice(q, 4, "A", true));
 							break;
+						case 372:   //|372|６|水上艦「艦隊防空演習」を実施せよ！|演習A勝利以上×4回|条件：秋月型(旗艦), 駆逐2, 航戦2, 自由1|イヤーリーだが1日で進捗リセット|
+							Progresses.Add(new ProgressPractice(q, 4, "A", true));
+							break;
 						//============================ 400～499 ============================
 						case 402:   //|402|「遠征」を3回成功させよう！|遠征成功3
 							Progresses.Add(new ProgressExpedition(q, 3, null));
