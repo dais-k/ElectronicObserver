@@ -1305,6 +1305,8 @@ namespace ElectronicObserver.Resource.Record
 			{
 				foreach (var b in data.api_bounus)
 				{
+					if (b == null) continue;
+
 					if ((int)b.api_type == 11 && b.api_item() && b.api_item != null)
 					{
 						if (b.api_item.api_ship_id())
