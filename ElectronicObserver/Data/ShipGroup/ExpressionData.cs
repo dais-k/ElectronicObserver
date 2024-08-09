@@ -149,6 +149,8 @@ namespace ElectronicObserver.Data.ShipGroup
 			{ ".MasterShip.RemodelAfterShipID", "改装後艦船ID" },
 			//マスターのパラメータ系もおそらく意味がないので省略		
 			{ ".MasterShip.EquippableCategories", "装備可能リスト" },
+			{ ".MasterShip.ShipNationality", "国籍" },
+			{ ".MasterShip.IsGlasses", "眼鏡っ娘" },
 		};
 
 		private static Dictionary<string, Type> ExpressionTypeTable = new Dictionary<string, Type>();
@@ -492,6 +494,15 @@ namespace ElectronicObserver.Data.ShipGroup
 					return $"{ship.ShipID} ({ship.NameWithClass})";
 				else
 					return $"{(int)RightOperand} (存在せず)";
+
+			}
+			else if (LeftOperand == ".MasterShip.ShipNationality")
+			{
+				var shipNationality = Constants.GetShipNationality((int)RightOperand);
+				if (shipNationality != null)
+					return shipNationality;
+				else
+					return $"{(int)RightOperand} (未定義)";
 
 			}
 			else if (RightOperand is bool)

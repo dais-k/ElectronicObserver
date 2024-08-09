@@ -721,39 +721,113 @@ namespace ElectronicObserver.Data
 				ShipType == ShipTypes.LightCruiser ||
 				ShipType == ShipTypes.SeaplaneTender
 			);
+	
+		/// <summary>
+		/// 国籍
+		/// </summary>
+		public int ShipNationality
+		{
+			get
+			{
+				if (ShipID == 147) return 6;   //Верный
+				if (ShipID == 651) return 10;  //丹陽
+
+				switch ( ShipClass ) 
+				{
+					case 65:      //Iowa級
+					case 69:      //Lexington級
+					case 83:      //Casablanca級
+					case 84:      //Essex級
+					case 87:      //John C.Butler級
+					case 91:      //Fletcher級
+					case 93:      //Colorado級
+					case 95:      //Northampton級
+					case 99:      //Atlanta級
+					case 102:     //South Dakota級
+					case 105:     //Yorktown級
+					case 106:     //St. Louis級
+					case 107:     //North Carolina級
+					case 110:     //Brooklyn級
+					case 114:     //Gato級
+					case 116:     //Independence級
+					case 118:     //Ranger級
+					case 121:     //New Orleans級
+					case 122:     //Salmon級
+					case 125:	  //Nevada級
+						return 1;
+					case 67:      //Queen Elizabeth級
+					case 78:      //Ark Royal級
+					case 82:      //J級
+					case 88:      //Nelson級
+					case 108:     //Town級
+					case 112:     //Illustrious級					
+						return 2;
+					case 58:      //V.Veneto級
+					case 61:      //Maestrale級
+					case 64:      //Zara級
+					case 68:      //Aquila級
+					case 92:      //L.d.S.D.d.Abruzzi級
+					case 113:     //Conte di Cavour級"
+						return 3;
+					case 47:      //Bismarck級
+					case 48:      //Z1型
+					case 55:      //Admiral Hipper級
+					case 57:      //UボートIXC型
+					case 63:      //Graf Zeppelin級
+					case 80:      //Guglielmo Marconi級
+					case 124:     //Marcello級
+						return 4;
+					case 70:      //C.Teste級
+					case 79:      //Richelieu級
+					case 128:     //La Galissonnière級
+					case 129:     //Mogador級
+						return 5;
+					case 73:      //Гангут級
+					case 81:      //Ташкент級
+						return 6;
+					case 96:      //Perth級
+						return 7;
+					case 98:      //De Ruyter級
+						return 8;
+					case 89:      //Gotland級
+						return 9;
+					default: 
+						return 0;
+				}
+
+			}
+		}
 
 		/// <summary>
-		/// 米英国籍であるか
+		/// 眼鏡っ娘であるか
 		/// </summary>
-		public bool IsGBandUSA =>
+		public bool IsGlasses =>
 			(
-				ShipClass == 65 ||      //Iowa級
-				ShipClass == 67 ||      //Queen Elizabeth級
-				ShipClass == 69 ||      //Lexington級
-				ShipClass == 78 ||      //Ark Royal級
-				ShipClass == 82 ||      //J級
-				ShipClass == 83 ||      //Casablanca級
-				ShipClass == 84 ||      //Essex級
-				ShipClass == 87 ||      //John C.Butler級
-				ShipClass == 88 ||      //Nelson級
-				ShipClass == 91 ||      //Fletcher級
-				ShipClass == 93 ||      //Colorado級
-				ShipClass == 95 ||      //Northampton級
-				ShipClass == 99 ||      //Atlanta級
-				ShipClass == 102 ||     //South Dakota級
-				ShipClass == 105 ||     //Yorktown級
-				ShipClass == 106 ||     //St. Louis級
-				ShipClass == 107 ||     //North Carolina級
-				ShipClass == 108 ||     //Town級
-				ShipClass == 110 ||     //Brooklyn級
-				ShipClass == 112 ||     //Illustrious級
-				ShipClass == 114 ||     //Gato級
-				ShipClass == 116 ||     //Independence級
-				ShipClass == 118 ||     //Ranger級
-				ShipClass == 121 ||     //New Orleans級
-				ShipClass == 122 ||     //Salmon級
-				ShipClass == 125		//Nevada級
+				ShipID == 31 || ShipID ==261 ||     //望月
+				ShipID == 479 || ShipID == 390 ||   //天霧
+				ShipID == 903 || ShipID == 908 ||   //天霧改二
+				ShipID == 134 || ShipID == 303 ||   //巻雲
+				ShipID == 563 ||                    //巻雲改二
+				ShipID == 452 || ShipID == 359 ||   //沖波
+				ShipID == 569 ||                    //沖波改二
+				ShipID == 643 || ShipID == 716 ||   //梅
+				ShipID == 941 || ShipID == 726 ||   //Heywood
+				ShipID == 183 || ShipID == 321 ||   //大淀
+				ShipID == 154 || ShipID == 343 ||   //香取
+				ShipID == 69 || ShipID == 272 ||    //鳥海
+				ShipID == 427 ||                    //鳥海改二
+				ShipID == 655 || ShipID == 660 ||   //Northampton
+				ShipID == 85 || ShipID == 212 ||    //霧島
+				ShipID == 152 ||                    //霧島改二
+				ShipID == 143 || ShipID == 148 ||   //武蔵
+				ShipID == 546 ||                    //武蔵改二
+				ShipID == 442 || ShipID == 447 ||   //Roma
+				ShipID == 128 || ShipID == 400 ||   //伊8
+				ShipID == 570 || ShipID == 684 ||   //平戸
+				ShipID == 944 || ShipID == 949      //平安丸
+
 			);
+
 
 		/// <summary>
 		/// 自身のパラメータレコードを取得します。

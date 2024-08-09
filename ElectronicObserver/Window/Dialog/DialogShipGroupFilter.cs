@@ -39,6 +39,7 @@ namespace ElectronicObserver.Window.Dialog
 		private DataTable _dtRightOperand_rarity;
 		private DataTable _dtRightOperand_equipment;
 		private DataTable _dtRightOperand_equipmentCategory;
+		private DataTable _dtRightOperand_shipNationality;
 		#endregion
 
 		public DialogShipGroupFilter(ShipGroupData group)
@@ -250,6 +251,15 @@ namespace ElectronicObserver.Window.Dialog
 					_dtRightOperand_equipmentCategory.Rows.Add(cat.TypeID, cat.Name);
 				}
 				_dtRightOperand_equipmentCategory.AcceptChanges();
+			}
+			{
+				_dtRightOperand_shipNationality = new DataTable();
+				_dtRightOperand_shipNationality.Columns.AddRange(new DataColumn[] {
+					new DataColumn( "Value", typeof( int ) ),
+					new DataColumn( "Display", typeof( string ) ) });
+				for (int i = 0; i <= 10; i++)
+					_dtRightOperand_shipNationality.Rows.Add(i, Constants.GetShipNationality(i));
+				_dtRightOperand_shipNationality.AcceptChanges();
 			}
 
 			RightOperand_ComboBox.ValueMember = "Value";
@@ -535,10 +545,23 @@ namespace ElectronicObserver.Window.Dialog
 
 				RightOperand_ComboBox.DataSource = _dtRightOperand_rarity;
 				RightOperand_ComboBox.SelectedValue = right ?? 1;
-
-
-				// 以下、汎用判定
 			}
+			else if (left == ".MasterShip.ShipNationality")
+			{
+				RightOperand_ComboBox.Visible = true;
+				RightOperand_ComboBox.Enabled = true;
+				RightOperand_ComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+				RightOperand_NumericUpDown.Visible = false;
+				RightOperand_NumericUpDown.Enabled = false;
+				RightOperand_TextBox.Visible = false;
+				RightOperand_TextBox.Enabled = false;
+				Operator.Enabled = true;
+				Operator.DataSource = _dtOperator_bool;
+
+				RightOperand_ComboBox.DataSource = _dtRightOperand_shipNationality;
+				RightOperand_ComboBox.SelectedValue = right ?? 1;
+			}
+			// 以下、汎用判定
 			else if (lefttype == null)
 			{
 				RightOperand_ComboBox.Visible = false;
