@@ -1039,6 +1039,7 @@ namespace ElectronicObserver.Data
 						case 303:   // Bofors15.2cm連装砲 Model1930
 						case 360:   // Bofors 15cm連装速射砲 Mk.9 Model 1938
 						case 361:   // Bofors 15cm連装速射砲 Mk.9改＋単装速射砲 Mk.10改 Model 1938
+						case 518:   // 14cm連装砲改二
 							twin++;
 							break;
 					}

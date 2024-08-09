@@ -157,7 +157,7 @@ namespace ElectronicObserver.Data.Battle
 		/// <summary>
 		/// 記録する特殊攻撃
 		/// </summary>
-		private readonly int[] TracedSpecialAttack = new int[] { 100, 101, 102, 103, 104 };
+		private readonly int[] TracedSpecialAttack = new int[] { 100, 101, 102, 103, 104, 105, 300, 301, 302, 400, 401 };
 
 
 
