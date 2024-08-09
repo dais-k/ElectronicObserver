@@ -367,6 +367,13 @@ namespace ElectronicObserver.Data.Quest
 						ret = true;
 					}
 					break;
+				case 373:   //|373|７|「フランス艦隊」演習！|演習A勝利以上×4回|条件：フランス艦(旗艦)、旗艦含め3隻以上|イヤーリーだが1日で進捗リセット|
+					if (ships.FirstOrDefault()?.MasterShip.ShipNationality == 5 &&
+						(ships.Count(s => s.MasterShip.ShipNationality == 5) >= 3))
+					{
+						ret = true;
+					}
+					break;
 				default:
 					//ここに来たらバグ
 					ret = false;

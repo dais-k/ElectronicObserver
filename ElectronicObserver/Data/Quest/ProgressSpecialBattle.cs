@@ -504,7 +504,7 @@ namespace ElectronicObserver.Data.Quest
 						(memberstype.Count(t => t == ShipTypes.LightAircraftCarrier) == 0) &&
 						(memberstype.Count(t => t == ShipTypes.AircraftCarrier) == 0) &&
 						(memberstype.Count(t => t == ShipTypes.ArmoredAircraftCarrier) == 0) &&
-						members.Count(s => s?.MasterShip?.IsGBandUSA == true) >= 3;
+						(members.Count(s => s?.MasterShip?.ShipNationality == 1) + members.Count(s => s?.MasterShip?.ShipNationality == 2)) >= 3;
 					break;
 				case 975:   //|975|５|精鋭「第十九駆逐隊」、全力出撃！|1-5、2-3、3-2、5-3ボスを各S勝利1回ずつ|条件：磯波改二、浦波改二、綾波改二、敷波改二を編成に入れる|
 					isAccepted =
