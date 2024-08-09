@@ -830,6 +830,8 @@ namespace ElectronicObserver.Data
 					return "Colorado Touch";
 				case DayAttackKind.SpecialKongo:
 					return "僚艦夜戦突撃";
+				case DayAttackKind.SpecialRichelieu:
+					return "Richelieuよ！圧倒しなさいっ！";
 				case DayAttackKind.SpecialSubmarineAttack1:
 					return "潜水艦隊攻撃";
 				case DayAttackKind.SpecialSubmarineAttack2:
@@ -929,6 +931,8 @@ namespace ElectronicObserver.Data
 					return "Colorado Touch";
 				case NightAttackKind.SpecialKongo:
 					return "僚艦夜戦突撃";
+				case NightAttackKind.SpecialRichelieu:
+					return "Richelieuよ！圧倒しなさいっ！";
 				case NightAttackKind.SpecialNightZuiun:
 					return "夜間瑞雲攻撃";
 				case NightAttackKind.SpecialSubmarineAttack1:
