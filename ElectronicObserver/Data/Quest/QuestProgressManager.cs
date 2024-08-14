@@ -1068,6 +1068,9 @@ namespace ElectronicObserver.Data.Quest
 						case 1123:  //|1123|改良三座水上偵察機の増備|秘書艦「利根改二」または「由良改二」に零式水上偵察機★10を装備した状態で九七式艦攻(九三一空)x2を破棄、ボーキ950、新型航空兵装資材x2、開発資材x35、熟練搭乗員x2を保有
 							Progresses.Add(new ProgressDiscard(q, 2, true, new[] { 82 }, -1));
 							break;
+						case 1138:  //|1138|【高射装置量産】94式高射装置の追加配備|秘書艦に秋月型を配置し91式高射装置を4つ廃棄、ボーキ1300、鋼材480、高速建造材x4、開発資材x16を保有
+							Progresses.Add(new ProgressDiscard(q, 4, true, new[] { 120 }, -1));
+							break;
 					}
 
 					#endregion

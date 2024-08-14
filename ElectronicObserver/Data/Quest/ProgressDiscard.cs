@@ -187,6 +187,9 @@ namespace ElectronicObserver.Data.Quest
 								  members.FirstOrDefault().SlotInstance[0].EquipmentID == 25 &&
 								  members.FirstOrDefault().SlotInstance[0].Level == 10) ? 1 : 0;
 					break;
+				case 1138:  //|1138|【高射装置量産】94式高射装置の追加配備|秘書艦に秋月型を配置し91式高射装置を4つ廃棄、ボーキ1300、鋼材480、高速建造材x4、開発資材x16を保有
+					isAccepted = members.FirstOrDefault()?.MasterShip?.ShipClass == 54 ? 1 : 0;
+					break;
 				default:
 					//任務IDが当てはまらないなら-1のまま、つまりチェックの必要なし
 					break;
