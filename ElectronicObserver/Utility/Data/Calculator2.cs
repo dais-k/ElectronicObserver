@@ -481,6 +481,7 @@ namespace ElectronicObserver.Utility.Data
 		{
 			int highangle = 0;
 			int highangle_director = 0;
+			int highangle_kai = 0;
 			int director = 0;
 			int radar = 0;
 			int aaradar = 0;
@@ -540,6 +541,9 @@ namespace ElectronicObserver.Utility.Data
 						case 464:   // 10cm連装高角砲群 集中配備
 							highangle_yamato++;
 							break;
+						case 533:   // 10cm連装高角砲改+高射装置改
+							highangle_kai++;
+							break;
 					}
 				}
 				else if (eq.CategoryType == EquipmentTypes.AADirector)
@@ -556,7 +560,7 @@ namespace ElectronicObserver.Utility.Data
 					if (eq.EquipmentID == 307)   // GFCS Mk.37
 						radar_gfcs++;
 
-					if (eq.AA >= 4)   // 電探装備マスト(13号改+22号電探改四)
+					if (eq.AA >= 4)   // 電探装備マスト(13号改+22号電探改四)素対空4以上
 						radar_mast++;
 
 					if (eq.IsRadarWithRangeFinder)
@@ -611,6 +615,8 @@ namespace ElectronicObserver.Utility.Data
 			switch (KCDatabase.Instance.MasterShips[shipID]?.ShipClass) //艦型別
 			{
 				case 54:    // 秋月型
+					if (KCDatabase.Instance.MasterShips[shipID]?.RemodelTier != 0 && highangle_kai >= 2 && radar_mast >= 1)
+						aacutinlist.Add(48);
 					if (highangle >= 2 && radar >= 1)
 						aacutinlist.Add(1);
 					if (highangle >= 1 && radar >= 1)

@@ -1033,11 +1033,11 @@ namespace ElectronicObserver.Data
 				case 0:
 					return "なし";
 				case 1:
-					return "高角砲x2/電探<秋月>";
+					return "高角砲x2/電探<秋月型>";
 				case 2:
-					return "高角砲/電探<秋月>";
+					return "高角砲/電探<秋月型>";
 				case 3:
-					return "高角砲x2<秋月>";
+					return "高角砲x2<秋月型>";
 				case 4:
 					return "大口径主砲/三式弾/高射装置/電探";
 				case 5:
@@ -1126,6 +1126,8 @@ namespace ElectronicObserver.Data
 					return "35.6cm連装砲改三 or 改四/機銃/電探<榛名改二乙>";
 				case 47:
 					return "12.7cm連装砲C型改三H/電探装備マスト or 機銃増備<白露型>";
+				case 48:
+					return "10cm連装高角砲改＋高射装置改x2/対空電探<秋月型改・改二>";
 				default:
 					return "不明(" + id + ")";
 			}
