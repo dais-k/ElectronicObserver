@@ -1039,7 +1039,8 @@ namespace ElectronicObserver.Utility
 				{
 					ZoomRate = 1;
 					ZoomFit = false;
-					LogInPageURL = @"http://www.dmm.com/netgame_s/kancolle/";
+					//LogInPageURL = @"http://www.dmm.com/netgame_s/kancolle/";
+					LogInPageURL = @"https://games.dmm.com/detail/kancolle";
 					IsEnabled = true;
 					ScreenShotPath = "ScreenShot";
 					ScreenShotFormat = 2;

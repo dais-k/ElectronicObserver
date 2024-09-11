@@ -435,13 +435,13 @@ namespace ElectronicObserver.Data
 			{
 				case 1: return "米";
 				case 2: return "英";
-				case 3:	return "伊";
-				case 4:	return "独";
-				case 5:	return "仏";
-				case 6:	return "露";
-				case 7:	return "豪";
-				case 8:	return "蘭";
-				case 9:	return "瑞";
+				case 3: return "伊";
+				case 4: return "独";
+				case 5: return "仏";
+				case 6: return "露";
+				case 7: return "豪";
+				case 8: return "蘭";
+				case 9: return "瑞";
 				case 10: return "中";
 				default: return "日";
 			}
