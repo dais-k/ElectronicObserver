@@ -1352,8 +1352,8 @@ namespace ElectronicObserver.Data
 						+ SlotInstanceMaster.Where(eq => eq?.IsSwordfish ?? false).Sum(eq => eq.Firepower + eq.Torpedo)
 						+ SlotInstance.Where(eq => eq?.MasterEquipment.IsSwordfish ?? false).Sum(eq => Math.Sqrt(eq.Level));
 				}
-				//神鷹改二、大鷹改二、加賀改二護 かつ 夜間に行動可能な航空機が1つもない場合(この三隻は無条件に夜戦可能)
-				if ((ShipID == 529 || ShipID == 536 || ShipID == 646) && countNightAircraft == 0)
+				//神鷹改二、大鷹改二、雲鷹改二、加賀改二護、レキシントン(改) かつ 夜間に行動可能な航空機が1つもない場合(無条件に夜戦可能・航空攻撃アニメーション)
+				if ((ShipID == 529 || ShipID == 536 || ShipID == 889 || ShipID == 646 || ShipID == 735 || ShipID == 966) && countNightAircraft == 0)
 				{
 					// ソードフィッシュ系に限らずすべての装備の火力/雷装/改修値が加算される
 					// (艦載機の改修値は暫定でルート計算)
@@ -1377,7 +1377,7 @@ namespace ElectronicObserver.Data
 								0.3 * (p.master.Firepower + p.master.Torpedo + p.master.Bomber + p.master.ASW) * Math.Sqrt(p.count) + Math.Sqrt(p.eq.Level));
 				}
 			}
-			//グラーフツェッペリン(改)と未改造サラトガ固有(砲撃)
+			//グラーフツェッペリン(改)と未改造サラトガ固有(砲撃アニメーション)
 			else if (ShipID == 353 || ShipID == 432 || ShipID == 433)
 			{
 				// ソードフィッシュ系に限らずすべての装備の火力/雷装/改修値が加算される
@@ -1388,7 +1388,7 @@ namespace ElectronicObserver.Data
 					+ SlotInstance.Where(eq => eq?.MasterEquipment.IsAircraft ?? false).Sum(eq => Math.Sqrt(eq.Level));
 			}
 			//アークロイヤル(改)の夜戦連撃
-			else if(ShipID == 515 || ShipID == 393)
+			else if (ShipID == 515 || ShipID == 393)
 			{
 				// ソードフィッシュ系に限り装備の火力/雷装/改修値が加算される
 				// 改修値はルート計算

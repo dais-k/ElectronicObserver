@@ -382,7 +382,8 @@ namespace ElectronicObserver.Utility.Data
 					if (attackerShipID == 432 || attackerShipID == 353
 						|| attackerShipID == 433 || attackerShipID == 646
 						|| attackerShipID == 889 || attackerShipID == 536
-						|| attackerShipID == 529)        // Graf Zeppelin(改), Saratoga,加賀改二護,大鷹型改二
+						|| attackerShipID == 529 || attackerShipID == 735
+						|| attackerShipID == 966)        // Graf Zeppelin(改), Saratoga,加賀改二護,大鷹型改二,レキシントン(改)
 						nightAttackList.Add(NightAttackKind.AirAttack); //空撃
 				}
 
