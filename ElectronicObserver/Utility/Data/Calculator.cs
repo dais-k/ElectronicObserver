@@ -603,7 +603,6 @@ namespace ElectronicObserver.Utility.Data
 
 			int smokecnt = 0;
 			int smokekaicnt = 0;
-			int smoketotal = 0;
 			int smokelevel = 0;
 			int smokekailevel = 0;
 			double p3 = 0;
@@ -658,35 +657,35 @@ namespace ElectronicObserver.Utility.Data
 					}
 				}
 			}
-			smoketotal = smokecnt + smokekaicnt * 2;
+			int smoketotal = smokecnt + smokekaicnt * 2;
 			double smokeleveltotal = (double)0.3 * smokelevel + (double)0.5 * smokekailevel;
 			double modifier = Math.Ceiling(Math.Sqrt(flagluck) + smokeleveltotal);
-			double p0 = Math.Max(320 - 20 * modifier - 100 * modifier, 0);
+			double baserate = Math.Max(3.2 - 0.2 * modifier - smoketotal, 0);
 
 			if (smoketotal >= 3)
 			{
-				p3 = Math.Min(100, 4.2 * modifier + 15 * (smoketotal - 3));
-				p2 = Math.Min(30, 100 - p3);
+				p3 = Math.Min(3 * Math.Ceiling(5 * smoketotal + 1.5 * Math.Sqrt(flagluck) + smokeleveltotal - 15 ) + 1 , 100);
+				p2 =30 - (p3 > 70 ? (p3 - 70) : 0);
 				p1 = Math.Max(100 - p2 - p3, 0);
 			}
 
 			if (smoketotal == 2)
 			{
 				p3 = 0;
-				p2 = Math.Min(100, (100 - p0) * 0.05 * (modifier + 2));
-				p1 = Math.Max(100 - p0 - p2, 0);
+				p2 = Math.Min(3 * Math.Ceiling(5 * smoketotal + 1.5 * Math.Sqrt(flagluck) + smokeleveltotal - 5) + 1, 100); ;
+				p1 = Math.Max(100 - p2, 0);
 			}
 
 			if (smoketotal == 1)
 			{
 				p3 = 0;
 				p2 = 0;
-				p1 = Math.Max(100 - p0, 0);
+				p1 = 100 * (1 - baserate);
 			}
 			smokeReturn[0] = p3;
 			smokeReturn[1] = p2;
 			smokeReturn[2] = p1;
-			smokeReturn[3] = p0;
+			smokeReturn[3] = Math.Min(100 , baserate * 100);
 			return smokeReturn; 
 		}
 

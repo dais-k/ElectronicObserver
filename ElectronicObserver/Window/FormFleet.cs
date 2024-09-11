@@ -186,7 +186,7 @@ namespace ElectronicObserver.Window
 						"輸送量(TP): S {13} / A {14}\r\n" +
 						"総積載: 燃 {15} / 弾 {16}\r\n" +
 						"(1戦当たり 燃 {17} / 弾 {18})\r\n" +
-						"煙幕発動 3重:{19:0.0} / 2重:{20:0.0} / 1重:{21:0.0} / 0重:{22:0.0}",
+						"煙幕発動 3重:{19:0.0} / 2重:{20:0.0} / 1重:{21:0.0} / 不発:{22:0.0}",
 						levelSum,
 						(double)levelSum / Math.Max(fleet.Members.Count(id => id != -1), 1),
 						Constants.GetSpeed(speed),
