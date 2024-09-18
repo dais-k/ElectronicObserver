@@ -631,6 +631,27 @@ namespace ElectronicObserver.Data
 		public int NightBattlePower { get; private set; }
 
 		/// <summary>
+		/// 遠征火力
+		/// </summary>
+		public int ExpeditionFire { get; private set; }
+
+		/// <summary>
+		/// 遠征対空
+		/// </summary>
+		public int ExpeditionAA { get; private set; }
+
+		/// <summary>
+		/// 遠征対潜
+		/// </summary>
+		public int ExpeditionASW { get; private set; }
+		private int[] _expeditionASWsub;
+
+		/// <summary>
+		/// 遠征索敵
+		/// </summary>
+		public int ExpeditionLOS { get; private set; }
+
+		/// <summary>
 		/// 装備改修補正(砲撃戦)
 		/// </summary>
 		private double GetDayBattleEquipmentLevelBonus()
@@ -1086,8 +1107,6 @@ namespace ElectronicObserver.Data
 		private int CalculateAirBattlePower(int slotIndex)
 		{
 			double basepower = 0;
-			var slots = AllSlotInstance;
-
 			var eq = SlotInstance[slotIndex];
 
 			if (eq == null || _aircraft[slotIndex] == 0)
@@ -1593,6 +1612,11 @@ namespace ElectronicObserver.Data
 			AntiSubmarinePower = CalculateAntiSubmarinePower(form);
 			TorpedoPower = CalculateTorpedoPower(form);
 			NightBattlePower = CalculateNightBattlePower();
+			ExpeditionFire = CalculateExpeditionFire();
+			ExpeditionAA = CalculateExpeditionAA();
+			_expeditionASWsub = Slot.Select((_, i) => CalculateExpeditionASWsub(i)).ToArray();
+			ExpeditionASW = CalculateExpeditionASW() + (int)_expeditionASWsub.Sum();
+			ExpeditionLOS = CalculateExpeditionLOS();
 
 		}
 
@@ -2053,5 +2077,166 @@ namespace ElectronicObserver.Data
 			RawData.api_ndock_item[0] = 0;
 			RawData.api_ndock_item[1] = 0;
 		}
+
+		/// <summary>
+		/// 改修値込みの火力を算出します(遠征用)
+		/// </summary>
+		private int CalculateExpeditionFire()
+		{
+			double basepower = FirepowerTotal + SpItemHoug;
+
+			foreach (var slot in AllSlotInstance)
+			{
+				if (slot == null)
+					continue;
+
+				switch (slot.MasterEquipment.CategoryType)
+				{
+					case EquipmentTypes.MainGunSmall:
+					case EquipmentTypes.SecondaryGun:
+					case EquipmentTypes.SecondaryGun2:
+					case EquipmentTypes.RadarSmall:
+					case EquipmentTypes.APShell:
+					case EquipmentTypes.AAGun:
+						basepower += 0.5 * (Math.Truncate(Math.Sqrt(slot.Level) * 10) / 10);
+						break;
+
+					case EquipmentTypes.MainGunMedium:
+					case EquipmentTypes.MainGunLarge:
+					case EquipmentTypes.MainGunLarge2:
+					case EquipmentTypes.RadarLarge:
+					case EquipmentTypes.RadarLarge2:
+						basepower += (Math.Truncate(Math.Sqrt(slot.Level) * 10) / 10);
+						break;
+				}
+			}
+			basepower *= 10;
+			return (int)basepower;
+		}
+
+		/// <summary>
+		/// 改修値込みの対空値を算出します(遠征用)
+		/// </summary>
+		private int CalculateExpeditionAA()
+		{
+			double basepower = AATotal;
+
+			foreach (var slot in AllSlotInstance)
+			{
+				if (slot == null)
+					continue;
+
+				switch (slot.MasterEquipment.IconType)
+				{
+					case 15:
+					case 16:
+						basepower += (Math.Truncate(Math.Sqrt(slot.Level) * 10) / 10);
+						break;
+				}
+			}
+			basepower *= 10;
+			return (int)basepower;
+		}
+
+		/// <summary>
+		/// 改修値込みの対潜値を算出します(遠征用)
+		/// </summary>
+		private int CalculateExpeditionASW()
+		{
+			double basepower = ASWTotal;
+
+			foreach (var slot in AllSlotInstance)
+			{
+				if (slot == null)
+					continue;
+
+				switch (slot.MasterEquipment.CategoryType)
+				{
+					case EquipmentTypes.Sonar:
+					case EquipmentTypes.SonarLarge:
+					case EquipmentTypes.DepthCharge:
+						basepower += (Math.Truncate(Math.Sqrt(slot.Level) * 10) / 10);
+						break;
+					case EquipmentTypes.CarrierBasedBomber:
+					case EquipmentTypes.CarrierBasedTorpedo:
+					case EquipmentTypes.SeaplaneRecon:
+					case EquipmentTypes.SeaplaneBomber:
+					case EquipmentTypes.Autogyro:
+						if (slot.MasterEquipment.ASW < 5)
+						{
+							//basepower = basepower;
+						}
+						else if (slot.MasterEquipment.ASW < 7)
+						{
+							basepower += 0.5 * (Math.Truncate(Math.Sqrt(slot.Level) * 10) / 10);
+						}
+						else
+						{
+							basepower += (Math.Truncate(Math.Sqrt(slot.Level) * 10) / 10);
+						}
+						break;
+				}
+			}
+			basepower *= 10;
+			return (int)basepower;
+		}
+
+		/// <summary>
+		/// スロット数による対潜値の補正分を算出します(※熟練度0で算出・遠征用)
+		/// </summary>
+		private int CalculateExpeditionASWsub(int slotIndex)
+		{
+			double basepower;
+			var eq = SlotInstance[slotIndex];
+
+			if (eq == null || _aircraft[slotIndex] == 0)
+				return 0;
+
+			if (eq.MasterEquipment.IsAircraft)
+			{
+				if (_aircraft[slotIndex] == 1)
+				{
+					basepower = (Math.Truncate(eq.MasterEquipment.ASW * 0.65 * 100 ) /100) - eq.MasterEquipment.ASW;
+				}
+				else
+				{
+					basepower = (Math.Truncate(eq.MasterEquipment.ASW * (0.65 + Math.Sqrt(_aircraft[slotIndex] - 2) * 0.1) *100) / 100) - eq.MasterEquipment.ASW;
+				}
+			}
+			else
+			{
+				basepower = 0;
+			}
+
+			basepower *= 10;
+			return (int)basepower;
+		}
+
+		/// <summary>
+		/// 改修値込みの索敵値を算出します(遠征用)
+		/// </summary>
+		private int CalculateExpeditionLOS()
+		{
+			double basepower = LOSTotal;
+
+			foreach (var slot in AllSlotInstance)
+			{
+				if (slot == null)
+					continue;
+
+				switch (slot.MasterEquipment.CategoryType)
+				{
+					case EquipmentTypes.RadarLarge:
+					case EquipmentTypes.RadarLarge2:
+					case EquipmentTypes.RadarSmall:
+					case EquipmentTypes.SeaplaneRecon:
+						basepower += (Math.Truncate(Math.Sqrt(slot.Level) * 10) / 10);
+						break;
+				}
+			}
+			basepower *= 10;
+			return (int)basepower;
+		}
+
 	}
 }

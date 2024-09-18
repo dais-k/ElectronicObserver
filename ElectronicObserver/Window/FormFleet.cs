@@ -180,7 +180,7 @@ namespace ElectronicObserver.Window
 						"Lv合計: {0} / 平均: {1:0.00}\r\n" +
 						"{2}艦隊\r\n" +
 						"支援攻撃: {3}\r\n" +
-						"合計火力 {4} / 対空 {5} / 対潜 {6} / 索敵 {7}\r\n" +
+						"合計火力 {4:0.0} / 対空 {5:0.0} / 対潜 {6:0.0} / 索敵 {7:0.0}\r\n" +
 						"ドラム缶搭載: {8}個 ({9}艦)\r\n" +
 						"大発動艇搭載: {10}個 ({11}艦, +{12:p1})\r\n" +
 						"輸送量(TP): S {13} / A {14}\r\n" +
@@ -191,10 +191,10 @@ namespace ElectronicObserver.Window
 						(double)levelSum / Math.Max(fleet.Members.Count(id => id != -1), 1),
 						Constants.GetSpeed(speed),
 						supporttype,
-						members.Sum(s => s.FirepowerTotal),
-						members.Sum(s => s.AATotal),
-						members.Sum(s => s.ASWTotal),
-						members.Sum(s => s.LOSTotal),
+						(double)members.Sum(s => s.ExpeditionFire) / 10,
+						(double)members.Sum(s => s.ExpeditionAA) /10,
+						(double)members.Sum(s => s.ExpeditionASW) / 10,
+						(double)members.Sum(s => s.ExpeditionLOS) / 10,
 						transport.Sum(),
 						transport.Count(i => i > 0),
 						landing.Sum(),
