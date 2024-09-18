@@ -1399,8 +1399,8 @@ namespace ElectronicObserver.Window.Dialog
 		private void TopMenu_File_CopyToFleetAnalysis_Click(object sender, EventArgs e)
 		{
 			Clipboard.SetText(
-				"[" + string.Join(",", KCDatabase.Instance.Equipments.Values.Where(eq => eq?.IsLocked ?? false)
-				.Select(eq => $"{{\"api_slotitem_id\":{eq.EquipmentID},\"api_level\":{eq.Level}}}")) + "]");
+				"svdata={\"api_result\":1,\"api_result_msg\":\"成功\",\"api_data\":[" + string.Join(",", KCDatabase.Instance.Equipments.Values.Where(eq => eq?.ID >= 0)
+				.Select(eq => $"{{\"api_id\":{eq.ID},\"api_slotitem_id\":{eq.EquipmentID},\"api_level\":{eq.Level},\"api_locked\":{(eq.IsLocked ? 1 : 0)}}}")) + "]}");
 		}
 
 
