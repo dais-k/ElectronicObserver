@@ -29,8 +29,8 @@
 		private void InitializeComponent()
 		{
             this.components = new System.ComponentModel.Container();
-            ElectronicObserver.Window.Control.StatusBarModule statusBarModule1 = new ElectronicObserver.Window.Control.StatusBarModule();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            ElectronicObserver.Window.Control.StatusBarModule statusBarModule2 = new ElectronicObserver.Window.Control.StatusBarModule();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.label19 = new System.Windows.Forms.Label();
@@ -179,7 +179,9 @@
             this.FormQuest_ShowOnce = new System.Windows.Forms.CheckBox();
             this.FormQuest_ShowRunningOnly = new System.Windows.Forms.CheckBox();
             this.tabPage13 = new System.Windows.Forms.TabPage();
+            this.FormShipGroup_WhichOpenDialogMethod = new System.Windows.Forms.ComboBox();
             this.FormShipGroup_ShipNameSortMethod = new System.Windows.Forms.ComboBox();
+            this.label45 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
             this.FormShipGroup_ShowStatusBar = new System.Windows.Forms.CheckBox();
             this.FormShipGroup_AutoUpdate = new System.Windows.Forms.CheckBox();
@@ -256,8 +258,6 @@
             this.APIListBrowser = new System.Windows.Forms.OpenFileDialog();
             this.Log_PlayTime = new System.Windows.Forms.Label();
             this.PlayTimeTimer = new System.Windows.Forms.Timer(this.components);
-            this.label45 = new System.Windows.Forms.Label();
-            this.FormShipGroup_WhichOpenDialogMethod = new System.Windows.Forms.ComboBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Connection_UpstreamProxyPort)).BeginInit();
@@ -635,12 +635,12 @@
             // 
             this.UI_RenderingTest.AutoSize = true;
             this.UI_RenderingTest.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            statusBarModule1.BarColor0Begin = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            statusBarModule1.BarColor0End = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            statusBarModule1.MaximumValue = 500;
-            statusBarModule1.PrevValue = 401;
-            statusBarModule1.Value = 401;
-            this.UI_RenderingTest.HPBar = statusBarModule1;
+            statusBarModule2.BarColor0Begin = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            statusBarModule2.BarColor0End = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            statusBarModule2.MaximumValue = 500;
+            statusBarModule2.PrevValue = 401;
+            statusBarModule2.Value = 401;
+            this.UI_RenderingTest.HPBar = statusBarModule2;
             this.UI_RenderingTest.IsTargetable = true;
             this.UI_RenderingTest.Location = new System.Drawing.Point(16, 3);
             this.UI_RenderingTest.MainFontColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
@@ -1034,7 +1034,7 @@
             this.Debug_SealingPanel.Controls.Add(this.Debug_APIListPathSearch);
             this.Debug_SealingPanel.Location = new System.Drawing.Point(0, 56);
             this.Debug_SealingPanel.Name = "Debug_SealingPanel";
-            this.Debug_SealingPanel.Size = new System.Drawing.Size(696, 225);
+            this.Debug_SealingPanel.Size = new System.Drawing.Size(696, 223);
             this.Debug_SealingPanel.TabIndex = 1;
             // 
             // Debug_APIListPath
@@ -1108,9 +1108,9 @@
             this.label22.AutoSize = true;
             this.label22.Location = new System.Drawing.Point(8, 33);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(88, 15);
+            this.label22.Size = new System.Drawing.Size(64, 15);
             this.label22.TabIndex = 2;
-            this.label22.Text = "C2機関Twitter";
+            this.label22.Text = "C2機関\"X\"";
             // 
             // Tool_MCTwitterURL
             // 
@@ -1124,9 +1124,9 @@
             this.label21.AutoSize = true;
             this.label21.Location = new System.Drawing.Point(8, 6);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(104, 15);
+            this.label21.Size = new System.Drawing.Size(80, 15);
             this.label21.TabIndex = 0;
-            this.label21.Text = "艦これ運営Twitter";
+            this.label21.Text = "艦これ運営\"X\"";
             // 
             // tabPage6
             // 
@@ -1666,10 +1666,10 @@
             this.tabPage9.Controls.Add(this.FormArsenal_MaxShipNameWidth);
             this.tabPage9.Controls.Add(this.FormArsenal_BlinkAtCompletion);
             this.tabPage9.Controls.Add(this.FormArsenal_ShowShipName);
-            this.tabPage9.Location = new System.Drawing.Point(4, 22);
+            this.tabPage9.Location = new System.Drawing.Point(4, 24);
             this.tabPage9.Name = "tabPage9";
             this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage9.Size = new System.Drawing.Size(682, 340);
+            this.tabPage9.Size = new System.Drawing.Size(682, 338);
             this.tabPage9.TabIndex = 1;
             this.tabPage9.Text = "工廠";
             this.tabPage9.UseVisualStyleBackColor = true;
@@ -1742,10 +1742,10 @@
             this.tabPage19.Controls.Add(this.label36);
             this.tabPage19.Controls.Add(this.FormDock_MaxShipNameWidth);
             this.tabPage19.Controls.Add(this.FormDock_BlinkAtCompletion);
-            this.tabPage19.Location = new System.Drawing.Point(4, 22);
+            this.tabPage19.Location = new System.Drawing.Point(4, 24);
             this.tabPage19.Name = "tabPage19";
             this.tabPage19.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage19.Size = new System.Drawing.Size(682, 340);
+            this.tabPage19.Size = new System.Drawing.Size(682, 338);
             this.tabPage19.TabIndex = 8;
             this.tabPage19.Text = "入渠";
             this.tabPage19.UseVisualStyleBackColor = true;
@@ -1809,10 +1809,10 @@
             this.tabPage16.Controls.Add(this.label26);
             this.tabPage16.Controls.Add(this.FormHeadquarters_Visibility);
             this.tabPage16.Controls.Add(this.FormHeadquarters_BlinkAtMaximum);
-            this.tabPage16.Location = new System.Drawing.Point(4, 22);
+            this.tabPage16.Location = new System.Drawing.Point(4, 24);
             this.tabPage16.Name = "tabPage16";
             this.tabPage16.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage16.Size = new System.Drawing.Size(682, 340);
+            this.tabPage16.Size = new System.Drawing.Size(682, 338);
             this.tabPage16.TabIndex = 6;
             this.tabPage16.Text = "司令部";
             this.tabPage16.UseVisualStyleBackColor = true;
@@ -1852,7 +1852,7 @@
             this.FormHeadquarters_Visibility.IntegralHeight = false;
             this.FormHeadquarters_Visibility.Location = new System.Drawing.Point(6, 46);
             this.FormHeadquarters_Visibility.Name = "FormHeadquarters_Visibility";
-            this.FormHeadquarters_Visibility.Size = new System.Drawing.Size(150, 286);
+            this.FormHeadquarters_Visibility.Size = new System.Drawing.Size(150, 284);
             this.FormHeadquarters_Visibility.TabIndex = 1;
             // 
             // FormHeadquarters_BlinkAtMaximum
@@ -1874,10 +1874,10 @@
             this.tabPage18.Controls.Add(this.FormCompass_CandidateDisplayCount);
             this.tabPage18.Controls.Add(this.FormCompass_DoMergeByFormation);
             this.tabPage18.Controls.Add(this.label2);
-            this.tabPage18.Location = new System.Drawing.Point(4, 22);
+            this.tabPage18.Location = new System.Drawing.Point(4, 24);
             this.tabPage18.Name = "tabPage18";
             this.tabPage18.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage18.Size = new System.Drawing.Size(682, 340);
+            this.tabPage18.Size = new System.Drawing.Size(682, 338);
             this.tabPage18.TabIndex = 7;
             this.tabPage18.Text = "羅針盤";
             this.tabPage18.UseVisualStyleBackColor = true;
@@ -1985,10 +1985,10 @@
             this.tabPage10.Controls.Add(this.label27);
             this.tabPage10.Controls.Add(this.groupBox1);
             this.tabPage10.Controls.Add(this.FormQuest_ShowRunningOnly);
-            this.tabPage10.Location = new System.Drawing.Point(4, 22);
+            this.tabPage10.Location = new System.Drawing.Point(4, 24);
             this.tabPage10.Name = "tabPage10";
             this.tabPage10.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage10.Size = new System.Drawing.Size(682, 340);
+            this.tabPage10.Size = new System.Drawing.Size(682, 338);
             this.tabPage10.TabIndex = 2;
             this.tabPage10.Text = "任務";
             this.tabPage10.UseVisualStyleBackColor = true;
@@ -2115,6 +2115,18 @@
             this.tabPage13.Text = "グループ";
             this.tabPage13.UseVisualStyleBackColor = true;
             // 
+            // FormShipGroup_WhichOpenDialogMethod
+            // 
+            this.FormShipGroup_WhichOpenDialogMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.FormShipGroup_WhichOpenDialogMethod.FormattingEnabled = true;
+            this.FormShipGroup_WhichOpenDialogMethod.Items.AddRange(new object[] {
+            "艦船図鑑",
+            "攻撃詳細"});
+            this.FormShipGroup_WhichOpenDialogMethod.Location = new System.Drawing.Point(161, 86);
+            this.FormShipGroup_WhichOpenDialogMethod.Name = "FormShipGroup_WhichOpenDialogMethod";
+            this.FormShipGroup_WhichOpenDialogMethod.Size = new System.Drawing.Size(121, 23);
+            this.FormShipGroup_WhichOpenDialogMethod.TabIndex = 7;
+            // 
             // FormShipGroup_ShipNameSortMethod
             // 
             this.FormShipGroup_ShipNameSortMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -2127,6 +2139,15 @@
             this.FormShipGroup_ShipNameSortMethod.Name = "FormShipGroup_ShipNameSortMethod";
             this.FormShipGroup_ShipNameSortMethod.Size = new System.Drawing.Size(121, 23);
             this.FormShipGroup_ShipNameSortMethod.TabIndex = 7;
+            // 
+            // label45
+            // 
+            this.label45.AutoSize = true;
+            this.label45.Location = new System.Drawing.Point(6, 89);
+            this.label45.Name = "label45";
+            this.label45.Size = new System.Drawing.Size(149, 15);
+            this.label45.TabIndex = 6;
+            this.label45.Text = "ダブルクリックで開くウインドウ：";
             // 
             // label25
             // 
@@ -2166,10 +2187,10 @@
             this.tabPage20.Controls.Add(this.FormBattle_ShowHPBar);
             this.tabPage20.Controls.Add(this.FormBattle_HideDuringBattle);
             this.tabPage20.Controls.Add(this.FormBattle_IsScrollable);
-            this.tabPage20.Location = new System.Drawing.Point(4, 22);
+            this.tabPage20.Location = new System.Drawing.Point(4, 24);
             this.tabPage20.Name = "tabPage20";
             this.tabPage20.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage20.Size = new System.Drawing.Size(682, 340);
+            this.tabPage20.Size = new System.Drawing.Size(682, 338);
             this.tabPage20.TabIndex = 10;
             this.tabPage20.Text = "戦闘";
             this.tabPage20.UseVisualStyleBackColor = true;
@@ -2250,10 +2271,10 @@
             this.tabPage12.Controls.Add(this.FormBrowser_LogInPageURL);
             this.tabPage12.Controls.Add(this.FormBrowser_ZoomRate);
             this.tabPage12.Controls.Add(this.label15);
-            this.tabPage12.Location = new System.Drawing.Point(4, 22);
+            this.tabPage12.Location = new System.Drawing.Point(4, 24);
             this.tabPage12.Name = "tabPage12";
             this.tabPage12.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage12.Size = new System.Drawing.Size(682, 340);
+            this.tabPage12.Size = new System.Drawing.Size(682, 338);
             this.tabPage12.TabIndex = 3;
             this.tabPage12.Text = "ブラウザ";
             this.tabPage12.UseVisualStyleBackColor = true;
@@ -2430,11 +2451,10 @@
             this.FormBrowser_ScreenShotFormat_AvoidTwitterDeterioration.Enabled = false;
             this.FormBrowser_ScreenShotFormat_AvoidTwitterDeterioration.Location = new System.Drawing.Point(123, 22);
             this.FormBrowser_ScreenShotFormat_AvoidTwitterDeterioration.Name = "FormBrowser_ScreenShotFormat_AvoidTwitterDeterioration";
-            this.FormBrowser_ScreenShotFormat_AvoidTwitterDeterioration.Size = new System.Drawing.Size(182, 19);
+            this.FormBrowser_ScreenShotFormat_AvoidTwitterDeterioration.Size = new System.Drawing.Size(148, 19);
             this.FormBrowser_ScreenShotFormat_AvoidTwitterDeterioration.TabIndex = 13;
-            this.FormBrowser_ScreenShotFormat_AvoidTwitterDeterioration.Text = "Twitter の画像圧縮を回避する";
-            this.ToolTipInfo.SetToolTip(this.FormBrowser_ScreenShotFormat_AvoidTwitterDeterioration, "Twitter に PNG 形式の画像をアップロードすると、自動的に JPEG 形式に変換され画質が劣化します。\\r\\nそれを回避するための情報を埋め込むかを指定" +
-        "します。");
+            this.FormBrowser_ScreenShotFormat_AvoidTwitterDeterioration.Text = "X の画像圧縮を回避する";
+            this.ToolTipInfo.SetToolTip(this.FormBrowser_ScreenShotFormat_AvoidTwitterDeterioration, "X に PNG 形式の画像をアップロードすると、自動的に JPEG 形式に変換され画質が劣化します。\r\nそれを回避するための情報を埋め込むかを指定します。");
             this.FormBrowser_ScreenShotFormat_AvoidTwitterDeterioration.UseVisualStyleBackColor = true;
             // 
             // label18
@@ -2735,7 +2755,7 @@
             // 
             this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(3, 296);
+            this.label10.Location = new System.Drawing.Point(3, 294);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(238, 15);
             this.label10.TabIndex = 5;
@@ -2866,21 +2886,21 @@
             this.BGMPlayer_ColumnContent,
             this.BGMPlayer_ColumnPath,
             this.BGMPlayer_ColumnSetting});
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.BGMPlayer_ControlGrid.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.BGMPlayer_ControlGrid.DefaultCellStyle = dataGridViewCellStyle2;
             this.BGMPlayer_ControlGrid.Location = new System.Drawing.Point(6, 35);
             this.BGMPlayer_ControlGrid.MultiSelect = false;
             this.BGMPlayer_ControlGrid.Name = "BGMPlayer_ControlGrid";
             this.BGMPlayer_ControlGrid.RowHeadersVisible = false;
             this.BGMPlayer_ControlGrid.RowTemplate.Height = 21;
             this.BGMPlayer_ControlGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.BGMPlayer_ControlGrid.Size = new System.Drawing.Size(684, 245);
+            this.BGMPlayer_ControlGrid.Size = new System.Drawing.Size(684, 243);
             this.BGMPlayer_ControlGrid.TabIndex = 0;
             this.BGMPlayer_ControlGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.BGMPlayer_ControlGrid_CellContentClick);
             this.BGMPlayer_ControlGrid.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.BGMPlayer_ControlGrid_CellFormatting);
@@ -2977,27 +2997,6 @@
             this.PlayTimeTimer.Enabled = true;
             this.PlayTimeTimer.Interval = 1000;
             this.PlayTimeTimer.Tick += new System.EventHandler(this.PlayTimeTimer_Tick);
-            // 
-            // label45
-            // 
-            this.label45.AutoSize = true;
-            this.label45.Location = new System.Drawing.Point(6, 89);
-            this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(149, 15);
-            this.label45.TabIndex = 6;
-            this.label45.Text = "ダブルクリックで開くウインドウ：";
-            // 
-            // FormShipGroup_WhichOpenDialogMethod
-            // 
-            this.FormShipGroup_WhichOpenDialogMethod.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.FormShipGroup_WhichOpenDialogMethod.FormattingEnabled = true;
-            this.FormShipGroup_WhichOpenDialogMethod.Items.AddRange(new object[] {
-            "艦船図鑑",
-            "攻撃詳細"});
-            this.FormShipGroup_WhichOpenDialogMethod.Location = new System.Drawing.Point(161, 86);
-            this.FormShipGroup_WhichOpenDialogMethod.Name = "FormShipGroup_WhichOpenDialogMethod";
-            this.FormShipGroup_WhichOpenDialogMethod.Size = new System.Drawing.Size(121, 23);
-            this.FormShipGroup_WhichOpenDialogMethod.TabIndex = 7;
             // 
             // DialogConfiguration
             // 

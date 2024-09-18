@@ -432,8 +432,8 @@ namespace ElectronicObserver.Utility
 
 				public ConfigTool()
 				{
-					MCTwitterURL = "https://twitter.com/KanColle_STAFF";
-					C2TwitterURL = "https://twitter.com/C2_STAFF";
+					MCTwitterURL = "https://x.com/KanColle_STAFF";
+					C2TwitterURL = "https://x.com/C2_STAFF";
 				}
 			}
 			/// <summary>ツール</summary>
