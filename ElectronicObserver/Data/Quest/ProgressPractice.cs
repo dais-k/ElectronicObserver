@@ -374,6 +374,43 @@ namespace ElectronicObserver.Data.Quest
 						ret = true;
 					}
 					break;
+				case 374:   //|374|週|【期間限定任務】「三十二駆」特別演習！|演習S勝利以上×3回|条件：「玉波」「涼波」「藤波」「早波」「浜波」から3隻以上含む|イヤーリーだが1日で進捗リセット|
+					if (ships.Count(s =>
+					{
+						switch (s?.MasterShip?.NameReading)
+						{
+							case "たまなみ":
+							case "すずなみ":
+							case "ふじなみ":
+							case "はやなみ":
+							case "はまなみ":
+								return true;
+							default:
+								return false;
+						}
+					}) >= 3)
+					{
+						ret = true;
+					}
+					break;
+				case 375:   //|375|９|「第三戦隊」第二小隊、演習開始！|演習S勝利以上×4回|条件：「比叡」「霧島」軽巡1, 駆逐2, 自由1|イヤーリーだが1日で進捗リセット|
+					if ((ships.Count(s =>
+					{
+						switch (s?.MasterShip?.NameReading)
+						{
+							case "ひえい":
+							case "きりしま":
+								return true;
+							default:
+								return false;
+						}
+					}) >= 2) &&
+					(ships.Count(s => s.MasterShip.ShipType == ShipTypes.LightCruiser) >= 1) &&
+					(ships.Count(s => s.MasterShip.ShipType == ShipTypes.Destroyer) >= 2))
+					{
+						ret = true;
+					}
+					break;
 				default:
 					//ここに来たらバグ
 					ret = false;

@@ -402,6 +402,12 @@ namespace ElectronicObserver.Data.Quest
 						case 373:   //|373|７|「フランス艦隊」演習！|演習A勝利以上×4回|条件：フランス艦(旗艦)、旗艦含め3隻以上|イヤーリーだが1日で進捗リセット|
 							Progresses.Add(new ProgressPractice(q, 4, "A", true));
 							break;
+						case 374:   //|374|週|【期間限定任務】「三十二駆」特別演習！|演習S勝利以上×3回|条件：「玉波」「涼波」「藤波」「早波」「浜波」から3隻以上含む|イヤーリーだが1日で進捗リセット|
+							Progresses.Add(new ProgressPractice(q, 3, "S", true));
+							break;
+						case 375:   //|375|９|「第三戦隊」第二小隊、演習開始！|演習S勝利以上×4回|条件：「比叡」「霧島」軽巡1, 駆逐2, 自由1|イヤーリーだが1日で進捗リセット|
+							Progresses.Add(new ProgressPractice(q, 4, "S", true));
+							break;
 						//============================ 400～499 ============================
 						case 402:   //|402|「遠征」を3回成功させよう！|遠征成功3
 							Progresses.Add(new ProgressExpedition(q, 3, null));
@@ -1010,6 +1016,14 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressSpecialBattle(q, 2, "A", new[] { 15 }, true),
 							}));
 							break;
+						case 1018:  //|1018|９|「第三戦隊」第二小隊、鉄底海峡へ！|5-1、5-3、5-4、5-5ボスを各A勝利1回ずつ|条件：「比叡」「霧島」駆逐2, 自由2 (※「比叡」または「霧島」を旗艦にする)|
+							Progresses.Add(new ProgressMultiBattle(q, new[] {
+								new ProgressSpecialBattle(q, 1, "A", new[] { 51 }, true),
+								new ProgressSpecialBattle(q, 1, "A", new[] { 53 }, true),
+								new ProgressSpecialBattle(q, 1, "A", new[] { 54 }, true),
+								new ProgressSpecialBattle(q, 1, "A", new[] { 55 }, true),
+							}));
+							break;
 						//============================ 1100～1199 ============================
 						case 1103:  //|1103|６|潜水艦強化兵装の量産|61cm三連装(酸素)魚雷x3を破棄し、開発資材60、九三式水中聴音機x2、13号対空電探改x2を所有|
 							Progresses.Add(new ProgressDiscard(q, 3, true, new[] { 125 }, -1));
@@ -1017,34 +1031,34 @@ namespace ElectronicObserver.Data.Quest
 						case 1104:  //|1104|６|潜水艦電子兵装の量産|13号対空電探改x3を破棄し、開発資材100、九三式水中聴音機x2、22号対水上電探x2を所有|
 							Progresses.Add(new ProgressDiscard(q, 3, true, new[] { 28 }, -1));
 							break;
-						case 1105:  //|1105|夏の格納庫整備＆航空基地整備|陸攻系x3廃棄、弾薬2800、九七式艦攻x4、天山x4を保有
+						case 1105:  //|1105|７|夏の格納庫整備＆航空基地整備|陸攻系x3廃棄、弾薬2800、九七式艦攻x4、天山x4を保有
 							Progresses.Add(new ProgressDiscard(q, 3, true, new[] { 47 }));
 							break;
-						case 1106:  //|1106|精鋭三座水上偵察機隊の前線投入|秘書艦「由良改二」の第一スロットに零式水上偵察機11型乙★10を装備した状態で瑞雲x3、零式水上偵察機x3破棄、燃料1300、ボーキ1700、新型航空兵装資材x1、戦闘詳報x1、熟練搭乗員x3を保有
+						case 1106:  //|1106|単|精鋭三座水上偵察機隊の前線投入|秘書艦「由良改二」の第一スロットに零式水上偵察機11型乙★10を装備した状態で瑞雲x3、零式水上偵察機x3破棄、燃料1300、ボーキ1700、新型航空兵装資材x1、戦闘詳報x1、熟練搭乗員x3を保有
 							Progresses.Add(new ProgressMultiDiscard(q, new[]{
 								new ProgressDiscard(q, 3, true, new[]{ 25 }, -1),
 								new ProgressDiscard(q, 3, true, new[]{ 26 }, -1),
 							}));
 							break;
-						case 1107:  //|1107|【鋼材輸出】基地航空兵力を増備せよ！|艦上戦闘機x2、艦上攻撃機x2を破棄、鋼材24000と開発資材10を保有
+						case 1107:  //|1107|９|【鋼材輸出】基地航空兵力を増備せよ！|艦上戦闘機x2、艦上攻撃機x2を破棄、鋼材24000と開発資材10を保有
 							Progresses.Add(new ProgressMultiDiscard(q, new[]{
 								new ProgressDiscard(q, 2, true, new[]{ 6 }),
 								new ProgressDiscard(q, 2, true, new[]{ 8 }),
 							}));
 							break;
-						case 1108:  //|1108|調整改良型「水中探信儀」の増産|秘書艦「山風改二(丁)」もしくは「時雨改二」の第一スロットに三式水中探信儀★10を装備した状態で九三式水中聴音機x2破棄、三式水中探信儀x2破棄、新型兵装資材x2＆開発資材x30＆ボーキ1300を保有
+						case 1108:  //|1108|単|調整改良型「水中探信儀」の増産|秘書艦「山風改二(丁)」もしくは「時雨改二」の第一スロットに三式水中探信儀★10を装備した状態で九三式水中聴音機x2破棄、三式水中探信儀x2破棄、新型兵装資材x2＆開発資材x30＆ボーキ1300を保有
 							Progresses.Add(new ProgressMultiDiscard(q, new[]{
 								new ProgressDiscard(q, 2, true, new[]{ 46 }, -1),
 								new ProgressDiscard(q, 2, true, new[]{ 47 }, -1),
 							}));
 							break;
-						case 1109:  //|1109|上陸作戦支援用装備の配備|秘書艦「神州丸」の第一スロットに大発戦車★10を装備した状態で7.7mm機銃x2、大発動艇x2を破棄、高速建造材x8、開発資材x10、鋼材800を保有
+						case 1109:  //|1109|単|上陸作戦支援用装備の配備|秘書艦「神州丸」の第一スロットに大発戦車★10を装備した状態で7.7mm機銃x2、大発動艇x2を破棄、高速建造材x8、開発資材x10、鋼材800を保有
 							Progresses.Add(new ProgressMultiDiscard(q, new[]{
 								new ProgressDiscard(q, 2, true, new[]{ 37 }, -1),
 								new ProgressDiscard(q, 2, true, new[]{ 68 }, -1),
 							}));
 							break;
-						case 1112:  //|1112|鎮守府「大掃除」祭り！|小口径主砲x4、中口径主砲x4、大口径主砲x4を破棄、ドラム缶x1、開発資材x10、鋼材1800を保有
+						case 1112:  //|1112|単|鎮守府「大掃除」祭り！|小口径主砲x4、中口径主砲x4、大口径主砲x4を破棄、ドラム缶x1、開発資材x10、鋼材1800を保有
 							Progresses.Add(new ProgressMultiDiscard(q, new[]{
 								new ProgressDiscard(q, 4, true, new[]{ 1 }),
 								new ProgressDiscard(q, 4, true, new[]{ 2 }),
@@ -1058,17 +1072,17 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressDiscard(q, 6, true, new[]{ 10 }),
 							}));
 							break;
-						case 1120:  //|1120|【機種整理統合】新型戦闘機の量産計画|「艦上戦闘機」「艦上爆撃機」「艦上攻撃機」各x4を廃棄、「零式艦戦21型」x3「零式艦戦52型」x3ボーキサイト1800を保有
+						case 1120:  //|1120|12|【機種整理統合】新型戦闘機の量産計画|「艦上戦闘機」「艦上爆撃機」「艦上攻撃機」各x4を廃棄、「零式艦戦21型」x3「零式艦戦52型」x3ボーキサイト1800を保有
 							Progresses.Add(new ProgressMultiDiscard(q, new[]{
 								new ProgressDiscard(q, 4, true, new[]{ 6 }),
 								new ProgressDiscard(q, 4, true, new[]{ 7 }),
 								new ProgressDiscard(q, 4, true, new[]{ 8 }),
 							}));
 							break;
-						case 1123:  //|1123|改良三座水上偵察機の増備|秘書艦「利根改二」または「由良改二」に零式水上偵察機★10を装備した状態で九七式艦攻(九三一空)x2を破棄、ボーキ950、新型航空兵装資材x2、開発資材x35、熟練搭乗員x2を保有
+						case 1123:  //|1123|１|改良三座水上偵察機の増備|秘書艦「利根改二」または「由良改二」に零式水上偵察機★10を装備した状態で九七式艦攻(九三一空)x2を破棄、ボーキ950、新型航空兵装資材x2、開発資材x35、熟練搭乗員x2を保有
 							Progresses.Add(new ProgressDiscard(q, 2, true, new[] { 82 }, -1));
 							break;
-						case 1138:  //|1138|【高射装置量産】94式高射装置の追加配備|秘書艦に秋月型を配置し91式高射装置を4つ廃棄、ボーキ1300、鋼材480、高速建造材x4、開発資材x16を保有
+						case 1138:  //|1138|６|【高射装置量産】94式高射装置の追加配備|秘書艦に秋月型を配置し91式高射装置を4つ廃棄、ボーキ1300、鋼材480、高速建造材x4、開発資材x16を保有
 							Progresses.Add(new ProgressDiscard(q, 4, true, new[] { 120 }, -1));
 							break;
 					}

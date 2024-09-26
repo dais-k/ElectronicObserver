@@ -160,13 +160,13 @@ namespace ElectronicObserver.Data.Quest
 								  members.FirstOrDefault().SlotInstance[0].EquipmentID == 294 &&
 								  members.FirstOrDefault().SlotInstance[0].Level == 10) ? 1 : 0;
 					break;
-				case 1106:  //|1106|精鋭三座水上偵察機隊の前線投入|秘書艦「由良改二」の第一スロットに零式水上偵察機11型乙★10を装備した状態で瑞雲x3＆零式水上偵察機x3破棄、燃料1300＆ボーキ1700＆新型航空兵装資材x1＆戦闘詳報x1＆熟練搭乗員x3を保有
+				case 1106:  //|1106|単|精鋭三座水上偵察機隊の前線投入|秘書艦「由良改二」の第一スロットに零式水上偵察機11型乙★10を装備した状態で瑞雲x3＆零式水上偵察機x3破棄、燃料1300＆ボーキ1700＆新型航空兵装資材x1＆戦闘詳報x1＆熟練搭乗員x3を保有
 					isAccepted = (members.FirstOrDefault()?.MasterShip?.ShipID == 488 &&
 								  members.FirstOrDefault().SlotInstance[0] != null &&
 								  members.FirstOrDefault().SlotInstance[0].EquipmentID == 238 &&
 							      members.FirstOrDefault().SlotInstance[0].Level == 10) ? 1 : 0;
 					break;
-				case 1108:  //|1108|調整改良型「水中探信儀」の増産|秘書艦「山風改二(丁)」もしくは「時雨改二」の第一スロットに三式水中探信儀★10を装備した状態で九三式水中聴音機x2破棄、三式水中探信儀x2破棄、新型兵装資材x2＆開発資材x30＆ボーキ1300を保有
+				case 1108:  //|1108|単|調整改良型「水中探信儀」の増産|秘書艦「山風改二(丁)」もしくは「時雨改二」の第一スロットに三式水中探信儀★10を装備した状態で九三式水中聴音機x2破棄、三式水中探信儀x2破棄、新型兵装資材x2＆開発資材x30＆ボーキ1300を保有
 					isAccepted = (((members.FirstOrDefault()?.MasterShip?.ShipID == 588) ||  //山風改二
 						           (members.FirstOrDefault()?.MasterShip?.ShipID == 667) ||  //山風改二丁
 								   (members.FirstOrDefault()?.MasterShip?.ShipID == 145)) && //時雨改二
@@ -174,20 +174,20 @@ namespace ElectronicObserver.Data.Quest
 								  members.FirstOrDefault().SlotInstance[0].EquipmentID == 47 &&
 								  members.FirstOrDefault().SlotInstance[0].Level == 10) ? 1 : 0;
 					break;
-				case 1109:  //|1109|上陸作戦支援用装備の配備|秘書艦「神州丸」の第一スロットに大発戦車★10を装備した状態で7.7mm機銃x2、大発動艇x2を破棄、高速建造材x8、開発資材x10、鋼材800を保有
+				case 1109:  //|1109|単|上陸作戦支援用装備の配備|秘書艦「神州丸」の第一スロットに大発戦車★10を装備した状態で7.7mm機銃x2、大発動艇x2を破棄、高速建造材x8、開発資材x10、鋼材800を保有
 					isAccepted = (members.FirstOrDefault()?.MasterShip?.NameReading == "しんしゅうまる" &&
 								  members.FirstOrDefault().SlotInstance[0] != null &&
 								  members.FirstOrDefault().SlotInstance[0].EquipmentID == 166 &&
 								  members.FirstOrDefault().SlotInstance[0].Level == 10) ? 1 : 0;
 					break;
-				case 1123:	//|1123|改良三座水上偵察機の増備|秘書艦「利根改二」または「由良改二」に零式水上偵察機★10を装備した状態で九七式艦攻(九三一空)x2を破棄、ボーキ950、新型航空兵装資材x2、開発資材x35、熟練搭乗員x2を保有
+				case 1123:  //|1123|１|改良三座水上偵察機の増備|秘書艦「利根改二」または「由良改二」に零式水上偵察機★10を装備した状態で九七式艦攻(九三一空)x2を破棄、ボーキ950、新型航空兵装資材x2、開発資材x35、熟練搭乗員x2を保有
 					isAccepted = (((members.FirstOrDefault()?.MasterShip?.ShipID == 188) ||		//利根改二
 						           (members.FirstOrDefault()?.MasterShip?.ShipID == 488)) &&	//由良改二
 								  members.FirstOrDefault().SlotInstance[0] != null &&
 								  members.FirstOrDefault().SlotInstance[0].EquipmentID == 25 &&
 								  members.FirstOrDefault().SlotInstance[0].Level == 10) ? 1 : 0;
 					break;
-				case 1138:  //|1138|【高射装置量産】94式高射装置の追加配備|秘書艦に秋月型を配置し91式高射装置を4つ廃棄、ボーキ1300、鋼材480、高速建造材x4、開発資材x16を保有
+				case 1138:  //|1138|６|【高射装置量産】94式高射装置の追加配備|秘書艦に秋月型を配置し91式高射装置を4つ廃棄、ボーキ1300、鋼材480、高速建造材x4、開発資材x16を保有
 					isAccepted = members.FirstOrDefault()?.MasterShip?.ShipClass == 54 ? 1 : 0;
 					break;
 				default:

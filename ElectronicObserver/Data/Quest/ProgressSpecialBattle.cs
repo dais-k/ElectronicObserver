@@ -611,6 +611,15 @@ namespace ElectronicObserver.Data.Quest
 						 members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Escort) <= 4 &&
 						 memberstype.All(t => t == ShipTypes.Escort || t == Empty));
 					break;
+				case 1018:   //|1018|９|「第三戦隊」第二小隊、鉄底海峡へ！|5-1、5-3、5-4、5-5ボスを各A勝利1回ずつ|条件：「比叡」「霧島」駆逐2, 自由2 (※「比叡」または「霧島」を旗艦にする)|
+					isAccepted =
+						(members.FirstOrDefault()?.MasterShip?.NameReading == "ひえい" ||
+						 members.FirstOrDefault()?.MasterShip?.NameReading ==  "きりしま")
+						 &&
+						 members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Destroyer) >= 2 &&
+						 members.Count(s => s?.MasterShip?.NameReading == "ひえい") >= 1 &&
+						 members.Count(s => s?.MasterShip?.NameReading == "きりしま") >= 1;
+					break;
 			}
 
 			// 第二ゲージでも第一ボスに行ける場合があるので、個別対応が必要
