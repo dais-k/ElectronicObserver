@@ -2200,7 +2200,7 @@ namespace ElectronicObserver.Data
 				}
 				else
 				{
-					basepower = (Math.Truncate(eq.MasterEquipment.ASW * (0.65 + Math.Sqrt(_aircraft[slotIndex] - 2) * 0.1) *100) / 100) - eq.MasterEquipment.ASW;
+					basepower = (Math.Truncate(eq.MasterEquipment.ASW * (0.65 + (Math.Sqrt(_aircraft[slotIndex] - 2) * 0.1)) * 100) / 100) - eq.MasterEquipment.ASW;
 				}
 			}
 			else
