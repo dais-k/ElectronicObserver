@@ -803,29 +803,22 @@ namespace ElectronicObserver.Data
 		/// </summary>
 		public bool IsGlasses =>
 			(
-				ShipID == 31 || ShipID ==261 ||     //望月
-				ShipID == 479 || ShipID == 390 ||   //天霧
-				ShipID == 903 || ShipID == 908 ||   //天霧改二
-				ShipID == 134 || ShipID == 303 ||   //巻雲
-				ShipID == 563 ||                    //巻雲改二
-				ShipID == 452 || ShipID == 359 ||   //沖波
-				ShipID == 569 ||                    //沖波改二
-				ShipID == 643 || ShipID == 716 ||   //梅
-				ShipID == 941 || ShipID == 726 ||   //Heywood
-				ShipID == 183 || ShipID == 321 ||   //大淀
-				ShipID == 154 || ShipID == 343 ||   //香取
-				ShipID == 69 || ShipID == 272 ||    //鳥海
-				ShipID == 427 ||                    //鳥海改二
-				ShipID == 655 || ShipID == 660 ||   //Northampton
-				ShipID == 85 || ShipID == 212 ||    //霧島
-				ShipID == 152 ||                    //霧島改二
-				ShipID == 143 || ShipID == 148 ||   //武蔵
-				ShipID == 546 ||                    //武蔵改二
-				ShipID == 442 || ShipID == 447 ||   //Roma
-				ShipID == 128 || ShipID == 400 ||   //伊8
-				ShipID == 570 || ShipID == 684 ||   //平戸
-				ShipID == 944 || ShipID == 949      //平安丸
-
+				NameReading == "もちづき" ||
+				NameReading == "あまぎり" ||
+				NameReading == "まきぐも" ||
+				NameReading == "おきなみ" ||
+				NameReading == "うめ" ||
+				NameReading == "ヘイウッド" ||
+				NameReading == "おおよど" ||
+				NameReading == "かとり" ||
+				NameReading == "ちょうかい" ||
+				NameReading == "ノーザンプトン" ||
+				NameReading == "きりしま" ||
+				NameReading == "むさし" ||
+				NameReading == "ローマ" ||
+				NameReading == "い8" ||
+				NameReading == "ひらど" ||
+				NameReading == "へいあんまる"
 			);
 
 
