@@ -1133,7 +1133,7 @@ namespace ElectronicObserver.Utility.Data
 				}
 				else
 				{
-					basepower = firepowerTotal + torpedoTotal + spItemHoug + spItemRaig + GetNightBattleEquipmentLevelBonus(allSlotInstance);
+					basepower = firepowerTotal + torpedoTotal + spItemHoug + spItemRaig + GetNightBattleEquipmentLevelBonus(allSlotInstance); // 集積地棲姫IIIは水上型
 				}
 				basepower = Math.Floor(CapDamage(basepower, 360));
 			}
@@ -1155,11 +1155,16 @@ namespace ElectronicObserver.Utility.Data
 			var allSlotInstance = ship.AllSlotInstance.ToArray();
 			var hpRate = ship.HPRate;
 
-			double landingCraftLevel = 0; double[] rate_landingCraft = new double[5] { 1.8, 1.8, 1.4, 1.4, 1.7 };
+			double landingCraftLevel = 0;
 			double toku2tankLevel = 0;
 			double toku4tankLevel = 0;
 
-			var landingCraft = 0;
+			var landingCraft = 0; double[] rate_landingCraft = new double[5] { 1.8, 1.8, 1.4, 1.4, 1.7 };
+			var landingForces = 0;
+			var amphibiousTank = 0;
+			double[] rate_landingForces1 = new double[5] { 1.0, 1.0, 1.4, 1.4, 1.0 };
+			double[] rate_landingForces2 = new double[5] { 1.0, 1.0, 1.2, 1.2, 1.0 };
+			double[] rate_landingForces3 = new double[5] { 1.0, 1.0, 1.1, 1.1, 1.0 };
 			var aaShell = 0; double[] rate_aaShell = new double[5] { 1.0, 1.75, 2.5, 2.5, 1.75 };
 			var rocketWG = 0; double[] rate_rocketWG1 = new double[5] { 1.6 ,1.4, 1.3, 1.3, 1.4 }; double[] rate_rocketWG2 = new double[5] { 2.72, 2.1, 1.82, 1.82, 1.68 };
 			var rocket20 = 0; double[] rate_rocket201 = new double[5] { 1.5, 1.3, 1.25, 1.25, 1.25 }; double[] rate_rocket202 = new double[5] { 2.7, 2.145, 1.875, 1.875, 1.75 };
@@ -1183,8 +1188,12 @@ namespace ElectronicObserver.Utility.Data
 			var apShell = 0; double[] rate_apShell = new double[5] { 1.85, 1.0, 1.0, 1.0, 1.3 };
 			var seaPlane = 0; double[] rate_seaPlane = new double[5] { 1.5, 1.0, 1.2, 1.2, 1.3 };
 			var Bomber = 0; double[] rate_Bomber1 = new double[5] { 1.5, 1.4, 1.0, 1.0, 1.3 }; double[] rate_Bomber2 = new double[5] { 3.0, 2.45, 1.0, 1.0, 1.62 };
-			var toku4tank = 0; double[] rate_toku4tank = new double[5] { 1.2, 1.1, 1.1, 1.1, 1.1 };
+			var toku4tank = 0; double[] rate_toku4tank = new double[5] { 1.2, 1.1, 1.1, 1.1, 1.1 }; 
 			var toku4tankkai = 0; double[] rate_toku4tankkai1 = new double[5] { 1.35, 1.35, 1.2, 1.2, 1.5 };
+			var armyInfantry = 0;
+			var armyInfantryChiHaKai = 0;
+			var t97ChiHa = 0;
+			var t97ChiHaKai = 0;
 
 			foreach (var slot in allSlotInstance)
 			{
@@ -1205,6 +1214,12 @@ namespace ElectronicObserver.Utility.Data
 					case EquipmentTypes.SeaplaneFighter:
 					case EquipmentTypes.SeaplaneBomber:
 						seaPlane++;
+						break;
+					case EquipmentTypes.ArmyInfantry:
+						landingForces++;
+						break;
+					case EquipmentTypes.SpecialAmphibiousTank:
+						amphibiousTank++;
 						break;
 				}
 
@@ -1296,6 +1311,18 @@ namespace ElectronicObserver.Utility.Data
 					case 306:
 						Bomber++;
 						break;
+					case 496:
+						armyInfantry++;
+						break;
+					case 497:
+						t97ChiHa++;
+						break;
+					case 498:
+						t97ChiHaKai++;
+						break;
+					case 499:
+						armyInfantryChiHaKai++;
+						break;
 
 				}
 			}
@@ -1331,7 +1358,7 @@ namespace ElectronicObserver.Utility.Data
 						basepower *= rate_depthCharge1[skin];
 				}
 
-				if (landingCraft + toku4tank + toku4tankkai != 0) //上陸用舟艇 + 特四式内火艇・改
+				if (landingCraft + toku4tank + toku4tankkai + landingForces != 0) //上陸用舟艇 + 特四式内火艇・改 + 陸戦部隊
 				{
 					basepower *= rate_landingCraft[skin];
 
@@ -1345,24 +1372,25 @@ namespace ElectronicObserver.Utility.Data
 						basepower *= rate_elevenReg1[skin];
 					}
 
-					if (tokudaihatsu + no3Tank+ no3TankJ != 0) //特大発+Ⅲ号+Ⅲ号J
+					if (tokudaihatsu + no3Tank+ no3TankJ + armyInfantry + armyInfantryChiHaKai != 0) //特大発+Ⅲ号+Ⅲ号J+陸戦部隊+陸戦部隊チハ改
 					{
 						basepower *= rate_tokudaihatsu1[skin];
 					}
 
-					if (rikusen + isshiki + no3Tank + no3TankJ != 0) //陸戦隊+一式砲戦車+Ⅲ号+Ⅲ号J
+					if (rikusen + isshiki + no3Tank + no3TankJ + armyInfantry + armyInfantryChiHaKai != 0) //陸戦隊+一式砲戦車+Ⅲ号+Ⅲ号J+陸戦部隊+陸戦部隊チハ改
 					{
-						if (rikusen + isshiki + no3Tank + no3TankJ >= 2) //2積み
+						if (rikusen + isshiki + no3Tank + no3TankJ + armyInfantry + armyInfantryChiHaKai >= 2) //2積み
 							basepower *= rate_rikusenisshiki2[skin];
-						else if (chiha + chihaKai >= 1) //チハ、チハ改のどれか混載
+						else if (chiha + chihaKai + t97ChiHa + t97ChiHaKai >= 1) //チハ、チハ改、T97チハ、T97チハ改のどれか混載
 							basepower *= rate_rikusenisshiki2[skin];
 						else
 							basepower *= rate_rikusenisshiki1[skin];
 					}
 
-					if (chiha + chihaKai != 0 && rikusen + isshiki + no3Tank + no3TankJ == 0) //チハ+チハ改
+					if (chiha + chihaKai + t97ChiHa + t97ChiHaKai != 0 && rikusen + isshiki + no3Tank + no3TankJ + armyInfantry + armyInfantryChiHaKai == 0) //チハ+チハ改
 					{
-						if (chiha != 0 && chihaKai != 0)
+						bool[] cnt = new bool[] { chiha != 0, chihaKai != 0, t97ChiHa != 0, t97ChiHaKai != 0 };  
+						if (cnt.Count(res => res == true) >= 2)
 							basepower *= rate_chiha2[skin];
 						else
 							basepower *= rate_chiha1[skin];
@@ -1376,7 +1404,7 @@ namespace ElectronicObserver.Utility.Data
 							basepower *= rate_no2Tank1[skin];
 					}
 
-					if (m4A1DD + chihaKai + no3TankJ != 0) //M4A1+チハ改+Ⅲ号戦車J
+					if (m4A1DD + chihaKai + no3TankJ + armyInfantryChiHaKai + t97ChiHaKai != 0) //M4A1+チハ改+Ⅲ号戦車J+陸戦部隊チハ改+T97チハ改
 					{
 						basepower *= rate_m4A1DDchihaKai[skin];
 					}
@@ -1391,7 +1419,7 @@ namespace ElectronicObserver.Utility.Data
 								basepower *= rate_busouAB1[skin];
 						}
 
-						if (toku4tank + toku4tankkai >= 2 && daihatsuAB + busouDaihatsu < 2) //特四式内火艇+改
+						if (toku4tank + toku4tankkai >= 2) //特四式内火艇+改
 						{
 							basepower *= rate_toku4tank[skin];
 						}
@@ -1408,6 +1436,23 @@ namespace ElectronicObserver.Utility.Data
 						double avgtoku4Level = toku4tankLevel != 0 ? toku4tankLevel / (toku4tank + toku4tankkai) : 0;
 						basepower *= ((avglandingCraftLevel+ avgtoku4Level) / 50) + 1;
 					}
+
+					if (landingForces != 0)
+					{
+						if (landingForces >= 1)
+						{
+							basepower *= rate_landingForces1[skin];
+							if (landingForces >= 2)
+							{
+								basepower *= rate_landingForces2[skin];
+								if (landingForces >= 3)
+								{
+									basepower *= rate_landingForces3[skin];
+								}
+							}
+						}
+					}
+
 				}
 
 				if (toku2tank != 0) //特二式内火艇
@@ -1481,6 +1526,65 @@ namespace ElectronicObserver.Utility.Data
 				{
 					basepower *= 1.5;
 					basepower += 33;
+				}
+			}
+
+			//陸軍歩兵部隊+チハ改補正
+			{
+				if (armyInfantry + armyInfantryChiHaKai != 0)
+				{
+					basepower *= 1.2;
+					basepower += 60;
+				}
+			}
+
+			//T97チハ+チハ改補正
+			{
+				if (t97ChiHa + t97ChiHaKai != 0)
+				{
+					basepower *= 1.5;
+					basepower += 70;
+				}
+			}
+
+			//T97チハ改補正
+			{
+				if (t97ChiHaKai != 0)
+				{
+					basepower *= 1.5;
+					basepower += 50;
+				}
+			}
+
+			//陸軍歩兵部隊チハ改補正
+			{
+				if (armyInfantryChiHaKai != 0)
+				{
+					basepower *= 1.6;
+					basepower += 70;
+				}
+			}
+
+			//陸戦部隊補正
+			{
+				if (landingForces >= 2)
+				{
+					basepower *= 2;
+					basepower += 100;
+				}
+			}
+
+			//陸戦部隊+内火艇補正
+			{
+				if (armyInfantryChiHaKai >= 1 || landingForces - armyInfantryChiHaKai + amphibiousTank >= 3 )
+				{
+					basepower *= 3;
+					if (toku4tankkai >= 1)
+						basepower += 322;
+					else if (toku4tank >= 1)
+						basepower += 250;
+					else
+						basepower += 150;
 				}
 			}
 
@@ -1561,6 +1665,7 @@ namespace ElectronicObserver.Utility.Data
 			double toku4tankLevel = 0;
 			var allSlotInstance = ship.AllSlotInstance.ToArray();
 			var landingCraft = 0;
+			var landingForces = 0;
 			var rocketWG = 0; 
 			var rocket20 = 0; 
 			var depthCharge = 0;
@@ -1580,6 +1685,10 @@ namespace ElectronicObserver.Utility.Data
 			var chihaKai = 0;
 			var toku4tank = 0;
 			var toku4tankkai = 0;
+			var armyInfantry = 0;
+			var armyInfantryChiHaKai = 0;
+			var t97ChiHa = 0;
+			var t97ChiHaKai = 0;
 
 			foreach (var slot in allSlotInstance)
 			{
@@ -1591,6 +1700,9 @@ namespace ElectronicObserver.Utility.Data
 					case EquipmentTypes.LandingCraft:
 						landingCraft++;
 						landingCraftLevel += slot.Level;
+						break;
+					case EquipmentTypes.ArmyInfantry:
+						landingForces++;
 						break;
 				}
 
@@ -1658,6 +1770,18 @@ namespace ElectronicObserver.Utility.Data
 						toku4tankkai++;
 						toku4tankLevel += slot.Level;
 						break;
+					case 496:
+						armyInfantry++;
+						break;
+					case 497:
+						t97ChiHa++;
+						break;
+					case 498:
+						t97ChiHaKai++;
+						break;
+					case 499:
+						armyInfantryChiHaKai++;
+						break;
 				}
 			}
 
@@ -1687,7 +1811,7 @@ namespace ElectronicObserver.Utility.Data
 						basepower *= 1.15;
 				}
 
-				if (landingCraft + toku4tank + toku4tankkai != 0)
+				if (landingCraft + toku4tank + toku4tankkai + landingForces != 0) //上陸用舟艇 + 特四式内火艇・改 + 陸戦部隊
 				{
 					basepower *= 1.7;
 
@@ -1701,40 +1825,41 @@ namespace ElectronicObserver.Utility.Data
 						basepower *= 1.0;
 					}
 
-					if (tokudaihatsu + no3Tank+ no3TankJ != 0)
+					if (tokudaihatsu + no3Tank + no3TankJ + armyInfantry + armyInfantryChiHaKai != 0) //特大発+Ⅲ号+Ⅲ号J+陸戦部隊+陸戦部隊チハ改
 					{
 						basepower *= 1.2;
 					}
 
-					if (rikusen + isshiki + no3Tank + no3TankJ != 0)
+					if (rikusen + isshiki + no3Tank + no3TankJ + armyInfantry + armyInfantryChiHaKai != 0) //陸戦隊+一式砲戦車+Ⅲ号+Ⅲ号J+陸戦部隊+陸戦部隊チハ改
 					{
-						if (rikusen + isshiki + no3Tank + no3TankJ >= 2)
+						if (rikusen + isshiki + no3Tank + no3TankJ >= 2) //2積み
 							basepower *= 2.08;
-						else if (chiha + chihaKai >= 1)
+						else if (chiha + chihaKai + t97ChiHa + t97ChiHaKai >= 1) //チハ、チハ改、T97チハ、T97チハ改のどれか混載
 							basepower *= 2.08;
 						else
 							basepower *= 1.3;
 					}
 
-					if (chiha + chihaKai != 0 && rikusen + isshiki + no3Tank + no3TankJ == 0)
+					if (chiha + chihaKai + t97ChiHa + t97ChiHaKai != 0 && rikusen + isshiki + no3Tank + no3TankJ + armyInfantry + armyInfantryChiHaKai == 0) //チハ+チハ改
 					{
-						if (chiha + chihaKai >= 2)
+						bool[] cnt = new bool[] { chiha != 0, chihaKai != 0, t97ChiHa != 0, t97ChiHaKai != 0 };
+						if (cnt.Count(res => res == true) >= 2)
 							basepower *= 1.6;
 						else
 							basepower *= 1.0;
 					}
 
-					if (no2Tank != 0)
+					if (no2Tank != 0) //Ⅱ号戦車
 					{
 						basepower *= 1.3;
 					}
 
-					if (m4A1DD + chihaKai + no3TankJ != 0)
+					if (m4A1DD + chihaKai + no3TankJ + armyInfantryChiHaKai + t97ChiHaKai != 0) //M4A1+チハ改+Ⅲ号戦車J+陸戦部隊チハ改+T97チハ改
 					{
 						basepower *= 1.2;
 					}
 
-					if (daihatsuAB + busouDaihatsu != 0)
+					if (daihatsuAB + busouDaihatsu != 0) //装甲艇(AB)+武装大発
 					{
 						if (daihatsuAB + busouDaihatsu >= 2)
 							basepower *= 1.65;
@@ -1742,7 +1867,7 @@ namespace ElectronicObserver.Utility.Data
 							basepower *= 1.5;
 					}
 
-					if (toku4tank + toku4tankkai >= 2 && daihatsuAB + busouDaihatsu < 2) //特四式内火艇+改
+					if (toku4tank + toku4tankkai >= 2) //特四式内火艇+改
 					{
 						basepower *= 1.1;
 					}
@@ -1750,6 +1875,21 @@ namespace ElectronicObserver.Utility.Data
 					if (toku4tankkai != 0)
 					{
 						basepower *= 1.5;
+					}
+					if (landingForces != 0)
+					{
+						if (landingForces >= 1)
+						{
+							basepower *= 1.85;
+							if (landingForces >= 2)
+							{
+								basepower *= 1.45;
+								if (landingForces >= 3)
+								{
+									basepower *= 1.2;
+								}
+							}
+						}
 					}
 
 					if (landingCraftLevel != 0 || toku4tankLevel != 0) //改修レベル
