@@ -484,6 +484,7 @@ namespace ElectronicObserver.Utility.Data
 					case EquipmentTypes.AviationPersonnel:
 					case EquipmentTypes.SurfaceShipPersonnel:
 					case EquipmentTypes.CommandFacility:
+					case EquipmentTypes.ArmyInfantry:
 						basepower += Math.Sqrt(slot.Level);
 						break;
 
@@ -495,11 +496,20 @@ namespace ElectronicObserver.Utility.Data
 					case EquipmentTypes.SecondaryGun:
 						switch (slot.EquipmentID)
 						{
+							case 11:        // 15.2cm単装砲
+							case 134:       // OTO 152mm三連装速射砲
+							case 135:       // 90mm単装高角砲
+								basepower += Math.Sqrt(slot.Level);
+								break;
+
 							case 10:        // 12.7cm連装高角砲
 							case 66:        // 8cm高角砲
+							case 71:        // 10cm連装高角砲(砲架)
+							case 130:       // 12.7cm高角砲＋高射装置
 							case 220:       // 8cm高角砲改+増設機銃
 							case 275:       // 10cm連装高角砲改+増設機銃
 							case 464:       // 10cm連装高角砲群 集中配備
+							case 524:       // 12cm単装高角砲+25mm機銃増備
 								basepower += 0.2 * slot.Level;
 								break;
 
@@ -511,7 +521,7 @@ namespace ElectronicObserver.Utility.Data
 								break;
 
 							default:
-								basepower += Math.Sqrt(slot.Level);
+								basepower += 0;
 								break;
 						}
 						break;
@@ -641,6 +651,7 @@ namespace ElectronicObserver.Utility.Data
 					case EquipmentTypes.AviationPersonnel:
 					case EquipmentTypes.SurfaceShipPersonnel:
 					case EquipmentTypes.CommandFacility:
+					case EquipmentTypes.ArmyInfantry:
 						basepower += Math.Sqrt(slot.Level);
 						break;
 
@@ -651,11 +662,20 @@ namespace ElectronicObserver.Utility.Data
 					case EquipmentTypes.SecondaryGun:
 						switch (slot.EquipmentID)
 						{
+							case 11:        // 15.2cm単装砲
+							case 134:       // OTO 152mm三連装速射砲
+							case 135:       // 90mm単装高角砲
+								basepower += Math.Sqrt(slot.Level);
+								break;
+
 							case 10:        // 12.7cm連装高角砲
 							case 66:        // 8cm高角砲
+							case 71:        // 10cm連装高角砲(砲架)
+							case 130:       // 12.7cm高角砲＋高射装置
 							case 220:       // 8cm高角砲改+増設機銃
 							case 275:       // 10cm連装高角砲改+増設機銃
 							case 464:       // 10cm連装高角砲群 集中配備
+							case 524:       // 12cm単装高角砲+25mm機銃増備
 								basepower += 0.2 * slot.Level;
 								break;
 
@@ -667,7 +687,7 @@ namespace ElectronicObserver.Utility.Data
 								break;
 
 							default:
-								basepower += Math.Sqrt(slot.Level);
+								basepower += 0;
 								break;
 						}
 						break;
