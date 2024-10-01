@@ -714,17 +714,17 @@ namespace ElectronicObserver.Data
 			}
 
 			public MissionClearConditionResult CheckFirepower(int leastSum) =>
-			   CheckParameter(s => s.ExpeditionFire, leastSum * 10, "火力");
+			   CheckParameter(s => s.ExpeditionFire / 10, leastSum, "火力");
 
 			public MissionClearConditionResult CheckAA(int leastSum) =>
-				CheckParameter(s => s.ExpeditionAA, leastSum * 10, "対空");
+				CheckParameter(s => s.ExpeditionAA / 10, leastSum, "対空");
 
 			public MissionClearConditionResult CheckLOS(int leastSum) =>
-			   CheckParameter(s => s.ExpeditionLOS, leastSum * 10, "索敵");
+			   CheckParameter(s => s.ExpeditionLOS / 10, leastSum, "索敵");
 
 
 			public MissionClearConditionResult CheckASW(int leastSum) =>
-				CheckParameter(s => s.ExpeditionASW, leastSum * 10, "対潜");
+				CheckParameter(s => s.ExpeditionASW / 10, leastSum, "対潜");
 
 
 			public MissionClearConditionResult CheckEquipmentCount(Func<EquipmentData, bool> predicate, int leastCount, string whatis)
