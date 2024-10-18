@@ -1065,7 +1065,7 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressDiscard(q, 4, true, new[]{ 3 }),
 							}));
 							break;
-						case 1119:   //|1119|週|【期間限定】Halloweenはお掃除もね、ね？|(小口径主砲x6, 中口径主砲x6,  水上偵察機x6)廃棄, (35.6cm連装砲x3, 25mm連装機銃x3, 家具コインx1031)保有
+						case 1119:   //|1119|週|【期間限定】Halloweenの南瓜、食べりゅ？|(小口径主砲x6, 中口径主砲x6,  水上偵察機x6)廃棄, (20.3cm連装砲x5, 九九式艦爆x5, 家具コインx1031)保有、南瓜イベント
 							Progresses.Add(new ProgressMultiDiscard(q, new[]{
 								new ProgressDiscard(q, 6, true, new[]{ 1 }),
 								new ProgressDiscard(q, 6, true, new[]{ 2 }),
