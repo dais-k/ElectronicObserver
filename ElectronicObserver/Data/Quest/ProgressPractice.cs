@@ -411,6 +411,27 @@ namespace ElectronicObserver.Data.Quest
 						ret = true;
 					}
 					break;
+				case 377:   //|377|10|「第二駆逐隊(後期編成)」、練度向上！|演習S勝利以上×4回|条件：「早霜」「秋霜」「清霜」の1隻を旗艦、僚艦に「早霜」「秋霜」「清霜」「朝霜」2隻を含む|イヤーリーだが1日で進捗リセット|
+					if (ships.FirstOrDefault()?.MasterShip?.NameReading == "はやしも" || ships.FirstOrDefault()?.MasterShip?.NameReading == "あきしも" || ships.FirstOrDefault()?.MasterShip?.NameReading == "きよしも")
+					{
+						if (ships.Count(s =>
+						{
+							switch (s?.MasterShip?.NameReading)
+							{
+								case "はやしも":
+								case "あきしも":
+								case "きよしも":
+								case "あさしも":
+									return true;
+								default:
+									return false;
+							}
+						}) >= 3)
+						{
+							ret = true;
+						}
+					}
+					break;
 				default:
 					//ここに来たらバグ
 					ret = false;

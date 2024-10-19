@@ -408,6 +408,9 @@ namespace ElectronicObserver.Data.Quest
 						case 375:   //|375|９|「第三戦隊」第二小隊、演習開始！|演習S勝利以上×4回|条件：「比叡」「霧島」軽巡1, 駆逐2, 自由1|イヤーリーだが1日で進捗リセット|
 							Progresses.Add(new ProgressPractice(q, 4, "S", true));
 							break;
+						case 377:   //|377|10|「第二駆逐隊(後期編成)」、練度向上！|演習S勝利以上×4回|条件：「早霜」「秋霜」「清霜」の1隻を旗艦、僚艦に「早霜」「秋霜」「清霜」「朝霜」2隻を含む|イヤーリーだが1日で進捗リセット|
+							Progresses.Add(new ProgressPractice(q, 4, "S", true));
+							break;
 						//============================ 400～499 ============================
 						case 402:   //|402|「遠征」を3回成功させよう！|遠征成功3
 							Progresses.Add(new ProgressExpedition(q, 3, null));
@@ -970,11 +973,12 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressSpecialBattle(q, 1, "S", new[] { 53 }, true),
 							}));
 							break;
-						case 987:   //|987|週|【限定週間任務】10周年秋南瓜祭りおかわり！|6-1, 6-2, 6-3ボスA勝利各1回|条件：「阿武隈+伊201」「鵜来+稲木」「瑞穂+Brooklyn+Johnston」何れかの組み合わせ、南瓜イベント
+						case 987:   //|987|週|【期間限定任務】秋の南瓜祭り、おかわりっ！|1-5, 2-1, 3-1, 6-1ボスA勝利各1回|条件：「迅鯨+伊201+伊47」「第四号海防艦+第二十二号海防艦+第三〇号海防艦」「阿武隈+Brooklyn+Johnston」何れかの組み合わせ、南瓜イベント
 							Progresses.Add(new ProgressMultiBattle(q, new[] {
+								new ProgressSpecialBattle(q, 1, "A", new[] { 15 }, true),
+								new ProgressSpecialBattle(q, 1, "A", new[] { 21 }, true),
+								new ProgressSpecialBattle(q, 1, "A", new[] { 31 }, true),
 								new ProgressSpecialBattle(q, 1, "A", new[] { 61 }, true),
-								new ProgressSpecialBattle(q, 1, "A", new[] { 62 }, true),
-								new ProgressSpecialBattle(q, 1, "A", new[] { 63 }, true),
 							}));
 							break;
 						//============================ 1000～1099 ============================

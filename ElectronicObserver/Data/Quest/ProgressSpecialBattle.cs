@@ -522,32 +522,34 @@ namespace ElectronicObserver.Data.Quest
 							}
 						}) >= 4;
 					break;
-				case 987:   //|987|週|【限定週間任務】10周年秋南瓜祭りおかわり！|6-1, 6-2, 6-3ボスA勝利各1回|条件：「阿武隈+伊201」「鵜来+稲木」「瑞穂+Brooklyn+Johnston」何れかの組み合わせ、南瓜イベント
+				case 987:   //|987|週|【期間限定任務】秋の南瓜祭り、おかわりっ！|1-5, 2-1, 3-1, 6-1ボスA勝利各1回|条件：「迅鯨+伊201+伊47」「第四号海防艦+第二十二号海防艦+第三〇号海防艦」「阿武隈+Brooklyn+Johnston」何れかの組み合わせ、南瓜イベント
 					isAccepted = (members.Count(s =>
 					{
 						switch (s?.MasterShip?.NameReading)
 						{
-							case "あぶくま":
+							case "じんげい":
 							case "い201":
+							case "い47":
 								return true;
 							default:
 								return false;
 						}
-					}) >= 2) || (members.Count(s =>
+					}) >= 3) || (members.Count(s =>
 					{
 						switch (s?.MasterShip?.NameReading)
 						{
-							case "うくる":
-							case "いなぎ":
+							case "だいよんごう":
+							case "だいにじゅうにごう":
+							case "だいさんじゅうごう":
 								return true;
 							default:
 								return false;
 						}
-					}) >= 2) || (members.Count(s =>
+					}) >= 3) || (members.Count(s =>
 					{
 						switch (s?.MasterShip?.NameReading)
 						{
-							case "みずほ":
+							case "あぶくま":
 							case "ブルックリン":
 							case "ジョンストン":
 								return true;
@@ -611,7 +613,7 @@ namespace ElectronicObserver.Data.Quest
 						 members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Escort) <= 4 &&
 						 memberstype.All(t => t == ShipTypes.Escort || t == Empty));
 					break;
-				case 1018:   //|1018|９|「第三戦隊」第二小隊、鉄底海峡へ！|5-1、5-3、5-4、5-5ボスを各A勝利1回ずつ|条件：「比叡」「霧島」駆逐2, 自由2 (※「比叡」または「霧島」を旗艦にする)|
+				case 1018:   //|1018|９|「第三戦隊」第二小隊、鉄底海峡へ！|5-1、5-3、5-4、5-5ボスを各A勝利1回ずつ|条件：「比叡」「霧島」駆逐2, 自由2|
 					isAccepted =
 						(members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Destroyer) >= 2 &&
 						 members.Count(s => s?.MasterShip?.NameReading == "ひえい") >= 1 &&
