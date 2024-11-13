@@ -467,24 +467,6 @@ namespace ElectronicObserver.Data.Quest
 							}
 						}) >= 2;
 					break;
-				case 959:   //|959|単|「鎮守府秋刀魚祭り」発動準備！|1-1～1-5ボスを各S勝利1回ずつ|条件：軽巡、練巡、水上機母艦、特務艦のいずれかが旗艦|
-					//※暫定で書いてある通り特務艦のみにした。灯台補給艦や南極観測船だとダメなのかは未検証
-					isAccepted = (
-						new[] {
-							ShipTypes.LightCruiser,
-							ShipTypes.TrainingCruiser,
-							ShipTypes.SeaplaneTender,
-						}.Contains(memberstype.FirstOrDefault()) || members[0]?.MasterShip?.ShipID == 699);
-					break;
-				case 960:   //|960|単|続：「鎮守府秋刀魚祭り」発動準備！|3-1～3-5ボスを各S勝利1回ずつ|条件：軽巡、練巡、潜水母艦、特務艦のいずれかが旗艦|
-					//※暫定で書いてある通り特務艦のみにした。灯台補給艦や南極観測船だとダメなのかは未検証
-					isAccepted = (
-						new[] {
-							ShipTypes.LightCruiser,
-							ShipTypes.TrainingCruiser,
-							ShipTypes.SubmarineTender,
-						}.Contains(memberstype.FirstOrDefault()) || members[0]?.MasterShip?.ShipID == 699);
-					break;
 				case 961:   //|961|単|奮戦！精鋭「第十五駆逐隊」第一小隊|2-4、5-4、7-2-2ボスを各S勝利1回ずつ|条件：黒潮改二、親潮改二を編成に入れる|
 					isAccepted =
 						members.Count(s =>
