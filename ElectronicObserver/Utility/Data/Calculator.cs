@@ -493,6 +493,9 @@ namespace ElectronicObserver.Utility.Data
 						case EquipmentTypes.RadarLarge:
 							levelRate = 1.4;
 							break;
+						case EquipmentTypes.ASPatrol:
+							levelRate = 1.0;
+							break;
 						default:
 							levelRate = 0;
 							break;
