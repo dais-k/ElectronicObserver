@@ -2359,7 +2359,7 @@ namespace ElectronicObserver.Utility.Data
 			{ 46, 1.55 },
 			{ 47, 1.2 },
 			{ 48, 1.75 },
-			{ 49, 1.55 },
+			{ 49, 1.5 },
 		});
 
 		/// <summary>
