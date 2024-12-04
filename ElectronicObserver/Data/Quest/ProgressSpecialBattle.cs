@@ -540,8 +540,7 @@ namespace ElectronicObserver.Data.Quest
 						}
 					}) >= 3);
 					break;
-				//|1002|単|【期間限定任務】10周年秋南瓜祭り拡張作戦！|1-5、2-3、4-4、6-4ボスを各S勝利1回ずつ|条件：鵜来, 稲木, 朝潮, 夕立, 野分, 浜波, 早波, 阿武隈から2隻|
-				case 1002:
+				case 1002:   //|1002|単|【期間限定任務】10周年秋南瓜祭り拡張作戦！|1-5、2-3、4-4、6-4ボスを各S勝利1回ずつ|条件：鵜来, 稲木, 朝潮, 夕立, 野分, 浜波, 早波, 阿武隈から2隻|
 					isAccepted =
 						members.Count(s =>
 						{
@@ -561,8 +560,7 @@ namespace ElectronicObserver.Data.Quest
 							}
 						}) >= 2;
 					break;
-				//|1005|１|精強「第七駆逐隊」緊急出動！|1-2、1-3、1-5、3-2ボスを各A勝利1回ずつ|条件：「朧改」「漣改」「曙改(二)」「潮改(二)」を編成に入れる|
-				case 1005:
+				case 1005:   //|1005|１|精強「第七駆逐隊」緊急出動！|1-2、1-3、1-5、3-2ボスを各A勝利1回ずつ|条件：「朧改」「漣改」「曙改(二)」「潮改(二)」を編成に入れる|
 					isAccepted =
 						members.Count(s =>
 						{
@@ -600,6 +598,23 @@ namespace ElectronicObserver.Data.Quest
 						(members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Destroyer) >= 2 &&
 						 members.Count(s => s?.MasterShip?.NameReading == "ひえい") >= 1 &&
 						 members.Count(s => s?.MasterShip?.NameReading == "きりしま") >= 1);
+					break;
+				case 1022:   //|1022|月|【期間限定任務】「三十二駆」月次戦闘哨戒！|2-3、4-1、5-1、7-1ボスを各S勝利1回ずつ|条件：玉波、涼波、藤波、早波、浜波から3, 自由2|2024/12/2～
+					isAccepted =
+						members.Count(s =>
+						{
+							switch (s?.MasterShip?.NameReading)
+							{
+								case "たまなみ":
+								case "すずなみ":
+								case "ふじなみ":
+								case "はまなみ":
+								case "はやなみ":
+									return true;
+								default:
+									return false;
+							}
+						}) >= 3;
 					break;
 			}
 

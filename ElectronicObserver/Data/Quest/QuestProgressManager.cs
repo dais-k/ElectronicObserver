@@ -414,8 +414,8 @@ namespace ElectronicObserver.Data.Quest
 						case 373:   //|373|７|「フランス艦隊」演習！|演習A勝利以上×4回|条件：フランス艦(旗艦)、旗艦含め3隻以上|イヤーリーだが1日で進捗リセット|
 							Progresses.Add(new ProgressPractice(q, 4, "A", true));
 							break;
-						case 374:   //|374|週|【期間限定任務】「三十二駆」特別演習！|演習S勝利以上×3回|条件：「玉波」「涼波」「藤波」「早波」「浜波」から3隻以上含む|イヤーリーだが1日で進捗リセット| 期間限定ウィークリー任務 終了日未定
-							if (DateTime.Now < new DateTime(2024, 12, 31))
+						case 374:   //|374|週|【期間限定任務】「三十二駆」特別演習！|演習S勝利以上×3回|条件：「玉波」「涼波」「藤波」「早波」「浜波」から3隻以上含む|イヤーリーだが1日で進捗リセット| 期間限定ウィークリー任務 2024/12/3終了
+							if (DateTime.Now < new DateTime(2024, 12, 4))
 							{
 								Progresses.Add(new ProgressPractice(q, 3, "S", true));
 							}
@@ -1066,12 +1066,20 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressSpecialBattle(q, 2, "A", new[] { 15 }, true),
 							}));
 							break;
-						case 1018:  //|1018|９|「第三戦隊」第二小隊、鉄底海峡へ！|5-1、5-3、5-4、5-5ボスを各A勝利1回ずつ|条件：「比叡」「霧島」駆逐2, 自由2 (※「比叡」または「霧島」を旗艦にする)|
+						case 1018:  //|1018|９|「第三戦隊」第二小隊、鉄底海峡へ！|5-1、5-3、5-4、5-5ボスを各A勝利1回ずつ|条件：「比叡」「霧島」駆逐2, 自由2|
 							Progresses.Add(new ProgressMultiBattle(q, new[] {
 								new ProgressSpecialBattle(q, 1, "A", new[] { 51 }, true),
 								new ProgressSpecialBattle(q, 1, "A", new[] { 53 }, true),
 								new ProgressSpecialBattle(q, 1, "A", new[] { 54 }, true),
 								new ProgressSpecialBattle(q, 1, "A", new[] { 55 }, true),
+							}));
+							break;
+						case 1022:  //|1022|月|【期間限定任務】「三十二駆」月次戦闘哨戒！|2-3、4-1、5-1、7-1ボスを各S勝利1回ずつ|条件：玉波、涼波、藤波、早波、浜波から3, 自由2|2024/12/2～
+							Progresses.Add(new ProgressMultiBattle(q, new[] {
+								new ProgressSpecialBattle(q, 1, "S", new[] { 23 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 41 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 51 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 71 }, true),
 							}));
 							break;
 						//============================ 1100～1199 ============================
