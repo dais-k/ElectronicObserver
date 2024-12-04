@@ -843,7 +843,43 @@ namespace ElectronicObserver.Data
 				{
 					case EquipmentTypes.DepthCharge:
 					case EquipmentTypes.Sonar:
-						basepower += Math.Sqrt(slot.Level);
+						basepower += Math.Sqrt(slot.Level) * 0.67;
+						break;
+					case EquipmentTypes.ASPatrol:
+						switch (slot.EquipmentID)
+						{
+							case 70: //三式指揮連絡機(対潜)
+								basepower += slot.Level * 0.2;
+								break;
+							case 451: //三式指揮連絡機改
+							case 549: //三式指揮連絡機改二
+								basepower += slot.Level * 0.3;
+								break;
+						}
+						break;
+					case EquipmentTypes.Autogyro:
+						if (slot.MasterEquipment.ASW > 10)
+							basepower += slot.Level * 0.3;
+						else
+							basepower += slot.Level * 0.2;
+						break;
+					case EquipmentTypes.CarrierBasedTorpedo:
+						basepower += slot.Level * 0.2;
+						break;
+					case EquipmentTypes.CarrierBasedBomber:
+						switch(slot.EquipmentID)
+						{
+							case 60: //零式艦戦62型(爆戦)
+							case 154: //零戦62型(爆戦/岩井隊)
+							case 219: //零式艦戦63型(爆戦)
+							case 447: //零式艦戦64型(複座KMX搭載機)
+							case 487: //零式艦戦64型(熟練爆戦)
+								basepower += slot.Level * 0;
+								break;
+							default:
+								basepower += slot.Level * 0.2;
+								break;
+						}
 						break;
 				}
 			}
