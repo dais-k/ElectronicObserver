@@ -1,6 +1,5 @@
 ﻿using ElectronicObserver.Data.Battle;
 using ElectronicObserver.Data.Quest;
-using static ElectronicObserver.Data.Constants;
 
 namespace ElectronicObserver.Data
 {
@@ -162,10 +161,6 @@ namespace ElectronicObserver.Data
 		/// </summary>
 		public FleetPresetManager FleetPreset { get; private set; }
 
-		/// <summary>
-		/// Current server
-		/// </summary>
-		public KCServer Server { get; set; }
 
 		private KCDatabase()
 		{

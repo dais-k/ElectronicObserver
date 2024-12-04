@@ -1,5 +1,4 @@
 ﻿using DynaJson;
-using ElectronicObserver.Data;
 using ElectronicObserver.Utility;
 using ElectronicObserver.Utility.Mathematics;
 using System;
@@ -13,7 +12,6 @@ using System.Windows.Forms;
 using Titanium.Web.Proxy;
 using Titanium.Web.Proxy.EventArguments;
 using Titanium.Web.Proxy.Models;
-using static ElectronicObserver.Data.Constants;
 
 namespace ElectronicObserver.Observer
 {
@@ -287,19 +285,6 @@ namespace ElectronicObserver.Observer
 
 			//debug
 			//Utility.Logger.Add( 1, baseurl );
-
-			if (baseurl == ("/gadgets/makeRequest"))
-			{
-				KCDatabase db = KCDatabase.Instance;
-				if (db.Server is null)
-				{
-					string body = await e.GetResponseBodyAsString();
-					string url = body.Split('/')[2];
-					url = url.Split('\\')[0];
-
-					db.Server = Constants.getKCServer(url);
-				}
-			}
 
 			//response
 			//保存
