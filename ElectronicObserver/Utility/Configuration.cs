@@ -1158,12 +1158,29 @@ namespace ElectronicObserver.Utility
 				/// </summary>
 				public string Last4hoursIntervalTo { get; set; }
 
+				/// <summary>
+				/// 24時間以上アクセスした日
+				/// </summary>
+				public string Continuous24hoursDay { get; set; }
+
+				/// <summary>
+				/// 当月24時間連続稼働したかどうか
+				/// </summary>
+				public bool Continuous24hours { get; set; }
+
+				/// <summary>
+				/// 先月24時間連続稼働したかどうか
+				/// </summary>
+				public bool Continuous24hoursLastMonth { get; set; }
 
 				public ConfigFormAccessTime()
 				{
 					LastRequestReceivedTime = "";
 					Last4hoursIntervalUntil = "";
 					Last4hoursIntervalTo = "";
+					Continuous24hoursDay = "";
+					Continuous24hours = false;
+					Continuous24hoursLastMonth = false;
 				}
 			}
 			/// <summary>[稼働時間]ウィンドウ</summary>

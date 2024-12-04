@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -26,6 +27,7 @@ namespace ElectronicObserver.Window
 		private DateTime _LastRequestReceivedTime;
 		private string _Last4hoursIntervalUntil;
 		private string _Last4hoursIntervalTo;
+		private string _Continuous24hoursDay;
 
 		public FormAccessTime(FormMain parent)
 		{
@@ -55,6 +57,7 @@ namespace ElectronicObserver.Window
 			_LastAccessTime = _LastRequestReceivedTime;
 			_Last4hoursIntervalUntil = (c.FormAccessTime.Last4hoursIntervalUntil != "" && DateTime.TryParse(c.FormAccessTime.Last4hoursIntervalUntil, out dateTime)) ? c.FormAccessTime.Last4hoursIntervalUntil : "不明";
 			_Last4hoursIntervalTo = (c.FormAccessTime.Last4hoursIntervalTo != "" && DateTime.TryParse(c.FormAccessTime.Last4hoursIntervalTo, out dateTime)) ? c.FormAccessTime.Last4hoursIntervalTo : "不明";
+			_Continuous24hoursDay = (c.FormAccessTime.Continuous24hoursDay != "" && DateTime.TryParse(c.FormAccessTime.Continuous24hoursDay, out dateTime)) ? c.FormAccessTime.Continuous24hoursDay : "";
 
 
 			Utility.Configuration.Instance.ConfigurationChanged += ConfigurationChanged;
@@ -86,6 +89,13 @@ namespace ElectronicObserver.Window
 			DateTime last =_LastRequestReceivedTime;
 			TimeSpan _AccessInterval = now - last;
 
+			if (_Continuous24hoursDay!="" && DateTimeHelper.IsCrossedMonth(DateTime.Parse(_Continuous24hoursDay), 1, 0, 0, 0))
+			{
+				c.FormAccessTime.Continuous24hoursLastMonth = c.FormAccessTime.Continuous24hours;
+				c.FormAccessTime.Continuous24hours = false;
+				_Continuous24hoursDay = DateTimeHelper.TimeToCSVString(now);
+			}
+
 			if (_AccessInterval.TotalHours >= 4)
 			{
 				_Last4hoursIntervalTo = DateTimeHelper.TimeToCSVString(_LastRequestReceivedTime);
@@ -101,10 +111,26 @@ namespace ElectronicObserver.Window
 
 			TimeViewer.Text = (_currentAPIPath == apiname ? TimeViewer.Text += "\r\n\r\n" : "") + apiname + " : Response\r\n[" + now.ToString() + "]\r\n\r\n";
 			TimeViewer.Text += (_TotalAccessTime.Days * 24 + _TotalAccessTime.Hours).ToString() + "時間" + _TotalAccessTime.Minutes.ToString() + "分" + _TotalAccessTime.Seconds.ToString() + "秒 連続アクセス中...";
-			TimeViewer.Text += "\r\n" + "最後に艦これを4時間以上アクセスしなかった期間：\r\n[" + _Last4hoursIntervalTo + "～" + _Last4hoursIntervalUntil + "]";
+			TimeViewer.Text += "\r\n" + "最後に艦これを4時間以上アクセスしなかった期間：\r\n[" + _Last4hoursIntervalTo + "～" + _Last4hoursIntervalUntil + "]\r\n";
+
+			if (c.FormAccessTime.Continuous24hoursLastMonth)
+			{
+				TimeViewer.Text += "\r\n" + "先月は24時間以上連続稼働してしまいました (´･ω･`) ";
+			}
+
+			if (c.FormAccessTime.Continuous24hours || _TotalAccessTime.TotalHours >= 24)
+			{
+				c.FormAccessTime.Continuous24hours = true;
+				_Continuous24hoursDay = DateTimeHelper.TimeToCSVString(now);
+				if (c.FormAccessTime.Continuous24hoursLastMonth)
+					TimeViewer.Text += "\r\n" + "今月も24時間以上連続稼働してしまいました (´;ω;`) ";
+				else
+					TimeViewer.Text += "\r\n" + "今月は24時間以上連続稼働しています (´･ω･`) ";
+			}
 
 			_LastRequestReceivedTime = now;
 			c.FormAccessTime.LastRequestReceivedTime = DateTimeHelper.TimeToCSVString(_LastRequestReceivedTime);
+			c.FormAccessTime.Continuous24hoursDay = _Continuous24hoursDay;
 
 		}
 
