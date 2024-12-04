@@ -1106,6 +1106,11 @@ namespace ElectronicObserver.Utility.Data
 						aacutinlist.Add(9);
 
 					return aacutinlist.ToArray();
+
+				case 981:   //藤波改二
+					if (highangle_director >= 2 && radar_mast >= 1)
+						aacutinlist.Add(49);
+					break;
 			}
 
 			//以下汎用カットイン

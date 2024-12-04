@@ -2008,6 +2008,31 @@ namespace ElectronicObserver.Utility.Data
 						return 9; 
 					break;
 
+				case 979:   // 稲木改二
+					if (highangle_director >= 2 && aaradar >= 1)
+						return 5;
+					if (highangle >= 3)
+						return 8;
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+						return 13;
+					if (highangle >= 1 && director >= 1 && aaradar >= 1)
+						return 7;
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						return 12;
+					if (highangle >= 2)
+						return 31;
+					if (highangle >= 1 && aagun_total >= 1)
+						return 17;
+					if (aagun_concentrated >= 1)
+						return 18;
+					if (highangle >= 1 && director >= 1)
+						return 9;
+					break;
+
+				case 981:   //藤波改二
+					if (highangle_director >= 2 && radar_mast >= 1)
+						return 49;
+					break;
 			}
 
 			//以下汎用カットイン
@@ -2279,6 +2304,7 @@ namespace ElectronicObserver.Utility.Data
 			{ 46, 8 },
 			{ 47, 2 },
 			{ 48, 8 },
+			{ 49, 5 },
 		});
 
 		/// <summary>
@@ -2333,6 +2359,7 @@ namespace ElectronicObserver.Utility.Data
 			{ 46, 1.55 },
 			{ 47, 1.2 },
 			{ 48, 1.75 },
+			{ 49, 1.55 },
 		});
 
 		/// <summary>
