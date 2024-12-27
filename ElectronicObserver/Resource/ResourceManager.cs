@@ -221,13 +221,14 @@ namespace ElectronicObserver.Resource
 			LandAssaultPlane,
 			HeavyBomber,
 			NightSeaplane,          //50
-			NightSeaplane2,
+			NightSeaplaneBomber,
 			ArmyInfantry,
 			Reserved53, 
 			SmokeGenerator,
 			BarrageBalloon,
 			JetInterceptor,
 			InterceptorShinden,
+			NightBomber,
 			Locked,					
 			Unknown,				//不明な場合はこれ
 		}
@@ -477,13 +478,14 @@ namespace ElectronicObserver.Resource
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/LandAssaultPlane.png", "Equipment_LandAssaultPlane");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/HeavyBomber.png", "Equipment_HeavyBomber");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/NightSeaplane.png", "Equipment_NightSeaplane");
-				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/NightSeaplane2.png", "Equipment_NightSeaplane2");
+				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/NightSeaplaneBomber.png", "Equipment_NightSeaplaneBomber");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/ArmyInfantry.png", "Equipment_ArmyInfantry");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/Unknown.png", "Equipment_Reserved53"); 
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/SmokeGenerator.png", "Equipment_SmokeGenerator");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/BarrageBalloon.png", "Equipment_BarrageBalloon");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/JetInterceptor.png", "Equipment_JetInterceptor");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/InterceptorShinden.png", "Equipment_InterceptorShinden");
+				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/NightBomber.png", "Equipment_NightBomber");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/Locked.png", "Equipment_Locked");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/Unknown.png", "Equipment_Unknown");
 			}

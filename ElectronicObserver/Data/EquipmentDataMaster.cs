@@ -334,7 +334,7 @@ namespace ElectronicObserver.Data
 		public bool IsNightFighter => IconType == 45;
 
 		/// <summary> 夜間爆撃機かどうか </summary>
-		public bool IsNightBomber => EquipmentID == 154 || EquipmentID == 320;
+		public bool IsNightBomber => EquipmentID == 154 || EquipmentID == 320 || EquipmentID == 552;
 
 		/// <summary> 夜間攻撃機かどうか </summary>
 		public bool IsNightAttacker => IconType == 46;

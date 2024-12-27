@@ -287,7 +287,12 @@ namespace ElectronicObserver.Utility.Data
 							nightBomberCount++;
 							nightAirplaneCount++;
 						}
-							break;
+						//else if (eq.EquipmentID == 552) // 九九式練爆二二型改(夜間装備実験機)
+						//{
+						//	nightBomberCount++;
+						//	nightAirplaneCount++;
+						//}
+						break;
 
 					// 夜間攻撃機
 					case EquipmentTypes.CarrierBasedTorpedo:
