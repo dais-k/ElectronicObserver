@@ -432,6 +432,18 @@ namespace ElectronicObserver.Data.Quest
 						}
 					}
 					break;
+				case 378:   //|378|週|新春限定！第六艦隊特別演習|演習A勝利以上×4回|条件：潜母(旗艦), (潜母+潜水)1, 潜水1|1日で進捗リセット|期間限定ウィークリー任務
+					if (ships.FirstOrDefault()?.MasterShip?.ShipType == ShipTypes.SubmarineTender)
+					{
+						if (ships.Count(s => s.MasterShip.ShipType == ShipTypes.Submarine || s.MasterShip.ShipType == ShipTypes.SubmarineAircraftCarrier) >= 1)
+						{
+							if (ships.Count(s => s.MasterShip.ShipType == ShipTypes.Submarine || s.MasterShip.ShipType == ShipTypes.SubmarineAircraftCarrier || s.MasterShip.ShipType == ShipTypes.SubmarineTender) >= 3)
+							{
+								ret = true;
+							}
+						}
+					}
+					break;
 				default:
 					//ここに来たらバグ
 					ret = false;
