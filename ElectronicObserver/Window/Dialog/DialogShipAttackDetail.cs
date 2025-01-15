@@ -26,7 +26,6 @@ namespace ElectronicObserver.Window.Dialog
 	{
 
 		private int _shipID;
-		private int loadingResourceShipID;
 		private int[] equipID = new int[6];
 
 		private ImageLabel[] Aircrafts;
@@ -73,8 +72,6 @@ namespace ElectronicObserver.Window.Dialog
 			SupportAntiSubmarinePowers15 = new ImageLabel[] { SupportAntiSubmarinePower15_1, SupportAntiSubmarinePower15_2, SupportAntiSubmarinePower15_3, SupportAntiSubmarinePower15_4, SupportAntiSubmarinePower15_5 };
 			SupportAntiSubmarinePowers20 = new ImageLabel[] { SupportAntiSubmarinePower20_1, SupportAntiSubmarinePower20_2, SupportAntiSubmarinePower20_3, SupportAntiSubmarinePower20_4, SupportAntiSubmarinePower20_5 };
 
-
-			loadingResourceShipID = -1;
 
 			TitleHP.ImageList =
 			TitleFirepower.ImageList =
@@ -361,7 +358,7 @@ namespace ElectronicObserver.Window.Dialog
 		}
 
 
-		private async void UpdateBattleListPage(int shipID)
+		private void UpdateBattleListPage(int shipID)
 		{
 
 			KCDatabase db = KCDatabase.Instance;

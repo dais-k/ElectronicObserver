@@ -149,7 +149,7 @@ namespace ElectronicObserver.Observer
 
 			Proxy = new ProxyServer
 			{
-				ExceptionFunc = async exception =>
+				ExceptionFunc = exception =>
 				{
 					// todo write to output
 				},
@@ -161,6 +161,7 @@ namespace ElectronicObserver.Observer
 			};
 			Proxy.BeforeRequest += ProxyOnBeforeRequest;
 			Proxy.BeforeResponse += ProxyOnBeforeResponse;
+
 		}
 
 
@@ -264,7 +265,7 @@ namespace ElectronicObserver.Observer
 				if (c.SaveReceivedData && c.SaveRequest)
 				{
 
-					Task.Run((Action)(() =>
+					await Task.Run((Action)(() =>
 					{
 						SaveRequest(url, body);
 					}));
@@ -306,7 +307,7 @@ namespace ElectronicObserver.Observer
 						string url = baseurl;
 						string body = await e.GetResponseBodyAsString();
 
-						Task.Run((Action)(() =>
+						await Task.Run((Action)(() =>
 						{
 							SaveResponse(url, body);
 						}));
@@ -346,7 +347,7 @@ namespace ElectronicObserver.Observer
 						byte[] responseCopy = new byte[(await e.GetResponseBody()).Length];
 						Array.Copy(await e.GetResponseBody(), responseCopy, (await e.GetResponseBody()).Length);
 
-						Task.Run((Action)(() =>
+						await Task.Run((Action)(() =>
 						{
 							try
 							{
