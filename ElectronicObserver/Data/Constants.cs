@@ -994,6 +994,12 @@ namespace ElectronicObserver.Data
 					return "夜襲カットイン(戦彗)";
 				case NightAttackKind.CutinNightAirAttackAS:
 					return "夜襲カットイン(攻彗)";
+				case NightAttackKind.CutinNightAirAttackFB:
+					return "夜襲カットイン(戦爆)";
+				case NightAttackKind.CutinNightAirAttackAB:
+					return "夜襲カットイン(攻爆)";
+				case NightAttackKind.CutinNightAirAttackBS:
+					return "夜襲カットイン(爆彗)";
 				case NightAttackKind.CutinNightAirAttackFOther:
 					return "夜襲カットイン(戦他他)";
 				case NightAttackKind.NightAirAttack:
@@ -1380,7 +1386,6 @@ namespace ElectronicObserver.Data
 					return "不明";
 			}
 		}
-
 		#endregion
 
 	}

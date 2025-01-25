@@ -1093,6 +1093,7 @@ namespace ElectronicObserver.Utility.Data
 			int nightAttackerCount = 0;
 			int swordfishCount = 0;
 			int nightCapableBomberCount = 0;
+			int nightPcBomberCount = 0;
 			int nightBomberCount = 0;
 			int nightPersonnelCount = 0;
 			int surfaceRadarCount = 0;
@@ -1151,7 +1152,9 @@ namespace ElectronicObserver.Utility.Data
 					case EquipmentTypes.CarrierBasedBomber:
 						if (eq.EquipmentID == 154)      // 零戦62型(爆戦/岩井隊)
 							nightCapableBomberCount++;
-						else if (eq.EquipmentID == 320) // 彗星一二型(三一号光電管爆弾搭載機)
+						else if (eq.IsNightPhotocellBomber) // 彗星一二型(三一号光電管爆弾搭載機)
+							nightPcBomberCount++;
+						else if (eq.IsNightBomber) // 九九式練爆二二型改(夜間装備実験機)
 							nightBomberCount++;
 						break;
 
@@ -1271,9 +1274,9 @@ namespace ElectronicObserver.Utility.Data
 				if (nightPersonnelCount > 0)
 				{
 					if (nightFighterCount > 0 &&
-						(nightAttackerCount > 0 || (nightFighterCount + swordfishCount + nightCapableBomberCount) >= 3))
+						((nightAttackerCount + nightBomberCount) > 0 || (nightFighterCount + swordfishCount + nightCapableBomberCount) >= 3))
 						return NightAttackKind.CutinAirAttack;
-					else if (nightBomberCount > 0 && (nightFighterCount + nightAttackerCount > 0))
+					else if (nightPcBomberCount > 0 && (nightFighterCount + nightAttackerCount + nightBomberCount > 0))
 						return NightAttackKind.CutinAirAttack;
 				}
 

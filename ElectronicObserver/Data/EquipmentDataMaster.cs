@@ -327,14 +327,20 @@ namespace ElectronicObserver.Data
 			}
 		}
 
-		/// <summary> 夜間行動可能な航空機かどうか </summary>
-		public bool IsNightAircraft => IsNightFighter || IsNightAttacker;
+		/// <summary> 夜間行動可能な航空機かどうか Aタイプ(夜戦/夜攻/夜爆) </summary>
+		public bool IsNightAircraftTypeA => IsNightFighter || IsNightAttacker || IsNightBomber;
+
+		/// <summary> 夜間行動可能な航空機かどうか Bタイプ (Swordfish/光電管彗星/爆戦岩井)</summary>
+		public bool IsNightAircraftTypeB => IsNightPhotocellBomber || IsSwordfish || EquipmentID == 154;
 
 		/// <summary> 夜間戦闘機かどうか </summary>
 		public bool IsNightFighter => IconType == 45;
 
 		/// <summary> 夜間爆撃機かどうか </summary>
-		public bool IsNightBomber => EquipmentID == 154 || EquipmentID == 320 || EquipmentID == 552;
+		public bool IsNightBomber => IconType == 58;
+
+		/// <summary> 光電管彗星かどうか </summary>
+		public bool IsNightPhotocellBomber => EquipmentID == 320;
 
 		/// <summary> 夜間攻撃機かどうか </summary>
 		public bool IsNightAttacker => IconType == 46;
@@ -344,7 +350,6 @@ namespace ElectronicObserver.Data
 
 		/// <summary> Swordfish 系艦上攻撃機かどうか </summary>
 		public bool IsSwordfish => CategoryType == EquipmentTypes.CarrierBasedTorpedo && Name.Contains("Swordfish");
-
 
 		/// <summary> 電探かどうか </summary>
 		public bool IsRadar => CategoryType == EquipmentTypes.RadarSmall || CategoryType == EquipmentTypes.RadarLarge || CategoryType == EquipmentTypes.RadarLarge2;

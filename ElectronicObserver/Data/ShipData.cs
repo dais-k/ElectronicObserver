@@ -1383,11 +1383,11 @@ namespace ElectronicObserver.Data
 				var airs = SlotInstance.Zip(Aircraft, (eq, count) => new { eq, master = eq?.MasterEquipment, count }).Where(a => a.eq != null);
 
 				basepower = FirepowerBase + GetAviationPersonnelBomberLevelBonus()+ GetAviationPersonnelFirepowerLevelBonus() + GetAviationPersonnelTorpedoLevelBonus() +
-					airs.Where(p => p.master.IsNightAircraft)
+					airs.Where(p => p.master.IsNightAircraftTypeA)
 						.Sum(p => p.master.Firepower + p.master.Torpedo + p.master.Bomber +
 							3 * p.count +
 							0.45 * (p.master.Firepower + p.master.Torpedo + p.master.Bomber + p.master.ASW) * Math.Sqrt(p.count) + Math.Sqrt(p.eq.Level)) +
-					airs.Where(p => p.master.IsSwordfish || p.master.EquipmentID == 154 || p.master.EquipmentID == 320)   // 零戦62型(爆戦/岩井隊)、彗星一二型(三一号光電管爆弾搭載機)
+					airs.Where(p => p.master.IsNightAircraftTypeB)
 						.Sum(p => p.master.Firepower + p.master.Torpedo + p.master.Bomber +
 							0.3 * (p.master.Firepower + p.master.Torpedo + p.master.Bomber + p.master.ASW) * Math.Sqrt(p.count) + Math.Sqrt(p.eq.Level));
 
@@ -1395,7 +1395,7 @@ namespace ElectronicObserver.Data
 			//空撃
 			else if (kind == NightAttackKind.AirAttack)
 			{
-				int countNightAircraft = SlotInstance.Where(eq => eq != null).Where(eq => eq?.MasterEquipment.IsNightAircraft ?? false).Count();
+				int countNightAircraft = SlotInstance.Where(eq => eq != null).Where(eq => eq?.MasterEquipment.IsNightAircraftTypeA ?? false).Count();
 
 				// Ark Royal (改) かつ 夜間に行動可能な航空機が1つもない場合(Swordfishで夜戦が可能になっている)
 				if ((ShipID == 515 || ShipID == 393) && countNightAircraft == 0)
@@ -1423,11 +1423,11 @@ namespace ElectronicObserver.Data
 					var airs = SlotInstance.Zip(Aircraft, (eq, count) => new { eq, master = eq?.MasterEquipment, count }).Where(a => a.eq != null);
 
 					basepower = FirepowerBase + GetAviationPersonnelBomberLevelBonus() + GetAviationPersonnelFirepowerLevelBonus() + GetAviationPersonnelTorpedoLevelBonus() +
-						airs.Where(p => p.master.IsNightAircraft)
+						airs.Where(p => p.master.IsNightAircraftTypeA)
 							.Sum(p => p.master.Firepower + p.master.Torpedo + p.master.Bomber +
 								3 * p.count +
 								0.45 * (p.master.Firepower + p.master.Torpedo + p.master.Bomber + p.master.ASW) * Math.Sqrt(p.count) + Math.Sqrt(p.eq.Level)) +
-						airs.Where(p => p.master.IsSwordfish || p.master.EquipmentID == 154 || p.master.EquipmentID == 320)   // 零戦62型(爆戦/岩井隊)、彗星一二型(三一号光電管爆弾搭載機)
+						airs.Where(p => p.master.IsNightAircraftTypeB)
 							.Sum(p => p.master.Firepower + p.master.Torpedo + p.master.Bomber +
 								0.3 * (p.master.Firepower + p.master.Torpedo + p.master.Bomber + p.master.ASW) * Math.Sqrt(p.count) + Math.Sqrt(p.eq.Level));
 				}
@@ -1862,7 +1862,7 @@ namespace ElectronicObserver.Data
 					bool hasNightPersonnel = master.ShipID == 545 || master.ShipID == 599 || master.ShipID == 610 || master.ShipID == 883 ||
 						AllSlotInstanceMaster.Any(eq => eq != null && eq.IsNightAviationPersonnel);
 
-					bool hasNightAircraft = AllSlotInstanceMaster.Any(eq => eq != null && eq.IsNightAircraft);
+					bool hasNightAircraft = AllSlotInstanceMaster.Any(eq => eq != null && eq.IsNightAircraftTypeA);
 
 					if (hasNightPersonnel && hasNightAircraft)
 						return true;

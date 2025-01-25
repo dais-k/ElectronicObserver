@@ -190,6 +190,9 @@ namespace ElectronicObserver.Utility.Data
 					case NightAttackKind.CutinNightAirAttackFA:
 					case NightAttackKind.CutinNightAirAttackFS:
 					case NightAttackKind.CutinNightAirAttackAS:
+					case NightAttackKind.CutinNightAirAttackFB:
+					case NightAttackKind.CutinNightAirAttackAB:
+					case NightAttackKind.CutinNightAirAttackBS:
 						basepower = CalculateNightAirAttackBasepower(ship) * 1.2;
 						break;
 					case NightAttackKind.CutinNightAirAttackFOther:
@@ -294,11 +297,11 @@ namespace ElectronicObserver.Utility.Data
 			var firepowerBase = ship.FirepowerBase;
 			var airs = slotInstance.Zip(aircraft, (eq, count) => new { eq, master = eq?.MasterEquipment, count }).Where(a => a.eq != null);
 			return firepowerBase + GetAviationPersonnelBomberLevelBonus(allSlotInstance) + GetAviationPersonnelFirepowerLevelBonus(allSlotInstance) + GetAviationPersonnelTorpedoLevelBonus(allSlotInstance) +
-				airs.Where(p => p.master.IsNightAircraft)
+				airs.Where(p => p.master.IsNightAircraftTypeA)
 					.Sum(p => p.master.Firepower + p.master.Torpedo + p.master.Bomber +
 						3 * p.count +
 						0.45 * (p.master.Firepower + p.master.Torpedo + p.master.Bomber + p.master.ASW) * Math.Sqrt(p.count) + Math.Sqrt(p.eq.Level)) +
-				airs.Where(p => p.master.IsSwordfish || p.master.EquipmentID == 154 || p.master.EquipmentID == 320)   // 零戦62型(爆戦/岩井隊)、彗星一二型(三一号光電管爆弾搭載機)
+				airs.Where(p => p.master.IsNightAircraftTypeB)
 					.Sum(p => p.master.Firepower + p.master.Torpedo + p.master.Bomber +
 						0.3 * (p.master.Firepower + p.master.Torpedo + p.master.Bomber + p.master.ASW) * Math.Sqrt(p.count) + Math.Sqrt(p.eq.Level));
 
@@ -1069,9 +1072,9 @@ namespace ElectronicObserver.Utility.Data
 					{
 						//夜間航空攻撃(雷装抜き)
 						basepower = (firepowerBase + GetAviationPersonnelBomberLevelBonus(allSlotInstance) + GetAviationPersonnelFirepowerLevelBonus(allSlotInstance) + GetAviationPersonnelTorpedoLevelBonus(allSlotInstance)) +
-									airs.Where(p => p.master.IsNightAircraft).Sum(p => p.master.Firepower + p.master.Bomber +
+									airs.Where(p => p.master.IsNightAircraftTypeA).Sum(p => p.master.Firepower + p.master.Bomber +
 										3 * p.count + 0.45 * (p.master.Firepower + p.master.Torpedo + p.master.Bomber + p.master.ASW) * Math.Sqrt(p.count) + Math.Sqrt(p.eq.Level)) +
-									 airs.Where(p => p.master.IsSwordfish || p.master.EquipmentID == 154 || p.master.EquipmentID == 320)   // 零戦62型(爆戦/岩井隊)、彗星一二型(三一号光電管爆弾搭載機)
+									 airs.Where(p => p.master.IsNightAircraftTypeB)
 										.Sum(p => p.master.Firepower + p.master.Torpedo + p.master.Bomber + 0.3 * (p.master.Firepower + p.master.Torpedo + p.master.Bomber + p.master.ASW) * Math.Sqrt(p.count) + Math.Sqrt(p.eq.Level));
 						basepower = GetGroundEnemyAttackPower(ship, skin, basepower, false);
 					}

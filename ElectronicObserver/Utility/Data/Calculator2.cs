@@ -269,39 +269,24 @@ namespace ElectronicObserver.Utility.Data
 					// 夜間戦闘機
 					case EquipmentTypes.CarrierBasedFighter:
 						if (eq.IsNightFighter)
-						{ 
 							nightFighterCount++;
-							nightAirplaneCount++;
-						}
 						break;
 
 					// (夜間)爆撃機
 					case EquipmentTypes.CarrierBasedBomber:
 						if (eq.EquipmentID == 154)      // 零戦62型(爆戦/岩井隊)
-						{
 							nightCapableBomberCount++;
-							nightAirplaneCount++;
-						}
-						else if (eq.EquipmentID == 320) // 彗星一二型(三一号光電管爆弾搭載機)
-						{
+						else if (eq.IsNightPhotocellBomber) // 彗星一二型(三一号光電管爆弾搭載機)
+							nightPcBomberCount++;
+						else if (eq.IsNightBomber) // 九九式練爆二二型改(夜間装備実験機)
 							nightBomberCount++;
-							nightAirplaneCount++;
-						}
-						//else if (eq.EquipmentID == 552) // 九九式練爆二二型改(夜間装備実験機)
-						//{
-						//	nightBomberCount++;
-						//	nightAirplaneCount++;
-						//}
 						break;
 
 					// 夜間攻撃機
 					case EquipmentTypes.CarrierBasedTorpedo:
 						if (eq.IsNightAttacker)
-						{
 							nightAttackerCount++;
-							nightAirplaneCount++;
-						}
-							if (eq.IsSwordfish) // Swordfish系
+						if (eq.IsSwordfish) // Swordfish系
 							swordfishCount++;
 						break;
 
@@ -363,17 +348,34 @@ namespace ElectronicObserver.Utility.Data
 						nightAttackList.Add(NightAttackKind.CutinNightAirAttackFFA);
 					if (nightFighterCount >= 1 && nightAttackerCount >= 1)
 						nightAttackList.Add(NightAttackKind.CutinNightAirAttackFA);
-					if (nightFighterCount >= 1 && nightBomberCount >= 1)
+					if (nightFighterCount >= 1 && nightPcBomberCount >= 1)
 						nightAttackList.Add(NightAttackKind.CutinNightAirAttackFS);
-					if (nightFighterCount == 0 && nightAttackerCount >= 1 && nightBomberCount >= 1)
+					if (nightFighterCount == 0 && nightAttackerCount >= 1 && nightPcBomberCount >= 1)
 						nightAttackList.Add(NightAttackKind.CutinNightAirAttackAS);
-					nightFighterCountsub = nightFighterCount - 1;
-					nightFighterCount = nightFighterCount - nightFighterCountsub;
-					if (!nightAttackList.Contains(NightAttackKind.CutinNightAirAttackFFA))
+					if (nightFighterCount >= 1 && nightBomberCount >= 1)
 					{
-						if (nightFighterCount >= 1 && (nightFighterCountsub + nightAttackerCount + nightBomberCount + swordfishCount + nightCapableBomberCount >= 2))
+						if (nightPcBomberCount >= 1)
+							nightAttackList.Add(NightAttackKind.CutinNightAirAttackFS);
+						else
+							nightAttackList.Add(NightAttackKind.CutinNightAirAttackFB);
+					}
+					if (nightFighterCount == 0 && nightAttackerCount >= 1 && nightBomberCount >= 1)
+					{
+						if (nightPcBomberCount >= 1)
+							nightAttackList.Add(NightAttackKind.CutinNightAirAttackAS);
+						else
+							nightAttackList.Add(NightAttackKind.CutinNightAirAttackAB);
+					}
+					if (nightFighterCount == 0 && nightAttackerCount == 0 && nightPcBomberCount >= 1 && nightBomberCount >= 1)
+						nightAttackList.Add(NightAttackKind.CutinNightAirAttackBS);
+					if (nightFighterCount != 0)
+					{
+						nightAirplaneCount = (nightFighterCount - 1) + nightAttackerCount + nightBomberCount + nightCapableBomberCount + nightPcBomberCount + swordfishCount;
+						if (nightAirplaneCount >= 2)
 							nightAttackList.Add(NightAttackKind.CutinNightAirAttackFOther);
 					}
+					else
+						nightAirplaneCount = nightFighterCount + nightAttackerCount + nightBomberCount + nightCapableBomberCount + nightPcBomberCount + swordfishCount;
 					if (nightAirplaneCount != 0)
 						nightAttackList.Add(NightAttackKind.NightAirAttack);
 				}
