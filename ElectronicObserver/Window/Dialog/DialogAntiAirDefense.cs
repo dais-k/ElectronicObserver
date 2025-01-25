@@ -198,10 +198,10 @@ namespace ElectronicObserver.Window.Dialog
 
 				list = GetShips()
 					.Where(s => s != null)
-					.Select(s => Calculator.GetAACutinKind(s.ShipID, s.AllSlotMaster.ToArray()))
+					.Select(s => Calculator.GetAACutinKind(s.ShipID, s.AllSlotMaster.ToArray(), s.ID))
 					.Concat(Enumerable.Repeat(0, 1))
 					.Distinct()
-					.OrderBy(i => i)
+					//.OrderBy(i => i) ※ソートしない
 					.Select(kind => new AACutinComboBoxData(kind)).ToArray();
 
 			}

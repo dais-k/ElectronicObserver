@@ -495,7 +495,7 @@ namespace ElectronicObserver.Window
 				Constants.GetNightAttackKind(Calculator.GetNightAttackKind(slot, ship.ShipID, -1)));
 
 			{
-				int aacutin = Calculator.GetAACutinKind(shipID, slot);
+				int aacutin = Calculator.GetAACutinKind(shipID, slot, -1);
 				if (aacutin != 0)
 				{
 					sb.AppendFormat("対空: {0}\r\n", Constants.GetAACutinKind(aacutin));

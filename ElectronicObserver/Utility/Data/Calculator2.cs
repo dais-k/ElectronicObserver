@@ -22,7 +22,7 @@ namespace ElectronicObserver.Utility.Data
 		/// <param name="attackerShipID">攻撃艦の艦船ID。</param>
 		/// <param name="defenderShipID">防御艦の艦船ID。なければ-1</param>
 		/// <param name="includeSpecialAttack">弾着観測砲撃を含むか。falseなら除外して計算</param>
-		public static DayAttackKind[] GetDayAttackKindList(int[] slot, int attackerShipID, bool includeSpecialAttack = true)
+		public static DayAttackKind[] GetDayAttackKindList(int[] slot, int attackerShipID, int defenderShipID = -1, bool includeSpecialAttack = true)
 		{
 			int reconCount = 0;
 			int mainGunCount = 0;
@@ -98,6 +98,7 @@ namespace ElectronicObserver.Utility.Data
 			}
 
 			ShipDataMaster attacker = KCDatabase.Instance.MasterShips[attackerShipID];
+			ShipDataMaster defender = KCDatabase.Instance.MasterShips[defenderShipID];
 
 			if (includeSpecialAttack) //瑞雲特殊攻撃判定
 			{
@@ -150,24 +151,25 @@ namespace ElectronicObserver.Utility.Data
 
 			}
 
-			if (attackerShipID == 352) //速吸改
-			{
-				if (slotmaster.Any(eq => eq.CategoryType == EquipmentTypes.CarrierBasedTorpedo))
-					dayAttackList.Add(DayAttackKind.AirAttack);
-				else
-					dayAttackList.Add(DayAttackKind.Shelling);
-			}
-				
-			if (attackerShipID == 717) //山汐丸改
-			{
-				if (slotmaster.Any(eq => eq.CategoryType == EquipmentTypes.CarrierBasedBomber))
-					dayAttackList.Add(DayAttackKind.AirAttack);
-				else
-					dayAttackList.Add(DayAttackKind.Shelling);
-			}
-
 			if (!attacker.IsAircraftCarrier && !attacker.IsSubmarine)
-				dayAttackList.Add(DayAttackKind.Shelling); //砲撃
+			{
+				if (attackerShipID == 352) //速吸改
+				{
+					if (slotmaster.Any(eq => eq.CategoryType == EquipmentTypes.CarrierBasedTorpedo))
+						dayAttackList.Add(DayAttackKind.AirAttack);
+					else
+						dayAttackList.Add(DayAttackKind.Shelling);
+				}
+				else if (attackerShipID == 717) //山汐丸改
+				{
+					if (slotmaster.Any(eq => eq.CategoryType == EquipmentTypes.CarrierBasedBomber))
+						dayAttackList.Add(DayAttackKind.AirAttack);
+					else
+						dayAttackList.Add(DayAttackKind.Shelling);
+				}
+				else
+					dayAttackList.Add(DayAttackKind.Shelling); //砲撃
+			}
 
 			if (attacker.IsAircraftCarrier)
 			{
@@ -203,10 +205,10 @@ namespace ElectronicObserver.Utility.Data
 			int submarineEquipmentCount = 0;
 			int nightAirplaneCount = 0;
 			int nightFighterCount = 0;
-			int nightFighterCountsub = 0;
 			int nightAttackerCount = 0;
 			int swordfishCount = 0;
 			int nightCapableBomberCount = 0;
+			int nightPcBomberCount = 0;
 			int nightBomberCount = 0;
 			int nightPersonnelCount = 0;
 			int surfaceRadarCount = 0;
@@ -300,13 +302,9 @@ namespace ElectronicObserver.Utility.Data
 					// 見張員
 					case EquipmentTypes.SurfaceShipPersonnel:
 						if (eq.EquipmentID == 412)
-						{
 							masterPicketCrewCount++; //水雷戦隊 熟練見張員(水)
-						}
 						else
-						{
 							picketCrewCount++; //熟練見張員(見)
-						}
 						break;
 
 					// 夜間作戦航空要員
@@ -328,9 +326,7 @@ namespace ElectronicObserver.Utility.Data
 					//ドラム缶
 					case EquipmentTypes.TransportContainer:
 						if (eq.EquipmentID == 75)
-						{
 							drumCount++;
-						}
 						break;
 				}
 			}
@@ -485,7 +481,7 @@ namespace ElectronicObserver.Utility.Data
 		/// <summary>
 		/// 対空カットイン種別を取得します。
 		/// </summary>
-		public static int[] GetAACutinKind(int shipID, int[] slot, int id)
+		public static int[] GetAACutinKind(int shipID, int[] slot, int sId = -1)
 		{
 			int highangle = 0;
 			int highangle_director = 0;
@@ -1085,8 +1081,16 @@ namespace ElectronicObserver.Utility.Data
 						aacutinlist.Add(7);
 					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
 						aacutinlist.Add(12);
-					if ((KCDatabase.Instance.Ships[id].AABase > 70) && (maingun_c3h >= 2 || (maingun_c3h >= 1 && (aagun_25mmz + radar_mast >= 1))))
-						aacutinlist.Add(47);
+					if (sId != -1)
+					{
+						if ((KCDatabase.Instance.Ships[sId].AABase > 70) && (maingun_c3h >= 2 || (maingun_c3h >= 1 && (aagun_25mmz + radar_mast >= 1))))
+							aacutinlist.Add(47);
+					}
+					else
+					{
+						if (maingun_c3h >= 2 || (maingun_c3h >= 1 && (aagun_25mmz + radar_mast >= 1)))
+							aacutinlist.Add(47); 
+					}
 					if (highangle >= 1 && director >= 1)
 						aacutinlist.Add(9);
 

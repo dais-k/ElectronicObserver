@@ -812,7 +812,7 @@ namespace ElectronicObserver.Window
 				}
 
 				{
-					int aacutin = Calculator.GetAACutinKind(ship.ShipID, slotmaster);
+					int aacutin = Calculator.GetAACutinKind(ship.ShipID, slotmaster, ship.ID);
 					if (aacutin != 0)
 					{
 						sb.AppendFormat("対空: {0}\r\n", Constants.GetAACutinKind(aacutin));
