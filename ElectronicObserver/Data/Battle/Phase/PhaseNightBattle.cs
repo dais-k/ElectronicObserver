@@ -99,7 +99,8 @@ namespace ElectronicObserver.Data.Battle.Phase
 						break;
 
 					case 101:
-                    case 102:
+					case 102:
+					case 105:
 					case 401:
 						// nagato/mutsu touch / Yamato touch (Battleship * 2)
 						for (int i = 0; i < atk.Defenders.Count; i++)
