@@ -19,7 +19,7 @@ namespace Browser.Properties {
     // または Visual Studio のようなツールを使用して自動生成されました。
     // メンバーを追加または削除するには、.ResX ファイルを編集して、/str オプションと共に
     // ResGen を実行し直すか、または VS プロジェクトをビルドし直します。
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -86,7 +86,8 @@ namespace Browser.Properties {
         ///#htmlWrap {{ visibility: visible; width: 100% !important; height: 100% !important; }}&lt;/style&gt;&apos;;
         ///document.getElementsByTagName(&apos;head&apos;)[0].appendChild(node.lastChild);
         ///}}
-        ///ca [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
+        ///catch(e) {{
+        /// [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string FrameScript {
             get {
@@ -103,7 +104,7 @@ namespace Browser.Properties {
         ///node.innerHTML = &apos;P&lt;style id=\&apos;{0}\&apos;&gt;body {{ visibility: hidden; overflow: hidden; }} \
         ///div #block_background {{ visibility: visible; }} \
         ///div #alert {{ visibility: visible; overflow: scroll; overflow-x: hidden; top: 3% !important; left: 3% !important; width: 94% !important; height: 94%; padding: 2%; box-sizing: border-box;}} \
-        ///div.dmm-ntgnavi [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
+        ///div.dmm-ntgnavi {{ disp [残りの文字列は切り詰められました]&quot;; に類似しているローカライズされた文字列を検索します。
         /// </summary>
         internal static string PageScript {
             get {

@@ -46,14 +46,14 @@ namespace Browser
 				{
 					if (MessageBox.Show(
 $@"ブラウザコンポーネントがロードできませんでした。動作に必要な
-「Microsoft Visual C++ 2015 再頒布可能パッケージ」
+「Microsoft Visual C++ 再頒布可能パッケージ」
 がインストールされていないのが原因の可能性があります。
 ダウンロードページを開きますか？
 (vc_redist.{(Environment.Is64BitProcess ? "x64" : "x86")}.exe をインストールしてください。)",
 						"CefSharp ロードエラー", MessageBoxButtons.YesNo, MessageBoxIcon.Error, MessageBoxDefaultButton.Button1)
 						== DialogResult.Yes)
 					{
-						System.Diagnostics.Process.Start(@"https://www.microsoft.com/ja-jp/download/details.aspx?id=53587");
+						System.Diagnostics.Process.Start(@"https://learn.microsoft.com/ja-JP/cpp/windows/latest-supported-vc-redist?view=msvc-170");
 					}
 
 					// なんにせよ今回は起動できないのであきらめる
