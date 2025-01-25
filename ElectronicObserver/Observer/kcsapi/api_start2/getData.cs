@@ -220,7 +220,7 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 				//api_slotitem_idを作り直す
 				JsonElement jelem_id = JsonSerializer.Deserialize<JsonElement>(text_api_mst_equip_exslot_ship); //変換した文字列をJsonElement にデシリアライズ
 				JsonProperty root_id = jelem_id.EnumerateObject().First(); //最初の要素を取りだす
-				rootObject.api_slotitem_id = int.Parse(root_id.Name);
+				rootObject.Api_slotitem_id = int.Parse(root_id.Name);
 				string text_equip_exslot = root_id.ToString();
 				string text_shipids = root_id.Value.ToString();
 
@@ -236,7 +236,7 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 					{
 						list_ship_ids.Add(int.Parse(jprop.Name));
 					}
-					rootObject.api_ship_ids = list_ship_ids;
+					rootObject.Api_ship_ids = list_ship_ids;
 				}
 				string text_stypes = text_shipids.Replace(root_ship_ids.ToString() + ",", ""); 
 
@@ -252,7 +252,7 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 					{
 						list_stypes.Add(int.Parse(jprop.Name));
 					}
-					rootObject.api_stypes = list_stypes;
+					rootObject.Api_stypes = list_stypes;
 				}
 				string text_ctypes = text_stypes.Replace(root_stypes.ToString() + ",", "");
 
@@ -268,7 +268,7 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 					{
 						list_ctypes.Add(int.Parse(jprop.Name));
 					}
-					rootObject.api_ctypes = list_ctypes;
+					rootObject.Api_ctypes = list_ctypes;
 				}
 				string text_reqLV = text_ctypes.Replace(root_ctypes.ToString() + ",", "");
 
@@ -276,7 +276,7 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 				JsonElement jelem_reqLV = JsonSerializer.Deserialize<JsonElement>(text_reqLV);
 				JsonProperty root_reqLV = jelem_reqLV.EnumerateObject().First();
 				JsonElement value_reqLV = root_reqLV.Value;
-				rootObject.api_req_level = value_reqLV.GetInt32();
+				rootObject.Api_req_level = value_reqLV.GetInt32();
 
 				//大本のテキストから今作業した要素を削除
 				text_api_mst_equip_exslot_ship = text_api_mst_equip_exslot_ship.Replace(text_equip_exslot + ",", "");
@@ -285,41 +285,41 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 				string mst_equip_exslot_ship_temp = JsonSerializer.Serialize<RootObject>(rootObject);
 
 				//JSONデータを作成したらrootObjectのデータをnull化する
-				if (rootObject.api_ship_ids != null) rootObject.api_ship_ids = null;
-				if (rootObject.api_stypes != null) rootObject.api_stypes = null;
-				if (rootObject.api_ctypes != null) rootObject.api_ctypes = null;
-				if (rootObject.api_req_level != 0) rootObject.api_req_level = 0;
+				if (rootObject.Api_ship_ids != null) rootObject.Api_ship_ids = null;
+				if (rootObject.Api_stypes != null) rootObject.Api_stypes = null;
+				if (rootObject.Api_ctypes != null) rootObject.Api_ctypes = null;
+				if (rootObject.Api_req_level != 0) rootObject.Api_req_level = 0;
 
 				//作ったJSONデータをJsonSerializerでDeserializeしてデータを取りだす
 				Api_mst_equip_exslot_ship_decode api_mst_equip_exslot_ship_decode = JsonSerializer.Deserialize<Api_mst_equip_exslot_ship_decode>(mst_equip_exslot_ship_temp);
 				//装備ID
-				int id = api_mst_equip_exslot_ship_decode.api_slotitem_id;
+				int id = api_mst_equip_exslot_ship_decode.Api_slotitem_id;
 				//搭載可能艦娘個別指定
-				if (api_mst_equip_exslot_ship_decode.api_ship_ids is not null)
+				if (api_mst_equip_exslot_ship_decode.Api_ship_ids is not null)
 				{
-					foreach (var cnt_ship in api_mst_equip_exslot_ship_decode.api_ship_ids)
+					foreach (var cnt_ship in api_mst_equip_exslot_ship_decode.Api_ship_ids)
 					{
-						db.MasterEquipments[id].equippableShipsAtExpansion = api_mst_equip_exslot_ship_decode.api_ship_ids;
+						db.MasterEquipments[id].equippableShipsAtExpansion = api_mst_equip_exslot_ship_decode.Api_ship_ids;
 					}
 				}
 				//装備可能艦種（駆逐艦、軽巡とか）
-				if (api_mst_equip_exslot_ship_decode.api_stypes is not null)
+				if (api_mst_equip_exslot_ship_decode.Api_stypes is not null)
 				{
-					foreach (var cnt_stype in api_mst_equip_exslot_ship_decode.api_stypes)
+					foreach (var cnt_stype in api_mst_equip_exslot_ship_decode.Api_stypes)
 					{
-						db.MasterEquipments[id].equippableStypeAtExpansion = api_mst_equip_exslot_ship_decode.api_stypes;
+						db.MasterEquipments[id].equippableStypeAtExpansion = api_mst_equip_exslot_ship_decode.Api_stypes;
 					}
 				}
 				//装備可能艦型（綾波型、秋月型とか）
-				if (api_mst_equip_exslot_ship_decode.api_ctypes is not null)
+				if (api_mst_equip_exslot_ship_decode.Api_ctypes is not null)
 				{ 
-					foreach(var cnt_ctype in api_mst_equip_exslot_ship_decode.api_ctypes)
+					foreach(var cnt_ctype in api_mst_equip_exslot_ship_decode.Api_ctypes)
 					{
-						db.MasterEquipments[id].equippableCtypeAtExpansion = api_mst_equip_exslot_ship_decode.api_ctypes;
+						db.MasterEquipments[id].equippableCtypeAtExpansion = api_mst_equip_exslot_ship_decode.Api_ctypes;
 					}
 				}
 				//装備可能改修レベル
-				db.MasterEquipments[id].equippableRequestLevel = api_mst_equip_exslot_ship_decode.api_req_level;
+				db.MasterEquipments[id].equippableRequestLevel = api_mst_equip_exslot_ship_decode.Api_req_level;
 			}
 
 			//api_mst_shipgraph
@@ -351,28 +351,28 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 
 	public class RootObject
 	{
-		public int api_slotitem_id { get; set; }
-		public List<int> api_ship_ids { get; set; }
-		public List<int> api_stypes { get; set; }
-		public List<int> api_ctypes { get; set; }
-		public int api_req_level { get; set; }
+		public int Api_slotitem_id { get; set; }
+		public List<int> Api_ship_ids { get; set; }
+		public List<int> Api_stypes { get; set; }
+		public List<int> Api_ctypes { get; set; }
+		public int Api_req_level { get; set; }
 	}
 
 	public class Api_mst_equip_exslot_ship_decode
 	{
-		public int api_slotitem_id { get; set; }
-		public int[] api_ship_ids { get; set; }
-		public int[] api_stypes { get; set; }
-		public int[] api_ctypes { get; set; }
-		public int api_req_level { get; set; }
+		public int Api_slotitem_id { get; set; }
+		public int[] Api_ship_ids { get; set; }
+		public int[] Api_stypes { get; set; }
+		public int[] Api_ctypes { get; set; }
+		public int Api_req_level { get; set; }
 
 		public Api_mst_equip_exslot_ship_decode(int api_slotitem_id, int[] api_ship_ids, int[] api_stypes, int[] api_ctypes, int api_req_level)
 		{
-			this.api_slotitem_id = api_slotitem_id;
-			this.api_ship_ids = api_ship_ids;
-			this.api_stypes = api_stypes;
-			this.api_ctypes = api_ctypes;
-			this.api_req_level = api_req_level;
+			this.Api_slotitem_id = api_slotitem_id;
+			this.Api_ship_ids = api_ship_ids;
+			this.Api_stypes = api_stypes;
+			this.Api_ctypes = api_ctypes;
+			this.Api_req_level = api_req_level;
 
 		}
 	}

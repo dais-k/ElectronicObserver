@@ -115,17 +115,17 @@ namespace ElectronicObserver.Window
 
 			if (c.FormAccessTime.Continuous24hoursLastMonth)
 			{
-				TimeViewer.Text += "\r\n" + "先月は24時間以上連続稼働してしまいました (´･ω･`) ";
+				TimeViewer.Text += "\r\n" + "先月は20時間以上連続稼働してしまいました (´･ω･`) ";
 			}
 
-			if (c.FormAccessTime.Continuous24hours || _TotalAccessTime.TotalHours >= 24)
+			if (c.FormAccessTime.Continuous24hours || _TotalAccessTime.TotalHours >= 20)
 			{
 				c.FormAccessTime.Continuous24hours = true;
 				_Continuous24hoursDay = DateTimeHelper.TimeToCSVString(now);
 				if (c.FormAccessTime.Continuous24hoursLastMonth)
-					TimeViewer.Text += "\r\n" + "今月も24時間以上連続稼働してしまいました (´;ω;`) ";
+					TimeViewer.Text += "\r\n" + "今月も20時間以上連続稼働してしまいました (´;ω;`) ";
 				else
-					TimeViewer.Text += "\r\n" + "今月は24時間以上連続稼働しています (´･ω･`) ";
+					TimeViewer.Text += "\r\n" + "今月は20時間以上連続稼働しています (´･ω･`) ";
 			}
 
 			_LastRequestReceivedTime = now;

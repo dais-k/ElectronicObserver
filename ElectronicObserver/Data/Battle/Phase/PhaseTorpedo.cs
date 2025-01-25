@@ -22,7 +22,7 @@ namespace ElectronicObserver.Data.Battle.Phase
 		public PhaseTorpedo(BattleData data, string title, int phaseID)
 			: base(data, title)
 		{
-
+			#nullable enable
 			this.phaseID = phaseID;
 
 			if (!IsAvailable)
@@ -41,6 +41,7 @@ namespace ElectronicObserver.Data.Battle.Phase
 				Targets = GetConcatArray("api_frai", "api_erai", -1).Select(i => new[] { i }).ToArray();
 				CriticalFlags = GetConcatArray("api_fcl", "api_ecl", 0).Select(i => new[] { i }).ToArray();
 			}
+			#nullable disable
 		}
 
 		public override bool IsAvailable => IsOpeningTorpedoPhase || IsClosingTorpedoPhase;
@@ -86,7 +87,7 @@ namespace ElectronicObserver.Data.Battle.Phase
 
 		public dynamic TorpedoData => phaseID == 0 ? RawData.api_opening_atack : RawData.api_raigeki;
 
-
+		#nullable enable
 		/// <summary>
 		/// 各艦の被ダメージ
 		/// </summary>
@@ -106,8 +107,7 @@ namespace ElectronicObserver.Data.Battle.Phase
 		/// クリティカルフラグ(攻撃側)
 		/// </summary>
 		public int[]?[] CriticalFlags { get; private set; }
-
-
+		#nullable disable
 
 
 		private T[] GetConcatArray<T>(string friendName, string enemyName, T defaultValue)
