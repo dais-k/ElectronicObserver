@@ -1000,51 +1000,6 @@ namespace ElectronicObserver.Utility.Data
 
 					return aacutinlist.ToArray();
 
-				case 149:   // 金剛改二 (英国艦+金剛型改二)
-				case 591:   // 金剛改二丙
-				case 150:   // 比叡改二
-				case 592:   // 比叡改二丙
-				case 151:   // 榛名改二
-				case 954:   // 榛名改二丙
-				case 152:   // 霧島改二
-				case 694:   // 霧島改二丙
-				case 519:   // Jervis
-				case 394:   // Jervis改
-				case 571:   // Nelson
-				case 576:   // Nelson改
-				case 439:   // Warspite
-				case 364:   // Warspite改
-				case 515:   // Ark Royal
-				case 393:   // Ark Royal改
-				case 520:   // Janus
-				case 893:   // Janus改
-				case 514:   // Sheffield
-				case 705:   // Sheffield改
-				case 885:   // Victorious
-				case 713:   // Victorious改
-					if (maingunl >= 1 && aashell >= 1 && director >= 1 && aaradar >= 1) //戦艦系汎用
-						aacutinlist.Add(4);
-					if (highangle_director >= 2 && aaradar >= 1)
-						aacutinlist.Add(5);
-					if (maingunl >= 1 && aashell >= 1 && director >= 1) //戦艦系汎用
-						aacutinlist.Add(6);
-					if (highangle_director >= 1 && aaradar >= 1)
-						aacutinlist.Add(8);
-					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
-						aacutinlist.Add(13);
-					if (highangle >= 1 && director >= 1 && aaradar >= 1)
-						aacutinlist.Add(7);
-					if (aarocket_english >= 2)
-						aacutinlist.Add(32);
-					if (aagun_pompom >= 1 && (maingunl_fcr >= 1 || aarocket_english >= 1))
-						aacutinlist.Add(32);
-					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
-						aacutinlist.Add(12);
-					if (highangle >= 1 && director >= 1)
-						aacutinlist.Add(9);
-
-					return aacutinlist.ToArray();
-
 				case 579:   // Gotland改
 				case 630:   // Gotland andra
 					if (highangle_director >= 2 && aaradar >= 1)
@@ -1124,7 +1079,34 @@ namespace ElectronicObserver.Utility.Data
 					break;
 			}
 
-			//以下汎用カットイン
+			if ((KCDatabase.Instance.MasterShips[shipID]?.ShipClass == 6 && KCDatabase.Instance.MasterShips[shipID]?.RemodelTier >=2 ) ||
+				KCDatabase.Instance.MasterShips[shipID]?.ShipNationality == 2) //金剛型改二と英国艦
+			{
+					if (maingunl >= 1 && aashell >= 1 && director >= 1 && aaradar >= 1) //戦艦系汎用
+						aacutinlist.Add(4);
+					if (highangle_director >= 2 && aaradar >= 1)
+						aacutinlist.Add(5);
+					if (maingunl >= 1 && aashell >= 1 && director >= 1) //戦艦系汎用
+						aacutinlist.Add(6);
+					if (highangle_director >= 1 && aaradar >= 1)
+						aacutinlist.Add(8);
+					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+						aacutinlist.Add(13);
+					if (highangle >= 1 && director >= 1 && aaradar >= 1)
+						aacutinlist.Add(7);
+					if (aarocket_english >= 2)
+						aacutinlist.Add(32);
+					if (aagun_pompom >= 1 && (maingunl_fcr >= 1 || aarocket_english >= 1))
+						aacutinlist.Add(32);
+					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+						aacutinlist.Add(12);
+					if (highangle >= 1 && director >= 1)
+						aacutinlist.Add(9);
+
+					return aacutinlist.ToArray();
+				}
+
+				//以下汎用カットイン
 			if (maingunl >= 1 && aashell >= 1 && director >= 1 && aaradar >= 1) //戦艦系汎用
 				aacutinlist.Add(4);
 			if (highangle_director >= 2 && aaradar >= 1)

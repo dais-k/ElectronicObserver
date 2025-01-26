@@ -1426,7 +1426,7 @@ namespace ElectronicObserver.Utility.Data
 		/// </summary>
 		public static int GetAACutinKind(int shipID, int[] slot, int sID)
 		{
-			//計算はCalculator2.GetAACutinKindに移行
+			//判定はCalculator2.GetAACutinKindに移行
 			var aacutintypelist = Calculator2.GetAACutinKind(shipID, slot, sID);
 			if (aacutintypelist.Length == 0)
 				return 0;
