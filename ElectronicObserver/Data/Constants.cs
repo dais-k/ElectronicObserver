@@ -852,6 +852,8 @@ namespace ElectronicObserver.Data
 					return "僚艦夜戦突撃";
 				case DayAttackKind.SpecialRichelieu:
 					return "Richelieuよ！圧倒しなさいっ！";
+				case DayAttackKind.SpecialWarspite:
+					return "姉妹艦連携砲撃";
 				case DayAttackKind.SpecialSubmarineAttack1:
 					return "潜水艦隊攻撃";
 				case DayAttackKind.SpecialSubmarineAttack2:

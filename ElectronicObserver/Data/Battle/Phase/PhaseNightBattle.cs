@@ -101,8 +101,9 @@ namespace ElectronicObserver.Data.Battle.Phase
 					case 101:
 					case 102:
 					case 105:
+					case 106:
 					case 401:
-						// nagato/mutsu touch / Yamato touch (Battleship * 2)
+						// nagato/mutsu touch / Yamato touch (Battleship * 2) / Richelieu touch / Warspite touch
 						for (int i = 0; i < atk.Defenders.Count; i++)
 						{
 							var comboatk = new BattleIndex(atk.Attacker.Side, i / 2);       // #1, #1, #2

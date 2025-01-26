@@ -2347,8 +2347,11 @@ namespace ElectronicObserver.Utility.Data
 		SpecialKongo = 104,
 
 		/// <summary> Richelieuよ！圧倒しなさいっ！ </summary>
-		SpecialRichelieu = 105,     
-		
+		SpecialRichelieu = 105,
+
+		/// <summary> 姉妹艦連携砲撃 </summary>
+		SpecialWarspite = 106,
+
 		/// <summary> 瑞雲立体攻撃 </summary>
 		ZuiunMultiAngle = 200,
 
@@ -2491,6 +2494,9 @@ namespace ElectronicObserver.Utility.Data
 		/// <summary> Richelieuよ！圧倒しなさいっ！ </summary>
 		SpecialRichelieu = 105,
 
+		/// <summary> 姉妹艦連携砲撃 </summary>
+		SpecialWarspite = 106,
+		
 		/// <summary> 夜間瑞雲攻撃 </summary>
 		SpecialNightZuiun = 200,
 
