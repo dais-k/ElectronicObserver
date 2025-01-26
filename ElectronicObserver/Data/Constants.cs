@@ -443,6 +443,7 @@ namespace ElectronicObserver.Data
 				case 8: return "蘭";
 				case 9: return "瑞";
 				case 10: return "中";
+				case 11: return "亜";
 				default: return "日";
 			}
 		}

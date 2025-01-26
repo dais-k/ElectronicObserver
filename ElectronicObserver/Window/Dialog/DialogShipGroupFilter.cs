@@ -257,7 +257,7 @@ namespace ElectronicObserver.Window.Dialog
 				_dtRightOperand_shipNationality.Columns.AddRange(new DataColumn[] {
 					new DataColumn( "Value", typeof( int ) ),
 					new DataColumn( "Display", typeof( string ) ) });
-				for (int i = 0; i <= 10; i++)
+				for (int i = 0; i <= 11; i++) //国籍増えたらここを増やす
 					_dtRightOperand_shipNationality.Rows.Add(i, Constants.GetShipNationality(i));
 				_dtRightOperand_shipNationality.AcceptChanges();
 			}

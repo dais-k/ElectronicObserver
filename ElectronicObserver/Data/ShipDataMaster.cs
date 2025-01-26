@@ -724,6 +724,7 @@ namespace ElectronicObserver.Data
 	
 		/// <summary>
 		/// 国籍
+		/// (1:米 2:英 3:伊 4:独 5:仏 6:露 7:豪 8:蘭 9:瑞 10:中 11:亜)
 		/// </summary>
 		public int ShipNationality
 		{
@@ -731,6 +732,7 @@ namespace ElectronicObserver.Data
 			{
 				if (ShipID == 147) return 6;   //Верный
 				if (ShipID == 651) return 10;  //丹陽
+				if (ShipID == 957) return 11;  //General Belgrano
 
 				switch ( ShipClass ) 
 				{
