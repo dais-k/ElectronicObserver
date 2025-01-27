@@ -627,14 +627,7 @@ namespace ElectronicObserver.Utility.Data
 						aacutinlist.Add(2);
 					if (highangle >= 2)
 						aacutinlist.Add(3);
-					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
-						aacutinlist.Add(13);
-					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
-						aacutinlist.Add(12);
-					if (highangle >= 1 && director >= 1)
-						aacutinlist.Add(9);
-					
-					return aacutinlist.ToArray(); 
+					break;
 
 				case 91:    // Fletcher級
 					if (highangle_america_gfcs >= 2)
@@ -643,23 +636,10 @@ namespace ElectronicObserver.Utility.Data
 						aacutinlist.Add(35);
 					if (highangle_america >= 2 && radar_gfcs >= 1)
 						aacutinlist.Add(36);
-					if (highangle_director >= 2 && aaradar >= 1)
-						aacutinlist.Add(5);
 					if (highangle_america >= 2)
 						aacutinlist.Add(37);
-					if (highangle_director >= 1 && aaradar >= 1)
-						aacutinlist.Add(8);
-					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1)
-						aacutinlist.Add(13);
-					if (highangle >= 1 && director >= 1 && aaradar >= 1)
-						aacutinlist.Add(7);
-					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
-						aacutinlist.Add(12);
-					if (highangle >= 1 && director >= 1)
-						aacutinlist.Add(9);
-					
-					return aacutinlist.ToArray();
-
+					break;
+				
 				case 99:   // Atlanta級
 					if (highangle_atlanta_gfcs >= 2)
 						aacutinlist.Add(38);
@@ -689,42 +669,16 @@ namespace ElectronicObserver.Utility.Data
 				case 141:   // 五十鈴改二
 					if (highangle >= 1 && aagun_total >= 1 && aaradar >= 1)
 						aacutinlist.Add(14);
-					if (highangle_director >= 2 && aaradar >= 1)
-						aacutinlist.Add(5);
-					if (highangle_director >= 1 && aaradar >= 1)
-						aacutinlist.Add(8);
-					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
-						aacutinlist.Add(13); 
 					if (highangle >= 1 && aagun_total >= 1)
 						aacutinlist.Add(15);
-					if (highangle >= 1 && director >= 1 && aaradar >= 1)
-						aacutinlist.Add(7);
-					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
-						aacutinlist.Add(12);
-					if (highangle >= 1 && director >= 1)
-						aacutinlist.Add(9);
-
-					return aacutinlist.ToArray();
+					break;
 
 				case 470:   // 霞改二乙
 					if (highangle >= 1 && aagun_total >= 1 && aaradar >= 1)
 						aacutinlist.Add(16);
-					if (highangle_director >= 2 && aaradar >= 1)
-						aacutinlist.Add(5);
-					if (highangle_director >= 1 && aaradar >= 1)
-						aacutinlist.Add(8);
-					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
-						aacutinlist.Add(13);
-					if (highangle >= 1 && director >= 1 && aaradar >= 1)
-						aacutinlist.Add(7);
-					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
-						aacutinlist.Add(12);
 					if (highangle >= 1 && aagun_total >= 1)
 						aacutinlist.Add(17);
-					if (highangle >= 1 && director >= 1)
-						aacutinlist.Add(9);
-
-					return aacutinlist.ToArray();
+					break;
 
 				case 622:   // 夕張改二
 					if (highangle >= 1 && aagun_total >= 1 && aaradar >= 1)
@@ -732,42 +686,16 @@ namespace ElectronicObserver.Utility.Data
 					break;
 
 				case 418:   // 皐月改二
-					if (highangle_director >= 2 && aaradar >= 1)
-						aacutinlist.Add(5);
-					if (highangle_director >= 1 && aaradar >= 1)
-						aacutinlist.Add(8);
-					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
-						aacutinlist.Add(13);
-					if (highangle >= 1 && director >= 1 && aaradar >= 1)
-						aacutinlist.Add(7);
-					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
-						aacutinlist.Add(12);
 					if (aagun_concentrated >= 1)
 						aacutinlist.Add(18);
-					if (highangle >= 1 && director >= 1)
-						aacutinlist.Add(9);
-
-					return aacutinlist.ToArray();
+					break;
 
 				case 487:   // 鬼怒改二
 					if (aagun_concentrated >= 1 && (highangle - highangle_director >= 1))
 						aacutinlist.Add(19);
-					if (highangle_director >= 2 && aaradar >= 1)
-						aacutinlist.Add(5);
-					if (highangle_director >= 1 && aaradar >= 1)
-						aacutinlist.Add(8);
-					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
-						aacutinlist.Add(13);
-					if (highangle >= 1 && director >= 1 && aaradar >= 1)
-						aacutinlist.Add(7);
 					if (aagun_concentrated >= 1)
 						aacutinlist.Add(20);
-					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
-						aacutinlist.Add(12);
-					if (highangle >= 1 && director >= 1)
-						aacutinlist.Add(9);
-
-					return aacutinlist.ToArray();
+					break;
 
 				case 488:   // 由良改二
 					if (highangle >= 1 && aaradar >= 1)
@@ -775,81 +703,29 @@ namespace ElectronicObserver.Utility.Data
 					break;
 
 				case 548:   // 文月改二
-					if (highangle_director >= 2 && aaradar >= 1)
-						aacutinlist.Add(5);
-					if (highangle_director >= 1 && aaradar >= 1)
-						aacutinlist.Add(8);
-					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
-						aacutinlist.Add(13);
-					if (highangle >= 1 && director >= 1 && aaradar >= 1)
-						aacutinlist.Add(7);
-					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
-						aacutinlist.Add(12);
 					if (aagun_concentrated >= 1)
 						aacutinlist.Add(22);
-					if (highangle >= 1 && director >= 1)
-						aacutinlist.Add(9);
-
-					return aacutinlist.ToArray();
+					break;
 
 				case 539:   // UIT-25
 				case 530:   // 伊504
-					if (highangle_director >= 2 && aaradar >= 1)
-						aacutinlist.Add(5);
-					if (highangle_director >= 1 && aaradar >= 1)
-						aacutinlist.Add(8);
-					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
-						aacutinlist.Add(13);
-					if (highangle >= 1 && director >= 1 && aaradar >= 1)
-						aacutinlist.Add(7);
-					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
-						aacutinlist.Add(12);
-					if (highangle >= 1 && director >= 1)
-						aacutinlist.Add(9);
 					if (aagun_medium3 >= 1)
 						aacutinlist.Add(23);
-
-					return aacutinlist.ToArray();
+					break;
 					
 				case 477:   // 天龍改二
-					if (highangle_director >= 2 && aaradar >= 1)
-						aacutinlist.Add(5);
 					if (highangle >= 3)
 						aacutinlist.Add(30);
-					if (highangle_director >= 1 && aaradar >= 1)
-						aacutinlist.Add(8);
-					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
-						aacutinlist.Add(13);
-					if (highangle >= 1 && director >= 1 && aaradar >= 1)
-						aacutinlist.Add(7);
 					if (highangle >= 1 && aagun_medium3 >= 1)
 						aacutinlist.Add(24);
-					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
-						aacutinlist.Add(12);
 					if (highangle >= 2)
 						aacutinlist.Add(31);
-					if (highangle >= 1 && director >= 1)
-						aacutinlist.Add(9);
-
-					return aacutinlist.ToArray();
+					break;
 
 				case 478:   // 龍田改二
-					if (highangle_director >= 2 && aaradar >= 1)
-						aacutinlist.Add(5);
-					if (highangle >= 3)
-						aacutinlist.Add(8);
-					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
-						aacutinlist.Add(13);
-					if (highangle >= 1 && director >= 1 && aaradar >= 1)
-						aacutinlist.Add(7);
 					if (highangle >= 1 && aagun_medium3 >= 1)
 						aacutinlist.Add(24);
-					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
-						aacutinlist.Add(12);
-					if (highangle >= 1 && director >= 1)
-						aacutinlist.Add(9);
-
-					return aacutinlist.ToArray();
+					break;
 
 				case 82:    // 伊勢改
 				case 88:    // 日向改
@@ -857,26 +733,9 @@ namespace ElectronicObserver.Utility.Data
 				case 554:   // 日向改二
 					if (aarocket_mod >= 1 && aaradar >= 1 && aashell >= 1)
 						aacutinlist.Add(25);
-					if (maingunl >= 1 && aashell >= 1 && director >= 1 && aaradar >= 1) //戦艦系汎用
-						aacutinlist.Add(4);
-					if (highangle_director >= 2 && aaradar >= 1)
-						aacutinlist.Add(5);
-					if (maingunl >= 1 && aashell >= 1 && director >= 1) //戦艦系汎用
-						aacutinlist.Add(6);
 					if (aarocket_mod >= 1 && aaradar >= 1)
 						aacutinlist.Add(28);
-					if (highangle_director >= 1 && aaradar >= 1)
-						aacutinlist.Add(8);
-					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
-						aacutinlist.Add(13);
-					if (highangle >= 1 && director >= 1 && aaradar >= 1)
-						aacutinlist.Add(7);
-					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
-						aacutinlist.Add(12);
-					if (highangle >= 1 && director >= 1)
-						aacutinlist.Add(9);
-
-					return aacutinlist.ToArray();
+					break;
 					
 				case 321:   //大淀改
 					if (aaradar >= 1 && highangle_musashi >= 1 && aarocket_mod >= 1)
@@ -890,26 +749,9 @@ namespace ElectronicObserver.Utility.Data
 					break;
 
 				case 148:   // 武蔵改
-					if (maingunl >= 1 && aashell >= 1 && director >= 1 && aaradar >= 1) //戦艦系汎用
-						aacutinlist.Add(4);
-					if (highangle_director >= 2 && aaradar >= 1)
-						aacutinlist.Add(5);
-					if (maingunl >= 1 && aashell >= 1 && director >= 1) //戦艦系汎用
-						aacutinlist.Add(6); 
 					if (aarocket_mod >= 1 && aaradar >= 1)
 						aacutinlist.Add(28);
-					if (highangle_director >= 1 && aaradar >= 1)
-						aacutinlist.Add(8);
-					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
-						aacutinlist.Add(13);
-					if (highangle >= 1 && director >= 1 && aaradar >= 1)
-						aacutinlist.Add(7);
-					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
-						aacutinlist.Add(12);
-					if (highangle >= 1 && director >= 1)
-						aacutinlist.Add(9);
-
-					return aacutinlist.ToArray();
+					break;
 
 				case 546:   // 武蔵改二
 					if (radar_with_range_finder >= 1 && highangle_yamato >= 2 && aagun_high >= 1)
@@ -920,28 +762,11 @@ namespace ElectronicObserver.Utility.Data
 						aacutinlist.Add(44); //44:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備、対空機銃
 					if (highangle_musashi >= 1 && aaradar >= 1)
 						aacutinlist.Add(26);
-					if (maingunl >= 1 && aashell >= 1 && director >= 1 && aaradar >= 1) //戦艦系汎用
-						aacutinlist.Add(4);
 					if (radar_with_range_finder >= 1 && highangle_yamato >= 1)
 						aacutinlist.Add(45); //45:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備
-					if (highangle_director >= 2 && aaradar >= 1)
-						aacutinlist.Add(5);
-					if (maingunl >= 1 && aashell >= 1 && director >= 1) //戦艦系汎用
-						aacutinlist.Add(6);
 					if (aarocket_mod >= 1 && aaradar >= 1)
 						aacutinlist.Add(28);
-					if (highangle_director >= 1 && aaradar >= 1)
-						aacutinlist.Add(8);
-					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
-						aacutinlist.Add(13);
-					if (highangle >= 1 && director >= 1 && aaradar >= 1)
-						aacutinlist.Add(7);
-					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
-						aacutinlist.Add(12);
-					if (highangle >= 1 && director >= 1)
-						aacutinlist.Add(9);
-
-					return aacutinlist.ToArray();
+					break;
 
 				case 911:   // 大和改二
 				case 916:   // 大和改二重
@@ -953,89 +778,32 @@ namespace ElectronicObserver.Utility.Data
 						aacutinlist.Add(44); //44:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備、対空機銃
 					if (highangle_musashi >= 1 && aaradar >= 1)
 						aacutinlist.Add(26);
-					if (maingunl >= 1 && aashell >= 1 && director >= 1 && aaradar >= 1) //戦艦系汎用
-						aacutinlist.Add(4);
 					if (radar_with_range_finder >= 1 && highangle_yamato >= 1)
 						aacutinlist.Add(45); //45:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備
-					if (highangle_director >= 2 && aaradar >= 1)
-						aacutinlist.Add(5);
-					if (maingunl >= 1 && aashell >= 1 && director >= 1) //戦艦系汎用
-						aacutinlist.Add(6);
-					if (highangle_director >= 1 && aaradar >= 1)
-						aacutinlist.Add(8);
-					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
-						aacutinlist.Add(13);
-					if (highangle >= 1 && director >= 1 && aaradar >= 1)
-						aacutinlist.Add(7);
-					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
-						aacutinlist.Add(12);
-					if (highangle >= 1 && director >= 1)
-						aacutinlist.Add(9);
-
-					return aacutinlist.ToArray();
+					break;
 
 				case 593:   // 榛名改二乙
 					if (maingunl_356 >= 1 && aagun_concentrated >= 1 && aaradar >= 1)
 						aacutinlist.Add(46);
-					if (maingunl >= 1 && aashell >= 1 && director >= 1 && aaradar >= 1) //戦艦系汎用
-						aacutinlist.Add(4);
-					if (highangle_director >= 2 && aaradar >= 1)
-						aacutinlist.Add(5);
-					if (maingunl >= 1 && aashell >= 1 && director >= 1) //戦艦系汎用
-						aacutinlist.Add(6);
-					if (highangle_director >= 1 && aaradar >= 1)
-						aacutinlist.Add(8);
-					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
-						aacutinlist.Add(13);
-					if (highangle >= 1 && director >= 1 && aaradar >= 1)
-						aacutinlist.Add(7); 
 					if (aarocket_english >= 2)
 						aacutinlist.Add(32);
 					if (aagun_pompom >= 1 && (maingunl_fcr >= 1 || aarocket_english >= 1))
 						aacutinlist.Add(32);
-					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
-						aacutinlist.Add(12);
-					if (highangle >= 1 && director >= 1)
-						aacutinlist.Add(9);
-
-					return aacutinlist.ToArray();
+					break;
 
 				case 579:   // Gotland改
 				case 630:   // Gotland andra
-					if (highangle_director >= 2 && aaradar >= 1)
-						aacutinlist.Add(5);
 					if (highangle >= 1 && aagun_medium4 >= 1)
 						aacutinlist.Add(33);
 					if (highangle >= 3)
 						aacutinlist.Add(30);
-					if (highangle_director >= 1 && aaradar >= 1)
-						aacutinlist.Add(8);
-					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
-						aacutinlist.Add(13);
-					if (highangle >= 1 && director >= 1 && aaradar >= 1)
-						aacutinlist.Add(7);
-					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
-						aacutinlist.Add(12);
-					if (highangle >= 1 && director >= 1)
-						aacutinlist.Add(9);
-
-					return aacutinlist.ToArray();
+					break;
 
 				case 961:   // 時雨改三
 				case 975:   // 春雨改二
 				case 145:   // 時雨改二
 				case 497:   // 白露改二
 				case 498:   // 村雨改二
-					if (highangle_director >= 2 && aaradar >= 1)
-						aacutinlist.Add(5);
-					if (highangle_director >= 1 && aaradar >= 1)
-						aacutinlist.Add(8);
-					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
-						aacutinlist.Add(13);
-					if (highangle >= 1 && director >= 1 && aaradar >= 1)
-						aacutinlist.Add(7);
-					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
-						aacutinlist.Add(12);
 					if (sId != -1)
 					{
 						if ((KCDatabase.Instance.Ships[sId].AABase > 70) && (maingun_c3h >= 2 || (maingun_c3h >= 1 && (aagun_25mmz + radar_mast >= 1))))
@@ -1046,32 +814,16 @@ namespace ElectronicObserver.Utility.Data
 						if (maingun_c3h >= 2 || (maingun_c3h >= 1 && (aagun_25mmz + radar_mast >= 1)))
 							aacutinlist.Add(47); 
 					}
-					if (highangle >= 1 && director >= 1)
-						aacutinlist.Add(9);
-
-					return aacutinlist.ToArray();
+					break;
 
 				case 979:   // 稲木改二
-					if (highangle_director >= 2 && aaradar >= 1)
-						aacutinlist.Add(5);
-					if (highangle >= 3)
-						aacutinlist.Add(8);
-					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
-						aacutinlist.Add(13);
-					if (highangle >= 1 && director >= 1 && aaradar >= 1)
-						aacutinlist.Add(7);
-					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
-						aacutinlist.Add(12);
 					if (highangle >= 2)
 						aacutinlist.Add(31);
 					if (highangle >= 1 && aagun_total >= 1)
 						aacutinlist.Add(17);
 					if (aagun_concentrated >= 1)
 						aacutinlist.Add(18);
-					if (highangle >= 1 && director >= 1)
-						aacutinlist.Add(9);
-
-					return aacutinlist.ToArray();
+					break;
 
 				case 981:   //藤波改二
 					if (highangle_director >= 2 && radar_mast >= 1)
@@ -1082,48 +834,55 @@ namespace ElectronicObserver.Utility.Data
 			if ((KCDatabase.Instance.MasterShips[shipID]?.ShipClass == 6 && KCDatabase.Instance.MasterShips[shipID]?.RemodelTier >=2 ) ||
 				KCDatabase.Instance.MasterShips[shipID]?.ShipNationality == 2) //金剛型改二と英国艦
 			{
-					if (maingunl >= 1 && aashell >= 1 && director >= 1 && aaradar >= 1) //戦艦系汎用
-						aacutinlist.Add(4);
-					if (highangle_director >= 2 && aaradar >= 1)
-						aacutinlist.Add(5);
-					if (maingunl >= 1 && aashell >= 1 && director >= 1) //戦艦系汎用
-						aacutinlist.Add(6);
-					if (highangle_director >= 1 && aaradar >= 1)
-						aacutinlist.Add(8);
-					if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
-						aacutinlist.Add(13);
-					if (highangle >= 1 && director >= 1 && aaradar >= 1)
-						aacutinlist.Add(7);
-					if (aarocket_english >= 2)
-						aacutinlist.Add(32);
-					if (aagun_pompom >= 1 && (maingunl_fcr >= 1 || aarocket_english >= 1))
-						aacutinlist.Add(32);
-					if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
-						aacutinlist.Add(12);
-					if (highangle >= 1 && director >= 1)
-						aacutinlist.Add(9);
+				if (aarocket_english >= 2)
+					aacutinlist.Add(32);
+				if (aagun_pompom >= 1 && (maingunl_fcr >= 1 || aarocket_english >= 1))
+					aacutinlist.Add(32);
+			}
 
-					return aacutinlist.ToArray();
-				}
-
-				//以下汎用カットイン
+			//以下汎用カットイン
 			if (maingunl >= 1 && aashell >= 1 && director >= 1 && aaradar >= 1) //戦艦系汎用
 				aacutinlist.Add(4);
-			if (highangle_director >= 2 && aaradar >= 1)
+			if (highangle_director >= 2 && aaradar >= 1 && KCDatabase.Instance.MasterShips[shipID]?.ShipClass != 54)
 				aacutinlist.Add(5);
 			if (maingunl >= 1 && aashell >= 1 && director >= 1) //戦艦系汎用
 				aacutinlist.Add(6);
-			if (highangle_director >= 1 && aaradar >= 1)
-				aacutinlist.Add(8);
-			if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
-				aacutinlist.Add(13);
-			if (highangle >= 1 && director >= 1 && aaradar >= 1)
+			if (highangle >= 1 && director >= 1 && aaradar >= 1 && KCDatabase.Instance.MasterShips[shipID]?.ShipClass != 54)
 				aacutinlist.Add(7);
-			if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
-				aacutinlist.Add(12);
+			if (highangle_director >= 1 && aaradar >= 1 && KCDatabase.Instance.MasterShips[shipID]?.ShipClass != 54)
+				aacutinlist.Add(8);
 			if (highangle >= 1 && director >= 1)
 				aacutinlist.Add(9);
+			if (aagun_concentrated >= 1 && aagun_medium3 >= 2 && aaradar >= 1)
+				aacutinlist.Add(12);
+			if (highangle_director >= 1 && aagun_concentrated >= 1 && aaradar >= 1 && shipID != 428)
+				aacutinlist.Add(13);
 
+			//並び替え処理
+			if (aacutinlist.Count >= 2)
+			{
+				int[,] listtemp = new int[aacutinlist.Count, 2];
+				int index = 0;
+				foreach (var item in aacutinlist)
+				{
+					listtemp[index, 0] = item;
+					listtemp[index, 1] = (Calculator.AACutinPriority.ContainsKey(item) ? Calculator.AACutinPriority[item] : 0);
+					index++;
+				}
+				int numRows = listtemp.GetLength(0);
+				int numCols = listtemp.GetLength(1);
+				var sortedRows = Enumerable.Range(0, numRows)
+					.OrderBy(row => listtemp[row, 1])
+					.Select(row => Enumerable.Range(0, numCols)
+					.Select(col => listtemp[row, col])
+					.ToArray())
+					.ToArray();
+				aacutinlist.Clear();
+				foreach (var n in sortedRows)
+				{
+					aacutinlist.Add(n.ElementAt(0));
+				}
+			}
 			return aacutinlist.ToArray();
 		}
 
