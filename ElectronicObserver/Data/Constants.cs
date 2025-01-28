@@ -1138,7 +1138,7 @@ namespace ElectronicObserver.Data
 				case 48:
 					return "10cm連装高角砲改＋高射装置改x2/対空電探<秋月型改・改二>";
 				case 49:
-					return "特殊高角砲/対空電探<藤波改二>";
+					return "特殊高角砲/対空電探<藤波・吹雪・白雪改二>";
 				default:
 					return "不明(" + id + ")";
 			}
