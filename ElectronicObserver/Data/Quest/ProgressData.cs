@@ -151,6 +151,9 @@ namespace ElectronicObserver.Data.Quest
 					//一部の任務で進捗がバグるので個別対策
 					switch (q.QuestID)
 					{
+						case 329:
+							Progress = 1;
+							break;
 						case 337:
 							Progress = 1;
 							break;
@@ -182,7 +185,7 @@ namespace ElectronicObserver.Data.Quest
 					switch (q.QuestID)
 					{
 						case 329:
-							Progress = 3;
+							Progress = 2;
 							break;
 						case 330:
 							Progress = 3;
@@ -245,6 +248,9 @@ namespace ElectronicObserver.Data.Quest
 							Progress = 3;
 							break;
 						case 378:
+							Progress = 3;
+							break;
+						case 379:
 							Progress = 3;
 							break;
 						case 1138:

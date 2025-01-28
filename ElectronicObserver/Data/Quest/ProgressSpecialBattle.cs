@@ -151,8 +151,8 @@ namespace ElectronicObserver.Data.Quest
 						memberstype.Count(t => t == ShipTypes.Destroyer || t == ShipTypes.Escort) >= 3;
 					break;
 				//============================ 800～899 ============================
-				case 840:   //|840|週|【節分任務:豆】節分作戦二〇二四|1-1・1-3・1-4ボスA勝利各1|鳳翔・阿賀野・浦波・深雪・朧・潮・清霜・風雲・朝霜・峯雲・迅鯨・長鯨から旗艦と二番艦, 期間限定
-					membernames = new string[] { "ほうしょう", "あがの", "うらなみ", "みゆき", "おぼろ", "うしお", "きよしも", "かざぐも", "あさしも", "みねぐも", "じんげい", "ちょうげい" };
+				case 840:   //|840|週|【節分任務:豆】節分作戦二〇二五|1-1・1-3・1-4ボスA勝利各1|鳳翔・朝日・明石・迅鯨・長鯨・朧・漣・曙・潮から旗艦と二番艦, 期間限定
+					membernames = new string[] { "ほうしょう", "あさひ", "あかし", "じんげい", "ちょうげい", "おぼろ", "うしお", "さざなみ", "あけぼの" };
 					fleetmember = new bool[] { false, false };
 					foreach (var item in membernames)
 					{
@@ -167,8 +167,8 @@ namespace ElectronicObserver.Data.Quest
 					}
 					isAccepted = (fleetmember[0] == true && fleetmember[1] == true);
 					break;
-				case 841:   //|841|週|【節分任務:鬼】南西方面節分作戦二〇二四|2-1・2-2・7-4のボスA勝利各2|Ranger・Johnston・早霜・神鷹・大淀・明石・天霧・狭霧・瑞穂・Commandant Testeから旗艦と二番艦, 期間限定
-					membernames = new string[] { "レンジャー", "ジョンストン", "はやしも", "しんよう", "おおよど", "あかし", "あまぎり", "さぎり", "みずほ", "コマンダン・テスト" };
+				case 841:   //|841|週|【節分任務:鬼】南西方面節分作戦二〇二五|1-4・2-1・2-2のボスA勝利各2|神鷹・Ranger・夕張・大淀・Gloire・風雲・朝霜・早霜・Johnstonから旗艦と二番艦, 期間限定
+					membernames = new string[] { "しんよう", "レンジャー", "ゆうばり", "おおよど", "グロワール", "かざぐも", "あさしも", "はやしも", "ジョンストン" };
 					fleetmember = new bool[] { false, false };
 					foreach (var item in membernames)
 					{
@@ -183,33 +183,10 @@ namespace ElectronicObserver.Data.Quest
 					}
 					isAccepted = (fleetmember[0] == true && fleetmember[1] == true);
 					break;
-				case 843:   //|843|月|【節分任務:柊】節分拡張作戦二〇二四 精強即応！|2-3・4-5・5-5・6-5ボスS勝利各1|要最上型2+軽母1+自由枠3, 期間限定
-					int count_typemogami = members.Count(s => s?.MasterShip?.ShipClass == 9);
-					int count_cvl = members.Count(s => s?.MasterShip?.ShipType == ShipTypes.LightAircraftCarrier);
-					bool suzukuma_cvl = members.Any(s => s?.ShipID == 508) || members.Any(s => s?.ShipID == 509);
-
-					if (suzukuma_cvl)
-					{
-						if ((count_typemogami >= 3 && count_cvl >= 1) || (count_typemogami >= 2 && count_cvl >= 2))
-						{
-							isAccepted = true;
-						}
-						else
-						{
-							isAccepted = false;
-						}
-					}
-					else
-					{
-						if (count_typemogami >= 2 && count_cvl >= 1)
-						{
-							isAccepted = true;
-						}
-						else
-						{ 
-							isAccepted = false;
-						}
-					}
+				case 843:   //|843|週|【節分任務:柊】節分拡張作戦二〇二五 精強即応！|2-3・4-1・5-1・7-5-3ボスS勝利各1|重巡洋艦2 + 軽空母1+自由枠3, 期間限定
+					isAccepted =
+						memberstype.Count(t => t == ShipTypes.HeavyCruiser) >= 2 &&
+						memberstype.Count(t => t == ShipTypes.LightAircraftCarrier) >= 1;
 					break;
 				// |854|季|戦果拡張任務！「Z作戦」前段作戦|2-4・6-1・6-3ボスA勝利各1/6-4ボスS勝利1|要第一艦隊
 				case 854:

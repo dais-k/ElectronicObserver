@@ -85,9 +85,11 @@ namespace ElectronicObserver.Data.Quest
 						ret = true;
 					}
 					break;
-				case 329:   //|329|日|【節分任務:枡】節分演習！二〇二四|演習B勝利4|条件：重巡級(重巡・航巡)2+駆逐・海防3+自由枠1|節分イベントの期間限定デイリー任務
-					if ((ships.Count(s => s.MasterShip.ShipType == ShipTypes.HeavyCruiser || s.MasterShip.ShipType == ShipTypes.AviationCruiser) >= 2) &&
-						(ships.Count(s => s.MasterShip.ShipType == ShipTypes.Destroyer || s.MasterShip.ShipType == ShipTypes.Escort) >= 3))
+				case 329:   //|329|日|【節分任務:枡】節分演習！二〇二五|演習B勝利3|条件：旗艦潜水母艦or軽空母+潜水艦2or駆逐4or海防2|節分イベントの期間限定デイリー任務 2025/1/28
+					if ((ships.FirstOrDefault().MasterShip.ShipType == ShipTypes.SubmarineTender || ships.FirstOrDefault().MasterShip.ShipType == ShipTypes.LightAircraftCarrier) &&
+						((ships.Count(s => s.MasterShip.ShipType == ShipTypes.Destroyer) >= 4 ||
+						ships.Count(s => s.MasterShip.ShipType == ShipTypes.Escort) >= 2) ||
+						ships.Count(s => s.MasterShip.ShipType == ShipTypes.Submarine) + ships.Count(s => s.MasterShip.ShipType == ShipTypes.SubmarineAircraftCarrier) >= 2))
 					{
 						ret = true;
 					}
@@ -442,6 +444,24 @@ namespace ElectronicObserver.Data.Quest
 								ret = true;
 							}
 						}
+					}
+					break;
+				case 379:   //|379|週|【期間限定任務】「精鋭十一駆」特別演習！|演習S勝利以上×4回|条件：「吹雪改二」「白雪改二」「深雪改二」「初雪改」から2隻以上|1日で進捗リセット|期間限定ウィークリー任務
+					if (ships.Count(s =>
+					{
+						switch (s?.MasterShip?.ShipID)
+						{
+							case 426:
+							case 986:
+							case 959:
+							case 203:
+								return true;
+							default:
+								return false;
+						}
+					}) >= 2)
+					{
+						ret = true;
 					}
 					break;
 				default:

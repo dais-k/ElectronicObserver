@@ -342,10 +342,10 @@ namespace ElectronicObserver.Data.Quest
 						case 326:   //|326|単|夏季大演習|演習勝利8|単発(というか更新時期不定、名前の通り夏ごろ)だが1日で進捗リセット
 							Progresses.Add(new ProgressPractice(q, 8, true));
 							break;
-						case 329:   //|329|日|【節分任務:枡】節分演習！二〇二四|演習B勝利4|条件：重巡級(重巡・航巡)2+駆逐・海防3+自由枠1|節分イベントの期間限定デイリー任務 2024/1/25～2/29
-							if (DateTime.Now < new DateTime(2024, 3, 1))
+						case 329:   //|329|日|【節分任務:枡】節分演習！二〇二五|演習B勝利3|条件：旗艦潜水母艦or軽空母+潜水艦2or駆逐4or海防2|節分イベントの期間限定デイリー任務 2025/1/28
+							if (DateTime.Now < new DateTime(2025, 4, 1))
 							{
-								Progresses.Add(new ProgressPractice(q, 4, "B", true));
+								Progresses.Add(new ProgressPractice(q, 3, "B", true));
 							}
 							break;
 						case 330:   //|330|Ｑ|空母機動部隊、演習始め！|演習B勝利以上4|条件：航空母艦旗艦他1隻計2隻以上及び駆逐艦2隻を含む|クォータリーだが1日で進捗リセット
@@ -428,6 +428,9 @@ namespace ElectronicObserver.Data.Quest
 							break;
 						case 378:   //|378|週|新春限定！第六艦隊特別演習|演習A勝利以上×4回|条件：潜母(旗艦), (潜母+潜水)1, 潜水1|1日で進捗リセット|期間限定ウィークリー任務
 							Progresses.Add(new ProgressPractice(q, 4, "A", true));
+							break;
+						case 379:   //|379|週|【期間限定任務】「精鋭十一駆」特別演習！|演習S勝利以上×4回|条件：「吹雪改二」「白雪改二」「深雪改二」「初雪改」から2隻以上|1日で進捗リセット|期間限定ウィークリー任務
+							Progresses.Add(new ProgressPractice(q, 4, "S", true));
 							break;
 						//============================ 400～499 ============================
 						case 402:   //|402|「遠征」を3回成功させよう！|遠征成功3
@@ -721,34 +724,34 @@ namespace ElectronicObserver.Data.Quest
 						case 822:   //|822|季|沖ノ島海域迎撃戦|2-4ボスS勝利2
 							Progresses.Add(new ProgressBattle(q, 2, "S", new[] { 24 }, true));
 							break;
-						case 840:   //|840|週|【節分任務:豆】節分作戦二〇二四|1-1・1-3・1-4ボスA勝利各1|鳳翔・阿賀野・浦波・深雪・朧・潮・清霜・風雲・朝霜・峯雲・迅鯨・長鯨から旗艦と二番艦, 期間限定 2024/1/25～2/29
-							if (DateTime.Now < new DateTime(2024, 3, 1))
+						case 840:   //|840|週|【節分任務:豆】節分作戦二〇二五|1-1・1-3・1-4ボスA勝利各1|鳳翔・朝日・明石・迅鯨・長鯨・朧・漣・曙・潮から旗艦と二番艦, 期間限定 2025/1/28～
+							if (DateTime.Now < new DateTime(2025, 4, 1))
 							{
 								Progresses.Add(new ProgressMultiBattle(q, new[] {
 									new ProgressSpecialBattle(q, 2, "A", new[] { 11 }, true),
+									new ProgressSpecialBattle(q, 2, "A", new[] { 12 }, true),
 									new ProgressSpecialBattle(q, 2, "A", new[] { 13 }, true),
-									new ProgressSpecialBattle(q, 2, "A", new[] { 14 }, true),
 								}));
 							}
 							break;
-						case 841:   //|841|週|【節分任務:鬼】南西方面節分作戦二〇二四|2-1・2-2・7-4のボスA勝利各2|Ranger・Johnston・早霜・神鷹・大淀・明石・天霧・狭霧・瑞穂・Commandant Testeから旗艦と二番艦, 期間限定 2024/1/25～2/29
-							if (DateTime.Now < new DateTime(2024, 3, 1))
+						case 841:   //|841|週|【節分任務:鬼】南西方面節分作戦二〇二五|1-4・2-1・2-2のボスA勝利各2|神鷹・Ranger・夕張・大淀・Gloire・風雲・朝霜・早霜・Johnstonから旗艦と二番艦, 期間限定 2025/1/28～
+							if (DateTime.Now < new DateTime(2025, 4, 1))
 							{
 								Progresses.Add(new ProgressMultiBattle(q, new[] {
-									new ProgressSpecialBattle(q, 2, "A", new[] { 21 }, true),
-									new ProgressSpecialBattle(q, 2, "A", new[] { 22 }, true),
-									new ProgressSpecialBattle(q, 2, "A", new[] { 74 }, true),
+									new ProgressSpecialBattle(q, 2, "S", new[] { 14 }, true),
+									new ProgressSpecialBattle(q, 2, "S", new[] { 21 }, true),
+									new ProgressSpecialBattle(q, 2, "S", new[] { 22 }, true),
 								}));
 							}
 							break;
-						case 843:   //|843|月|【節分任務:柊】節分拡張作戦二〇二四 精強即応！|2-3・4-5・5-5・6-5ボスS勝利各1|要最上型2+軽母1+自由枠3, 期間限定 2024/1/25～2/29
-							if (DateTime.Now < new DateTime(2024, 3, 1))
+						case 843:   //|843|週|【節分任務:柊】節分拡張作戦二〇二五 精強即応！|2-3・4-1・5-1・7-5-3ボスS勝利各1|重巡洋艦2 + 軽空母1+自由枠3, 期間限定 2025/1/28
+							if (DateTime.Now < new DateTime(2025, 4, 1))
 							{
 								Progresses.Add(new ProgressMultiBattle(q, new[] {
 									new ProgressSpecialBattle(q, 1, "S", new[] { 23 }, true),
-									new ProgressSpecialBattle(q, 1, "S", new[] { 45 }, true),
-									new ProgressSpecialBattle(q, 1, "S", new[] { 55 }, true),
-									new ProgressSpecialBattle(q, 1, "S", new[] { 65 }, true),
+									new ProgressSpecialBattle(q, 1, "S", new[] { 41 }, true),
+									new ProgressSpecialBattle(q, 1, "S", new[] { 51 }, true),
+									new ProgressSpecialBattle(q, 1, "S", new[] { 75 }, true, 3),
 								}));
 							}
 							break;

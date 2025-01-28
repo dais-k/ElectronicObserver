@@ -825,7 +825,9 @@ namespace ElectronicObserver.Utility.Data
 						aacutinlist.Add(18);
 					break;
 
-				case 981:   //藤波改二
+				case 981:   // 藤波改二
+				case 426:	// 吹雪改二
+				case 986:	// 白雪改二
 					if (highangle_director >= 2 && radar_mast >= 1)
 						aacutinlist.Add(49);
 					break;
