@@ -45,6 +45,7 @@ namespace ElectronicObserver.Resource
 
 		public enum IconContent
 		{
+
 			Nothing = -1,
 			AppIcon,						//0
 			ResourceFuel,
@@ -56,7 +57,7 @@ namespace ElectronicObserver.Resource
 			ConditionLittleTired,
 			ConditionTired,
 			ConditionVeryTired,
-			ItemInstantRepair,				//10
+			ItemInstantRepair,              //10
 			ItemInstantConstruction,
 			ItemDevelopmentMaterial,
 			ItemModdingMaterial,
@@ -66,7 +67,7 @@ namespace ElectronicObserver.Resource
 			ItemPresentBox,
 			ItemActionReport,
 			ItemAviationMaterial,
-			FormArsenal,					//20
+			FormArsenal,                    //20
 			FormBattle,
 			FormCompass,
 			FormDock,
@@ -76,7 +77,7 @@ namespace ElectronicObserver.Resource
 			FormLog,
 			FormMain,
 			FormQuest,
-			FormShipGroup,					//30
+			FormShipGroup,                  //30
 			FormBrowser,
 			FormAlbumShip,
 			FormAlbumEquipment,
@@ -86,7 +87,7 @@ namespace ElectronicObserver.Resource
 			FormDropRecord,
 			FormDevelopmentRecord,
 			FormConstructionRecord,
-			FormResourceChart,				//40
+			FormResourceChart,              //40
 			FormBaseAirCorps,
 			FormJson,
 			FormAntiAirDefense,
@@ -96,73 +97,77 @@ namespace ElectronicObserver.Resource
 			FormFleetPreset,
 			FormTwitter,
 			FormAccessTimer,
-			FleetNoShip,                    //50
+			FormKcWeb,                      //50
+			FormJervisVercel,
+			FormKcSupportkai,
+			FormCompassSimulator,
+			FleetNoShip,
 			FleetDocking,
 			FleetSortieDamaged,
 			FleetSortie,
 			FleetExpedition,
 			FleetDamaged,
-			FleetNotReplenished,
+			FleetNotReplenished,			//60
 			FleetAnchorageRepairing,
 			FleetReady,
 			FleetCombined,
-			HeadQuartersShip,		        //60
+			HeadQuartersShip,
 			HeadQuartersEquipment,
 			BrowserScreenShot,
 			BrowserZoom,
 			BrowserZoomIn,
 			BrowserZoomOut,
-			BrowserUnmute,
+			BrowserUnmute,      			//70
 			BrowserMute,
 			BrowserRefresh,
 			BrowserNavigate,
-			BrowserOther,                   //70
+			BrowserOther,
 			RarityBlack,
 			RarityRed,
 			RarityBlueC,
 			RarityBlueB,
 			RarityBlueA,
-			RaritySilver,
+			RaritySilver,       			//80
 			RarityGold,
 			RarityHoloB,
 			RarityHoloA,
-			RarityCherry,                   //80
+			RarityCherry,
 			ParameterHP,
 			ParameterFirepower,
 			ParameterTorpedo,
 			ParameterAA,
 			ParameterArmor,
-			ParameterASW,
+			ParameterASW,       			//90
 			ParameterEvasion,
 			ParameterLOS,
 			ParameterLuck,
-			ParameterBomber,                //90
+			ParameterBomber,
 			ParameterAccuracy,
 			ParameterAircraft,
 			ParameterSpeed,
 			ParameterRange,
 			ParameterInterception,
-			ParameterAntiBomber,
+			ParameterAntiBomber,			//100
 			ParameterAircraftCost,
 			ParameterAircraftDistance,
 			BattleFormationEnemyLineAhead,
-			BattleFormationEnemyDoubleLine, //100
+			BattleFormationEnemyDoubleLine,
 			BattleFormationEnemyDiamond,
 			BattleFormationEnemyEchelon,
 			BattleFormationEnemyLineAbreast,
 			AircraftLevel0,
 			AircraftLevel1,
-			AircraftLevel2,
+			AircraftLevel2,     			//110
 			AircraftLevel3,
 			AircraftLevel4,
 			AircraftLevel5,
-			AircraftLevel6,                 //110
+			AircraftLevel6,
 			AircraftLevel7,
 			AircraftLevelTop0,
 			AircraftLevelTop1,
 			AircraftLevelTop2,
 			AircraftLevelTop3,
-			AircraftLevelTop4,
+			AircraftLevelTop4,  			//120
 			AircraftLevelTop5,
 			AircraftLevelTop6,
 			AircraftLevelTop7,
@@ -346,6 +351,11 @@ namespace ElectronicObserver.Resource
 				LoadImageFromArchive(Icons, archive, mstpath + @"Form/FleetPreset.png", "Form_FleetPreset");
 				LoadImageFromArchive(Icons, archive, mstpath + @"Form/Twitter.png", "Form_Twittert");
 				LoadImageFromArchive(Icons, archive, mstpath + @"Form/AccessTimer.png", "Form_AccessTimer");
+				LoadImageFromArchive(Icons, archive, mstpath + @"Form/KcWeb.png", "Form_KcWeb");
+				LoadImageFromArchive(Icons, archive, mstpath + @"Form/JervisVercel.png", "Form_JervisVercel");
+				LoadImageFromArchive(Icons, archive, mstpath + @"Form/KcSupportkai.png", "Form_KcSupportkai");
+				LoadImageFromArchive(Icons, archive, mstpath + @"Form/CompassSimulator.png", "Form_CompassSimulator");
+
 
 				LoadImageFromArchive(Icons, archive, mstpath + @"Fleet/NoShip.png", "Fleet_NoShip");
 				LoadImageFromArchive(Icons, archive, mstpath + @"Fleet/Docking.png", "Fleet_Docking");

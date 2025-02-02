@@ -1248,118 +1248,6 @@ namespace ElectronicObserver.Window
 			ContextMenuFleet_Capture.Visible = Utility.Configuration.Config.Debug.EnableDebugMenu;
 		}
 
-		private string CreateDeciBuilderData(int areaId, bool[] fleetExportFlags,bool withID)
-		{
-			StringBuilder sb = new StringBuilder();
-			KCDatabase db = KCDatabase.Instance;
-
-			// 手書き json の悲しみ
-			sb.Append(@"{""version"":4,");
-			sb.Append(@"""hplv"":"+db.Admiral.Level+",");
-			foreach (var fleet in db.Fleet.Fleets.Values)
-			{
-				if (fleet == null || fleet.MembersInstance.All(m => m == null)) continue;
-
-				if (fleetExportFlags[fleet.FleetID-1])
-				{
-					sb.AppendFormat(@"""f{0}"":{{", fleet.FleetID);
-
-					int shipcount = 1;
-					foreach (var ship in fleet.MembersInstance)
-					{
-						if (ship == null) break;
-						if (!withID)
-						{ 
-							sb.AppendFormat(@"""s{0}"":{{""id"":{1},""lv"":{2},""asw"":{3},""luck"":{4},""items"":{{",
-								shipcount,
-								ship.ShipID,
-								ship.Level,
-								ship.ASWBase,
-								ship.LuckBase);
-						}
-						else
-						{
-							sb.AppendFormat(@"""s{0}"":{{""api_id"":{1},""id"":{2},""lv"":{3},""asw"":{4},""luck"":{5},""items"":{{",
-								shipcount,
-								ship.MasterID,
-								ship.ShipID,
-								ship.Level,
-								ship.ASWBase,
-								ship.LuckBase);
-						}
-						int eqcount = 1;
-						foreach (var eq in ship.AllSlotInstance.Where(eq => eq != null))
-						{
-							if (eq == null) break;
-
-							sb.AppendFormat(@"""i{0}"":{{""id"":{1},""rf"":{2},""mas"":{3}}},", eqcount >= 6 ? "x" : eqcount.ToString(), eq.EquipmentID, eq.Level, eq.AircraftLevel);
-
-							eqcount++;
-						}
-
-						if (eqcount > 1)
-							sb.Remove(sb.Length - 1, 1);        // remove ","
-						sb.Append(@"}},");
-
-						shipcount++;
-					}
-
-					if (shipcount > 0)
-						sb.Remove(sb.Length - 1, 1);        // remove ","
-					sb.Append(@"},");
-				}
-			}
-
-			//基地航空隊
-			//Note:mode(出撃/待機などの中隊ごとの状態)は、読み取る側の制御が揃っていないため対応しない。
-			//　制空権シミュレータ：modeはitemの前にないといけない、modeがない場合は「待機」になる
-			//　作戦室　　　　　　：modeはitemの後にないといけない、modeがない場合は「出撃」になる
-			if (areaId != 0)
-			{
-				int corpsNumber = 1;
-				int squadronNumber = 1;
-				string corpsJson = "";
-				string squadronJson = "";
-				foreach (KeyValuePair<int, BaseAirCorpsData> corps in db.BaseAirCorps)
-				{
-					if (corps.Value.MapAreaID == areaId)
-					{
-						corpsJson += @"""a" + corpsNumber + @""":{";
-						foreach (KeyValuePair<int,BaseAirCorpsSquadron> sq in corps.Value.Squadrons)
-						{
-							int emid = sq.Value.EquipmentMasterID;
-							EquipmentData eq = db.Equipments[emid];
-							if(eq != null)
-							{
-								squadronJson += @"""i"+squadronNumber+@""":{""id"":"+ sq.Value.EquipmentID+@",""rf"":"+eq.Level+@",""mas"":"+eq.AircraftLevel+@"},";
-								//Console.WriteLine(sq.Value.SquadronID + "," + sq.Value.EquipmentID + "," + eq.Level + "," + eq.AircraftLevel);
-							}
-							squadronNumber++;
-						}
-						squadronJson = @"""items"":{" + squadronJson.Trim(',') + "}";
-
-						corpsJson += squadronJson + "},";
-						squadronJson = "";
-						squadronNumber = 1;
-						corpsNumber++;
-					}
-				}
-
-				corpsJson = corpsJson.Trim(',');
-				Console.WriteLine(corpsJson+ "}");
-				if(corpsJson != "")
-				{
-					sb.Append(corpsJson+ "}");
-				}
-			}
-
-			sb.Remove(sb.Length - 1, 1);        // remove ","
-			sb.Append(@"}");
-
-			Console.WriteLine(sb.ToString());
-			return sb.ToString();
-		}
-
 		private bool[] GetFleetExportFlag(DialogChooseAirBase dca)
 		{
 			bool[] fleet = new bool[] { true, true, true, true };
@@ -1385,197 +1273,24 @@ namespace ElectronicObserver.Window
 			{
 				areaId = dca.areaId;
 				fleet = GetFleetExportFlag(dca);
-				Clipboard.SetData(DataFormats.StringFormat, CreateDeciBuilderData(areaId, fleet, false));
+				Clipboard.SetData(DataFormats.StringFormat, GenerateDeckBuilderFormat.CreateDeciBuilderData(areaId, fleet));
 			}
 		}
 
 		/// <summary>
-		/// 「艦隊晒しページ」用編成コピー
-		/// <see cref="http://kancolle-calc.net/kanmusu_list.html"/>
+		/// 全艦娘をコピー
 		/// </summary>
-		private void ContextMenuFleet_CopyKanmusuList_Click(object sender, EventArgs e)
+		private void ContextMenuFleet_CopyAllShips_Click(object sender, EventArgs e)
 		{
-			StringBuilder sb = new StringBuilder();
-			KCDatabase db = KCDatabase.Instance;
-
-			// version
-			sb.Append(".2");
-
-			// <たね艦娘(完全未改造時)のID, 艦娘リスト>　に分類
-			Dictionary<int, List<ShipData>> shiplist = new Dictionary<int, List<ShipData>>();
-
-			foreach (var ship in db.Ships.Values.Where(s => s.IsLocked))
-			{
-				var master = ship.MasterShip;
-				while (master.RemodelBeforeShip != null)
-				{
-					master = master.RemodelBeforeShip;
-				}
-
-				if (!shiplist.ContainsKey(master.ShipID))
-				{
-					shiplist.Add(master.ShipID, new List<ShipData>() { ship });
-				}
-				else
-				{
-					shiplist[master.ShipID].Add(ship);
-				}
-			}
-
-			//Note:宗谷に対する特別対応
-			//艦隊晒しページ(http://kancolle-calc.net/kanmusu_list.html)の宗谷は主キーがID:645(灯台補給艦)であるとしてデータを読み込んでいる(IDが一番若いから？)
-			//未改造時の艦IDを主キーとしている本ロジックとマッチしないため例外的に差し替えを行う
-			if (shiplist.ContainsKey(699))	//699：特務艦
-			{
-				List<ShipData> tmpShipData = shiplist[699];
-
-				shiplist.Remove(699);
-				shiplist.Add(645, tmpShipData);
-			}
-			if (shiplist.ContainsKey(650))	//650：南極観測船
-			{
-				List<ShipData> tmpShipData = shiplist[650];
-
-				shiplist.Remove(650);
-				shiplist.Add(645, tmpShipData);
-			}
-
-			// 上で作った分類の各項を文字列化
-			// Note:KancolleSnifferでの出力がID順なのでそちらに合わせるようにした
-			foreach (var sl in shiplist.OrderBy(id => id.Key))
-			{
-				sb.Append("|").Append(sl.Key).Append(":");
-
-				foreach (var ship in sl.Value.OrderByDescending(s => s.Level))
-				{
-					sb.Append(ship.Level);
-
-					// 改造レベルに達しているのに未改造の艦は ".<たね=1, 改=2, 改二=3, ...>" を付加
-					if (ship.MasterShip.RemodelAfterShipID != 0 && ship.ExpNextRemodel == 0)
-					{
-						sb.Append(".");
-						int count = 1;
-						var master = ship.MasterShip;
-						while (master.RemodelBeforeShip != null)
-						{
-							master = master.RemodelBeforeShip;
-							count++;
-						}
-						sb.Append(count);
-					}
-					sb.Append(",");
-				}
-
-				// 余った "," を削除
-				sb.Remove(sb.Length - 1, 1);
-			}
-
-			Clipboard.SetData(DataFormats.StringFormat, sb.ToString());
+			Clipboard.SetData(DataFormats.StringFormat, GenerateDeckBuilderFormat.CreateAllFleetListWithID());
 		}
 
 		/// <summary>
-		/// 「艦隊分析 -艦これ-」の艦隊情報反映用フォーマットでコピー
-		/// メモ
-		/// https://kancolle-fleetanalysis.firebaseapp.com/#/ はサービス終了閉鎖済み
-		/// 制空権シミュレータ：https://noro6.github.io/kcTools/list/ で本フォーマットを使用できる
+		/// 全装備をコピー
 		/// </summary>
-		private void ContextMenuFleet_CopyToFleetAnalysis_Click(object sender, EventArgs e)
+		private void ContextMenuFleet_CopyAllEquips_Click(object sender, EventArgs e)
 		{
-			var sb = new StringBuilder();
-
-			sb.Append("[");
-			foreach (var ship in KCDatabase.Instance.Ships.Values.Where(s => s.IsLocked))
-			{
-				//現在の進捗計算
-				int expProgress = 0;
-				if (ExpTable.ShipExp.ContainsKey(ship.Level + 1) && ship.Level != 99)
-				{
-					double tmpExpProgress = ((double)ExpTable.ShipExp[ship.Level].Next - (double)ship.ExpNext) / (double)ExpTable.ShipExp[ship.Level].Next * 100;
-					expProgress = (int)Math.Truncate(tmpExpProgress);
-				}
-				long[] apiExp = { ship.ExpTotal, (long)ship.ExpNext, (long)expProgress };
-				sb.AppendFormat(@"{{""api_ship_id"":{0},""api_lv"":{1},""api_kyouka"":[{2}],""api_exp"":[{3}],""api_slot_ex"":{4},""api_sally_area"":{5}}},",
-					ship.ShipID, ship.Level, 
-					string.Join(",", (int[])ship.RawData.api_kyouka), 
-					string.Join(",", apiExp), 
-					ship.ExpansionSlot, 
-					(ship.SallyArea >= 0 ? ship.SallyArea : 0));
-			}
-			sb.Remove(sb.Length - 1, 1);        // remove ","
-			sb.Append("]");
-
-			Clipboard.SetData(DataFormats.StringFormat, sb.ToString());
-		}
-
-		/// <summary>
-		/// 「艦隊分析 -艦これ-」の艦隊情報反映用フォーマットにapi_idを追加してコピー
-		/// メモ
-		/// https://kancolle-fleetanalysis.firebaseapp.com/#/ はサービス終了閉鎖済み
-		/// 制空権シミュレータ：https://noro6.github.io/kcTools/list/ で本フォーマットを使用できる
-		/// </summary>
-		private void ContextMenuFleet_CopyToFleetAnalysisWithID_Click(object sender, EventArgs e)
-		{
-			var sb = new StringBuilder();
-
-			sb.Append("[");
-			foreach (var ship in KCDatabase.Instance.Ships.Values.Where(s => s.IsLocked))
-			{
-				//現在の進捗計算
-				int expProgress = 0;
-				if (ExpTable.ShipExp.ContainsKey(ship.Level + 1) && ship.Level != 99)
-				{
-					double tmpExpProgress = ((double)ExpTable.ShipExp[ship.Level].Next - (double)ship.ExpNext) / (double)ExpTable.ShipExp[ship.Level].Next * 100;
-					expProgress = (int)Math.Truncate(tmpExpProgress);
-				}
-				long[] apiExp = { ship.ExpTotal, (long)ship.ExpNext, (long)expProgress };
-				sb.AppendFormat(@"{{""api_id"":{0},""api_ship_id"":{1},""api_lv"":{2},""api_kyouka"":[{3}],""api_exp"":[{4}],""api_slot_ex"":{5},""api_sally_area"":{6}",
-					ship.MasterID,ship.ShipID, ship.Level,
-					string.Join(",", (int[])ship.RawData.api_kyouka),
-					string.Join(",", apiExp),
-					ship.ExpansionSlot,
-					(ship.SallyArea >= 0 ? ship.SallyArea : 0));
-				if (ship.SpItemKind > 0)
-				{
-					switch (ship.SpItemKind)
-					{
-						case 1:
-							sb.AppendFormat(@",""api_sp_effect_items"": [{{""api_kind"":{0},""api_raig"":{1},""api_souk"":{2}}}]}},", ship.SpItemKind, ship.SpItemRaig, ship.SpItemSouk);
-							break;
-						case 2:
-							sb.AppendFormat(@",""api_sp_effect_items"": [{{""api_kind"":{0},""api_houg"":{1},""api_kaih"":{2}}}]}},", ship.SpItemKind, ship.SpItemHoug, ship.SpItemKaih);
-							break;
-					}
-				}
-				else
-					sb.AppendFormat("}},");
-			}
-			sb.Remove(sb.Length - 1, 1);        // remove ","
-			sb.Append("]");
-
-			Clipboard.SetData(DataFormats.StringFormat, sb.ToString());
-		}
-
-		/// <summary>
-		/// 外部サイトをデッキビルダー形式指定で開く
-		/// =>デッキビルダー形式のデータをクリップボードにコピーして外部サイトを開く
-		/// </summary>
-		/// <param name="baseUrl"></param>
-		/// <param name="areaId"></param>
-		/// <returns></returns>
-		private Process OpenUrlWithDeciBuilderData(string baseUrl, int areaId, bool[] fleet)
-		{
-			//string data = CreateDeciBuilderData(areaId, fleet, false);
-			Clipboard.SetData(DataFormats.StringFormat, CreateDeciBuilderData(areaId, fleet, false));
-			//string url = $@"{baseUrl}?predeck={data.Replace("\"", "\\\"")}";
-			string url = baseUrl;
-
-
-			ProcessStartInfo pi = new ProcessStartInfo()
-			{
-				FileName = url,
-				UseShellExecute = true,
-			};
-			return Process.Start(pi);
+			Clipboard.SetText("[" + GenerateDeckBuilderFormat.CreateEquipmentList() + "]");
 		}
 
 		/// <summary>
@@ -1593,7 +1308,7 @@ namespace ElectronicObserver.Window
 			{
 				areaId = dca.areaId;
 				fleet = GetFleetExportFlag(dca);
-				OpenUrlWithDeciBuilderData("https://noro6.github.io/kc-web", areaId, fleet);
+				OpenUrlWithDeciBuilderData("https://noro6.github.io/kc-web", areaId, fleet, 1);
 			}
 		}
 
@@ -1612,7 +1327,7 @@ namespace ElectronicObserver.Window
 			{
 				areaId = dca.areaId;
 				fleet = GetFleetExportFlag(dca);
-				OpenUrlWithDeciBuilderData("https://jervis.vercel.app", areaId, fleet);
+				OpenUrlWithDeciBuilderData("https://jervis.vercel.app", areaId, fleet, 2);
 			}
 		}
 
@@ -1636,27 +1351,52 @@ namespace ElectronicObserver.Window
 		}
 
 		/// <summary>
-		/// 現在の艦隊データでデッキビルダー(http://kancolle-calc.net/deckbuilder.html)を開く
+		/// 現在の艦隊データでらくらく支援艦隊改(https://kancolle-support-kai.netlify.app/)を開く
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
-		private void ContextMenuFleet_OpenDeckBuilder_Click(object sender, EventArgs e)
+		private void ContextMenuFleet_OpenKacColleSupportKai_Click(object sender, EventArgs e)
 		{
-			//全艦隊固定出力かつ基地のデータなし
-			OpenUrlWithDeciBuilderData("http://kancolle-calc.net/deckbuilder.html", 0, new bool[] { true,true,true,true,} );
+			int areaId = 0;
+			bool[] fleet;
+			DialogChooseAirBase dca = new DialogChooseAirBase();
+			DialogResult dr = dca.ShowDialog();
+			if (dr == DialogResult.OK)
+			{
+				areaId = dca.areaId;
+				fleet = GetFleetExportFlag(dca);
+				OpenUrlWithDeciBuilderData("https://kancolle-support-kai.netlify.app/", areaId, fleet);
+			}
 		}
 
 		/// <summary>
-		/// 「艦隊分析」装備情報反映用
-		/// https://kancolle-fleetanalysis.firebaseapp.com/
+		/// 外部サイトをデッキビルダー形式指定で開く
+		/// =>デッキビルダー形式のデータをクリップボードにコピーして外部サイトを開く
 		/// </summary>
-		private void ContextMenuFleet_CopyToFleetAnalysisEquip_Click(object sender, EventArgs e)
+		/// <param name="baseUrl"></param>
+		/// <param name="areaId"></param>
+		/// <returns></returns>
+		private Process OpenUrlWithDeciBuilderData(string baseUrl, int areaId, bool[] fleet, int a = 0)
 		{
-			Clipboard.SetText(
-				"svdata={\"api_result\":1,\"api_result_msg\":\"成功\",\"api_data\":[" + string.Join(",", KCDatabase.Instance.Equipments.Values.Where(eq => eq?.ID >= 0)
-				.Select(eq => $"{{\"api_id\":{eq.ID},\"api_slotitem_id\":{eq.EquipmentID},\"api_level\":{eq.Level},\"api_locked\":{(eq.IsLocked ? 1 : 0)}}}")) + "]}");
+			Clipboard.SetData(DataFormats.StringFormat, GenerateDeckBuilderFormat.CreateDeciBuilderData(areaId, fleet));
+			UriBuilder uBuild = new UriBuilder(baseUrl);
+			switch (a)
+			{
+				case 1:
+					uBuild.Fragment = "import:{\"predeck\":" + GenerateDeckBuilderFormat.CreateDeciBuilderData(areaId, fleet) + "}";
+					break;
+				case 2:
+					uBuild.Query = "predeck=" + GenerateDeckBuilderFormat.CreateDeciBuilderData(areaId, fleet);
+					break;
+			}
+			ProcessStartInfo pi = new ProcessStartInfo()
+			{
+				FileName = uBuild.ToString(),
+				UseShellExecute = true,
+			};
+			return Process.Start(pi);
 		}
-		
+
 		private void ContextMenuFleet_AntiAirDetails_Click(object sender, EventArgs e)
 		{
 			var dialog = new DialogAntiAirDefense();

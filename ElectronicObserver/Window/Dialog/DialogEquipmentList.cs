@@ -1,5 +1,6 @@
 ﻿using ElectronicObserver.Data;
 using ElectronicObserver.Resource;
+using ElectronicObserver.Utility.Data;
 using ElectronicObserver.Window.Support;
 using System;
 using System.Collections.Generic;
@@ -1398,13 +1399,11 @@ namespace ElectronicObserver.Window.Dialog
 		/// </summary>
 		private void TopMenu_File_CopyToFleetAnalysis_Click(object sender, EventArgs e)
 		{
-			Clipboard.SetText(
-				"svdata={\"api_result\":1,\"api_result_msg\":\"成功\",\"api_data\":[" + string.Join(",", KCDatabase.Instance.Equipments.Values.Where(eq => eq?.ID >= 0)
-				.Select(eq => $"{{\"api_id\":{eq.ID},\"api_slotitem_id\":{eq.EquipmentID},\"api_level\":{eq.Level},\"api_locked\":{(eq.IsLocked ? 1 : 0)}}}")) + "]}");
-		}
+            Clipboard.SetText("[" + GenerateDeckBuilderFormat.CreateEquipmentList() + "]");
+        }
 
 
-		private void DialogEquipmentList_FormClosed(object sender, FormClosedEventArgs e)
+        private void DialogEquipmentList_FormClosed(object sender, FormClosedEventArgs e)
 		{
 
 			ResourceManager.DestroyIcon(Icon);

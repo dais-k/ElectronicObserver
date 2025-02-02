@@ -315,6 +315,7 @@
     <Compile Include="Resource\KCResourceHelper.cs" />
     <Compile Include="Resource\Record\ResourceRecord.cs" />
     <Compile Include="Utility\Data\Calculator2.cs" />
+    <Compile Include="Utility\Data\GenerateDeckBuilderFormat.cs" />
     <Compile Include="Utility\Data\RecordHash.cs" />
     <Compile Include="Utility\Data\CalcShipAttackPower.cs" />
     <Compile Include="Utility\FleetImageGenerator.cs" />

@@ -5,6 +5,7 @@ using ElectronicObserver.Observer;
 using ElectronicObserver.Resource;
 using ElectronicObserver.Resource.Record;
 using ElectronicObserver.Utility;
+using ElectronicObserver.Utility.Data;
 using ElectronicObserver.Window.Dialog;
 using ElectronicObserver.Window.Integrate;
 using ElectronicObserver.Window.Support;
@@ -154,6 +155,10 @@ namespace ElectronicObserver.Window
 			StripMenu_Tool_FleetAnalysis.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormResourceChart];
 			StripMenu_Tool_MCTwitter.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormTwitter];
 			StripMenu_Tool_C2Twitter.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormTwitter];
+			StripMenu_Tool_KcWeb.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormKcWeb];
+			StripMenu_Tool_Jervis.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormJervisVercel];
+			StripMenu_Tool_SupportKai.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormKcSupportkai];
+			StripMenu_Tool_CompassSim.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormCompassSimulator];
 
 			StripMenu_Help_Version.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.AppIcon];
 			#endregion
@@ -1463,6 +1468,133 @@ namespace ElectronicObserver.Window
 			OpenUrl(Configuration.Config.Tool.C2TwitterURL);
 		}
 
+		private void StripMenu_Tool_KcWeb_Open_Click(object sender, EventArgs e)
+		{
+			OpenUrl("https://noro6.github.io/kc-web");
+		}
+
+		private void StripMenu_Tool_KcWeb_OpenwithFleet_Click(object sender, EventArgs e)
+		{
+			int areaId = 0;
+			bool[] fleet;
+			DialogChooseAirBase dca = new DialogChooseAirBase();
+			DialogResult dr = dca.ShowDialog();
+			if (dr == DialogResult.OK)
+			{
+				areaId = dca.areaId;
+				fleet = GetFleetExportFlag(dca);
+				UriBuilder uBuild = new UriBuilder("https://noro6.github.io/kc-web");
+				uBuild.Fragment = "import:{\"predeck\":" + GenerateDeckBuilderFormat.CreateDeciBuilderData(areaId, fleet) + "}";
+				OpenUrl(uBuild.ToString());
+			}
+		}
+
+		private void StripMenu_Tool_KcWeb_OpenwithShips_Click(object sender, EventArgs e)
+		{
+			Clipboard.SetData(DataFormats.StringFormat, GenerateDeckBuilderFormat.CreateAllFleetListWithID());
+			OpenUrl("https://noro6.github.io/kc-web/#/manager");
+		}
+
+		private void StripMenu_Tool_KcWeb_OpenwithEquip_Click(object sender, EventArgs e)
+		{
+			Clipboard.SetText("[" + GenerateDeckBuilderFormat.CreateEquipmentList() + "]");
+			OpenUrl("https://noro6.github.io/kc-web/#/manager");
+		}
+
+		private void StripMenu_Tool_Jervis_Open_Click(object sender, EventArgs e)
+		{
+			OpenUrl("https://jervis.vercel.app/");
+		}
+
+		private void StripMenu_Tool_Jervis_OpenwithFleet_Click(object sender, EventArgs e)
+		{
+			int areaId = 0;
+			bool[] fleet;
+			DialogChooseAirBase dca = new DialogChooseAirBase();
+			DialogResult dr = dca.ShowDialog();
+			if (dr == DialogResult.OK)
+			{
+				areaId = dca.areaId;
+				fleet = GetFleetExportFlag(dca);
+				UriBuilder uBuild = new UriBuilder("https://jervis.vercel.app/");
+				uBuild.Query = "predeck=" + GenerateDeckBuilderFormat.CreateDeciBuilderData(areaId, fleet);
+				OpenUrl(uBuild.ToString());
+			}
+		}
+
+		private void StripMenu_Tool_SupportKai_Open_Click(object sender, EventArgs e)
+		{
+			OpenUrl("https://kancolle-support-kai.netlify.app/");
+		}
+
+		private void StripMenu_Tool_SupportKai_OpenwithFleet_Click(object sender, EventArgs e)
+		{
+			int areaId = 0;
+			bool[] fleet;
+			DialogChooseAirBase dca = new DialogChooseAirBase();
+			DialogResult dr = dca.ShowDialog();
+			if (dr == DialogResult.OK)
+			{
+				areaId = dca.areaId;
+				fleet = GetFleetExportFlag(dca);
+				Clipboard.SetData(DataFormats.StringFormat, GenerateDeckBuilderFormat.CreateDeciBuilderData(areaId, fleet));
+				OpenUrl("https://kancolle-support-kai.netlify.app/");
+			}
+		}
+
+		private void StripMenu_Tool_SupportKai_OpenwithEquip_Click(object sender, EventArgs e)
+		{
+			Clipboard.SetText("[" + GenerateDeckBuilderFormat.CreateEquipmentList() + "]");
+			OpenUrl("https://kancolle-support-kai.netlify.app/");
+		}
+
+		private void StripMenu_Tool_CompassSim_Open_Click(object sender, EventArgs e)
+		{
+			OpenUrl("https://x-20a.github.io/compass/");
+		}
+
+		private void StripMenu_Tool_CompassSim_OpenwithFleet_Click(object sender, EventArgs e)
+		{
+			int areaId = 0;
+			bool[] fleet;
+			DialogChooseAirBase dca = new DialogChooseAirBase();
+			DialogResult dr = dca.ShowDialog();
+			if (dr == DialogResult.OK)
+			{
+				areaId = dca.areaId;
+				fleet = GetFleetExportFlag(dca);
+				Clipboard.SetData(DataFormats.StringFormat, GenerateDeckBuilderFormat.CreateDeciBuilderData(areaId, fleet));
+				OpenUrl("https://x-20a.github.io/compass/");
+			}
+		}
+
+		private void StripMenu_Tool_CopyFleet_Click(object sender, EventArgs e)
+		{
+			int areaId = 0;
+			bool[] fleet;
+			DialogChooseAirBase dca = new DialogChooseAirBase();
+			DialogResult dr = dca.ShowDialog();
+			if (dr == DialogResult.OK)
+			{
+				areaId = dca.areaId;
+				fleet = GetFleetExportFlag(dca);
+				Clipboard.SetData(DataFormats.StringFormat, GenerateDeckBuilderFormat.CreateDeciBuilderData(areaId, fleet));
+				Utility.Logger.Add(2, "編成をクリップボードにコピーしました。");
+			}
+		}
+
+		private void StripMenu_Tool_CopyAllShips_Click(object sender, EventArgs e)
+		{
+			Clipboard.SetData(DataFormats.StringFormat, GenerateDeckBuilderFormat.CreateAllFleetListWithID());
+			Utility.Logger.Add(2, "全ての所属艦娘をクリップボードにコピーしました。");
+		}
+
+		private void StripMenu_Tool_CopyAllEquips_Click(object sender, EventArgs e)
+		{
+			Clipboard.SetText("[" + GenerateDeckBuilderFormat.CreateEquipmentList() + "]");
+			Utility.Logger.Add(2, "全ての所有装備をクリップボードにコピーしました。");
+		}
+
 		private Process OpenUrl(string url)
 		{
 			ProcessStartInfo pi = new ProcessStartInfo()
@@ -1486,6 +1618,17 @@ namespace ElectronicObserver.Window
 			}
 
 			_prevPlayTimeRecorded = now;
+		}
+
+		private bool[] GetFleetExportFlag(DialogChooseAirBase dca)
+		{
+			bool[] fleet = new bool[] { true, true, true, true };
+			fleet[0] = dca.fleet1;
+			fleet[1] = dca.fleet2;
+			fleet[2] = dca.fleet3;
+			fleet[3] = dca.fleet4;
+
+			return fleet;
 		}
 
 		#region フォーム表示
