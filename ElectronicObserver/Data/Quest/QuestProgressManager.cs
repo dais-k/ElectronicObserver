@@ -519,6 +519,15 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressExpedition(q, 1, new[]{ 46 }),
 							}));
 							break;
+						case 441:   //|441|単|兵站強化遠征任務【拡張作戦】|「海上護衛任務」「兵站強化任務」「航空戦艦運用演習」「北号作戦」「遠洋潜水艦作戦」成功各1
+							Progresses.Add(new ProgressMultiExpedition(q, new[]{
+								new ProgressExpedition(q, 1, new[]{ 5 }),
+								new ProgressExpedition(q, 1, new[]{ 100 }),
+								new ProgressExpedition(q, 1, new[]{ 23 }),
+								new ProgressExpedition(q, 1, new[]{ 19 }),
+								new ProgressExpedition(q, 1, new[]{ 39 }),
+							}));
+							break;
 						case 442:   //|442|２|西方連絡作戦準備を実施せよ！|「西方海域偵察作戦」「潜水艦派遣演習」「潜水艦派遣作戦」「欧州方面友軍との接触」成功各1?|
 							Progresses.Add(new ProgressMultiExpedition(q, new[]{
 								new ProgressExpedition(q, 1, new[]{ 131 }),
@@ -738,9 +747,9 @@ namespace ElectronicObserver.Data.Quest
 							if (DateTime.Now < new DateTime(2025, 4, 1))
 							{
 								Progresses.Add(new ProgressMultiBattle(q, new[] {
-									new ProgressSpecialBattle(q, 2, "S", new[] { 14 }, true),
-									new ProgressSpecialBattle(q, 2, "S", new[] { 21 }, true),
-									new ProgressSpecialBattle(q, 2, "S", new[] { 22 }, true),
+									new ProgressSpecialBattle(q, 2, "A", new[] { 14 }, true),
+									new ProgressSpecialBattle(q, 2, "A", new[] { 21 }, true),
+									new ProgressSpecialBattle(q, 2, "A", new[] { 22 }, true),
 								}));
 							}
 							break;
