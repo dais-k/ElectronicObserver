@@ -258,14 +258,14 @@ namespace ElectronicObserver.Window
 				// 対空能力計算
 				{
 					var sb = new StringBuilder();
-					double lineahead = Calculator.GetAdjustedFleetAAValue(fleet, 1);
+					double lineahead = Calculator.GetAdjustedFleetAAValue(fleet, 1, 1);
 
-					AntiAirPower.Text = lineahead.ToString("0.0");
+					AntiAirPower.Text = lineahead.ToString("0.00");
 
 					sb.AppendFormat("艦隊防空\r\n単縦陣: {0:0.0} / 複縦陣: {1:0.0} / 輪形陣: {2:0.0}\r\n",
 						lineahead,
-						Calculator.GetAdjustedFleetAAValue(fleet, 2),
-						Calculator.GetAdjustedFleetAAValue(fleet, 3));
+						Calculator.GetAdjustedFleetAAValue(fleet, 2, 1),
+						Calculator.GetAdjustedFleetAAValue(fleet, 3, 1));
 
 					ToolTipInfo.SetToolTip(AntiAirPower, sb.ToString());
 				}

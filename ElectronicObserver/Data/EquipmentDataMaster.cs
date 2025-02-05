@@ -213,11 +213,11 @@ namespace ElectronicObserver.Data
 		/// <summary> 高角砲かどうか </summary>
 		public bool IsHighAngleGun => IconType == 16;
 
-		/// <summary> 高角砲+高射装置かどうか 素対空8以上</summary>
-		public bool IsHighAngleGunWithAADirector => IsHighAngleGun && AA >= 8;
+		/// <summary> 特殊高角砲（素対空8以上）かどうか 高角砲+高射装置</summary>
+		public bool IsSpecialHighAngleGun => IsHighAngleGun && AA >= 8;
 
-		/// <summary> 集中配備機銃かどうか 素対空9以上</summary>
-		public bool IsConcentratedAAGun => CategoryType == EquipmentTypes.AAGun && AA >= 9;
+		/// <summary> 特殊機銃（素対空9以上）かどうか 集中配備機銃</summary>
+		public bool IsSpecialAAGun => CategoryType == EquipmentTypes.AAGun && AA >= 9;
 
 
 		/// <summary> 航空機かどうか </summary>

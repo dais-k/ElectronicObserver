@@ -81,7 +81,7 @@ namespace ElectronicObserver.Window.Dialog
 			if (FleetID.SelectedIndex == -1)
 				FleetID.SelectedIndex = 0;
 			Formation.SelectedIndex = 0;
-
+			AAFireAvoidance.SelectedIndex = 0;
 			UpdateAACutinKind(ShowAll.Checked);
 			UpdateFormation();
 
@@ -106,34 +106,37 @@ namespace ElectronicObserver.Window.Dialog
 			int formation = Formation.SelectedItem as FormationComboBoxData;
 			int aaCutinKind = AACutinKind.SelectedItem as AACutinComboBoxData;
 			int enemyAircraftCount = enemySlotCountValue;
-
+			int enemyAvoidance = (AAFireAvoidance.SelectedIndex < 0)? 0 : AAFireAvoidance.SelectedIndex;
+			double[] avoid1 = new double[5] { 1.0, 0.6, 0.6, 0.5, 0.5 };
+			double[] avoid2 = new double[5] { 1.0, 1.0, 0.7, 0.7, 0.5 };
+			double[] avoid3 = new double[5] { 1.0, 1.0, 0.6, 0.4, 0.4 };
+			double[] avoid4 = new double[5] { 1.0, 1.0, 1.0, 0.5, 0.5 };
 
 			// 加重対空値
-			double[] adjustedAAs = ships.Select(s => s == null ? 0.0 : Calculator.GetAdjustedAAValue(s)).ToArray();
+			double[] adjustedAAs = ships.Select(s => s == null ? 0.0 : Math.Floor(Calculator.GetAdjustedAAValue(s) * avoid1[enemyAvoidance])).ToArray();
 
 			// 艦隊防空値
-			double adjustedFleetAA = Calculator.GetAdjustedFleetAAValue(ships, formation);
+			double adjustedFleetAA = Calculator.GetAdjustedFleetAAValue(ships, formation, avoid2[enemyAvoidance]);
 
-			// 割合撃墜
+			// 割合撃墜率
 			double[] proportionalAAs = adjustedAAs.Select((val, i) => Calculator.GetProportionalAirDefense(val, IsCombined ? (i < 6 ? 1 : 2) : -1)).ToArray();
 
-			// 固定撃墜
-			int[] fixedAAs = adjustedAAs.Select((val, i) => Calculator.GetFixedAirDefense(val, adjustedFleetAA, aaCutinKind, IsCombined ? (i < 6 ? 1 : 2) : -1)).ToArray();
-
-
-
-			int[] shootDownBoth = adjustedAAs.Select((val, i) => ships[i] == null ? 0 :
-			   Calculator.GetShootDownCount(enemyAircraftCount, proportionalAAs[i], fixedAAs[i], aaCutinKind)).ToArray();
-
+			// 割合撃墜数
 			int[] shootDownProportional = adjustedAAs.Select((val, i) => ships[i] == null ? 0 :
-			   Calculator.GetShootDownCount(enemyAircraftCount, proportionalAAs[i], 0, aaCutinKind)).ToArray();
+			   Calculator.GetProportionalShootDown(enemyAircraftCount, proportionalAAs[i])).ToArray();
 
-			int[] shootDownFixed = adjustedAAs.Select((val, i) => ships[i] == null ? 0 :
-			   Calculator.GetShootDownCount(enemyAircraftCount, 0, fixedAAs[i], aaCutinKind)).ToArray();
+			// 固定撃墜
+			int[] shootDownfixedAAs = adjustedAAs.Select((val, i) => Calculator.GetFixedAirDefense(val, adjustedFleetAA, aaCutinKind, IsCombined ? (i < 6 ? 1 : 2) : -1)).ToArray();
 
+			// 最低保証数
 			int[] shootDownFailed = adjustedAAs.Select((val, i) => ships[i] == null ? 0 :
-			   Calculator.GetShootDownCount(enemyAircraftCount, 0, 0, aaCutinKind)).ToArray();
+			   Calculator.GetMinimumShootDownCount(avoid3[enemyAvoidance], avoid4[enemyAvoidance], aaCutinKind)).ToArray();
 
+			// 両方成功撃墜数
+			int[] shootDownBoth = adjustedAAs.Select((val, i) => ships[i] == null ? 0 :
+			   shootDownfixedAAs[i]+ shootDownProportional[i]+ shootDownFailed[i]).ToArray();
+
+			// 噴進弾幕
 			double[] aaRocketBarrageProbability = ships.Select(ship => Calculator.GetAARocketBarrageProbability(ship)).ToArray();
 
 
@@ -149,22 +152,21 @@ namespace ElectronicObserver.Window.Dialog
 
 				rows[i].SetValues(
 					ships[i].Name,
-					ships[i].AABase,
+					ships[i].AATotal,
 					adjustedAAs[i],
 					proportionalAAs[i],
-					fixedAAs[i],
-					shootDownBoth[i],
 					shootDownProportional[i],
-					shootDownFixed[i],
+					shootDownfixedAAs[i],
 					shootDownFailed[i],
+					shootDownBoth[i],
 					aaRocketBarrageProbability[i]);
 
 			}
 			ResultView.Rows.AddRange(rows.Where(r => r != null).ToArray());
 
-			AdjustedFleetAA.Text = adjustedFleetAA.ToString("0.0");
+			AdjustedFleetAA.Text = adjustedFleetAA.ToString("0.00");
 			{
-				var allShootDown = shootDownBoth.Concat(shootDownProportional).Concat(shootDownFixed).Concat(shootDownFailed);
+				var allShootDown = shootDownBoth.Concat(shootDownProportional).Concat(shootDownFailed);
 				AnnihilationProbability.Text = (allShootDown.Count(i => i >= enemyAircraftCount) / Math.Max(ships.Count(s => s != null) * 4, 1.0)).ToString("p1");
 			}
 		}
@@ -189,20 +191,46 @@ namespace ElectronicObserver.Window.Dialog
 			if (showAll)
 			{
 
-				int max = Calculator.AACutinFixedBonus.Keys.Max();
+				int max = Calculator.AACutinFixedBonusA.Keys.Max();
 				list = Enumerable.Range(0, max + 1).Select(kind => new AACutinComboBoxData(kind)).ToArray();
 
 			}
 			else
 			{
+				var aacutintypelist = GetShips().Where(s => s !=null).Select(s => Calculator2.GetAACutinKind(s.ShipID, s.AllSlotMaster.ToArray(), s.ID)).SelectMany(x => x).Distinct().ToArray();
+				var aacutinlist = new List<int>();
 
-				list = GetShips()
-					.Where(s => s != null)
-					.Select(s => Calculator.GetAACutinKind(s.ShipID, s.AllSlotMaster.ToArray(), s.ID))
-					.Concat(Enumerable.Repeat(0, 1))
-					.Distinct()
-					//.OrderBy(i => i) ※ソートしない
-					.Select(kind => new AACutinComboBoxData(kind)).ToArray();
+				foreach (var aac in aacutintypelist)
+				{
+					aacutinlist.Add(aac);
+				}
+
+				if (aacutinlist.Count >= 2)
+				{
+					int[,] listtemp = new int[aacutinlist.Count, 2];
+					int index = 0;
+					foreach (var item in aacutinlist)
+					{
+						listtemp[index, 0] = item;
+						listtemp[index, 1] = (Calculator.AACutinPriority.ContainsKey(item) ? Calculator.AACutinPriority[item] : 0);
+						index++;
+					}
+					int numRows = listtemp.GetLength(0);
+					int numCols = listtemp.GetLength(1);
+					var sortedRows = Enumerable.Range(0, numRows)
+						.OrderBy(row => listtemp[row, 1])
+						.Select(row => Enumerable.Range(0, numCols)
+						.Select(col => listtemp[row, col])
+						.ToArray())
+						.ToArray();
+					aacutinlist.Clear();
+					foreach (var n in sortedRows)
+					{
+						aacutinlist.Add(n.ElementAt(0));
+					}
+				}
+				aacutinlist.Insert(0,0);
+				list = aacutinlist.Select(kind => new AACutinComboBoxData(kind)).ToArray();
 
 			}
 
@@ -230,14 +258,13 @@ namespace ElectronicObserver.Window.Dialog
 
 			if (e.ColumnIndex == ResultView_ShootDownBoth.Index ||
 				e.ColumnIndex == ResultView_ShootDownProportional.Index ||
-				e.ColumnIndex == ResultView_ShootDownFixed.Index ||
 				e.ColumnIndex == ResultView_ShootDownFailed.Index)
 			{
 
 				int value = e.Value as int? ?? 0;
 				int enemySlot = enemySlotCountValue;
 
-				e.Value = string.Format("{0} ({1:p0})", value, (double)value / enemySlot);
+				e.Value = string.Format("{0}", value);
 				e.FormattingApplied = true;
 				e.CellStyle.BackColor = e.CellStyle.SelectionBackColor =
 					value >= enemySlot ? Color.MistyRose : SystemColors.Window;
@@ -275,6 +302,10 @@ namespace ElectronicObserver.Window.Dialog
 			UpdateAACutinKind(ShowAll.Checked);
 		}
 
+		private void AAFireAvoidance_CheckedChanged(object sender, EventArgs e)
+		{
+			Updated();
+		}
 
 	}
 }

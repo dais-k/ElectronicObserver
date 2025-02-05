@@ -36,29 +36,30 @@
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.AnnihilationProbability = new System.Windows.Forms.TextBox();
             this.AdjustedFleetAA = new System.Windows.Forms.TextBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.ShowAll = new System.Windows.Forms.CheckBox();
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.AACutinKind = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.AAFireAvoidance = new System.Windows.Forms.ComboBox();
             this.Formation = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.EnemySlotCount = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.FleetID = new System.Windows.Forms.ComboBox();
             this.ResultView = new System.Windows.Forms.DataGridView();
+            this.ToolTipInfo = new System.Windows.Forms.ToolTip(this.components);
             this.ResultView_ShipName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ResultView_AntiAir = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ResultView_AdjustedAntiAir = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ResultView_ProportionalAirDefense = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ResultView_FixedAirDefense = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ResultView_ShootDownBoth = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ResultView_ShootDownProportional = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ResultView_ShootDownFixed = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ResultView_FixedAirDefense = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ResultView_ShootDownFailed = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ResultView_ShootDownBoth = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ResultView_AARocketBarrageProbability = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ToolTipInfo = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -79,12 +80,14 @@
             // 
             this.splitContainer1.Panel1.Controls.Add(this.AnnihilationProbability);
             this.splitContainer1.Panel1.Controls.Add(this.AdjustedFleetAA);
+            this.splitContainer1.Panel1.Controls.Add(this.label7);
             this.splitContainer1.Panel1.Controls.Add(this.label6);
             this.splitContainer1.Panel1.Controls.Add(this.ShowAll);
             this.splitContainer1.Panel1.Controls.Add(this.label5);
             this.splitContainer1.Panel1.Controls.Add(this.label4);
             this.splitContainer1.Panel1.Controls.Add(this.AACutinKind);
             this.splitContainer1.Panel1.Controls.Add(this.label3);
+            this.splitContainer1.Panel1.Controls.Add(this.AAFireAvoidance);
             this.splitContainer1.Panel1.Controls.Add(this.Formation);
             this.splitContainer1.Panel1.Controls.Add(this.label2);
             this.splitContainer1.Panel1.Controls.Add(this.EnemySlotCount);
@@ -101,7 +104,7 @@
             // 
             // AnnihilationProbability
             // 
-            this.AnnihilationProbability.Location = new System.Drawing.Point(600, 41);
+            this.AnnihilationProbability.Location = new System.Drawing.Point(778, 41);
             this.AnnihilationProbability.Name = "AnnihilationProbability";
             this.AnnihilationProbability.ReadOnly = true;
             this.AnnihilationProbability.Size = new System.Drawing.Size(80, 23);
@@ -110,17 +113,26 @@
             // 
             // AdjustedFleetAA
             // 
-            this.AdjustedFleetAA.Location = new System.Drawing.Point(441, 41);
+            this.AdjustedFleetAA.Location = new System.Drawing.Point(619, 41);
             this.AdjustedFleetAA.Name = "AdjustedFleetAA";
             this.AdjustedFleetAA.ReadOnly = true;
             this.AdjustedFleetAA.Size = new System.Drawing.Size(80, 23);
             this.AdjustedFleetAA.TabIndex = 12;
             this.AdjustedFleetAA.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(368, 44);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(103, 15);
+            this.label7.TabIndex = 11;
+            this.label7.Text = "敵対空射撃回避：";
+            // 
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(527, 44);
+            this.label6.Location = new System.Drawing.Point(705, 44);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(67, 15);
             this.label6.TabIndex = 11;
@@ -141,7 +153,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(368, 44);
+            this.label5.Location = new System.Drawing.Point(546, 44);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(67, 15);
             this.label5.TabIndex = 8;
@@ -174,6 +186,22 @@
             this.label3.Size = new System.Drawing.Size(43, 15);
             this.label3.TabIndex = 5;
             this.label3.Text = "陣形：";
+            // 
+            // AAFireAvoidance
+            // 
+            this.AAFireAvoidance.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.AAFireAvoidance.FormattingEnabled = true;
+            this.AAFireAvoidance.Items.AddRange(new object[] {
+            "なし",
+            "弱",
+            "中",
+            "強",
+            "超"});
+            this.AAFireAvoidance.Location = new System.Drawing.Point(477, 41);
+            this.AAFireAvoidance.Name = "AAFireAvoidance";
+            this.AAFireAvoidance.Size = new System.Drawing.Size(63, 23);
+            this.AAFireAvoidance.TabIndex = 4;
+            this.AAFireAvoidance.SelectedIndexChanged += new System.EventHandler(this.AAFireAvoidance_CheckedChanged);
             // 
             // Formation
             // 
@@ -216,7 +244,7 @@
             this.EnemySlotCount.TabIndex = 2;
             this.EnemySlotCount.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.EnemySlotCount.Value = new decimal(new int[] {
-            36,
+            18,
             0,
             0,
             0});
@@ -259,11 +287,10 @@
             this.ResultView_AntiAir,
             this.ResultView_AdjustedAntiAir,
             this.ResultView_ProportionalAirDefense,
-            this.ResultView_FixedAirDefense,
-            this.ResultView_ShootDownBoth,
             this.ResultView_ShootDownProportional,
-            this.ResultView_ShootDownFixed,
+            this.ResultView_FixedAirDefense,
             this.ResultView_ShootDownFailed,
+            this.ResultView_ShootDownBoth,
             this.ResultView_AARocketBarrageProbability});
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
             dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
@@ -284,6 +311,13 @@
             this.ResultView.TabIndex = 0;
             this.ResultView.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.ResultView_CellFormatting);
             // 
+            // ToolTipInfo
+            // 
+            this.ToolTipInfo.AutoPopDelay = 30000;
+            this.ToolTipInfo.InitialDelay = 500;
+            this.ToolTipInfo.ReshowDelay = 100;
+            this.ToolTipInfo.ShowAlways = true;
+            // 
             // ResultView_ShipName
             // 
             this.ResultView_ShipName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
@@ -297,10 +331,10 @@
             // ResultView_AntiAir
             // 
             this.ResultView_AntiAir.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.ResultView_AntiAir.HeaderText = "対空";
+            this.ResultView_AntiAir.HeaderText = "対空合計";
             this.ResultView_AntiAir.Name = "ResultView_AntiAir";
             this.ResultView_AntiAir.ReadOnly = true;
-            this.ResultView_AntiAir.Width = 56;
+            this.ResultView_AntiAir.Width = 80;
             // 
             // ResultView_AdjustedAntiAir
             // 
@@ -320,49 +354,41 @@
             this.ResultView_ProportionalAirDefense.ReadOnly = true;
             this.ResultView_ProportionalAirDefense.Width = 80;
             // 
-            // ResultView_FixedAirDefense
-            // 
-            this.ResultView_FixedAirDefense.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.ResultView_FixedAirDefense.HeaderText = "固定撃墜";
-            this.ResultView_FixedAirDefense.Name = "ResultView_FixedAirDefense";
-            this.ResultView_FixedAirDefense.ReadOnly = true;
-            this.ResultView_FixedAirDefense.Width = 80;
-            // 
-            // ResultView_ShootDownBoth
-            // 
-            this.ResultView_ShootDownBoth.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.ResultView_ShootDownBoth.HeaderText = "両方成功";
-            this.ResultView_ShootDownBoth.Name = "ResultView_ShootDownBoth";
-            this.ResultView_ShootDownBoth.ReadOnly = true;
-            this.ResultView_ShootDownBoth.ToolTipText = "割合撃墜・固定撃墜の両方に成功した場合の撃墜数";
-            this.ResultView_ShootDownBoth.Width = 80;
-            // 
             // ResultView_ShootDownProportional
             // 
             this.ResultView_ShootDownProportional.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.ResultView_ShootDownProportional.HeaderText = "割合のみ";
+            this.ResultView_ShootDownProportional.HeaderText = "割合撃墜数";
             this.ResultView_ShootDownProportional.Name = "ResultView_ShootDownProportional";
             this.ResultView_ShootDownProportional.ReadOnly = true;
             this.ResultView_ShootDownProportional.ToolTipText = "割合撃墜に成功した場合の撃墜数";
-            this.ResultView_ShootDownProportional.Width = 77;
+            this.ResultView_ShootDownProportional.Width = 92;
             // 
-            // ResultView_ShootDownFixed
+            // ResultView_FixedAirDefense
             // 
-            this.ResultView_ShootDownFixed.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.ResultView_ShootDownFixed.HeaderText = "固定のみ";
-            this.ResultView_ShootDownFixed.Name = "ResultView_ShootDownFixed";
-            this.ResultView_ShootDownFixed.ReadOnly = true;
-            this.ResultView_ShootDownFixed.ToolTipText = "固定撃墜に成功した場合の撃墜数";
-            this.ResultView_ShootDownFixed.Width = 77;
+            this.ResultView_FixedAirDefense.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.ResultView_FixedAirDefense.HeaderText = "固定撃墜数";
+            this.ResultView_FixedAirDefense.Name = "ResultView_FixedAirDefense";
+            this.ResultView_FixedAirDefense.ReadOnly = true;
+            this.ResultView_FixedAirDefense.ToolTipText = "固定撃墜に成功した場合の撃墜数";
+            this.ResultView_FixedAirDefense.Width = 92;
             // 
             // ResultView_ShootDownFailed
             // 
             this.ResultView_ShootDownFailed.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
-            this.ResultView_ShootDownFailed.HeaderText = "両方失敗";
+            this.ResultView_ShootDownFailed.HeaderText = "最低保証数";
             this.ResultView_ShootDownFailed.Name = "ResultView_ShootDownFailed";
             this.ResultView_ShootDownFailed.ReadOnly = true;
             this.ResultView_ShootDownFailed.ToolTipText = "固定撃墜・割合撃墜の両方に失敗した場合の撃墜数";
-            this.ResultView_ShootDownFailed.Width = 80;
+            this.ResultView_ShootDownFailed.Width = 92;
+            // 
+            // ResultView_ShootDownBoth
+            // 
+            this.ResultView_ShootDownBoth.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.ResultView_ShootDownBoth.HeaderText = "両方成功　";
+            this.ResultView_ShootDownBoth.Name = "ResultView_ShootDownBoth";
+            this.ResultView_ShootDownBoth.ReadOnly = true;
+            this.ResultView_ShootDownBoth.ToolTipText = "割合撃墜・固定撃墜の両方に成功した場合の撃墜数";
+            this.ResultView_ShootDownBoth.Width = 88;
             // 
             // ResultView_AARocketBarrageProbability
             // 
@@ -374,13 +400,6 @@
             this.ResultView_AARocketBarrageProbability.ReadOnly = true;
             this.ResultView_AARocketBarrageProbability.ToolTipText = "対空噴進弾幕の発動確率";
             this.ResultView_AARocketBarrageProbability.Width = 80;
-            // 
-            // ToolTipInfo
-            // 
-            this.ToolTipInfo.AutoPopDelay = 30000;
-            this.ToolTipInfo.InitialDelay = 500;
-            this.ToolTipInfo.ReshowDelay = 100;
-            this.ToolTipInfo.ShowAlways = true;
             // 
             // DialogAntiAirDefense
             // 
@@ -422,15 +441,16 @@
 		private System.Windows.Forms.TextBox AdjustedFleetAA;
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.TextBox AnnihilationProbability;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ResultView_ShipName;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ResultView_AntiAir;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ResultView_AdjustedAntiAir;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ResultView_ProportionalAirDefense;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ResultView_FixedAirDefense;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ResultView_ShootDownBoth;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ResultView_ShootDownProportional;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ResultView_ShootDownFixed;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ResultView_ShootDownFailed;
-		private System.Windows.Forms.DataGridViewTextBoxColumn ResultView_AARocketBarrageProbability;
-	}
+		private System.Windows.Forms.Label label7;
+		private System.Windows.Forms.ComboBox AAFireAvoidance;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ResultView_ShipName;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ResultView_AntiAir;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ResultView_AdjustedAntiAir;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ResultView_ProportionalAirDefense;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ResultView_ShootDownProportional;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ResultView_FixedAirDefense;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ResultView_ShootDownFailed;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ResultView_ShootDownBoth;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ResultView_AARocketBarrageProbability;
+    }
 }

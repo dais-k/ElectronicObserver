@@ -1440,7 +1440,8 @@ namespace ElectronicObserver.Utility.Data
 		{
 			int equippedModifier = ship.SlotInstance.Any(s => s != null) ? 2 : 1;
 
-			double x = ship.AABase;
+			double aaBase = 0;
+			int aaEquip = 0;
 
 			foreach (var eq in ship.AllSlotInstance)
 			{
@@ -1451,13 +1452,13 @@ namespace ElectronicObserver.Utility.Data
 
 				double equipmentBonus;
 				if (eqmaster.IsHighAngleGun || eqmaster.CategoryType == EquipmentTypes.AADirector)
-					equipmentBonus = 4;
+					equipmentBonus = 2;
 
 				else if (eqmaster.CategoryType == EquipmentTypes.AAGun)
-					equipmentBonus = 6;
+					equipmentBonus = 3;
 
 				else if (eqmaster.IsRadar)
-					equipmentBonus = 3;
+					equipmentBonus = 1.5;
 
 				else
 					equipmentBonus = 0;
@@ -1466,37 +1467,39 @@ namespace ElectronicObserver.Utility.Data
 				double levelBonus;
 				if (eqmaster.IsHighAngleGun)
 				{
-					if (eqmaster.IsHighAngleGunWithAADirector)
-						levelBonus = 3;
+					if (eqmaster.IsSpecialHighAngleGun)
+						levelBonus = 1.5;
 					else
-						levelBonus = 2;
+						levelBonus = 1;
 				}
 				else if (eqmaster.CategoryType == EquipmentTypes.AAGun)
 				{
 					if (eqmaster.AA >= 8)
-						levelBonus = 6;
+						levelBonus = 3;
 					else
-						levelBonus = 4;
+						levelBonus = 2;
 				}
 				else if (eqmaster.CategoryType == EquipmentTypes.AADirector)
 				{
-					levelBonus = 2;
+					levelBonus = 1;
 				}
 				else
 				{
 					levelBonus = 0;
 				}
 
-				x += eqmaster.AA * equipmentBonus + Math.Sqrt(eq.Level) * levelBonus;
+				aaBase += eqmaster.AA * equipmentBonus + Math.Sqrt(eq.Level) * levelBonus;
+				aaEquip += eqmaster.AA;
 			}
+			aaBase += ship.AABase /2 + 0.75 * (ship.AATotal - ship.AABase - aaEquip);
 
-			return equippedModifier * Math.Floor(x / equippedModifier);
+			return Math.Floor(aaBase);
 		}
 
 		/// <summary>
 		/// 艦隊防空値を求めます。
 		/// </summary>
-		public static double GetAdjustedFleetAAValue(IEnumerable<ShipData> ships, int formation)
+		public static double GetAdjustedFleetAAValue(IEnumerable<ShipData> ships, int formation, double rate)
 		{
 			double formationBonus;
 			switch (formation)
@@ -1528,6 +1531,7 @@ namespace ElectronicObserver.Utility.Data
 					continue;
 
 				double shipAABonus = 0;
+				int aaEquip = 0;
 				foreach (var eq in ship.AllSlotInstance)
 				{
 					if (eq == null)
@@ -1556,7 +1560,7 @@ namespace ElectronicObserver.Utility.Data
 
 					double levelBonus;
 
-					if (eqmaster.IsHighAngleGunWithAADirector)
+					if (eqmaster.IsSpecialHighAngleGun)
 						levelBonus = 3.0;
 
 					else if (eqmaster.IsHighAngleGun || eqmaster.CategoryType == EquipmentTypes.AADirector)
@@ -1570,20 +1574,19 @@ namespace ElectronicObserver.Utility.Data
 
 
 					shipAABonus += eqmaster.AA * equipmentBonus + Math.Sqrt(eq.Level) * levelBonus;
+					aaEquip += eqmaster.AA;
 				}
-
-				fleetAABonus += Math.Floor(shipAABonus);
+				fleetAABonus += Math.Floor(shipAABonus + 1.0 * (ship.AATotal - ship.AABase - aaEquip));  
 			}
-
-			return Math.Floor(formationBonus * fleetAABonus) * 2 / 1.3;
+			return Math.Floor(formationBonus * fleetAABonus * rate)  / 1.3;
 		}
 
 		/// <summary>
 		/// 艦隊防空値を求めます。
 		/// </summary>
-		public static double GetAdjustedFleetAAValue(FleetData fleet, int formation)
+		public static double GetAdjustedFleetAAValue(FleetData fleet, int formation, double rate)
 		{
-			return GetAdjustedFleetAAValue(fleet.MembersWithoutEscaped, formation);
+			return GetAdjustedFleetAAValue(fleet.MembersWithoutEscaped, formation, rate);
 		}
 
 
@@ -1596,7 +1599,7 @@ namespace ElectronicObserver.Utility.Data
 			switch (combinedFleetFlag)
 			{
 				case 1:
-					return 0.72;
+					return 0.80;
 				case 2:
 					return 0.48;
 				default:
@@ -1612,7 +1615,17 @@ namespace ElectronicObserver.Utility.Data
 		/// <param name="combinedFleetFlag">連合艦隊フラグ。 -1=連合艦隊でない, 1=連合艦隊主力艦隊, 2=連合艦隊随伴艦隊</param>
 		public static double GetProportionalAirDefense(double adjustedAAValue, int combinedFleetFlag = -1)
 		{
-			return adjustedAAValue * GetAirDefenseCombinedFleetCoefficient(combinedFleetFlag) / 400;
+			return adjustedAAValue * GetAirDefenseCombinedFleetCoefficient(combinedFleetFlag) *0.25 * 0.02;
+		}
+
+		/// <summary>
+		/// 割合撃墜(の撃墜数)を求めます。
+		/// </summary>
+		/// <param name="proportionalAAs">割合撃墜</param>
+		/// <param name="enemyAircraftCount">敵航空機数</param>
+		public static int GetProportionalShootDown(int enemyAircraftCount, double proportionalAAs)
+		{
+			return (int)Math.Floor(proportionalAAs * enemyAircraftCount);
 		}
 
 		/// <summary>
@@ -1626,26 +1639,39 @@ namespace ElectronicObserver.Utility.Data
 		{
 			double cutinBonus = Calculator.AACutinVariableBonus.ContainsKey(cutinKind) ? Calculator.AACutinVariableBonus[cutinKind] : 1.0;
 
-			return (int)Math.Floor((adjustedAAValue + adjustedFleetAAValue) * GetAirDefenseCombinedFleetCoefficient(combinedFleetFlag) * cutinBonus / 10);
+			return (int)Math.Floor((adjustedAAValue + Math.Floor(adjustedFleetAAValue)) * 0.25 * 0.8 * GetAirDefenseCombinedFleetCoefficient(combinedFleetFlag) * cutinBonus );
 		}
 
 		/// <summary>
-		/// 対空カットイン固定ボーナス
+		/// 最低保証撃墜数を求めます。
 		/// </summary>
-		public static readonly ReadOnlyDictionary<int, int> AACutinFixedBonus = new ReadOnlyDictionary<int, int>(new Dictionary<int, int>() {
-			{  1, 7 },
-			{  2, 6 },
-			{  3, 4 },
-			{  4, 6 },
-			{  5, 4 },
+		/// <param name="avoid3">対空射撃補正A</param>
+		/// <param name="avoid4">対空射撃補正B</param>
+		/// <param name="aaCutinKind">発動した対空カットインの種類</param>
+		public static int GetMinimumShootDownCount(double avoid3, double avoid4, int aaCutinKind)
+		{
+			return (int)Math.Floor((((AACutinFixedBonusA.ContainsKey(aaCutinKind) ? AACutinFixedBonusA[aaCutinKind] : 0) * avoid3) + (((AACutinFixedBonusB.ContainsKey(aaCutinKind) ? AACutinFixedBonusB[aaCutinKind] : 0) * avoid4))));
+			//return (((AACutinFixedBonusA.ContainsKey(aaCutinKind) ? AACutinFixedBonusA[aaCutinKind] : 0 * avoid3) + ((AACutinFixedBonusB.ContainsKey(aaCutinKind) ? AACutinFixedBonusB[aaCutinKind] : 0 * avoid4))));
+		}
+
+		/// <summary>
+		/// 対空カットイン固定ボーナスA
+		/// </summary>
+		public static readonly ReadOnlyDictionary<int, int> AACutinFixedBonusA = new ReadOnlyDictionary<int, int>(new Dictionary<int, int>() {
+			{  0, 1 },
+			{  1, 3 },
+			{  2, 3 },
+			{  3, 2 },
+			{  4, 5 },
+			{  5, 2 },
 			{  6, 4 },
-			{  7, 3 },
-			{  8, 4 },
-			{  9, 2 },
-			{ 10, 8 },
-			{ 11, 6 },
-			{ 12, 3 },
-			{ 13, 4 },
+			{  7, 2 },
+			{  8, 2 },
+			{  9, 1 },
+			{ 10, 3 },
+			{ 11, 2 },
+			{ 12, 1 },
+			{ 13, 1 },
 			{ 14, 4 },
 			{ 15, 3 },
 			{ 16, 4 },
@@ -1669,11 +1695,11 @@ namespace ElectronicObserver.Utility.Data
 			{ 34, 7 },
 			{ 35, 6 },
 			{ 36, 6 },
-			{ 37, 4 },
-			{ 38, 10 },
-			{ 39, 10 },
-			{ 40, 10 },
-			{ 41, 9 },
+			{ 37, 2 },
+			{ 38, 6 },
+			{ 39, 6 },
+			{ 40, 6 },
+			{ 41, 5 },
 			{ 42, 10 },
 			{ 43, 8 },
 			{ 44, 6 },
@@ -1682,12 +1708,75 @@ namespace ElectronicObserver.Utility.Data
 			{ 47, 2 },
 			{ 48, 8 },
 			{ 49, 5 },
+			{ 50, 7 },
+			{ 51, 5 },
+			{ 52, 4 },
+		});
+
+		/// <summary>
+		/// 対空カットイン固定ボーナスB
+		/// </summary>
+		public static readonly ReadOnlyDictionary<int, int> AACutinFixedBonusB = new ReadOnlyDictionary<int, int>(new Dictionary<int, int>() {
+			{  0, 0 },
+			{  1, 5 },
+			{  2, 4 },
+			{  3, 3 },
+			{  4, 2 },
+			{  5, 3 },
+			{  6, 1 },
+			{  7, 2 },
+			{  8, 3 },
+			{  9, 2 },
+			{ 10, 6 },
+			{ 11, 5 },
+			{ 12, 3 },
+			{ 13, 4 },
+			{ 14, 1 },
+			{ 15, 1 },
+			{ 16, 1 },
+			{ 17, 1 },
+			{ 18, 1 },
+			{ 19, 1 },
+			{ 20, 1 },
+			{ 21, 1 },
+			{ 22, 1 },
+			{ 23, 1 },
+			{ 24, 1 },
+			{ 25, 1 },
+			{ 26, 1 },
+			{ 27, 1 },
+			{ 28, 1 },
+			{ 29, 1 },
+			{ 30, 1 },
+			{ 31, 1 },
+			{ 32, 1 },
+			{ 33, 1 },
+			{ 34, 1 },
+			{ 35, 1 },
+			{ 36, 1 },
+			{ 37, 3 },
+			{ 38, 5 },
+			{ 39, 5 },
+			{ 40, 5 },
+			{ 41, 5 },
+			{ 42, 1 },
+			{ 43, 1 },
+			{ 44, 1 },
+			{ 45, 1 },
+			{ 46, 1 },
+			{ 47, 1 },
+			{ 48, 1 },
+			{ 49, 1 },
+			{ 50, 1 },
+			{ 51, 1 },
+			{ 52, 1 },
 		});
 
 		/// <summary>
 		/// 対空カットイン変動ボーナス
 		/// </summary>
 		public static readonly ReadOnlyDictionary<int, double> AACutinVariableBonus = new ReadOnlyDictionary<int, double>(new Dictionary<int, double>() {
+			{  0, 1.0 },
 			{  1, 1.7 },
 			{  2, 1.7 },
 			{  3, 1.6 },
@@ -1734,9 +1823,12 @@ namespace ElectronicObserver.Utility.Data
 			{ 44, 1.6 },
 			{ 45, 1.55 },
 			{ 46, 1.55 },
-			{ 47, 1.2 },
+			{ 47, 1.3 },
 			{ 48, 1.75 },
 			{ 49, 1.5 },
+			{ 50, 1.5 },
+			{ 51, 1.35 },
+			{ 52, 1.4 },
 		});
 
 		/// <summary>
@@ -1744,68 +1836,59 @@ namespace ElectronicObserver.Utility.Data
 		/// </summary>
 		public static readonly ReadOnlyDictionary<int, int> AACutinPriority = new ReadOnlyDictionary<int, int>(new Dictionary<int, int>() {
 			{  0, 999},
-			{  1, 12},
-			{  2, 17},
-			{  3, 24},
-			{  4, 16},
-			{  5, 25},
-			{  6, 25},
-			{  7, 29},
-			{  8, 28},
-			{  9, 34},
-			{ 10,  6},
-			{ 11,  9},
-			{ 12, 31},
-			{ 13, 28},
-			{ 14, 24},
-			{ 15, 29},
-			{ 16, 23},
-			{ 17, 33},
-			{ 18, 33},
-			{ 19, 22},
-			{ 20, 30},
-			{ 21, 22},
-			{ 22, 34},
-			{ 23, 35},
-			{ 24, 30},
-			{ 25, 10},
-			{ 26, 15},
-			{ 27, 20},
-			{ 28, 26},
-			{ 29, 23},
-			{ 30, 27},
-			{ 31, 32},
-			{ 32, 31},
-			{ 33, 27},
-			{ 34, 13},
-			{ 35, 18},
-			{ 36, 19},
-			{ 37, 26},
-			{ 38,  1},
-			{ 39,  2},
-			{ 40,  3},
-			{ 41,  5},
-			{ 42,  4},
-			{ 43,  7},
-			{ 44, 14},
-			{ 45, 21},
-			{ 46,  8},
-			{ 47, 32},
-			{ 48, 11},
-			{ 49, 21},
+			{  1, 12 },
+			{  2, 17 },
+			{  3, 31 },
+			{  4, 16 },
+			{  5, 32 },
+			{  6, 33 },
+			{  7, 41 },
+			{  8, 38 },
+			{  9, 51 },
+			{ 10,  6 },
+			{ 11,  9 },
+			{ 12, 45 },
+			{ 13, 39 },
+			{ 14, 30 },
+			{ 15, 40 },
+			{ 16, 29 },
+			{ 17, 48 },
+			{ 18, 49 },
+			{ 19, 26 },
+			{ 20, 42 },
+			{ 21, 27 },
+			{ 22, 50 },
+			{ 23, 52 },
+			{ 24, 43 },
+			{ 25, 10 },
+			{ 26, 15 },
+			{ 27, 20 },
+			{ 28, 34 },
+			{ 29, 28 },
+			{ 30, 37 },
+			{ 31, 46 },
+			{ 32, 44 },
+			{ 33, 36 },
+			{ 34, 13 },
+			{ 35, 18 },
+			{ 36, 19 },
+			{ 37, 35 },
+			{ 38,  1 },
+			{ 39,  2 },
+			{ 40,  3 },
+			{ 41,  5 },
+			{ 42,  4 },
+			{ 43,  7 },
+			{ 44, 14 },
+			{ 45, 21 },
+			{ 46,  8 },
+			{ 47, 47 },
+			{ 48, 11 },
+			{ 49, 23 },
+			{ 50, 22 },
+			{ 51, 24 },
+			{ 52, 25 },
 		});
-
-		/// <summary>
-		/// 撃墜数の推定値を求めます。
-		/// </summary>
-		/// <param name="enemyAircraftCount">敵航空中隊の機数</param>
-		/// <param name="proportionalAirDefense">割合撃墜の割合</param>
-		/// <param name="fixedAirDefense">固定撃墜</param>
-		/// <param name="aaCutinKind">発動した対空カットインの種類</param>
-		public static int GetShootDownCount(int enemyAircraftCount, double proportionalAirDefense, int fixedAirDefense, int aaCutinKind)
-		{
-			return (int)Math.Floor(enemyAircraftCount * proportionalAirDefense) + fixedAirDefense + 1 + (AACutinFixedBonus.ContainsKey(aaCutinKind) ? AACutinFixedBonus[aaCutinKind] : 0);
-		}
 
 		/// <summary>
 		/// 対空噴進弾幕の発動確率を求めます。
