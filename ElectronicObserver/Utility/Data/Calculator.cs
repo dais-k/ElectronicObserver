@@ -1434,7 +1434,7 @@ namespace ElectronicObserver.Utility.Data
 		}
 
 		/// <summary>
-		/// 加重対空値を求めます。
+		/// 加重対空値を求めます。制空権シミュ式
 		/// </summary>
 		public static double GetAdjustedAAValue(ShipData ship)
 		{
@@ -1497,8 +1497,68 @@ namespace ElectronicObserver.Utility.Data
 		}
 
 		/// <summary>
-		/// 艦隊防空値を求めます。
+		/// 加重対空値を求めます。Wiki式
 		/// </summary>
+		public static double GetAdjustedAAValueW(ShipData ship)
+		{
+			int equippedModifier = ship.SlotInstance.Any(s => s != null) ? 2 : 1;
+
+			double x = ship.AABase;
+
+			foreach (var eq in ship.AllSlotInstance)
+			{
+				if (eq == null)
+					continue;
+
+				var eqmaster = eq.MasterEquipment;
+
+				double equipmentBonus;
+				if (eqmaster.IsHighAngleGun || eqmaster.CategoryType == EquipmentTypes.AADirector)
+					equipmentBonus = 4;
+
+				else if (eqmaster.CategoryType == EquipmentTypes.AAGun)
+					equipmentBonus = 6;
+
+				else if (eqmaster.IsRadar)
+					equipmentBonus = 3;
+
+				else
+					equipmentBonus = 0;
+
+
+				double levelBonus;
+				if (eqmaster.IsHighAngleGun)
+				{
+					if (eqmaster.IsSpecialHighAngleGun)
+						levelBonus = 3;
+					else
+						levelBonus = 2;
+				}
+				else if (eqmaster.CategoryType == EquipmentTypes.AAGun)
+				{
+					if (eqmaster.AA >= 8)
+						levelBonus = 6;
+					else
+						levelBonus = 4;
+				}
+				else if (eqmaster.CategoryType == EquipmentTypes.AADirector)
+				{
+					levelBonus = 2;
+				}
+				else
+				{
+					levelBonus = 0;
+				}
+
+				x += eqmaster.AA * equipmentBonus + Math.Sqrt(eq.Level) * levelBonus;
+			}
+
+			return equippedModifier * Math.Floor(x / equippedModifier);
+		}
+
+		/// <summary>
+				/// 艦隊防空値を求めます。
+				/// </summary>
 		public static double GetAdjustedFleetAAValue(IEnumerable<ShipData> ships, int formation, double rate)
 		{
 			double formationBonus;
@@ -1912,7 +1972,7 @@ namespace ElectronicObserver.Utility.Data
 						if (rocketLauncherCount == 0)
 							return 0;
 
-						double rocket = (0.9 * ship.LuckTotal + GetAdjustedAAValue(ship)) / 281.0 + ((rocketLauncherCount - 1) * 0.15);
+						double rocket = (0.9 * ship.LuckTotal + GetAdjustedAAValueW(ship)) / 281.0 + ((rocketLauncherCount - 1) * 0.15);
 						if (ship.MasterShip.ShipClass == 2) // 伊勢型
 							rocket += 0.25;
 
