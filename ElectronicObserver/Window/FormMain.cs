@@ -1476,14 +1476,25 @@ namespace ElectronicObserver.Window
 		private void StripMenu_Tool_KcWeb_OpenwithFleet_Click(object sender, EventArgs e)
 		{
 			int areaId = 0;
-			bool[] fleet;
-			DialogChooseAirBase dca = new DialogChooseAirBase();
-			DialogResult dr = dca.ShowDialog();
-			if (dr == DialogResult.OK)
+			bool[] fleet = new[] { true, true, true, true };
+			bool choice = Utility.Configuration.Config.Control.ShowDialogChooseAirBase;
+			if (ModifierKeys.HasFlag(Keys.Shift))
+				choice = !choice;
+			UriBuilder uBuild = new UriBuilder("https://noro6.github.io/kc-web");
+			if (choice)
 			{
-				areaId = dca.areaId;
-				fleet = GetFleetExportFlag(dca);
-				UriBuilder uBuild = new UriBuilder("https://noro6.github.io/kc-web");
+				DialogChooseAirBase dca = new DialogChooseAirBase();
+				DialogResult dr = dca.ShowDialog();
+				if (dr == DialogResult.OK)
+				{
+					areaId = dca.areaId;
+					fleet = GetFleetExportFlag(dca);
+					uBuild.Fragment = "import:{\"predeck\":" + GenerateDeckBuilderFormat.CreateDeciBuilderData(areaId, fleet) + "}";
+					OpenUrl(uBuild.ToString());
+				}
+			}
+			else
+			{
 				uBuild.Fragment = "import:{\"predeck\":" + GenerateDeckBuilderFormat.CreateDeciBuilderData(areaId, fleet) + "}";
 				OpenUrl(uBuild.ToString());
 			}
@@ -1492,13 +1503,13 @@ namespace ElectronicObserver.Window
 		private void StripMenu_Tool_KcWeb_OpenwithShips_Click(object sender, EventArgs e)
 		{
 			Clipboard.SetData(DataFormats.StringFormat, GenerateDeckBuilderFormat.CreateAllFleetListWithID());
-			OpenUrl("https://noro6.github.io/kc-web/#/manager");
+			OpenUrl("https://noro6.github.io/kc-web");
 		}
 
 		private void StripMenu_Tool_KcWeb_OpenwithEquip_Click(object sender, EventArgs e)
 		{
 			Clipboard.SetText("[" + GenerateDeckBuilderFormat.CreateEquipmentList() + "]");
-			OpenUrl("https://noro6.github.io/kc-web/#/manager");
+			OpenUrl("https://noro6.github.io/kc-web");
 		}
 
 		private void StripMenu_Tool_Jervis_Open_Click(object sender, EventArgs e)
@@ -1509,14 +1520,25 @@ namespace ElectronicObserver.Window
 		private void StripMenu_Tool_Jervis_OpenwithFleet_Click(object sender, EventArgs e)
 		{
 			int areaId = 0;
-			bool[] fleet;
-			DialogChooseAirBase dca = new DialogChooseAirBase();
-			DialogResult dr = dca.ShowDialog();
-			if (dr == DialogResult.OK)
+			bool[] fleet = new[] { true, true, true, true };
+			bool choice = Utility.Configuration.Config.Control.ShowDialogChooseAirBase;
+			if (ModifierKeys.HasFlag(Keys.Shift))
+				choice = !choice;
+			UriBuilder uBuild = new UriBuilder("https://jervis.vercel.app/");
+			if (choice)
 			{
-				areaId = dca.areaId;
-				fleet = GetFleetExportFlag(dca);
-				UriBuilder uBuild = new UriBuilder("https://jervis.vercel.app/");
+				DialogChooseAirBase dca = new DialogChooseAirBase();
+				DialogResult dr = dca.ShowDialog();
+				if (dr == DialogResult.OK)
+				{
+					areaId = dca.areaId;
+					fleet = GetFleetExportFlag(dca);
+					uBuild.Query = "predeck=" + GenerateDeckBuilderFormat.CreateDeciBuilderData(areaId, fleet);
+					OpenUrl(uBuild.ToString());
+				}
+			}
+			else
+			{
 				uBuild.Query = "predeck=" + GenerateDeckBuilderFormat.CreateDeciBuilderData(areaId, fleet);
 				OpenUrl(uBuild.ToString());
 			}
@@ -1530,13 +1552,24 @@ namespace ElectronicObserver.Window
 		private void StripMenu_Tool_SupportKai_OpenwithFleet_Click(object sender, EventArgs e)
 		{
 			int areaId = 0;
-			bool[] fleet;
-			DialogChooseAirBase dca = new DialogChooseAirBase();
-			DialogResult dr = dca.ShowDialog();
-			if (dr == DialogResult.OK)
+			bool[] fleet = new[] { true, true, true, true };
+			bool choice = Utility.Configuration.Config.Control.ShowDialogChooseAirBase;
+			if (ModifierKeys.HasFlag(Keys.Shift))
+				choice = !choice;
+			if (choice)
 			{
-				areaId = dca.areaId;
-				fleet = GetFleetExportFlag(dca);
+				DialogChooseAirBase dca = new DialogChooseAirBase();
+				DialogResult dr = dca.ShowDialog();
+				if (dr == DialogResult.OK)
+				{
+					areaId = dca.areaId;
+					fleet = GetFleetExportFlag(dca);
+					Clipboard.SetData(DataFormats.StringFormat, GenerateDeckBuilderFormat.CreateDeciBuilderData(areaId, fleet));
+					OpenUrl("https://kancolle-support-kai.netlify.app/");
+				}
+			}
+			else
+			{
 				Clipboard.SetData(DataFormats.StringFormat, GenerateDeckBuilderFormat.CreateDeciBuilderData(areaId, fleet));
 				OpenUrl("https://kancolle-support-kai.netlify.app/");
 			}
@@ -1556,13 +1589,24 @@ namespace ElectronicObserver.Window
 		private void StripMenu_Tool_CompassSim_OpenwithFleet_Click(object sender, EventArgs e)
 		{
 			int areaId = 0;
-			bool[] fleet;
-			DialogChooseAirBase dca = new DialogChooseAirBase();
-			DialogResult dr = dca.ShowDialog();
-			if (dr == DialogResult.OK)
+			bool[] fleet = new[] { true, true, true, true };
+			bool choice = Utility.Configuration.Config.Control.ShowDialogChooseAirBase;
+			if (ModifierKeys.HasFlag(Keys.Shift))
+				choice = !choice;
+			if (choice)
 			{
-				areaId = dca.areaId;
-				fleet = GetFleetExportFlag(dca);
+				DialogChooseAirBase dca = new DialogChooseAirBase();
+				DialogResult dr = dca.ShowDialog();
+				if (dr == DialogResult.OK)
+				{
+					areaId = dca.areaId;
+					fleet = GetFleetExportFlag(dca);
+					Clipboard.SetData(DataFormats.StringFormat, GenerateDeckBuilderFormat.CreateDeciBuilderData(areaId, fleet));
+					OpenUrl("https://x-20a.github.io/compass/");
+				}
+			}
+			else
+			{
 				Clipboard.SetData(DataFormats.StringFormat, GenerateDeckBuilderFormat.CreateDeciBuilderData(areaId, fleet));
 				OpenUrl("https://x-20a.github.io/compass/");
 			}
@@ -1571,13 +1615,24 @@ namespace ElectronicObserver.Window
 		private void StripMenu_Tool_CopyFleet_Click(object sender, EventArgs e)
 		{
 			int areaId = 0;
-			bool[] fleet;
-			DialogChooseAirBase dca = new DialogChooseAirBase();
-			DialogResult dr = dca.ShowDialog();
-			if (dr == DialogResult.OK)
+			bool[] fleet = new[] { true, true, true, true };
+			bool choice = Utility.Configuration.Config.Control.ShowDialogChooseAirBase;
+			if (ModifierKeys.HasFlag(Keys.Shift))
+				choice = !choice;
+			if (choice)
 			{
-				areaId = dca.areaId;
-				fleet = GetFleetExportFlag(dca);
+				DialogChooseAirBase dca = new DialogChooseAirBase();
+				DialogResult dr = dca.ShowDialog();
+				if (dr == DialogResult.OK)
+				{
+					areaId = dca.areaId;
+					fleet = GetFleetExportFlag(dca);
+					Clipboard.SetData(DataFormats.StringFormat, GenerateDeckBuilderFormat.CreateDeciBuilderData(areaId, fleet));
+					Utility.Logger.Add(2, "編成をクリップボードにコピーしました。");
+				}
+			}
+			else
+			{
 				Clipboard.SetData(DataFormats.StringFormat, GenerateDeckBuilderFormat.CreateDeciBuilderData(areaId, fleet));
 				Utility.Logger.Add(2, "編成をクリップボードにコピーしました。");
 			}

@@ -1266,14 +1266,26 @@ namespace ElectronicObserver.Window
 		private void ContextMenuFleet_CopyFleetDeckBuilder_Click(object sender, EventArgs e)
 		{
 			int areaId = 0;
-			bool[] fleet;
-			DialogChooseAirBase dca = new DialogChooseAirBase();
-			DialogResult dr = dca.ShowDialog();
-			if (dr == DialogResult.OK)
+			bool[] fleet = new[] { true, true, true, true };
+			bool choice = Utility.Configuration.Config.Control.ShowDialogChooseAirBase;
+			if (ModifierKeys.HasFlag(Keys.Shift))
+				choice = !choice;
+			if (choice)
 			{
-				areaId = dca.areaId;
-				fleet = GetFleetExportFlag(dca);
+				DialogChooseAirBase dca = new DialogChooseAirBase();
+				DialogResult dr = dca.ShowDialog();
+				if (dr == DialogResult.OK)
+				{
+					areaId = dca.areaId;
+					fleet = GetFleetExportFlag(dca);
+					Clipboard.SetData(DataFormats.StringFormat, GenerateDeckBuilderFormat.CreateDeciBuilderData(areaId, fleet));
+					Utility.Logger.Add(2, "編成をクリップボードにコピーしました。");
+				}
+			}
+			else
+			{
 				Clipboard.SetData(DataFormats.StringFormat, GenerateDeckBuilderFormat.CreateDeciBuilderData(areaId, fleet));
+				Utility.Logger.Add(2, "編成をクリップボードにコピーしました。");
 			}
 		}
 
@@ -1283,6 +1295,7 @@ namespace ElectronicObserver.Window
 		private void ContextMenuFleet_CopyAllShips_Click(object sender, EventArgs e)
 		{
 			Clipboard.SetData(DataFormats.StringFormat, GenerateDeckBuilderFormat.CreateAllFleetListWithID());
+			Utility.Logger.Add(2, "全ての所属艦娘をクリップボードにコピーしました。");
 		}
 
 		/// <summary>
@@ -1291,6 +1304,7 @@ namespace ElectronicObserver.Window
 		private void ContextMenuFleet_CopyAllEquips_Click(object sender, EventArgs e)
 		{
 			Clipboard.SetText("[" + GenerateDeckBuilderFormat.CreateEquipmentList() + "]");
+			Utility.Logger.Add(2, "全ての所有装備をクリップボードにコピーしました。");
 		}
 
 		/// <summary>
@@ -1301,15 +1315,23 @@ namespace ElectronicObserver.Window
 		private void ContextMenuFleet_OpenAirControlSimulator_Click(object sender, EventArgs e)
 		{
 			int areaId = 0;
-			bool[] fleet;
-			DialogChooseAirBase dca = new DialogChooseAirBase();
-			DialogResult dr = dca.ShowDialog();
-			if (dr == DialogResult.OK)
+			bool[] fleet = new[] { true, true, true, true };
+			bool choice = Utility.Configuration.Config.Control.ShowDialogChooseAirBase;
+			if (ModifierKeys.HasFlag(Keys.Shift))
+				choice = !choice;
+			if (choice)
 			{
-				areaId = dca.areaId;
-				fleet = GetFleetExportFlag(dca);
-				OpenUrlWithDeciBuilderData("https://noro6.github.io/kc-web", areaId, fleet, 1);
+				DialogChooseAirBase dca = new DialogChooseAirBase();
+				DialogResult dr = dca.ShowDialog();
+				if (dr == DialogResult.OK)
+				{
+					areaId = dca.areaId;
+					fleet = GetFleetExportFlag(dca);
+					OpenUrlWithDeciBuilderData("https://noro6.github.io/kc-web", areaId, fleet, 1);
+				}
 			}
+			else
+				OpenUrlWithDeciBuilderData("https://noro6.github.io/kc-web", areaId, fleet, 1);
 		}
 
 		/// <summary>
@@ -1320,15 +1342,23 @@ namespace ElectronicObserver.Window
 		private void ContextMenuFleet_OpenTacticalRoom_Click(object sender, EventArgs e)
 		{
 			int areaId = 0;
-			bool[] fleet;
-			DialogChooseAirBase dca = new DialogChooseAirBase();
-			DialogResult dr = dca.ShowDialog();
-			if(dr == DialogResult.OK)
+			bool[] fleet = new[] { true, true, true, true };
+			bool choice = Utility.Configuration.Config.Control.ShowDialogChooseAirBase;
+			if (ModifierKeys.HasFlag(Keys.Shift))
+				choice = !choice;
+			if (choice)
 			{
-				areaId = dca.areaId;
-				fleet = GetFleetExportFlag(dca);
-				OpenUrlWithDeciBuilderData("https://jervis.vercel.app", areaId, fleet, 2);
+				DialogChooseAirBase dca = new DialogChooseAirBase();
+				DialogResult dr = dca.ShowDialog();
+				if (dr == DialogResult.OK)
+				{
+					areaId = dca.areaId;
+					fleet = GetFleetExportFlag(dca);
+					OpenUrlWithDeciBuilderData("https://jervis.vercel.app", areaId, fleet, 2);
+				}
 			}
+			else
+				OpenUrlWithDeciBuilderData("https://jervis.vercel.app", areaId, fleet, 2);
 		}
 
 		/// <summary>
@@ -1339,15 +1369,23 @@ namespace ElectronicObserver.Window
 		private void ContextMenuFleet_OpenCompassSimulator_Click(object sender, EventArgs e)
 		{
 			int areaId = 0;
-			bool[] fleet;
-			DialogChooseAirBase dca = new DialogChooseAirBase();
-			DialogResult dr = dca.ShowDialog();
-			if (dr == DialogResult.OK)
+			bool[] fleet = new[] { true, true, true, true };
+			bool choice = Utility.Configuration.Config.Control.ShowDialogChooseAirBase;
+			if (ModifierKeys.HasFlag(Keys.Shift))
+				choice = !choice;
+			if (choice)
 			{
-				areaId = dca.areaId;
-				fleet = GetFleetExportFlag(dca);
-				OpenUrlWithDeciBuilderData("https://x-20a.github.io/compass/", areaId, fleet);
+				DialogChooseAirBase dca = new DialogChooseAirBase();
+				DialogResult dr = dca.ShowDialog();
+				if (dr == DialogResult.OK)
+				{
+					areaId = dca.areaId;
+					fleet = GetFleetExportFlag(dca);
+					OpenUrlWithDeciBuilderData("https://x-20a.github.io/compass/", areaId, fleet);
+				}
 			}
+			else
+				OpenUrlWithDeciBuilderData("https://x-20a.github.io/compass/", areaId, fleet);
 		}
 
 		/// <summary>
@@ -1358,15 +1396,23 @@ namespace ElectronicObserver.Window
 		private void ContextMenuFleet_OpenKacColleSupportKai_Click(object sender, EventArgs e)
 		{
 			int areaId = 0;
-			bool[] fleet;
-			DialogChooseAirBase dca = new DialogChooseAirBase();
-			DialogResult dr = dca.ShowDialog();
-			if (dr == DialogResult.OK)
+			bool[] fleet = new[] { true, true, true, true };
+			bool choice = Utility.Configuration.Config.Control.ShowDialogChooseAirBase;
+			if (ModifierKeys.HasFlag(Keys.Shift))
+				choice = !choice;
+			if (choice)
 			{
-				areaId = dca.areaId;
-				fleet = GetFleetExportFlag(dca);
-				OpenUrlWithDeciBuilderData("https://kancolle-support-kai.netlify.app/", areaId, fleet);
+				DialogChooseAirBase dca = new DialogChooseAirBase();
+				DialogResult dr = dca.ShowDialog();
+				if (dr == DialogResult.OK)
+				{
+					areaId = dca.areaId;
+					fleet = GetFleetExportFlag(dca);
+					OpenUrlWithDeciBuilderData("https://kancolle-support-kai.netlify.app/", areaId, fleet);
+				}
 			}
+			else
+				OpenUrlWithDeciBuilderData("https://kancolle-support-kai.netlify.app/", areaId, fleet);
 		}
 
 		/// <summary>

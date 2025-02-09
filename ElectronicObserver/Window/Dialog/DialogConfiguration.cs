@@ -375,6 +375,7 @@ namespace ElectronicObserver.Window.Dialog
 			Control_PowerEngagementForm.SelectedIndex = config.Control.PowerEngagementForm - 1;
 			Control_ShowSallyAreaAlertDialog.Checked = config.Control.ShowSallyAreaAlertDialog;
 			Control_ShowExpeditionAlertDialog.Checked = config.Control.ShowExpeditionAlertDialog;
+			Control_ShowDialogChooseAirBase.Checked = config.Control.ShowDialogChooseAirBase;
 
 			//[デバッグ]
 			Debug_EnableDebugMenu.Checked = config.Debug.EnableDebugMenu;
@@ -599,6 +600,7 @@ namespace ElectronicObserver.Window.Dialog
 			config.Control.PowerEngagementForm = Control_PowerEngagementForm.SelectedIndex + 1;
 			config.Control.ShowSallyAreaAlertDialog = Control_ShowSallyAreaAlertDialog.Checked;
 			config.Control.ShowExpeditionAlertDialog = Control_ShowExpeditionAlertDialog.Checked;
+			config.Control.ShowDialogChooseAirBase = Control_ShowDialogChooseAirBase.Checked;
 
 			//[デバッグ]
 			config.Debug.EnableDebugMenu = Debug_EnableDebugMenu.Checked;
