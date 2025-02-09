@@ -629,14 +629,16 @@ namespace ElectronicObserver.Utility.Data
 			switch (KCDatabase.Instance.MasterShips[shipID]?.ShipClass) //艦型別
 			{
 				case 54:    // 秋月型
-					if (KCDatabase.Instance.MasterShips[shipID]?.RemodelTier != 0 && highangle_10kai_Directorkai >= 2 && radar_over4 >= 1)
-						aacutinlist.Add(48);
 					if (highangle >= 2 && radar >= 1)
 						aacutinlist.Add(1);
 					if (highangle >= 1 && radar >= 1)
 						aacutinlist.Add(2);
 					if (highangle >= 2)
 						aacutinlist.Add(3);
+					if (KCDatabase.Instance.MasterShips[shipID]?.RemodelTier != 0 && highangle_10kai_Directorkai >= 2 && radar_over4 >= 1)
+						aacutinlist.Add(48);
+					if ((highangle_10kai + highangle_10kai_Directorkai) >= 2 && radar_over4 >= 1 && director_94 >= 1)
+						aacutinlist.Add(50);
 					break;
 
 				case 91:    // Fletcher級
