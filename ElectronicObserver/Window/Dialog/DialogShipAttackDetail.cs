@@ -408,6 +408,7 @@ namespace ElectronicObserver.Window.Dialog
 			{
 				AACutinNames[i].Text = "";
 				AACutinTypes[i].Text = "";
+				ToolTipInfo.SetToolTip(AACutinNames[i], null);
 			}
 
 			//昼戦リスト
@@ -800,6 +801,7 @@ namespace ElectronicObserver.Window.Dialog
 							break;
 					}
 					AACutinNames[aacut.num].Text = Constants.GetAACutinKind(aacut.name);
+					ToolTipInfo.SetToolTip(AACutinNames[aacut.num], Constants.GetAACutinKind(aacut.name));
 				}
 			}
 			else
@@ -898,7 +900,7 @@ namespace ElectronicObserver.Window.Dialog
 
 		}
 
-		void Updated(string apiname, dynamic data)
+		private void Updated(string apiname, dynamic data)
 		{
 			KCDatabase db = KCDatabase.Instance;
 			ShipData shipData = db.Ships[_shipID];

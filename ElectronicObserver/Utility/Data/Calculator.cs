@@ -1422,6 +1422,24 @@ namespace ElectronicObserver.Utility.Data
 		}
 
 		/// <summary>
+		/// 装備対空ボーナス種別を取得します。
+		/// </summary>
+		public static int GetItemBonusAntiAir(ShipData ship)
+		{
+			int aaEquip = 0;
+
+			foreach (var eq in ship.AllSlotInstance)
+			{
+				if (eq == null)
+					continue;
+				var eqmaster = eq.MasterEquipment;
+				aaEquip += eqmaster.AA;
+			}
+			return (ship.AATotal - ship.AABase - aaEquip);
+		}
+
+
+		/// <summary>
 		/// 対空カットイン種別を取得します。
 		/// </summary>
 		public static int GetAACutinKind(int shipID, int[] slot, int sID)
@@ -1491,9 +1509,8 @@ namespace ElectronicObserver.Utility.Data
 				aaBase += eqmaster.AA * equipmentBonus + Math.Sqrt(eq.Level) * levelBonus;
 				aaEquip += eqmaster.AA;
 			}
-			aaBase += ship.AABase /2 + 0.75 * (ship.AATotal - ship.AABase - aaEquip);
 
-			return Math.Floor(aaBase);
+			return Math.Floor(Math.Floor((ship.AABase / 2) +  aaBase) + GetItemBonusAntiAir(ship) * 0.75);
 		}
 
 		/// <summary>
@@ -1557,8 +1574,8 @@ namespace ElectronicObserver.Utility.Data
 		}
 
 		/// <summary>
-				/// 艦隊防空値を求めます。
-				/// </summary>
+		/// 艦隊防空値を求めます。
+		/// </summary>
 		public static double GetAdjustedFleetAAValue(IEnumerable<ShipData> ships, int formation, double rate)
 		{
 			double formationBonus;
@@ -1623,7 +1640,7 @@ namespace ElectronicObserver.Utility.Data
 					if (eqmaster.IsSpecialHighAngleGun)
 						levelBonus = 3.0;
 
-					else if (eqmaster.IsHighAngleGun || eqmaster.CategoryType == EquipmentTypes.AADirector)
+					else if ((eqmaster.IsHighAngleGun && !eqmaster.IsSpecialHighAngleGun) || eqmaster.CategoryType == EquipmentTypes.AADirector)
 						levelBonus = 2.0;
 
 					else if (eqmaster.IsRadar)
@@ -1636,9 +1653,9 @@ namespace ElectronicObserver.Utility.Data
 					shipAABonus += eqmaster.AA * equipmentBonus + Math.Sqrt(eq.Level) * levelBonus;
 					aaEquip += eqmaster.AA;
 				}
-				fleetAABonus += Math.Floor(shipAABonus + 1.0 * (ship.AATotal - ship.AABase - aaEquip));  
+				fleetAABonus += Math.Floor(shipAABonus) + (GetItemBonusAntiAir(ship) * 0.5);  
 			}
-			return Math.Floor(formationBonus * fleetAABonus * rate)  / 1.3;
+			return Math.Floor(formationBonus * fleetAABonus * rate) / 1.3;
 		}
 
 		/// <summary>

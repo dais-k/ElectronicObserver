@@ -726,10 +726,10 @@ namespace ElectronicObserver.Utility.Data
 					break;
 					
 				case 477:   // 天龍改二
-					if (highangle >= 3)
-						aacutinlist.Add(30);
 					if (highangle >= 1 && aagun_over3 >= 1)
 						aacutinlist.Add(24);
+					if (highangle >= 3)
+						aacutinlist.Add(30);
 					if (highangle >= 2)
 						aacutinlist.Add(31);
 					break;
@@ -766,49 +766,49 @@ namespace ElectronicObserver.Utility.Data
 					break;
 
 				case 546:   // 武蔵改二
+					if (highangle_musashi >= 1 && radar_aaradar >= 1)
+						aacutinlist.Add(26);
+					if (aagun_Rocket_Mod2 >= 1 && radar_aaradar >= 1)
+						aacutinlist.Add(28);
 					if (radar_with_range_finder >= 1 && highangle_yamato >= 2 && aagun_over6 >= 1)
 						aacutinlist.Add(42); //42:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備*2、対空機銃
 					if (radar_with_range_finder >= 1 && highangle_yamato >= 2)
 						aacutinlist.Add(43); //43:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備*2
 					if (radar_with_range_finder >= 1 && highangle_yamato >= 1 && aagun_over6 >= 1)
 						aacutinlist.Add(44); //44:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備、対空機銃
-					if (highangle_musashi >= 1 && radar_aaradar >= 1)
-						aacutinlist.Add(26);
 					if (radar_with_range_finder >= 1 && highangle_yamato >= 1)
 						aacutinlist.Add(45); //45:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備
-					if (aagun_Rocket_Mod2 >= 1 && radar_aaradar >= 1)
-						aacutinlist.Add(28);
 					break;
 
 				case 911:   // 大和改二
 				case 916:   // 大和改二重
+					if (highangle_musashi >= 1 && radar_aaradar >= 1)
+						aacutinlist.Add(26);
 					if (radar_with_range_finder >= 1 && highangle_yamato >= 2 && aagun_over6 >= 1)
 						aacutinlist.Add(42); //42:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備*2、対空機銃
 					if (radar_with_range_finder >= 1 && highangle_yamato >= 2)
 						aacutinlist.Add(43); //43:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備*2
 					if (radar_with_range_finder >= 1 && highangle_yamato >= 1 && aagun_over6 >= 1)
 						aacutinlist.Add(44); //44:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備、対空機銃
-					if (highangle_musashi >= 1 && radar_aaradar >= 1)
-						aacutinlist.Add(26);
 					if (radar_with_range_finder >= 1 && highangle_yamato >= 1)
 						aacutinlist.Add(45); //45:15m二重測距儀+21号電探改二系、10cm連装高角砲群集中配備
 					break;
 
 				case 593:   // 榛名改二乙
-					if (maingunl_356 >= 1 && aagun_over8 >= 1 && radar_aaradar >= 1)
-						aacutinlist.Add(46);
 					if (aagun_7inchRocket >= 2)
 						aacutinlist.Add(32);
 					if (aagun_Pompom >= 1 && (maingunl_FCR >= 1 || aagun_7inchRocket >= 1))
 						aacutinlist.Add(32);
+					if (maingunl_356 >= 1 && aagun_over8 >= 1 && radar_aaradar >= 1)
+						aacutinlist.Add(46);
 					break;
 
 				case 579:   // Gotland改
 				case 630:   // Gotland andra
-					if (highangle >= 1 && aagun_over4 >= 1)
-						aacutinlist.Add(33);
 					if (highangle >= 3)
 						aacutinlist.Add(30);
+					if (highangle >= 1 && aagun_over4 >= 1)
+						aacutinlist.Add(33);
 					break;
 
 				case 961:   // 時雨改三
@@ -829,19 +829,15 @@ namespace ElectronicObserver.Utility.Data
 					break;
 
 				case 979:   // 稲木改二
-					if (highangle >= 2)
-						aacutinlist.Add(31);
 					if (highangle >= 1 && aagun_total >= 1)
 						aacutinlist.Add(17);
 					if (aagun_over8 >= 1)
 						aacutinlist.Add(18);
+					if (highangle >= 2)
+						aacutinlist.Add(31);
 					break;
 
 				case 981:   // 藤波改二
-					if (highangle_director >= 2 && radar_over4 >= 1)
-						aacutinlist.Add(49);
-					break;
-
 				case 426:   // 吹雪改二
 				case 986:   // 白雪改二
 					if (highangle_director >= 2 && radar_over4 >= 1)
@@ -855,7 +851,7 @@ namespace ElectronicObserver.Utility.Data
 					break;
 			}
 
-			if ((KCDatabase.Instance.MasterShips[shipID]?.ShipClass == 6 && KCDatabase.Instance.MasterShips[shipID]?.RemodelTier >=2 ) ||
+			if ((KCDatabase.Instance.MasterShips[shipID]?.ShipClass == 6 && KCDatabase.Instance.MasterShips[shipID]?.RemodelTier >=2 && shipID != 593) ||
 				KCDatabase.Instance.MasterShips[shipID]?.ShipNationality == 2) //金剛型改二と英国艦
 			{
 				if (aagun_7inchRocket >= 2)

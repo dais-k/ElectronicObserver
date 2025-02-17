@@ -1,4 +1,5 @@
 ﻿using ElectronicObserver.Data;
+using ElectronicObserver.Observer;
 using ElectronicObserver.Resource;
 using ElectronicObserver.Utility.Data;
 using System;
@@ -84,6 +85,31 @@ namespace ElectronicObserver.Window.Dialog
 			AAFireAvoidance.SelectedIndex = 0;
 			UpdateAACutinKind(ShowAll.Checked);
 			UpdateFormation();
+ 
+			APIObserver o = APIObserver.Instance;
+
+			o["api_req_hensei/change"].RequestReceived += Updated;
+			o["api_req_kousyou/destroyship"].RequestReceived += Updated;
+			o["api_req_member/updatedeckname"].RequestReceived += Updated;
+			o["api_req_kaisou/remodeling"].RequestReceived += Updated;
+			o["api_req_hensei/combined"].RequestReceived += Updated;
+			o["api_req_kaisou/open_exslot"].RequestReceived += Updated;
+
+			o["api_port/port"].ResponseReceived += Updated;
+			o["api_get_member/ship2"].ResponseReceived += Updated;
+			o["api_get_member/ndock"].ResponseReceived += Updated;
+			o["api_req_kousyou/getship"].ResponseReceived += Updated;
+			o["api_req_kousyou/destroyship"].ResponseReceived += Updated;
+			o["api_get_member/ship3"].ResponseReceived += Updated;
+			o["api_req_kaisou/powerup"].ResponseReceived += Updated;        //requestのほうは面倒なのでこちらでまとめてやる
+			o["api_get_member/deck"].ResponseReceived += Updated;
+			o["api_get_member/slot_item"].ResponseReceived += Updated;
+			o["api_get_member/ship_deck"].ResponseReceived += Updated;
+			o["api_req_hensei/preset_select"].ResponseReceived += Updated;
+			o["api_req_kaisou/slot_exchange_index"].ResponseReceived += Updated;
+			o["api_get_member/require_info"].ResponseReceived += Updated;
+			o["api_req_kaisou/slot_deprive"].ResponseReceived += Updated;
+			o["api_req_kaisou/marriage"].ResponseReceived += Updated;
 
 			this.Icon = ResourceManager.ImageToIcon(ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormAntiAirDefense]);
 		}
@@ -99,7 +125,7 @@ namespace ElectronicObserver.Window.Dialog
 			FleetID.SelectedIndex = id - 1;
 		}
 
-		private void Updated()
+		private void Updated_List()
 		{
 
 			ShipData[] ships = GetShips().ToArray();
@@ -273,38 +299,48 @@ namespace ElectronicObserver.Window.Dialog
 		}
 
 
+		private void Updated(string apiname, dynamic data)
+		{
+			ToolTipInfo.SetToolTip(AACutinKind, null);
+			Updated_List();
+			UpdateAACutinKind(ShowAll.Checked);
+			UpdateFormation();
+		}
+
 
 		private void FleetID_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			Updated();
+			Updated_List();
 			UpdateAACutinKind(ShowAll.Checked);
 			UpdateFormation();
 		}
 
 		private void Formation_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			Updated();
+			Updated_List();
 		}
 
 		private void AACutinKind_SelectedIndexChanged(object sender, EventArgs e)
 		{
-			Updated();
+			ToolTipInfo.SetToolTip(AACutinKind,Constants.GetAACutinKind(AACutinKind.SelectedItem as AACutinComboBoxData));
+			Updated_List();
 		}
 
 		private void EnemySlotCount_ValueChanged(object sender, EventArgs e)
 		{
 			enemySlotCountValue = (int)EnemySlotCount.Value;
-			Updated();
+			Updated_List();
 		}
 
 		private void ShowAll_CheckedChanged(object sender, EventArgs e)
 		{
+			ToolTipInfo.SetToolTip(AACutinKind, null);
 			UpdateAACutinKind(ShowAll.Checked);
 		}
 
 		private void AAFireAvoidance_CheckedChanged(object sender, EventArgs e)
 		{
-			Updated();
+			Updated_List();
 		}
 
 	}
