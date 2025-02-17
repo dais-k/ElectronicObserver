@@ -1475,6 +1475,13 @@ namespace ElectronicObserver.Window
 
 		private void StripMenu_Tool_KcWeb_OpenwithFleet_Click(object sender, EventArgs e)
 		{
+			if (!KCDatabase.Instance.Fleet.IsAvailable)
+			{
+				MessageBox.Show("艦隊データが読み込まれていません。\r\n艦これを起動してから開いてください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+
+			}
+
 			int areaId = 0;
 			bool[] fleet = new[] { true, true, true, true };
 			bool choice = Utility.Configuration.Config.Control.ShowDialogChooseAirBase;
@@ -1502,12 +1509,26 @@ namespace ElectronicObserver.Window
 
 		private void StripMenu_Tool_KcWeb_OpenwithShips_Click(object sender, EventArgs e)
 		{
+			if (KCDatabase.Instance.MasterShips.Count == 0)
+			{
+				MessageBox.Show("艦船データが読み込まれていません。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+
+			}
+
 			Clipboard.SetData(DataFormats.StringFormat, GenerateDeckBuilderFormat.CreateAllFleetListWithID());
 			OpenUrl("https://noro6.github.io/kc-web");
 		}
 
 		private void StripMenu_Tool_KcWeb_OpenwithEquip_Click(object sender, EventArgs e)
 		{
+			if (KCDatabase.Instance.MasterEquipments.Count == 0)
+			{
+				MessageBox.Show("装備データが読み込まれていません。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+
+			}
+
 			Clipboard.SetText("[" + GenerateDeckBuilderFormat.CreateEquipmentList() + "]");
 			OpenUrl("https://noro6.github.io/kc-web");
 		}
@@ -1519,6 +1540,12 @@ namespace ElectronicObserver.Window
 
 		private void StripMenu_Tool_Jervis_OpenwithFleet_Click(object sender, EventArgs e)
 		{
+			if (!KCDatabase.Instance.Fleet.IsAvailable)
+			{
+				MessageBox.Show("艦隊データが読み込まれていません。\r\n艦これを起動してから開いてください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+			
 			int areaId = 0;
 			bool[] fleet = new[] { true, true, true, true };
 			bool choice = Utility.Configuration.Config.Control.ShowDialogChooseAirBase;
@@ -1551,6 +1578,12 @@ namespace ElectronicObserver.Window
 
 		private void StripMenu_Tool_SupportKai_OpenwithFleet_Click(object sender, EventArgs e)
 		{
+			if (!KCDatabase.Instance.Fleet.IsAvailable)
+			{
+				MessageBox.Show("艦隊データが読み込まれていません。\r\n艦これを起動してから開いてください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+			
 			int areaId = 0;
 			bool[] fleet = new[] { true, true, true, true };
 			bool choice = Utility.Configuration.Config.Control.ShowDialogChooseAirBase;
@@ -1577,6 +1610,13 @@ namespace ElectronicObserver.Window
 
 		private void StripMenu_Tool_SupportKai_OpenwithEquip_Click(object sender, EventArgs e)
 		{
+			if (KCDatabase.Instance.MasterEquipments.Count == 0)
+			{
+				MessageBox.Show("装備データが読み込まれていません。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+
+			}
+
 			Clipboard.SetText("[" + GenerateDeckBuilderFormat.CreateEquipmentList() + "]");
 			OpenUrl("https://kancolle-support-kai.netlify.app/");
 		}
@@ -1588,6 +1628,12 @@ namespace ElectronicObserver.Window
 
 		private void StripMenu_Tool_CompassSim_OpenwithFleet_Click(object sender, EventArgs e)
 		{
+			if (!KCDatabase.Instance.Fleet.IsAvailable)
+			{
+				MessageBox.Show("艦隊データが読み込まれていません。\r\n艦これを起動してから開いてください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+			
 			int areaId = 0;
 			bool[] fleet = new[] { true, true, true, true };
 			bool choice = Utility.Configuration.Config.Control.ShowDialogChooseAirBase;
@@ -1614,6 +1660,12 @@ namespace ElectronicObserver.Window
 
 		private void StripMenu_Tool_CopyFleet_Click(object sender, EventArgs e)
 		{
+			if (!KCDatabase.Instance.Fleet.IsAvailable)
+			{
+				MessageBox.Show("艦隊データが読み込まれていません。\r\n艦これを起動してから開いてください。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+			
 			int areaId = 0;
 			bool[] fleet = new[] { true, true, true, true };
 			bool choice = Utility.Configuration.Config.Control.ShowDialogChooseAirBase;
@@ -1640,12 +1692,26 @@ namespace ElectronicObserver.Window
 
 		private void StripMenu_Tool_CopyAllShips_Click(object sender, EventArgs e)
 		{
+			if (KCDatabase.Instance.MasterShips.Count == 0)
+			{
+				MessageBox.Show("艦船データが読み込まれていません。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+
+			}
+
 			Clipboard.SetData(DataFormats.StringFormat, GenerateDeckBuilderFormat.CreateAllFleetListWithID());
 			Utility.Logger.Add(2, "全ての所属艦娘をクリップボードにコピーしました。");
 		}
 
 		private void StripMenu_Tool_CopyAllEquips_Click(object sender, EventArgs e)
 		{
+			if (KCDatabase.Instance.MasterEquipments.Count == 0)
+			{
+				MessageBox.Show("装備データが読み込まれていません。", "エラー", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+
+			}
+
 			Clipboard.SetText("[" + GenerateDeckBuilderFormat.CreateEquipmentList() + "]");
 			Utility.Logger.Add(2, "全ての所有装備をクリップボードにコピーしました。");
 		}

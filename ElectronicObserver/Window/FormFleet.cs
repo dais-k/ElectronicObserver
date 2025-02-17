@@ -1199,7 +1199,7 @@ namespace ElectronicObserver.Window
 
 				ShipData ship = db.Ships[fleet[i]];
 
-				sb.AppendFormat("{0}/{1}\t", ship.MasterShip.Name, ship.Level);
+				sb.AppendFormat("{0}({1})\t", ship.MasterShip.Name, ship.Level);
 
 				var eq = ship.AllSlotInstance;
 
