@@ -396,12 +396,12 @@ namespace ElectronicObserver.Utility
 				/// </summary>
 				public bool ShowExpeditionAlertDialog { get; set; }
 
-                /// <summary>
-                /// 編成コピーをする時に艦隊選択ダイアログを表示するか
-                /// </summary>
-                public bool ShowDialogChooseAirBase { get; set; }
+				/// <summary>
+				/// 編成コピーをする時に艦隊選択ダイアログを表示するか
+				/// </summary>
+				public bool ShowDialogChooseAirBase { get; set; }
 
-                public ConfigControl()
+				public ConfigControl()
 				{
 					ConditionBorder = 40;
 					RecordAutoSaving = 1;
@@ -412,7 +412,7 @@ namespace ElectronicObserver.Utility
 					ShowSallyAreaAlertDialog = true;
 					ExpCheckerExpUnit = 2268;
 					ShowExpeditionAlertDialog = true;
-                    ShowDialogChooseAirBase = true;
+					ShowDialogChooseAirBase = true;
 				}
 			}
 			/// <summary>動作</summary>
