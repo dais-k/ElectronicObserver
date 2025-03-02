@@ -24,53 +24,53 @@ namespace ElectronicObserver.Resource.Record
 			/// <summary>
 			/// 艦隊ID
 			/// </summary>
-			public ulong FleetID { get; private set; }
+			public ulong FleetID { get; set; }
 
 			/// <summary>
 			/// 艦隊名
 			/// </summary>
-			public string FleetName { get; private set; }
+			public string FleetName { get; set; }
 
 			/// <summary>
 			/// 海域カテゴリID
 			/// </summary>
-			public int MapAreaID { get; private set; }
+			public int MapAreaID { get; set; }
 
 			/// <summary>
 			/// 海域カテゴリ内番号
 			/// </summary>
-			public int MapInfoID { get; private set; }
+			public int MapInfoID { get; set; }
 
 			/// <summary>
 			/// 海域セルID
 			/// </summary>
-			public int CellID { get; private set; }
+			public int CellID { get; set; }
 
 			/// <summary>
 			/// 海域難易度(甲乙丙)
 			/// </summary>
-			public int Difficulty { get; private set; }
+			public int Difficulty { get; set; }
 
 			/// <summary>
 			/// 陣形
 			/// </summary>
-			public int Formation { get; private set; }
+			public int Formation { get; set; }
 
 			/// <summary>
 			/// 敵艦船リスト [12]
 			/// </summary>
-			public int[] FleetMember { get; private set; }
+			public int[] FleetMember { get; set; }
 
 			/// <summary>
 			/// 敵艦船レベル [12]
 			/// </summary>
-			public int[] FleetMemberLevel { get; private set; }
+			public int[] FleetMemberLevel { get; set; }
 
 
 			/// <summary>
 			/// 艦娘の獲得経験値
 			/// </summary>
-			public int ExpShip { get; private set; }
+			public int ExpShip { get; set; }
 
 
 			/// <summary>

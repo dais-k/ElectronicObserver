@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using DynaJson;
 
 namespace ElectronicObserver.Data
 {
@@ -323,8 +326,31 @@ namespace ElectronicObserver.Data
 		/// 対応する海域情報
 		/// </summary>
 		public MapInfoData MapInfo => KCDatabase.Instance.MapInfo[MapAreaID * 10 + MapInfoID];
+
+		/// <summary>
+		/// マップ画面上の敵艦候補(3隻)
+		/// </summary>
+		public List<ApiEDeckInfo> Edeckinfo
+		{
+			get
+			{
+				if (!RawData.api_e_deck_info()) return new();
+				if (RawData.api_e_deck_info is not JsonObject fleets) return new();
+				if (!fleets.IsArray) return new();
+
+				return JsonSerializer.Deserialize<List<ApiEDeckInfo>>(fleets.ToString()) ?? new();
+			}
+		}
+
+		public class ApiEDeckInfo
+		{
+			[JsonPropertyName("api_kind")]
+			public int Apikind { get; set; }
+
+			[JsonPropertyName("api_ship_ids")]
+			public List<int> ApiShipIds { get; set; }
+		}
+
 	}
-
-
 
 }

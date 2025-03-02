@@ -1096,6 +1096,10 @@ namespace ElectronicObserver.Utility
 				/// </summary>
 				public bool DoMergeByFormation { get; set; }
 
+				/// <summary>
+				/// 敵候補表示方法
+				/// </summary>
+				public int NextEnemyFleetShowtype { get; set; }
 
 				public ConfigFormCompass()
 				{
@@ -1103,6 +1107,7 @@ namespace ElectronicObserver.Utility
 					IsScrollable = false;
 					MaxShipNameWidth = 60;
 					DoMergeByFormation = false;
+					NextEnemyFleetShowtype = 0;
 				}
 			}
 			/// <summary>[羅針盤]ウィンドウ</summary>

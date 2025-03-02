@@ -500,6 +500,7 @@ namespace ElectronicObserver.Window.Dialog
 			FormCompass_IsScrollable.Checked = config.FormCompass.IsScrollable;
 			FormCompass_MaxShipNameWidth.Value = config.FormCompass.MaxShipNameWidth;
 			FormCompass_DoMergeByFormation.Checked = config.FormCompass.DoMergeByFormation;
+			FormCompass_NextEnemyFleetShowtype.SelectedIndex = config.FormCompass.NextEnemyFleetShowtype;
 
 			FormJson_AutoUpdate.Checked = config.FormJson.AutoUpdate;
 			FormJson_UpdatesTree.Checked = config.FormJson.UpdatesTree;
@@ -738,6 +739,7 @@ namespace ElectronicObserver.Window.Dialog
 			config.FormCompass.IsScrollable = FormCompass_IsScrollable.Checked;
 			config.FormCompass.MaxShipNameWidth = (int)FormCompass_MaxShipNameWidth.Value;
 			config.FormCompass.DoMergeByFormation = FormCompass_DoMergeByFormation.Checked;
+			config.FormCompass.NextEnemyFleetShowtype = FormCompass_NextEnemyFleetShowtype.SelectedIndex;
 
 			config.FormJson.AutoUpdate = FormJson_AutoUpdate.Checked;
 			config.FormJson.UpdatesTree = FormJson_UpdatesTree.Checked;
