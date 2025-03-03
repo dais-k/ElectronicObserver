@@ -1090,17 +1090,11 @@ namespace ElectronicObserver.Window
 
 			//api_e_deck_infoから候補を作成
 			List<int> _eDeckFleetCandidate = new List<int>();
+			var unknowunFleet = new EnemyFleetRecord.EnemyFleetElement();
+
 			int[] apishipids = new int[12];
 			int[] apishipidlv = new int[12];
 			int formation = -1;
-			
-			foreach (var item in compass.Edeckinfo)
-			{
-				foreach (var id in item.ApiShipIds)
-				{
-					_eDeckFleetCandidate.Add(id);
-				}
-			}
 
 			for (int i = 0; i < 12; i++)
 			{
@@ -1108,44 +1102,57 @@ namespace ElectronicObserver.Window
 				apishipidlv[i] = -1;
 			}
 
-			for (int i = 0; i < compass.Edeckinfo[0].ApiShipIds.Count(); i++)
+			if (compass.Edeckinfo.Count > 0)
 			{
-				apishipids[i] = compass.Edeckinfo[0].ApiShipIds[i];
-				apishipidlv[i] = 1;
-				if (compass.Edeckinfo.Count == 2)
+				foreach (var item in compass.Edeckinfo)
 				{
-					apishipids[i + 6] = compass.Edeckinfo[1].ApiShipIds[i];
-					apishipidlv[i + 6] = 1;
-					formation = 20;
+					foreach (var id in item.ApiShipIds)
+					{
+						_eDeckFleetCandidate.Add(id);
+					}
+				}
+
+				for (int i = 0; i < compass.Edeckinfo[0].ApiShipIds.Count(); i++)
+				{
+					apishipids[i] = compass.Edeckinfo[0].ApiShipIds[i];
+					apishipidlv[i] = 1;
+					if (compass.Edeckinfo.Count == 2)
+					{
+						apishipids[i + 6] = compass.Edeckinfo[1].ApiShipIds[i];
+						apishipidlv[i + 6] = 1;
+						formation = 20;
+					}
+				}
+
+				unknowunFleet = new EnemyFleetRecord.EnemyFleetElement(
+					_enemyFleetCandidate.Count != 0 ? _enemyFleetCandidate[0].FleetName : "未確認艦隊", compass.MapAreaID, compass.MapInfoID, compass.Destination, -1, formation, apishipids, apishipidlv, 0);
+			}
+
+			if (compass.EventKind != 4 && compass.EventKind != 6)
+			{
+				switch (Utility.Configuration.Config.FormCompass.NextEnemyFleetShowtype)
+				{
+					case 0:
+						_enemyFleetCandidate.Clear();
+						_enemyFleetCandidate.Add(unknowunFleet);
+						break;
+
+					case 2:
+						_matchedEnemyFleetCandidate.Clear();
+						foreach (var enemy in _enemyFleetCandidate)
+						{
+							if (enemy.FleetMember[0] == unknowunFleet.FleetMember[0] &&
+								enemy.FleetMember[1] == unknowunFleet.FleetMember[1] &&
+								enemy.FleetMember[2] == unknowunFleet.FleetMember[2])
+							{
+								_matchedEnemyFleetCandidate.Add(enemy);
+							}
+						}
+						_enemyFleetCandidate.Clear();
+						_enemyFleetCandidate = _matchedEnemyFleetCandidate;
+						break;
 				}
 			}
-
-			var unknowunFleet = new EnemyFleetRecord.EnemyFleetElement(
-				_enemyFleetCandidate.Count != 0? _enemyFleetCandidate[0].FleetName : "未確認艦隊" , compass.MapAreaID, compass.MapInfoID, compass.Destination, -1, formation, apishipids, apishipidlv, 0);
-
-			switch(Utility.Configuration.Config.FormCompass.NextEnemyFleetShowtype)
-			{
-				case 0:
-					_enemyFleetCandidate.Clear();
-					_enemyFleetCandidate.Add(unknowunFleet);
-					break;
-
-				case 2:
-					_matchedEnemyFleetCandidate.Clear();
-					foreach (var enemy in _enemyFleetCandidate)
-					{
-						if (enemy.FleetMember[0] == unknowunFleet.FleetMember[0] &&
-							enemy.FleetMember[1] == unknowunFleet.FleetMember[1] &&
-							enemy.FleetMember[2] == unknowunFleet.FleetMember[2] )
-						{
-							_matchedEnemyFleetCandidate.Add(enemy);
-						}
-					}
-					_enemyFleetCandidate.Clear();
-					_enemyFleetCandidate = _matchedEnemyFleetCandidate;
-					break;
-			}
-
 
 			if (_enemyFleetCandidate.Count == 0)
 			{
