@@ -167,7 +167,8 @@ namespace ElectronicObserver.Window
 					}
 
 					double expeditionBonus = Calculator.GetExpeditionBonus(fleet);
-					int tp = Calculator.GetTPDamage(fleet);
+					int tp = Calculator.GetTPDamage(fleet, false);
+					int tanktp = Calculator.GetTPDamage(fleet, true);
 
 					// 各艦ごとの ドラム缶 or 大発系 を搭載している個数
 					var transport = members.Select(s => s.AllSlotInstanceMaster.Count(eq => eq?.CategoryType == EquipmentTypes.TransportContainer));
@@ -184,6 +185,7 @@ namespace ElectronicObserver.Window
 						"ドラム缶搭載: {8}個 ({9}艦)\r\n" +
 						"大発動艇搭載: {10}個 ({11}艦, +{12:p1})\r\n" +
 						"輸送量(TP): S {13} / A {14}\r\n" +
+						"戦車輸送量(TP): S {23} / A {24} ※推定\r\n" +
 						"総積載: 燃 {15} / 弾 {16}\r\n" +
 						"(1戦当たり 燃 {17} / 弾 {18})\r\n" +
 						"煙幕発動 3重:{19:0.0} / 2重:{20:0.0} / 1重:{21:0.0} / 不発:{22:0.0}",
@@ -201,7 +203,7 @@ namespace ElectronicObserver.Window
 						landing.Count(i => i > 0),
 						expeditionBonus,
 						tp,
-						(int)(tp * 0.7),
+						(int)Math.Floor(tp * 0.7),
 						fueltotal,
 						ammototal,
 						fuelunit,
@@ -209,7 +211,9 @@ namespace ElectronicObserver.Window
 						smokeGenrate[0],
 						smokeGenrate[1],
 						smokeGenrate[2],
-						smokeGenrate[3]
+						smokeGenrate[3],
+						tanktp,
+						(int)Math.Floor(tanktp * 0.7)
 						));
 
 				}
@@ -1191,7 +1195,7 @@ namespace ElectronicObserver.Window
 			FleetData fleet = db.Fleet[FleetID];
 			if (fleet == null) return;
 
-			sb.AppendFormat("{0}\t制空戦力{1} / 索敵能力 {2} / 輸送能力 {3}\r\n", fleet.Name, fleet.GetAirSuperiority(), fleet.GetSearchingAbilityString(ControlFleet.BranchWeight), Calculator.GetTPDamage(fleet));
+			sb.AppendFormat("{0}\t制空戦力{1} / 索敵能力 {2} / 輸送能力 {3} / 戦車輸送能力※推定 {4}\r\n", fleet.Name, fleet.GetAirSuperiority(), fleet.GetSearchingAbilityString(ControlFleet.BranchWeight), Calculator.GetTPDamage(fleet, false), Calculator.GetTPDamage(fleet, true));
 			for (int i = 0; i < fleet.Members.Count; i++)
 			{
 				if (fleet[i] == -1)

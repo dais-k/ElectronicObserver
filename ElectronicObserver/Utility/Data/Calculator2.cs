@@ -913,32 +913,182 @@ namespace ElectronicObserver.Utility.Data
 		/// </summary>
 		/// <param name="ship">対象の艦娘。</param>
 		/// <returns>減少TP。</returns>
-		public static int GetTPDamage(ShipData ship)
+		public static int GetTPDamage(ShipData ship, bool tank)
+		{
+			int tp = 0;
+
+			if (tank)
+			{
+				tp = GetTankTPDamage(ship);
+			}
+			else
+			{
+				// 装備ボーナス
+				foreach (var eq in ship.AllSlotInstanceMaster.Where(q => q != null))
+				{
+					switch (eq.CategoryType)
+					{
+
+						case EquipmentTypes.LandingCraft:
+							tp += 8;
+							break;
+
+						case EquipmentTypes.TransportContainer:
+							tp += 5;
+							break;
+
+						case EquipmentTypes.Ration:
+							tp += 1;
+							break;
+
+						case EquipmentTypes.SpecialAmphibiousTank:
+							tp += 2;
+							break;
+					}
+				}
+
+				// 艦種ボーナス
+				switch (ship.MasterShip.ShipType)
+				{
+
+					case ShipTypes.Destroyer:
+						tp += 5;
+						break;
+
+					case ShipTypes.LightCruiser:
+						tp += 2;
+						if (ship.ShipID == 487) // 鬼怒改二
+							tp += 8;
+						break;
+
+					case ShipTypes.AviationCruiser:
+						tp += 4;
+						break;
+
+					case ShipTypes.AviationBattleship:
+						tp += 7;
+						break;
+
+					case ShipTypes.SeaplaneTender:
+						tp += 9;
+						break;
+
+					case ShipTypes.AmphibiousAssaultShip:
+						tp += 12;
+						break;
+
+					case ShipTypes.SubmarineTender:
+						tp += 7;
+						break;
+
+					case ShipTypes.TrainingCruiser:
+						tp += 6;
+						break;
+
+					case ShipTypes.FleetOiler:
+						tp += 15;
+						break;
+
+					case ShipTypes.SubmarineAircraftCarrier:
+						tp += 1;
+						break;
+				}
+			}
+			if (ship.HPRate < 0.25)
+				return 0;
+			return tp;
+		}
+
+		/// <summary>
+		/// イベント時の個別の輸送作戦成功時の輸送量(減少TP)を求めます。
+		/// (S勝利時のもの。A勝利時は int( value * 0.7 ) )
+		/// </summary>
+		/// <param name="ship">対象の艦娘。</param>
+		/// <returns>減少TP。</returns>
+		public static int GetTankTPDamage(ShipData ship)
 		{
 			int tp = 0;
 
 			// 装備ボーナス
 			foreach (var eq in ship.AllSlotInstanceMaster.Where(q => q != null))
 			{
-
-				switch (eq.CategoryType)
+				switch (eq.EquipmentID)
 				{
-
-					case EquipmentTypes.LandingCraft:
-						tp += 8;
+					case 68:
+					case 193:
+					case 408:
+					case 409:
+						tp += 6;
 						break;
 
-					case EquipmentTypes.TransportContainer:
+					case 166:
+					case 496:
+						tp += 15;
+						break;
+
+					case 449:
+						tp += 41;
+						break;
+
+					case 230:
+						tp += 47;
+						break;
+
+					case 494:
+					case 498:
+						tp += 23;
+						break;
+
+					case 495:
+						tp += 29;
+						break;
+
+					case 355:
+						tp += 25;
+						break;
+
+					case 514:
+						tp += 33;
+						break;
+
+					case 482:
+						tp += 28;
+						break;
+
+					case 436:
+						tp += 22;
+						break;
+
+					case 525:
+						tp += 7;
+						break;
+
+					case 526:
+						tp += 9;
+						break;
+
+					case 167:
+						tp += 10;
+						break;
+
+					case 497:
+						tp += 17;
+						break;
+
+					case 499:
+						tp += 38;
+						break;
+
+					case 75:
 						tp += 5;
 						break;
 
-					case EquipmentTypes.Ration:
-						tp += 1;
+					case 145:
+					case 150:
+					case 241:
+						tp += 0;
 						break;
 
-					case EquipmentTypes.SpecialAmphibiousTank:
-						tp += 2;
-						break;
 				}
 			}
 
@@ -947,50 +1097,49 @@ namespace ElectronicObserver.Utility.Data
 			{
 
 				case ShipTypes.Destroyer:
-					tp += 5;
+					tp += 3;
 					break;
 
 				case ShipTypes.LightCruiser:
-					tp += 2;
-					if (ship.ShipID == 487) // 鬼怒改二
-						tp += 8;
+					tp += 1;
+					break;
+
+				case ShipTypes.HeavyCruiser:
+					tp += 1;
 					break;
 
 				case ShipTypes.AviationCruiser:
-					tp += 4;
+					tp += 2;
 					break;
 
 				case ShipTypes.AviationBattleship:
-					tp += 7;
+					tp += 4;
 					break;
 
 				case ShipTypes.SeaplaneTender:
-					tp += 9;
-					break;
-
-				case ShipTypes.AmphibiousAssaultShip:
-					tp += 12;
-					break;
-
-				case ShipTypes.SubmarineTender:
-					tp += 7;
-					break;
-
-				case ShipTypes.TrainingCruiser:
 					tp += 6;
 					break;
 
+				case ShipTypes.AmphibiousAssaultShip:
+					tp += 8;
+					break;
+
+				case ShipTypes.SubmarineTender:
+					tp += 4;
+					break;
+
+				case ShipTypes.TrainingCruiser:
+					tp += 1;
+					break;
+
 				case ShipTypes.FleetOiler:
-					tp += 15;
+					tp += 10;
 					break;
 
 				case ShipTypes.SubmarineAircraftCarrier:
 					tp += 1;
 					break;
 			}
-
-			if (ship.HPRate < 0.25)
-				return 0;
 			return tp;
 		}
 	}

@@ -698,86 +698,13 @@ namespace ElectronicObserver.Utility.Data
 		/// </summary>
 		/// <param name="fleet">対象の艦隊。</param>
 		/// <returns>減少TP。</returns>
-		public static int GetTPDamage(FleetData fleet)
+		public static int GetTPDamage(FleetData fleet, bool tank)
 		{
 			int tp = 0;
 
 			foreach (var ship in fleet.MembersWithoutEscaped.Where(s => s != null && s.HPRate > 0.25))
 			{
-				// 装備ボーナス
-				foreach (var eq in ship.AllSlotInstanceMaster.Where(q => q != null))
-				{
-
-					switch (eq.CategoryType)
-					{
-
-						case EquipmentTypes.LandingCraft:
-							//if ( eq.EquipmentID == 166 )	// 陸戦隊
-							//	tp += 13;
-							//else
-							tp += 8;
-							break;
-
-						case EquipmentTypes.TransportContainer:
-							tp += 5;
-							break;
-
-						case EquipmentTypes.Ration:
-							tp += 1;
-							break;
-
-						case EquipmentTypes.SpecialAmphibiousTank:
-							tp += 2;
-							break;
-					}
-				}
-
-				// 艦種ボーナス
-				switch (ship.MasterShip.ShipType)
-				{
-
-					case ShipTypes.Destroyer:
-						tp += 5;
-						break;
-
-					case ShipTypes.LightCruiser:
-						tp += 2;
-						if (ship.ShipID == 487) // 鬼怒改二
-							tp += 8;
-						break;
-
-					case ShipTypes.AviationCruiser:
-						tp += 4;
-						break;
-
-					case ShipTypes.AviationBattleship:
-						tp += 7;
-						break;
-
-					case ShipTypes.SeaplaneTender:
-						tp += 9;
-						break;
-
-					case ShipTypes.AmphibiousAssaultShip:
-						tp += 12;
-						break;
-
-					case ShipTypes.SubmarineTender:
-						tp += 7;
-						break;
-
-					case ShipTypes.TrainingCruiser:
-						tp += 6;
-						break;
-
-					case ShipTypes.FleetOiler:
-						tp += 15;
-						break;
-
-					case ShipTypes.SubmarineAircraftCarrier:
-						tp += 1;
-						break;
-				}
+                tp += Calculator2.GetTPDamage(ship, tank);
 			}
 
 			return tp;
