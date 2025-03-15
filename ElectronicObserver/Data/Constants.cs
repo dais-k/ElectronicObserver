@@ -421,6 +421,8 @@ namespace ElectronicObserver.Data
 				case 127: return "巡潜乙型改一";
 				case 128: return "La Galissonnière級";
 				case 129: return "Mogador級";
+				case 130: return "大泊型";
+				case 131: return "Киров級";
 				default: 
 					return "不明";
 			}

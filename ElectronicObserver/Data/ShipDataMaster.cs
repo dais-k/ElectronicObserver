@@ -786,6 +786,7 @@ namespace ElectronicObserver.Data
 						return 5;
 					case 73:      //Гангут級
 					case 81:      //Ташкент級
+					case 131:     //Киров級
 						return 6;
 					case 96:      //Perth級
 						return 7;
