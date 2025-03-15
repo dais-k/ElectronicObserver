@@ -1125,7 +1125,7 @@ namespace ElectronicObserver.Window
 				}
 
 				unknowunFleet = new EnemyFleetRecord.EnemyFleetElement(
-					_enemyFleetCandidate.Count != 0 ? _enemyFleetCandidate[0].FleetName : "未確認艦隊", compass.MapAreaID, compass.MapInfoID, compass.Destination, -1, formation, apishipids, apishipidlv, 0);
+					_enemyFleetCandidate.Count != 0 ? _enemyFleetCandidate[0].FleetName : "未確認艦隊", compass.MapAreaID, compass.MapInfoID, compass.Destination, compass.MapInfo.EventDifficulty, formation, apishipids, apishipidlv, 0);
 			}
 
 			if (compass.EventKind != 4 && compass.EventKind != 6)
@@ -1136,20 +1136,36 @@ namespace ElectronicObserver.Window
 						_enemyFleetCandidate.Clear();
 						_enemyFleetCandidate.Add(unknowunFleet);
 						break;
+					
+					case 1:
+						if (_enemyFleetCandidate.Count == 0)
+						{
+							_enemyFleetCandidate.Clear();
+							_enemyFleetCandidate.Add(unknowunFleet);
+						}
+						break;
 
 					case 2:
 						_matchedEnemyFleetCandidate.Clear();
-						foreach (var enemy in _enemyFleetCandidate)
+						if (_enemyFleetCandidate.Count != 0)
 						{
-							if (enemy.FleetMember[0] == unknowunFleet.FleetMember[0] &&
-								enemy.FleetMember[1] == unknowunFleet.FleetMember[1] &&
-								enemy.FleetMember[2] == unknowunFleet.FleetMember[2])
+							foreach (var enemy in _enemyFleetCandidate)
 							{
-								_matchedEnemyFleetCandidate.Add(enemy);
+								if (enemy.FleetMember[0] == unknowunFleet.FleetMember[0] &&
+									enemy.FleetMember[1] == unknowunFleet.FleetMember[1] &&
+									enemy.FleetMember[2] == unknowunFleet.FleetMember[2])
+								{
+									_matchedEnemyFleetCandidate.Add(enemy);
+								}
 							}
+							_enemyFleetCandidate.Clear();
+							_enemyFleetCandidate = _matchedEnemyFleetCandidate;
 						}
-						_enemyFleetCandidate.Clear();
-						_enemyFleetCandidate = _matchedEnemyFleetCandidate;
+						else
+						{
+							_enemyFleetCandidate.Clear();
+							_enemyFleetCandidate.Add(unknowunFleet);
+						}
 						break;
 				}
 			}
@@ -1206,12 +1222,6 @@ namespace ElectronicObserver.Window
 			int[] hps = bd.Initial.EnemyMaxHPs;
 
 
-			_enemyFleetCandidate = null;
-			_enemyFleetCandidateIndex = -1;
-			_mergedEnemyFleetCandidate = null;
-
-
-
 			if (!bm.IsPractice)
 			{
 				var efcurrent = EnemyFleetRecord.EnemyFleetElement.CreateFromCurrentState();
@@ -1221,8 +1231,20 @@ namespace ElectronicObserver.Window
 					TextEnemyFleetName.Text = efrecord.FleetName;
 					TextEventDetail.Text = "Exp: " + efrecord.ExpShip;
 				}
+				else if (_enemyFleetCandidate != null && (_enemyFleetCandidate[0].FleetName == "未確認艦隊" || efrecord == null))
+				{
+					TextEnemyFleetName.Text = _enemyFleetCandidate[0].FleetName;
+					TextEventDetail.Text = "Exp: 不明";
+				}
+
 				ToolTipInfo.SetToolTip(TextEventDetail, "敵艦隊ID: " + efcurrent.FleetID.ToString("x16"));
 			}
+
+
+			_enemyFleetCandidate = null;
+			_enemyFleetCandidateIndex = -1;
+			_mergedEnemyFleetCandidate = null;
+
 
 			TextFormation.Text = Constants.GetFormationShort((int)bd.Searching.FormationEnemy);
 			//TextFormation.ImageIndex = (int)ResourceManager.IconContent.BattleFormationEnemyLineAhead + bd.Searching.FormationEnemy - 1;

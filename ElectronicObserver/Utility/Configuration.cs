@@ -1107,7 +1107,7 @@ namespace ElectronicObserver.Utility
 					IsScrollable = false;
 					MaxShipNameWidth = 60;
 					DoMergeByFormation = false;
-					NextEnemyFleetShowtype = 1;
+					NextEnemyFleetShowtype = 0;
 				}
 			}
 			/// <summary>[羅針盤]ウィンドウ</summary>

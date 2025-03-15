@@ -657,9 +657,9 @@ namespace ElectronicObserver.Data
 					return "第三警戒航行序列";
 				case 14:
 					return "第四警戒航行序列";
-                case 20:
-                    return "不明";
-                default:
+				case 20:
+					return "不明";
+				default:
 					return "不明";
 			}
 		}
