@@ -164,19 +164,26 @@ namespace ElectronicObserver.Window
 
 					// state 
 
-					if (corps.Squadrons.Values.Any(sq => sq != null && sq.Condition > 1))
+					if (corps.Squadrons.Values.Any(sq => sq != null ))
 					{
 						// 疲労
-						int tired = corps.Squadrons.Values.Max(sq => sq?.Condition ?? 0);
+						int tired = corps.Squadrons.Values.Max(sq => sq?.Condition ?? -1);
 
-						if (tired == 2)
+						if (tired == 0)
+						{
+							Name.ImageAlign = ContentAlignment.MiddleRight;
+							Name.ImageIndex = (int)ResourceManager.IconContent.ConditionSparkle;
+							sb.AppendLine("士気最大");
+
+						}
+						else if (tired == 2)
 						{
 							Name.ImageAlign = ContentAlignment.MiddleRight;
 							Name.ImageIndex = (int)ResourceManager.IconContent.ConditionTired;
 							sb.AppendLine("疲労");
 
 						}
-						else
+						else if (tired == 3) 
 						{
 							Name.ImageAlign = ContentAlignment.MiddleRight;
 							Name.ImageIndex = (int)ResourceManager.IconContent.ConditionVeryTired;
@@ -318,6 +325,9 @@ namespace ElectronicObserver.Window
 
 							switch (squadron.Condition)
 							{
+								case 0:
+									sb.Append("[士気最大] ");
+									break;
 								case 1:
 								default:
 									break;
