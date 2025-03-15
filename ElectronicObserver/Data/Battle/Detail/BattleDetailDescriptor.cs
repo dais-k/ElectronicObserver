@@ -240,7 +240,7 @@ namespace ElectronicObserver.Data.Battle.Detail
 							sb.AppendLine("〈敵随伴艦隊〉");
 
 							appendEnemyFleetInfo(p.EnemyMembersEscort);
-                            sb.AppendLine();
+							sb.AppendLine();
 
 							OutputEnemyData(sb, p.EnemyMembersEscortInstance, p.EnemyLevelsEscort, p.EnemyInitialHPsEscort, p.EnemyMaxHPsEscort, p.EnemySlotsEscortInstance, p.EnemyParametersEscort);
 						}
@@ -326,7 +326,7 @@ namespace ElectronicObserver.Data.Battle.Detail
 						
 						if (p.IsBalloonCell)
 						{
-							sb.AppendLine("対象マス");
+							sb.AppendLine("阻塞気球展開対象マス");
 						}
 
 						if (p.IsAtollCell)
