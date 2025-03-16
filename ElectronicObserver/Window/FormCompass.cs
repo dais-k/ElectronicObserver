@@ -1116,12 +1116,13 @@ namespace ElectronicObserver.Window
 				{
 					apishipids[i] = compass.Edeckinfo[0].ApiShipIds[i];
 					apishipidlv[i] = 1;
+					/*
 					if (compass.Edeckinfo.Count == 2)
 					{
 						apishipids[i + 6] = compass.Edeckinfo[1].ApiShipIds[i];
 						apishipidlv[i + 6] = 1;
 						formation = 20;
-					}
+					}*/
 				}
 
 				unknowunFleet = new EnemyFleetRecord.EnemyFleetElement(
@@ -1158,8 +1159,16 @@ namespace ElectronicObserver.Window
 									_matchedEnemyFleetCandidate.Add(enemy);
 								}
 							}
-							_enemyFleetCandidate.Clear();
-							_enemyFleetCandidate = _matchedEnemyFleetCandidate;
+							if (_matchedEnemyFleetCandidate.Count() != 0)
+							{
+								_enemyFleetCandidate.Clear();
+								_enemyFleetCandidate = _matchedEnemyFleetCandidate;
+							}
+							else
+							{
+								_enemyFleetCandidate.Clear();
+								_enemyFleetCandidate.Add(unknowunFleet);
+							}
 						}
 						else
 						{
