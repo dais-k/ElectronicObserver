@@ -1007,88 +1007,75 @@ namespace ElectronicObserver.Utility.Data
 		/// <returns>減少TP。</returns>
 		public static int GetTankTPDamage(ShipData ship)
 		{
-			int tp = 0;
+			double tp = 0;
 
 			// 装備ボーナス
 			foreach (var eq in ship.AllSlotInstanceMaster.Where(q => q != null))
 			{
 				switch (eq.EquipmentID)
 				{
-					case 68:
-					case 193:
-					case 408:
-					case 409:
-						tp += 6;
-						break;
 
-					case 166:
-					case 496:
-						tp += 15;
+					case 230: //特大発動艇+戦車第11連隊
+						tp += 46.2;
 						break;
-
-					case 449:
-						tp += 41;
+					case 449: //特大発動艇+一式砲戦車
+						tp += 40.2; break;
+					case 499: //陸軍歩兵部隊+チハ改
+						tp += 38.0;
 						break;
-
-					case 230:
-						tp += 47;
+					case 514: //特大発動艇+3号戦車J型
+						tp += 32.2;
 						break;
-
-					case 494:
-					case 498:
-						tp += 23;
+					case 495: //特大発チハ改
+						tp += 28.2;
 						break;
-
-					case 495:
-						tp += 29;
+					case 482: //特大発動艇+3号戦車(北アフリカ仕様)
+						tp += 27.2;
 						break;
-
-					case 355:
-						tp += 25;
+					case 355: //M4A1DD
+						tp += 24.2;
 						break;
-
-					case 514:
-						tp += 33;
+					case 494: //特大発チハ
+						tp += 22.2;
 						break;
-
-					case 482:
-						tp += 28;
+					case 498: //97式中戦車 新砲塔(チハ改)
+						tp += 23.0;
 						break;
-
-					case 436:
-						tp += 22;
+					case 436: //大発動艇(II号戦車／北アフリカ仕様)
+						tp += 21.2;
 						break;
-
-					case 525:
-						tp += 7;
+					case 497: //97式中戦車
+						tp += 17.0;
 						break;
-
-					case 526:
-						tp += 9;
+					case 496: //陸軍歩兵部隊
+						tp += 15.0;
 						break;
-
-					case 167:
-						tp += 10;
+					case 166: //大発動艇(89式中戦車＆陸戦隊)
+						tp += 14.2;
 						break;
-
-					case 497:
-						tp += 17;
+					case 167: //特二式内火艇
+						tp += 9.3;
 						break;
-
-					case 499:
-						tp += 38;
+					case 526: //特四式内火艇改
+						tp += 8.3;
 						break;
-
-					case 75:
-						tp += 5;
+					case 525: //特四式内火艇
+						tp += 6.3;
 						break;
-
-					case 145:
-					case 150:
-					case 241:
-						tp += 0;
+					case 68:  //大発動艇
+					case 193: //特大発動艇
+					case 408: //装甲艇(AB艇)
+					case 409: //武装大発
+						tp += 5.2;
 						break;
-
+					case 75:  //ドラム缶
+						tp += 3.25;
+						break;
+					case 145: //戦闘糧食
+					case 150: //戦闘糧食
+					case 241: //戦闘糧食(特別なおにぎり)
+						tp += 0.65;
+						break;
 				}
 			}
 
@@ -1097,50 +1084,48 @@ namespace ElectronicObserver.Utility.Data
 			{
 
 				case ShipTypes.Destroyer:
-					tp += 3;
+					tp += 3.25;
 					break;
 
 				case ShipTypes.LightCruiser:
-					tp += 1;
-					break;
-
-				case ShipTypes.HeavyCruiser:
-					tp += 1;
+					tp += 1.3;
+					if (ship.ShipID == 487) // 鬼怒改二
+						tp += 8;
 					break;
 
 				case ShipTypes.AviationCruiser:
-					tp += 2;
+					tp += 2.6;
 					break;
 
 				case ShipTypes.AviationBattleship:
-					tp += 4;
+					tp += 4.55;
 					break;
 
 				case ShipTypes.SeaplaneTender:
-					tp += 6;
+					tp += 5.85;
 					break;
 
 				case ShipTypes.AmphibiousAssaultShip:
-					tp += 8;
+					tp += 7.8;
 					break;
 
 				case ShipTypes.SubmarineTender:
-					tp += 4;
+					tp += 4.55;
 					break;
 
 				case ShipTypes.TrainingCruiser:
-					tp += 1;
+					tp += 3.9;
 					break;
 
 				case ShipTypes.FleetOiler:
-					tp += 10;
+					tp += 9.75;
 					break;
 
 				case ShipTypes.SubmarineAircraftCarrier:
-					tp += 1;
+					tp += 0.65;
 					break;
 			}
-			return tp;
+			return (int)Math.Floor(tp);
 		}
 	}
 }

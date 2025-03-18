@@ -271,6 +271,7 @@ namespace ElectronicObserver.Window
 				if (kinu >= 2) //鬼怒改二が2人いたらTP合計から-8する
 				{
 					tp -= 8;
+					tanktp -= 8;
 				}
 
 				ToolTipInfo.SetToolTip(CombinedTag, string.Format(
