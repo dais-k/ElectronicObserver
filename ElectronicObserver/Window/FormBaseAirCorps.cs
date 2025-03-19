@@ -164,7 +164,7 @@ namespace ElectronicObserver.Window
 
 					// state 
 
-					if (corps.Squadrons.Values.Any(sq => sq != null ))
+					if (corps.Squadrons.Values.Any(sq => sq != null && sq.Condition != 1))
 					{
 						// 疲労
 						int tired = corps.Squadrons.Values.Max(sq => sq?.Condition ?? -1);
@@ -190,7 +190,6 @@ namespace ElectronicObserver.Window
 							sb.AppendLine("過労");
 
 						}
-
 					}
 					else if (corps.Squadrons.Values.Any(sq => sq != null && sq.AircraftCurrent < sq.AircraftMax))
 					{
