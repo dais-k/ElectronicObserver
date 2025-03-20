@@ -162,50 +162,88 @@ namespace ElectronicObserver.Window
 					string areaName = KCDatabase.Instance.MapArea.ContainsKey(corps.MapAreaID) ? KCDatabase.Instance.MapArea[corps.MapAreaID].Name : "バミューダ海域";
 					sb.AppendLine("所属海域: " + areaName + "(整備Lv:" + maintenanceLevel + ")"); ;
 
-					// state 
-
-					if (corps.Squadrons.Values.Any(sq => sq != null && sq.Condition != 1))
+					// state
+					if (corps.Squadrons.Values.Any(sq => sq != null))
 					{
 						// 疲労
-						int tired = corps.Squadrons.Values.Max(sq => sq?.Condition ?? -1);
+						int tired = corps.Squadrons.Values.Max(sq => sq?.Condition ?? 1);
+						/*
+							if (tired == 0)
+							{
+								Name.ImageAlign = ContentAlignment.MiddleRight;
+								Name.ImageIndex = (int)ResourceManager.IconContent.ConditionSparkle;
+								sb.AppendLine("士気最大");
 
-						if (tired == 0)
+							}
+							else if (tired == 2)
+							{
+								Name.ImageAlign = ContentAlignment.MiddleRight;
+								Name.ImageIndex = (int)ResourceManager.IconContent.ConditionTired;
+								sb.AppendLine("疲労");
+
+							}
+							else if (tired == 3) 
+							{
+								Name.ImageAlign = ContentAlignment.MiddleRight;
+								Name.ImageIndex = (int)ResourceManager.IconContent.ConditionVeryTired;
+								sb.AppendLine("過労");
+
+							}
+						}
+						else if (corps.Squadrons.Values.Any(sq => sq != null && sq.AircraftCurrent < sq.AircraftMax))
 						{
+							// 未補給
 							Name.ImageAlign = ContentAlignment.MiddleRight;
-							Name.ImageIndex = (int)ResourceManager.IconContent.ConditionSparkle;
-							sb.AppendLine("士気最大");
+							Name.ImageIndex = (int)ResourceManager.IconContent.FleetNotReplenished;
+							sb.AppendLine("未補給");
 
 						}
-						else if (tired == 2)
+						else
 						{
-							Name.ImageAlign = ContentAlignment.MiddleRight;
-							Name.ImageIndex = (int)ResourceManager.IconContent.ConditionTired;
-							sb.AppendLine("疲労");
+							Name.ImageAlign = ContentAlignment.MiddleCenter;
+							Name.ImageIndex = -1;
+						}*/
 
-						}
-						else if (tired == 3) 
+						switch (tired)
 						{
-							Name.ImageAlign = ContentAlignment.MiddleRight;
-							Name.ImageIndex = (int)ResourceManager.IconContent.ConditionVeryTired;
-							sb.AppendLine("過労");
+							case 0:
+								Name.ImageAlign = ContentAlignment.MiddleRight;
+								Name.ImageIndex = (int)ResourceManager.IconContent.ConditionSparkle;
+								sb.AppendLine("士気最大");
+								break;
 
+							case 1:
+							default:
+								if (corps.Squadrons.Values.Any(sq => sq != null && sq.AircraftCurrent < sq.AircraftMax))
+								{
+									// 未補給
+									Name.ImageAlign = ContentAlignment.MiddleRight;
+									Name.ImageIndex = (int)ResourceManager.IconContent.FleetNotReplenished;
+									sb.AppendLine("未補給");
+								}
+								else
+								{
+									Name.ImageAlign = ContentAlignment.MiddleCenter;
+									Name.ImageIndex = -1;
+									sb.AppendLine("");
+								}
+								break;
+
+							case 2:
+								Name.ImageAlign = ContentAlignment.MiddleRight;
+								Name.ImageIndex = (int)ResourceManager.IconContent.ConditionTired;
+								sb.AppendLine("疲労");
+								break;
+
+							case 3:
+								Name.ImageAlign = ContentAlignment.MiddleRight;
+								Name.ImageIndex = (int)ResourceManager.IconContent.ConditionVeryTired;
+								sb.AppendLine("過労");
+								break;
 						}
 					}
-					else if (corps.Squadrons.Values.Any(sq => sq != null && sq.AircraftCurrent < sq.AircraftMax))
-					{
-						// 未補給
-						Name.ImageAlign = ContentAlignment.MiddleRight;
-						Name.ImageIndex = (int)ResourceManager.IconContent.FleetNotReplenished;
-						sb.AppendLine("未補給");
 
-					}
-					else
-					{
-						Name.ImageAlign = ContentAlignment.MiddleCenter;
-						Name.ImageIndex = -1;
 
-					}
-					
 					sb.AppendLine(string.Format("合計制空: 防空 {0} / 対高高度 {1}",
 						db.BaseAirCorps.Values.Where(c => c.MapAreaID == corps.MapAreaID && c.ActionKind == 2).Select(c => Calculator.GetAirSuperiority(c)).DefaultIfEmpty(0).Sum(),
 						db.BaseAirCorps.Values.Where(c => c.MapAreaID == corps.MapAreaID && c.ActionKind == 2).Select(c => Calculator.GetAirSuperiority(c, isHighAltitude: true)).DefaultIfEmpty(0).Sum()
