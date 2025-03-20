@@ -1229,7 +1229,17 @@ namespace ElectronicObserver.Window
 			int[] levels = bd.Initial.EnemyLevels;
 			int[][] parameters = bd.Initial.EnemyParameters;
 			int[] hps = bd.Initial.EnemyMaxHPs;
+			
+			string tempfleetname = "未確認艦隊";
 
+			if (_enemyFleetCandidate != null && _enemyFleetCandidate.Count != 0 )
+			{
+				tempfleetname = _enemyFleetCandidate[0].FleetName;
+			}
+
+			_enemyFleetCandidate = null;
+			_enemyFleetCandidateIndex = -1;
+			_mergedEnemyFleetCandidate = null;
 
 			if (!bm.IsPractice)
 			{
@@ -1240,19 +1250,14 @@ namespace ElectronicObserver.Window
 					TextEnemyFleetName.Text = efrecord.FleetName;
 					TextEventDetail.Text = "Exp: " + efrecord.ExpShip;
 				}
-				else if (_enemyFleetCandidate != null && (_enemyFleetCandidate[0].FleetName == "未確認艦隊" || efrecord == null))
+				else if (TextEnemyFleetName.Text == TextEventDetail.Text)
 				{
-					TextEnemyFleetName.Text = _enemyFleetCandidate[0].FleetName;
+					TextEnemyFleetName.Text = tempfleetname;
 					TextEventDetail.Text = "Exp: 不明";
 				}
 
 				ToolTipInfo.SetToolTip(TextEventDetail, "敵艦隊ID: " + efcurrent.FleetID.ToString("x16"));
 			}
-
-
-			_enemyFleetCandidate = null;
-			_enemyFleetCandidateIndex = -1;
-			_mergedEnemyFleetCandidate = null;
 
 
 			TextFormation.Text = Constants.GetFormationShort((int)bd.Searching.FormationEnemy);
