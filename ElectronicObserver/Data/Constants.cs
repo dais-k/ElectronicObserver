@@ -423,6 +423,7 @@ namespace ElectronicObserver.Data
 				case 129: return "Mogador級";
 				case 130: return "大泊型";
 				case 131: return "Киров級";
+				case 132: return "特1TL型";
 				default: 
 					return "不明";
 			}
