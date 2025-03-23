@@ -225,7 +225,6 @@ namespace ElectronicObserver.Window
 								{
 									Name.ImageAlign = ContentAlignment.MiddleCenter;
 									Name.ImageIndex = -1;
-									sb.AppendLine("");
 								}
 								break;
 

@@ -1102,7 +1102,7 @@ namespace ElectronicObserver.Window
 				apishipidlv[i] = -1;
 			}
 
-			if (compass.Edeckinfo.Count > 0)
+			if (compass.Edeckinfo != null && compass.Edeckinfo.Count > 0)
 			{
 				foreach (var item in compass.Edeckinfo)
 				{
@@ -1129,7 +1129,7 @@ namespace ElectronicObserver.Window
 					_enemyFleetCandidate.Count != 0 ? _enemyFleetCandidate[0].FleetName : "未確認艦隊", compass.MapAreaID, compass.MapInfoID, compass.Destination, compass.MapInfo.EventDifficulty, formation, apishipids, apishipidlv, 0);
 			}
 
-			if (compass.EventKind != 4 && compass.EventKind != 6)
+			if (compass.EventKind != 4 && compass.EventKind != 6 && compass.EventKind != 8)
 			{
 				switch (Utility.Configuration.Config.FormCompass.NextEnemyFleetShowtype)
 				{
