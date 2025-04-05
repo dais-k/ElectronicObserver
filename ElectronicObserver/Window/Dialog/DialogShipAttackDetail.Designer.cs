@@ -238,7 +238,6 @@
 			this.SupportShellingPower = new ElectronicObserver.Window.Control.ImageLabel();
 			this.Errorpanel = new System.Windows.Forms.Panel();
 			this.ErrorMessage = new System.Windows.Forms.Label();
-			this.TankTP = new ElectronicObserver.Window.Control.ImageLabel();
 			this.TableParameterMain.SuspendLayout();
 			this.BasePanelShipGirl.SuspendLayout();
 			this.TableEquipment.SuspendLayout();
@@ -815,7 +814,6 @@
 			this.BasePanelShipGirl.Controls.Add(this.TableEquipment);
 			this.BasePanelShipGirl.Controls.Add(this.TableParameterMain);
 			this.BasePanelShipGirl.Controls.Add(this.Sanma);
-			this.BasePanelShipGirl.Controls.Add(this.TankTP);
 			this.BasePanelShipGirl.Controls.Add(this.TP);
 			this.BasePanelShipGirl.Controls.Add(this.NavalFreet);
 			this.BasePanelShipGirl.Location = new System.Drawing.Point(5, 6);
@@ -997,7 +995,7 @@
 			// Sanma
 			// 
 			this.Sanma.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.Sanma.Location = new System.Drawing.Point(26, 405);
+			this.Sanma.Location = new System.Drawing.Point(25, 394);
 			this.Sanma.Name = "Sanma";
 			this.Sanma.Size = new System.Drawing.Size(192, 16);
 			this.Sanma.TabIndex = 24;
@@ -1006,7 +1004,7 @@
 			// TP
 			// 
 			this.TP.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.TP.Location = new System.Drawing.Point(25, 361);
+			this.TP.Location = new System.Drawing.Point(25, 372);
 			this.TP.Name = "TP";
 			this.TP.Size = new System.Drawing.Size(147, 16);
 			this.TP.TabIndex = 24;
@@ -1015,7 +1013,7 @@
 			// NavalFreet
 			// 
 			this.NavalFreet.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.NavalFreet.Location = new System.Drawing.Point(25, 339);
+			this.NavalFreet.Location = new System.Drawing.Point(25, 350);
 			this.NavalFreet.Name = "NavalFreet";
 			this.NavalFreet.Size = new System.Drawing.Size(151, 16);
 			this.NavalFreet.TabIndex = 24;
@@ -2909,15 +2907,6 @@
 			this.ErrorMessage.Text = "この艦娘はもういません・・・";
 			this.ErrorMessage.Visible = false;
 			// 
-			// TankTP
-			// 
-			this.TankTP.Anchor = System.Windows.Forms.AnchorStyles.Left;
-			this.TankTP.Location = new System.Drawing.Point(26, 383);
-			this.TankTP.Name = "TankTP";
-			this.TankTP.Size = new System.Drawing.Size(221, 16);
-			this.TankTP.TabIndex = 24;
-			this.TankTP.Text = "戦車TP輸送量：S100 / A80 (※推定)";
-			// 
 			// DialogShipAttackDetail
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -3189,6 +3178,5 @@
 		private Control.ImageLabel SpItemSouk;
 		private Control.ImageLabel SpItemKaih;
 		private Control.ImageLabel Sanma;
-        private Control.ImageLabel TankTP;
-    }
+	}
 }

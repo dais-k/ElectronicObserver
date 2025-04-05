@@ -592,7 +592,7 @@ namespace ElectronicObserver.Utility.Data
 
 		/// <summary>
 		/// 煙幕発動
-		/// ※煙幕の発動率ではなく、煙幕が発動した場合に何重の煙幕になるかの格率
+		/// ※煙幕の発動率ではなく、煙幕が発動した場合に何重の煙幕になるかの確率
 		/// x.com/yukicacoon/status/1739480992090632669
 		/// </summary>
 		public static List<double> GetSmokeTriggerRates(FleetData fleet1, FleetData fleet2 )
@@ -698,13 +698,13 @@ namespace ElectronicObserver.Utility.Data
 		/// </summary>
 		/// <param name="fleet">対象の艦隊。</param>
 		/// <returns>減少TP。</returns>
-		public static int GetTPDamage(FleetData fleet, bool tank)
+		public static int GetTPDamage(FleetData fleet, int t)
 		{
 			int tp = 0;
 
 			foreach (var ship in fleet.MembersWithoutEscaped.Where(s => s != null && s.HPRate > 0.25))
 			{
-                tp += Calculator2.GetTPDamage(ship, tank);
+                tp += Calculator2.GetTPDamage(ship, t);
 			}
 
 			return tp;

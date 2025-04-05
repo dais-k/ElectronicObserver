@@ -913,13 +913,13 @@ namespace ElectronicObserver.Utility.Data
 		/// </summary>
 		/// <param name="ship">対象の艦娘。</param>
 		/// <returns>減少TP。</returns>
-		public static int GetTPDamage(ShipData ship, bool tank)
+		public static int GetTPDamage(ShipData ship, int t)
 		{
 			int tp = 0;
 
-			if (tank)
+			if (t != 0)
 			{
-				tp = GetTankTPDamage(ship);
+				tp = GetTankTPDamage(ship, t);
 			}
 			else
 			{
@@ -1005,10 +1005,10 @@ namespace ElectronicObserver.Utility.Data
 		/// </summary>
 		/// <param name="ship">対象の艦娘。</param>
 		/// <returns>減少TP。</returns>
-		public static int GetTankTPDamage(ShipData ship)
+		public static int GetTankTPDamage(ShipData ship, int c)
 		{
 			double tp = 0;
-
+			if (c >= 1) c -= 1;
 			// 装備ボーナス
 			foreach (var eq in ship.AllSlotInstanceMaster.Where(q => q != null))
 			{
@@ -1016,65 +1016,66 @@ namespace ElectronicObserver.Utility.Data
 				{
 
 					case 230: //特大発動艇+戦車第11連隊
-						tp += 46.2;
+						tp += (c == 0) ? 46.2 : 18.4;
 						break;
 					case 449: //特大発動艇+一式砲戦車
-						tp += 40.2; break;
+						tp += (c == 0) ? 40.2 : 28.4;
+						break;
 					case 499: //陸軍歩兵部隊+チハ改
-						tp += 38.0;
+						tp += (c == 0) ? 38.0 : 13.0;
 						break;
 					case 514: //特大発動艇+3号戦車J型
-						tp += 32.2;
+						tp += (c == 0) ? 32.2 : 21.4;
 						break;
 					case 495: //特大発チハ改
-						tp += 28.2;
+						tp += (c == 0) ? 28.2 : 19.4;
 						break;
 					case 482: //特大発動艇+3号戦車(北アフリカ仕様)
-						tp += 27.2;
+						tp += (c == 0) ? 27.2 : 16.4;
 						break;
 					case 355: //M4A1DD
-						tp += 24.2;
+						tp += (c == 0) ? 24.2 : 20.4;
 						break;
 					case 494: //特大発チハ
-						tp += 22.2;
+						tp += (c == 0) ? 22.2 : 17.4;
 						break;
 					case 498: //97式中戦車 新砲塔(チハ改)
-						tp += 23.0;
+						tp += (c == 0) ? 23.0 : 10.0;
 						break;
 					case 436: //大発動艇(II号戦車／北アフリカ仕様)
-						tp += 21.2;
+						tp += (c == 0) ? 21.2 : 14.4;
 						break;
 					case 497: //97式中戦車
-						tp += 17.0;
+						tp += (c == 0) ? 17.0 : 8.0;
 						break;
 					case 496: //陸軍歩兵部隊
-						tp += 15.0;
+						tp += (c == 0) ? 15.0 : 5.0;
 						break;
 					case 166: //大発動艇(89式中戦車＆陸戦隊)
-						tp += 14.2;
+						tp += (c == 0) ? 14.2 : 12.4;
 						break;
 					case 167: //特二式内火艇
-						tp += 9.3;
+						tp += (c == 0) ? 9.3 : 19.6;
 						break;
 					case 526: //特四式内火艇改
-						tp += 8.3;
+						tp += (c == 0) ? 8.3 : 19.6;
 						break;
 					case 525: //特四式内火艇
-						tp += 6.3;
+						tp += (c == 0) ? 6.3 : 16.6;
 						break;
 					case 68:  //大発動艇
 					case 193: //特大発動艇
 					case 408: //装甲艇(AB艇)
 					case 409: //武装大発
-						tp += 5.2;
+						tp += (c == 0) ? 5.2 : 6.4;
 						break;
 					case 75:  //ドラム缶
-						tp += 3.25;
+						tp += (c == 0) ? 3.25 : 4.0;
 						break;
 					case 145: //戦闘糧食
 					case 150: //戦闘糧食
 					case 241: //戦闘糧食(特別なおにぎり)
-						tp += 0.65;
+						tp += (c == 0) ? 0.65 : 0.8;
 						break;
 				}
 			}
@@ -1084,45 +1085,45 @@ namespace ElectronicObserver.Utility.Data
 			{
 
 				case ShipTypes.Destroyer:
-					tp += 3.25;
+					tp += (c == 0) ? 3.25 : 4.0;
 					break;
 
 				case ShipTypes.LightCruiser:
-					tp += 1.3;
+					tp += (c == 0) ? 1.3 : 1.6;
 					if (ship.ShipID == 487) // 鬼怒改二
 						tp += 8;
 					break;
 
 				case ShipTypes.AviationCruiser:
-					tp += 2.6;
+					tp += (c == 0) ? 2.6 : 3.2;
 					break;
 
 				case ShipTypes.AviationBattleship:
-					tp += 4.55;
+					tp += (c == 0) ? 4.55 : 5.6;
 					break;
 
 				case ShipTypes.SeaplaneTender:
-					tp += 5.85;
+					tp += (c == 0) ? 5.85 : 7.2;
 					break;
 
 				case ShipTypes.AmphibiousAssaultShip:
-					tp += 7.8;
+					tp += (c == 0) ? 7.8 : 9.6;
 					break;
 
 				case ShipTypes.SubmarineTender:
-					tp += 4.55;
+					tp += (c == 0) ? 4.55 : 5.6;
 					break;
 
 				case ShipTypes.TrainingCruiser:
-					tp += 3.9;
+					tp += (c == 0) ? 3.9 : 4.8;
 					break;
 
 				case ShipTypes.FleetOiler:
-					tp += 9.75;
+					tp += (c == 0) ? 9.75 : 12;
 					break;
 
 				case ShipTypes.SubmarineAircraftCarrier:
-					tp += 0.65;
+					tp += (c == 0) ? 0.65 : 0.8;
 					break;
 			}
 			return (int)Math.Floor(tp);

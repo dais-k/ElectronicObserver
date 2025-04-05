@@ -376,6 +376,7 @@ namespace ElectronicObserver.Window.Dialog
 			Control_ShowSallyAreaAlertDialog.Checked = config.Control.ShowSallyAreaAlertDialog;
 			Control_ShowExpeditionAlertDialog.Checked = config.Control.ShowExpeditionAlertDialog;
 			Control_ShowDialogChooseAirBase.Checked = config.Control.ShowDialogChooseAirBase;
+            Control_ChooseTankTP.SelectedIndex = config.Control.ChooseTankTP;
 
 			//[デバッグ]
 			Debug_EnableDebugMenu.Checked = config.Debug.EnableDebugMenu;
@@ -602,6 +603,7 @@ namespace ElectronicObserver.Window.Dialog
 			config.Control.ShowSallyAreaAlertDialog = Control_ShowSallyAreaAlertDialog.Checked;
 			config.Control.ShowExpeditionAlertDialog = Control_ShowExpeditionAlertDialog.Checked;
 			config.Control.ShowDialogChooseAirBase = Control_ShowDialogChooseAirBase.Checked;
+            config.Control.ChooseTankTP = Control_ChooseTankTP.SelectedIndex;
 
 			//[デバッグ]
 			config.Debug.EnableDebugMenu = Debug_EnableDebugMenu.Checked;

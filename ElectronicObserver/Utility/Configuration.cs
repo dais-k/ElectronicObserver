@@ -401,6 +401,11 @@ namespace ElectronicObserver.Utility
 				/// </summary>
 				public bool ShowDialogChooseAirBase { get; set; }
 
+				/// <summary>
+				/// イベント時の戦車TP表示切替
+				/// </summary>
+				public int ChooseTankTP { get; set; }
+
 				public ConfigControl()
 				{
 					ConditionBorder = 40;
@@ -413,8 +418,11 @@ namespace ElectronicObserver.Utility
 					ExpCheckerExpUnit = 2268;
 					ShowExpeditionAlertDialog = true;
 					ShowDialogChooseAirBase = true;
+					ChooseTankTP = 0;
+
 				}
 			}
+
 			/// <summary>動作</summary>
 			[DataMember]
 			public ConfigControl Control { get; private set; }

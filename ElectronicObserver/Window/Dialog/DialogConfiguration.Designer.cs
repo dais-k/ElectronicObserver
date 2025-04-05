@@ -81,7 +81,9 @@
 			this.Control_ShowDialogChooseAirBase = new System.Windows.Forms.CheckBox();
 			this.Control_ShowExpeditionAlertDialog = new System.Windows.Forms.CheckBox();
 			this.Control_ShowSallyAreaAlertDialog = new System.Windows.Forms.CheckBox();
+			this.Control_ChooseTankTP = new System.Windows.Forms.ComboBox();
 			this.Control_PowerEngagementForm = new System.Windows.Forms.ComboBox();
+			this.label47 = new System.Windows.Forms.Label();
 			this.label29 = new System.Windows.Forms.Label();
 			this.Control_UseSystemVolume = new System.Windows.Forms.CheckBox();
 			this.Control_RecordAutoSaving = new System.Windows.Forms.ComboBox();
@@ -886,7 +888,9 @@
 			this.tabPage4.Controls.Add(this.Control_ShowDialogChooseAirBase);
 			this.tabPage4.Controls.Add(this.Control_ShowExpeditionAlertDialog);
 			this.tabPage4.Controls.Add(this.Control_ShowSallyAreaAlertDialog);
+			this.tabPage4.Controls.Add(this.Control_ChooseTankTP);
 			this.tabPage4.Controls.Add(this.Control_PowerEngagementForm);
+			this.tabPage4.Controls.Add(this.label47);
 			this.tabPage4.Controls.Add(this.label29);
 			this.tabPage4.Controls.Add(this.Control_UseSystemVolume);
 			this.tabPage4.Controls.Add(this.Control_RecordAutoSaving);
@@ -936,6 +940,20 @@
         "す。ご了承ください。");
 			this.Control_ShowSallyAreaAlertDialog.UseVisualStyleBackColor = true;
 			// 
+			// Control_ChooseTankTP
+			// 
+			this.Control_ChooseTankTP.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.Control_ChooseTankTP.FormattingEnabled = true;
+			this.Control_ChooseTankTP.Items.AddRange(new object[] {
+            "従来の計算式",
+            "2025年春イベント E2 (北海道北東沖/宗谷海峡沖)",
+            "2025年春イベント E5 (ミンドロ島沖/キャビテ沖/サンホセ沖)"});
+			this.Control_ChooseTankTP.Location = new System.Drawing.Point(124, 193);
+			this.Control_ChooseTankTP.Name = "Control_ChooseTankTP";
+			this.Control_ChooseTankTP.Size = new System.Drawing.Size(315, 23);
+			this.Control_ChooseTankTP.TabIndex = 5;
+			this.ToolTipInfo.SetToolTip(this.Control_ChooseTankTP, "イベント海域における特殊TP輸送表示");
+			// 
 			// Control_PowerEngagementForm
 			// 
 			this.Control_PowerEngagementForm.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
@@ -950,6 +968,15 @@
 			this.Control_PowerEngagementForm.Size = new System.Drawing.Size(121, 23);
 			this.Control_PowerEngagementForm.TabIndex = 5;
 			this.ToolTipInfo.SetToolTip(this.Control_PowerEngagementForm, "威力（戦闘における攻撃力）を計算する際の、基準となる交戦形態を設定します。");
+			// 
+			// label47
+			// 
+			this.label47.AutoSize = true;
+			this.label47.Location = new System.Drawing.Point(6, 196);
+			this.label47.Name = "label47";
+			this.label47.Size = new System.Drawing.Size(113, 15);
+			this.label47.TabIndex = 4;
+			this.label47.Text = "表示するTP輸送量：";
 			// 
 			// label29
 			// 
@@ -1050,7 +1077,7 @@
 			this.Debug_SealingPanel.Controls.Add(this.Debug_APIListPathSearch);
 			this.Debug_SealingPanel.Location = new System.Drawing.Point(0, 56);
 			this.Debug_SealingPanel.Name = "Debug_SealingPanel";
-			this.Debug_SealingPanel.Size = new System.Drawing.Size(696, 203);
+			this.Debug_SealingPanel.Size = new System.Drawing.Size(696, 197);
 			this.Debug_SealingPanel.TabIndex = 1;
 			// 
 			// Debug_APIListPath
@@ -1685,7 +1712,7 @@
 			this.tabPage9.Location = new System.Drawing.Point(4, 22);
 			this.tabPage9.Name = "tabPage9";
 			this.tabPage9.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage9.Size = new System.Drawing.Size(682, 342);
+			this.tabPage9.Size = new System.Drawing.Size(682, 340);
 			this.tabPage9.TabIndex = 1;
 			this.tabPage9.Text = "工廠";
 			this.tabPage9.UseVisualStyleBackColor = true;
@@ -1761,7 +1788,7 @@
 			this.tabPage19.Location = new System.Drawing.Point(4, 22);
 			this.tabPage19.Name = "tabPage19";
 			this.tabPage19.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage19.Size = new System.Drawing.Size(682, 342);
+			this.tabPage19.Size = new System.Drawing.Size(682, 340);
 			this.tabPage19.TabIndex = 8;
 			this.tabPage19.Text = "入渠";
 			this.tabPage19.UseVisualStyleBackColor = true;
@@ -1828,7 +1855,7 @@
 			this.tabPage16.Location = new System.Drawing.Point(4, 22);
 			this.tabPage16.Name = "tabPage16";
 			this.tabPage16.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage16.Size = new System.Drawing.Size(682, 342);
+			this.tabPage16.Size = new System.Drawing.Size(682, 340);
 			this.tabPage16.TabIndex = 6;
 			this.tabPage16.Text = "司令部";
 			this.tabPage16.UseVisualStyleBackColor = true;
@@ -1868,7 +1895,7 @@
 			this.FormHeadquarters_Visibility.IntegralHeight = false;
 			this.FormHeadquarters_Visibility.Location = new System.Drawing.Point(6, 46);
 			this.FormHeadquarters_Visibility.Name = "FormHeadquarters_Visibility";
-			this.FormHeadquarters_Visibility.Size = new System.Drawing.Size(150, 288);
+			this.FormHeadquarters_Visibility.Size = new System.Drawing.Size(150, 286);
 			this.FormHeadquarters_Visibility.TabIndex = 1;
 			// 
 			// FormHeadquarters_BlinkAtMaximum
@@ -1895,7 +1922,7 @@
 			this.tabPage18.Location = new System.Drawing.Point(4, 22);
 			this.tabPage18.Name = "tabPage18";
 			this.tabPage18.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage18.Size = new System.Drawing.Size(682, 342);
+			this.tabPage18.Size = new System.Drawing.Size(682, 340);
 			this.tabPage18.TabIndex = 7;
 			this.tabPage18.Text = "羅針盤";
 			this.tabPage18.UseVisualStyleBackColor = true;
@@ -2028,7 +2055,7 @@
 			this.tabPage10.Location = new System.Drawing.Point(4, 22);
 			this.tabPage10.Name = "tabPage10";
 			this.tabPage10.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage10.Size = new System.Drawing.Size(682, 342);
+			this.tabPage10.Size = new System.Drawing.Size(682, 340);
 			this.tabPage10.TabIndex = 2;
 			this.tabPage10.Text = "任務";
 			this.tabPage10.UseVisualStyleBackColor = true;
@@ -2150,7 +2177,7 @@
 			this.tabPage13.Location = new System.Drawing.Point(4, 22);
 			this.tabPage13.Name = "tabPage13";
 			this.tabPage13.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage13.Size = new System.Drawing.Size(682, 342);
+			this.tabPage13.Size = new System.Drawing.Size(682, 340);
 			this.tabPage13.TabIndex = 4;
 			this.tabPage13.Text = "グループ";
 			this.tabPage13.UseVisualStyleBackColor = true;
@@ -2230,7 +2257,7 @@
 			this.tabPage20.Location = new System.Drawing.Point(4, 22);
 			this.tabPage20.Name = "tabPage20";
 			this.tabPage20.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage20.Size = new System.Drawing.Size(682, 342);
+			this.tabPage20.Size = new System.Drawing.Size(682, 340);
 			this.tabPage20.TabIndex = 10;
 			this.tabPage20.Text = "戦闘";
 			this.tabPage20.UseVisualStyleBackColor = true;
@@ -2314,7 +2341,7 @@
 			this.tabPage12.Location = new System.Drawing.Point(4, 22);
 			this.tabPage12.Name = "tabPage12";
 			this.tabPage12.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage12.Size = new System.Drawing.Size(682, 342);
+			this.tabPage12.Size = new System.Drawing.Size(682, 340);
 			this.tabPage12.TabIndex = 3;
 			this.tabPage12.Text = "ブラウザ";
 			this.tabPage12.UseVisualStyleBackColor = true;
@@ -2625,7 +2652,7 @@
 			this.tabPage21.Location = new System.Drawing.Point(4, 22);
 			this.tabPage21.Name = "tabPage21";
 			this.tabPage21.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage21.Size = new System.Drawing.Size(682, 342);
+			this.tabPage21.Size = new System.Drawing.Size(682, 340);
 			this.tabPage21.TabIndex = 11;
 			this.tabPage21.Text = "基地航空隊";
 			this.tabPage21.UseVisualStyleBackColor = true;
@@ -2648,7 +2675,7 @@
 			this.SubWindow_Json.Location = new System.Drawing.Point(4, 22);
 			this.SubWindow_Json.Name = "SubWindow_Json";
 			this.SubWindow_Json.Padding = new System.Windows.Forms.Padding(3);
-			this.SubWindow_Json.Size = new System.Drawing.Size(682, 342);
+			this.SubWindow_Json.Size = new System.Drawing.Size(682, 340);
 			this.SubWindow_Json.TabIndex = 9;
 			this.SubWindow_Json.Text = "JSON";
 			this.SubWindow_Json.UseVisualStyleBackColor = true;
@@ -2665,7 +2692,7 @@
 			this.SubWindow_Json_SealingPanel.Location = new System.Drawing.Point(3, 3);
 			this.SubWindow_Json_SealingPanel.Margin = new System.Windows.Forms.Padding(0);
 			this.SubWindow_Json_SealingPanel.Name = "SubWindow_Json_SealingPanel";
-			this.SubWindow_Json_SealingPanel.Size = new System.Drawing.Size(676, 336);
+			this.SubWindow_Json_SealingPanel.Size = new System.Drawing.Size(676, 334);
 			this.SubWindow_Json_SealingPanel.TabIndex = 6;
 			// 
 			// FormJson_AutoUpdate
@@ -2795,7 +2822,7 @@
 			// 
 			this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
 			this.label10.AutoSize = true;
-			this.label10.Location = new System.Drawing.Point(3, 274);
+			this.label10.Location = new System.Drawing.Point(3, 268);
 			this.label10.Name = "label10";
 			this.label10.Size = new System.Drawing.Size(238, 15);
 			this.label10.TabIndex = 5;
@@ -2940,7 +2967,7 @@
 			this.BGMPlayer_ControlGrid.RowHeadersVisible = false;
 			this.BGMPlayer_ControlGrid.RowTemplate.Height = 21;
 			this.BGMPlayer_ControlGrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-			this.BGMPlayer_ControlGrid.Size = new System.Drawing.Size(684, 223);
+			this.BGMPlayer_ControlGrid.Size = new System.Drawing.Size(684, 217);
 			this.BGMPlayer_ControlGrid.TabIndex = 0;
 			this.BGMPlayer_ControlGrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.BGMPlayer_ControlGrid_CellContentClick);
 			this.BGMPlayer_ControlGrid.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.BGMPlayer_ControlGrid_CellFormatting);
@@ -3363,5 +3390,7 @@
         private System.Windows.Forms.CheckBox Control_ShowDialogChooseAirBase;
         private System.Windows.Forms.ComboBox FormCompass_NextEnemyFleetShowtype;
         private System.Windows.Forms.Label label46;
+        private System.Windows.Forms.ComboBox Control_ChooseTankTP;
+        private System.Windows.Forms.Label label47;
     }
 }

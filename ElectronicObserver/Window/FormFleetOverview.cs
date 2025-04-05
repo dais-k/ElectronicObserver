@@ -256,9 +256,8 @@ namespace ElectronicObserver.Window
 
 				var fleet1 = KCDatabase.Instance.Fleet[1];
 				var fleet2 = KCDatabase.Instance.Fleet[2];
-
-				int tp = Calculator.GetTPDamage(fleet1, false) + Calculator.GetTPDamage(fleet2, false);
-				int tanktp = Calculator.GetTPDamage(fleet1, true) + Calculator.GetTPDamage(fleet2, true);
+                int t = Utility.Configuration.Config.Control.ChooseTankTP;
+				int tp = Calculator.GetTPDamage(fleet1, t) + Calculator.GetTPDamage(fleet2, t);
 				var smokeGenrate = Calculator.GetSmokeTriggerRates(fleet1, fleet2);
 
 				var members = fleet1.MembersWithoutEscaped.Concat(fleet2.MembersWithoutEscaped).Where(s => s != null);
@@ -271,14 +270,12 @@ namespace ElectronicObserver.Window
 				if (kinu >= 2) //鬼怒改二が2人いたらTP合計から-8する
 				{
 					tp -= 8;
-					tanktp -= 8;
 				}
 
 				ToolTipInfo.SetToolTip(CombinedTag, string.Format(
 					"ドラム缶搭載: {0}個\r\n" +
 					"大発動艇搭載: {1}個\r\n" +
 					"輸送量(TP): S {2} / A {3}\r\n" +
-					"戦車輸送量(TP): S {14} / A {15}\r\n\r\n" + 
 					"制空戦力合計: {4}\r\n" +
 					"索敵能力合計: {5:f2}\r\n" +
 					"新判定式(33):\r\n" +
@@ -300,9 +297,7 @@ namespace ElectronicObserver.Window
 					smokeGenrate[0],
 					smokeGenrate[1],
 					smokeGenrate[2],
-					smokeGenrate[3],
-					tanktp,
-					(int)Math.Floor(tanktp * 0.7)
+					smokeGenrate[3]
 					));
 
 

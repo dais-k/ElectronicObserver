@@ -32,6 +32,7 @@ namespace ElectronicObserver.Window
 			public ImageLabel AirSuperiority;
 			public ImageLabel SearchingAbility;
 			public ImageLabel AntiAirPower;
+			public ImageLabel TrafficTP;
 			public ToolTip ToolTipInfo;
 
 			public int BranchWeight { get; private set; } = 1;
@@ -96,6 +97,17 @@ namespace ElectronicObserver.Window
 					AutoSize = true
 				};
 
+				TrafficTP = new ImageLabel
+				{
+					Anchor = AnchorStyles.Left,
+					ForeColor = parent.MainFontColor,
+					ImageList = ResourceManager.Instance.Equipments,
+					ImageIndex = (int)ResourceManager.EquipmentContent.DrumCanister,
+					Padding = new Padding(2, 2, 2, 2),
+					Margin = new Padding(2, 0, 2, 0),
+					AutoSize = true
+				};
+
 
 				ConfigurationChanged(parent);
 
@@ -118,6 +130,7 @@ namespace ElectronicObserver.Window
 				table.Controls.Add(AirSuperiority, 2, 0);
 				table.Controls.Add(SearchingAbility, 3, 0);
 				table.Controls.Add(AntiAirPower, 4, 0);
+				table.Controls.Add(TrafficTP, 5, 0);
 				table.ResumeLayout();
 			}
 
@@ -167,8 +180,7 @@ namespace ElectronicObserver.Window
 					}
 
 					double expeditionBonus = Calculator.GetExpeditionBonus(fleet);
-					int tp = Calculator.GetTPDamage(fleet, false);
-					int tanktp = Calculator.GetTPDamage(fleet, true);
+					int tp = Calculator.GetTPDamage(fleet, Utility.Configuration.Config.Control.ChooseTankTP);
 
 					// 各艦ごとの ドラム缶 or 大発系 を搭載している個数
 					var transport = members.Select(s => s.AllSlotInstanceMaster.Count(eq => eq?.CategoryType == EquipmentTypes.TransportContainer));
@@ -185,7 +197,6 @@ namespace ElectronicObserver.Window
 						"ドラム缶搭載: {8}個 ({9}艦)\r\n" +
 						"大発動艇搭載: {10}個 ({11}艦, +{12:p1})\r\n" +
 						"輸送量(TP): S {13} / A {14}\r\n" +
-						"戦車輸送量(TP): S {23} / A {24}\r\n" +
 						"総積載: 燃 {15} / 弾 {16}\r\n" +
 						"(1戦当たり 燃 {17} / 弾 {18})\r\n" +
 						"煙幕発動 3重:{19:0.0} / 2重:{20:0.0} / 1重:{21:0.0} / 不発:{22:0.0}",
@@ -211,9 +222,7 @@ namespace ElectronicObserver.Window
 						smokeGenrate[0],
 						smokeGenrate[1],
 						smokeGenrate[2],
-						smokeGenrate[3],
-						tanktp,
-						(int)Math.Floor(tanktp * 0.7)
+						smokeGenrate[3]
 						));
 
 				}
@@ -273,6 +282,45 @@ namespace ElectronicObserver.Window
 
 					ToolTipInfo.SetToolTip(AntiAirPower, sb.ToString());
 				}
+
+				// TP輸送量計算
+				{
+					var sb = new StringBuilder();
+					int t = Utility.Configuration.Config.Control.ChooseTankTP;
+					double tp = Calculator.GetTPDamage(fleet, t);
+					TrafficTP.Text = tp.ToString();
+					switch (t)
+					{
+						case 0:
+							TrafficTP.ImageIndex = (int)ResourceManager.EquipmentContent.DrumCanister;
+							sb.AppendFormat("従来TP\r\n");
+							sb.AppendFormat("S:{0} / A:{1}", tp.ToString(), ((int)Math.Floor(tp * 0.7)).ToString());
+							sb.AppendFormat("\r\n\r\n2025春イベ E2\r\n");
+							sb.AppendFormat("S:{0} / A:{1}", Calculator.GetTPDamage(fleet, 1).ToString(), ((int)Math.Floor(Calculator.GetTPDamage(fleet, 1) * 0.7)).ToString());
+							sb.AppendFormat("\r\n2025春イベ E2\r\n");
+							sb.AppendFormat("S:{0} / A:{1}", Calculator.GetTPDamage(fleet, 2).ToString(), ((int)Math.Floor(Calculator.GetTPDamage(fleet, 2) * 0.7)).ToString());
+							break;
+						case 1:
+							TrafficTP.ImageIndex = (int)ResourceManager.EquipmentContent.ArmyInfantry;
+							sb.AppendFormat("2025春イベ E2\r\n");
+							sb.AppendFormat("S:{0} / A:{1}", tp.ToString(), ((int)Math.Floor(tp * 0.7)).ToString());
+							sb.AppendFormat("\r\n\r\n2025春イベ E5\r\n");
+							sb.AppendFormat("S:{0} / A:{1}", Calculator.GetTPDamage(fleet, 2).ToString(), ((int)Math.Floor(Calculator.GetTPDamage(fleet, 2) * 0.7)).ToString());
+							sb.AppendFormat("\r\n従来TP\r\n");
+							sb.AppendFormat("S:{0} / A:{1}", Calculator.GetTPDamage(fleet, 0).ToString(), ((int)Math.Floor(Calculator.GetTPDamage(fleet, 0) * 0.7)).ToString());
+							break;
+						case 2:
+							TrafficTP.ImageIndex = (int)ResourceManager.EquipmentContent.AmphibiousVehicle;
+							sb.AppendFormat("2025春イベ E5\r\n");
+							sb.AppendFormat("S:{0} / A:{1}", tp.ToString(), ((int)Math.Floor(tp * 0.7)).ToString());
+							sb.AppendFormat("\r\n\r\n2025春イベ E2\r\n");
+							sb.AppendFormat("S:{0} / A:{1}", Calculator.GetTPDamage(fleet, 1).ToString(), ((int)Math.Floor(Calculator.GetTPDamage(fleet, 1) * 0.7)).ToString());
+							sb.AppendFormat("\r\n従来TP\r\n");
+							sb.AppendFormat("S:{0} / A:{1}", Calculator.GetTPDamage(fleet, 0).ToString(), ((int)Math.Floor(Calculator.GetTPDamage(fleet, 0) * 0.7)).ToString());
+							break;
+					}
+					ToolTipInfo.SetToolTip(TrafficTP, sb.ToString());
+				}
 			}
 
 			public void Refresh()
@@ -299,6 +347,7 @@ namespace ElectronicObserver.Window
 				AirSuperiority.Dispose();
 				SearchingAbility.Dispose();
 				AntiAirPower.Dispose();
+				TrafficTP.Dispose();
 			}
 		}
 
@@ -1195,7 +1244,7 @@ namespace ElectronicObserver.Window
 			FleetData fleet = db.Fleet[FleetID];
 			if (fleet == null) return;
 
-			sb.AppendFormat("{0}\t制空戦力{1} / 索敵能力 {2} / 輸送能力 {3} / 戦車輸送能力※推定 {4}\r\n", fleet.Name, fleet.GetAirSuperiority(), fleet.GetSearchingAbilityString(ControlFleet.BranchWeight), Calculator.GetTPDamage(fleet, false), Calculator.GetTPDamage(fleet, true));
+			sb.AppendFormat("{0}\t制空戦力{1} / 索敵能力 {2} / 輸送能力 {3}\r\n", fleet.Name, fleet.GetAirSuperiority(), fleet.GetSearchingAbilityString(ControlFleet.BranchWeight), Calculator.GetTPDamage(fleet, Utility.Configuration.Config.Control.ChooseTankTP));
 			for (int i = 0; i < fleet.Members.Count; i++)
 			{
 				if (fleet[i] == -1)

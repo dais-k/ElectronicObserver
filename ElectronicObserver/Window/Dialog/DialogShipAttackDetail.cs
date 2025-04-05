@@ -97,7 +97,6 @@ namespace ElectronicObserver.Window.Dialog
 			Equipment5.ImageList =
 			EquipmentEx.ImageList =
 			TP.ImageList =
-            TankTP.ImageList =
 			Sanma.ImageList =
 				ResourceManager.Instance.Equipments;
 
@@ -116,9 +115,8 @@ namespace ElectronicObserver.Window.Dialog
 			TitleBomber.ImageIndex = (int)ResourceManager.IconContent.ParameterBomber;
 			TitleCarry.ImageIndex = (int)ResourceManager.IconContent.ParameterAircraft;
 			NavalFreet.ImageIndex = (int)ResourceManager.IconContent.FormFleet;
-			TP.ImageIndex = (int)ResourceManager.EquipmentContent.Supplies;
-            TankTP.ImageIndex = (int)ResourceManager.EquipmentContent.ArmyInfantry;
-            Sanma.ImageIndex = (int)ResourceManager.EquipmentContent.Sonar;
+			TP.ImageIndex = (int)ResourceManager.EquipmentContent.DrumCanister;
+			Sanma.ImageIndex = (int)ResourceManager.EquipmentContent.Sonar;
 
 			ControlHelper.SetDoubleBuffered(TableDayAttack);
 			ControlHelper.SetDoubleBuffered(TableNightAttack);
@@ -349,15 +347,24 @@ namespace ElectronicObserver.Window.Dialog
 				}
 			}
 			//TP輸送量
-			int tpdamage = Calculator2.GetTPDamage(shipData, false);
-			TP.Text = "TP輸送量：S " + tpdamage + " / A " + Math.Floor(tpdamage * 0.7);
+            int c = Utility.Configuration.Config.Control.ChooseTankTP;
+            int tpdamage = Calculator2.GetTPDamage(shipData, c);
+            switch (c)
+            {
+                case 0:
+                    TP.ImageIndex = (int)ResourceManager.EquipmentContent.DrumCanister;
+                    break;
+                case 1:
+                    TP.ImageIndex = (int)ResourceManager.EquipmentContent.ArmyInfantry;
+                    break;
+                case 2:
+                    TP.ImageIndex = (int)ResourceManager.EquipmentContent.AmphibiousVehicle;
+                    break;
+            }
+            TP.Text = "TP輸送量：S " + tpdamage + " / A " + Math.Floor(tpdamage * 0.7);
 
-            //戦車TP輸送量
-            int tanktpdamage = Calculator2.GetTPDamage(shipData, true);
-            TankTP.Text = "戦車TP輸送量：S " + tanktpdamage + " / A " + Math.Floor(tanktpdamage * 0.7) + " (※推定)";
-            
-            //秋刀魚
-            Sanma.Text = "秋刀魚漁支援装備：" + shipData.SanmaEquipCount + " (※爆雷"+ shipData.SanmaEquipCountBomb +")";
+			//秋刀魚
+			Sanma.Text = "秋刀魚漁支援装備：" + shipData.SanmaEquipCount + " (※爆雷"+ shipData.SanmaEquipCountBomb +")";
 
 			TableEquipment.ResumeLayout();
 			BasePanelShipGirl.ResumeLayout();
