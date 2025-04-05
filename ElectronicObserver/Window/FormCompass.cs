@@ -704,7 +704,7 @@ namespace ElectronicObserver.Window
 					case 7:     // 夜昼戦(対連合艦隊)
 						return Color.Navy;
 					case 8:     // レーダー射撃
-						return Color.Navy;
+						return Color.DarkOrange;
 				}
 			}
 
@@ -873,6 +873,12 @@ namespace ElectronicObserver.Window
 								eventkind += "/" + Constants.GetMapEventKind(compass.EventKind);
 
 								TextEventKind.ForeColor = getColorFromEventKind(compass.EventKind);
+							}
+							else if (compass.ColorID == 15)
+							{
+								eventkind += "/" + "対潜空襲";
+
+								TextEventKind.ForeColor = Color.DarkMagenta;
 							}
 							UpdateEnemyFleet();
 							break;
