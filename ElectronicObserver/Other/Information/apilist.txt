@@ -1646,20 +1646,7 @@ api_req_map/start		：出撃　同じメンバはnextのほうが情報が新し
 	api_cell_data		：当該海域の全セルデータ
 		api_id			：海域セルユニークID(全海域の通し番号)
 		api_no			：海域セルID(同海域内限定)
-		api_color_no	：セルの状態
-							 0=初期位置
-							 1=(存在せず)
-							 2=資源獲得
-							 3=渦潮
-							 4=通常戦闘, 気のせいだった
-							 5=ボス戦闘
-							 6=揚陸地点
-							 7=航空戦
-							 8=船団護衛成功
-							 9=航空偵察
-							10=長距離空襲戦
-							13=レーダー射撃
-							14=泊地
+		api_color_no	：次のセルの色
 		api_passed		：1=通行済み　初期地点は常に0
 	api_rashin_flg		：
 	api_rashin_id		：
@@ -1693,7 +1680,21 @@ api_req_map/next		：進撃
 	api_maparea_id		：海域カテゴリID(2-3でいう2)
 	api_mapinfo_no		：海域カテゴリ内番号(2-3でいう3)
 	api_no				：次に向かうセルのID
-	api_color_no		：次のセルの色　api_req_map/start.api_cell_data.api_color_no と同じ　
+	api_color_no		：次のセルの色
+							 0=初期位置
+							 1=(存在せず)
+							 2=資源獲得
+							 3=渦潮
+							 4=通常戦闘, 気のせいだった
+							 5=ボス戦闘
+							 6=揚陸地点
+							 7=航空戦
+							 8=船団護衛成功
+							 9=航空偵察
+							10=長距離空襲戦
+							13=レーダー射撃
+							14=泊地
+							15=対潜空襲
 	api_event_id		：イベント
 							 0=初期位置
 							 1=イベントなし
