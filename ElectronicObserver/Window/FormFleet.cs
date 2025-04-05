@@ -107,7 +107,7 @@ namespace ElectronicObserver.Window
 					Margin = new Padding(2, 0, 2, 0),
 					AutoSize = true
 				};
-
+				TrafficTP.Click += (sender, e) => TrafficTP_Click(sender, e, parent.FleetID);
 
 				ConfigurationChanged(parent);
 
@@ -139,6 +139,15 @@ namespace ElectronicObserver.Window
 				BranchWeight--;
 				if (BranchWeight <= 0)
 					BranchWeight = 4;
+
+				Update(KCDatabase.Instance.Fleet[fleetID]);
+			}
+
+			private void TrafficTP_Click(object sender, EventArgs e, int fleetID)
+			{
+				Utility.Configuration.Config.Control.ChooseTankTP ++;
+				if (Utility.Configuration.Config.Control.ChooseTankTP > 2)
+					Utility.Configuration.Config.Control.ChooseTankTP = 0;
 
 				Update(KCDatabase.Instance.Fleet[fleetID]);
 			}
@@ -319,6 +328,7 @@ namespace ElectronicObserver.Window
 							sb.AppendFormat("S:{0} / A:{1}", Calculator.GetTPDamage(fleet, 0).ToString(), ((int)Math.Floor(Calculator.GetTPDamage(fleet, 0) * 0.7)).ToString());
 							break;
 					}
+					sb.AppendFormat("\r\n(クリックで切り替え)");
 					ToolTipInfo.SetToolTip(TrafficTP, sb.ToString());
 				}
 			}
