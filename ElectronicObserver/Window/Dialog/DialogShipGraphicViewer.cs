@@ -30,7 +30,7 @@ namespace ElectronicObserver.Window.Dialog
 		InterpolationMode Interpolation = InterpolationMode.NearestNeighbor;
 		bool AdvMode = false;
 		bool RestrictedPatch = false;
-		bool DrawsInformation = true;
+		bool DrawsInformation = false;
 
 
 		private DialogShipGraphicViewer()
@@ -298,9 +298,19 @@ namespace ElectronicObserver.Window.Dialog
 				if (resourceType == KCResourceHelper.ResourceTypeShipName && isDamaged)
 					return;
 
-				var path = KCResourceHelper.GetShipImagePath(id, isDamaged, resourceType);
-				if (path != null)
-					list.AddLast(path);
+				if (resourceType == KCResourceHelper.ResourceTypeShipFull)
+				{
+					var pathall = KCResourceHelper.GetShipImagePathAll(id, isDamaged, resourceType);
+					if (pathall != null)
+						foreach (var p in pathall)
+						list.AddLast(p);
+				}
+				else
+				{
+					var path = KCResourceHelper.GetShipImagePath(id, isDamaged, resourceType);
+					if (path != null)
+						list.AddLast(path);
+				}
 			}
 			void AddShip(int id)
 			{
@@ -400,8 +410,13 @@ namespace ElectronicObserver.Window.Dialog
 
 				e.Graphics.DrawString(
 					string.Format("{0} / {1}\r\n{2} ({3})\r\nZoom {4:p1}\r\n(←/→キーでページめくり)",
-						CurrentIndex + 1, ImagePathList.Count, Path.GetFileName(ImagePathList[CurrentIndex]), ship?.NameWithClass ?? "???", zoomRate),
+						CurrentIndex + 1, ImagePathList.Count, Path.GetFileName(ImagePathList[CurrentIndex]), ship?.NameWithClass ?? "期間限定mode", zoomRate),
 					Font, Brushes.DimGray, new PointF(0, 0));
+			}
+			else
+			{
+				this.Text = "艦娘画像ビューア - " + string.Format("({0} / {1}) {2} ({3}) [{4:p1}]",
+							CurrentIndex + 1, ImagePathList.Count, Path.GetFileName(ImagePathList[CurrentIndex]), GetShipFromPath(ImagePathList[CurrentIndex])?.NameWithClass ?? "期間限定mode", zoomRate);
 			}
 
 			var location = new PointF((panelSize.Width - imgSize.Width) / 2 + ImageOffset.X, (panelSize.Height - imgSize.Height) / 2 + ImageOffset.Y);
@@ -427,7 +442,6 @@ namespace ElectronicObserver.Window.Dialog
 			{
 				DrawAdvMode(e.Graphics);
 			}
-
 		}
 
 		// かん☆これ!!

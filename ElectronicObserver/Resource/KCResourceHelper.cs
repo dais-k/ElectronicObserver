@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ElectronicObserver.Data;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
@@ -80,19 +81,41 @@ namespace ElectronicObserver.Resource
 		/// <summary>
 		/// 最新のリソースへのパスを取得します。
 		/// </summary>
-		public static string GetLatestResourcePath(string resourcePath)
+		public static string GetLatestResourcePath(string resourcePath, int shipID = -1)
 		{
 			string root = Utility.Configuration.Config.Connection.SaveDataPath + "\\" + Path.GetDirectoryName(resourcePath);
-
 			try
 			{
 				if (!Directory.Exists(root))
 					return null;
 
-				return
-					Directory.EnumerateFiles(root, Path.GetFileNameWithoutExtension(resourcePath) + "*.png", SearchOption.TopDirectoryOnly)
-					.OrderBy(path => File.GetCreationTime(path))
-					.LastOrDefault();
+				var tempname = Directory.EnumerateFiles(root, Path.GetFileNameWithoutExtension(resourcePath) + "*.png", SearchOption.TopDirectoryOnly);
+				if(shipID != -1)
+					return tempname.Where(t => t.Contains(KCDatabase.Instance.MasterShips[shipID].ResourceName)).FirstOrDefault();
+				else
+					return tempname.OrderBy(path => File.GetCreationTime(path)).LastOrDefault();
+			}
+			catch (Exception)
+			{
+				return null;
+			}
+		}
+
+
+		/// <summary>
+		/// Fullの全てのパスを取得します。
+		/// </summary>
+		public static List<string> GetLatestResourcePathAll(string resourcePath)
+		{
+			string root = Utility.Configuration.Config.Connection.SaveDataPath + "\\" + Path.GetDirectoryName(resourcePath);
+			try
+			{
+				if (!Directory.Exists(root))
+					return null;
+
+				return Directory.EnumerateFiles(root, Path.GetFileNameWithoutExtension(resourcePath) + "*.png", SearchOption.TopDirectoryOnly)
+				.OrderBy(path => File.GetCreationTime(path))
+				.ToList();
 			}
 			catch (Exception)
 			{
@@ -103,6 +126,9 @@ namespace ElectronicObserver.Resource
 
 		public static string GetShipImagePath(int shipID, bool isDamaged, string resourceType)
 			=> GetLatestResourcePath(GetShipResourcePath(shipID, isDamaged, resourceType));
+
+		public static List<string> GetShipImagePathAll(int shipID, bool isDamaged, string resourceType)
+			=> GetLatestResourcePathAll(GetShipResourcePath(shipID, isDamaged, resourceType));
 
 		public static string GetEquipmentImagePath(int equipmentID, string resourceType)
 			=> GetLatestResourcePath(GetEquipmentResourcePath(equipmentID, resourceType));
@@ -121,10 +147,10 @@ namespace ElectronicObserver.Resource
 		/// <param name="isDamaged">中破しているかどうか。</param>
 		/// <param name="resourceType">画像種別。同クラスの定数を使用します。</param>
 		/// <returns>成功した場合は艦船画像。失敗した場合は null。</returns>
-		public static Bitmap LoadShipImage(int shipID, bool isDamaged, string resourceType)
+		public static Bitmap LoadShipImage(int shipID, bool isDamaged, string resourceType, bool cutin = false)
 		{
 			string resourcepath = GetShipResourcePath(shipID, isDamaged, resourceType);
-			string realpath = GetLatestResourcePath(resourcepath);
+			string realpath = GetLatestResourcePath(resourcepath, (cutin == false)? -1 : shipID);
 
 			if (realpath == null)
 				return null;

@@ -739,7 +739,7 @@ namespace ElectronicObserver.Utility
 
 
 						// 顔座標は通常時のみ存在するため、中破グラフィックは適用できない
-						using (var shipImageOriginal = KCResourceHelper.LoadShipImage(ship.ShipID, false, KCResourceHelper.ResourceTypeShipFull))
+						using (var shipImageOriginal = KCResourceHelper.LoadShipImage(ship.ShipID, false, KCResourceHelper.ResourceTypeShipFull, true))
 						{
 							if (shipImageOriginal != null)
 							{
