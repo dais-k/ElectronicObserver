@@ -306,7 +306,7 @@ namespace ElectronicObserver.Window
 							sb.AppendFormat("S:{0} / A:{1}", tp.ToString(), ((int)Math.Floor(tp * 0.7)).ToString());
 							sb.AppendFormat("\r\n\r\n2025春イベ E2\r\n");
 							sb.AppendFormat("S:{0} / A:{1}", Calculator.GetTPDamage(fleet, 1).ToString(), ((int)Math.Floor(Calculator.GetTPDamage(fleet, 1) * 0.7)).ToString());
-							sb.AppendFormat("\r\n2025春イベ E2\r\n");
+							sb.AppendFormat("\r\n2025春イベ E5\r\n");
 							sb.AppendFormat("S:{0} / A:{1}", Calculator.GetTPDamage(fleet, 2).ToString(), ((int)Math.Floor(Calculator.GetTPDamage(fleet, 2) * 0.7)).ToString());
 							break;
 						case 1:
