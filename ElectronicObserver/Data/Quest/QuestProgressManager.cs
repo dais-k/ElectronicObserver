@@ -390,8 +390,8 @@ namespace ElectronicObserver.Data.Quest
 						case 362:   //|362|４|特型初代「第十一駆逐隊」演習スペシャル！|演習A勝利以上4|条件：吹雪、白雪、初雪、深雪|イヤーリーだが1日で進捗リセット|
 							Progresses.Add(new ProgressPractice(q, 4, "A", true));
 							break;
-						case 363:   //|363|週|【艦隊11周年記念任務】記念艦隊演習！|演習A勝利以上5|条件：大和、翔鶴、吹雪、朧、Tuscaloosa、Houston、Northampton、山汐丸、熊野丸から3隻以上 | 1日で進捗リセット|2024/04/23～2024/05/29
-							if (DateTime.Now < new DateTime(2024, 5, 30))
+						case 363:   //|363|週|【艦隊12周年記念任務】記念艦隊演習！|演習A勝利以上5|条件：「平安丸」「Mogador」「Gotland」「大泊」「朧」「曙」「衣笠改二」が旗艦と2番艦 | 1日で進捗リセット|2025/04/23～
+							if (DateTime.Now < new DateTime(2025, 5, 31))
 							{
 								Progresses.Add(new ProgressPractice(q, 5, "A", true));
 							}
@@ -414,8 +414,8 @@ namespace ElectronicObserver.Data.Quest
 						case 373:   //|373|７|「フランス艦隊」演習！|演習A勝利以上×4回|条件：フランス艦(旗艦)、旗艦含め3隻以上|イヤーリーだが1日で進捗リセット|
 							Progresses.Add(new ProgressPractice(q, 4, "A", true));
 							break;
-						case 374:   //|374|週|【期間限定任務】「三十二駆」特別演習！|演習S勝利以上×3回|条件：「玉波」「涼波」「藤波」「早波」「浜波」から3隻以上含む|1日で進捗リセット| 期間限定ウィークリー任務 2024/12/3終了
-							if (DateTime.Now < new DateTime(2024, 12, 4))
+						case 374:   //|374|週|【期間限定任務】「三十二駆」特別演習！|演習S勝利以上×3回|条件：「玉波」「涼波」「藤波」「早波」「浜波」から3隻以上含む|1日で進捗リセット| 期間限定ウィークリー任務 2024/12/3終了→2025/05復活
+							if (DateTime.Now < new DateTime(2025, 5, 31))
 							{
 								Progresses.Add(new ProgressPractice(q, 3, "S", true));
 							}
@@ -574,8 +574,8 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressExpedition(q, 1, new[]{ 110 }),
 							})); 
 							break;
-						case 449:   //|449|週|【艦隊11周年記念任務】資源輸出|05「海上護衛任務」09「タンカー護衛任務」11「ボーキサイト輸送任務」(2回ずつ)|2024/04/23～2024/05/29
-							if (DateTime.Now < new DateTime(2024, 5, 30))
+						case 449:   //|449|週|【艦隊12周年記念任務】資源輸出|05「海上護衛任務」09「タンカー護衛任務」11「ボーキサイト輸送任務」(2回ずつ)|2025/04/23～
+							if (DateTime.Now < new DateTime(2025, 5, 30))
 							{
 								Progresses.Add(new ProgressMultiExpedition(q, new[]{
 									new ProgressExpedition(q, 2, new[]{ 5 }),
@@ -1097,6 +1097,13 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressSpecialBattle(q, 1, "S", new[] { 71 }, true),
 							}));
 							break;
+						case 1030:  //|1030|週|【期間限定任務】Fletcher級、哨戒任務！|1-3, 1-4, 2-4　それぞれS勝利×2回|条件：Fletcher級駆逐艦2,Northampton級かNew Orleans級1|2025/5/12～
+							Progresses.Add(new ProgressMultiBattle(q, new[] {
+								new ProgressSpecialBattle(q, 2, "S", new[] { 13 }, true),
+								new ProgressSpecialBattle(q, 2, "S", new[] { 14 }, true),
+								new ProgressSpecialBattle(q, 2, "S", new[] { 24 }, true),
+							}));
+							break;
 						//============================ 1100～1199 ============================
 						case 1103:  //|1103|６|潜水艦強化兵装の量産|61cm三連装(酸素)魚雷x3を破棄し、開発資材60、九三式水中聴音機x2、13号対空電探改x2を所有|
 							Progresses.Add(new ProgressDiscard(q, 3, true, new[] { 125 }, -1));
@@ -1160,6 +1167,13 @@ namespace ElectronicObserver.Data.Quest
 							break;
 						case 1138:  //|1138|６|【高射装置量産】94式高射装置の追加配備|秘書艦に秋月型を配置し91式高射装置を4つ廃棄、ボーキ1300、鋼材480、高速建造材x4、開発資材x16を保有
 							Progresses.Add(new ProgressDiscard(q, 4, true, new[] { 120 }, -1));
+							break;
+						case 1149:  //|1149|週|【期間限定任務】作戦後の不要装備等用途廃止|「高速建造材」x48を準備した上で、「中口径主砲」x8及び「魚雷」x8、「大口径主砲」x4を廃棄
+							Progresses.Add(new ProgressMultiDiscard(q, new[]{
+								new ProgressDiscard(q, 8, true, new[]{ 2 }),
+								new ProgressDiscard(q, 8, true, new[]{ 5 }),
+								new ProgressDiscard(q, 4, true, new[]{ 3 }),
+							}));
 							break;
 					}
 

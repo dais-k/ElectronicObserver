@@ -593,6 +593,12 @@ namespace ElectronicObserver.Data.Quest
 							}
 						}) >= 3;
 					break;
+				case 1030:   //|1030|週|【期間限定任務】Fletcher級、哨戒任務！|1-3, 1-4, 2-4　それぞれS勝利×2回|条件：Fletcher級駆逐艦2,Northampton級かNew Orleans級1|2025/5/12～
+					isAccepted =
+						(members.Count(s => s?.MasterShip?.ShipClass == 91) >= 2 &&
+						 (members.Count(s => s?.MasterShip?.ShipClass == 95) +
+						 members.Count(s => s?.MasterShip?.ShipClass == 121)) >= 1);
+					break;
 			}
 
 			// 第二ゲージでも第一ボスに行ける場合があるので、個別対応が必要

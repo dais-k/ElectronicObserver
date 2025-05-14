@@ -190,7 +190,7 @@ namespace ElectronicObserver.Data.Quest
 				case 348:   //|348|２|「精鋭軽巡」演習！|演習A勝利以上4|条件：軽巡級(雷巡を除く)旗艦、旗艦含む軽巡3隻以上、随伴に駆逐艦2隻以上|イヤーリーだが1日で進捗リセット|
 					if ((ships.FirstOrDefault().MasterShip.ShipType == ShipTypes.LightCruiser || ships.FirstOrDefault().MasterShip.ShipType == ShipTypes.TrainingCruiser) &&
 						(ships.Count(s => s.MasterShip.ShipType == ShipTypes.LightCruiser || s.MasterShip.ShipType == ShipTypes.TrainingCruiser) >= 3) &&
-					    (ships.Count(s => s.MasterShip.ShipType == ShipTypes.Destroyer) >= 2))
+						(ships.Count(s => s.MasterShip.ShipType == ShipTypes.Destroyer) >= 2))
 					{
 						ret = true;
 					}
@@ -293,25 +293,27 @@ namespace ElectronicObserver.Data.Quest
 						ret = true;
 					}
 					break;
-				case 363:   //|363|週|【艦隊11周年記念任務】記念艦隊演習！|演習A勝利以上5|条件：大和、翔鶴、吹雪、朧、Tuscaloosa、Houston、Northampton、山汐丸、熊野丸から3隻以上 | 1日で進捗リセット|
-					if (ships.Count(s =>
+				case 363:   //|363|週|【艦隊12周年記念任務】記念艦隊演習！|演習A勝利以上5|条件：「平安丸」「Mogador」「Gotland」「大泊」「朧」「曙」「衣笠改二」が旗艦と2番艦 | 1日で進捗リセット|
+					string[] membernames = new string[] { "へいあんまる", "モガドール", "ゴトランド", "おおとまり", "おぼろ", "あけぼの", "きぬがさ" };
+					bool[] shipcheck = new bool[] { false, false };
+					foreach (var item in membernames)
 					{
-						switch (s?.MasterShip?.NameReading)
+						if (shipcheck[0] == false && ships[0]?.MasterShip?.NameReading == item)
 						{
-							case "やまと":
-							case "しょうかく":
-							case "ふぶき":
-							case "おぼろ":
-							case "タスカルーサ":
-							case "ヒューストン":
-							case "ノーザンプトン":
-							case "やましおまる":
-							case "くまのまる":
-								return true;
-							default:
-								return false;
+							if (item == "きぬがさ" && ships[0]?.MasterShip?.RemodelTier < 2)
+								shipcheck[0] = false;
+							else
+								shipcheck[0] = true;
 						}
-					}) >= 3)
+						if (shipcheck[1] == false && ships[1]?.MasterShip?.NameReading == item)
+						{
+							if (item == "きぬがさ" && ships[1]?.MasterShip?.RemodelTier < 2)
+								shipcheck[1] = false;
+							else
+								shipcheck[1] = true;
+						}
+					}
+					if (shipcheck[0] == true && shipcheck[1] == true)
 					{
 						ret = true;
 					}
