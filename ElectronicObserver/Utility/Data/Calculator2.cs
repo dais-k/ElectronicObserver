@@ -160,7 +160,7 @@ namespace ElectronicObserver.Utility.Data
 					else
 						dayAttackList.Add(DayAttackKind.Shelling);
 				}
-				else if (attackerShipID == 717) //山汐丸改
+				else if (attackerShipID == 717 || attackerShipID == 1008) //山汐丸改・しまね丸改
 				{
 					if (slotmaster.Any(eq => eq.CategoryType == EquipmentTypes.CarrierBasedBomber))
 						dayAttackList.Add(DayAttackKind.AirAttack);
@@ -331,8 +331,9 @@ namespace ElectronicObserver.Utility.Data
 				}
 			}
 
-			if (attackerShipID == 545
-				|| attackerShipID == 599 || attackerShipID == 610 || attackerShipID == 883)      // 無条件夜間航空攻撃可能な娘 Saratoga Mk.II/赤城改二戊/加賀改二戊/龍鳳改二戊
+            // 無条件夜間航空攻撃可能な娘 Saratoga Mk.II/赤城改二戊/加賀改二戊/龍鳳改二戊/しまね丸改
+            if (attackerShipID == 545
+				|| attackerShipID == 599 || attackerShipID == 610 || attackerShipID == 883 || attackerShipID == 1008)
 				nightPersonnelCount++;
 
 			if (includeSpecialAttack)
