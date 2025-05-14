@@ -256,8 +256,9 @@ namespace ElectronicObserver.Window
 
 				var fleet1 = KCDatabase.Instance.Fleet[1];
 				var fleet2 = KCDatabase.Instance.Fleet[2];
-                int t = Utility.Configuration.Config.Control.ChooseTankTP;
+				int t = Utility.Configuration.Config.Control.ChooseTankTP;
 				int tp = Calculator.GetTPDamage(fleet1, t) + Calculator.GetTPDamage(fleet2, t);
+				string[] kindtp = { "TP(輸送物資量)", "TP(増援防衛戦力・戦車)", "TP(増援防衛戦力・内火艇)" };
 				var smokeGenrate = Calculator.GetSmokeTriggerRates(fleet1, fleet2);
 
 				var members = fleet1.MembersWithoutEscaped.Concat(fleet2.MembersWithoutEscaped).Where(s => s != null);
@@ -275,17 +276,18 @@ namespace ElectronicObserver.Window
 				ToolTipInfo.SetToolTip(CombinedTag, string.Format(
 					"ドラム缶搭載: {0}個\r\n" +
 					"大発動艇搭載: {1}個\r\n" +
-					"輸送量(TP): S {2} / A {3}\r\n" +
-					"制空戦力合計: {4}\r\n" +
-					"索敵能力合計: {5:f2}\r\n" +
+					"{2}: S {3} / A {4}\r\n" +
+					"制空戦力合計: {5}\r\n" +
+					"索敵能力合計: {6:f2}\r\n" +
 					"新判定式(33):\r\n" +
-					"　分岐点係数1: {6:f2}\r\n" +
-					"　分岐点係数2: {7:f2}\r\n" +
-					"　分岐点係数3: {8:f2}\r\n" +
-					"　分岐点係数4: {9:f2}\r\n\r\n"+
-					"煙幕発動 3重:{10:0.0} / 2重:{11:0.0} / 1重:{12:0.0} / 不発:{13:0.0}",
+					"　分岐点係数1: {7:f2}\r\n" +
+					"　分岐点係数2: {8:f2}\r\n" +
+					"　分岐点係数3: {9:f2}\r\n" +
+					"　分岐点係数4: {10:f2}\r\n\r\n"+
+					"煙幕発動 3重:{11:0.0} / 2重:{12:0.0} / 1重:{13:0.0} / 不発:{14:0.0}",
 					transport.Sum(),
 					landing.Sum(),
+					kindtp[t],
 					tp,
 					(int)Math.Floor(tp * 0.7),
 					Calculator.GetAirSuperiority(fleet1) + Calculator.GetAirSuperiority(fleet2),

@@ -302,29 +302,29 @@ namespace ElectronicObserver.Window
 					{
 						case 0:
 							TrafficTP.ImageIndex = (int)ResourceManager.EquipmentContent.DrumCanister;
-							sb.AppendFormat("従来TP\r\n");
+							sb.AppendFormat("輸送物資量\r\n");
 							sb.AppendFormat("S:{0} / A:{1}", tp.ToString(), ((int)Math.Floor(tp * 0.7)).ToString());
-							sb.AppendFormat("\r\n\r\n2025春イベ E2\r\n");
+							sb.AppendFormat("\r\n\r\n増援防衛戦力・戦車\r\n");
 							sb.AppendFormat("S:{0} / A:{1}", Calculator.GetTPDamage(fleet, 1).ToString(), ((int)Math.Floor(Calculator.GetTPDamage(fleet, 1) * 0.7)).ToString());
-							sb.AppendFormat("\r\n2025春イベ E5\r\n");
+							sb.AppendFormat("\r\n増援防衛戦力・内火艇\r\n");
 							sb.AppendFormat("S:{0} / A:{1}", Calculator.GetTPDamage(fleet, 2).ToString(), ((int)Math.Floor(Calculator.GetTPDamage(fleet, 2) * 0.7)).ToString());
 							break;
 						case 1:
 							TrafficTP.ImageIndex = (int)ResourceManager.EquipmentContent.ArmyInfantry;
-							sb.AppendFormat("2025春イベ E2\r\n");
+							sb.AppendFormat("増援防衛戦力・戦車\r\n");
 							sb.AppendFormat("S:{0} / A:{1}", tp.ToString(), ((int)Math.Floor(tp * 0.7)).ToString());
-							sb.AppendFormat("\r\n\r\n2025春イベ E5\r\n");
+							sb.AppendFormat("\r\n\r\n増援防衛戦力・内火艇\r\n");
 							sb.AppendFormat("S:{0} / A:{1}", Calculator.GetTPDamage(fleet, 2).ToString(), ((int)Math.Floor(Calculator.GetTPDamage(fleet, 2) * 0.7)).ToString());
-							sb.AppendFormat("\r\n従来TP\r\n");
+							sb.AppendFormat("\r\n輸送物資量\r\n");
 							sb.AppendFormat("S:{0} / A:{1}", Calculator.GetTPDamage(fleet, 0).ToString(), ((int)Math.Floor(Calculator.GetTPDamage(fleet, 0) * 0.7)).ToString());
 							break;
 						case 2:
 							TrafficTP.ImageIndex = (int)ResourceManager.EquipmentContent.AmphibiousVehicle;
-							sb.AppendFormat("2025春イベ E5\r\n");
+							sb.AppendFormat("増援防衛戦力・内火艇\r\n");
 							sb.AppendFormat("S:{0} / A:{1}", tp.ToString(), ((int)Math.Floor(tp * 0.7)).ToString());
-							sb.AppendFormat("\r\n\r\n2025春イベ E2\r\n");
+							sb.AppendFormat("\r\n\r\n増援防衛戦力・戦車\r\n");
 							sb.AppendFormat("S:{0} / A:{1}", Calculator.GetTPDamage(fleet, 1).ToString(), ((int)Math.Floor(Calculator.GetTPDamage(fleet, 1) * 0.7)).ToString());
-							sb.AppendFormat("\r\n従来TP\r\n");
+							sb.AppendFormat("\r\n輸送物資量\r\n");
 							sb.AppendFormat("S:{0} / A:{1}", Calculator.GetTPDamage(fleet, 0).ToString(), ((int)Math.Floor(Calculator.GetTPDamage(fleet, 0) * 0.7)).ToString());
 							break;
 					}
