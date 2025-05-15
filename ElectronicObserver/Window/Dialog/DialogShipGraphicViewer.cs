@@ -51,8 +51,8 @@ namespace ElectronicObserver.Window.Dialog
 			using (var g = Graphics.FromImage(back))
 			{
 				g.Clear(Color.White);
-				g.FillRectangle(Brushes.LightGray, new Rectangle(0, 0, 8, 8));
-				g.FillRectangle(Brushes.LightGray, new Rectangle(8, 8, 8, 8));
+				g.FillRectangle(Brushes.Gainsboro, new Rectangle(0, 0, 8, 8));
+				g.FillRectangle(Brushes.Gainsboro, new Rectangle(8, 8, 8, 8));
 			}
 			DrawingPanel.BackgroundImage = back;
 
@@ -535,7 +535,7 @@ namespace ElectronicObserver.Window.Dialog
 
 			// text
 			// don't think (about env that font is not installed), feel
-			using (var font = new Font("にゃしぃフォント改二", 32, FontStyle.Regular, GraphicsUnit.Pixel))
+			using (var font = new Font("にゃしぃフォント改二", 28, FontStyle.Regular, GraphicsUnit.Pixel))
 			{
 				var rec = Resource.Record.RecordManager.Instance.ShipParameter[ship.ShipID];
 				string mes = null;

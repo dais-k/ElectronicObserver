@@ -57,7 +57,7 @@
             this.TopMenu_View});
 			this.TopMenu.Location = new System.Drawing.Point(0, 0);
 			this.TopMenu.Name = "TopMenu";
-			this.TopMenu.Size = new System.Drawing.Size(784, 26);
+			this.TopMenu.Size = new System.Drawing.Size(944, 26);
 			this.TopMenu.TabIndex = 0;
 			this.TopMenu.Text = "menuStrip1";
 			// 
@@ -182,7 +182,7 @@
 			this.DrawingPanel.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.DrawingPanel.Location = new System.Drawing.Point(0, 26);
 			this.DrawingPanel.Name = "DrawingPanel";
-			this.DrawingPanel.Size = new System.Drawing.Size(784, 895);
+			this.DrawingPanel.Size = new System.Drawing.Size(944, 895);
 			this.DrawingPanel.TabIndex = 1;
 			this.DrawingPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.DrawingPanel_Paint);
 			this.DrawingPanel.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DrawingPanel_MouseClick);
@@ -204,7 +204,7 @@
 			// 
 			this.AllowDrop = true;
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-			this.ClientSize = new System.Drawing.Size(784, 921);
+			this.ClientSize = new System.Drawing.Size(944, 921);
 			this.Controls.Add(this.DrawingPanel);
 			this.Controls.Add(this.TopMenu);
 			this.DoubleBuffered = true;
