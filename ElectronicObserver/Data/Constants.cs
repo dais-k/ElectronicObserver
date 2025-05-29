@@ -1047,109 +1047,109 @@ namespace ElectronicObserver.Data
 				case 0:
 					return "なし";
 				case 1:
-					return "高角砲x2/電探<秋月型>";
+					return "高角砲×2／電探 <秋月型>";
 				case 2:
-					return "高角砲/電探<秋月型>";
+					return "高角砲／電探 <秋月型>";
 				case 3:
-					return "高角砲x2<秋月型>";
+					return "高角砲×2 <秋月型>";
 				case 4:
-					return "大口径主砲/三式弾/高射装置/電探";
+					return "大口径主砲／三式弾／対空電探／高射装置";
 				case 5:
-					return "高角砲+高射装置x2/電探";
+					return "特殊高角砲×2／対空電探";
 				case 6:
-					return "大口径主砲/三式弾/高射装置";
+					return "大口径主砲／三式弾／高射装置";
 				case 7:
-					return "高角砲/高射装置/電探";
+					return "高角砲／高射装置／対空電探";
 				case 8:
-					return "高角砲+高射装置/電探";
+					return "特殊高角砲／対空電探";
 				case 9:
-					return "高角砲/高射装置";
+					return "高角砲／高射装置";
 				case 10:
-					return "高角砲/集中機銃/電探<摩耶改二>";
+					return "高角砲／特殊機銃／対空電探 <摩耶改二>";
 				case 11:
-					return "高角砲/集中機銃<摩耶改二>";
+					return "高角砲／特殊機銃 <摩耶改二>";
 				case 12:
-					return "集中機銃/機銃/電探";
+					return "特殊機銃／対空機銃(対空3以上)／対空電探";
 				case 13:
-					return "特殊高角砲/集中機銃/対空電探";
+					return "特殊高角砲／特殊機銃／対空電探";
 				case 14:
-					return "高角砲/機銃/電探<五十鈴改二>";
+					return "高角砲／対空機銃／対空電探 <五十鈴改二>";
 				case 15:
-					return "高角砲/機銃<五十鈴改二>";
+					return "高角砲／対空機銃 <五十鈴改二>";
 				case 16:
-					return "高角砲/機銃/電探<霞改二乙・夕張改二>";
+					return "高角砲／対空機銃／対空電探 <霞改二乙・夕張改二>";
 				case 17:
-					return "高角砲/機銃<霞改二乙・稲木改二>";
+					return "高角砲／対空機銃 <霞改二乙・稲木改二>";
 				case 18:
-					return "集中機銃<皐月改二・稲木改二>";
+					return "特殊機銃 <皐月改二・稲木改二>";
 				case 19:
-					return "高角砲(非高射装置)/集中機銃<鬼怒改二>";
+					return "高角砲(対空7以下)／特殊機銃 <鬼怒改二>";
 				case 20:
-					return "集中機銃<鬼怒改二>";
+					return "特殊機銃 <鬼怒改二>";
 				case 21:
-					return "高角砲/電探<由良改二>";
+					return "高角砲／対空電探 <由良改二>";
 				case 22:
-					return "集中機銃<文月改二>";
+					return "特殊機銃 <文月改二>";
 				case 23:
-					return "機銃(非集中)<UIT-25>";
+					return "対空機銃(対空3～8) <UIT-25・伊504>";
 				case 24:
-					return "高角砲/機銃(非集中)<天龍型改二>";
+					return "高角砲／対空機銃(対空3～8) <天龍型改二>";
 				case 25:
-					return "噴進砲改二/電探/三式弾<伊勢型改/改二>";
+					return "噴進砲改二／対空電探／三式弾 <伊勢型改/改二>";
 				case 26:
-					return "高角砲+増設機銃/電探<大和型改二>";
+					return "高角砲改＋増設機銃／対空電探 <大和型改二>";
 				case 27:
-					return "高角砲+増設機銃/噴進砲改二/電探<大淀改>";
+					return "高角砲改＋増設機銃／噴進砲改二／対空電探 <大淀改>";
 				case 28:
-					return "噴進砲改二/電探<伊勢型改/改二・武蔵改/改二>";
+					return "噴進砲改二／対空電探 <伊勢型改/改二・武蔵改/改二>";
 				case 29:
-					return "高角砲/電探<磯風乙改・浜風乙改>";
+					return "高角砲／対空電探 <磯風乙改・浜風乙改>";
 				case 30:
-					return "高角砲x3<天龍改二・Gotland改/andra>";
+					return "高角砲×3 <天龍改二・Gotland改/andra>";
 				case 31:
-					return "高角砲x2<天龍改二・稲木改二>";
+					return "高角砲×2 <天龍改二・稲木改二>";
 				case 32:
-					return "ロケランx2 or FCR/ポンポン砲 or ロケラン/ポンポン砲<英国艦・金剛型改二/丙>";
+					return "20連装ロケラン×2 or 20連装ロケラン／ポンポン砲 or FCRtype284／ポンポン砲 <英国艦・金剛型改二/丙>";
 				case 33:
-					return "高角砲/機銃(非集中)<Gotland改/andra>";
+					return "高角砲／対空機銃(対空4以上) <Gotland改/andra>";
 				case 34:
-					return "Fletcher砲改+GFCSx2<Fletcher級>";
+					return "Fletcher砲改+GFCS×2 <Fletcher級>";
 				case 35:
-					return "Fletcher砲改+GFCS/Fletcher砲改<Fletcher級>";
+					return "Fletcher砲改+GFCS／Fletcher砲(改) <Fletcher級>";
 				case 36:
-					return "Fletcher砲改x2/GFCS<Fletcher級>";
+					return "Fletcher砲(改)×2／GFCS電探 <Fletcher級>";
 				case 37:
-					return "Fletcher砲改x2<Fletcher級>";
+					return "Fletcher砲(改)×2 <Fletcher級>";
 				case 38:
-					return "Atlanta砲+GFCSx2<Atlanta>";
+					return "GFCS+Atlanta砲×2 <Atlanta>";
 				case 39:
-					return "Atlanta砲+GFCS/Atlanta砲<Atlanta>";
+					return "GFCS+Atlanta砲／Atlanta砲 <Atlanta>";
 				case 40:
-					return "Atlanta砲x2/GFCS<Atlanta>";
+					return "(GFCS+)Atlanta砲×2／GFCS電探 <Atlanta>";
 				case 41:
-					return "Atlanta砲x2<Atlanta>";
+					return "(GFCS+)Atlanta砲×2 <Atlanta>";
 				case 42:
-					return "測距儀付き電探/10cm連装高角砲群x2/対空機銃<大和型改二>";
+					return "連装高角砲群 集中配備×2／測距儀電探／対空機銃(対空6以上) <大和型改二>";
 				case 43:
-					return "測距儀付き電探/10cm連装高角砲群x2<大和型改二>";
+					return "連装高角砲群 集中配備×2／測距儀電探 <大和型改二>";
 				case 44:
-					return "測距儀付き電探/10cm連装高角砲群+対空機銃<大和型改二>";
+					return "連装高角砲群 集中配備／測距儀電探／対空機銃(対空6以上) <大和型改二>";
 				case 45:
-					return "測距儀付き電探/10cm連装高角砲群<大和型改二>";
+					return "連装高角砲群 集中配備／測距儀電探 <大和型改二>";
 				case 46:
-					return "35.6cm連装砲改三 or 改四/機銃/電探<榛名改二乙>";
+					return "35.6cm連装砲改四 or 35.6cm連装砲改三(ダズル迷彩仕様)／特殊機銃／対空電探 <榛名改二乙>";
 				case 47:
-					return "12.7cm連装砲C型改三H/電探装備マスト or 機銃増備<白露改二・村雨改二・春雨改二・時雨改二/改三>";
+					return "12.7cm連装砲C型改三H／12.7cm連装砲C型改三H or 25mm対空機銃増備 or 対空電探(対空4以上) <白露改二・村雨改二・春雨改二・時雨改二/改三>";
 				case 48:
-					return "10cm連装高角砲改＋高射装置改x2/対空電探<秋月型改・改二>";
+					return "10cm連装高角砲改＋高射装置改×2／対空電探(対空4以上) <秋月型改・改二>";
 				case 49:
-					return "特殊高角砲/対空電探<藤波改二・吹雪改二・白雪改二・浜波改二・秋月型>";
+					return "特殊高角砲×2／対空電探(対空4以上) <藤波改二・吹雪改二・白雪改二・浜波改二>";
 				case 50:
-					return "10cm連装高角砲改(＋高射装置改)x2/対空電探/94式高射装置<藤波改二・吹雪改二・白雪改二・浜波改二・秋月型>";
+					return "10cm連装高角砲改(＋高射装置改)×2／対空電探(対空4以上)／94式高射装置 <藤波改二・吹雪改二・白雪改二・初雪改二・浜波改二・秋月型>";
 				case 51:
-					return "10cm連装高角砲改(＋高射装置改)/対空電探/機銃<藤波改二・吹雪改二・白雪改二・浜波改二>";
+					return "10cm連装高角砲改(＋高射装置改)／対空電探(対空4以上)／対空機銃(対空5以上) <藤波改二・吹雪改二・白雪改二・初雪改二・浜波改二>";
 				case 52:
-					return "10cm連装高角砲改x2/94式高射装置<藤波改二・吹雪改二・白雪改二・浜波改二・秋月型>";
+					return "10cm連装高角砲改×2／94式高射装置 <藤波改二・吹雪改二・白雪改二・初雪改二・浜波改二・秋月型>";
 				default:
 					return "不明(" + id + ")";
 			}
