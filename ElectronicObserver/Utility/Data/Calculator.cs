@@ -704,7 +704,7 @@ namespace ElectronicObserver.Utility.Data
 
 			foreach (var ship in fleet.MembersWithoutEscaped.Where(s => s != null && s.HPRate > 0.25))
 			{
-                tp += Calculator2.GetTPDamage(ship, t);
+				tp += Calculator2.GetTPDamage(ship, t);
 			}
 
 			return tp;
@@ -1689,7 +1689,7 @@ namespace ElectronicObserver.Utility.Data
 			{ 24, 3 },
 			{ 25, 7 },
 			{ 26, 6 },
-			{ 27, 5 },
+			{ 27, 6 },
 			{ 28, 4 },
 			{ 29, 5 },
 			{ 30, 3 },
@@ -1707,14 +1707,14 @@ namespace ElectronicObserver.Utility.Data
 			{ 42, 10 },
 			{ 43, 8 },
 			{ 44, 6 },
-			{ 45, 5 },
+			{ 45, 6 },
 			{ 46, 8 },
 			{ 47, 2 },
 			{ 48, 8 },
-			{ 49, 5 },
+			{ 49, 6 },
 			{ 50, 7 },
 			{ 51, 5 },
-			{ 52, 4 },
+			{ 52, 5 },
 		});
 
 		/// <summary>
@@ -1822,7 +1822,7 @@ namespace ElectronicObserver.Utility.Data
 			{ 39, 1.7 },
 			{ 40, 1.7 },
 			{ 41, 1.65 },
-			{ 42, 1.65 },
+			{ 42, 1.7 },
 			{ 43, 1.6 },
 			{ 44, 1.6 },
 			{ 45, 1.55 },
@@ -1831,7 +1831,7 @@ namespace ElectronicObserver.Utility.Data
 			{ 48, 1.75 },
 			{ 49, 1.5 },
 			{ 50, 1.5 },
-			{ 51, 1.35 },
+			{ 51, 1.4 },
 			{ 52, 1.4 },
 		});
 

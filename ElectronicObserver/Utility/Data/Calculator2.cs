@@ -331,8 +331,8 @@ namespace ElectronicObserver.Utility.Data
 				}
 			}
 
-            // 無条件夜間航空攻撃可能な娘 Saratoga Mk.II/赤城改二戊/加賀改二戊/龍鳳改二戊/しまね丸改
-            if (attackerShipID == 545
+			// 無条件夜間航空攻撃可能な娘 Saratoga Mk.II/赤城改二戊/加賀改二戊/龍鳳改二戊/しまね丸改
+			if (attackerShipID == 545
 				|| attackerShipID == 599 || attackerShipID == 610 || attackerShipID == 883 || attackerShipID == 1008)
 				nightPersonnelCount++;
 
@@ -640,6 +640,8 @@ namespace ElectronicObserver.Utility.Data
 						aacutinlist.Add(48);
 					if ((highangle_10kai + highangle_10kai_Directorkai) >= 2 && radar_over4 >= 1 && director_94 >= 1)
 						aacutinlist.Add(50);
+					if (highangle_10kai >= 2 && director_94 >= 1)
+						aacutinlist.Add(52);
 					break;
 
 				case 91:    // Fletcher級
@@ -838,9 +840,11 @@ namespace ElectronicObserver.Utility.Data
 						aacutinlist.Add(31);
 					break;
 
-				case 981:   // 藤波改二
 				case 426:   // 吹雪改二
+				case 981:   // 藤波改二
+				case 983:   // 浜波改二
 				case 986:   // 白雪改二
+				case 987:   // 初雪改二
 					if (highangle_director >= 2 && radar_over4 >= 1)
 						aacutinlist.Add(49);
 					if ((highangle_10kai + highangle_10kai_Directorkai) >= 2 && radar_over4 >= 1 && director_94 >= 1)
