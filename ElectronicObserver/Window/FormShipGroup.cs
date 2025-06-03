@@ -361,7 +361,7 @@ namespace ElectronicObserver.Window
 				ship.LuckBase,
 				ship.LuckRemain,
 				ship.LuckTotal,
-				ship.BomberTotal,
+				ship.BomberTotalwithBonus,
 				ship.Speed,
 				ship.Range,
 				ship.AirBattlePower,

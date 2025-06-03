@@ -172,7 +172,7 @@ namespace ElectronicObserver.Window.Dialog
 			LOS.Text = shipData.LOSTotal.ToString();
 			Luck.Text = shipData.LuckTotal.ToString();
 			Accuracy.Text = shipData.AccuracyTotal.ToString("+0;-0");
-			Bomber.Text = shipData.BomberTotal.ToString("+0;-0");
+			Bomber.Text = shipData.BomberTotalwithBonus.ToString("+0;-0");
 			Range.Text = Constants.GetRange(shipData.Range);
 			Carry.Text = shipData.AircraftTotal.ToString();
 			if (shipData.Speed == 15)
@@ -347,21 +347,21 @@ namespace ElectronicObserver.Window.Dialog
 				}
 			}
 			//TP輸送量
-            int c = Utility.Configuration.Config.Control.ChooseTankTP;
-            int tpdamage = Calculator2.GetTPDamage(shipData, c);
-            switch (c)
-            {
-                case 0:
-                    TP.ImageIndex = (int)ResourceManager.EquipmentContent.DrumCanister;
-                    break;
-                case 1:
-                    TP.ImageIndex = (int)ResourceManager.EquipmentContent.ArmyInfantry;
-                    break;
-                case 2:
-                    TP.ImageIndex = (int)ResourceManager.EquipmentContent.AmphibiousVehicle;
-                    break;
-            }
-            TP.Text = "TP輸送量：S " + tpdamage + " / A " + Math.Floor(tpdamage * 0.7);
+			int c = Utility.Configuration.Config.Control.ChooseTankTP;
+			int tpdamage = Calculator2.GetTPDamage(shipData, c);
+			switch (c)
+			{
+				case 0:
+					TP.ImageIndex = (int)ResourceManager.EquipmentContent.DrumCanister;
+					break;
+				case 1:
+					TP.ImageIndex = (int)ResourceManager.EquipmentContent.ArmyInfantry;
+					break;
+				case 2:
+					TP.ImageIndex = (int)ResourceManager.EquipmentContent.AmphibiousVehicle;
+					break;
+			}
+			TP.Text = "TP輸送量：S " + tpdamage + " / A " + Math.Floor(tpdamage * 0.7);
 
 			//秋刀魚
 			Sanma.Text = "秋刀魚漁支援装備：" + shipData.SanmaEquipCount + " (※爆雷"+ shipData.SanmaEquipCountBomb +")";

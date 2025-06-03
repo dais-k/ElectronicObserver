@@ -552,8 +552,8 @@ namespace ElectronicObserver.Window
 						ship.LOSBase, ship.LOSTotal,
 						ship.LuckTotal,
 						equipments.Any() ? equipments.Sum(eq => eq.MasterEquipment.Accuracy) : 0,
-						equipments.Any() ? equipments.Sum(eq => eq.MasterEquipment.Bomber) : 0,
-						Constants.GetRange(ship.Range),
+						equipments.Any() ? ship.BomberTotalwithBonus : 0, //equipments.Sum(eq => eq.MasterEquipment.Bomber) : 0,
+                        Constants.GetRange(ship.Range),
 						Constants.GetSpeed(ship.Speed)
 						));
 					{

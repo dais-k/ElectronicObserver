@@ -426,7 +426,14 @@ namespace ElectronicObserver.Data
 			EquipmentID == 421 ||       // SB2C-5
 			EquipmentID == 64 ||       // Ju87C改
 			EquipmentID == 305 ||       // Ju87C改二(KMX搭載機)
-			EquipmentID == 306;         // Ju87C改二(KMX搭載機/熟練)
+			EquipmentID == 306 ||       // Ju87C改二(KMX搭載機/熟練)
+			EquipmentID == 541 ||       // SBD(Yellow Wings)
+			EquipmentID == 544 ||       // SBD VB-2(爆撃飛行隊)
+			EquipmentID == 550 ||       // 試製 明星(増加試作機)
+			EquipmentID == 551 ||       // 明星改
+			EquipmentID == 551;         // 九九式練爆二二型改(夜間装備実験機)
+
+
 
 		/// <summary> 改修値が制空に影響する艦爆かどうか</summary>
 		public bool IsAirLevelBonusedGroundBomber =>

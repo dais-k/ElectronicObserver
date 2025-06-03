@@ -10,6 +10,7 @@ using System.Linq;
 using System.Runtime;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ElectronicObserver.Utility.Data
@@ -43,7 +44,6 @@ namespace ElectronicObserver.Utility.Data
 			var allSlotInstance = ship.AllSlotInstance.ToArray();
 			var allSlotInstanceMaster = ship.AllSlotInstanceMaster;
 			var attackKind = Calculator2.GetDayAttackKindList(allSlotMaster.ToArray(), shipID);
-
 			//int engagementForm = 1;
 			double basepower = 0;
 			int[] returnBasepower = new int[attackKind.Count()];
@@ -57,8 +57,8 @@ namespace ElectronicObserver.Utility.Data
 						|| attack.name == DayAttackKind.CutinBomberAttacker)
 				{
 					//空撃の基本火力
-					basepower = Math.Floor((firepowerTotal + spItemHoug + torpedoTotal + spItemRaig + Math.Floor((bomberTotal + GetAviationPersonnelBomberLevelBonus(allSlotInstance)) * 1.3) + GetDayBattleEquipmentLevelBonus(allSlotInstance) + GetCombinedFleetShellingDamageBonus(fleet)) * 1.5) + 55;
-
+					basepower = Math.Floor((firepowerTotal + spItemHoug + torpedoTotal + spItemRaig + Math.Floor((bomberTotal + GetAviationPersonnelBomberLevelBonus(allSlotInstance)) * 1.3)
+						+ GetDayBattleEquipmentLevelBonus(allSlotInstance) + GetCombinedFleetShellingDamageBonus(fleet)) * 1.5) + 55;
 					//basepower *= GetHPDamageBonus(hpRate) * GetEngagementFormDamageRate(engagementForm);
 
 					// キャップ
@@ -294,16 +294,15 @@ namespace ElectronicObserver.Utility.Data
 			var allSlotInstance = ship.AllSlotInstance.ToArray();
 			var slotInstance = ship.SlotInstance;
 			var aircraft = ship.Aircraft;
-			var firepowerBase = ship.FirepowerBase;
 			var airs = slotInstance.Zip(aircraft, (eq, count) => new { eq, master = eq?.MasterEquipment, count }).Where(a => a.eq != null);
-			return firepowerBase + GetAviationPersonnelBomberLevelBonus(allSlotInstance) + GetAviationPersonnelFirepowerLevelBonus(allSlotInstance) + GetAviationPersonnelTorpedoLevelBonus(allSlotInstance) +
-				airs.Where(p => p.master.IsNightAircraftTypeA)
-					.Sum(p => p.master.Firepower + p.master.Torpedo + p.master.Bomber +
-						3 * p.count +
-						0.45 * (p.master.Firepower + p.master.Torpedo + p.master.Bomber + p.master.ASW) * Math.Sqrt(p.count) + Math.Sqrt(p.eq.Level)) +
-				airs.Where(p => p.master.IsNightAircraftTypeB)
-					.Sum(p => p.master.Firepower + p.master.Torpedo + p.master.Bomber +
-						0.3 * (p.master.Firepower + p.master.Torpedo + p.master.Bomber + p.master.ASW) * Math.Sqrt(p.count) + Math.Sqrt(p.eq.Level));
+			double firepower = ship.FirepowerBase + GetAviationPersonnelBomberLevelBonus(allSlotInstance) + GetAviationPersonnelFirepowerLevelBonus(allSlotInstance) + GetAviationPersonnelTorpedoLevelBonus(allSlotInstance); //素火力+熟練甲板要員＋航空整備員の改修による装備ボーナス
+			firepower += ship.TorpedoTotal - (allSlotInstance.Sum(p => p?.MasterEquipment?.Torpedo?? 0)); //青字ボーナス算出
+			firepower += airs.Where(p => p.master.IsNightAircraftTypeA).Sum(p => p.master.Firepower + p.master.Torpedo + p.master.Bomber) + airs.Where(p => p.master.IsNightAircraftTypeB).Sum(p => p.master.Firepower + p.master.Torpedo + p.master.Bomber);
+			firepower -= airs.Where(p => p.master.EquipmentID == 389).Sum(p => p.master.Bomber);
+			firepower += airs.Where(p => p.master.IsNightAircraftTypeA).Sum(p => (p.count * 3) + (0.45 * (p.master.Firepower + p.master.Torpedo + p.master.Bomber + p.master.ASW)) * Math.Sqrt(p.count) + Math.Sqrt(p.eq.Level));
+			firepower += airs.Where(p => p.master.IsNightAircraftTypeB).Sum(p => (0.3 * (p.master.Firepower + p.master.Torpedo + p.master.Bomber + p.master.ASW)) * Math.Sqrt(p.count) + Math.Sqrt(p.eq.Level));
+
+			return firepower;
 
 		}
 
@@ -548,6 +547,16 @@ namespace ElectronicObserver.Utility.Data
 								break;
 						}
 						break;
+
+					case EquipmentTypes.CarrierBasedTorpedo:
+						basepower += 0.2 * slot.Level;
+						break;
+
+					case EquipmentTypes.CarrierBasedBomber:
+						if (!slot.MasterEquipment.IsAirLevelBonusedGroundBomber)
+							basepower += 0.2 * slot.Level;
+						break;
+
 				}
 			}
 			return basepower;
@@ -873,6 +882,193 @@ namespace ElectronicObserver.Utility.Data
 					return 0;
 			}
 		}
+
+		/// <summary>
+		/// 艦攻雷装ボーナス
+		/// </summary>
+		/// <returns></returns>
+		private static int GetCarrierBasedTorpedoBonus(int shipID, EquipmentData[] allSlotInstance)
+		{
+			int bonuspower = 0;
+			var bonuspowerMin = new List<int>();
+			bool flag372 = false;
+			bool flag373 = false;
+			bool flag374 = false;
+			bool flag424 = false;
+			bool flag425 = false;
+			
+			foreach (var slot in allSlotInstance)
+			{
+				if (slot == null) continue;
+
+				switch (slot.MasterEquipment.EquipmentID)
+				{
+					case 372:   // 天山一二型甲
+						if (!flag372)
+						{
+							flag372 = true;
+							switch (shipID)
+							{
+								case 883:   // 龍鳳改二戊
+								case 888:   // 龍鳳改二
+									bonuspower = 2;
+									break;
+								case 110:   // 翔鶴
+								case 111:   // 瑞鶴
+								case 112:   // 瑞鶴改
+								case 288:   // 翔鶴改
+								case 461:   // 翔鶴改二
+								case 462:   // 瑞鶴改二
+								case 466:   // 翔鶴改二甲
+								case 467:   // 瑞鶴改二甲
+								case 153:   // 大鳳
+								case 156:   // 大鳳改
+								case 555:   // 瑞鳳改二
+								case 560:   // 瑞鳳改二乙
+								case 318:   // 龍鳳改
+									bonuspower = 1;
+									break;
+								default:
+									bonuspower = 0;
+									break;
+							}
+						}
+						break;
+
+					case 373:   // 天山一二型甲改(空六号電探改装備機)
+						if (!flag373)
+						{
+							flag373 = true;
+							switch (shipID)
+							{
+								case 883:   // 龍鳳改二戊
+									bonuspower = 3;
+									break;
+								case 888:   // 龍鳳改二
+								case 110:   // 翔鶴
+								case 111:   // 瑞鶴
+								case 112:   // 瑞鶴改
+								case 288:   // 翔鶴改
+								case 461:   // 翔鶴改二
+								case 462:   // 瑞鶴改二
+								case 466:   // 翔鶴改二甲
+								case 467:   // 瑞鶴改二甲
+								case 153:   // 大鳳
+								case 156:   // 大鳳改
+								case 508:   // 鈴谷航改二
+								case 509:   // 熊野航改二
+									bonuspower = 2;
+									break;
+								case 282:   // 祥鳳改
+								case 117:   // 瑞鳳改
+								case 555:   // 瑞鳳改二
+								case 560:   // 瑞鳳改二乙
+								case 185:   // 龍鳳
+								case 318:   // 龍鳳改
+								case 291:   // 千歳航改
+								case 292:   // 千代田航改
+								case 296:   // 千歳航改二
+								case 297:   // 千代田航改二
+								case 75:    // 飛鷹
+								case 92:    // 隼鷹
+								case 283:   // 飛鷹改
+								case 284:   // 隼鷹改
+								case 408:   // 隼鷹改二
+									bonuspower = 1;
+									break;
+								default:
+									bonuspower = 0;
+									break;
+							}
+						}
+						break;
+
+					case 374:   // 天山一二型甲改(熟練/空六号電探改装備機)
+						if (!flag374)
+						{
+							flag374 = true;
+							switch (shipID)
+							{
+								case 461:   // 翔鶴改二
+								case 462:   // 瑞鶴改二
+								case 466:   // 翔鶴改二甲
+								case 467:   // 瑞鶴改二甲
+								case 883:   // 龍鳳改二戊
+								case 156:   // 大鳳改
+									bonuspower = 3;
+									break;
+								case 888:   // 龍鳳改二
+								case 508:   // 鈴谷航改二
+								case 509:   // 熊野航改二
+								case 408:   // 隼鷹改二
+								case 283:   // 飛鷹改
+									bonuspower = 2;
+									break;
+								case 282:   // 祥鳳改
+								case 555:   // 瑞鳳改二
+								case 560:   // 瑞鳳改二乙
+								case 318:   // 龍鳳改
+								case 296:   // 千歳航改二
+								case 297:   // 千代田航改二
+									bonuspower = 1;
+									break;
+								default:
+									bonuspower = 0;
+									break;
+							}
+						}
+						break;
+
+					case 424:   // Barracuda Mk.II
+						if (!flag424)
+						{
+							flag424 = true;
+							switch (shipID)
+							{
+								case 515:   // Ark Royal
+								case 393:   // Ark Royal改
+								case 885:   // Victorious
+								case 713:   // Victorious改
+									bonuspower = 3;
+									break;
+								default:
+									bonuspower = 0;
+									break;
+							}
+						}
+						break;
+					
+					case 425:   // Barracuda Mk.III
+						if (!flag425)
+						{
+							flag425 = true;
+							switch (shipID)
+							{
+								case 515:   // Ark Royal
+								case 393:   // Ark Royal改
+								case 885:   // Victorious
+								case 713:   // Victorious改
+									if (slot.Level >= 8)
+										bonuspower = 2;
+									else
+										bonuspower = 1;
+									break;
+								default:
+									bonuspower = 0;
+									break;
+							}
+						}
+						break;
+				}
+				if (bonuspower > 0)
+				{
+					bonuspowerMin.Add(bonuspower);
+				}
+			}
+			return bonuspowerMin.Min();
+		}
+
+
 
 		/// <summary>
 		/// キャップ処理

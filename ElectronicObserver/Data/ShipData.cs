@@ -298,6 +298,28 @@ namespace ElectronicObserver.Data
 		/// 爆装総合値
 		/// </summary>
 		public int BomberTotal => AllSlotInstanceMaster.Sum(eq => eq?.Bomber ?? 0);
+		public int BomberTotalwithBonus
+		{
+			get
+			{
+				var basepower = AllSlotInstanceMaster.Sum(eq => eq?.Bomber ?? 0);
+				foreach (var slot in AllSlotInstance)
+				{
+					if (slot == null)
+						continue;
+
+					switch (slot.MasterEquipment.CategoryType)
+					{
+
+						case EquipmentTypes.AviationPersonnel:
+
+							if (slot.Level >= 4) basepower += 1;
+							break;
+					}
+				}
+				return basepower;
+			}
+		}
 
 		/// <summary>
 		/// 命中総合値
@@ -1736,7 +1758,8 @@ namespace ElectronicObserver.Data
 					case 893:       // Janus改
 					case 624:       // 夕張改二丁
 					case 726:       // Heywood L.E.改
-					case 901:		// Javelin改
+					case 901:       // Javelin改
+					case 737:       // Richard P.Leary改
 						return true;
 				}
 
