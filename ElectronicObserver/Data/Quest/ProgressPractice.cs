@@ -365,7 +365,7 @@ namespace ElectronicObserver.Data.Quest
 					break;
 				case 372:   //|372|６|水上艦「艦隊防空演習」を実施せよ！|演習A勝利以上×4回|条件：秋月型(旗艦), 駆逐2, 航戦2, 自由1|イヤーリーだが1日で進捗リセット|
 					if (ships.FirstOrDefault()?.MasterShip?.ShipClass == 54 &&
-						(ships.Count(s => s.MasterShip.ShipType == ShipTypes.Destroyer) >= 2) &&
+						(ships.Count(s => s.MasterShip.ShipType == ShipTypes.Destroyer) > 2) &&
 						(ships.Count(s => s.MasterShip.ShipType == ShipTypes.AviationBattleship) >= 2))
 					{
 						ret = true;

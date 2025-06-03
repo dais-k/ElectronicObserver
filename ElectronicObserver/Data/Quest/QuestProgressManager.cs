@@ -396,8 +396,8 @@ namespace ElectronicObserver.Data.Quest
 								Progresses.Add(new ProgressPractice(q, 5, "A", true));
 							}
 							break;
-						case 367:   //|367|日|【梅雨限定任務】海上護衛隊、雨中演習！|演習A勝利4|条件：海防艦2隻以上または駆逐艦4隻以上|期間限定デイリー任務 2024/05/29～2024/06/27
-							if (DateTime.Now < new DateTime(2024, 6, 28))
+						case 367:   //|367|日|【梅雨限定任務】海上護衛隊、雨中演習！|演習A勝利4|条件：海防艦2隻以上または駆逐艦4隻以上|期間限定デイリー任務 2025/05/30～
+							if (DateTime.Now < new DateTime(2025, 6, 30))
 							{
 								Progresses.Add(new ProgressPractice(q, 4, "A", true));
 							}
@@ -950,8 +950,8 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressSpecialBattle(q, 1, "S", new[] { 22 }, true),
 							}));
 							break;
-						case 953:   //|953|週|【梅雨限定任務】雨の南西諸島防衛戦！|2-1, 2-2, 2-3ボスA勝利各1回|条件：巡洋艦を旗艦、駆逐艦x1、海防艦x1、水上機母艦x1|期間限定任務 2024/6/27まで
-							if (DateTime.Now < new DateTime(2024, 6, 28))
+						case 953:   //|953|週|【梅雨限定任務】雨の南西諸島防衛戦！|2-1, 2-2, 2-3ボスA勝利各1回|条件：巡洋艦を旗艦、駆逐艦x1、海防艦x1、水上機母艦x1|期間限定任務 2025/5/30～
+							if (DateTime.Now < new DateTime(2025, 6, 30))
 							{
 								Progresses.Add(new ProgressMultiBattle(q, new[]{
 									new ProgressSpecialBattle(q, 1, "A", new[] { 21 }, true),
@@ -960,19 +960,20 @@ namespace ElectronicObserver.Data.Quest
 								}));
 							}
 							break;
-						case 954:   //|954|週|【梅雨拡張任務】梅雨の海上護衛強化！|1-2, 1-3, 1-5ボスS勝利各1回+1-6到達2回|条件：駆逐艦を旗艦、海防艦x2|期間限定任務 2024/6/27まで
-							if (DateTime.Now < new DateTime(2024, 6, 28))
+						case 954:   //|954|週|【梅雨拡張任務】梅雨の海上護衛強化2025|1-2, 1-3, 1-4, 1-5ボスS勝利各1回+1-6到達2回|条件：駆逐艦を旗艦、海防艦x2|期間限定任務 2025/5/30～
+							if (DateTime.Now < new DateTime(2025, 6, 30))
 							{
 								Progresses.Add(new ProgressMultiBattle(q, new[]{
 									new ProgressSpecialBattle(q, 1, "S", new[] { 12 }, true),
 									new ProgressSpecialBattle(q, 1, "S", new[] { 13 }, true),
+									new ProgressSpecialBattle(q, 1, "S", new[] { 14 }, true),
 									new ProgressSpecialBattle(q, 1, "S", new[] { 15 }, true),
 									new ProgressSpecialBattle(q, 2, "x", new[] { 16 }, true),
 								}));
 							}
 							break;
-						case 955:   //|955|月|【梅雨限定月間任務】西方海域統合作戦|4-1, 4-2, 4-3, 4-4, 4-5ボスS勝利各1回|条件：空母2以上、(球磨型+大淀)1|期間限定任務 2024/6/27まで
-							if (DateTime.Now < new DateTime(2024, 6, 28))
+						case 955:   //|955|月|【梅雨限定月間任務】西方海域統合作戦2025|4-1, 4-2, 4-3, 4-4, 4-5ボスS勝利各1回|条件：空母1以上、(重巡or秋月型)2以上|期間限定任務  2025/5/30～
+							if (DateTime.Now < new DateTime(2025, 6, 30))
 							{
 								Progresses.Add(new ProgressMultiBattle(q, new[]{
 									new ProgressSpecialBattle(q, 1, "S", new[] { 41 }, true),

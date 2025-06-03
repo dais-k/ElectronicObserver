@@ -411,18 +411,20 @@ namespace ElectronicObserver.Data.Quest
 						 members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Escort) >= 1 &&
 						 members.Count(s => s?.MasterShip?.ShipType == ShipTypes.SeaplaneTender) >= 1;
 					break;
-				case 954:   //|954|週|【梅雨拡張任務】梅雨の海上護衛強化！|1-2, 1-3, 1-5ボスS勝利各1回+1-6到達2回|条件：駆逐艦を旗艦、海防艦x2|期間限定任務
+				case 954:   //|954|週|【梅雨拡張任務】梅雨の海上護衛強化2025|1-2, 1-3, 1-4, 1-5ボスS勝利各1回+1-6到達2回|条件：駆逐艦を旗艦、海防艦x2|期間限定任務
 					isAccepted =
 						(members.FirstOrDefault()?.MasterShip?.ShipType == ShipTypes.Destroyer)
 						 &&
 						(members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Escort) >= 2);
 					break;
-				case 955:   //|955|月|【梅雨限定月間任務】西方海域統合作戦|4-1, 4-2, 4-3, 4-4, 4-5ボスS勝利各1回|条件：空母2以上、(球磨型+大淀)1|期間限定任務
+				case 955:   //|955|月|【梅雨限定月間任務】西方海域統合作戦2025|4-1, 4-2, 4-3, 4-4, 4-5ボスS勝利各1回|条件：空母1以上、(重巡or秋月型)2以上|期間限定任務
 					isAccepted =
 						(members.Count(s => s?.MasterShip?.ShipType == ShipTypes.LightAircraftCarrier ||
 											s?.MasterShip?.ShipType == ShipTypes.AircraftCarrier ||
-											s?.MasterShip?.ShipType == ShipTypes.ArmoredAircraftCarrier) >= 2) &&
-						members.Count(s => s?.MasterShip?.ShipClass == 4 || s?.MasterShip?.NameReading == "おおよど") >= 1;
+											s?.MasterShip?.ShipType == ShipTypes.ArmoredAircraftCarrier) >= 1)
+						&&
+						(members.Count(s => s?.MasterShip?.ShipClass == 54) >=2 ||
+						(members.Count(s => s?.MasterShip?.ShipType == ShipTypes.HeavyCruiser || s?.MasterShip?.ShipType == ShipTypes.AviationCruiser) >= 2));
 					break;
 				case 957:	//|957|単|「山風改二」、抜錨せよ！|1-2、1-3、1-4、1-5ボス各S勝利1改|条件：山風改二旗艦および随伴に駆逐/海防3|
 					isAccepted = 
