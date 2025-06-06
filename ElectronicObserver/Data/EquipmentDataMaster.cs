@@ -435,7 +435,7 @@ namespace ElectronicObserver.Data
 
 
 
-		/// <summary> 改修値が制空に影響する艦爆かどうか</summary>
+		/// <summary> 改修値が制空に影響しない艦爆かどうか(要は爆戦)</summary>
 		public bool IsAirLevelBonusedGroundBomber =>
 			EquipmentID == 60 ||       // 零式艦戦62型(爆戦)
 			EquipmentID == 154 ||       // 零戦62型(爆戦/岩井隊)

@@ -260,9 +260,19 @@ namespace ElectronicObserver.Data
 		public int FirepowerTotal => (int)RawData.api_karyoku[0];
 
 		/// <summary>
+		/// 火力ボーナス値
+		/// </summary>
+		public int FirepowerBonus => FirepowerTotal - FirepowerBase - AllSlotInstanceMaster.Sum(eq => eq?.Firepower ?? 0) - SpItemHoug;
+
+		/// <summary>
 		/// 雷装総合値
 		/// </summary>
 		public int TorpedoTotal => (int)RawData.api_raisou[0];
+
+		/// <summary>
+		/// 雷装ボーナス値
+		/// </summary>
+		public int TorpedoBonus => TorpedoTotal - TorpedoBase - AllSlotInstanceMaster.Sum(eq => eq?.Torpedo ?? 0) - SpItemRaig;
 
 		/// <summary>
 		/// 対空総合値
@@ -270,9 +280,19 @@ namespace ElectronicObserver.Data
 		public int AATotal => (int)RawData.api_taiku[0];
 
 		/// <summary>
+		/// 対空ボーナス値
+		/// </summary>
+		public int AABonus => AATotal - AABase - AllSlotInstanceMaster.Sum(eq => eq?.AA ?? 0);
+
+		/// <summary>
 		/// 装甲総合値
 		/// </summary>
 		public int ArmorTotal => (int)RawData.api_soukou[0];
+
+		/// <summary>
+		/// 装甲ボーナス値
+		/// </summary>
+		public int ArmorBonus => ArmorTotal - ArmorBase - AllSlotInstanceMaster.Sum(eq => eq?.Armor ?? 0) - SpItemSouk;
 
 		/// <summary>
 		/// 回避総合値
@@ -280,14 +300,29 @@ namespace ElectronicObserver.Data
 		public int EvasionTotal => (int)RawData.api_kaihi[0];
 
 		/// <summary>
+		/// 回避ボーナス値
+		/// </summary>
+		public int EvasionBonus => EvasionTotal - EvasionBase - AllSlotInstanceMaster.Sum(eq => eq?.Evasion ?? 0) - SpItemKaih;
+
+		/// <summary>
 		/// 対潜総合値
 		/// </summary>
 		public int ASWTotal => (int)RawData.api_taisen[0];
 
 		/// <summary>
+		/// 対潜ボーナス値
+		/// </summary>
+		public int ASWBonus => ASWTotal - ASWBase - AllSlotInstanceMaster.Sum(eq => eq?.ASW ?? 0);
+
+		/// <summary>
 		/// 索敵総合値
 		/// </summary>
 		public int LOSTotal => (int)RawData.api_sakuteki[0];
+
+		/// <summary>
+		/// 索敵ボーナス値
+		/// </summary>
+		public int LOSBonus => LOSTotal - LOSBase - AllSlotInstanceMaster.Sum(eq => eq?.LOS ?? 0);
 
 		/// <summary>
 		/// 運総合値
@@ -297,34 +332,22 @@ namespace ElectronicObserver.Data
 		/// <summary>
 		/// 爆装総合値
 		/// </summary>
-		public int BomberTotal => AllSlotInstanceMaster.Sum(eq => eq?.Bomber ?? 0);
-		public int BomberTotalwithBonus
-		{
-			get
-			{
-				var basepower = AllSlotInstanceMaster.Sum(eq => eq?.Bomber ?? 0);
-				foreach (var slot in AllSlotInstance)
-				{
-					if (slot == null)
-						continue;
+		public int BomberTotal => AllSlotInstanceMaster.Sum(eq => eq?.Bomber ?? 0) + GetAviationPersonnelBomberLevelBonus();
 
-					switch (slot.MasterEquipment.CategoryType)
-					{
-
-						case EquipmentTypes.AviationPersonnel:
-
-							if (slot.Level >= 4) basepower += 1;
-							break;
-					}
-				}
-				return basepower;
-			}
-		}
+		/// <summary>
+		/// 爆装ボーナス値
+		/// </summary>
+		public int BomberBonus => BomberTotal - AllSlotInstanceMaster.Sum(eq => eq?.Bomber ?? 0);
 
 		/// <summary>
 		/// 命中総合値
 		/// </summary>
-		public int AccuracyTotal => AllSlotInstanceMaster.Sum(eq => eq?.Accuracy ?? 0);
+		public int AccuracyTotal => AllSlotInstanceMaster.Sum(eq => eq?.Accuracy ?? 0) + GetAviationPersonnelAccuracyLevelBonus();
+
+		/// <summary>
+		/// 命中ボーナス値
+		/// </summary>
+		public int AccuracyBonus => AccuracyTotal - AllSlotInstanceMaster.Sum(eq => eq?.Accuracy ?? 0);
 
 		/// <summary>
 		/// 火力基本値
@@ -588,6 +611,16 @@ namespace ElectronicObserver.Data
 		public int SynergyCount => GetSynergyCount();
 
 		/// <summary>
+		/// 艦攻の雷装ボーナスを付与するスロット番号
+		/// </summary>
+		public int TorpedoBonusGivingIndex => SearchAirplaneMaxTBIndex();
+
+		/// <summary>
+		/// 艦攻の雷装ボーナス
+		/// </summary>
+		public int AttackerTorpedoBonus => CalculateAttackerTorpedoBonus();
+
+		/// <summary>
 		/// ステータスアップアイテム【1:海色リボン】【2:白たすき】
 		/// </summary>
 		public int SpItemKind { get; internal set; }
@@ -759,9 +792,9 @@ namespace ElectronicObserver.Data
 		/// <summary>
 		/// 装備改修補正(航空要員の爆装ボーナス)
 		/// </summary>
-		private double GetAviationPersonnelBomberLevelBonus()
+		private int GetAviationPersonnelBomberLevelBonus()
 		{
-			double basepower = 0;
+			int basepower = 0;
 			foreach (var slot in AllSlotInstance)
 			{
 				if (slot == null)
@@ -782,9 +815,9 @@ namespace ElectronicObserver.Data
 		/// <summary>
 		/// 装備改修補正(航空要員の雷撃ボーナス・航空戦で加算)
 		/// </summary>
-		private double GetAviationPersonnelTorpedoLevelBonus()
+		private int GetAviationPersonnelTorpedoLevelBonus()
 		{
-			double basepower = 0;
+			int basepower = 0;
 			foreach (var slot in AllSlotInstance)
 			{
 				if (slot == null)
@@ -805,9 +838,9 @@ namespace ElectronicObserver.Data
 		/// <summary>
 		/// 装備改修補正(航空要員の火力ボーナス・夜間航空攻撃で加算)
 		/// </summary>
-		private double GetAviationPersonnelFirepowerLevelBonus()
+		private int GetAviationPersonnelFirepowerLevelBonus()
 		{
-			double basepower = 0;
+			int basepower = 0;
 			foreach (var slot in AllSlotInstance)
 			{
 				if (slot == null)
@@ -821,6 +854,30 @@ namespace ElectronicObserver.Data
 						if (slot.Level >= 10) basepower = 3;
 						else if (slot.Level >= 7) basepower = 2;
 						else if (slot.Level >= 1) basepower = 1;
+						break;
+				}
+			}
+			return basepower;
+		}
+
+		/// <summary>
+		/// 装備改修補正(航空要員の命中ボーナス)
+		/// </summary>
+		private int GetAviationPersonnelAccuracyLevelBonus()
+		{
+			int basepower = 0;
+			foreach (var slot in AllSlotInstance)
+			{
+				if (slot == null)
+					continue;
+
+				switch (slot.MasterEquipment.CategoryType)
+				{
+
+					case EquipmentTypes.AviationPersonnel:
+
+						if (slot.Level >= 8) basepower = 2;
+						else if (slot.Level >= 2) basepower = 1;
 						break;
 				}
 			}
@@ -1150,12 +1207,55 @@ namespace ElectronicObserver.Data
 			}
 		}
 
+		/// <summary>
+		/// キャップ補正
+		/// </summary>
+		/// <returns></returns>
 		private double CapDamage(double damage, int max)
 		{
 			if (damage < max)
 				return damage;
 			else
 				return max + Math.Sqrt(damage - max);
+		}
+
+		/// <summary>
+		/// 艦攻の雷装ボーナスを付与するスロットのインデックス
+		/// </summary>
+		/// <returns></returns>
+		private int SearchAirplaneMaxTBIndex()
+		{
+			var airs = SlotInstance.Zip(_aircraft, (eq, count) => new { eq, master = eq?.MasterEquipment, count }).Where(a => a.eq != null);
+			var power = 0;
+			var powerMax = 0;
+			var maxindex = 0;
+			var maxslot = 0;
+			int i = 0;
+			foreach (var s in airs)
+			{
+				if (s == null) continue;
+
+				if(s.master.Torpedo > s.master.Bomber) power = s.master.Torpedo;
+				else if (s.master.Torpedo < s.master.Bomber) power = s.master.Bomber;
+				else if (s.master.Torpedo == s.master.Bomber) power = s.master.Torpedo;
+
+				if (power > powerMax)
+				{
+					powerMax = power;
+					maxindex = i;
+					maxslot = s.count;
+				}
+				else if (power == powerMax)
+				{
+					if (s.count > maxslot)
+					{
+						maxindex = i;
+						maxslot = s.count;
+					}
+				}
+				i++;
+			}
+			return maxindex;
 		}
 
 		/// <summary>
@@ -1166,21 +1266,21 @@ namespace ElectronicObserver.Data
 		{
 			double basepower = 0;
 			var eq = SlotInstance[slotIndex];
-
 			if (eq == null || _aircraft[slotIndex] == 0)
 				return 0;
+			var torpedobonus = (slotIndex == TorpedoBonusGivingIndex) ? AttackerTorpedoBonus : 0;
 
 			switch (eq.MasterEquipment.CategoryType)
 			{
 				case EquipmentTypes.CarrierBasedBomber:
 				case EquipmentTypes.SeaplaneBomber:
 				case EquipmentTypes.JetBomber:              // 通常航空戦においては /√2 されるが、とりあえず考えない
-					basepower = (eq.MasterEquipment.Bomber + GetAviationPersonnelBomberLevelBonus()) * Math.Sqrt(_aircraft[slotIndex]) + 25;
+					basepower = (eq.MasterEquipment.Bomber + GetAviationPersonnelBomberLevelBonus() + torpedobonus + ((!eq.MasterEquipment.IsAirLevelBonusedGroundBomber)? (0.2 * eq.Level) : 0)) * Math.Sqrt(_aircraft[slotIndex]) + 25;
 					break;
 				case EquipmentTypes.CarrierBasedTorpedo:
 				case EquipmentTypes.JetTorpedo:
 					// 150% 補正を引いたとする
-					basepower = ((eq.MasterEquipment.Torpedo + GetAviationPersonnelTorpedoLevelBonus()) * Math.Sqrt(_aircraft[slotIndex]) + 25) * 1.5;
+					basepower = ((eq.MasterEquipment.Torpedo + GetAviationPersonnelTorpedoLevelBonus() + torpedobonus + (0.2 * eq.Level)) * Math.Sqrt(_aircraft[slotIndex]) + 25) * 1.5;
 					break;
 				default:
 					return 0;
@@ -1250,7 +1350,7 @@ namespace ElectronicObserver.Data
 			if (attackKind != DayAttackKind.AirAttack && attackKind != DayAttackKind.CutinAirAttack)
 				return 0;
 
-			double basepower = Math.Floor((FirepowerTotal + SpItemHoug + TorpedoTotal + SpItemRaig + Math.Floor((BomberTotal+ GetAviationPersonnelBomberLevelBonus()) * 1.3) + GetDayBattleEquipmentLevelBonus() + GetCombinedFleetShellingDamageBonus()) * 1.5) + 55;
+			double basepower = Math.Floor((FirepowerTotal + SpItemHoug + TorpedoTotal + SpItemRaig + Math.Floor((BomberTotal) * 1.3) + GetDayBattleEquipmentLevelBonus() + GetCombinedFleetShellingDamageBonus()) * 1.5) + 55;
 
 			basepower *= GetHPDamageBonus() * GetEngagementFormDamageRate(engagementForm);
 
@@ -2297,5 +2397,220 @@ namespace ElectronicObserver.Data
 			return (int)basepower;
 		}
 
+		/// <summary>
+		/// 航空戦での最小艦攻雷装ボーナスを算出します
+		/// </summary>
+		/// <returns></returns>
+		public int CalculateAttackerTorpedoBonus()
+		{
+			int bonuspower = -1;
+			var bonuspowerMin = new List<int>();
+
+			foreach (var slot in AllSlotInstance)
+			{
+				if (slot == null) continue;
+
+				switch (slot.MasterEquipment.EquipmentID)
+				{
+					case 372:   // 天山一二型甲
+						switch (ShipID)
+						{
+							case 883:   // 龍鳳改二戊
+							case 888:   // 龍鳳改二
+								bonuspower = 2;
+								break;
+							case 110:   // 翔鶴
+							case 111:   // 瑞鶴
+							case 112:   // 瑞鶴改
+							case 288:   // 翔鶴改
+							case 461:   // 翔鶴改二
+							case 462:   // 瑞鶴改二
+							case 466:   // 翔鶴改二甲
+							case 467:   // 瑞鶴改二甲
+							case 153:   // 大鳳
+							case 156:   // 大鳳改
+							case 555:   // 瑞鳳改二
+							case 560:   // 瑞鳳改二乙
+							case 318:   // 龍鳳改
+								bonuspower = 1;
+								break;
+							case 515:   // Ark Royal
+							case 393:   // Ark Royal改
+							case 885:   // Victorious
+							case 713:   // Victorious改
+								bonuspower = 0;
+								break;
+							default:
+								bonuspower = -1;
+								break;
+						}
+						break;
+
+					case 373:   // 天山一二型甲改(空六号電探改装備機)
+						switch (ShipID)
+						{
+							case 883:   // 龍鳳改二戊
+								bonuspower = 3;
+								break;
+							case 888:   // 龍鳳改二
+							case 110:   // 翔鶴
+							case 111:   // 瑞鶴
+							case 112:   // 瑞鶴改
+							case 288:   // 翔鶴改
+							case 461:   // 翔鶴改二
+							case 462:   // 瑞鶴改二
+							case 466:   // 翔鶴改二甲
+							case 467:   // 瑞鶴改二甲
+							case 153:   // 大鳳
+							case 156:   // 大鳳改
+							case 508:   // 鈴谷航改二
+							case 509:   // 熊野航改二
+								bonuspower = 2;
+								break;
+							case 282:   // 祥鳳改
+							case 117:   // 瑞鳳改
+							case 555:   // 瑞鳳改二
+							case 560:   // 瑞鳳改二乙
+							case 185:   // 龍鳳
+							case 318:   // 龍鳳改
+							case 291:   // 千歳航改
+							case 292:   // 千代田航改
+							case 296:   // 千歳航改二
+							case 297:   // 千代田航改二
+							case 75:    // 飛鷹
+							case 92:    // 隼鷹
+							case 283:   // 飛鷹改
+							case 284:   // 隼鷹改
+							case 408:   // 隼鷹改二
+								bonuspower = 1;
+								break;
+							case 515:   // Ark Royal
+							case 393:   // Ark Royal改
+							case 885:   // Victorious
+							case 713:   // Victorious改
+								bonuspower = 0;
+								break;
+							default:
+								bonuspower = -1;
+								break;
+						}
+						break;
+
+					case 374:   // 天山一二型甲改(熟練/空六号電探改装備機)
+						switch (ShipID)
+						{
+							case 461:   // 翔鶴改二
+							case 462:   // 瑞鶴改二
+							case 466:   // 翔鶴改二甲
+							case 467:   // 瑞鶴改二甲
+							case 883:   // 龍鳳改二戊
+							case 156:   // 大鳳改
+								bonuspower = 3;
+								break;
+							case 888:   // 龍鳳改二
+							case 508:   // 鈴谷航改二
+							case 509:   // 熊野航改二
+							case 408:   // 隼鷹改二
+							case 283:   // 飛鷹改
+								bonuspower = 2;
+								break;
+							case 282:   // 祥鳳改
+							case 555:   // 瑞鳳改二
+							case 560:   // 瑞鳳改二乙
+							case 318:   // 龍鳳改
+							case 296:   // 千歳航改二
+							case 297:   // 千代田航改二
+								bonuspower = 1;
+								break;
+							case 515:   // Ark Royal
+							case 393:   // Ark Royal改
+							case 885:   // Victorious
+							case 713:   // Victorious改
+								bonuspower = 0;
+								break;
+							default:
+								bonuspower = -1;
+								break;
+						}
+						break;
+
+					case 424:   // Barracuda Mk.II
+						switch (ShipID)
+						{
+							case 515:   // Ark Royal
+							case 393:   // Ark Royal改
+							case 885:   // Victorious
+							case 713:   // Victorious改
+								bonuspower = 3;
+								break;
+							default:
+								bonuspower = -1;
+								break;
+						}
+						break;
+
+					case 425:   // Barracuda Mk.III
+						switch (ShipID)
+						{
+							case 515:   // Ark Royal
+							case 393:   // Ark Royal改
+							case 885:   // Victorious
+							case 713:   // Victorious改
+								if (slot.Level >= 8)
+									bonuspower = 2;
+								else
+									bonuspower = 1;
+								break;
+							default:
+								bonuspower = -1;
+								break;
+						}
+						break;
+					
+					case 238:   // 零式水上偵察機11型乙
+					case 239:   // 零式水上偵察機11型乙(熟練)
+					case 118:   // 紫雲
+					case 521:   // 紫雲(熟練)
+					case 522:   // 零式小型水上機
+					case 523:   // 零式小型水上機(熟練)
+						switch (ShipID)
+						{
+							case 630:   // Gotland andra
+								bonuspower = 0;
+								break;
+							default:
+								bonuspower = -1;
+								break;
+						}
+						break;
+
+					case 368:   // Swordfish Mk.III改(水上機型)
+						switch (ShipID)
+						{
+							case 630:   // Gotland andra
+								bonuspower = 2;
+								break;
+							default:
+								bonuspower = -1;
+								break;
+						}
+						break;
+
+					case 369:   // Swordfish Mk.III改(水上機型/熟練)
+						switch (ShipID)
+						{
+							case 630:   // Gotland andra
+								bonuspower = 3;
+								break;
+							default:
+								bonuspower = -1;
+								break;
+						}
+						break;
+				}
+				if (bonuspower > -1) bonuspowerMin.Add(bonuspower);
+			}
+			return (bonuspowerMin.Count != 0) ? bonuspowerMin.Min() : 0; 
+		}
 	}
 }

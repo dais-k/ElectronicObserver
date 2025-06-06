@@ -172,9 +172,20 @@ namespace ElectronicObserver.Window.Dialog
 			LOS.Text = shipData.LOSTotal.ToString();
 			Luck.Text = shipData.LuckTotal.ToString();
 			Accuracy.Text = shipData.AccuracyTotal.ToString("+0;-0");
-			Bomber.Text = shipData.BomberTotalwithBonus.ToString("+0;-0");
+			Bomber.Text = shipData.BomberTotal.ToString("+0;-0");
 			Range.Text = Constants.GetRange(shipData.Range);
 			Carry.Text = shipData.AircraftTotal.ToString();
+ 
+			ToolTipInfo.SetToolTip(Firepower, ("素" + shipData.FirepowerBase.ToString() + ((shipData.SpItemHoug != 0)? "+"+shipData.SpItemHoug.ToString() : "") +" 装" + (shipData.FirepowerTotal - shipData.FirepowerBase - shipData.FirepowerBonus).ToString() + " ボ" + shipData.FirepowerBonus.ToString()));
+			ToolTipInfo.SetToolTip(Torpedo, ("素" + shipData.TorpedoBase.ToString() + ((shipData.SpItemRaig != 0) ? "+" + shipData.SpItemRaig.ToString() : "") + " 装" + (shipData.TorpedoTotal - shipData.TorpedoBase - shipData.TorpedoBonus).ToString() + " ボ" + shipData.TorpedoBonus.ToString()));
+			ToolTipInfo.SetToolTip(Armor, ("素" + shipData.ArmorBase.ToString() + ((shipData.SpItemSouk != 0) ? "+" + shipData.SpItemSouk.ToString() : "") + " 装" + (shipData.ArmorTotal - shipData.ArmorBase - shipData.ArmorBonus).ToString() + " ボ" + shipData.ArmorBonus.ToString()));
+			ToolTipInfo.SetToolTip(Evasion, ("素" + shipData.EvasionBase.ToString() + ((shipData.SpItemKaih != 0) ? "+" + shipData.SpItemKaih.ToString() : "") + " 装" + (shipData.EvasionTotal - shipData.EvasionBase - shipData.EvasionBonus).ToString() + " ボ" + shipData.EvasionBonus.ToString()));
+			ToolTipInfo.SetToolTip(AA, ("素" + shipData.AABase.ToString() + " 装" + (shipData.AATotal - shipData.AABase - shipData.AABonus).ToString() + " ボ" + shipData.AABonus.ToString()));
+			ToolTipInfo.SetToolTip(ASW, ("素" + shipData.ASWBase.ToString() + " 装" + (shipData.ASWTotal - shipData.ASWBase - shipData.ASWBonus).ToString() + " ボ" + shipData.ASWBonus.ToString()));
+			ToolTipInfo.SetToolTip(LOS, ("素" + shipData.LOSBase.ToString() + " 装" + (shipData.LOSTotal - shipData.LOSBase - shipData.LOSBonus).ToString() + " ボ" + shipData.LOSBonus.ToString()));
+			ToolTipInfo.SetToolTip(Accuracy, ("装" + (shipData.AccuracyTotal - shipData.AccuracyBonus).ToString() + " ボ" + shipData.AccuracyBonus.ToString()));
+			ToolTipInfo.SetToolTip(Bomber, ("装" + (shipData.BomberTotal - shipData.BomberBonus).ToString() + " ボ" + shipData.BomberBonus.ToString()));
+
 			if (shipData.Speed == 15)
 			{
 				Speed.Text = "高速";
