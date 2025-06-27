@@ -205,22 +205,70 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 				}
 			}
 
-			
+			//api_mst_equip_ship (うんこJSON2を変換)
+			rootObjectEs rootObjectEs = new();
+			string text_api_mst_equip_ship = data.api_mst_equip_ship.ToString(); //元データを文字列に変換
 			foreach (var elem in data.api_mst_equip_ship)
 			{
-				int id = (int)elem.api_ship_id;
-				db.MasterShips[id].specialEquippableCategory = (int[])elem.api_equip_type;
+				//api_ship_idを作り直す
+				JsonElement jelem_ship_id = JsonSerializer.Deserialize<JsonElement>(text_api_mst_equip_ship);
+				JsonProperty root_ship_id = jelem_ship_id.EnumerateObject().First(); //最初の要素を取りだす
+				rootObjectEs.Api_ship_id = int.Parse(root_ship_id.Name);
+				string text_equip_ship = root_ship_id.ToString();
+				string text_equips = root_ship_id.Value.ToString();
+
+				//api_equip_type取得 特殊装備はとりあえず無視
+				JsonElement jelem_equip_type = JsonSerializer.Deserialize<JsonElement>(text_equips);
+				JsonProperty root_equip_type = jelem_equip_type.EnumerateObject().First();
+				JsonElement value_equip_type = root_equip_type.Value; //foreach処理用のデータ
+				List<int> list_equip_type = new List<int>();
+				string text_value_equip_type = root_equip_type.Value.ToString(); //データ変換用作業テキスト
+				if (text_value_equip_type != "")
+				{
+					foreach (JsonProperty jprop in value_equip_type.EnumerateObject())
+					{
+						list_equip_type.Add(int.Parse(jprop.Name));
+					}
+					rootObjectEs.Api_equip_type = list_equip_type;
+				}
+
+				//大本のテキストから今作業した要素を削除
+				text_api_mst_equip_ship = text_api_mst_equip_ship.Replace(text_equip_ship + ",", "");
+
+				// 一旦一装備のみでJSONデータをシリアライズで作成
+				string mst_equip_ship_temp = JsonSerializer.Serialize<rootObjectEs>(rootObjectEs);
+
+				//JSONデータを作成したらrootObjectExslotのデータをnull化する
+				if (rootObjectEs.Api_equip_type != null) rootObjectEs.Api_equip_type = null;
+
+				//作ったJSONデータをJsonSerializerでDeserializeしてデータを取りだす
+				Api_mst_equip_ship_decode api_mst_equip_ship_decode = JsonSerializer.Deserialize<Api_mst_equip_ship_decode>(mst_equip_ship_temp);
+ 
+				//ShipID
+				int id = api_mst_equip_ship_decode.Api_ship_id;
+ 
+				//装備カテゴリ
+				if (api_mst_equip_ship_decode.Api_equip_type is not null)
+				{
+					foreach (var cnt_equip in api_mst_equip_ship_decode.Api_equip_type)
+					{
+						db.MasterShips[id].specialEquippableCategory = api_mst_equip_ship_decode.Api_equip_type;
+					}
+				}
+
+				//int id = (int)elem.api_ship_id;
+				//db.MasterShips[id].specialEquippableCategory = (int[])elem.api_equip_type;
 			}
 
 			//api_mst_equip_exslot_ship (うんこJSONを変換)
-			RootObject rootObject = new();
+			rootObjectExslot rootObjectExslot = new();
 			string text_api_mst_equip_exslot_ship = data.api_mst_equip_exslot_ship.ToString(); //元データを文字列に変換
 			foreach (var elem in data.api_mst_equip_exslot_ship) //元データを使ってループ処理 
 			{
 				//api_slotitem_idを作り直す
 				JsonElement jelem_id = JsonSerializer.Deserialize<JsonElement>(text_api_mst_equip_exslot_ship); //変換した文字列をJsonElement にデシリアライズ
 				JsonProperty root_id = jelem_id.EnumerateObject().First(); //最初の要素を取りだす
-				rootObject.Api_slotitem_id = int.Parse(root_id.Name);
+				rootObjectExslot.Api_slotitem_id = int.Parse(root_id.Name);
 				string text_equip_exslot = root_id.ToString();
 				string text_shipids = root_id.Value.ToString();
 
@@ -236,7 +284,7 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 					{
 						list_ship_ids.Add(int.Parse(jprop.Name));
 					}
-					rootObject.Api_ship_ids = list_ship_ids;
+					rootObjectExslot.Api_ship_ids = list_ship_ids;
 				}
 				string text_stypes = text_shipids.Replace(root_ship_ids.ToString() + ",", ""); 
 
@@ -252,7 +300,7 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 					{
 						list_stypes.Add(int.Parse(jprop.Name));
 					}
-					rootObject.Api_stypes = list_stypes;
+					rootObjectExslot.Api_stypes = list_stypes;
 				}
 				string text_ctypes = text_stypes.Replace(root_stypes.ToString() + ",", "");
 
@@ -268,7 +316,7 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 					{
 						list_ctypes.Add(int.Parse(jprop.Name));
 					}
-					rootObject.Api_ctypes = list_ctypes;
+					rootObjectExslot.Api_ctypes = list_ctypes;
 				}
 				string text_reqLV = text_ctypes.Replace(root_ctypes.ToString() + ",", "");
 
@@ -276,19 +324,19 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 				JsonElement jelem_reqLV = JsonSerializer.Deserialize<JsonElement>(text_reqLV);
 				JsonProperty root_reqLV = jelem_reqLV.EnumerateObject().First();
 				JsonElement value_reqLV = root_reqLV.Value;
-				rootObject.Api_req_level = value_reqLV.GetInt32();
+				rootObjectExslot.Api_req_level = value_reqLV.GetInt32();
 
 				//大本のテキストから今作業した要素を削除
 				text_api_mst_equip_exslot_ship = text_api_mst_equip_exslot_ship.Replace(text_equip_exslot + ",", "");
 
 				// 一旦一装備のみでJSONデータをシリアライズで作成
-				string mst_equip_exslot_ship_temp = JsonSerializer.Serialize<RootObject>(rootObject);
+				string mst_equip_exslot_ship_temp = JsonSerializer.Serialize<rootObjectExslot>(rootObjectExslot);
 
-				//JSONデータを作成したらrootObjectのデータをnull化する
-				if (rootObject.Api_ship_ids != null) rootObject.Api_ship_ids = null;
-				if (rootObject.Api_stypes != null) rootObject.Api_stypes = null;
-				if (rootObject.Api_ctypes != null) rootObject.Api_ctypes = null;
-				if (rootObject.Api_req_level != 0) rootObject.Api_req_level = 0;
+				//JSONデータを作成したらrootObjectExslotのデータをnull化する
+				if (rootObjectExslot.Api_ship_ids != null) rootObjectExslot.Api_ship_ids = null;
+				if (rootObjectExslot.Api_stypes != null) rootObjectExslot.Api_stypes = null;
+				if (rootObjectExslot.Api_ctypes != null) rootObjectExslot.Api_ctypes = null;
+				if (rootObjectExslot.Api_req_level != 0) rootObjectExslot.Api_req_level = 0;
 
 				//作ったJSONデータをJsonSerializerでDeserializeしてデータを取りだす
 				Api_mst_equip_exslot_ship_decode api_mst_equip_exslot_ship_decode = JsonSerializer.Deserialize<Api_mst_equip_exslot_ship_decode>(mst_equip_exslot_ship_temp);
@@ -349,7 +397,7 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 		public override string APIName => "api_start2/getData";
 	}
 
-	public class RootObject
+	public class rootObjectExslot
 	{
 		public int Api_slotitem_id { get; set; }
 		public List<int> Api_ship_ids { get; set; }
@@ -376,4 +424,24 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 
 		}
 	}
+
+	public class rootObjectEs
+	{
+		public int Api_ship_id { get; set; }
+		public List<int> Api_equip_type { get; set; }
+	}
+
+	public class Api_mst_equip_ship_decode
+	{
+		public int Api_ship_id { get; set; }
+		public int[] Api_equip_type { get; set; }
+
+		public Api_mst_equip_ship_decode(int api_ship_id, int[] api_equip_type)
+		{
+			this.Api_ship_id = api_ship_id;
+			this.Api_equip_type = api_equip_type;
+
+		}
+	}
+
 }
