@@ -601,6 +601,14 @@ namespace ElectronicObserver.Data.Quest
 						 (members.Count(s => s?.MasterShip?.ShipClass == 95) +
 						 members.Count(s => s?.MasterShip?.ShipClass == 121)) >= 1);
 					break;
+				case 1034:   //|1034|月|【夏季限定任務】夏の日の「朝日」護衛|1-2, 1-3, 1-4, 2-1それぞれS勝利×1回|条件：朝日[旗艦], 駆逐3 or 海防1
+					isAccepted = members.FirstOrDefault()?.MasterShip?.NameReading == "あさひ" &&
+						(memberstype.Count(t => t == ShipTypes.Destroyer) >= 3 || memberstype.Count(t => t == ShipTypes.Escort) >= 1);
+					break;
+				case 1035:   //|1035|月|【夏季限定任務】ソロモンの夏夜|5-1, 5-3, 5-4それぞれS勝利×1回|条件：旗艦に能代 or Atlanta or Richard P.Leary, 駆逐艦 x3
+					isAccepted = (((members[0]?.MasterShip?.NameReading == "のしろ" || members[0]?.MasterShip?.NameReading == "アトランタ") && members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Destroyer) >= 3)
+						|| (members[0]?.MasterShip?.NameReading == "リチャード・P・リアリー" && members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Destroyer) >= 4));
+					break;
 			}
 
 			// 第二ゲージでも第一ボスに行ける場合があるので、個別対応が必要
