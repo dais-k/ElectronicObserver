@@ -204,6 +204,7 @@ api_start2/getData	：艦娘・装備固有データその他
 				48=Army Infantry
 				49=Smoke Generator
 				50=Barrage Balloon
+				51=All Frying Wing Jet Bomber
 
 				 1=主砲
 				 2=副砲
@@ -252,6 +253,7 @@ api_start2/getData	：艦娘・装備固有データその他
 				48=陸戦部隊
 				49=艦載発煙装置
 				50=防空気球
+				51=全翼型戦闘爆撃機
 
 			[2]：カテゴリ
 				(api_mst_slotitem_equiptype にUnicodeで直接記載されている)
@@ -376,6 +378,7 @@ api_start2/getData	：艦娘・装備固有データその他
 				56=噴式局地戦闘機
 				57=局地戦闘機(試製震電)
 				58=夜間爆撃機
+				59=全翼型戦闘爆撃機
 
 			[4]: 航空機カテゴリ
 				 0=非航空機
@@ -431,6 +434,8 @@ api_start2/getData	：艦娘・装備固有データその他
 				56=SBD
 				57=試製明星
 				58=九九式練爆二二型改(夜間装備実験機)
+				59=Ju87 D-4(Fliegerass)
+				60=Ho229
 
 		api_taik		：耐久(0)
 		api_souk		：装甲
