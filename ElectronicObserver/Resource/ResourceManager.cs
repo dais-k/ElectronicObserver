@@ -234,6 +234,7 @@ namespace ElectronicObserver.Resource
 			JetInterceptor,
 			InterceptorShinden,
 			NightBomber,
+			FlyingWingJetBomber,
 			Locked,					
 			Unknown,				//不明な場合はこれ
 		}
@@ -496,6 +497,7 @@ namespace ElectronicObserver.Resource
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/JetInterceptor.png", "Equipment_JetInterceptor");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/InterceptorShinden.png", "Equipment_InterceptorShinden");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/NightBomber.png", "Equipment_NightBomber");
+				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/FlyingWingJetBomber.png", "Equipment_FlyingWingJetBomber"); 
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/Locked.png", "Equipment_Locked");
 				LoadImageFromArchive(Equipments, archive, mstpath + @"Equipment/Unknown.png", "Equipment_Unknown");
 			}
