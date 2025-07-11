@@ -36,6 +36,8 @@ namespace ElectronicObserver.Window.Dialog
 			EquipmentTypes.JetBomber,
 			EquipmentTypes.JetTorpedo,
 			EquipmentTypes.JetRecon,
+			EquipmentTypes.Autogyro,
+			EquipmentTypes.ASPatrol,
 		};
 
 		/// <summary> 基地航空隊に配備可能な攻撃系航空機リスト </summary>
@@ -48,6 +50,8 @@ namespace ElectronicObserver.Window.Dialog
 			EquipmentTypes.HeavyBomber,
 			EquipmentTypes.JetBomber,
 			EquipmentTypes.JetTorpedo,
+			EquipmentTypes.Autogyro,
+			EquipmentTypes.ASPatrol,
 		};
 
 		/// <summary> 基地航空隊に配備可能な戦闘機リスト </summary>
@@ -720,9 +724,9 @@ namespace ElectronicObserver.Window.Dialog
 				foreach (var category in KCDatabase.Instance.EquipmentTypes.Values)
 				{
 
-					// オートジャイロ / 対潜哨戒機 は除外
-					if (category.TypeID == (int)EquipmentTypes.Autogyro || category.TypeID == (int)EquipmentTypes.ASPatrol)
-						continue;
+					// オートジャイロ / 対潜哨戒機 は除外 => 2023/02/14のメンテ以降オートジャイロ・対潜哨戒機も編成可能に
+					//if (category.TypeID == (int)EquipmentTypes.Autogyro || category.TypeID == (int)EquipmentTypes.ASPatrol)
+					//continue;
 
 					var first = KCDatabase.Instance.MasterEquipments.Values
 						.Where(eq => !eq.IsAbyssalEquipment)
