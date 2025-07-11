@@ -1116,15 +1116,15 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressSpecialBattle(q, 1, "S", new[] { 21 }, true),
 							}));
 							break;
-                        case 1035:  //|1035|月|【夏季限定任務】ソロモンの夏夜|5-1, 5-3, 5-4それぞれS勝利×1回|条件：旗艦に能代 or Atlanta or Richard P.Leary, 駆逐艦 x3
-                            Progresses.Add(new ProgressMultiBattle(q, new[] {
-                                new ProgressSpecialBattle(q, 1, "S", new[] { 51 }, true),
-                                new ProgressSpecialBattle(q, 1, "S", new[] { 53 }, true),
-                                new ProgressSpecialBattle(q, 1, "S", new[] { 54 }, true),
-                            }));
-                            break;
-                        //============================ 1100～1199 ============================
-                        case 1103:  //|1103|６|潜水艦強化兵装の量産|61cm三連装(酸素)魚雷x3を破棄し、開発資材60、九三式水中聴音機x2、13号対空電探改x2を所有|
+						case 1035:  //|1035|月|【夏季限定任務】ソロモンの夏夜|5-1, 5-3, 5-4それぞれS勝利×1回|条件：旗艦に能代 or Atlanta or Richard P.Leary, 駆逐艦 x3
+							Progresses.Add(new ProgressMultiBattle(q, new[] {
+								new ProgressSpecialBattle(q, 1, "S", new[] { 51 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 53 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 54 }, true),
+							}));
+							break;
+						//============================ 1100～1199 ============================
+						case 1103:  //|1103|６|潜水艦強化兵装の量産|61cm三連装(酸素)魚雷x3を破棄し、開発資材60、九三式水中聴音機x2、13号対空電探改x2を所有|
 							Progresses.Add(new ProgressDiscard(q, 3, true, new[] { 125 }, -1));
 							break;
 						case 1104:  //|1104|６|潜水艦電子兵装の量産|13号対空電探改x3を破棄し、開発資材100、九三式水中聴音機x2、22号対水上電探x2を所有|

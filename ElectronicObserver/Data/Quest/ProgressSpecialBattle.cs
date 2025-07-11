@@ -607,7 +607,7 @@ namespace ElectronicObserver.Data.Quest
 					break;
 				case 1035:   //|1035|月|【夏季限定任務】ソロモンの夏夜|5-1, 5-3, 5-4それぞれS勝利×1回|条件：旗艦に能代 or Atlanta or Richard P.Leary, 駆逐艦 x3
 					isAccepted = (((members[0]?.MasterShip?.NameReading == "のしろ" || members[0]?.MasterShip?.NameReading == "アトランタ") && members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Destroyer) >= 3)
-						|| (members[0]?.MasterShip?.NameReading == "リチャード・P・リアリー" && members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Destroyer) >= 4));
+						|| (members[0]?.MasterShip?.NameReading == "リチャード・P・リアリー" && members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Destroyer) >= 3));
 					break;
 			}
 
