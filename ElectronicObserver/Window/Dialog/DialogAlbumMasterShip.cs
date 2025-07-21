@@ -17,6 +17,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace ElectronicObserver.Window.Dialog
 {
@@ -340,7 +341,7 @@ namespace ElectronicObserver.Window.Dialog
 					tip.AppendLine($"{shipClassName}: {ship.ShipClass}");
 
 				tip.AppendLine();
-				tip.AppendLine("[装備可能]");
+				tip.AppendLine("[装備可能カテゴリ]");
 				tip.AppendLine(GetEquippableString(shipID));
 
 				ToolTipInfo.SetToolTip(ShipType, tip.ToString());
@@ -811,13 +812,51 @@ namespace ElectronicObserver.Window.Dialog
 		{
 			var db = KCDatabase.Instance;
 			var ship = db.MasterShips[shipID];
+			string cats = "";
 			if (ship == null)
 				return "";
 
-			return string.Join("\r\n", ship.EquippableCategories.Select(id => db.EquipmentTypes[id].Name)
-				.Concat(db.MasterEquipments.Values.Where(eq => eq.EquippableShipsAtExpansion.Contains(shipID)).Select(eq => eq.Name + " (補強スロット)"))
-				.Concat(db.MasterEquipments.Values.Where(eq => eq.EquippableStypeAtExpansion.Contains(ship.ShipTypeInstance.ID)).Select(eq => eq.Name + " (補強スロット)"))
-				.Concat(db.MasterEquipments.Values.Where(eq => eq.EquippableCtypeAtExpansion.Contains(ship.ShipClass)).Select(eq => eq.Name + " (補強スロット)")));
+			if (ship.SpecialEquippableCategories != null)
+			{
+				foreach (var e in ship.SpecialEquippableCategories)
+				{
+					cats += db.EquipmentTypes[e].Name;
+					if (ship.specialEquippableId != null)
+					{
+						string ids = "";
+						foreach (var i in ship.specialEquippableId)
+						{
+							if ((int)db.MasterEquipments[i].CategoryType != e)
+								continue;
+							else
+							{
+								ids += ((ids != "")? ", " : "") + db.MasterEquipments[i].Name;
+							}
+						}
+						cats += (ids != "")? " (※"+ ids + "のみ装備可)\r\n" : "\r\n";
+					}
+					else
+					{
+						cats += "\r\n";
+					}
+				}
+			}
+			else
+			{
+				cats = string.Join("\r\n", ship.EquippableCategories.Select(id => db.EquipmentTypes[id].Name));
+			}
+
+			if (!cats.EndsWith("\r\n")) cats += "\r\n";
+			
+			List<EquipmentDataMaster> exweapons = db.MasterEquipments.Values.Where(eq => eq.EquippableShipsAtExpansion.Contains(shipID)).ToList();
+			exweapons.AddRange(db.MasterEquipments.Values.Where(eq => eq.EquippableStypeAtExpansion.Contains(ship.ShipTypeInstance.ID)).ToList());
+			exweapons.AddRange(db.MasterEquipments.Values.Where(eq => eq.EquippableCtypeAtExpansion.Contains(ship.ShipClass)).ToList());
+			exweapons = exweapons.OrderBy(eq => eq.Name)
+								 .ThenBy(eq => eq.CategoryType2).ToList();
+
+			if (exweapons.Count != 0) cats += "\r\n[補強増設可能装備 ※装備可能カテゴリは除く]\r\n" + string.Join("\r\n", exweapons.Select(eq => eq.Name)); ;
+
+			return cats;
 		}
 
 

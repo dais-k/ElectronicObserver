@@ -316,26 +316,54 @@ namespace ElectronicObserver.Window.Dialog
 				}
 			}
 			DefaultSlots.EndUpdate();
-			
+
 			//装備対象
+			eqlist.Clear();
+			EquipSlots.BeginUpdate();
+			EquipSlots.Items.Clear();
+			EquipLevel.Text = "装備不可";
+			if (!eq.IsAbyssalEquipment)
 			{
-				eqlist.Clear();
-				EquipSlots.BeginUpdate();
-				EquipSlots.Items.Clear();
-				EquipLevel.Text = "装備不可";
-				int eqCategory = (int)eq.CategoryType;
+				int eqCategory = (int)eq.CategoryType2;
+				var preSpecialShips = new Dictionary<ShipTypes, List<ShipDataMaster>>();
 				var specialShips = new Dictionary<ShipTypes, List<int>>();
 				foreach (var ship in db.MasterShips.Values.Where(s => s.SpecialEquippableCategories != null))
 				{
 					bool usual = ship.ShipTypeInstance.EquippableCategories.Contains(eqCategory);
 					bool special = ship.SpecialEquippableCategories.Contains(eqCategory);
 
+					if (ship.specialEquippableId != null)
+					{
+						foreach (var id in ship.specialEquippableId)
+						{
+							if ((int)db.MasterEquipments[id].CategoryType != eqCategory)
+								continue;
+							else
+							{
+								special = false;
+								if (id == eq.EquipmentID)
+									special = true;
+							}
+						}
+
+					}
+
 					if (usual != special)
 					{
-						if (specialShips.ContainsKey(ship.ShipType))
-							specialShips[ship.ShipType].Add(ship.ShipID);
+						if (preSpecialShips.ContainsKey(ship.ShipType))
+							preSpecialShips[ship.ShipType].Add(ship);
 						else
-							specialShips.Add(ship.ShipType, new List<int>(new[] { ship.ShipID }));
+							preSpecialShips.Add(ship.ShipType, new List<ShipDataMaster>(new[] { ship }));
+					}
+
+					foreach (var sp in preSpecialShips)
+					{
+						specialShips[sp.Key] = sp.Value
+							.OrderBy(s => s.ShipClass)
+							.ThenBy(s => s.Name)
+							.ThenBy(s => s.RemodelTier)
+							.Select(s => s.ShipID)
+							.ToList();
 					}
 				}
 				EquipSlots.Items.Add($"[通常スロット]");
@@ -351,7 +379,7 @@ namespace ElectronicObserver.Window.Dialog
 							eqlist.Add(-1);
 							foreach (var ss in specialShips[shiptype.Type])
 							{
-								EquipSlots.Items.Add("  ×" + db.MasterShips[ss]?.NameWithClass + SouyaSelect(ss));
+								EquipSlots.Items.Add("  ×" + db.MasterShips[ss]?.NameWithClass);
 								eqlist.Add(ss);
 							}
 						}
@@ -369,7 +397,7 @@ namespace ElectronicObserver.Window.Dialog
 							eqlist.Add(-1);
 							foreach (var ss in specialShips[shiptype.Type])
 							{
-								EquipSlots.Items.Add("  〇" + db.MasterShips[ss]?.NameWithClass + SouyaSelect(ss));
+								EquipSlots.Items.Add("  〇" + db.MasterShips[ss]?.NameWithClass);
 								eqlist.Add(ss);
 							}
 						}
@@ -388,8 +416,15 @@ namespace ElectronicObserver.Window.Dialog
 					|| eq.EquippableCtypeAtExpansion.Any())
 				{
 					EquipLevel.Text = "★" + eq.equippableRequestLevel;
-					EquipSlots.Items.Add($""); eqlist.Add(-1); ;
-					EquipSlots.Items.Add($"[拡張スロット]"); eqlist.Add(-1);
+					EquipSlots.Items.Add($""); eqlist.Add(-1);
+					if (equipmentID == 268)
+					{
+						EquipSlots.Items.Add($"[拡張スロット] ★7～"); eqlist.Add(-1);
+					}
+					else
+					{
+						EquipSlots.Items.Add($"[拡張スロット]"); eqlist.Add(-1);
+					}
 					if (eq.EquippableStypeAtExpansion.Any())
 					{
 						foreach (var ss in eq.EquippableStypeAtExpansion)
@@ -399,7 +434,7 @@ namespace ElectronicObserver.Window.Dialog
 								EquipSlots.Items.Add($"上記艦種・艦娘が装備可"); eqlist.Add(-1);
 							}
 							else
-							{ 
+							{
 								EquipSlots.Items.Add(" " + db.ShipTypes[ss]?.Name);
 								eqlist.Add(-1);
 							}
@@ -415,20 +450,25 @@ namespace ElectronicObserver.Window.Dialog
 					}
 					if (eq.equippableShipsAtExpansion.Any())
 					{
-						foreach (var ss in eq.EquippableShipsAtExpansion)
+						List<ShipDataMaster> shiptemp = eq.equippableShipsAtExpansion.Select(s => db.MasterShips[s]).ToList();
+						shiptemp = shiptemp.OrderBy(s => s.ShipType)
+							.ThenBy(s => s.ShipClass)
+							.ThenBy(s => s.Name)
+							.ThenBy(s => s.RemodelTier)
+							.ToList();
+
+						foreach (var ss in shiptemp)
 						{
-							if(db.MasterShips[ss]?.NameWithClass != null)
-							{ 
-								EquipSlots.Items.Add(" " + db.MasterShips[ss]?.NameWithClass + SouyaSelect(ss));
-								eqlist.Add(ss);
+							if(ss?.NameWithClass != null)
+							{
+								EquipSlots.Items.Add(" " + ss?.NameWithClass);
+								eqlist.Add(ss.ShipID);
 							}
 						}
 					}
 				}
-				EquipSlots.EndUpdate();
 			}
-
-
+			EquipSlots.EndUpdate();
 
 			Description.Text = eq.Message;
 			
@@ -517,23 +557,55 @@ namespace ElectronicObserver.Window.Dialog
 			var eq = db.MasterEquipments[equipmentID];
 			if (eq == null)
 				return sb.ToString();
+			if (eq.IsAbyssalEquipment)
+			{
+				sb.AppendLine("深海棲艦");
+				return sb.ToString();
+			}
 
-			int eqCategory = (int)eq.CategoryType;
+			int eqCategory = (int)eq.CategoryType2;
 
-			var specialShips = new Dictionary<ShipTypes, List<string>>();
+			var preSpecialShips = new Dictionary<ShipTypes, List<ShipDataMaster>>();
+			var specialShips = new Dictionary<ShipTypes, List<String>>();
 
 			foreach (var ship in db.MasterShips.Values.Where(s => s.SpecialEquippableCategories != null))
 			{
 				bool usual = ship.ShipTypeInstance.EquippableCategories.Contains(eqCategory);
 				bool special = ship.SpecialEquippableCategories.Contains(eqCategory);
 
+				if (ship.specialEquippableId != null)
+				{
+					foreach (var id in ship.specialEquippableId)
+					{
+						if ((int)db.MasterEquipments[id].CategoryType != eqCategory)
+							continue;
+						else
+						{
+							special = false;
+							if (id == eq.EquipmentID)
+								special = true;
+						}
+					}
+
+				}
+
 				if (usual != special)
 				{
-					if (specialShips.ContainsKey(ship.ShipType))
-						specialShips[ship.ShipType].Add(ship.NameWithClass);
+					if (preSpecialShips.ContainsKey(ship.ShipType))
+						preSpecialShips[ship.ShipType].Add(ship);
 					else
-						specialShips.Add(ship.ShipType, new List<string>(new[] { ship.NameWithClass }));
+						preSpecialShips.Add(ship.ShipType, new List<ShipDataMaster>(new[] { ship }));
 				}
+			}
+
+			foreach(var sp in preSpecialShips)
+			{
+				specialShips[sp.Key] = sp.Value
+					.OrderBy(s => s.ShipClass)
+					.ThenBy(s => s.Name)
+					.ThenBy(s => s.RemodelTier)
+					.Select(s => s.NameWithClass)
+					.ToList();
 			}
 
 			foreach (var shiptype in db.ShipTypes.Values)
@@ -544,7 +616,7 @@ namespace ElectronicObserver.Window.Dialog
 
 					if (specialShips.ContainsKey(shiptype.Type))
 					{
-						sb.Append(" (").Append(string.Join(", ", specialShips[shiptype.Type])).Append("を除く)");
+						sb.Append(" (").Append(string.Join(", ", specialShips[shiptype.Type])).Append("は除く)");
 					}
 
 					sb.AppendLine();
@@ -553,7 +625,7 @@ namespace ElectronicObserver.Window.Dialog
 				{
 					if (specialShips.ContainsKey(shiptype.Type))
 					{
-						sb.Append(shiptype.Name + " (").Append(string.Join(", ", specialShips[shiptype.Type])).Append(")");
+						sb.Append(shiptype.Name + " (").Append(string.Join(", ", specialShips[shiptype.Type])).Append("が装備可能)");
 						sb.AppendLine();
 					}
 				}
@@ -574,7 +646,18 @@ namespace ElectronicObserver.Window.Dialog
 				if (eq.EquippableCtypeAtExpansion.Any())
 					sb.AppendLine(string.Join(", ", eq.EquippableCtypeAtExpansion.Select(id => Constants.GetShipClass(id))));
 				if (eq.EquippableShipsAtExpansion.Any())
-					sb.AppendLine(string.Join(", ", eq.EquippableShipsAtExpansion.Select(id => db.MasterShips[id]?.NameWithClass ?? "？？")));
+				{
+					List<ShipDataMaster> shiptemp = eq.equippableShipsAtExpansion.Select(id => db.MasterShips[id]).ToList();
+					shiptemp = shiptemp.OrderBy(s => s.ShipType)
+						.ThenBy(s => s.ShipClass)
+						.ThenBy(s => s.Name)
+						.ThenBy(s => s.RemodelTier)
+						.ToList();
+
+					sb.AppendLine(string.Join(", ", shiptemp.Select(id => id?.NameWithClass ?? "？？")));
+
+				}
+				//sb.AppendLine(string.Join(", ", eq.EquippableShipsAtExpansion.Select(id => db.MasterShips[id]?.NameWithClass ?? "？？")));
 			}
 			return sb.ToString();
 		}

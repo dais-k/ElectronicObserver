@@ -506,10 +506,16 @@ namespace ElectronicObserver.Data
 		/// </summary>
 		public IEnumerable<int> SpecialEquippableCategories => specialEquippableCategory;
 
-		/// <summary>
-		/// 装備可能なカテゴリ
-		/// </summary>
-		public IEnumerable<int> EquippableCategories
+        internal int[] specialEquippableId = null;
+        /// <summary>
+        /// 特殊装備ID　カテゴリの値が nullでない場合
+        /// </summary>
+        public IEnumerable<int> SpecialEquippableId => specialEquippableId;
+
+        /// <summary>
+        /// 装備可能なカテゴリ
+        /// </summary>
+        public IEnumerable<int> EquippableCategories
 		{
 			get
 			{

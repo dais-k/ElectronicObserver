@@ -1,4 +1,5 @@
 ﻿using ElectronicObserver.Data;
+using Microsoft.SqlServer.Server;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
@@ -206,7 +207,7 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 			}
 
 			//api_mst_equip_ship (うんこJSON2を変換)
-			rootObjectEs rootObjectEs = new();
+			RootObjectEs rootObjectEs = new();
 			string text_api_mst_equip_ship = data.api_mst_equip_ship.ToString(); //元データを文字列に変換
 			foreach (var elem in data.api_mst_equip_ship)
 			{
@@ -217,26 +218,37 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 				string text_equip_ship = root_ship_id.ToString();
 				string text_equips = root_ship_id.Value.ToString();
 
-				//api_equip_type取得 特殊装備はとりあえず無視
+				//api_equip_type取得
 				JsonElement jelem_equip_type = JsonSerializer.Deserialize<JsonElement>(text_equips);
 				JsonProperty root_equip_type = jelem_equip_type.EnumerateObject().First();
 				JsonElement value_equip_type = root_equip_type.Value; //foreach処理用のデータ
 				List<int> list_equip_type = new List<int>();
+				List<int> list_equip_id = new List<int>();
 				string text_value_equip_type = root_equip_type.Value.ToString(); //データ変換用作業テキスト
 				if (text_value_equip_type != "")
 				{
 					foreach (JsonProperty jprop in value_equip_type.EnumerateObject())
 					{
 						list_equip_type.Add(int.Parse(jprop.Name));
+						if (jprop.Value.ToString() != "") //特殊装備追加
+						{
+							string idvalue = jprop.Value.ToString();
+							List<int> idtemp =JsonSerializer.Deserialize<List<int>>(idvalue);
+							foreach (int idval in idtemp)
+							{
+								list_equip_id.Add(int.Parse(idval.ToString()));
+							}
+						}
 					}
 					rootObjectEs.Api_equip_type = list_equip_type;
+					rootObjectEs.Api_equip_id = list_equip_id;
 				}
 
 				//大本のテキストから今作業した要素を削除
 				text_api_mst_equip_ship = text_api_mst_equip_ship.Replace(text_equip_ship + ",", "");
 
 				// 一旦一装備のみでJSONデータをシリアライズで作成
-				string mst_equip_ship_temp = JsonSerializer.Serialize<rootObjectEs>(rootObjectEs);
+				string mst_equip_ship_temp = JsonSerializer.Serialize<RootObjectEs>(rootObjectEs);
 
 				//JSONデータを作成したらrootObjectExslotのデータをnull化する
 				if (rootObjectEs.Api_equip_type != null) rootObjectEs.Api_equip_type = null;
@@ -256,12 +268,18 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 					}
 				}
 
+				//装備ID
+				if (api_mst_equip_ship_decode.Api_equip_id is not null)
+				{
+					db.MasterShips[id].specialEquippableId = api_mst_equip_ship_decode.Api_equip_id;
+				}
+
 				//int id = (int)elem.api_ship_id;
 				//db.MasterShips[id].specialEquippableCategory = (int[])elem.api_equip_type;
 			}
 
 			//api_mst_equip_exslot_ship (うんこJSONを変換)
-			rootObjectExslot rootObjectExslot = new();
+			RootObjectExslot rootObjectExslot = new();
 			string text_api_mst_equip_exslot_ship = data.api_mst_equip_exslot_ship.ToString(); //元データを文字列に変換
 			foreach (var elem in data.api_mst_equip_exslot_ship) //元データを使ってループ処理 
 			{
@@ -314,7 +332,15 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 				{
 					foreach (JsonProperty jprop in value_ctypes.EnumerateObject())
 					{
-						list_ctypes.Add(int.Parse(jprop.Name));
+						if (rootObjectExslot.Api_slotitem_id == 413 && int.Parse(jprop.Name) == 38) //精鋭水雷戦隊 司令部の夕雲型特別対応
+						{
+							list_ship_ids.Add(542);
+							list_ship_ids.Add(543);
+							list_ship_ids.Add(649);
+							rootObjectExslot.Api_ship_ids = list_ship_ids;
+						}
+						else
+							list_ctypes.Add(int.Parse(jprop.Name));
 					}
 					rootObjectExslot.Api_ctypes = list_ctypes;
 				}
@@ -330,7 +356,7 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 				text_api_mst_equip_exslot_ship = text_api_mst_equip_exslot_ship.Replace(text_equip_exslot + ",", "");
 
 				// 一旦一装備のみでJSONデータをシリアライズで作成
-				string mst_equip_exslot_ship_temp = JsonSerializer.Serialize<rootObjectExslot>(rootObjectExslot);
+				string mst_equip_exslot_ship_temp = JsonSerializer.Serialize<RootObjectExslot>(rootObjectExslot);
 
 				//JSONデータを作成したらrootObjectExslotのデータをnull化する
 				if (rootObjectExslot.Api_ship_ids != null) rootObjectExslot.Api_ship_ids = null;
@@ -345,26 +371,17 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 				//搭載可能艦娘個別指定
 				if (api_mst_equip_exslot_ship_decode.Api_ship_ids is not null)
 				{
-					foreach (var cnt_ship in api_mst_equip_exslot_ship_decode.Api_ship_ids)
-					{
-						db.MasterEquipments[id].equippableShipsAtExpansion = api_mst_equip_exslot_ship_decode.Api_ship_ids;
-					}
+					db.MasterEquipments[id].equippableShipsAtExpansion = api_mst_equip_exslot_ship_decode.Api_ship_ids;
 				}
 				//装備可能艦種（駆逐艦、軽巡とか）
 				if (api_mst_equip_exslot_ship_decode.Api_stypes is not null)
 				{
-					foreach (var cnt_stype in api_mst_equip_exslot_ship_decode.Api_stypes)
-					{
-						db.MasterEquipments[id].equippableStypeAtExpansion = api_mst_equip_exslot_ship_decode.Api_stypes;
-					}
+					db.MasterEquipments[id].equippableStypeAtExpansion = api_mst_equip_exslot_ship_decode.Api_stypes;
 				}
 				//装備可能艦型（綾波型、秋月型とか）
 				if (api_mst_equip_exslot_ship_decode.Api_ctypes is not null)
 				{ 
-					foreach(var cnt_ctype in api_mst_equip_exslot_ship_decode.Api_ctypes)
-					{
-						db.MasterEquipments[id].equippableCtypeAtExpansion = api_mst_equip_exslot_ship_decode.Api_ctypes;
-					}
+					db.MasterEquipments[id].equippableCtypeAtExpansion = api_mst_equip_exslot_ship_decode.Api_ctypes;
 				}
 				//装備可能改修レベル
 				db.MasterEquipments[id].equippableRequestLevel = api_mst_equip_exslot_ship_decode.Api_req_level;
@@ -397,7 +414,7 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 		public override string APIName => "api_start2/getData";
 	}
 
-	public class rootObjectExslot
+	public class RootObjectExslot
 	{
 		public int Api_slotitem_id { get; set; }
 		public List<int> Api_ship_ids { get; set; }
@@ -425,23 +442,25 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 		}
 	}
 
-	public class rootObjectEs
+	public class RootObjectEs
 	{
 		public int Api_ship_id { get; set; }
 		public List<int> Api_equip_type { get; set; }
+		public List<int> Api_equip_id { get; set; }
 	}
 
 	public class Api_mst_equip_ship_decode
 	{
 		public int Api_ship_id { get; set; }
 		public int[] Api_equip_type { get; set; }
+		public int[] Api_equip_id { get; set; }
 
-		public Api_mst_equip_ship_decode(int api_ship_id, int[] api_equip_type)
+		public Api_mst_equip_ship_decode(int api_ship_id, int[] api_equip_type, int[] api_equip_id)
 		{
 			this.Api_ship_id = api_ship_id;
 			this.Api_equip_type = api_equip_type;
+			this.Api_equip_id = api_equip_id;
 
 		}
 	}
-
 }
