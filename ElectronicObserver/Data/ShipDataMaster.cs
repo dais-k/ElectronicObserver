@@ -33,7 +33,24 @@ namespace ElectronicObserver.Data
 		/// <summary>
 		/// 名前
 		/// </summary>
-		public string Name => RawData.api_name;
+		//public string Name => RawData.api_name;
+        public string Name
+        {
+            get
+            {
+                switch (ShipID)
+                {
+                    case 645:
+                        return RawData.api_name + "(灯台)";  //宗谷
+                    case 650:
+                        return RawData.api_name + "(南極)";
+                    case 699:
+                        return RawData.api_name + "(特務)";
+                    default:
+                        return RawData.api_name;
+                }
+            }
+        }
 
 		/// <summary>
 		/// 読み
@@ -632,7 +649,7 @@ namespace ElectronicObserver.Data
 		public bool IsAbyssalShip => ShipID > 1500;
 
 		/// <summary>
-		/// クラスも含めた艦名
+		/// クラスも含めた艦名 (深海のeliteとかflagshipとかを追記する)
 		/// </summary>
 		public string NameWithClass
 		{
