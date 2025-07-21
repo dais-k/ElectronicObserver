@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using Titanium.Web.Proxy;
 using Titanium.Web.Proxy.EventArguments;
 using Titanium.Web.Proxy.Models;
+using Titanium.Web.Proxy.Http;
 
 namespace ElectronicObserver.Observer
 {
@@ -159,6 +160,8 @@ namespace ElectronicObserver.Observer
 				EnableConnectionPool = false,
 				ForwardToUpstreamGateway = true,
 			};
+			Proxy.CertificateManager.CreateRootCertificate(true);
+			Proxy.CertificateManager.TrustRootCertificate();
 			Proxy.BeforeRequest += ProxyOnBeforeRequest;
 			Proxy.BeforeResponse += ProxyOnBeforeResponse;
 
@@ -189,7 +192,7 @@ namespace ElectronicObserver.Observer
 
 			try
 			{
-				Endpoint = new ExplicitProxyEndPoint(IPAddress.Any, portID);
+				Endpoint = new ExplicitProxyEndPoint(IPAddress.Any, portID, true);
 				Proxy.AddEndPoint(Endpoint);
 
 				ExternalProxy? upstreamProxy = c switch
