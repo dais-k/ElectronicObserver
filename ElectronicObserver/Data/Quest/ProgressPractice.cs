@@ -466,6 +466,15 @@ namespace ElectronicObserver.Data.Quest
 						ret = true;
 					}
 					break;
+				case 380:   //|380|週|【期間限定任務】揚陸船団護衛演習|演習A勝利以上×3回|条件：揚陸1海防2自由3 or 海防3自由3|1日で進捗リセット|期間限定ウィークリー任務
+					if ((ships.Count(s => s.MasterShip.ShipType == ShipTypes.Escort) >= 3)
+							||
+						((ships.Count(s => s.MasterShip.ShipType == ShipTypes.Escort)) >= 2 && (ships.Count(s => s.MasterShip.ShipType == ShipTypes.AmphibiousAssaultShip) >= 1)))
+					{
+						ret = true;
+					}
+					break;
+
 				default:
 					//ここに来たらバグ
 					ret = false;

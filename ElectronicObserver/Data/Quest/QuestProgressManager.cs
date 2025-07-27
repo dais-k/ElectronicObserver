@@ -432,6 +432,9 @@ namespace ElectronicObserver.Data.Quest
 						case 379:   //|379|週|【期間限定任務】「精鋭十一駆」特別演習！|演習S勝利以上×4回|条件：「吹雪改二」「白雪改二」「深雪改二」「初雪改」から2隻以上|1日で進捗リセット|期間限定ウィークリー任務
 							Progresses.Add(new ProgressPractice(q, 4, "S", true));
 							break;
+						case 380:   //|380|週|【期間限定任務】揚陸船団護衛演習|演習A勝利以上×3回|条件：揚陸1海防2自由3 or 海防3自由3|1日で進捗リセット|期間限定ウィークリー任務
+							Progresses.Add(new ProgressPractice(q, 3, "A", true));
+							break;
 						//============================ 400～499 ============================
 						case 402:   //|402|「遠征」を3回成功させよう！|遠征成功3
 							Progresses.Add(new ProgressExpedition(q, 3, null));
@@ -1187,6 +1190,12 @@ namespace ElectronicObserver.Data.Quest
 						case 1138:  //|1138|６|【高射装置量産】94式高射装置の追加配備|秘書艦に秋月型を配置し91式高射装置を4つ廃棄、ボーキ1300、鋼材480、高速建造材x4、開発資材x16を保有
 							Progresses.Add(new ProgressDiscard(q, 4, true, new[] { 120 }, -1));
 							break;
+						case 1145:  //|1145|単|【工廠任務】伊号潜水艦装備の拡充|潜水を旗艦にし、第一スロに「零式水上偵察機☆4」を装備。九三式水中聴音機×4, 新型航空兵装資材1, 開発資材60, 新型兵装資材1 を準備、零式水上偵察機×8, 魚雷×15 を廃棄
+							Progresses.Add(new ProgressMultiDiscard(q, new[]{
+								new ProgressDiscard(q, 8, true, new[]{ 25 }, -1),
+								new ProgressDiscard(q, 15, true, new[]{ 5 }),
+							}));
+							break;
 						case 1149:  //|1149|週|【期間限定任務】作戦後の不要装備等用途廃止|「高速建造材」x48を準備した上で、「中口径主砲」x8及び「魚雷」x8、「大口径主砲」x4を廃棄|2025/5/12～2025/5/30
 							if (DateTime.Now < new DateTime(2025, 5, 31))
 							{
@@ -1196,6 +1205,13 @@ namespace ElectronicObserver.Data.Quest
 									new ProgressDiscard(q, 4, true, new[]{ 3 }),
 								}));
 							}
+							break;
+						case 1151:  //|1151|単|陸軍戦闘機及び海外戦闘機の増備|「水上偵察機」×14、「中口径主砲」×12、「艦上爆撃機」×10を廃棄し、「零式艦戦21型」×8「零式艦戦32型」×4, 開発資材36を準備
+							Progresses.Add(new ProgressMultiDiscard(q, new[]{
+								new ProgressDiscard(q, 14, true, new[]{ 10 }),
+								new ProgressDiscard(q, 12, true, new[]{ 2 }),
+								new ProgressDiscard(q, 10, true, new[]{ 7 }),
+							}));
 							break;
 					}
 
