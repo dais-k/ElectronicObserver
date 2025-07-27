@@ -360,7 +360,7 @@ namespace ElectronicObserver.Window.Dialog
 					{
 						specialShips[sp.Key] = sp.Value
 							.OrderBy(s => s.ShipClass)
-							.ThenBy(s => s.Name)
+							.ThenBy(s => s.NameReading)
 							.ThenBy(s => s.RemodelTier)
 							.Select(s => s.ShipID)
 							.ToList();
@@ -453,7 +453,7 @@ namespace ElectronicObserver.Window.Dialog
 						List<ShipDataMaster> shiptemp = eq.equippableShipsAtExpansion.Select(s => db.MasterShips[s]).ToList();
 						shiptemp = shiptemp.OrderBy(s => s.ShipType)
 							.ThenBy(s => s.ShipClass)
-							.ThenBy(s => s.Name)
+							.ThenBy(s => s.NameReading)
 							.ThenBy(s => s.RemodelTier)
 							.ToList();
 
@@ -602,7 +602,7 @@ namespace ElectronicObserver.Window.Dialog
 			{
 				specialShips[sp.Key] = sp.Value
 					.OrderBy(s => s.ShipClass)
-					.ThenBy(s => s.Name)
+					.ThenBy(s => s.NameReading)
 					.ThenBy(s => s.RemodelTier)
 					.Select(s => s.NameWithClass)
 					.ToList();
@@ -650,7 +650,7 @@ namespace ElectronicObserver.Window.Dialog
 					List<ShipDataMaster> shiptemp = eq.equippableShipsAtExpansion.Select(id => db.MasterShips[id]).ToList();
 					shiptemp = shiptemp.OrderBy(s => s.ShipType)
 						.ThenBy(s => s.ShipClass)
-						.ThenBy(s => s.Name)
+						.ThenBy(s => s.NameReading)
 						.ThenBy(s => s.RemodelTier)
 						.ToList();
 

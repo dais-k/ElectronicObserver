@@ -150,31 +150,31 @@ namespace ElectronicObserver.Data
 		/// </summary>
 		public EquipmentTypes CategoryType => (EquipmentTypes)(int)RawData.api_type[2];
 
-        public EquipmentTypes CategoryType2
-        {
-            get
-            {
-                switch (EquipmentID)
-                {
-                    case 128:
-                    case 281:
-                    case 465:
-                        return (EquipmentTypes)38;
-                    case 142:
-                    case 460:
-                        return (EquipmentTypes)93;
-                    case 151:
-                        return (EquipmentTypes)94;
-                    default:
-                        return CategoryType;
-                }
-            }
-        }
-        
-        /// <summary>
-        /// 装備種別：カテゴリ
-        /// </summary>
-        public EquipmentType CategoryTypeInstance => KCDatabase.Instance.EquipmentTypes[(int)CategoryType];
+		public EquipmentTypes CategoryType2
+		{
+			get
+			{
+				switch (EquipmentID)
+				{
+					case 128:
+					case 281:
+					case 465:
+						return (EquipmentTypes)38;
+					case 142:
+					case 460:
+						return (EquipmentTypes)93;
+					case 151:
+						return (EquipmentTypes)94;
+					default:
+						return CategoryType;
+				}
+			}
+		}
+		
+		/// <summary>
+		/// 装備種別：カテゴリ
+		/// </summary>
+		public EquipmentType CategoryTypeInstance => KCDatabase.Instance.EquipmentTypes[(int)CategoryType];
 
 		/// <summary>
 		/// 装備種別：アイコン

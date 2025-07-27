@@ -34,23 +34,23 @@ namespace ElectronicObserver.Data
 		/// 名前
 		/// </summary>
 		//public string Name => RawData.api_name;
-        public string Name
-        {
-            get
-            {
-                switch (ShipID)
-                {
-                    case 645:
-                        return RawData.api_name + "(灯台)";  //宗谷
-                    case 650:
-                        return RawData.api_name + "(南極)";
-                    case 699:
-                        return RawData.api_name + "(特務)";
-                    default:
-                        return RawData.api_name;
-                }
-            }
-        }
+		public string Name
+		{
+			get
+			{
+				switch (ShipID)
+				{
+					case 645:
+						return RawData.api_name + "(灯台)";  //宗谷
+					case 650:
+						return RawData.api_name + "(南極)";
+					case 699:
+						return RawData.api_name + "(特務)";
+					default:
+						return RawData.api_name;
+				}
+			}
+		}
 
 		/// <summary>
 		/// 読み
@@ -506,16 +506,16 @@ namespace ElectronicObserver.Data
 		/// </summary>
 		public IEnumerable<int> SpecialEquippableCategories => specialEquippableCategory;
 
-        internal int[] specialEquippableId = null;
-        /// <summary>
-        /// 特殊装備ID　カテゴリの値が nullでない場合
-        /// </summary>
-        public IEnumerable<int> SpecialEquippableId => specialEquippableId;
+		internal int[] specialEquippableId = null;
+		/// <summary>
+		/// 特殊装備ID　カテゴリの値が nullでない場合
+		/// </summary>
+		public IEnumerable<int> SpecialEquippableId => specialEquippableId;
 
-        /// <summary>
-        /// 装備可能なカテゴリ
-        /// </summary>
-        public IEnumerable<int> EquippableCategories
+		/// <summary>
+		/// 装備可能なカテゴリ
+		/// </summary>
+		public IEnumerable<int> EquippableCategories
 		{
 			get
 			{

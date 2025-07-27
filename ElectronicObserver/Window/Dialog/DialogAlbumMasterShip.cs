@@ -851,10 +851,10 @@ namespace ElectronicObserver.Window.Dialog
 			List<EquipmentDataMaster> exweapons = db.MasterEquipments.Values.Where(eq => eq.EquippableShipsAtExpansion.Contains(shipID)).ToList();
 			exweapons.AddRange(db.MasterEquipments.Values.Where(eq => eq.EquippableStypeAtExpansion.Contains(ship.ShipTypeInstance.ID)).ToList());
 			exweapons.AddRange(db.MasterEquipments.Values.Where(eq => eq.EquippableCtypeAtExpansion.Contains(ship.ShipClass)).ToList());
-			exweapons = exweapons.OrderBy(eq => eq.Name)
-								 .ThenBy(eq => eq.CategoryType2).ToList();
+			exweapons = exweapons.OrderBy(eq => eq.CategoryType2)
+								 .ThenBy(eq => eq.Name).ToList();
 
-			if (exweapons.Count != 0) cats += "\r\n[補強増設可能装備 ※装備可能カテゴリは除く]\r\n" + string.Join("\r\n", exweapons.Select(eq => eq.Name)); ;
+			if (exweapons.Count != 0) cats += "\r\n[補強増設可能装備 ※装備可能カテゴリは除く]\r\n" + string.Join("\r\n", exweapons.Select(eq => eq.CategoryTypeInstance.Name + " " + eq.Name + ((eq.equippableRequestLevel > 0)? " ★" + eq.equippableRequestLevel + "～" : "")));
 
 			return cats;
 		}
