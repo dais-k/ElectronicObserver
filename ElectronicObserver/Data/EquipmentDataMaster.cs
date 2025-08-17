@@ -159,12 +159,14 @@ namespace ElectronicObserver.Data
 					case 128:
 					case 281:
 					case 465:
-						return (EquipmentTypes)38;
+						return (EquipmentTypes)38; // 大口径主砲(II)
 					case 142:
 					case 460:
-						return (EquipmentTypes)93;
+						return (EquipmentTypes)93; // 大型電探(II)
 					case 151:
-						return (EquipmentTypes)94;
+						return (EquipmentTypes)94; // 艦上偵察機(II)
+					case 467:
+						return (EquipmentTypes)95; // 副砲（II）
 					default:
 						return CategoryType;
 				}
