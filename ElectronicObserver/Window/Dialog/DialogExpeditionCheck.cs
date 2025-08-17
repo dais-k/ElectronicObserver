@@ -50,6 +50,7 @@ namespace ElectronicObserver.Window.Dialog
 			{
 				var results = new[]
 				{
+					MissionClearCondition.Check(mission.MissionID, db.Fleet[1]),
 					MissionClearCondition.Check(mission.MissionID, db.Fleet[2]),
 					MissionClearCondition.Check(mission.MissionID, db.Fleet[3]),
 					MissionClearCondition.Check(mission.MissionID, db.Fleet[4]),
@@ -65,16 +66,17 @@ namespace ElectronicObserver.Window.Dialog
 					results[0],
 					results[1],
 					results[2],
-					results[3]);
+					results[3],
+					results[4]);
 
 				row.Cells[1].ToolTipText = $"ID: {mission.MissionID}";
 
-				for (int i = 0; i < 4; i++)
+				for (int i = 0; i < 5; i++)
 				{
 					var result = results[i];
 					var cell = row.Cells[i + 2];
 
-					if (result.IsSuceeded || i == 3)
+					if (result.IsSuceeded || i == 4)
 					{
 						if (!result.FailureReason.Any())
 							cell.Value = "○";
