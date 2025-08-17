@@ -415,10 +415,7 @@ namespace ElectronicObserver.Data.Quest
 							Progresses.Add(new ProgressPractice(q, 4, "A", true));
 							break;
 						case 374:   //|374|週|【期間限定任務】「三十二駆」特別演習！|演習S勝利以上×3回|条件：「玉波」「涼波」「藤波」「早波」「浜波」から3隻以上含む|1日で進捗リセット| 期間限定ウィークリー任務 2024/12/3終了→2025/05復活
-							if (DateTime.Now < new DateTime(2025, 5, 31))
-							{
-								Progresses.Add(new ProgressPractice(q, 3, "S", true));
-							}
+							Progresses.Add(new ProgressPractice(q, 3, "S", true));
 							break;
 						case 375:   //|375|９|「第三戦隊」第二小隊、演習開始！|演習S勝利以上×4回|条件：「比叡」「霧島」軽巡1, 駆逐2, 自由1|イヤーリーだが1日で進捗リセット|
 							Progresses.Add(new ProgressPractice(q, 4, "S", true));
