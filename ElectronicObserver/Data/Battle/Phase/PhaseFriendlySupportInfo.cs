@@ -100,7 +100,7 @@ namespace ElectronicObserver.Data.Battle.Phase
 		public int[][] FriendlySlots { get; private set; }
 
 		/// <summary>
-		/// 友軍艦隊装備 (拡張スロット)
+		/// 友軍艦隊装備 (増設スロット)
 		/// </summary>
 		public int[] FriendlyExpansionSlots { get; private set; }
 

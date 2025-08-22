@@ -1546,10 +1546,10 @@ api_req_kaisou/slot_exchange_index		：装備スロット交換
 Request.api_req_kaisou/slot_deprive		：艦娘間装備受け渡し
 	api_unset_ship		：送信元の艦船固有ID
 	api_set_ship		：送信先の艦船固有ID
-	api_unset_slot_kind	：送信元のスロット種別　0=通常スロット, 1=拡張スロット
-	api_set_slot_kind	：送信先のスロット種別　0=通常スロット, 1=拡張スロット
-	api_unset_idx		：送信元のスロットインデックス　0から始まる　拡張スロットの時は0
-	api_set_idx			：送信先のスロットインデックス　0から始まる　拡張スロットの時は-1
+	api_unset_slot_kind	：送信元のスロット種別　0=通常スロット, 1=増設スロット
+	api_set_slot_kind	：送信先のスロット種別　0=通常スロット, 1=増設スロット
+	api_unset_idx		：送信元のスロットインデックス　0から始まる　増設スロットの時は0
+	api_set_idx			：送信先のスロットインデックス　0から始まる　増設スロットの時は-1
 
 api_req_kaisou/slot_deprive		：艦娘間装備受け渡し
 	api_ship_data		：更新した艦船データ
@@ -1597,7 +1597,7 @@ api_get_member/preset_slot			：装備プリセット情報
 		api_slot_item		：通常スロット装備リスト
 			api_id				：装備ID (固有ではない)
 			api_level			：装備改修レベル
-		api_slot_item_ex	：拡張スロット装備　ないなら存在しない
+		api_slot_item_ex	：増設スロット装備　ないなら存在しない
 			api_id				：装備ID (固有ではない)
 			api_level			：装備改修レベル
 
@@ -1915,7 +1915,7 @@ api_req_sortie/battle	：通常艦隊　昼戦
 		api_nowhps				：友軍の現在HP [艦船数]
 		api_maxhps				：友軍の最大HP [艦船数]
 		api_Slot				：友軍の装備スロット [艦船数][5] 空きスロットは -1
-		api_slot_ex				：友軍の装備(拡張スロット) [艦船数]
+		api_slot_ex				：友軍の装備(増設スロット) [艦船数]
 		api_Param				：友軍の基礎ステータス [艦船数][4]; [火力, 雷装, 対空, 装甲]
 		api_voice_id			：再生されるボイスID? [艦船数]
 		api_voice_p_no			：1以上=戦闘前口上あり（口上の順番？）, 0=なし [艦船数]

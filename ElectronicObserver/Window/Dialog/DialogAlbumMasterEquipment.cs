@@ -407,7 +407,7 @@ namespace ElectronicObserver.Window.Dialog
 				{
 					EquipLevel.Text = "★0";
 					EquipSlots.Items.Add($""); eqlist.Add(-1);
-					EquipSlots.Items.Add($"[拡張スロット]"); eqlist.Add(-1);
+					EquipSlots.Items.Add($"[増設スロット]"); eqlist.Add(-1);
 					EquipSlots.Items.Add($"上記艦種・艦娘が装備可"); eqlist.Add(-1);
 				}
 
@@ -419,11 +419,11 @@ namespace ElectronicObserver.Window.Dialog
 					EquipSlots.Items.Add($""); eqlist.Add(-1);
 					if (equipmentID == 268)
 					{
-						EquipSlots.Items.Add($"[拡張スロット] ★7～"); eqlist.Add(-1);
+						EquipSlots.Items.Add($"[増設スロット] ★7～"); eqlist.Add(-1);
 					}
 					else
 					{
-						EquipSlots.Items.Add($"[拡張スロット]"); eqlist.Add(-1);
+						EquipSlots.Items.Add($"[増設スロット]"); eqlist.Add(-1);
 					}
 					if (eq.EquippableStypeAtExpansion.Any())
 					{
@@ -633,14 +633,14 @@ namespace ElectronicObserver.Window.Dialog
 
 			if (eq.IsExslotEquipped)
 			{
-				sb.AppendLine("\n[拡張スロット]  上記艦種・艦娘が装備可能\n");
+				sb.AppendLine("\n[増設スロット]  上記艦種・艦娘が装備可能\n");
 			}
 
 			if (eq.EquippableShipsAtExpansion.Any()
 				|| eq.EquippableStypeAtExpansion.Any()
 				|| eq.EquippableCtypeAtExpansion.Any())
 			{
-				sb.AppendFormat("\n[拡張スロット]  改修LV★{0}から装備可能\n",eq.equippableRequestLevel);
+				sb.AppendFormat("\n[増設スロット]  改修LV★{0}から装備可能\n",eq.equippableRequestLevel);
 				if (eq.EquippableStypeAtExpansion.Any())
 					sb.AppendLine(string.Join(", ",eq.EquippableStypeAtExpansion.Select(id => db.ShipTypes[id]?.Name)));
 				if (eq.EquippableCtypeAtExpansion.Any())

@@ -581,7 +581,7 @@
 			// 
 			// ShipView_ExpansionSlot
 			// 
-			this.ShipView_ExpansionSlot.HeaderText = "補強装備";
+			this.ShipView_ExpansionSlot.HeaderText = "増設装備";
 			this.ShipView_ExpansionSlot.Name = "ShipView_ExpansionSlot";
 			this.ShipView_ExpansionSlot.ReadOnly = true;
 			this.ShipView_ExpansionSlot.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;

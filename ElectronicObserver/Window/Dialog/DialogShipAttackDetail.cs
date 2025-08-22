@@ -319,7 +319,7 @@ namespace ElectronicObserver.Window.Dialog
 					Equipments[i].ImageIndex = (int)ResourceManager.EquipmentContent.Locked;
 				}
 
-				//拡張スロット
+				//増設スロット
 				if (shipData.ExpansionSlotInstance != null)
 				{
 					EquipmentEx.Text = shipData.ExpansionSlotInstance.NameWithLevel;

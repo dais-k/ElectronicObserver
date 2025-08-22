@@ -310,8 +310,8 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 		public override string APIName => "api_start2/getData";
 	}
 
-
-	public class EquipExslotData
+#nullable enable
+    public class EquipExslotData
 	{
 		[JsonPropertyName("api_ship_ids")] 
 		public Dictionary<int, int>? Api_ship_ids { get; set; }
@@ -325,5 +325,6 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 		[JsonPropertyName("api_req_level")]
 		public int Api_req_level { get; set; }
 	}
+#nullable disable
 
 }

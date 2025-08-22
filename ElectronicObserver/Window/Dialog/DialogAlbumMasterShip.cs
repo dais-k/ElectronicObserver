@@ -854,7 +854,7 @@ namespace ElectronicObserver.Window.Dialog
 			exweapons = exweapons.OrderBy(eq => eq.CategoryType2)
 								 .ThenBy(eq => eq.Name).ToList();
 
-			if (exweapons.Count != 0) cats += "\r\n[補強増設可能装備 ※装備可能カテゴリは除く]\r\n" + string.Join("\r\n", exweapons.Select(eq => eq.CategoryTypeInstance.Name + " " + eq.Name + ((eq.equippableRequestLevel > 0)? " ★" + eq.equippableRequestLevel + "～" : "")));
+			if (exweapons.Count != 0) cats += "\r\n[増設スロット可能装備 ※装備可能カテゴリは除く]\r\n" + string.Join("\r\n", exweapons.Select(eq => eq.CategoryTypeInstance.Name + " " + eq.Name + ((eq.equippableRequestLevel > 0)? " ★" + eq.equippableRequestLevel + "～" : "")));
 
 			return cats;
 		}

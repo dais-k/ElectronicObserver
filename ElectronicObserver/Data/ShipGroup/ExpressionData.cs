@@ -75,7 +75,7 @@ namespace ElectronicObserver.Data.ShipGroup
 			{ ".SlotMaster[2]", "装備 #3" },
 			{ ".SlotMaster[3]", "装備 #4" },
 			{ ".SlotMaster[4]", "装備 #5" },
-			{ ".ExpansionSlotMaster", "補強装備" },
+			{ ".ExpansionSlotMaster", "増設装備" },
 			{ ".Aircraft[0]", "搭載 #1" },
 			{ ".Aircraft[1]", "搭載 #2" },
 			{ ".Aircraft[2]", "搭載 #3" },

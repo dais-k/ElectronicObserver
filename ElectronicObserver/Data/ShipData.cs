@@ -87,23 +87,23 @@ namespace ElectronicObserver.Data
 		public ReadOnlyCollection<EquipmentDataMaster> SlotInstanceMaster => Array.AsReadOnly(Slot.Select(id => KCDatabase.Instance.Equipments[id]?.MasterEquipment).ToArray());
 
 		/// <summary>
-		/// 補強装備スロット(ID)
+		/// 増設スロット(ID)
 		/// 0=未開放, -1=装備なし 
 		/// </summary>
 		public int ExpansionSlot { get; private set; }
 
 		/// <summary>
-		/// 補強装備スロット(マスターID)
+		/// 増設スロット(マスターID)
 		/// </summary>
 		public int ExpansionSlotMaster => ExpansionSlot == 0 ? 0 : (KCDatabase.Instance.Equipments[ExpansionSlot]?.EquipmentID ?? -1);
 
 		/// <summary>
-		/// 補強装備スロット(装備データ)
+		/// 増設スロット(装備データ)
 		/// </summary>
 		public EquipmentData ExpansionSlotInstance => KCDatabase.Instance.Equipments[ExpansionSlot];
 
 		/// <summary>
-		/// 補強装備スロット(装備マスターデータ)
+		/// 増設スロット(装備マスターデータ)
 		/// </summary>
 		public EquipmentDataMaster ExpansionSlotInstanceMaster => KCDatabase.Instance.Equipments[ExpansionSlot]?.MasterEquipment;
 
@@ -591,7 +591,7 @@ namespace ElectronicObserver.Data
 		public double AircraftTotalRate => (double)AircraftTotal / Math.Max(MasterShip.AircraftTotal, 1);
 
 		/// <summary>
-		/// 補強装備スロットが使用可能か
+		/// 増設スロットが使用可能か
 		/// </summary>
 		public bool IsExpansionSlotAvailable => ExpansionSlot != 0;
 

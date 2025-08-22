@@ -371,7 +371,7 @@
             this.imageLabel3.Name = "imageLabel3";
             this.imageLabel3.Size = new System.Drawing.Size(156, 16);
             this.imageLabel3.TabIndex = 28;
-            this.imageLabel3.Text = "拡張スロット装備可能改修LV：";
+            this.imageLabel3.Text = "増設スロット装備可能改修LV：";
             // 
             // tabControl1
             // 

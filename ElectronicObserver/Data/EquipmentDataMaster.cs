@@ -185,7 +185,7 @@ namespace ElectronicObserver.Data
 
 
 		/// <summary>
-		/// 拡張スロットに装備可能な艦船ID、艦種ID、艦型ID、装備可能改修LVのリスト
+		/// 増設スロットに装備可能な艦船ID、艦種ID、艦型ID、装備可能改修LVのリスト
 		/// </summary>
 		public int[] equippableShipsAtExpansion = new int[0];
 		public int[] equippableStypeAtExpansion = new int[0];
@@ -466,7 +466,7 @@ namespace ElectronicObserver.Data
 			EquipmentID == 447 ||       // 零式艦戦64型(複座KMX搭載機)
 			EquipmentID == 487;         // 零式艦戦64型(熟練爆戦)
 
-		/// <summary> 拡張スロットに載るかどうか</summary>
+		/// <summary> 増設スロットに載るかどうか</summary>
 		public bool IsExslotEquipped =>
 			CategoryType == EquipmentTypes.ExtraArmor ||
 			CategoryType == EquipmentTypes.AAGun ||
