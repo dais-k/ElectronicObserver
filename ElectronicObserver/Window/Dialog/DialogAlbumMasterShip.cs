@@ -820,6 +820,7 @@ namespace ElectronicObserver.Window.Dialog
 			{
 				foreach (var e in ship.SpecialEquippableCategories)
 				{
+					if (e == 16 || e == 20) continue; // 16:追加装甲, 20:VT信管は除外
 					cats += db.EquipmentTypes[e].Name;
 					if (ship.specialEquippableId != null)
 					{
@@ -843,7 +844,9 @@ namespace ElectronicObserver.Window.Dialog
 			}
 			else
 			{
-				cats = string.Join("\r\n", ship.EquippableCategories.Select(id => db.EquipmentTypes[id].Name));
+				cats = string.Join("\r\n", ship.EquippableCategories
+					.Where(id => id != 16 && id != 20) // 16:追加装甲, 20:VT信管は除外
+					.Select(id => db.EquipmentTypes[id].Name));
 			}
 
 			if (!cats.EndsWith("\r\n")) cats += "\r\n";

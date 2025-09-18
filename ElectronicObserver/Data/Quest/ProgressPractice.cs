@@ -474,6 +474,28 @@ namespace ElectronicObserver.Data.Quest
 						ret = true;
 					}
 					break;
+				case 381:   //|381|週|【期間限定任務】秋月型演習任務|演習A勝利以上×3回|条件：秋月, 照月, 涼月, 初月, 冬月, 秋雲, 秋霜, 秋津洲 から3隻以上|1日で進捗リセット|期間限定ウィークリー任務
+					if (ships.Count(s =>
+					{
+						switch (s?.MasterShip?.NameReading)
+						{
+							case "あきづき":
+							case "てるづき":
+							case "すずつき":
+							case "はつづき":
+							case "ふゆつき":
+							case "あきぐも":
+							case "あきしも":
+							case "あきつしま":
+								return true;
+							default:
+								return false;
+						}
+					}) >= 3)
+					{
+						ret = true;
+					}
+					break;
 
 				default:
 					//ここに来たらバグ

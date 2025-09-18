@@ -432,6 +432,9 @@ namespace ElectronicObserver.Data.Quest
 						case 380:   //|380|週|【期間限定任務】揚陸船団護衛演習|演習A勝利以上×3回|条件：揚陸1海防2自由3 or 海防3自由3|1日で進捗リセット|期間限定ウィークリー任務
 							Progresses.Add(new ProgressPractice(q, 3, "A", true));
 							break;
+						case 381:   //|381|週|【期間限定任務】秋月型演習任務|演習A勝利以上×3回|条件：秋月, 照月, 涼月, 初月, 冬月, 秋雲, 秋霜, 秋津洲 から3隻以上|1日で進捗リセット|期間限定ウィークリー任務
+							Progresses.Add(new ProgressPractice(q, 3, "A", true));
+							break;
 						//============================ 400～499 ============================
 						case 402:   //|402|「遠征」を3回成功させよう！|遠征成功3
 							Progresses.Add(new ProgressExpedition(q, 3, null));
