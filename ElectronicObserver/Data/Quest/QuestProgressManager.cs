@@ -1026,25 +1026,23 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressSpecialBattle(q, 1, "S", new[] { 53 }, true),
 							}));
 							break;
-						case 987:   //|987|週|【期間限定任務】秋の南瓜祭り、おかわりっ！|1-5, 2-1, 3-1, 6-1ボスA勝利各1回|条件：「迅鯨+伊201+伊47」「第四号海防艦+第二十二号海防艦+第三〇号海防艦」「阿武隈+Brooklyn+Johnston」何れかの組み合わせ、南瓜イベント2024/10/18～2024/11/08
-							if (DateTime.Now < new DateTime(2024, 11, 9))
+						case 987:   //|987|週|【週間拡張任務】秋の南瓜祭り! Buono!|4-2, 4-3, 4-4 それぞれS勝利×1回|条件：Roma, Minneapolis, 村雨, 夕立, 朧, 曙, Maestrale, Grecale,Libeccio, Scirocco, Jervis, Luigi Torelliから旗艦含め3隻以上 南瓜イベント2025 /9/26～
+							//if (DateTime.Now < new DateTime(2024, 11, 9))
 							{
 								Progresses.Add(new ProgressMultiBattle(q, new[] {
-									new ProgressSpecialBattle(q, 1, "A", new[] { 15 }, true),
-									new ProgressSpecialBattle(q, 1, "A", new[] { 21 }, true),
-									new ProgressSpecialBattle(q, 1, "A", new[] { 31 }, true),
-									new ProgressSpecialBattle(q, 1, "A", new[] { 61 }, true),
+									new ProgressSpecialBattle(q, 1, "S", new[] { 42 }, true),
+									new ProgressSpecialBattle(q, 1, "S", new[] { 43 }, true),
+									new ProgressSpecialBattle(q, 1, "S", new[] { 44 }, true),
 								}));
 							}
 							break;
 						//============================ 1000～1099 ============================
-						case 1002:  //|1002|単|【期間限定任務】10周年秋南瓜祭り拡張作戦！|1-5、2-3、4-4、6-4ボスを各S勝利1回ずつ|条件：鵜来, 稲木, 朝潮, 夕立, 野分, 浜波, 早波, 阿武隈から2隻|南瓜イベント2024/10/18～2024/11/08
-							if (DateTime.Now < new DateTime(2024, 11, 9))
+						case 1002:  //|1002|単|【限定拡張任務】南瓜祭り2025、拡張作戦！|3-2, 3-5, 6-4 それぞれS勝利×1回|条件：Gambier Bay, Minneapolis, Tuscaloosa, Jervis, 朧, 夕立, 村雨 ,朝潮, 野分, 巻波 から旗艦含め3隻| 南瓜イベント2025/9/26～
+							//if (DateTime.Now < new DateTime(2024, 11, 9))
 							{
 								Progresses.Add(new ProgressMultiBattle(q, new[] {
-									new ProgressSpecialBattle(q, 1, "S", new[] { 15 }, true),
-									new ProgressSpecialBattle(q, 1, "S", new[] { 23 }, true),
-									new ProgressSpecialBattle(q, 1, "S", new[] { 44 }, true),
+									new ProgressSpecialBattle(q, 1, "S", new[] { 32 }, true),
+									new ProgressSpecialBattle(q, 1, "S", new[] { 35 }, true),
 									new ProgressSpecialBattle(q, 1, "S", new[] { 64 }, true),
 								}));
 							}
@@ -1167,13 +1165,13 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressDiscard(q, 4, true, new[]{ 3 }),
 							}));
 							break;
-						case 1119:   //|1119|週|【期間限定】Halloweenの南瓜、食べりゅ？|(小口径主砲x6, 中口径主砲x6,  水上偵察機x6)廃棄, (20.3cm連装砲x5, 九九式艦爆x5, 家具コインx1031)保有、南瓜イベント 2024/10/18～2024/11/08
-							if (DateTime.Now < new DateTime(2024, 11, 9))
+						case 1119:   //|1119|週|【期間限定】Halloweenの南瓜、食べりゅ？|(小口径主砲x8, 中口径主砲x8,  水上偵察機x8)廃棄, (20.3cm連装砲x8, 九九式艦爆x8, 家具コインx1031)保有、南瓜イベント 2025/9/26～
+							//if (DateTime.Now < new DateTime(2024, 11, 9))
 							{
 								Progresses.Add(new ProgressMultiDiscard(q, new[]{
-									new ProgressDiscard(q, 6, true, new[]{ 1 }),
-									new ProgressDiscard(q, 6, true, new[]{ 2 }),
-									new ProgressDiscard(q, 6, true, new[]{ 10 }),
+									new ProgressDiscard(q, 8, true, new[]{ 1 }),
+									new ProgressDiscard(q, 8, true, new[]{ 2 }),
+									new ProgressDiscard(q, 8, true, new[]{ 10 }),
 								}));
 							}
 							break;
@@ -1211,6 +1209,13 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressDiscard(q, 14, true, new[]{ 10 }),
 								new ProgressDiscard(q, 12, true, new[]{ 2 }),
 								new ProgressDiscard(q, 10, true, new[]{ 7 }),
+							}));
+							break;
+						case 1156:  //|1156|単|【重南瓜祭り拡張任務】大きいの収穫すりゅ？|「艦上爆撃機」×12「艦上攻撃機」×12「水上偵察機」×12を廃棄、新型航空兵装資材2、南瓜5、開発資材80を準備
+							Progresses.Add(new ProgressMultiDiscard(q, new[]{
+								new ProgressDiscard(q, 12, true, new[]{ 7 }),
+								new ProgressDiscard(q, 12, true, new[]{ 8 }),
+								new ProgressDiscard(q, 12, true, new[]{ 10 }),
 							}));
 							break;
 					}

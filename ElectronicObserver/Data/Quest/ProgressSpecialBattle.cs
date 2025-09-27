@@ -49,6 +49,8 @@ namespace ElectronicObserver.Data.Quest
 
 			string[] membernames;
 			bool[] fleetmember;
+			bool isFlagship = false;
+			var membercount = 0;
 
 			bool isAccepted = false;
 
@@ -483,61 +485,41 @@ namespace ElectronicObserver.Data.Quest
 							}
 						}) >= 4;
 					break;
-				case 987:   //|987|週|【期間限定任務】秋の南瓜祭り、おかわりっ！|1-5, 2-1, 3-1, 6-1ボスA勝利各1回|条件：「迅鯨+伊201+伊47」「第四号海防艦+第二十二号海防艦+第三〇号海防艦」「阿武隈+Brooklyn+Johnston」何れかの組み合わせ、南瓜イベント
-					isAccepted = (members.Count(s =>
+				case 987:   //|987|週|【週間拡張任務】秋の南瓜祭り! Buono!|4-2, 4-3, 4-4 それぞれS勝利×1回|条件：Roma, Minneapolis, 村雨, 夕立, 朧, 曙, Maestrale, Grecale,Libeccio, Scirocco, Jervis, Luigi Torelliから旗艦含め3隻以上
+					membernames = new string[] { "ローマ", "ミネアポリス", "むらさめ", "ゆうだち", "おぼろ", "あけぼの", "マエストラーレ", "グレカーレ", "リベッチオ", "シロッコ", "ジャーヴィス", "ルイージ・トレッリ" };
+					isFlagship = false;
+					membercount = 0;
+					foreach (var item in membernames)
 					{
-						switch (s?.MasterShip?.NameReading)
+						if (isFlagship == false && members[0]?.MasterShip?.NameReading == item)
 						{
-							case "じんげい":
-							case "い201":
-							case "い47":
-								return true;
-							default:
-								return false;
+							isFlagship = true;
 						}
-					}) >= 3) || (members.Count(s =>
-					{
-						switch (s?.MasterShip?.NameReading)
+
+						if (members.Count(s => s?.MasterShip?.NameReading == item) != 0)
 						{
-							case "だいよんごう":
-							case "だいにじゅうにごう":
-							case "だいさんじゅうごう":
-								return true;
-							default:
-								return false;
+							membercount ++;
 						}
-					}) >= 3) || (members.Count(s =>
-					{
-						switch (s?.MasterShip?.NameReading)
-						{
-							case "あぶくま":
-							case "ブルックリン":
-							case "ジョンストン":
-								return true;
-							default:
-								return false;
-						}
-					}) >= 3);
+					}
+					isAccepted = (isFlagship == true && membercount >= 3);
 					break;
-				case 1002:   //|1002|単|【期間限定任務】10周年秋南瓜祭り拡張作戦！|1-5、2-3、4-4、6-4ボスを各S勝利1回ずつ|条件：鵜来, 稲木, 朝潮, 夕立, 野分, 浜波, 早波, 阿武隈から2隻|
-					isAccepted =
-						members.Count(s =>
+				case 1002:   //|1002|単|【限定拡張任務】南瓜祭り2025、拡張作戦！|3-2, 3-5, 6-4 それぞれS勝利×1回|条件：Gambier Bay, Minneapolis, Tuscaloosa, Jervis, 朧, 夕立, 村雨 ,朝潮, 野分, 巻波 から旗艦含め3隻
+					membernames = new string[] { "ガンビア・ベイ", "ミネアポリス", "タスカルーサ", "ジャーヴィス", "おぼろ", "ゆうだち", "むらさめ", "あさしお", "のわき", "まきなみ" };
+					isFlagship = false;
+					membercount = 0;
+					foreach (var item in membernames)
+					{
+						if (isFlagship == false && members[0]?.MasterShip?.NameReading == item)
 						{
-							switch (s?.MasterShip?.NameReading)
-							{
-								case "うくる":
-								case "いなぎ":
-								case "あさしお":
-								case "ゆうだち":
-								case "のわき":
-								case "はまなみ":
-								case "はやなみ":
-								case "あぶくま":
-									return true;
-								default:
-									return false;
-							}
-						}) >= 2;
+							isFlagship = true;
+						}
+
+						if (members.Count(s => s?.MasterShip?.NameReading == item) != 0)
+						{
+							membercount++;
+						}
+					}
+					isAccepted = (isFlagship == true && membercount >= 3);
 					break;
 				case 1005:   //|1005|１|精強「第七駆逐隊」緊急出動！|1-2、1-3、1-5、3-2ボスを各A勝利1回ずつ|条件：「朧改」「漣改」「曙改(二)」「潮改(二)」を編成に入れる|
 					isAccepted =
