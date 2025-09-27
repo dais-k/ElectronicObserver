@@ -1429,7 +1429,12 @@ namespace ElectronicObserver.Window.Dialog
 			{
 				var ship = KCDatabase.Instance.MasterShips[_shipID];
 				if (ship != null)
-					Clipboard.SetText(ship.NameWithClass);
+				{
+					if (ModifierKeys.HasFlag(Keys.Shift))
+						Clipboard.SetText(ship.NameReading);
+					else
+						Clipboard.SetText(ship.NameWithClass);
+				}
 				else
 					System.Media.SystemSounds.Exclamation.Play();
 			}

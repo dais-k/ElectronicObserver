@@ -325,6 +325,7 @@ namespace ElectronicObserver.Window.Dialog
 			if (!eq.IsAbyssalEquipment)
 			{
 				int eqCategory = (int)eq.CategoryType2;
+				var isAirbaseonly = eq.IsAircraftOnlyAirbase;
 				var preSpecialShips = new Dictionary<ShipTypes, List<ShipDataMaster>>();
 				var specialShips = new Dictionary<ShipTypes, List<int>>();
 				foreach (var ship in db.MasterShips.Values.Where(s => s.SpecialEquippableCategories != null))
@@ -366,7 +367,7 @@ namespace ElectronicObserver.Window.Dialog
 							.ToList();
 					}
 				}
-				EquipSlots.Items.Add($"[通常スロット]");
+				EquipSlots.Items.Add(!isAirbaseonly? $"[通常スロット]" : $"基地航空隊にのみ配備可");
 				eqlist.Add(-1);
 
 				foreach (var shiptype in db.ShipTypes.Values)
@@ -557,12 +558,19 @@ namespace ElectronicObserver.Window.Dialog
 			var eq = db.MasterEquipments[equipmentID];
 			if (eq == null)
 				return sb.ToString();
+
 			if (eq.IsAbyssalEquipment)
 			{
 				sb.AppendLine("深海棲艦");
 				return sb.ToString();
 			}
 
+			if (eq.IsAircraftOnlyAirbase)
+			{
+				sb.AppendLine("基地航空隊");
+				return sb.ToString();
+			}
+			
 			int eqCategory = (int)eq.CategoryType2;
 
 			var preSpecialShips = new Dictionary<ShipTypes, List<ShipDataMaster>>();

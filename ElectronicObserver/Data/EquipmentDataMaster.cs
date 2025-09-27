@@ -167,16 +167,19 @@ namespace ElectronicObserver.Data
 						return (EquipmentTypes)94; // 艦上偵察機(II)
 					case 467:
 						return (EquipmentTypes)95; // 副砲（II）
+					case 561:
+						return (EquipmentTypes)91; // 噴式戦闘爆撃機(II)
 					default:
 						return CategoryType;
 				}
 			}
 		}
-		
+
 		/// <summary>
 		/// 装備種別：カテゴリ
 		/// </summary>
 		public EquipmentType CategoryTypeInstance => KCDatabase.Instance.EquipmentTypes[(int)CategoryType];
+		public EquipmentType CategoryTypeInstance2 => KCDatabase.Instance.EquipmentTypes[(int)CategoryType2];
 
 		/// <summary>
 		/// 装備種別：アイコン
@@ -454,11 +457,9 @@ namespace ElectronicObserver.Data
 			EquipmentID == 544 ||       // SBD VB-2(爆撃飛行隊)
 			EquipmentID == 550 ||       // 試製 明星(増加試作機)
 			EquipmentID == 551 ||       // 明星改
-			EquipmentID == 551;         // 九九式練爆二二型改(夜間装備実験機)
+			EquipmentID == 552;         // 九九式練爆二二型改(夜間装備実験機)
 
-
-
-		/// <summary> 改修値が制空に影響しない艦爆かどうか(要は爆戦)</summary>
+		/// <summary> 改修値が制空に影響する艦爆かどうか(要は爆戦)</summary>
 		public bool IsAirLevelBonusedGroundBomber =>
 			EquipmentID == 60 ||       // 零式艦戦62型(爆戦)
 			EquipmentID == 154 ||       // 零戦62型(爆戦/岩井隊)
@@ -477,6 +478,26 @@ namespace ElectronicObserver.Data
 			CategoryType == EquipmentTypes.SurfaceShipPersonnel ||
 			CategoryType == EquipmentTypes.Ration ||
 			CategoryType == EquipmentTypes.Supplies;
+
+		/// <summary> 基地航空隊のみの航空機かどうか </summary>
+		public bool IsAircraftOnlyAirbase
+		{
+			get
+			{
+				switch (CategoryType2)
+				{
+					case EquipmentTypes.LandBasedAttacker:
+					case EquipmentTypes.Interceptor:
+					case EquipmentTypes.HeavyBomber:
+					case EquipmentTypes.LandBasedRecon:
+					case EquipmentTypes.JetBomber2:
+						return true;
+
+					default:
+						return false;
+				}
+			}
+		}
 
 		public int ID => EquipmentID;
 

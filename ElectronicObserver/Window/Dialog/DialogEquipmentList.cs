@@ -301,7 +301,7 @@ namespace ElectronicObserver.Window.Dialog
 				{
 					continue;
 				}
-				if (masterEquipments[id].CategoryTypeInstance.Name == "噴式戦闘爆撃機" && !Jet_ToolStripMenuItem.Checked)
+				if (masterEquipments[id].CategoryTypeInstance2.Name == "噴式戦闘爆撃機" && !Jet_ToolStripMenuItem.Checked)
 				{
 					continue;
 				}
@@ -485,6 +485,10 @@ namespace ElectronicObserver.Window.Dialog
 					continue;
 				}
 				if (masterEquipments[id].CategoryTypeInstance.Name == "陸上偵察機" && !LandPatrol_ToolStripMenuItem.Checked)
+				{
+					continue;
+				}
+				if (masterEquipments[id].CategoryTypeInstance2.Name == "噴式戦闘爆撃機(II" && !LandJetBomb_ToolStripMenuItem.Checked)
 				{
 					continue;
 				}
@@ -963,6 +967,9 @@ namespace ElectronicObserver.Window.Dialog
 			LandPatrol_ToolStripMenuItem.Checked = true;
 			LandPatrol_ToolStripMenuItem.CheckState = CheckState.Checked;
 
+			LandJetBomb_ToolStripMenuItem.Checked = true;
+			LandJetBomb_ToolStripMenuItem.CheckState = CheckState.Checked;
+
 			ArmyInfantry_ToolStripMenuItem.Checked = true;
 			ArmyInfantry_ToolStripMenuItem.CheckState = CheckState.Checked;
 
@@ -1124,6 +1131,9 @@ namespace ElectronicObserver.Window.Dialog
 			LandPatrol_ToolStripMenuItem.Checked = false;
 			LandPatrol_ToolStripMenuItem.CheckState = CheckState.Unchecked;
 
+			LandJetBomb_ToolStripMenuItem.Checked = false;
+			LandJetBomb_ToolStripMenuItem.CheckState = CheckState.Unchecked;
+			
 			ArmyInfantry_ToolStripMenuItem.Checked = false;
 			ArmyInfantry_ToolStripMenuItem.CheckState = CheckState.Unchecked;
 
@@ -1355,6 +1365,11 @@ namespace ElectronicObserver.Window.Dialog
 			FilterFinish();
 		}
 
+		private void LandJetBomb_ToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			FilterFinish();
+		}
+
 		private void VisibleAllCountColumn_ToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			EquipmentView_CountAll.Visible = VisibleAllCountColumn_ToolStripMenuItem.Checked;
@@ -1399,11 +1414,11 @@ namespace ElectronicObserver.Window.Dialog
 		/// </summary>
 		private void TopMenu_File_CopyToFleetAnalysis_Click(object sender, EventArgs e)
 		{
-            Clipboard.SetText("[" + GenerateDeckBuilderFormat.CreateEquipmentList() + "]");
-        }
+			Clipboard.SetText("[" + GenerateDeckBuilderFormat.CreateEquipmentList() + "]");
+		}
 
 
-        private void DialogEquipmentList_FormClosed(object sender, FormClosedEventArgs e)
+		private void DialogEquipmentList_FormClosed(object sender, FormClosedEventArgs e)
 		{
 
 			ResourceManager.DestroyIcon(Icon);

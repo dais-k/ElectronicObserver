@@ -178,6 +178,9 @@ namespace ElectronicObserver.Data
 		/// <summary>噴式索敵機</summary>
 		JetRecon = 59,
 
+		/// <summary>噴式戦闘爆撃機(II)</summary>
+		JetBomber2 = 91,
+
 		/// <summary>大型電探(II)</summary>
 		RadarLarge2 = 93,
 
