@@ -917,7 +917,7 @@ namespace ElectronicObserver.Utility.Data
 					else
 						return DayAttackKind.Shelling;
 				}
-				if(attackerShipID == 717) //山汐丸改
+				if(attackerShipID == 717 || attackerShipID == 1008) //山汐丸改・しまね丸改
 				{
 					if (defender != null && (defender.IsSubmarine))
 					{
