@@ -2,7 +2,6 @@
 using BrowserLib;
 using CefSharp;
 using CefSharp.WinForms;
-//using Nekoxy;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -31,8 +30,149 @@ namespace Browser
 
 		private readonly Size KanColleSize = new Size(1200, 720);
 		private readonly string BrowserCachePath = "BrowserCache";
+		protected string KanColleUrl => "https://play.games.dmm.com/game/kancolle";
+		private string StyleClassId { get; } = Guid.NewGuid().ToString().Substring(0, 8);
 
-		private readonly string StyleClassID = Guid.NewGuid().ToString().Substring(0, 8);
+		protected string PageScript =>
+			$@"
+				try
+				{{
+					var node = document.getElementById('{StyleClassId}');
+					if (node)
+					{{
+						document.head.removeChild(node);
+					}}
+
+					var style = document.createElement('style');
+					style.id = '{StyleClassId}';
+					style.textContent = `
+						body {{
+							margin: 0;
+							padding: 0;
+							min-width: 0;
+							min-height: 0;
+							overflow: hidden;
+							background-color: black;
+						}}
+
+						#main-ntg {{
+							position: static;
+						}}
+
+						#area-game {{
+							margin-left: 0;
+							margin-right: 0;
+							padding: 0;
+							width: 1200px;
+							height: 720px;
+							position: relative;
+						}}
+
+						.dmm-ntgnavi,
+						.area-naviapp,
+						#ntg-recommend,
+						#foot,
+						#foot+img {{
+							display: none;
+						}}
+
+						#w,
+						#main-ntg,
+						#page {{
+							margin: 0;
+							padding: 0;
+							width: 100%;
+							height: 0;
+							background: none !important;
+						}}
+
+						#main-ntg {{
+							margin: 0 !important;
+						}}
+
+						.gamesResetStyle,
+						.gamesResetStyle * {{
+							background: none !important;
+						}}
+
+						#game_frame {{
+							--game-frame-width: 1200px;
+							--game-frame-height: 720px;
+							position: absolute;
+							top: 0;
+							left: 0;
+						}}
+					`;
+					document.head.appendChild(style);
+				}}
+				catch (e)
+				{{
+					alert(""ページCSS適用に失敗しました: "" + e);
+				}}
+			";
+
+		protected string FrameScript =>
+			$@"
+				try
+				{{
+					var node = document.getElementById('{StyleClassId}');
+					if (node)
+					{{
+						document.head.removeChild(node);
+					}}
+
+					var style = document.createElement('style');
+					style.id = '{StyleClassId}';
+					style.textContent = `
+						body {{
+							visibility: hidden;
+						}}
+
+						#flashWrap {{
+							position: fixed;
+							left: 0;
+							top: 0;
+							width: 100% !important;
+							height: 100% !important;
+						}}
+
+						#htmlWrap {{
+							visibility: visible;
+							width: 100% !important;
+							height: 100% !important;
+						}}
+					`;
+					document.head.appendChild(style);
+				}}
+				catch (e)
+				{{
+					alert(""フレームCSS適用に失敗しました: "" + e);
+				}}
+			";
+
+		protected string RestoreScript =>
+			$@"
+				var node = document.getElementById('{StyleClassId}');
+				if (node)
+				{{
+					document.head.removeChild(node);
+				}}
+			";
+
+		protected string DMMScript =>
+			"try\n" +
+			"{\n" +
+			"    if (DMM.netgame.reloadDialog)\n" +
+			"    {\n" +
+			"        DMM.netgame.reloadDialog = function (){};\n" +
+			"    }\n" +
+			"}\n" +
+			"catch(e)\n" +
+			"{\n" +
+			"    // todo: \"DMM\" doesn't seem to exist anymore so there's always an error here\n" +
+			"    // alert(\"DMMによるページ更新ダイアログの非表示に失敗しました: \" + e);\n" +
+			"}\n";
+
 		private bool RestoreStyleSheet = false;
 
 		// FormBrowserHostの通信サーバ
@@ -386,10 +526,14 @@ namespace Browser
 			var browser = Browser.GetBrowser();
 			var frame = browser.MainFrame;
 
-			if (frame?.Url?.Contains(@"http://www.dmm.com/netgame/social/") ?? false)
+			if (frame.Url.Contains(@"http://www.dmm.com/netgame/social/") || frame.Url.Contains(KanColleUrl))
+			{
 				return frame;
-
-			return null;
+			}
+			else
+			{
+				return null;
+			}
 		}
 
 		private IFrame GetGameFrame()
@@ -399,9 +543,9 @@ namespace Browser
 
 			var browser = Browser.GetBrowser();
 			var frames = browser.GetFrameIdentifiers()
-						.Select(id => browser.GetFrame(id));
+						.Select(id => browser.GetFrameByIdentifier(id));
 
-			return frames.FirstOrDefault(f => f?.Url?.Contains(@"http://osapi.dmm.com/gadgets/") ?? false);
+			return frames.FirstOrDefault(f => f?.Url?.Contains(@"osapi.dmm.com/gadgets/") ?? false);
 		}
 
 		private IFrame GetKanColleFrame()
@@ -411,7 +555,7 @@ namespace Browser
 
 			var browser = Browser.GetBrowser();
 			var frames = browser.GetFrameIdentifiers()
-					.Select(id => browser.GetFrame(id));
+					.Select(id => browser.GetFrameByIdentifier(id));
 
 			return frames.FirstOrDefault(f => f?.Url?.Contains(@"/kcs2/index.php") ?? false);
 		}
@@ -439,15 +583,15 @@ namespace Browser
 
 				if (RestoreStyleSheet)
 				{
-					mainframe.EvaluateScriptAsync(string.Format(Properties.Resources.RestoreScript, StyleClassID));
-					gameframe.EvaluateScriptAsync(string.Format(Properties.Resources.RestoreScript, StyleClassID));
+					mainframe.EvaluateScriptAsync(RestoreScript);
+					gameframe.EvaluateScriptAsync(RestoreScript);
 					StyleSheetApplied = false;
 					RestoreStyleSheet = false;
 				}
 				else
 				{
-					mainframe.EvaluateScriptAsync(string.Format(Properties.Resources.PageScript, StyleClassID));
-					gameframe.EvaluateScriptAsync(string.Format(Properties.Resources.FrameScript, StyleClassID));
+					mainframe.EvaluateScriptAsync(PageScript);
+					gameframe.EvaluateScriptAsync(FrameScript);
 				}
 
 				StyleSheetApplied = true;
@@ -477,7 +621,7 @@ namespace Browser
 				if (mainframe == null)
 					return;
 
-				mainframe.EvaluateScriptAsync(Properties.Resources.DMMScript);
+				mainframe.EvaluateScriptAsync(DMMScript);
 			}
 			catch (Exception ex)
 			{
