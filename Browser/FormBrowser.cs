@@ -33,83 +33,96 @@ namespace Browser
 		protected string KanColleUrl => "https://play.games.dmm.com/game/kancolle";
 		private string StyleClassId { get; } = Guid.NewGuid().ToString().Substring(0, 8);
 
-		protected string PageScript =>
-			$@"
-				try
+		protected string PageScript => $@"
+			try
+			{{
+				var node = document.getElementById('{StyleClassId}');
+				if (node)
 				{{
-					var node = document.getElementById('{StyleClassId}');
-					if (node)
-					{{
-						document.head.removeChild(node);
+					document.head.removeChild(node);
+				}}
+
+				var style = document.createElement('style');
+				style.id = '{StyleClassId}';
+				style.textContent = `
+					body {{
+						margin: 0;
+						padding: 0;
+						min-width: 0;
+						min-height: 0;
+						overflow: hidden;
+						background-color: black;
 					}}
 
-					var style = document.createElement('style');
-					style.id = '{StyleClassId}';
-					style.textContent = `
-						body {{
-							margin: 0;
-							padding: 0;
-							min-width: 0;
-							min-height: 0;
-							overflow: hidden;
-							background-color: black;
-						}}
+					#main-ntg {{
+						position: static;
+					}}
 
-						#main-ntg {{
-							position: static;
-						}}
+					#area-game {{
+						margin-left: 0;
+						margin-right: 0;
+						padding: 0;
+						width: 1200;
+						height: 720;
+						position: relative;
+					}}
 
-						#area-game {{
-							margin-left: 0;
-							margin-right: 0;
-							padding: 0;
-							width: 1200px;
-							height: 720px;
-							position: relative;
-						}}
+					.dmm-ntgnavi {{
+						display: none;
+					}}
 
-						.dmm-ntgnavi,
-						.area-naviapp,
-						#ntg-recommend,
-						#foot,
-						#foot+img {{
-							display: none;
-						}}
+					.area-naviapp {{
+						display: none;
+					}}
 
-						#w,
-						#main-ntg,
-						#page {{
-							margin: 0;
-							padding: 0;
-							width: 100%;
-							height: 0;
-							background: none !important;
-						}}
+					#ntg-recommend {{
+						display: none;
+					}}
 
-						#main-ntg {{
-							margin: 0 !important;
-						}}
+					#foot, #foot+img {{
+						display: none;
+					}}
 
-						.gamesResetStyle,
-						.gamesResetStyle * {{
-							background: none !important;
-						}}
+					#w, #main-ntg, #page {{
+						margin: 0;
+						padding: 0;
+						width: 100%;
+						height: 0;
+						background: none !important;
+					}}
 
-						#game_frame {{
-							--game-frame-width: 1200px;
-							--game-frame-height: 720px;
-							position: absolute;
-							top: 0;
-							left: 0;
-						}}
-					`;
-					document.head.appendChild(style);
-				}}
-				catch (e)
-				{{
-					alert(""ページCSS適用に失敗しました: "" + e);
-				}}
-			";
+					#main-ntg {{
+						margin: 0 !important;
+					}}
+
+					.gamesResetStyle,
+					.gamesResetStyle * {{
+						background: none !important;
+					}}
+
+					/* hide ads */
+					.gamesResetStyle > header,
+					.gamesResetStyle > footer,
+					.gamesResetStyle > aside {{
+						display: none;
+					}}
+
+					#game_frame {{
+						--game-frame-width: 1200px;
+						--game-frame-height: 720px;
+						/* has to be fixed to avoid bugs when scrolling before stylesheet loads */
+						position: fixed;
+						top: 0;
+						left: 0;
+					}}
+				`;
+
+				document.head.appendChild(style);
+			}}
+			catch (e)
+			{{
+				alert(""ページCSS適用に失敗しました: "" + e);
+			}}";
 
 		protected string FrameScript =>
 			$@"
@@ -159,19 +172,23 @@ namespace Browser
 				}}
 			";
 
-		protected string DMMScript =>
-			"try\n" +
-			"{\n" +
-			"    if (DMM.netgame.reloadDialog)\n" +
-			"    {\n" +
-			"        DMM.netgame.reloadDialog = function (){};\n" +
-			"    }\n" +
-			"}\n" +
-			"catch(e)\n" +
-			"{\n" +
-			"    // todo: \"DMM\" doesn't seem to exist anymore so there's always an error here\n" +
-			"    // alert(\"DMMによるページ更新ダイアログの非表示に失敗しました: \" + e);\n" +
-			"}\n";
+		protected string DMMScript => @"
+			try {
+				if (DMM.netgame.reloadDialog) {
+					DMM.netgame.reloadDialog = function (){};
+				}
+			} catch(e) {
+				// todo: ""DMM"" doesn't seem to exist anymore so there's always an error here
+				// alert(""DMMによるページ更新ダイアログの非表示に失敗しました: "" + e);
+			}";
+
+		protected string OverrideReloadDialogScript =>
+			@"Object.defineProperty(window, 'confirm',
+				{
+					configurable: true,
+					writable: true,
+					value: function() { return false; }
+				});";
 
 		private bool RestoreStyleSheet = false;
 
@@ -389,6 +406,7 @@ namespace Browser
 				DragHandler = new DragHandler(),
 			};
 			Browser.LoadingStateChanged += Browser_LoadingStateChanged;
+			Browser.FrameLoadStart += Browser_OnFrameLoadStart;
 			Browser.IsBrowserInitializedChanged += Browser_IsBrowserInitializedChanged;
 			SizeAdjuster.Controls.Add(Browser);
 		}
@@ -543,7 +561,7 @@ namespace Browser
 
 			var browser = Browser.GetBrowser();
 			var frames = browser.GetFrameIdentifiers()
-						.Select(id => browser.GetFrameByIdentifier(id));
+						.Select(id => browser.GetFrame(id));
 
 			return frames.FirstOrDefault(f => f?.Url?.Contains(@"osapi.dmm.com/gadgets/") ?? false);
 		}
@@ -555,7 +573,7 @@ namespace Browser
 
 			var browser = Browser.GetBrowser();
 			var frames = browser.GetFrameIdentifiers()
-					.Select(id => browser.GetFrameByIdentifier(id));
+					.Select(id => browser.GetFrame(id));
 
 			return frames.FirstOrDefault(f => f?.Url?.Contains(@"/kcs2/index.php") ?? false);
 		}
@@ -630,6 +648,21 @@ namespace Browser
 
 		}
 
+		private void Browser_OnFrameLoadStart(object sender, FrameLoadStartEventArgs e)
+		{
+			if (e.Frame == null || !e.Frame.IsMain) return;
+			if (Configuration == null) return;
+			if (!Configuration.IsDMMreloadDialogDestroyable) return;
+
+			try
+			{
+				e.Frame.ExecuteJavaScriptAsync(OverrideReloadDialogScript);
+			}
+			catch (Exception ex)
+			{
+				SendErrorReport(ex.ToString(), "DMMによるページ更新ダイアログの非表示に失敗しました。");
+			}
+		}
 
 
 		// タイミングによっては(特に起動時)、ブラウザの初期化が完了する前に Navigate() が呼ばれることがある
@@ -761,18 +794,18 @@ namespace Browser
 
 
 				string script = $@"
-(async function() 
-{{
-	await CefSharp.BindObjectAsync('{request.ID}');
+					(async function() 
+					{{
+						await CefSharp.BindObjectAsync('{request.ID}');
 
-	let canvas = document.querySelector('canvas');
-	requestAnimationFrame(() =>
-	{{
-		let dataurl = canvas.toDataURL('image/png');
-		{request.ID}.complete(dataurl);
-	}});
-}})();
-";
+						let canvas = document.querySelector('canvas');
+						requestAnimationFrame(() =>
+						{{
+							let dataurl = canvas.toDataURL('image/png');
+							{request.ID}.complete(dataurl);
+						}});
+					}})();
+					";
 
 				Browser.JavascriptObjectRepository.Register(request.ID, request, true);
 				kancolleFrame.ExecuteJavaScriptAsync(script);
