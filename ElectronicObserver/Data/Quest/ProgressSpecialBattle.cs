@@ -591,6 +591,55 @@ namespace ElectronicObserver.Data.Quest
 					isAccepted = (((members[0]?.MasterShip?.NameReading == "のしろ" || members[0]?.MasterShip?.NameReading == "アトランタ") && members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Destroyer) >= 3)
 						|| (members[0]?.MasterShip?.NameReading == "リチャード・P・リアリー" && members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Destroyer) >= 3));
 					break;
+				case 1039:   //|1039|週|【期間限定任務】Halloween海上護衛隊出撃！|1-2, 1-4, 1-5それぞれS勝利×1回|条件：阿武隈, 曙, 朝潮, 巻波, 浜波, 鵜来, 稲木, 能美, 第四号海防艦,第三〇号海防艦, 第二十二号海防艦 から4隻
+					isAccepted =
+						members.Count(s =>
+						{
+							switch (s?.MasterShip?.NameReading)
+							{
+								case "あぶくま":
+								case "あけぼの":
+								case "あさしお":
+								case "はまなみ":
+								case "まきなみ":
+								case "うくる":
+								case "いなぎ":
+								case "のうみ":
+								case "だいよんごう":
+								case "だいさんじゅうごう":
+								case "だいにじゅうにごう":
+									return true;
+								default:
+									return false;
+							}
+						}) >= 4;
+					break;
+				case 1040:   //|1040|週|【期間限定任務】Halloween狼隊、夜の襲撃！|2-1, 2-2それぞれS勝利×2回|条件：「Tuscaloosa」「朧」「夕立」「野分」「早波」「熊野丸」「迅鯨改」旗艦含め3隻以上
+					membernames = new string[] { "タスカルーサ", "くまのまる", "おぼろ", "ゆうだち", "のわき", "はやなみ" };
+					isFlagship = false;
+					membercount = 0;
+					foreach (var item in membernames)
+					{
+						if (isFlagship == false && members[0]?.MasterShip?.NameReading == item)
+						{
+							isFlagship = true;
+						}
+
+						if (members.Count(s => s?.MasterShip?.NameReading == item) != 0)
+						{
+							membercount++;
+						}
+					}
+					if (members.Count(s => s?.MasterShip?.ShipID == 639) > 0)
+					{
+						membercount++;
+						if (members[0]?.MasterShip?.ShipID == 639) //迅鯨改
+						{
+							isFlagship = true;
+						}
+					}
+					isAccepted = (isFlagship == true && membercount >= 3);
+					break;
 			}
 
 			// 第二ゲージでも第一ボスに行ける場合があるので、個別対応が必要

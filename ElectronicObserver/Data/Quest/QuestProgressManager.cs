@@ -1124,6 +1124,19 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressSpecialBattle(q, 1, "S", new[] { 54 }, true),
 							}));
 							break;
+						case 1039:  //|1039|週|【期間限定任務】Halloween海上護衛隊出撃！|1-2, 1-4, 1-5それぞれS勝利×1回|条件：阿武隈, 曙, 朝潮, 巻波, 浜波, 鵜来, 稲木, 能美, 第四号海防艦,第三〇号海防艦, 第二十二号海防艦 から4隻
+							Progresses.Add(new ProgressMultiBattle(q, new[] {
+								new ProgressSpecialBattle(q, 1, "S", new[] { 12 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 14 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 15 }, true),
+							}));
+							break;
+						case 1040:  //|1040|週|【期間限定任務】Halloween狼隊、夜の襲撃！|2-1, 2-2それぞれS勝利×2回|条件：「Tuscaloosa」「朧」「夕立」「野分」「早波」「熊野丸」「迅鯨改」旗艦含め3隻以上
+							Progresses.Add(new ProgressMultiBattle(q, new[] {
+								new ProgressSpecialBattle(q, 2, "S", new[] { 21 }, true),
+								new ProgressSpecialBattle(q, 2, "S", new[] { 22 }, true),
+							}));
+							break;
 						//============================ 1100～1199 ============================
 						case 1103:  //|1103|６|潜水艦強化兵装の量産|61cm三連装(酸素)魚雷x3を破棄し、開発資材60、九三式水中聴音機x2、13号対空電探改x2を所有|
 							Progresses.Add(new ProgressDiscard(q, 3, true, new[] { 125 }, -1));
