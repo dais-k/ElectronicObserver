@@ -331,6 +331,18 @@ namespace ElectronicObserver.Window.Dialog
 				{
 					ShipType.Text = "第百一号型輸送艦";
 				}
+				//固有対応：南海
+				if (ShipType.Text == "南海型補給艦")
+				{
+					if (shipID == 988)
+					{
+						ShipType.Text = "冷凍船";
+					}
+					if (shipID == 996 || shipID == 1002)
+					{
+						ShipType.Text = "給糧艦";
+					}
+				}
 
 				var tip = new StringBuilder();
 				if (ship.IsAbyssalShip)

@@ -424,6 +424,10 @@ namespace ElectronicObserver.Data
 				case 130: return "大泊型";
 				case 131: return "Киров級";
 				case 132: return "特1TL型";
+				case 133: return "Norge級";
+				case 134: return "Courageous級";
+				case 135: return "Glorious級";
+				case 136: return "南海型";
 				default: 
 					return "不明";
 			}
@@ -447,6 +451,7 @@ namespace ElectronicObserver.Data
 				case 9: return "瑞";
 				case 10: return "中";
 				case 11: return "亜";
+				case 12: return "諾";
 				default: return "日";
 			}
 		}

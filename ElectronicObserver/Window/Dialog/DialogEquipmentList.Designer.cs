@@ -140,12 +140,12 @@
 			this.EquipmentView.BackgroundColor = System.Drawing.SystemColors.Control;
 			this.EquipmentView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.EquipmentView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.EquipmentView_ID,
-            this.EquipmentView_Icon,
-            this.EquipmentView_Name,
-            this.EquipmentView_CountAll,
-            this.EquipmentView_CountRemain,
-            this.EquipmentView_Unlocked});
+			this.EquipmentView_ID,
+			this.EquipmentView_Icon,
+			this.EquipmentView_Name,
+			this.EquipmentView_CountAll,
+			this.EquipmentView_CountRemain,
+			this.EquipmentView_Unlocked});
 			this.EquipmentView.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.EquipmentView.Location = new System.Drawing.Point(0, 0);
 			this.EquipmentView.Name = "EquipmentView";
@@ -210,10 +210,10 @@
 			// 
 			this.TopMenu.ImageScalingSize = new System.Drawing.Size(32, 32);
 			this.TopMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.TopMenu_File,
-            this.ソートToolStripMenuItem,
-            this.Reload_RToolStripMenuItem,
-            this.オプションToolStripMenuItem});
+			this.TopMenu_File,
+			this.ソートToolStripMenuItem,
+			this.Reload_RToolStripMenuItem,
+			this.オプションToolStripMenuItem});
 			this.TopMenu.Location = new System.Drawing.Point(0, 0);
 			this.TopMenu.Name = "TopMenu";
 			this.TopMenu.Size = new System.Drawing.Size(700, 26);
@@ -223,8 +223,8 @@
 			// TopMenu_File
 			// 
 			this.TopMenu_File.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.TopMenu_File_CSVOutput,
-            this.TopMenu_File_CopyToFleetAnalysis});
+			this.TopMenu_File_CSVOutput,
+			this.TopMenu_File_CopyToFleetAnalysis});
 			this.TopMenu_File.Name = "TopMenu_File";
 			this.TopMenu_File.Size = new System.Drawing.Size(85, 22);
 			this.TopMenu_File.Text = "ファイル(&F)";
@@ -247,23 +247,23 @@
 			// ソートToolStripMenuItem
 			// 
 			this.ソートToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.AllOn_ToolStripMenuItem,
-            this.AllOff_ToolStripMenuItem,
-            this.toolStripSeparator1,
-            this.主砲ToolStripMenuItem,
-            this.艦載機ToolStripMenuItem,
-            this.水上機ToolStripMenuItem,
-            this.魚雷ToolStripMenuItem,
-            this.Radar_ToolStripMenuItem,
-            this.ソナー爆雷ToolStripMenuItem,
-            this.機銃高射装置ToolStripMenuItem,
-            this.大発ドラム缶ToolStripMenuItem,
-            this.砲弾ToolStripMenuItem,
-            this.バルジToolStripMenuItem,
-            this.照明弾探照灯ToolStripMenuItem,
-            this.その他ToolStripMenuItem,
-            this.toolStripSeparator2,
-            this.陸上機ToolStripMenuItem});
+			this.AllOn_ToolStripMenuItem,
+			this.AllOff_ToolStripMenuItem,
+			this.toolStripSeparator1,
+			this.主砲ToolStripMenuItem,
+			this.艦載機ToolStripMenuItem,
+			this.水上機ToolStripMenuItem,
+			this.魚雷ToolStripMenuItem,
+			this.Radar_ToolStripMenuItem,
+			this.ソナー爆雷ToolStripMenuItem,
+			this.機銃高射装置ToolStripMenuItem,
+			this.大発ドラム缶ToolStripMenuItem,
+			this.砲弾ToolStripMenuItem,
+			this.バルジToolStripMenuItem,
+			this.照明弾探照灯ToolStripMenuItem,
+			this.その他ToolStripMenuItem,
+			this.toolStripSeparator2,
+			this.陸上機ToolStripMenuItem});
 			this.ソートToolStripMenuItem.Name = "ソートToolStripMenuItem";
 			this.ソートToolStripMenuItem.Size = new System.Drawing.Size(87, 22);
 			this.ソートToolStripMenuItem.Text = "フィルタ(&G)";
@@ -290,10 +290,10 @@
 			// 主砲ToolStripMenuItem
 			// 
 			this.主砲ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.GunSmall_ToolStripMenuItem,
-            this.GunMidium_ToolStripMenuItem,
-            this.GunLarge_ToolStripMenuItem,
-            this.Secondary_ToolStripMenuItem});
+			this.GunSmall_ToolStripMenuItem,
+			this.GunMidium_ToolStripMenuItem,
+			this.GunLarge_ToolStripMenuItem,
+			this.Secondary_ToolStripMenuItem});
 			this.主砲ToolStripMenuItem.Name = "主砲ToolStripMenuItem";
 			this.主砲ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.主砲ToolStripMenuItem.Text = "艦載砲";
@@ -345,13 +345,13 @@
 			// 艦載機ToolStripMenuItem
 			// 
 			this.艦載機ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Fighter_ToolStripMenuItem,
-            this.Bomber_ToolStripMenuItem,
-            this.Attacker_ToolStripMenuItem,
-            this.Recon_ToolStripMenuItem,
-            this.Jet_ToolStripMenuItem,
-            this.AutoGyro_ToolStripMenuItem,
-            this.MPA_ToolStripMenuItem});
+			this.Fighter_ToolStripMenuItem,
+			this.Bomber_ToolStripMenuItem,
+			this.Attacker_ToolStripMenuItem,
+			this.Recon_ToolStripMenuItem,
+			this.Jet_ToolStripMenuItem,
+			this.AutoGyro_ToolStripMenuItem,
+			this.MPA_ToolStripMenuItem});
 			this.艦載機ToolStripMenuItem.Name = "艦載機ToolStripMenuItem";
 			this.艦載機ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.艦載機ToolStripMenuItem.Text = "艦載機";
@@ -436,10 +436,10 @@
 			// 水上機ToolStripMenuItem
 			// 
 			this.水上機ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.PlaneRecon_ToolStripMenuItem,
-            this.PlaneBomber_ToolStripMenuItem,
-            this.PlaneFighter_ToolStripMenuItem,
-            this.FlyingBoat_ToolStripMenuItem});
+			this.PlaneRecon_ToolStripMenuItem,
+			this.PlaneBomber_ToolStripMenuItem,
+			this.PlaneFighter_ToolStripMenuItem,
+			this.FlyingBoat_ToolStripMenuItem});
 			this.水上機ToolStripMenuItem.Name = "水上機ToolStripMenuItem";
 			this.水上機ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.水上機ToolStripMenuItem.Text = "水上機";
@@ -491,9 +491,9 @@
 			// 魚雷ToolStripMenuItem
 			// 
 			this.魚雷ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Torpedo_ToolStripMenuItem,
-            this.SubmarineTorpedo_ToolStripMenuItem,
-            this.MidgetSubmarine_ToolStripMenuItem});
+			this.Torpedo_ToolStripMenuItem,
+			this.SubmarineTorpedo_ToolStripMenuItem,
+			this.MidgetSubmarine_ToolStripMenuItem});
 			this.魚雷ToolStripMenuItem.Name = "魚雷ToolStripMenuItem";
 			this.魚雷ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.魚雷ToolStripMenuItem.Text = "魚雷";
@@ -536,8 +536,8 @@
 			// Radar_ToolStripMenuItem
 			// 
 			this.Radar_ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.RadarSmall_ToolStripMenuItem,
-            this.RadarLarge_ToolStripMenuItem});
+			this.RadarSmall_ToolStripMenuItem,
+			this.RadarLarge_ToolStripMenuItem});
 			this.Radar_ToolStripMenuItem.Name = "Radar_ToolStripMenuItem";
 			this.Radar_ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.Radar_ToolStripMenuItem.Text = "電探";
@@ -567,9 +567,9 @@
 			// ソナー爆雷ToolStripMenuItem
 			// 
 			this.ソナー爆雷ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.SonarNormal_ToolStripMenuItem,
-            this.SonarLarge_ToolStripMenuItem,
-            this.DepthCharge_ToolStripMenuItem});
+			this.SonarNormal_ToolStripMenuItem,
+			this.SonarLarge_ToolStripMenuItem,
+			this.DepthCharge_ToolStripMenuItem});
 			this.ソナー爆雷ToolStripMenuItem.Name = "ソナー爆雷ToolStripMenuItem";
 			this.ソナー爆雷ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.ソナー爆雷ToolStripMenuItem.Text = "ソナー/爆雷";
@@ -610,8 +610,8 @@
 			// 機銃高射装置ToolStripMenuItem
 			// 
 			this.機銃高射装置ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.AAGun_ToolStripMenuItem,
-            this.AADirector_ToolStripMenuItem});
+			this.AAGun_ToolStripMenuItem,
+			this.AADirector_ToolStripMenuItem});
 			this.機銃高射装置ToolStripMenuItem.Name = "機銃高射装置ToolStripMenuItem";
 			this.機銃高射装置ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.機銃高射装置ToolStripMenuItem.Text = "機銃/高射装置";
@@ -641,9 +641,9 @@
 			// 大発ドラム缶ToolStripMenuItem
 			// 
 			this.大発ドラム缶ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Drum_ToolStripMenuItem,
-            this.LandingCraft_ToolStripMenuItem,
-            this.AmphibiousVehicle_ToolStripMenuItem});
+			this.Drum_ToolStripMenuItem,
+			this.LandingCraft_ToolStripMenuItem,
+			this.AmphibiousVehicle_ToolStripMenuItem});
 			this.大発ドラム缶ToolStripMenuItem.Name = "大発ドラム缶ToolStripMenuItem";
 			this.大発ドラム缶ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.大発ドラム缶ToolStripMenuItem.Text = "大発系/ドラム缶";
@@ -685,8 +685,8 @@
 			// 砲弾ToolStripMenuItem
 			// 
 			this.砲弾ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.APShell_ToolStripMenuItem,
-            this.AAShell_ToolStripMenuItem});
+			this.APShell_ToolStripMenuItem,
+			this.AAShell_ToolStripMenuItem});
 			this.砲弾ToolStripMenuItem.Name = "砲弾ToolStripMenuItem";
 			this.砲弾ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.砲弾ToolStripMenuItem.Text = "砲弾";
@@ -720,8 +720,8 @@
 			// バルジToolStripMenuItem
 			// 
 			this.バルジToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.BulgeMid_ToolStripMenuItem,
-            this.BulgeLarge_ToolStripMenuItem});
+			this.BulgeMid_ToolStripMenuItem,
+			this.BulgeLarge_ToolStripMenuItem});
 			this.バルジToolStripMenuItem.Name = "バルジToolStripMenuItem";
 			this.バルジToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.バルジToolStripMenuItem.Text = "バルジ";
@@ -751,9 +751,9 @@
 			// 照明弾探照灯ToolStripMenuItem
 			// 
 			this.照明弾探照灯ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Flare_ToolStripMenuItem,
-            this.Searchlight_ToolStripMenuItem,
-            this.SearchlightLarge_ToolStripMenuItem});
+			this.Flare_ToolStripMenuItem,
+			this.Searchlight_ToolStripMenuItem,
+			this.SearchlightLarge_ToolStripMenuItem});
 			this.照明弾探照灯ToolStripMenuItem.Name = "照明弾探照灯ToolStripMenuItem";
 			this.照明弾探照灯ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.照明弾探照灯ToolStripMenuItem.Text = "照明弾/探照灯";
@@ -794,19 +794,19 @@
 			// その他ToolStripMenuItem
 			// 
 			this.その他ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.Engine_ToolStripMenuItem,
-            this.Rocket_ToolStripMenuItem,
-            this.ArmyInfantry_ToolStripMenuItem,
-            this.PicketCrew_ToolStripMenuItem,
-            this.MaintenanceTeam_ToolStripMenuItem,
-            this.SurfaceShipEquipment_ToolStripMenuItem,
-            this.SubmarineEquipment_ToolStripMenuItem,
-            this.CommandFacility_ToolStripMenuItem,
-            this.DamageControl_ToolStripMenuItem,
-            this.Ration_ToolStripMenuItem,
-            this.RepairFacility_ToolStripMenuItem,
-            this.Supplies_ToolStripMenuItem,
-            this.TransportMaterials_ToolStripMenuItem});
+			this.Engine_ToolStripMenuItem,
+			this.Rocket_ToolStripMenuItem,
+			this.ArmyInfantry_ToolStripMenuItem,
+			this.PicketCrew_ToolStripMenuItem,
+			this.MaintenanceTeam_ToolStripMenuItem,
+			this.SurfaceShipEquipment_ToolStripMenuItem,
+			this.SubmarineEquipment_ToolStripMenuItem,
+			this.CommandFacility_ToolStripMenuItem,
+			this.DamageControl_ToolStripMenuItem,
+			this.Ration_ToolStripMenuItem,
+			this.RepairFacility_ToolStripMenuItem,
+			this.Supplies_ToolStripMenuItem,
+			this.TransportMaterials_ToolStripMenuItem});
 			this.その他ToolStripMenuItem.Name = "その他ToolStripMenuItem";
 			this.その他ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.その他ToolStripMenuItem.Text = "その他";
@@ -968,11 +968,11 @@
 			// 陸上機ToolStripMenuItem
 			// 
 			this.陸上機ToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.LandAttacker_ToolStripMenuItem,
-            this.HeavyBomber_ToolStripMenuItem,
-            this.Interceptor_ToolStripMenuItem,
-            this.LandPatrol_ToolStripMenuItem,
-            this.LandJetBomb_ToolStripMenuItem});
+			this.LandAttacker_ToolStripMenuItem,
+			this.HeavyBomber_ToolStripMenuItem,
+			this.Interceptor_ToolStripMenuItem,
+			this.LandPatrol_ToolStripMenuItem,
+			this.LandJetBomb_ToolStripMenuItem});
 			this.陸上機ToolStripMenuItem.Name = "陸上機ToolStripMenuItem";
 			this.陸上機ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
 			this.陸上機ToolStripMenuItem.Text = "陸上機";
@@ -1032,9 +1032,9 @@
 			// オプションToolStripMenuItem
 			// 
 			this.オプションToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.VisibleAllCountColumn_ToolStripMenuItem,
-            this.VisibleRemainCountColumn_ToolStripMenuItem,
-            this.VisibleUnlockedCountColumn_ToolStripMenuItem});
+			this.VisibleAllCountColumn_ToolStripMenuItem,
+			this.VisibleRemainCountColumn_ToolStripMenuItem,
+			this.VisibleUnlockedCountColumn_ToolStripMenuItem});
 			this.オプションToolStripMenuItem.Name = "オプションToolStripMenuItem";
 			this.オプションToolStripMenuItem.Size = new System.Drawing.Size(99, 22);
 			this.オプションToolStripMenuItem.Text = "オプション(&O)";
@@ -1102,11 +1102,11 @@
 			this.DetailView.BackgroundColor = System.Drawing.SystemColors.Control;
 			this.DetailView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.DetailView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.DetailView_Level,
-            this.DetailView_AircraftLevel,
-            this.DetailView_CountAll,
-            this.DetailView_CountRemain,
-            this.DetailView_EquippedShip});
+			this.DetailView_Level,
+			this.DetailView_AircraftLevel,
+			this.DetailView_CountAll,
+			this.DetailView_CountRemain,
+			this.DetailView_EquippedShip});
 			this.DetailView.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.DetailView.Location = new System.Drawing.Point(0, 0);
 			this.DetailView.Name = "DetailView";
@@ -1209,7 +1209,7 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn DetailView_CountAll;
 		private System.Windows.Forms.DataGridViewTextBoxColumn DetailView_CountRemain;
 		private System.Windows.Forms.DataGridViewTextBoxColumn DetailView_EquippedShip;
-        private System.Windows.Forms.ToolStripMenuItem TopMenu_File_CopyToFleetAnalysis;
+		private System.Windows.Forms.ToolStripMenuItem TopMenu_File_CopyToFleetAnalysis;
 		private System.Windows.Forms.ToolStripMenuItem ソートToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem 主砲ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem GunMidium_ToolStripMenuItem;
@@ -1291,6 +1291,6 @@
 		private System.Windows.Forms.ToolStripMenuItem VisibleAllCountColumn_ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem VisibleRemainCountColumn_ToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem ArmyInfantry_ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem LandJetBomb_ToolStripMenuItem;
-    }
+		private System.Windows.Forms.ToolStripMenuItem LandJetBomb_ToolStripMenuItem;
+	}
 }

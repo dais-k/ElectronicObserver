@@ -1231,6 +1231,13 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressDiscard(q, 12, true, new[]{ 10 }),
 							}));
 							break;
+						case 1157:  //|1157|単|【重南瓜祭り拡張任務】対潜装備も整理整頓！|「九四式爆雷投射機」「三式爆雷投射機」「二式12cm迫撃砲改」各×6を廃棄、南瓜2, 12cm30連装噴進砲×3, 開発資材30を準備
+							Progresses.Add(new ProgressMultiDiscard(q, new[]{
+								new ProgressDiscard(q, 6, true, new[]{ 44 }, -1),
+								new ProgressDiscard(q, 6, true, new[]{ 45 }, -1),
+								new ProgressDiscard(q, 6, true, new[]{ 346 }, -1),
+							}));
+							break;
 					}
 
 					#endregion

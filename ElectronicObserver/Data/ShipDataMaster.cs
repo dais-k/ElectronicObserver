@@ -744,10 +744,10 @@ namespace ElectronicObserver.Data
 				ShipType == ShipTypes.LightCruiser ||
 				ShipType == ShipTypes.SeaplaneTender
 			);
-	
+
 		/// <summary>
 		/// 国籍
-		/// (1:米 2:英 3:伊 4:独 5:仏 6:露 7:豪 8:蘭 9:瑞 10:中 11:亜)
+		/// (1:米 2:英 3:伊 4:独 5:仏 6:露 7:豪 8:蘭 9:瑞 10:中 11:亜 12:諾)
 		/// </summary>
 		public int ShipNationality
 		{
@@ -785,7 +785,9 @@ namespace ElectronicObserver.Data
 					case 82:      //J級
 					case 88:      //Nelson級
 					case 108:     //Town級
-					case 112:     //Illustrious級					
+					case 112:     //Illustrious級	
+					case 134:     //Courageous級
+					case 135:     //Glorious級				
 						return 2;
 					case 58:      //V.Veneto級
 					case 61:      //Maestrale級
@@ -817,6 +819,8 @@ namespace ElectronicObserver.Data
 						return 8;
 					case 89:      //Gotland級
 						return 9;
+					case 133:    //Norge級
+						return 12;
 					default: 
 						return 0;
 				}
@@ -847,6 +851,13 @@ namespace ElectronicObserver.Data
 				NameReading == "へいあんまる"
 			);
 
+		/// <summary>
+		/// 海防戦艦であるか
+		/// </summary>
+		public bool IsCoastalDefenceShip =>
+			(
+				ShipClass == 133  //Norge級
+			);
 
 		/// <summary>
 		/// 自身のパラメータレコードを取得します。

@@ -38,7 +38,7 @@ namespace ElectronicObserver.Window.Dialog
 		private DataTable _dtRightOperand_speed;
 		private DataTable _dtRightOperand_rarity;
 		private DataTable _dtRightOperand_equipment;
-		private DataTable _dtRightOperand_equipmentCategory;
+		private DataTable _dtRightOperand_equipmentCategory1;
 		private DataTable _dtRightOperand_shipNationality;
 		#endregion
 
@@ -241,23 +241,23 @@ namespace ElectronicObserver.Window.Dialog
 				_dtRightOperand_equipment.AcceptChanges();
 			}
 			{
-				_dtRightOperand_equipmentCategory = new DataTable();
-				_dtRightOperand_equipmentCategory.Columns.AddRange(new DataColumn[]{
+				_dtRightOperand_equipmentCategory1 = new DataTable();
+				_dtRightOperand_equipmentCategory1.Columns.AddRange(new DataColumn[]{
 					new DataColumn( "Value", typeof( int ) ),
 					new DataColumn( "Display", typeof( string ) ) });
 				foreach (var category in KCDatabase.Instance.MasterEquipments.Values.Select(eq => eq.CategoryType).Distinct().OrderBy(i => i))
 				{
 					var cat = KCDatabase.Instance.EquipmentTypes[(int)category];
-					_dtRightOperand_equipmentCategory.Rows.Add(cat.TypeID, cat.Name);
+					_dtRightOperand_equipmentCategory1.Rows.Add(cat.TypeID, cat.Name);
 				}
-				_dtRightOperand_equipmentCategory.AcceptChanges();
+				_dtRightOperand_equipmentCategory1.AcceptChanges();
 			}
 			{
 				_dtRightOperand_shipNationality = new DataTable();
 				_dtRightOperand_shipNationality.Columns.AddRange(new DataColumn[] {
 					new DataColumn( "Value", typeof( int ) ),
 					new DataColumn( "Display", typeof( string ) ) });
-				for (int i = 0; i <= 11; i++) //国籍増えたらここを増やす
+				for (int i = 0; i <= 12; i++) //国籍増えたらここを増やす
 					_dtRightOperand_shipNationality.Rows.Add(i, Constants.GetShipNationality(i));
 				_dtRightOperand_shipNationality.AcceptChanges();
 			}
@@ -495,7 +495,7 @@ namespace ElectronicObserver.Window.Dialog
 				Operator.Enabled = true;
 				Operator.DataSource = _dtOperator_array;
 
-				RightOperand_ComboBox.DataSource = _dtRightOperand_equipmentCategory;
+				RightOperand_ComboBox.DataSource = _dtRightOperand_equipmentCategory1;
 				RightOperand_ComboBox.SelectedValue = right ?? 1;
 
 			}
