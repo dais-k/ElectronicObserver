@@ -181,7 +181,18 @@ namespace ElectronicObserver.Window
 
 			IsRowsUpdating = false;
 			Icon = ResourceManager.ImageToIcon(ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormShipGroup]);
-		}
+ 
+            // 初回ロード時にタブが存在するなら先頭タブを選択しておく
+            // これにより自動更新時に SelectedTab が null となって更新が無視される問題を防ぐ
+            if (SelectedTab == null && TabPanel.Controls.Count > 0)
+            {
+                var first = TabPanel.Controls.OfType<ImageLabel>().FirstOrDefault();
+                if (first != null)
+                {
+                    ChangeShipView(first);
+                }
+            }
+        }
 		void ConfigurationChanged()
 		{
 

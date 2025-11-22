@@ -81,20 +81,20 @@
 			// 
 			this.ContextMenuFleet.ImageScalingSize = new System.Drawing.Size(32, 32);
 			this.ContextMenuFleet.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.ContextMenuFleet_CopyFleet,
-            this.ContextMenuFleet_OutputFleetImage,
-            this.toolStripSeparator3,
-            this.ContextMenuFleet_OpenAirControlSimulator,
-            this.ContextMenuFleet_OpenTacticalRoom,
-            this.ContextMenuFleet_OpenKacColleSupportKai,
-            this.ContextMenuFleet_OpenCompassSimulator,
-            this.toolStripSeparator1,
-            this.ContextMenuFleet_CopyFleetDeckBuilder,
-            this.ContextMenuFleet_CopyAllShips,
-            this.ContextMenuFleet_CopyAllEquips,
-            this.toolStripSeparator2,
-            this.ContextMenuFleet_Capture,
-            this.ContextMenuFleet_AntiAirDetails});
+			this.ContextMenuFleet_CopyFleet,
+			this.ContextMenuFleet_OutputFleetImage,
+			this.toolStripSeparator3,
+			this.ContextMenuFleet_OpenAirControlSimulator,
+			this.ContextMenuFleet_OpenTacticalRoom,
+			this.ContextMenuFleet_OpenKacColleSupportKai,
+			this.ContextMenuFleet_OpenCompassSimulator,
+			this.toolStripSeparator1,
+			this.ContextMenuFleet_CopyFleetDeckBuilder,
+			this.ContextMenuFleet_CopyAllShips,
+			this.ContextMenuFleet_CopyAllEquips,
+			this.toolStripSeparator2,
+			this.ContextMenuFleet_Capture,
+			this.ContextMenuFleet_AntiAirDetails});
 			this.ContextMenuFleet.Name = "ContextMenuFleet";
 			this.ContextMenuFleet.Size = new System.Drawing.Size(324, 264);
 			this.ContextMenuFleet.Opening += new System.ComponentModel.CancelEventHandler(this.ContextMenuFleet_Opening);

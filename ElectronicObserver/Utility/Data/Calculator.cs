@@ -222,11 +222,11 @@ namespace ElectronicObserver.Utility.Data
 			return air;
 		}
 
-        /// <summary>
-        /// 対象の艦船の制空戦力を求めます。
-        /// </summary>
-        /// <param name="ship">対象の艦船。</param>
-        public static int GetAirSuperiority(ShipData ship, bool isAircraftLevelMaximum = false)
+		/// <summary>
+		/// 対象の艦船の制空戦力を求めます。
+		/// </summary>
+		/// <param name="ship">対象の艦船。</param>
+		public static int GetAirSuperiority(ShipData ship, bool isAircraftLevelMaximum = false)
 		{
 
 			if (ship == null) return 0;
@@ -235,22 +235,22 @@ namespace ElectronicObserver.Utility.Data
 			   GetAirSuperiority(eq.EquipmentID, ship.Aircraft[i], eq.AircraftLevel, eq.Level, -1, isAircraftLevelMaximum)).Sum();
 		}
 
-        /// <summary>
-        /// 対象の艦船の制空戦力を求めます。Master
-        /// </summary>
-        /// <param name="ship">対象の艦船。</param>
-        public static int GetAirSuperiority(ShipDataMaster ship)
+		/// <summary>
+		/// 対象の艦船の制空戦力を求めます。Master
+		/// </summary>
+		/// <param name="ship">対象の艦船。</param>
+		public static int GetAirSuperiority(ShipDataMaster ship)
 		{
 			if (ship?.DefaultSlot == null)
 				return 0;
 			return GetAirSuperiority(ship.DefaultSlot.ToArray(), ship.Aircraft.ToArray());
 		}
 
-        /// <summary>
-        /// 対象の艦隊の制空戦力を求めます。
-        /// </summary>
-        /// <param name="fleet">対象の艦隊。</param>
-        public static int GetAirSuperiority(FleetData fleet, bool isAircraftLevelMaximum = false)
+		/// <summary>
+		/// 対象の艦隊の制空戦力を求めます。
+		/// </summary>
+		/// <param name="fleet">対象の艦隊。</param>
+		public static int GetAirSuperiority(FleetData fleet, bool isAircraftLevelMaximum = false)
 		{
 			if (fleet == null)
 				return 0;
