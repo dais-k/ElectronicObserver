@@ -20,6 +20,7 @@ namespace ElectronicObserver.Observer.kcsapi.api_req_kaisou
 			db.Fleet.LoadFromRequest(APIName, data);
 
 			bool destroysEquipments = data.ContainsKey("api_slot_dest_flag") ? (data["api_slot_dest_flag"] != "0") : true;
+			bool usePumpkin = data.ContainsKey("api_limited_feed_type") && data["api_limited_feed_type"] != "0";
 
 			foreach (string id in data["api_id_items"].Split(",".ToCharArray()))
 			{
@@ -38,6 +39,11 @@ namespace ElectronicObserver.Observer.kcsapi.api_req_kaisou
 				Utility.Logger.Add(2, ship.NameWithLevel + " を除籍しました。");
 				db.Ships.Remove(shipID);
 
+			}
+
+			if(usePumpkin)
+			{
+                KCDatabase.Instance.UseItems[96].Count--;
 			}
 
 			base.OnRequestReceived(data);

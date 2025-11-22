@@ -22,7 +22,11 @@ namespace ElectronicObserver.Data
 		/// <summary>
 		/// 個数
 		/// </summary>
-		public int Count => (int)RawData.api_count;
+		public int Count
+		{
+			get => (int)RawData.api_count;
+			set => RawData.api_count = value;
+		}
 
 
 		public UseItemMaster MasterUseItem => KCDatabase.Instance.MasterUseItems[ItemID];

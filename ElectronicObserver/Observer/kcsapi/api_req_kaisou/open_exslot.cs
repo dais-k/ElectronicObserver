@@ -18,6 +18,7 @@ namespace ElectronicObserver.Observer.kcsapi.api_req_kaisou
 			if (ship != null)
 			{
 				ship.LoadFromRequest(APIName, data);
+				KCDatabase.Instance.UseItems[64].Count--;
 
 				Utility.Logger.Add(2, $"{ship.NameWithLevel} の補強増設装備スロットの増設改修が完了しました。");
 			}
