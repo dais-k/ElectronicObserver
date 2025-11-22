@@ -949,7 +949,6 @@ namespace Browser
 			ushort port;
 			if (ushort.TryParse(proxy, out port))
 			{
-				//WinInetUtil.SetProxyInProcessForNekoxy(port);
 				ProxySettings = "http=127.0.0.1:" + port;           // todo: 動くには動くが正しいかわからない
 			}
 			else
