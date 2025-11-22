@@ -1280,6 +1280,34 @@ namespace ElectronicObserver.Utility
 			public ConfigFormBaseAirCorps FormBaseAirCorps { get; private set; }
 
 
+			/// <summary>
+			/// [装備グループ]ウィンドウの設定を扱います。
+			/// </summary>
+			public class ConfigFormEquipmentGroup : ConfigPartBase
+			{
+
+				/// <summary>
+				/// 自動更新するか
+				/// </summary>
+				public bool AutoUpdate { get; set; }
+ 
+				/// <summary>
+				/// ステータスバーを表示するか
+				/// </summary>
+				public bool ShowStatusBar { get; set; }
+
+				public ConfigFormEquipmentGroup()
+				{
+					AutoUpdate = true;
+					ShowStatusBar = true;
+				}
+			}
+			/// <summary>
+			/// [装備グループ]ウィンドウ
+			/// </summary>
+			[DataMember]
+			public ConfigFormEquipmentGroup FormEquipmentGroup { get; private set; }
+
 
 			/// <summary>
 			/// 各[通知]ウィンドウの設定を扱います。
@@ -1641,6 +1669,7 @@ namespace ElectronicObserver.Utility
 				FormJson = new ConfigFormJson();
 				FormBaseAirCorps = new ConfigFormBaseAirCorps();
 				FormAccessTime = new ConfigFormAccessTime();
+				FormEquipmentGroup = new ConfigFormEquipmentGroup();
 
 				NotifierExpedition = new ConfigNotifierBase();
 				NotifierConstruction = new ConfigNotifierBase();

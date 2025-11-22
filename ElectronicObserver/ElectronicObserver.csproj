@@ -203,8 +203,10 @@
     <Compile Include="Data\Constants.cs" />
     <Compile Include="Data\DevelopmentData.cs" />
     <Compile Include="Data\DockData.cs" />
+    <Compile Include="Data\EquipmentGroupData.cs" />
     <Compile Include="Data\EquipmentData.cs" />
     <Compile Include="Data\EquipmentDataMaster.cs" />
+    <Compile Include="Data\EquipmentGroupManager.cs" />
     <Compile Include="Data\EquipmentType.cs" />
     <Compile Include="Data\EquipmentTypes.cs" />
     <Compile Include="Data\FleetManager.cs" />
@@ -245,6 +247,9 @@
     <Compile Include="Data\ResponseWrapper.cs" />
     <Compile Include="Data\CompassData.cs" />
     <Compile Include="Data\ShipGraphicData.cs" />
+    <Compile Include="Data\EquipmentGroup\EqExpressionData.cs" />
+    <Compile Include="Data\EquipmentGroup\EqExpressionList.cs" />
+    <Compile Include="Data\EquipmentGroup\EqExpressionManager.cs" />
     <Compile Include="Data\ShipGroupData.cs" />
     <Compile Include="Data\ShipGroupManager.cs" />
     <Compile Include="Data\ShipGroup\ExpressionData.cs" />
@@ -315,6 +320,7 @@
     <Compile Include="Utility\Data\RecordHash.cs" />
     <Compile Include="Utility\Data\CalcShipAttackPower.cs" />
     <Compile Include="Utility\FleetImageGenerator.cs" />
+    <Compile Include="Utility\ImprovementDataStore.cs" />
     <Compile Include="Utility\Storage\CsvHelper.cs" />
     <Compile Include="Utility\SyncBGMPlayer.cs" />
     <Compile Include="Utility\MediaPlayer.cs" />
@@ -437,6 +443,12 @@
     <Compile Include="Window\Dialog\DialogAlbumMasterEquipment.Designer.cs">
       <DependentUpon>DialogAlbumMasterEquipment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Window\Dialog\DialogEquipmentList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Window\Dialog\DialogEquipmentList.Designer.cs">
+      <DependentUpon>DialogEquipmentList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Window\Dialog\DialogShipAttackDetail.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -515,12 +527,6 @@
     <Compile Include="Window\Dialog\DialogDropRecordViewer.Designer.cs">
       <DependentUpon>DialogDropRecordViewer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Window\Dialog\DialogEquipmentList.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Window\Dialog\DialogEquipmentList.Designer.cs">
-      <DependentUpon>DialogEquipmentList.cs</DependentUpon>
-    </Compile>
     <Compile Include="Window\Dialog\DialogExpChecker.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -597,6 +603,12 @@
     <Compile Include="Window\Dialog\DialogShipGroupCSVOutput.Designer.cs">
       <DependentUpon>DialogShipGroupCSVOutput.cs</DependentUpon>
     </Compile>
+    <Compile Include="Window\Dialog\DialogEquipmentGroupFilter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Window\Dialog\DialogEquipmentGroupFilter.Designer.cs">
+      <DependentUpon>DialogEquipmentGroupFilter.cs</DependentUpon>
+    </Compile>
     <Compile Include="Window\Dialog\DialogShipGroupFilter.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -669,6 +681,9 @@
     <Compile Include="Window\FormCompass.Designer.cs">
       <DependentUpon>FormCompass.cs</DependentUpon>
     </Compile>
+    <Compile Include="Window\FormEquipmentGroup.Tooltip.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Window\FormFleetPreset.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -686,6 +701,12 @@
     </Compile>
     <Compile Include="Window\FormSenka.Designer.cs">
       <DependentUpon>FormSenka.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Window\FormEquipmentGroup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Window\FormEquipmentGroup.Designer.cs">
+      <DependentUpon>FormEquipmentGroup.cs</DependentUpon>
     </Compile>
     <Compile Include="Window\FormWindowCapture.cs">
       <SubType>Form</SubType>
@@ -796,6 +817,10 @@
     <EmbeddedResource Include="Window\Dialog\DialogAlbumMasterEquipment.resx">
       <DependentUpon>DialogAlbumMasterEquipment.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Window\Dialog\DialogEquipmentList.resx">
+      <DependentUpon>DialogEquipmentList.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Window\Dialog\DialogShipAttackDetail.resx">
       <DependentUpon>DialogShipAttackDetail.cs</DependentUpon>
     </EmbeddedResource>
@@ -835,10 +860,6 @@
     <EmbeddedResource Include="Window\Dialog\DialogDropRecordViewer.resx">
       <DependentUpon>DialogDropRecordViewer.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Window\Dialog\DialogEquipmentList.resx">
-      <DependentUpon>DialogEquipmentList.cs</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Window\Dialog\DialogExpChecker.resx">
       <DependentUpon>DialogExpChecker.cs</DependentUpon>
     </EmbeddedResource>
@@ -874,6 +895,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Window\Dialog\DialogShipGroupCSVOutput.resx">
       <DependentUpon>DialogShipGroupCSVOutput.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Window\Dialog\DialogEquipmentGroupFilter.resx">
+      <DependentUpon>DialogEquipmentGroupFilter.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Window\Dialog\DialogShipGroupFilter.resx">
       <DependentUpon>DialogShipGroupFilter.cs</DependentUpon>
@@ -919,6 +943,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Window\FormSenka.resx">
       <DependentUpon>FormSenka.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Window\FormEquipmentGroup.resx">
+      <DependentUpon>FormEquipmentGroup.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Window\FormWindowCapture.resx">
       <DependentUpon>FormWindowCapture.cs</DependentUpon>

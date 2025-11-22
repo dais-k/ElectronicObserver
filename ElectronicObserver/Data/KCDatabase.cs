@@ -161,8 +161,12 @@ namespace ElectronicObserver.Data
 		/// </summary>
 		public FleetPresetManager FleetPreset { get; private set; }
 
+        /// <summary>
+        /// 装備グループデータ
+        /// </summary>
+        public EquipmentGroupManager EquipmentGroup { get; private set; }
 
-		private KCDatabase()
+        private KCDatabase()
 		{
 
 			MasterShips = new IDDictionary<ShipDataMaster>();
@@ -191,7 +195,8 @@ namespace ElectronicObserver.Data
 			BaseAirCorpsMaintenance = new IDDictionary<BaseAirCorpsMaintenance>();
 			RelocatedEquipments = new IDDictionary<RelocationData>();
 			FleetPreset = new FleetPresetManager();
-		}
+            EquipmentGroup = new EquipmentGroupManager();
+        }
 
 
 		public void Load()
@@ -201,8 +206,13 @@ namespace ElectronicObserver.Data
 				if (temp != null)
 					ShipGroup = temp;
 			}
-			{
-				var temp = QuestProgress.Load();
+            {
+                var temp = (EquipmentGroupManager)EquipmentGroup.Load();
+                if (temp != null)
+                    EquipmentGroup = temp;
+            }
+            {
+                var temp = QuestProgress.Load();
 				if (temp != null)
 				{
 					if (QuestProgress != null)
@@ -216,7 +226,8 @@ namespace ElectronicObserver.Data
 		public void Save()
 		{
 			ShipGroup.Save();
-			QuestProgress.Save();
+            EquipmentGroup.Save();
+            QuestProgress.Save();
 		}
 
 	}

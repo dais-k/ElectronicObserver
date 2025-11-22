@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace ElectronicObserver.Data
@@ -180,7 +181,7 @@ namespace ElectronicObserver.Data
 		/// </summary>
 		public EquipmentType CategoryTypeInstance => KCDatabase.Instance.EquipmentTypes[(int)CategoryType];
 		public EquipmentType CategoryTypeInstance2 => KCDatabase.Instance.EquipmentTypes[(int)CategoryType2];
-
+		
 		/// <summary>
 		/// 装備種別：アイコン
 		/// </summary>
@@ -197,6 +198,68 @@ namespace ElectronicObserver.Data
 		public IEnumerable<int> EquippableShipsAtExpansion => equippableShipsAtExpansion;
 		public IEnumerable<int> EquippableStypeAtExpansion => equippableStypeAtExpansion;
 		public IEnumerable<int> EquippableCtypeAtExpansion => equippableCtypeAtExpansion;
+
+
+		/// <summary>
+		/// 改修可能かどうか
+		/// </summary>
+		public bool Improvable { get; set; }
+		public List<Improvement> Improvements { get; set; } = new();
+
+		/// <summary>
+		/// 改修情報
+		/// </summary>
+		public class Improvement
+		{
+			/// <summary>
+			/// 改修後の派生装備情報。
+			/// [ (string)x, y ] または ["false",-1]
+			/// </summary>
+			public List<string> Upgrade { get; set; } = new();
+
+			/// <summary>
+			/// 曜日ごとの担当艦娘
+			/// </summary>
+			public ReqCondition Req { get; set; } = new();
+
+			/// <summary>
+			/// 改修資源情報。
+			/// 1つ目は 開発資源、2つ目以降は 改修資源とアイテム
+			/// </summary>
+			public ResourceBlock Resource { get; set; } = new();
+		}
+
+		public class ReqCondition
+		{
+			public List<List<int>> WeekConditions { get; set; } = new();
+		}
+
+		public class ResourceBlock
+		{
+			public ResourceEntry BaseResource { get; set; }
+			public List<ResourceEntry> ExtraResources { get; set; } = new();
+		}
+
+		public class ResourceEntry
+		{
+			public int Mat1 { get; set; }
+			public int Mat2 { get; set; }
+			public int Mat3 { get; set; }
+			public int Mat4 { get; set; }
+			public List<ResourceItem> Items { get; set; } = new();
+		}
+
+		public class ResourceItem
+		{
+			public string Id { get; set; } = "-1";
+			public int NeedCount { get; set; }
+		}
+
+
+
+
+
+
 
 
 		// 以降自作判定

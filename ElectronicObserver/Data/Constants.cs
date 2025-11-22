@@ -455,6 +455,227 @@ namespace ElectronicObserver.Data
 				default: return "日";
 			}
 		}
+
+		/// <summary>
+		/// 装備アイコンの文字列を取得します。
+		/// </summary>
+		public static string GetIconName(int id)
+		{
+			switch (id)
+			{
+				case 1: return "小口径主砲";
+				case 2: return "中口径主砲";
+				case 3: return "大口径主砲";
+				case 4: return "副砲";
+				case 5: return "魚雷";
+				case 6: return "艦上戦闘機";
+				case 7: return "艦上爆撃機";
+				case 8: return "艦上攻撃機";
+				case 9: return "艦上偵察機";
+				case 10: return "水上偵察機";
+				case 11: return "電波探信儀";
+				case 12: return "対空強化弾";
+				case 13: return "徹甲弾";
+				case 14: return "ダメコン";
+				case 15: return "機銃";
+				case 16: return "高角砲";
+				case 17: return "爆雷投射機";
+				case 18: return "ソナー";
+				case 19: return "機関部強化";
+				case 20: return "上陸用舟艇";
+				case 21: return "回転翼機";
+				case 22: return "対潜哨戒機";
+				case 23: return "追加装甲";
+				case 24: return "探照灯";
+				case 25: return "簡易輸送部材";
+				case 26: return "艦艇修理施設";
+				case 27: return "照明弾";
+				case 28: return "司令部施設";
+				case 29: return "航空要員";
+				case 30: return "高射装置";
+				case 31: return "対地装備";
+				case 32: return "水上艦要員";
+				case 33: return "大型飛行艇";
+				case 34: return "戦闘食料";
+				case 35: return "洋上補給";
+				case 36: return "特型内火艇";
+				case 37: return "陸上攻撃機";
+				case 38: return "局地戦闘機";
+				case 39: return "噴式戦闘爆撃機(噴式景雲改";
+				case 40: return "噴式戦闘爆撃機(橘花改";
+				case 41: return "輸送機材";
+				case 42: return "潜水艦装備";
+				case 43: return "水上戦闘機";
+				case 44: return "陸軍戦闘機";
+				case 45: return "夜間戦闘機";
+				case 46: return "夜間攻撃機";
+				case 47: return "陸上対潜哨戒機";
+				case 48: return "陸上攻撃機(襲撃機";
+				case 49: return "大型陸上機";
+				case 50: return "夜間偵察機";
+				case 51: return "夜間水上爆撃機";
+				case 52: return "陸戦部隊";
+				//case 53: return "未実装";
+				case 54: return "艦載発煙装置";
+				case 55: return "阻塞気球";
+				case 56: return "噴式局地戦闘機";
+				case 57: return "試作局地戦闘機";
+				case 58: return "夜間爆撃機";
+				case 59: return "全翼戦闘爆撃機";
+				default: return "不明";  
+			}
+		}
+
+		/// <summary>
+		/// 改修用のアイテム名を取得します。
+		/// </summary>
+		public static string GetImprovementItemName(int itemId)
+		{
+			switch (itemId)
+			{
+				case 57:
+					return "勲章";
+				case 58:
+					return "改装設計図";
+				case 63:
+					return "司令部要員";
+				case 64:
+					return "補強増設";
+				case 65:
+					return "試製甲板カタパルト";
+				case 66:
+					return "戦闘糧食";
+				case 67:
+					return "洋上補給";
+				case 70:
+					return "熟練搭乗員";
+				case 71:
+					return "ネ式エンジン";
+				case 74:
+					return "新型航空機設計図";
+				case 75:
+					return "新型砲熕兵装資材";
+				case 76:
+					return "戦闘糧食(特別なおにぎり)";
+				case 77:
+					return "新型航空兵装資材";
+				case 78:
+					return "戦闘詳報";
+				case 91:
+					return "緊急修理資材";
+				case 92:
+					return "新型噴進装備開発資材";
+				case 94:
+					return "新型兵装資材";
+				case 95:
+					return "潜水艦補給物資";
+				case 100:
+					return "海外艦最新技術";
+				case 101:
+					return "夜間熟練搭乗員";
+				case 102:
+					return "航空特別増加食";
+				case 1000:
+					return "(★6)熟練搭乗員";
+				case 1001:
+					return "(★7)熟練搭乗員";
+				case 1002:
+					return "(★8)熟練搭乗員";
+				case 1003:
+					return "(★9)熟練搭乗員";
+				case 1004:
+					return "(★6～)熟練搭乗員";
+				case 1005:
+					return "(★7～)熟練搭乗員";
+				case 1006:
+					return "(★8～)熟練搭乗員";
+				case 1007:
+					return "(★9～)熟練搭乗員";
+				case 1010:
+					return "(★6)新型砲熕兵装資材";
+				case 1011:
+					return "(★7)新型砲熕兵装資材";
+				case 1012:
+					return "(★8)新型砲熕兵装資材";
+				case 1013:
+					return "(★9)新型砲熕兵装資材";
+				case 1014:
+					return "(★6～)新型砲熕兵装資材";
+				case 1015:
+					return "(★7～)新型砲熕兵装資材";
+				case 1016:
+					return "(★8～)新型砲熕兵装資材";
+				case 1017:
+					return "(★9～)新型砲熕兵装資材";
+				case 1020:
+					return "(★6)新型航空兵装資材";
+				case 1021:
+					return "(★7)新型航空兵装資材";
+				case 1022:
+					return "(★8)新型航空兵装資材";
+				case 1023:
+					return "(★9)新型航空兵装資材";
+				case 1024:
+					return "(★6～)新型航空兵装資材";
+				case 1025:
+					return "(★7～)新型航空兵装資材";
+				case 1026:
+					return "(★8～)新型航空兵装資材";
+				case 1027:
+					return "(★9～)新型航空兵装資材";
+				case 1030:
+					return "(★6)新型兵装資材";
+				case 1031:
+					return "(★7)新型兵装資材";
+				case 1032:
+					return "(★8)新型兵装資材";
+				case 1033:
+					return "(★9)新型兵装資材";
+				case 1034:
+					return "(★6～)新型兵装資材";
+				case 1035:
+					return "(★7～)新型兵装資材";
+				case 1036:
+					return "(★8～)新型兵装資材";
+				case 1037:
+					return "(★9～)新型兵装資材";
+				case 1040:
+					return "(★6)海外艦最新技術";
+				case 1041:
+					return "(★7)海外艦最新技術";
+				case 1042:
+					return "(★8)海外艦最新技術";
+				case 1043:
+					return "(★9)海外艦最新技術";
+				case 1044:
+					return "(★6～)海外艦最新技術";
+				case 1045:
+					return "(★7～)海外艦最新技術";
+				case 1046:
+					return "(★8～)海外艦最新技術";
+				case 1047:
+					return "(★9～)海外艦最新技術";
+				case 1050:
+					return "(★6)緊急修理資材";
+				case 1051:
+					return "(★7)緊急修理資材";
+				case 1052:
+					return "(★8)緊急修理資材";
+				case 1053:
+					return "(★9)緊急修理資材";
+				case 1054:
+					return "(★6～)緊急修理資材";
+				case 1055:
+					return "(★7～)緊急修理資材";
+				case 1056:
+					return "(★8～)緊急修理資材";
+				case 1057:
+					return "(★9～)緊急修理資材";
+				default:
+					return "不明";
+			}
+		}
+
 		#endregion
 
 		#region 出撃

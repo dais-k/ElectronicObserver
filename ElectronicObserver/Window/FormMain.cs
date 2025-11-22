@@ -68,6 +68,7 @@ namespace ElectronicObserver.Window
 		public FormFleetPreset fFleetPreset;
 		public FormSenka fSenka;
 		public FormAccessTime fAccessTime;
+		public FormEquipmentGroup fEquipmentGroup;
 
 		#endregion
 
@@ -121,6 +122,7 @@ namespace ElectronicObserver.Window
 
 			StripMenu_File_Configuration.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormConfiguration];
 
+			StripMenu_View_EquipmentGroup.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormShipGroup];
 			StripMenu_View_Fleet.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormFleet];
 			StripMenu_View_FleetOverview.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormFleet];
 			StripMenu_View_ShipGroup.Image = ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormShipGroup];
@@ -197,6 +199,7 @@ namespace ElectronicObserver.Window
 			SubForms.Add(fFleetPreset = new FormFleetPreset(this));
 			SubForms.Add(fSenka = new FormSenka(this));
 			SubForms.Add(fAccessTime = new FormAccessTime(this));
+			SubForms.Add(fEquipmentGroup = new FormEquipmentGroup(this));
 
 			ConfigurationChanged();     //設定から初期化
 
@@ -535,6 +538,11 @@ namespace ElectronicObserver.Window
 					{
 						fShipGroup.ConfigureFromPersistString(persistString);
 						return fShipGroup;
+					}
+					if (persistString.StartsWith("EquipmentGroup"))
+					{
+						fEquipmentGroup.ConfigureFromPersistString(persistString);
+						return fEquipmentGroup;
 					}
 					if (persistString.StartsWith(FormIntegrate.PREFIX))
 					{
@@ -1871,6 +1879,11 @@ namespace ElectronicObserver.Window
 		private void StripMenu_View_AccessTime_Click(object sender, EventArgs e)
 		{
 			ShowForm(fAccessTime);
+		}
+
+		private void StripMenu_View_EquipmentGroup_Click(object sender, EventArgs e)
+		{
+			ShowForm(fEquipmentGroup);
 		}
 
 		#endregion

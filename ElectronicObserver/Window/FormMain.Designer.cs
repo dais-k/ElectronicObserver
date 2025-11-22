@@ -50,6 +50,7 @@
 			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
 			this.StripMenu_File_Close = new System.Windows.Forms.ToolStripMenuItem();
 			this.StripMenu_View = new System.Windows.Forms.ToolStripMenuItem();
+			this.StripMenu_View_EquipmentGroup = new System.Windows.Forms.ToolStripMenuItem();
 			this.StripMenu_View_Fleet = new System.Windows.Forms.ToolStripMenuItem();
 			this.StripMenu_View_Fleet_1 = new System.Windows.Forms.ToolStripMenuItem();
 			this.StripMenu_View_Fleet_2 = new System.Windows.Forms.ToolStripMenuItem();
@@ -303,6 +304,7 @@
 			// StripMenu_View
 			// 
 			this.StripMenu_View.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.StripMenu_View_EquipmentGroup,
             this.StripMenu_View_Fleet,
             this.StripMenu_View_FleetOverview,
             this.StripMenu_View_ShipGroup,
@@ -328,6 +330,13 @@
 			this.StripMenu_View.Name = "StripMenu_View";
 			this.StripMenu_View.Size = new System.Drawing.Size(62, 22);
 			this.StripMenu_View.Text = "表示(&V)";
+			// 
+			// StripMenu_View_EquipmentGroup
+			// 
+			this.StripMenu_View_EquipmentGroup.Name = "StripMenu_View_EquipmentGroup";
+			this.StripMenu_View_EquipmentGroup.Size = new System.Drawing.Size(218, 22);
+			this.StripMenu_View_EquipmentGroup.Text = "装備グループ(&N)";
+			this.StripMenu_View_EquipmentGroup.Click += new System.EventHandler(this.StripMenu_View_EquipmentGroup_Click);
 			// 
 			// StripMenu_View_Fleet
 			// 
@@ -379,7 +388,7 @@
 			// 
 			this.StripMenu_View_ShipGroup.Name = "StripMenu_View_ShipGroup";
 			this.StripMenu_View_ShipGroup.Size = new System.Drawing.Size(218, 22);
-			this.StripMenu_View_ShipGroup.Text = "艦船グループ(&G)";
+			this.StripMenu_View_ShipGroup.Text = "艦娘グループ(&G)";
 			this.StripMenu_View_ShipGroup.Click += new System.EventHandler(this.StripMenu_View_ShipGroup_Click);
 			// 
 			// StripMenu_View_FleetPreset
@@ -1105,10 +1114,11 @@
 		private System.Windows.Forms.ToolStripMenuItem StripMenu_Tool_SupportKai_Open;
 		private System.Windows.Forms.ToolStripMenuItem StripMenu_Tool_CompassSim_OpenwithFleet;
 		private System.Windows.Forms.ToolStripMenuItem StripMenu_Tool_CompassSim_Open;
-        private System.Windows.Forms.ToolStripMenuItem StripMenu_Tool_SupportKai_OpenwithEquip;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator14;
-        private System.Windows.Forms.ToolStripMenuItem StripMenu_Tool_CopyFleet;
-        private System.Windows.Forms.ToolStripMenuItem StripMenu_Tool_CopyAllShips;
-        private System.Windows.Forms.ToolStripMenuItem StripMenu_Tool_CopyAllEquips;
-    }
+		private System.Windows.Forms.ToolStripMenuItem StripMenu_Tool_SupportKai_OpenwithEquip;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator14;
+		private System.Windows.Forms.ToolStripMenuItem StripMenu_Tool_CopyFleet;
+		private System.Windows.Forms.ToolStripMenuItem StripMenu_Tool_CopyAllShips;
+		private System.Windows.Forms.ToolStripMenuItem StripMenu_Tool_CopyAllEquips;
+		private System.Windows.Forms.ToolStripMenuItem StripMenu_View_EquipmentGroup;
+	}
 }

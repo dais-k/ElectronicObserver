@@ -1,4 +1,5 @@
 ﻿using ElectronicObserver.Data;
+using ElectronicObserver.Utility;
 using Microsoft.SqlServer.Server;
 using System.Collections.Generic;
 using System.Linq;
@@ -301,6 +302,15 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 			}
 
 
+			// Items.nedb.json の読み込み
+			try
+			{
+				ImprovementDataStore.Load();
+			}
+			catch
+			{
+				// 読み込み失敗でも既存の挙動に影響させない
+			}
 
 			Utility.Logger.Add(2, "提督が鎮守府に着任しました。これより艦隊の指揮を執ります。");
 
@@ -311,7 +321,7 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 	}
 
 #nullable enable
-    public class EquipExslotData
+	public class EquipExslotData
 	{
 		[JsonPropertyName("api_ship_ids")] 
 		public Dictionary<int, int>? Api_ship_ids { get; set; }
