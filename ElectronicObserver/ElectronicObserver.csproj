@@ -591,6 +591,12 @@
     <Compile Include="Window\Dialog\DialogShipGraphicViewer.Designer.cs">
       <DependentUpon>DialogShipGraphicViewer.cs</DependentUpon>
     </Compile>
+    <Compile Include="Window\Dialog\DialogEquipmentGroupColumnFilter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Window\Dialog\DialogEquipmentGroupColumnFilter.Designer.cs">
+      <DependentUpon>DialogEquipmentGroupColumnFilter.cs</DependentUpon>
+    </Compile>
     <Compile Include="Window\Dialog\DialogShipGroupColumnFilter.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -614,6 +620,12 @@
     </Compile>
     <Compile Include="Window\Dialog\DialogShipGroupFilter.Designer.cs">
       <DependentUpon>DialogShipGroupFilter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Window\Dialog\DialogEquipmentGroupSortOrder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Window\Dialog\DialogEquipmentGroupSortOrder.Designer.cs">
+      <DependentUpon>DialogEquipmentGroupSortOrder.cs</DependentUpon>
     </Compile>
     <Compile Include="Window\Dialog\DialogShipGroupSortOrder.cs">
       <SubType>Form</SubType>
@@ -890,6 +902,9 @@
     <EmbeddedResource Include="Window\Dialog\DialogShipGraphicViewer.resx">
       <DependentUpon>DialogShipGraphicViewer.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Window\Dialog\DialogEquipmentGroupColumnFilter.resx">
+      <DependentUpon>DialogEquipmentGroupColumnFilter.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Window\Dialog\DialogShipGroupColumnFilter.resx">
       <DependentUpon>DialogShipGroupColumnFilter.cs</DependentUpon>
     </EmbeddedResource>
@@ -901,6 +916,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Window\Dialog\DialogShipGroupFilter.resx">
       <DependentUpon>DialogShipGroupFilter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Window\Dialog\DialogEquipmentGroupSortOrder.resx">
+      <DependentUpon>DialogEquipmentGroupSortOrder.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Window\Dialog\DialogShipGroupSortOrder.resx">
       <DependentUpon>DialogShipGroupSortOrder.cs</DependentUpon>

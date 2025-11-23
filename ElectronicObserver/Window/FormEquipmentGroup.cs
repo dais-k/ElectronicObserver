@@ -1186,7 +1186,7 @@ namespace ElectronicObserver.Window
 		#endregion
 
 		#region メニュー:メンバー操作
-		/*
+		
 		private void MenuMember_ColumnFilter_Click(object sender, EventArgs e)
 		{
 			EquipmentGroupData group = CurrentGroup;
@@ -1216,7 +1216,7 @@ namespace ElectronicObserver.Window
 
 				Utility.ErrorReporter.SendErrorReport(ex, "EquipmentGroup: 列の設定ダイアログでエラーが発生しました。");
 			}
-		}*/
+		}
 		
 		private void MenuMember_Filter_Click(object sender, EventArgs e)
 		{
@@ -1298,11 +1298,11 @@ namespace ElectronicObserver.Window
 			IsRowsUpdating = false;
 		}
 
-		/*
+		
 		private void MenuMember_SortOrder_Click(object sender, EventArgs e)
 		{
 			var group = CurrentGroup;
-
+            
 			if (group != null)
 			{
 				try
@@ -1324,7 +1324,7 @@ namespace ElectronicObserver.Window
 					Utility.ErrorReporter.SendErrorReport(ex, "EquipmentGroup: 自動ソート順設定ダイアログでエラーが発生しました。");
 				}
 			}
-		}*/
+		}
 
 
 		private void ApplyAutoSort(EquipmentGroupData group)

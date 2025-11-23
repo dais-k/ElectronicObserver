@@ -198,7 +198,6 @@ namespace ElectronicObserver.Window
 			this.EquipView_ImproveShips.HeaderText = "改修担当艦";
 			this.EquipView_ImproveShips.Name = "EquipView_ImproveShips";
 			this.EquipView_ImproveShips.ReadOnly = true;
-			this.EquipView_ImproveShips.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
 			this.EquipView_ImproveShips.Width = 150;
 			// 
 			// EquipView_Range
@@ -288,7 +287,6 @@ namespace ElectronicObserver.Window
 			this.EquipView_EquipedShips.HeaderText = "装備中の艦娘";
 			this.EquipView_EquipedShips.Name = "EquipView_EquipedShips";
 			this.EquipView_EquipedShips.ReadOnly = true;
-			this.EquipView_EquipedShips.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
 			// 
 			// MenuMember
 			// 
@@ -303,7 +301,7 @@ namespace ElectronicObserver.Window
 			this.toolStripSeparator3,
 			this.MenuMember_CSVOutput});
 			this.MenuMember.Name = "MenuMember";
-			this.MenuMember.Size = new System.Drawing.Size(216, 170);
+			this.MenuMember.Size = new System.Drawing.Size(216, 192);
 			this.MenuMember.Opening += new System.ComponentModel.CancelEventHandler(this.MenuMember_Opening);
 			// 
 			// MenuMember_AddToGroup
@@ -344,14 +342,14 @@ namespace ElectronicObserver.Window
 			this.MenuMember_ColumnFilter.Name = "MenuMember_ColumnFilter";
 			this.MenuMember_ColumnFilter.Size = new System.Drawing.Size(215, 22);
 			this.MenuMember_ColumnFilter.Text = "列の表示設定(&C)...";
-			this.MenuMember_ColumnFilter.Visible = false;
+			this.MenuMember_ColumnFilter.Click += new System.EventHandler(this.MenuMember_ColumnFilter_Click);
 			// 
 			// MenuMember_SortOrder
 			// 
 			this.MenuMember_SortOrder.Name = "MenuMember_SortOrder";
 			this.MenuMember_SortOrder.Size = new System.Drawing.Size(215, 22);
 			this.MenuMember_SortOrder.Text = "自動ソート設定(&S)...";
-			this.MenuMember_SortOrder.Visible = false;
+			this.MenuMember_SortOrder.Click += new System.EventHandler(this.MenuMember_SortOrder_Click);
 			// 
 			// toolStripSeparator3
 			// 
