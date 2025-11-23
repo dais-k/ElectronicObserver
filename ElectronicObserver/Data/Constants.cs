@@ -427,7 +427,7 @@ namespace ElectronicObserver.Data
 				case 133: return "Norge級";
 				case 134: return "Courageous級";
 				case 135: return "Glorious級";
-				case 136: return "南海型";
+				case 136: return "野崎型";
 				default: 
 					return "不明";
 			}

@@ -305,22 +305,6 @@ namespace ElectronicObserver.Window.Dialog
 				bool isShipClassUnknown = shipClassName == "不明";
 
 				ShipType.Text = (ship.IsAbyssalShip ? "深海" : isShipClassUnknown ? "" : shipClassName) + (ship.IsLandBase ? "陸上施設" : ship.ShipTypeName);
-				//固有対応：宗谷
-				if (ShipType.Text == "宗谷型補給艦")
-				{
-					if (shipID == 645)
-					{
-						ShipType.Text = "灯台補給船";
-					}
-					if (shipID == 650)
-					{
-						ShipType.Text = "南極観測船";
-					}
-					if (shipID == 699)
-					{
-						ShipType.Text = "特務艦";
-					}
-				}
 				//固有対応：山汐丸
 				if (ShipType.Text == "特2TL型補給艦")
 				{
@@ -331,17 +315,32 @@ namespace ElectronicObserver.Window.Dialog
 				{
 					ShipType.Text = "第百一号型輸送艦";
 				}
-				//固有対応：南海
-				if (ShipType.Text == "南海型補給艦")
+				//固有対応：Norge級
+				if (ShipType.Text == "Norge級海防艦")
 				{
-					if (shipID == 988)
-					{
+					ShipType.Text = "Norge級海防戦艦";
+				}
+				switch (shipID)
+				{
+					//固有対応：宗谷
+					case 645:
+						ShipType.Text = "灯台補給船";
+						break;
+					case 650:
+						ShipType.Text = "南極観測船";
+						break;
+					//固有対応：南海・野崎
+					case 699:
+						ShipType.Text = "特務艦";
+						break;
+					case 988:
 						ShipType.Text = "冷凍船";
-					}
-					if (shipID == 996 || shipID == 1002)
-					{
-						ShipType.Text = "給糧艦";
-					}
+						break;
+					case 996:
+					case 1002:
+						ShipType.Text = "野崎型給糧艦";
+						break;
+
 				}
 
 				var tip = new StringBuilder();
@@ -866,6 +865,14 @@ namespace ElectronicObserver.Window.Dialog
 			List<EquipmentDataMaster> exweapons = db.MasterEquipments.Values.Where(eq => eq.EquippableShipsAtExpansion.Contains(shipID)).ToList();
 			exweapons.AddRange(db.MasterEquipments.Values.Where(eq => eq.EquippableStypeAtExpansion.Contains(ship.ShipTypeInstance.ID)).ToList());
 			exweapons.AddRange(db.MasterEquipments.Values.Where(eq => eq.EquippableCtypeAtExpansion.Contains(ship.ShipClass)).ToList());
+
+			// 特定の艦で指定の EquipmentID を除外する
+			if (ship.IsCoastalDefenceShip)//海防戦艦なら海防艦全指定されている爆雷を除外
+			{
+				var exclude = new HashSet<int> { 226, 227, 488 };
+				exweapons = exweapons.Where(eq => !exclude.Contains(eq.EquipmentID)).ToList();
+			}
+
 			exweapons = exweapons.OrderBy(eq => eq.CategoryType2)
 								 .ThenBy(eq => eq.Name).ToList();
 
