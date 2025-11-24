@@ -544,14 +544,10 @@ namespace Browser
 			var browser = Browser.GetBrowser();
 			var frame = browser.MainFrame;
 
-			if (frame.Url.Contains(@"http://www.dmm.com/netgame/social/") || frame.Url.Contains(KanColleUrl))
-			{
+			if (IsMainFrame(frame))
 				return frame;
-			}
-			else
-			{
-				return null;
-			}
+
+			return null;
 		}
 
 		private IFrame GetGameFrame()
@@ -560,10 +556,13 @@ namespace Browser
 				return null;
 
 			var browser = Browser.GetBrowser();
-			var frames = browser.GetFrameIdentifiers()
-						.Select(id => browser.GetFrame(id));
-
-			return frames.FirstOrDefault(f => f?.Url?.Contains(@"osapi.dmm.com/gadgets/") ?? false);
+			foreach (var id in browser.GetFrameIdentifiers())
+			{
+				var frame = browser.GetFrame(id);
+				if (IsGameFrame(frame))
+					return frame;
+			}
+			return null;
 		}
 
 		private IFrame GetKanColleFrame()
@@ -572,12 +571,62 @@ namespace Browser
 				return null;
 
 			var browser = Browser.GetBrowser();
-			var frames = browser.GetFrameIdentifiers()
-					.Select(id => browser.GetFrame(id));
-
-			return frames.FirstOrDefault(f => f?.Url?.Contains(@"/kcs2/index.php") ?? false);
+			foreach (var id in browser.GetFrameIdentifiers())
+			{
+				var frame = browser.GetFrame(id);
+				if (IsKanColleFrame(frame))
+					return frame;
+			}
+			return null;
 		}
 
+
+
+
+		private bool IsMainFrame(IFrame frame)
+		{
+			if (frame == null || string.IsNullOrEmpty(frame.Url)) return false;
+			try
+			{
+				var uri = new Uri(frame.Url);
+				return uri.Host.EndsWith("dmm.com") &&
+					   (uri.AbsolutePath.Contains("/game/kancolle") ||
+						uri.AbsolutePath.Contains("/netgame/social"));
+			}
+			catch
+			{
+				return false;
+			}
+		}
+
+		private bool IsGameFrame(IFrame frame)
+		{
+			if (frame == null || string.IsNullOrEmpty(frame.Url)) return false;
+			try
+			{
+				var uri = new Uri(frame.Url);
+				return uri.Host.Contains("osapi.dmm.com") &&
+					   uri.AbsolutePath.Contains("/gadgets/");
+			}
+			catch
+			{
+				return false;
+			}
+		}
+
+		private bool IsKanColleFrame(IFrame frame)
+		{
+			if (frame == null || string.IsNullOrEmpty(frame.Url)) return false;
+			try
+			{
+				var uri = new Uri(frame.Url);
+				return uri.AbsolutePath.Contains("/kcs2/index.php");
+			}
+			catch
+			{
+				return false;
+			}
+		}
 
 
 
