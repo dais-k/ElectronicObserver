@@ -495,6 +495,7 @@
 			// 
 			this.ToolMenu_Other_AppliesStyleSheet.CheckOnClick = true;
 			this.ToolMenu_Other_AppliesStyleSheet.Name = "ToolMenu_Other_AppliesStyleSheet";
+			this.ToolMenu_Other_AppliesStyleSheet.ShortcutKeys = System.Windows.Forms.Keys.F8; 
 			this.ToolMenu_Other_AppliesStyleSheet.Size = new System.Drawing.Size(291, 22);
 			this.ToolMenu_Other_AppliesStyleSheet.Text = "スタイルシートを適用する";
 			this.ToolMenu_Other_AppliesStyleSheet.Click += new System.EventHandler(this.ToolMenu_Other_AppliesStyleSheet_Click);
