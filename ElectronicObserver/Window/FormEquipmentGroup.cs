@@ -199,13 +199,21 @@ namespace ElectronicObserver.Window
 			Icon = ResourceManager.ImageToIcon(ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormShipGroup]);
 			InitializeImprovementTooltip();
 		}
+
 		void ConfigurationChanged()
 		{
 
 			var config = Utility.Configuration.Config;
 
-			EquipView.Font = StatusBar.Font = Font = config.UI.MainFont;
+			// フォーム全体のフォントは設定から取得
+			Font = config.UI.MainFont;
+			StatusBar.Font = Font;
 
+			// DataGridView は常に Meiryo 12px に固定する
+			var dgvFont = new Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+			EquipView.Font = dgvFont;
+
+			// セルスタイルも DataGridView フォントに揃える
 			CSDefaultLeft.Font =
 			CSDefaultCenter.Font =
 			CSDefaultRight.Font =
@@ -216,39 +224,13 @@ namespace ElectronicObserver.Window
 			CSGrayRight.Font =
 			CSCherryRight.Font =
 			CSIsLocked.Font =
-				config.UI.MainFont;
+				dgvFont;
 
 			foreach (System.Windows.Forms.Control c in TabPanel.Controls)
 				c.Font = Font;
 
 			MenuGroup_AutoUpdate.Checked = config.FormEquipmentGroup.AutoUpdate;
 			MenuGroup_ShowStatusBar.Checked = config.FormEquipmentGroup.ShowStatusBar;
-			//_shipNameSortMethod = config.FormEquipmentGroup.ShipNameSortMethod;
-			//_whichOpenDialogMethod = config.FormEquipmentGroup.WhichOpenDialogMethod;
-
-
-			int rowHeight;
-			if (config.UI.IsLayoutFixed)
-			{
-				EquipView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-				EquipView.ColumnHeadersDefaultCellStyle.WrapMode = DataGridViewTriState.True;
-				rowHeight = 21;
-			}
-			else
-			{
-				EquipView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-				EquipView.ColumnHeadersDefaultCellStyle.WrapMode = DataGridViewTriState.False;
-
-				if (EquipView.Rows.Count > 0)
-					rowHeight = EquipView.Rows[0].GetPreferredHeight(0, DataGridViewAutoSizeRowMode.AllCellsExceptHeader, false);
-				else
-					rowHeight = 21;
-			}
-
-			foreach (DataGridViewRow row in EquipView.Rows)
-			{
-				row.Height = rowHeight;
-			}
 
 		}
 
@@ -384,7 +366,7 @@ namespace ElectronicObserver.Window
 					Utility.Logger.Add(3, $"EquipmentGroup: グループ '{group.Name}' が空であり、MasterEquipments は未ロードです。");
 				}
 			}
-			// -----------------------------------------------------------------
+			
 
 			IsRowsUpdating = true;
 			EquipView.SuspendLayout();
@@ -433,25 +415,9 @@ namespace ElectronicObserver.Window
 			ApplyViewData(group);
 			ApplyAutoSort(group);
 
-			// 高さ設定(追加直後に実行すると高さが0になることがあるのでここで実行)
-			int rowHeight = 21;
-			if (!Utility.Configuration.Config.UI.IsLayoutFixed)
-			{
-				if (EquipView.Rows.Count > 0)
-					rowHeight = EquipView.Rows[0].GetPreferredHeight(0, DataGridViewAutoSizeRowMode.AllCellsExceptHeader, false);
-			}
-
-			foreach (DataGridViewRow row in EquipView.Rows)
-				row.Height = rowHeight;
-
 			EquipView.ResumeLayout();
 			IsRowsUpdating = false;
 
-			//status bar
-			if (KCDatabase.Instance.Ships.Count > 0)
-			{
-				//status用処理（現在未使用）
-			}
 		}
 
 		/// <summary>
@@ -1302,7 +1268,7 @@ namespace ElectronicObserver.Window
 		private void MenuMember_SortOrder_Click(object sender, EventArgs e)
 		{
 			var group = CurrentGroup;
-            
+			
 			if (group != null)
 			{
 				try

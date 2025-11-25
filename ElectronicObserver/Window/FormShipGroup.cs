@@ -198,8 +198,15 @@ namespace ElectronicObserver.Window
 
 			var config = Utility.Configuration.Config;
 
-			ShipView.Font = StatusBar.Font = Font = config.UI.MainFont;
+			// フォーム全体のフォントは設定から取得
+			Font = config.UI.MainFont;
+			StatusBar.Font = Font;
 
+			// DataGridView は常に Meiryo 12px に固定する
+			var dgvFont = new Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+			ShipView.Font = dgvFont;
+
+			// セルスタイルも DataGridView フォントに揃える
 			CSDefaultLeft.Font =
 			CSDefaultCenter.Font =
 			CSDefaultRight.Font =
@@ -210,7 +217,7 @@ namespace ElectronicObserver.Window
 			CSGrayRight.Font =
 			CSCherryRight.Font =
 			CSIsLocked.Font =
-				config.UI.MainFont;
+				dgvFont;
 
 			foreach (System.Windows.Forms.Control c in TabPanel.Controls)
 				c.Font = Font;
@@ -219,30 +226,6 @@ namespace ElectronicObserver.Window
 			MenuGroup_ShowStatusBar.Checked = config.FormShipGroup.ShowStatusBar;
 			_shipNameSortMethod = config.FormShipGroup.ShipNameSortMethod;
 			_whichOpenDialogMethod = config.FormShipGroup.WhichOpenDialogMethod;
-
-
-			int rowHeight;
-			if (config.UI.IsLayoutFixed)
-			{
-				ShipView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-				ShipView.ColumnHeadersDefaultCellStyle.WrapMode = DataGridViewTriState.True;
-				rowHeight = 21;
-			}
-			else
-			{
-				ShipView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-				ShipView.ColumnHeadersDefaultCellStyle.WrapMode = DataGridViewTriState.False;
-
-				if (ShipView.Rows.Count > 0)
-					rowHeight = ShipView.Rows[0].GetPreferredHeight(0, DataGridViewAutoSizeRowMode.AllCellsExceptHeader, false);
-				else
-					rowHeight = 21;
-			}
-
-			foreach (DataGridViewRow row in ShipView.Rows)
-			{
-				row.Height = rowHeight;
-			}
 
 		}
 
@@ -513,17 +496,6 @@ namespace ElectronicObserver.Window
 
 			ApplyViewData(group);
 			ApplyAutoSort(group);
-
-			// 高さ設定(追加直後に実行すると高さが0になることがあるのでここで実行)
-			int rowHeight = 21;
-			if (!Utility.Configuration.Config.UI.IsLayoutFixed)
-			{
-				if (ShipView.Rows.Count > 0)
-					rowHeight = ShipView.Rows[0].GetPreferredHeight(0, DataGridViewAutoSizeRowMode.AllCellsExceptHeader, false);
-			}
-
-			foreach (DataGridViewRow row in ShipView.Rows)
-				row.Height = rowHeight;
 
 			ShipView.ResumeLayout();
 			IsRowsUpdating = false;

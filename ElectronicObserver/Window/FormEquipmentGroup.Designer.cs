@@ -132,7 +132,8 @@ namespace ElectronicObserver.Window
 			dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
 			dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
 			this.EquipView.DefaultCellStyle = dataGridViewCellStyle7;
-			this.EquipView.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.EquipView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.None;
+			this.EquipView.RowTemplate.Height = 21; this.EquipView.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.EquipView.Location = new System.Drawing.Point(0, 0);
 			this.EquipView.Name = "EquipView";
 			this.EquipView.ReadOnly = true;
