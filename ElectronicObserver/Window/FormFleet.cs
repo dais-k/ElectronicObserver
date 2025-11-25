@@ -1069,6 +1069,13 @@ namespace ElectronicObserver.Window
 		{
 			InitializeComponent();
 
+			// 描画最適化（ダブルバッファ等）
+			this.SetStyle(System.Windows.Forms.ControlStyles.OptimizedDoubleBuffer
+				| System.Windows.Forms.ControlStyles.AllPaintingInWmPaint
+				| System.Windows.Forms.ControlStyles.UserPaint
+				| System.Windows.Forms.ControlStyles.ResizeRedraw, true);
+			this.DoubleBuffered = true;
+
 			FleetID = fleetID;
 			Utility.SystemEvents.UpdateTimerTick += UpdateTimerTick;
 

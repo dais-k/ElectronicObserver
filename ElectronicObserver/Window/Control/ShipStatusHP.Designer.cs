@@ -28,6 +28,11 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			// 描画最適化（ダブルバッファ等）
+			this.SetStyle(System.Windows.Forms.ControlStyles.OptimizedDoubleBuffer
+				| System.Windows.Forms.ControlStyles.AllPaintingInWmPaint
+				| System.Windows.Forms.ControlStyles.UserPaint, true);
+			this.DoubleBuffered = true; 
 			this.SuspendLayout();
 			// 
 			// ShipStatusHP
