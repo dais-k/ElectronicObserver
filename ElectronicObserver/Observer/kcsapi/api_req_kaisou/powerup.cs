@@ -43,10 +43,22 @@ namespace ElectronicObserver.Observer.kcsapi.api_req_kaisou
 
 			if(usePumpkin)
 			{
-                KCDatabase.Instance.UseItems[96].Count--;
+				if (db.UseItems != null && db.UseItems.ContainsKey(96) && db.UseItems[96] != null)
+				{
+					db.UseItems[96].Count--;
+				}
 			}
 
-			base.OnRequestReceived(data);
+			try
+			{
+				base.OnRequestReceived(data);
+			}
+			catch (Exception ex)
+			{
+				// 稀に出るエラーを何もせず素通り(エラーリポートのみ出力）
+				Utility.ErrorReporter.SendErrorReport(ex, "Request の受信中にエラーが発生しました。 (powerup.base.OnRequestReceived)", APIName, data.ContainsKey("api_id_items") ? data["api_id_items"] : "");
+			}
+		
 		}
 
 
