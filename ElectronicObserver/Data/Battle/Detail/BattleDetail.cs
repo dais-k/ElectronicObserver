@@ -156,9 +156,82 @@ namespace ElectronicObserver.Data.Battle.Detail
 			else
 				builder.AppendFormat("{0} → {1}", GetAttackerName(), GetDefenderName()).AppendLine();
 
-
 			if (AttackType >= 0)
-				builder.Append("[").Append(GetAttackKind()).Append("] ");
+			{
+				if(GetAttackKind().Contains("空母カットイン") && EquipmentIDs != null)
+				{
+					// Masterオブジェクトを一度だけ列挙して配列化（遅延評価の二重走査を防ぐ）
+					var masters = EquipmentIDs
+						.Select(id => KCDatabase.Instance.MasterEquipments[id])
+						.Where(eq => eq != null)
+						.ToArray();
+
+					if (masters.Length > 0)
+					{
+						// カテゴリ値（api_type[2] に対応する数値）を抽出して、6/7/8 の有無を判定
+						var cats = masters.Select(eq => (int)eq.CategoryType).ToArray();
+						bool has6 = cats.Contains(6);
+						bool has7 = cats.Contains(7);
+						bool has8 = cats.Contains(8);
+
+						// 組み合わせがある場合は分かりやすく付加表示する（例: [カテゴリ: 艦戦(6)+艦爆(7)]）
+						if (has6 || has7 || has8)
+						{
+							var present = new List<string>();
+							if (has6) present.Add("F");
+							if (has7) present.Add("B");
+							if (has8) present.Add("A");
+							builder.Append("[").Append(GetAttackKind()).Append("(").Append(string.Join("", present)).Append(")] ");
+						}
+					}
+				}
+				else if (GetAttackKind().Contains("空母夜襲カットイン") && EquipmentIDs != null)
+				{
+					// Masterオブジェクトを一度だけ列挙して配列化（遅延評価の二重走査を防ぐ）
+					var masters = EquipmentIDs
+						.Select(id => KCDatabase.Instance.MasterEquipments[id])
+						.Where(eq => eq != null)
+						.ToArray();
+
+					if (masters.Length > 0)
+					{
+						var present = new List<string>();
+						foreach (var item in masters)
+						{
+							switch(item.IconType)
+							{
+								case 45:
+									present.Add("戦");
+									break;
+								case 46:
+									present.Add("攻");
+									break;
+								case 58:
+									present.Add("爆");
+									break;
+								case 7:
+									if (item.IsNightPhotocellBomber)
+										present.Add("彗");
+									break;
+								default:
+									if (item.IsNightAircraftTypeB)
+										present.Add("他");
+									break;
+							}
+						}
+							builder.Append("[").Append(GetAttackKind()).Append("(").Append(string.Join("", present)).Append(")] ");
+					}
+				}
+				else
+
+				{
+					builder.Append("[").Append(GetAttackKind()).Append("] ");
+				}
+			}
+
+
+			//if (AttackType >= 0)
+				//builder.Append("[").Append(GetAttackKind()).Append("] ");
 
 			/*// 
 			if ( EquipmentIDs != null ) {
