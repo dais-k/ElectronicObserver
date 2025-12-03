@@ -22,17 +22,60 @@ namespace ElectronicObserver.Observer.kcsapi.api_req_kaisou
 			bool destroysEquipments = data.ContainsKey("api_slot_dest_flag") ? (data["api_slot_dest_flag"] != "0") : true;
 			bool usePumpkin = data.ContainsKey("api_limited_feed_type") && data["api_limited_feed_type"] != "0";
 
-			foreach (string id in data["api_id_items"].Split(",".ToCharArray()))
+			// api_id_items の存在と内容をチェック
+			if (!data.ContainsKey("api_id_items") || string.IsNullOrWhiteSpace(data["api_id_items"]))
 			{
-				int shipID = int.Parse(id);
+				Utility.ErrorReporter.SendErrorReport(new ArgumentException("api_id_items is missing or empty"), "Request の受信中にエラーが発生しました。 (powerup.OnRequestReceived: missing api_id_items)", APIName, "");
+				try
+				{
+					base.OnRequestReceived(data);
+				}
+				catch (Exception)
+				{
+					//Utility.ErrorReporter.SendErrorReport(ex, "Request の受信中にエラーが発生しました。 (powerup.base.OnRequestReceived)", APIName, "");
+				}
+				return;
+			}
 
-				ShipData ship = db.Ships[shipID];
+			foreach (string idRaw in data["api_id_items"].Split(",".ToCharArray()))
+			{
+				if (string.IsNullOrWhiteSpace(idRaw))
+					continue;
+
+				if (!int.TryParse(idRaw, out int shipID))
+				{
+					//Utility.Logger.Add(3, $"除籍対象 ID の解析に失敗しました: '{idRaw}'");
+					continue;
+				}
+
+				ShipData ship = null;
+				try
+				{
+					ship = db.Ships[shipID];
+				}
+				catch (Exception)
+				{
+					// IDDictionary の実装により例外が出る可能性があるため守る
+					ship = null;
+				}
+
+				if (ship == null)
+				{
+					//Utility.Logger.Add(3, $"除籍対象の艦船が見つかりませんでした。ID: {shipID}");
+					// 見つからなければスキップ
+					continue;
+				}
+
 				if (destroysEquipments)
 				{
-					for (int i = 0; i < ship.Slot.Count; i++)
+					// Slot が null の可能性も防ぐ
+					if (ship.Slot != null)
 					{
-						if (ship.Slot[i] != -1)
-							db.Equipments.Remove(ship.Slot[i]);
+						for (int i = 0; i < ship.Slot.Count; i++)
+						{
+							if (ship.Slot[i] != -1)
+								db.Equipments.Remove(ship.Slot[i]);
+						}
 					}
 				}
 
@@ -53,10 +96,10 @@ namespace ElectronicObserver.Observer.kcsapi.api_req_kaisou
 			{
 				base.OnRequestReceived(data);
 			}
-			catch (Exception ex)
+			catch (Exception)
 			{
 				// 稀に出るエラーを何もせず素通り(エラーリポートのみ出力）
-				Utility.ErrorReporter.SendErrorReport(ex, "Request の受信中にエラーが発生しました。 (powerup.base.OnRequestReceived)", APIName, data.ContainsKey("api_id_items") ? data["api_id_items"] : "");
+				//Utility.ErrorReporter.SendErrorReport(ex, "Request の受信中にエラーが発生しました。 (powerup.base.OnRequestReceived)", APIName, data.ContainsKey("api_id_items") ? data["api_id_items"] : "");
 			}
 		
 		}
