@@ -700,14 +700,14 @@ namespace ElectronicObserver.Utility.Data
 		/// <returns>減少TP。</returns>
 		public static int GetTPDamage(FleetData fleet, int t)
 		{
-			int tp = 0;
+			double tp = 0;
 
 			foreach (var ship in fleet.MembersWithoutEscaped.Where(s => s != null && s.HPRate > 0.25))
 			{
 				tp += Calculator2.GetTPDamage(ship, t);
 			}
 
-			return tp;
+			return (int)Math.Floor(tp);
 		}
 
 		/// <summary>
@@ -2586,7 +2586,7 @@ namespace ElectronicObserver.Utility.Data
 		/// <summary> カットイン(主砲/主砲/主砲) </summary>
 		CutinMainMain,
 
-		/// <summary> 空母カットイン </summary>
+		/// <summary> 空母夜襲カットイン </summary>
 		CutinAirAttack,
 
 		/// <summary> 駆逐カットイン(主砲/魚雷/電探) 1Hit </summary>

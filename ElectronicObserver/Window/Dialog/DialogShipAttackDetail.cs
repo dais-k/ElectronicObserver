@@ -359,7 +359,7 @@ namespace ElectronicObserver.Window.Dialog
 			}
 			//TP輸送量
 			int c = Utility.Configuration.Config.Control.ChooseTankTP;
-			int tpdamage = Calculator2.GetTPDamage(shipData, c);
+			int tpdamage = (int)Math.Floor(Calculator2.GetTPDamage(shipData, c));
 			switch (c)
 			{
 				case 0:
