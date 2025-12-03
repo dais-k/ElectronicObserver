@@ -158,7 +158,7 @@ namespace ElectronicObserver.Window
 			// 
 			// EquipView_Icon
 			// 
-			this.EquipView_Icon.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCellsExceptHeader;
+			this.EquipView_Icon.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
 			this.EquipView_Icon.HeaderText = "";
 			this.EquipView_Icon.MinimumWidth = 2;
 			this.EquipView_Icon.Name = "EquipView_Icon";

@@ -300,12 +300,13 @@ namespace ElectronicObserver.Window
 
 		/// <summary>
 		/// EquipView用の新しい行のインスタンスを作成します。
+		/// （最適化: アイコンはキャッシュ経由で行作成時に設定し、装備配備先文字列は事前にまとめて計算したマップを利用）
 		/// </summary>
 		/// <param name="equip">追加する装備マスターデータ。</param>
-		private DataGridViewRow CreateEquipViewRow(EquipmentDataMaster equip)
+		private DataGridViewRow CreateEquipViewRow(EquipmentDataMaster equip, Dictionary<int, string> shipsMap = null)
 		{
 			if (equip == null) return null;
-	
+
 			DataGridViewRow row = new DataGridViewRow();
 			row.CreateCells(EquipView);
 			row.Height = 21;
@@ -314,6 +315,7 @@ namespace ElectronicObserver.Window
 			string today = GetTodayImprovementNames(equip.Improvements);
 			string improveDisplay = today == "-" ? GetNextImprovementNamesCombined(equip.Improvements) : today;
 
+			// SetValues ではアイコン列には int (IconType) を入れておく（ソートのため）
 			row.SetValues(
 				equip.EquipmentID,
 				equip.IconType,
@@ -332,8 +334,30 @@ namespace ElectronicObserver.Window
 				equip.AA,
 				equip.Armor,
 				equip.AircraftDistance,
-				GetShipsEquipping(equip.EquipmentID)
+				// EquipView_EquipedShips は後で shipsMap から設定するか、フォールバックで取得
+				shipsMap != null && shipsMap.TryGetValue(equip.EquipmentID, out var ships) ? ships : GetShipsEquipping(equip.EquipmentID)
 			);
+
+			// 値は int のままにして、ツールチップと（任意で）Tag にキャッシュ画像を入れておく。
+			try
+			{
+				var iconCell = row.Cells[EquipView_Icon.Index];
+
+				// 表示用の画像は CellFormatting で int -> Image に変換される前提。
+				// ただしツールチップはここで設定しておく。
+				iconCell.ToolTipText = Constants.GetIconName(equip.IconType);
+
+				// 任意: 描画時の GetCachedIcon 呼び出しを減らすため画像を Tag に入れておく
+				var img = GetCachedIcon(equip.IconType);
+				if (img != null)
+				{
+					iconCell.Tag = img;
+				}
+			}
+			catch
+			{
+				// 無視
+			}
 
 			row.Tag = equip.EquipmentID;
 
@@ -378,11 +402,15 @@ namespace ElectronicObserver.Window
 			var equips = group.MembersInstance;
 			var rows = new List<DataGridViewRow>(equips.Count());
 
+			// --- ここで装備ごとの配備先文字列マップを一括構築しておく（GetShipsEquipping を繰り返さない） ---
+			var equipIds = equips.Select(e => e?.EquipmentID ?? -1).Where(id => id > 0).Distinct();
+			var shipsMap = BuildEquipToShipsMap(equipIds);
+
 			foreach (var eq in equips)
 			{
 				if (eq == null) continue;
 
-				DataGridViewRow row = CreateEquipViewRow(eq);
+				DataGridViewRow row = CreateEquipViewRow(eq, shipsMap);
 				rows.Add(row);
 			}
 
@@ -418,6 +446,140 @@ namespace ElectronicObserver.Window
 			EquipView.ResumeLayout();
 			IsRowsUpdating = false;
 
+		}
+
+		/// <summary>
+		/// 指定された装備ID集合について、装備を所持/装備している艦・基地・配置転換中の集計文字列を一括で作る。
+		/// BuildEquipView の内部最適化用（GetShipsEquipping の個別走査を減らす）。
+		/// </summary>
+		private Dictionary<int, string> BuildEquipToShipsMap(IEnumerable<int> equipmentIDs)
+		{
+			var db = KCDatabase.Instance;
+			var ids = new HashSet<int>(equipmentIDs.Where(i => i > 0));
+			var result = ids.ToDictionary(i => i, i => new List<string>());
+
+			// 所持艦（スロット/増設）を走査
+			var equipmentsDict = db.Equipments;
+			foreach (var s in db.Ships.Values)
+			{
+				if (s == null) continue;
+
+				string displayName = s.MasterShip?.NameWithClass ?? $"ID:{s.MasterID}";
+				string displayWithLv = $"{displayName} (Lv.{s.Level})";
+
+				// マスターIDでの比較（主）
+				try
+				{
+					if (s.SlotMaster != null)
+					{
+						foreach (var mid in s.SlotMaster)
+						{
+							if (ids.Contains(mid))
+							{
+								if (!result[mid].Contains(displayWithLv))
+									result[mid].Add(displayWithLv);
+							}
+						}
+					}
+					if (s.ExpansionSlotMaster > 0 && ids.Contains(s.ExpansionSlotMaster))
+					{
+						if (!result[s.ExpansionSlotMaster].Contains(displayWithLv))
+							result[s.ExpansionSlotMaster].Add(displayWithLv);
+					}
+				}
+				catch
+				{
+					// 無視してインスタンス側の走査へ
+				}
+
+				// インスタンスID -> マスターID でのフォールバック
+				if (s.Slot != null)
+				{
+					foreach (var instId in s.Slot)
+					{
+						if (instId <= 0) continue;
+						if (equipmentsDict.TryGetValue(instId, out var inst) && inst != null)
+						{
+							int mid = inst.EquipmentID;
+							if (ids.Contains(mid))
+							{
+								if (!result[mid].Contains(displayWithLv))
+									result[mid].Add(displayWithLv);
+							}
+						}
+					}
+				}
+				if (s.ExpansionSlot > 0)
+				{
+					if (equipmentsDict.TryGetValue(s.ExpansionSlot, out var expInst) && expInst != null)
+					{
+						int mid = expInst.EquipmentID;
+						if (ids.Contains(mid))
+						{
+							if (!result[mid].Contains(displayWithLv))
+								result[mid].Add(displayWithLv);
+						}
+					}
+				}
+			}
+
+			// 基地航空隊：配備中の装備を集計
+			foreach (var corps in db.BaseAirCorps.Values)
+			{
+				if (corps == null) continue;
+
+				var counts = new Dictionary<int, int>();
+				foreach (var sq in corps.Squadrons.Values)
+				{
+					if (sq == null) continue;
+					int eqid = sq.EquipmentID;
+					if (ids.Contains(eqid))
+					{
+						if (!counts.ContainsKey(eqid)) counts[eqid] = 0;
+						counts[eqid]++;
+					}
+				}
+				if (counts.Count > 0)
+				{
+					string corpsName = string.IsNullOrEmpty(corps.Name) ? "" : " " + corps.Name;
+					foreach (var kv in counts)
+					{
+						var label = $"#{corps.MapAreaID}{corpsName}" + (kv.Value > 1 ? " x" + kv.Value : "");
+						if (!result[kv.Key].Contains(label))
+							result[kv.Key].Add(label);
+					}
+				}
+			}
+
+			// 配置転換中の装備
+			var relocatingCounts = new Dictionary<int, int>();
+			foreach (var r in db.RelocatedEquipments.Values)
+			{
+				var inst = r?.EquipmentInstance;
+				if (inst == null) continue;
+				int mid = inst.EquipmentID;
+				if (ids.Contains(mid))
+				{
+					if (!relocatingCounts.ContainsKey(mid)) relocatingCounts[mid] = 0;
+					relocatingCounts[mid]++;
+				}
+			}
+			foreach (var kv in relocatingCounts)
+			{
+				var label = "配置転換中" + (kv.Value > 1 ? " x" + kv.Value : "");
+				if (!result[kv.Key].Contains(label))
+					result[kv.Key].Add(label);
+			}
+
+			// 重複排除・結合して文字列化
+			var final = new Dictionary<int, string>();
+			foreach (var id in ids)
+			{
+				var list = result[id];
+				final[id] = list.Count == 0 ? "" : string.Join(", ", list.Distinct());
+			}
+
+			return final;
 		}
 
 		/// <summary>
@@ -943,9 +1105,70 @@ namespace ElectronicObserver.Window
 			return true;
 		}
 
-
 		private void EquipView_SortCompare(object sender, DataGridViewSortCompareEventArgs e)
 		{
+			try
+			{
+				// カテゴリ列は表示文字列(50音順)ではなく Category / Category2 の値で比較する
+				if (e.Column == EquipView_Category1 || e.Column == EquipView_Category2)
+				{
+					var db = KCDatabase.Instance;
+
+					object val1 = null, val2 = null;
+					int id1 = -1, id2 = -1;
+
+					// EquipView の行から装備のマスターIDを取得して比較に使う
+					try
+					{
+						val1 = EquipView.Rows[e.RowIndex1].Cells[EquipView_ID.Index].Value;
+						val2 = EquipView.Rows[e.RowIndex2].Cells[EquipView_ID.Index].Value;
+						if (val1 is int) id1 = (int)val1;
+						if (val2 is int) id2 = (int)val2;
+					}
+					catch
+					{
+						// 取得失敗時はフォールバックで表示文字列で比較する
+						id1 = id2 = -1;
+					}
+
+					int cat1 = int.MaxValue;
+					int cat2 = int.MaxValue;
+
+					if (id1 > 0 && db.MasterEquipments.TryGetValue(id1, out var m1) && m1 != null)
+					{
+						cat1 = (int)(e.Column == EquipView_Category1 ? m1.CategoryType : m1.CategoryType2);
+					}
+					if (id2 > 0 && db.MasterEquipments.TryGetValue(id2, out var m2) && m2 != null)
+					{
+						cat2 = (int)(e.Column == EquipView_Category1 ? m2.CategoryType : m2.CategoryType2);
+					}
+
+					// 比較
+					e.SortResult = cat1.CompareTo(cat2);
+
+					// 同値なら表示名(または装備名)で二次比較して安定化
+					if (e.SortResult == 0)
+					{
+						string s1 = e.CellValue1?.ToString() ?? "";
+						string s2 = e.CellValue2?.ToString() ?? "";
+
+						// 可能ならマスターの名前で比較
+						if (id1 > 0 && db.MasterEquipments.TryGetValue(id1, out var mm1) && mm1 != null)
+							s1 = mm1.Name;
+						if (id2 > 0 && db.MasterEquipments.TryGetValue(id2, out var mm2) && mm2 != null)
+							s2 = mm2.Name;
+
+						e.SortResult = string.Compare(s1, s2, StringComparison.CurrentCulture);
+					}
+
+					e.Handled = true;
+					return;
+				}
+			}
+			catch
+			{
+				// 失敗したら既定の比較にフォールバック（何もしない）
+			}
 		}
 
 		private void EquipView_Sorted(object sender, EventArgs e)
