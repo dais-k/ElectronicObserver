@@ -282,6 +282,15 @@ namespace ElectronicObserver.Window.Dialog
 			}
 		}
 
+		private void Notification_ConditionRepair_Click(object sender, EventArgs e)
+		{
+
+			using (var dialog = new DialogConfigurationNotifier(NotifierManager.Instance.ConditionRepair))
+			{
+				dialog.ShowDialog(this);
+			}
+		}
+
 		private void Life_LayoutFilePathSearch_Click(object sender, EventArgs e)
 		{
 

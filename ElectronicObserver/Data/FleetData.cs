@@ -1,4 +1,5 @@
-﻿using ElectronicObserver.Resource;
+﻿using ElectronicObserver.Observer.kcsapi.api_req_kousyou;
+using ElectronicObserver.Resource;
 using ElectronicObserver.Utility;
 using ElectronicObserver.Utility.Data;
 using ElectronicObserver.Utility.Mathematics;
@@ -238,6 +239,9 @@ namespace ElectronicObserver.Data
 							if (shipID != -2 && IsFlagshipRepairShip)        //随伴艦一括解除を除く
 								KCDatabase.Instance.Fleet.StartAnchorageRepairingTimer();
 
+							if (shipID != -2 && IsConditionRepairedShip)        //随伴艦一括解除を除く
+								KCDatabase.Instance.Fleet.StartConditionRepairingTimer();
+
 						}
 						else
 						{
@@ -257,6 +261,9 @@ namespace ElectronicObserver.Data
 
 										if (IsFlagshipRepairShip)
 											KCDatabase.Instance.Fleet.StartAnchorageRepairingTimer();
+
+										if (IsConditionRepairedShip)
+											KCDatabase.Instance.Fleet.StartConditionRepairingTimer();
 
 										break;
 									}
@@ -559,6 +566,17 @@ namespace ElectronicObserver.Data
 		}
 
 		/// <summary>
+		/// 旗艦と2番艦が工作艦か（かつ修理施設を所持しているか）
+		/// </summary>
+		public bool Is1st2ndRepairShip =>
+			_members.Take(2)
+					.Select(id => KCDatabase.Instance.Ships[id])
+					.Where(ship => ship != null)
+					.All(ship =>
+						ship.MasterShip.ShipType == ShipTypes.RepairShip &&
+						ship.SlotInstance.Count(eq => eq?.MasterEquipment?.CategoryType == EquipmentTypes.RepairFacility) > 0);
+		
+		/// <summary>
 		/// 泊地修理が発動可能か
 		/// </summary>
 		public bool CanAnchorageRepair
@@ -570,17 +588,113 @@ namespace ElectronicObserver.Data
 			}
 		}
 
-		public static bool CanAnchorageRepairWithMember(IEnumerable<ShipData> membersInstance) 
+		public static bool CanAnchorageRepairWithMember(IEnumerable<ShipData> membersInstance)
 		{
 			var flagship = membersInstance.FirstOrDefault();
-			return flagship?.MasterShip?.ShipType == ShipTypes.RepairShip &&
-				flagship.HPRate > 0.5 &&
-				flagship.RepairingDockID == -1 &&
-				membersInstance.All(s => s == null || (KCDatabase.Instance.Fleet[s.Fleet]?.ExpeditionState ?? 0) == 0) &&
-				membersInstance.Take(2 + flagship.SlotInstance.Count(eq => eq?.MasterEquipment?.CategoryType == EquipmentTypes.RepairFacility))
-					.Any(ship => ship?.RepairingDockID == -1 && 0.5 < ship.HPRate && ship.HPRate < 1.0);
+			if (flagship == null) return false;
+
+			// 旗艦が工作艦であり、HP/入渠状態が要件を満たすこと
+			if (flagship.MasterShip?.ShipType != ShipTypes.RepairShip) return false;
+			if (!(flagship.HPRate > 0.5)) return false;
+			if (flagship.RepairingDockID != -1) return false;
+
+			// 遠征中の艦がいないこと
+			if (!membersInstance.All(s => s == null || (KCDatabase.Instance.Fleet[s.Fleet]?.ExpeditionState ?? 0) == 0))
+				return false;
+
+			// 旗艦・2番艦の修理施設カウント
+			int flagshipRepairFacilityCount = flagship.SlotInstance.Count(eq => eq?.MasterEquipment?.CategoryType == EquipmentTypes.RepairFacility);
+
+			var second = membersInstance.Skip(1).FirstOrDefault();
+			bool secondIsRepairShip = second != null && second.MasterShip?.ShipType == ShipTypes.RepairShip;
+
+			// bound を ID / 2番艦の有無で決定
+			int bound;
+			if (secondIsRepairShip)
+			{
+				int secondRepairFacilityCount = second.SlotInstance.Count(eq => eq?.MasterEquipment?.CategoryType == EquipmentTypes.RepairFacility);
+				bound = 2 + flagshipRepairFacilityCount + secondRepairFacilityCount;
+			}
+			else
+			{
+				switch (flagship.MasterShip.ShipID)
+				{
+					case 182: // 明石
+					case 187: // 明石改？
+						bound = 2 + flagshipRepairFacilityCount;
+						break;
+					case 958: // 朝日改
+						bound = flagshipRepairFacilityCount;
+						break;
+					default:
+						// デフォルトは従来同様の挙動（旗艦基準で 2 + 装備数）
+						bound = 2 + flagshipRepairFacilityCount;
+						break;
+				}
+			}
+
+			// bound が 1 未満なら発動不可
+			if (bound < 1) return false;
+
+			// bound の範囲内に、入渠しておらずHPが (0.5,1.0) の艦が存在するか
+			return membersInstance
+				.Take(bound)
+				.Any(ship => ship?.RepairingDockID == -1 && 0.5 < ship.HPRate && ship.HPRate < 1.0);
+		}
+		
+		private static readonly HashSet<int> NosakiIds = new() { 996, 1002 };
+		/// <summary>
+		/// 旗艦か2番艦が野崎ちゃんか
+		/// </summary>
+		public bool IsConditionRepairedShip =>
+			_members.Take(2)
+					.Select(id => KCDatabase.Instance.Ships[id])
+					.Where(ship => ship != null)
+					.Any(ship => NosakiIds.Contains(ship.MasterShip.ShipID));
+
+		/// <summary>
+		/// 母港給糧艦システムが発動可能か
+		/// </summary>
+		public bool CanConditionRepair
+		{
+			get
+			{
+				return CanConditionRepairWithMember(MembersInstance);
+			}
 		}
 
+		public static bool CanConditionRepairWithMember(IEnumerable<ShipData> membersInstance)
+		{
+			var firstTwo = membersInstance.Take(2).Where(s => s != null);
+			return firstTwo.Any(ship =>
+				NosakiIds.Contains(ship.MasterShip.ShipID) &&
+				ship.HPRate > 0.5 &&
+				ship.Condition >= 40 && 
+				ship.RepairingDockID == -1 &&
+				ship.AmmoRate == 1.0 &&
+				ship.FuelRate == 1.0) &&
+				membersInstance.All(s => s == null || (KCDatabase.Instance.Fleet[s.Fleet]?.ExpeditionState ?? 0) == 0) &&
+				membersInstance.Any(s => s?.RepairingDockID == -1);
+		}
+
+		/// <summary>
+		/// 母港給糧艦システムタイマーがリセット可能か
+		/// </summary>
+		public bool ConditionRepairTimerCheck
+		{
+			get
+			{
+				return ConditionRepairTimerChecker(MembersInstance);
+			}
+		}
+
+		public static bool ConditionRepairTimerChecker(IEnumerable<ShipData> membersInstance)
+		{
+			var firstTwo = membersInstance.Take(2).Where(s => s != null);
+			return firstTwo.Any(ship =>
+				NosakiIds.Contains(ship.MasterShip.ShipID) &&
+				ship.Condition <= 30);
+		}
 
 		/// <summary>
 		/// 疲労が回復すると予測される日時 (疲労していない場合は null)

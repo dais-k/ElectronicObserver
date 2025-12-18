@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel.Security;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -27,7 +28,10 @@ namespace ElectronicObserver.Data
 		/// </summary>
 		public DateTime AnchorageRepairingTimer { get; private set; }
 
-
+		/// <summary>
+		/// 母港給糧艦タイマ
+		/// </summary>
+		public DateTime ConditionRepairingTimer { get; private set; }
 
 		/// <summary> 更新直前の艦船データ </summary>
 		private IDDictionary<ShipData> PreviousShips;
@@ -55,6 +59,7 @@ namespace ElectronicObserver.Data
 		{
 			Fleets = new IDDictionary<FleetData>();
 			AnchorageRepairingTimer = DateTime.MinValue;
+			ConditionRepairingTimer = DateTime.MinValue;
 
 			ConditionPredictMin = 0;
 			ConditionPredictMax = ConditionHealingSpan.TotalSeconds * 2;
@@ -144,6 +149,10 @@ namespace ElectronicObserver.Data
 			// 泊地修理・コンディションの処理
 			if (apiname == "api_port/port")
 			{
+				if ((DateTime.Now - ConditionRepairingTimer).TotalMinutes >= 15)
+					if (!Fleets.Values.Any(f => f != null && f.ConditionRepairTimerCheck))
+						StartConditionRepairingTimer();
+
 
 				if ((DateTime.Now - AnchorageRepairingTimer).TotalMinutes >= 20)
 					StartAnchorageRepairingTimer();
@@ -405,6 +414,14 @@ namespace ElectronicObserver.Data
 
 			return LastConditionUpdated + offset;
 
+		}
+
+		/// <summary>
+		/// 野崎タイマを現在時刻にセットします。
+		/// </summary>
+		public void StartConditionRepairingTimer()
+		{
+			ConditionRepairingTimer = DateTime.Now;
 		}
 
 	}

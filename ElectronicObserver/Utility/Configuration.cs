@@ -1537,6 +1537,10 @@ namespace ElectronicObserver.Utility
 			[DataMember]
 			public ConfigNotifierBaseAirCorps NotifierBaseAirCorps { get; private set; }
 
+			/// <summary>[野崎タイマー通知]</summary>
+			[DataMember]
+			public ConfigNotifierBase NotifierConditionRepair { get; private set; }
+
 
 			/// <summary>
 			/// SyncBGMPlayer の設定を扱います。
@@ -1678,6 +1682,7 @@ namespace ElectronicObserver.Utility
 				NotifierDamage = new ConfigNotifierDamage();
 				NotifierAnchorageRepair = new ConfigNotifierAnchorageRepair();
 				NotifierBaseAirCorps = new ConfigNotifierBaseAirCorps();
+				NotifierConditionRepair = new ConfigNotifierBase();
 
 				BGMPlayer = new ConfigBGMPlayer();
 				FleetImageGenerator = new ConfigFleetImageGenerator();

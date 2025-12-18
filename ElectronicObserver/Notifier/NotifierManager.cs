@@ -31,6 +31,7 @@ namespace ElectronicObserver.Notifier
 		public NotifierDamage Damage { get; private set; }
 		public NotifierAnchorageRepair AnchorageRepair { get; private set; }
 		public NotifierBaseAirCorps BaseAirCorps { get; private set; }
+		public NotifierConditionRepair ConditionRepair { get; private set; }
 
 		private NotifierManager()
 		{
@@ -51,6 +52,7 @@ namespace ElectronicObserver.Notifier
 			Damage = new NotifierDamage(c.NotifierDamage);
 			AnchorageRepair = new NotifierAnchorageRepair(c.NotifierAnchorageRepair);
 			BaseAirCorps = new NotifierBaseAirCorps(c.NotifierBaseAirCorps);
+			ConditionRepair = new NotifierConditionRepair(c.NotifierConditionRepair);
 		}
 
 		public void ApplyToConfiguration()
@@ -65,6 +67,7 @@ namespace ElectronicObserver.Notifier
 			Damage.ApplyToConfiguration(c.NotifierDamage);
 			AnchorageRepair.ApplyToConfiguration(c.NotifierAnchorageRepair);
 			BaseAirCorps.ApplyToConfiguration(c.NotifierBaseAirCorps);
+			ConditionRepair.ApplyToConfiguration(c.NotifierConditionRepair);
 		}
 
 		public void ShowNotifier(ElectronicObserver.Window.Dialog.DialogNotifier form)
@@ -91,6 +94,7 @@ namespace ElectronicObserver.Notifier
 			yield return Damage;
 			yield return AnchorageRepair;
 			yield return BaseAirCorps;
+			yield return ConditionRepair;
 		}
 
 	}

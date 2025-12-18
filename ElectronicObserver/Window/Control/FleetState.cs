@@ -270,6 +270,7 @@ namespace ElectronicObserver.Window.Control
 				if (fleet.CanAnchorageRepair)
 				{
 					var state = GetStateLabel(index);
+					int AnchorageRepairBound = 0;
 
 					state.Timer = db.Fleet.AnchorageRepairingTimer;
 					state.SetInformation(FleetStates.AnchorageRepairing,
@@ -282,24 +283,64 @@ namespace ElectronicObserver.Window.Control
 					sb.AppendFormat("開始日時 : {0}\r\n修理時間 :\r\n",
 						DateTimeHelper.TimeToCSVString(db.Fleet.AnchorageRepairingTimer));
 
-					for (int i = 0; i < fleet.Members.Count; i++)
+					if (fleet.CanAnchorageRepair)
 					{
-						var ship = fleet.MembersInstance[i];
-						if (ship != null && ship.HPRate < 1.0)
+						if (fleet.Is1st2ndRepairShip)
 						{
-							var totaltime = DateTimeHelper.FromAPITimeSpan(ship.RepairTime);
-							var unittime = Calculator.CalculateDockingUnitTime(ship);
-							sb.AppendFormat("#{0} : {1} @ {2} x -{3} HP\r\n",
-								i + 1,
-								DateTimeHelper.ToTimeRemainString(totaltime),
-								DateTimeHelper.ToTimeRemainString(unittime),
-								ship.HPMax - ship.HPCurrent
-								);
+							AnchorageRepairBound = 2
+								+ fleet.MembersInstance[0].SlotInstance.Count(eq => eq != null && eq.MasterEquipment.CategoryType == EquipmentTypes.RepairFacility)
+								+ fleet.MembersInstance[1].SlotInstance.Count(eq => eq != null && eq.MasterEquipment.CategoryType == EquipmentTypes.RepairFacility);
 						}
 						else
 						{
-							sb.Append("#").Append(i + 1).Append(" : ----\r\n");
+							switch (fleet.MembersInstance[0].MasterShip.ShipID)
+							{
+								case 182:
+								case 187:
+									AnchorageRepairBound = 2 + fleet.MembersInstance[0].SlotInstance.Count(eq => eq != null && eq.MasterEquipment.CategoryType == EquipmentTypes.RepairFacility);
+									break;
+								case 958:
+									AnchorageRepairBound = fleet.MembersInstance[0].SlotInstance.Count(eq => eq != null && eq.MasterEquipment.CategoryType == EquipmentTypes.RepairFacility);
+									break;
+							}
 						}
+						if (AnchorageRepairBound > fleet.Members.Count(id => id > 0))
+							AnchorageRepairBound = fleet.Members.Count(id => id > 0);
+					}
+					else
+						AnchorageRepairBound = 0;
+
+					if (AnchorageRepairBound == 0)
+						sb.AppendLine("泊地修理対象艦なし");
+					else
+					{
+						for (int i = 0; i < AnchorageRepairBound; i++)
+						{
+							var ship = fleet.MembersInstance[i];
+							if (ship != null && ship.HPRate < 1.0)
+							{
+								var baseTotal = DateTimeHelper.FromAPITimeSpan(ship.RepairTime);
+								TimeSpan totaltime = fleet.Is1st2ndRepairShip
+									? TimeSpan.FromSeconds(baseTotal.TotalSeconds * 0.85)
+									: baseTotal;
+								var baseUnit = Calculator.CalculateDockingUnitTime(ship);
+								TimeSpan unittime = fleet.Is1st2ndRepairShip
+									? TimeSpan.FromSeconds(baseUnit.TotalSeconds * 0.85)
+									: baseUnit; 
+								
+								sb.AppendFormat("#{0} : {1} @ {2} x -{3} HP\r\n",
+									i + 1,
+									DateTimeHelper.ToTimeRemainString(totaltime),
+									DateTimeHelper.ToTimeRemainString(unittime),
+									ship.HPMax - ship.HPCurrent
+									);
+							}
+							else
+							{
+								sb.Append("#").Append(i + 1).Append(" : ----\r\n");
+							}
+						}
+
 					}
 
 					tooltip.SetToolTip(state.Label, sb.ToString());

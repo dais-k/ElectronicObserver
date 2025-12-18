@@ -61,7 +61,7 @@
 			// 
 			this.TableFleet.AutoSize = true;
 			this.TableFleet.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.TableFleet.ColumnCount = 6;
+			this.TableFleet.ColumnCount = 7;
 			this.TableFleet.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.TableFleet.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
 			this.TableFleet.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());

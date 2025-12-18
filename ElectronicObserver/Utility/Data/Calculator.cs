@@ -1945,22 +1945,23 @@ namespace ElectronicObserver.Utility.Data
 		/// </summary>
 		/// <param name="ship">対象の艦船。</param>
 		/// <param name="repairTime">泊地修理を実施した時間。</param>
+		/// <param name="is1st2ndRepairShip">旗艦/2番艦に明石/朝日がいるか（回復量×1.15、所要時間×0.85）</param>
 		/// <returns></returns>
-		public static int CalculateAnchorageRepairHealAmount(ShipData ship, TimeSpan repairTime)
+		public static int CalculateAnchorageRepairHealAmount(ShipData ship, TimeSpan repairTime, bool is1st2ndRepairShip = false)
 		{
-			return CalculateAnchorageRepairHealAmount(ship.HPMax - ship.HPCurrent, DateTimeHelper.FromAPITimeSpan(ship.RepairTime).TotalSeconds, repairTime);
+			return CalculateAnchorageRepairHealAmount(ship.HPMax - ship.HPCurrent, DateTimeHelper.FromAPITimeSpan(ship.RepairTime).TotalSeconds, repairTime, is1st2ndRepairShip);
 		}
 
-		/// <summary>
-		/// 泊地修理において、指定時間修理したときの回復量を求めます。
-		/// </summary>
-		/// <param name="damage">被ダメージ。</param>
-		/// <param name="dockingSeconds">入渠時間。</param>
-		/// <param name="repairTime">泊地修理を実施した時間。</param>
-		public static int CalculateAnchorageRepairHealAmount(int damage, double dockingSeconds, TimeSpan repairTime)
+		public static int CalculateAnchorageRepairHealAmount(int damage, double dockingSeconds, TimeSpan repairTime, bool is1st2ndRepairShip = false)
 		{
 			if (damage <= 0)
 				return 0;
+
+			// 明石/朝日効果: 所要時間が0.85になる -> 同じ修理時間で回復量が1.15倍になる
+			if (is1st2ndRepairShip && dockingSeconds > 0.0)
+			{
+				dockingSeconds *= 0.85;
+			}
 
 			int heal = (int)Math.Floor(Math.Floor(repairTime.TotalMinutes) * 60 / (dockingSeconds / damage));
 			return Math.Min(Math.Max(heal, 1), damage);
@@ -1971,9 +1972,10 @@ namespace ElectronicObserver.Utility.Data
 		/// </summary>
 		/// <param name="ship">対象の艦船。</param>
 		/// <param name="healAmount">回復したい HP 量。</param>
-		public static TimeSpan CalculateAnchorageRepairTime(ShipData ship, int healAmount)
+		/// <param name="is1st2ndRepairShip">旗艦/2番艦に明石/朝日がいるか（回復量×1.15、所要時間×0.85）</param>
+		public static TimeSpan CalculateAnchorageRepairTime(ShipData ship, int healAmount, bool is1st2ndRepairShip = false)
 		{
-			return CalculateAnchorageRepairTime(ship.HPMax - ship.HPCurrent, DateTimeHelper.FromAPITimeSpan(ship.RepairTime).TotalSeconds, healAmount);
+			return CalculateAnchorageRepairTime(ship.HPMax - ship.HPCurrent, DateTimeHelper.FromAPITimeSpan(ship.RepairTime).TotalSeconds, healAmount, is1st2ndRepairShip);
 		}
 
 		/// <summary>
@@ -1982,7 +1984,7 @@ namespace ElectronicObserver.Utility.Data
 		/// <param name="damage">被ダメージ。</param>
 		/// <param name="dockingSeconds">入渠時間。</param>
 		/// <param name="healAmount">回復したい HP 量。</param>
-		public static TimeSpan CalculateAnchorageRepairTime(int damage, double dockingSeconds, int healAmount)
+		public static TimeSpan CalculateAnchorageRepairTime(int damage, double dockingSeconds, int healAmount, bool is1st2ndRepairShip = false)
 		{
 
 			if (healAmount <= 0)
@@ -1992,6 +1994,12 @@ namespace ElectronicObserver.Utility.Data
 				return TimeSpan.Zero;
 
 			healAmount = Math.Min(healAmount, damage);
+
+			// 明石/朝日効果: 所要時間が0.85になる
+			if (is1st2ndRepairShip && dockingSeconds > 0.0)
+			{
+				dockingSeconds *= 0.85;
+			}
 
 			if (healAmount == 1)
 			{

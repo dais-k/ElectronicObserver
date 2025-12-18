@@ -258,6 +258,7 @@
     <Compile Include="Data\ShipTypes.cs" />
     <Compile Include="Data\UseItem.cs" />
     <Compile Include="Data\UseItemMaster.cs" />
+    <Compile Include="Notifier\NotifierConditionRepair.cs" />
     <Compile Include="Notifier\NotifierAnchorageRepair.cs" />
     <Compile Include="Notifier\NotifierBase.cs" />
     <Compile Include="Notifier\NotifierBaseAirCorps.cs" />

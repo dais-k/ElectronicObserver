@@ -116,6 +116,7 @@ namespace ElectronicObserver.Window
 		private List<TableFleetControl> ControlFleet;
 		private ImageLabel CombinedTag;
 		private ImageLabel AnchorageRepairingTimer;
+		private ImageLabel ConditionRepairTimer;
 
 
 		public FormFleetOverview(FormMain parent)
@@ -145,7 +146,20 @@ namespace ElectronicObserver.Window
 				//AnchorageRepairingTimer.Visible = false;
 
 				TableFleet.Controls.Add(AnchorageRepairingTimer, 1, 4);
+			}
 
+			{
+				ConditionRepairTimer = new ImageLabel
+				{
+					Anchor = AnchorStyles.Left,
+					Padding = new Padding(0, 1, 0, 1),
+					Margin = new Padding(2, 1, 2, 1),
+					ImageList = ResourceManager.Instance.Equipments,
+					ImageIndex = (int)ResourceManager.EquipmentContent.Ration,
+					Text = "",
+					AutoSize = true,
+				};
+				TableFleet.Controls.Add(ConditionRepairTimer, 1, 5);
 			}
 
 			#region CombinedTag
@@ -161,9 +175,7 @@ namespace ElectronicObserver.Window
 					AutoSize = true,
 					Visible = false
 				};
-
-				TableFleet.Controls.Add(CombinedTag, 1, 5);
-
+				TableFleet.Controls.Add(CombinedTag, 1, 6);
 			}
 			#endregion
 
@@ -229,6 +241,7 @@ namespace ElectronicObserver.Window
 
 			CombinedTag.Font = Font;
 			AnchorageRepairingTimer.Font = Font;
+			ConditionRepairTimer.Font = Font;
 			AnchorageRepairingTimer.Visible = Utility.Configuration.Config.FormFleet.ShowAnchorageRepairingTimer;
 
 			LayoutSubInformation();
@@ -314,9 +327,20 @@ namespace ElectronicObserver.Window
 			{
 				AnchorageRepairingTimer.Text = DateTimeHelper.ToTimeElapsedString(KCDatabase.Instance.Fleet.AnchorageRepairingTimer);
 				AnchorageRepairingTimer.Tag = KCDatabase.Instance.Fleet.AnchorageRepairingTimer;
-				ToolTipInfo.SetToolTip(AnchorageRepairingTimer, "泊地修理タイマ\r\n開始: " + DateTimeHelper.TimeToCSVString(KCDatabase.Instance.Fleet.AnchorageRepairingTimer) + "\r\n回復: " + DateTimeHelper.TimeToCSVString(KCDatabase.Instance.Fleet.AnchorageRepairingTimer.AddMinutes(20)));
+				ToolTipInfo.SetToolTip(AnchorageRepairingTimer, "泊地修理タイマ\r\n開始: "
+					+ DateTimeHelper.TimeToCSVString(KCDatabase.Instance.Fleet.AnchorageRepairingTimer)
+					+ "\r\n回復: " + DateTimeHelper.TimeToCSVString(KCDatabase.Instance.Fleet.AnchorageRepairingTimer.AddMinutes(20)));
 			}
 
+			if (KCDatabase.Instance.Fleet.ConditionRepairingTimer > DateTime.MinValue)
+			{
+				ConditionRepairTimer.Text = DateTimeHelper.ToTimeElapsedString(KCDatabase.Instance.Fleet.ConditionRepairingTimer);
+				ConditionRepairTimer.Tag = KCDatabase.Instance.Fleet.ConditionRepairingTimer;
+				var tooltipSb = new StringBuilder();
+				ToolTipInfo.SetToolTip(ConditionRepairTimer, "母港給糧艦システムタイマ\r\n開始: "
+					+ DateTimeHelper.TimeToCSVString(KCDatabase.Instance.Fleet.ConditionRepairingTimer)
+					+ "\r\n回復: " + DateTimeHelper.TimeToCSVString(KCDatabase.Instance.Fleet.ConditionRepairingTimer.AddMinutes(15)));
+			}
 
 			LayoutSubInformation();
 
@@ -335,32 +359,59 @@ namespace ElectronicObserver.Window
 
 			if (AnchorageRepairingTimer.Visible && AnchorageRepairingTimer.Tag != null)
 				AnchorageRepairingTimer.Text = DateTimeHelper.ToTimeElapsedString((DateTime)AnchorageRepairingTimer.Tag);
+
+			if (ConditionRepairTimer.Visible && ConditionRepairTimer.Tag != null)
+				ConditionRepairTimer.Text = DateTimeHelper.ToTimeElapsedString((DateTime)ConditionRepairTimer.Tag);
+
 		}
 
-
+		private int labelstate;
 		// 空欄があれば詰める
 		void LayoutSubInformation()
 		{
-			if (CombinedTag.Visible && !AnchorageRepairingTimer.Visible)
+
+			if (labelstate != ((AnchorageRepairingTimer.Visible? 1 : 0) | (ConditionRepairTimer.Visible? 2 : 0) | (CombinedTag.Visible? 4 : 0)))
 			{
-				if (TableFleet.GetPositionFromControl(AnchorageRepairingTimer).Row != 5)
+				TableFleet.Controls.Remove(AnchorageRepairingTimer);
+				TableFleet.Controls.Remove(ConditionRepairTimer);
+				TableFleet.Controls.Remove(CombinedTag);
+
+				switch (AnchorageRepairingTimer.Visible, ConditionRepairTimer.Visible, CombinedTag.Visible)
 				{
-					TableFleet.Controls.Remove(CombinedTag);
-					TableFleet.Controls.Remove(AnchorageRepairingTimer);
-					TableFleet.Controls.Add(CombinedTag, 1, 4);
-					TableFleet.Controls.Add(AnchorageRepairingTimer, 1, 5);
+					case (false, false, false):
+					case (true, false, false):
+					case (true, true, false):
+					case (true, true, true):
+						TableFleet.Controls.Add(AnchorageRepairingTimer, 1, 4);
+						TableFleet.Controls.Add(ConditionRepairTimer, 1, 5);
+						TableFleet.Controls.Add(CombinedTag, 1, 6);
+
+						break;
+					case (true, false, true):
+						TableFleet.Controls.Add(AnchorageRepairingTimer, 1, 4);
+						TableFleet.Controls.Add(CombinedTag, 1, 5);
+						TableFleet.Controls.Add(ConditionRepairTimer, 1, 6);
+						break;
+					case (false, false, true):
+						TableFleet.Controls.Add(CombinedTag, 1, 4);
+						TableFleet.Controls.Add(AnchorageRepairingTimer, 1, 5);
+						TableFleet.Controls.Add(ConditionRepairTimer, 1, 6);
+						break;
+					case (false, true, false):
+						TableFleet.Controls.Add(ConditionRepairTimer, 1, 4);
+						TableFleet.Controls.Add(AnchorageRepairingTimer, 1, 5);
+						TableFleet.Controls.Add(CombinedTag, 1, 6);
+						break;
+					case (false, true, true):
+						TableFleet.Controls.Add(ConditionRepairTimer, 1, 4);
+						TableFleet.Controls.Add(CombinedTag, 1, 5);
+						TableFleet.Controls.Add(AnchorageRepairingTimer, 1, 6);
+						break;
 				}
+
 			}
-			else
-			{
-				if (TableFleet.GetPositionFromControl(AnchorageRepairingTimer).Row != 4)
-				{
-					TableFleet.Controls.Remove(CombinedTag);
-					TableFleet.Controls.Remove(AnchorageRepairingTimer);
-					TableFleet.Controls.Add(AnchorageRepairingTimer, 1, 4);
-					TableFleet.Controls.Add(CombinedTag, 1, 5);
-				}
-			}
+			labelstate = ((AnchorageRepairingTimer.Visible ? 1 : 0) | (ConditionRepairTimer.Visible ? 2 : 0) | (CombinedTag.Visible ? 4 : 0));
+
 		}
 
 

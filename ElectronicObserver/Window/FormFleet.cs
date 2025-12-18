@@ -33,6 +33,7 @@ namespace ElectronicObserver.Window
 			public ImageLabel SearchingAbility;
 			public ImageLabel AntiAirPower;
 			public ImageLabel TrafficTP;
+			public ImageLabel ConditionTimer;
 			public ToolTip ToolTipInfo;
 
 			public int BranchWeight { get; private set; } = 1;
@@ -109,6 +110,18 @@ namespace ElectronicObserver.Window
 				};
 				TrafficTP.Click += (sender, e) => TrafficTP_Click(sender, e, parent.FleetID);
 
+				ConditionTimer = new ImageLabel
+				{
+					Anchor = AnchorStyles.Left,
+					ForeColor = parent.MainFontColor,
+					ImageList = ResourceManager.Instance.Equipments,
+					ImageIndex = (int)ResourceManager.EquipmentContent.Ration,
+					Padding = new Padding(2, 2, 2, 2),
+					Margin = new Padding(2, 0, 2, 0),
+					AutoSize = true,
+					Cursor = Cursors.Default,
+				};
+
 				ConfigurationChanged(parent);
 
 				ToolTipInfo = parent.ToolTipInfo;
@@ -131,6 +144,7 @@ namespace ElectronicObserver.Window
 				table.Controls.Add(SearchingAbility, 3, 0);
 				table.Controls.Add(AntiAirPower, 4, 0);
 				table.Controls.Add(TrafficTP, 5, 0);
+				table.Controls.Add(ConditionTimer, 6, 0);
 				table.ResumeLayout();
 			}
 
@@ -236,6 +250,19 @@ namespace ElectronicObserver.Window
 
 				}
 				State.UpdateFleetState(fleet, ToolTipInfo);
+
+				// 母港給糧タイマー表示更新
+				{
+					ConditionTimer.Text = DateTimeHelper.ToTimeElapsedString(KCDatabase.Instance.Fleet.ConditionRepairingTimer);
+					ConditionTimer.Tag = KCDatabase.Instance.Fleet.ConditionRepairingTimer;
+					ToolTipInfo.SetToolTip(ConditionTimer, "母港給糧艦システムタイマ\r\n開始: "
+						+ DateTimeHelper.TimeToCSVString(KCDatabase.Instance.Fleet.ConditionRepairingTimer)
+						+ "\r\n回復: " + DateTimeHelper.TimeToCSVString(KCDatabase.Instance.Fleet.ConditionRepairingTimer.AddMinutes(15)));
+					if (fleet.IsConditionRepairedShip)
+						ConditionTimer.ForeColor = Color.Black;
+					else
+						ConditionTimer.ForeColor = Color.Gray;
+				}
 
 				//制空戦力計算	
 				{
@@ -346,6 +373,7 @@ namespace ElectronicObserver.Window
 				AirSuperiority.Font = parent.MainFont;
 				SearchingAbility.Font = parent.MainFont;
 				AntiAirPower.Font = parent.MainFont;
+				ConditionTimer.Font = parent.MainFont;
 
 				ControlHelper.SetTableRowStyles(parent.TableFleet, ControlHelper.GetDefaultRowStyle());
 			}
@@ -358,6 +386,7 @@ namespace ElectronicObserver.Window
 				SearchingAbility.Dispose();
 				AntiAirPower.Dispose();
 				TrafficTP.Dispose();
+				ConditionTimer.Dispose();
 			}
 		}
 
@@ -1179,7 +1208,32 @@ namespace ElectronicObserver.Window
 			TableFleet.ResumeLayout();
 			TableFleet.Refresh();
 
-			AnchorageRepairBound = fleet.CanAnchorageRepair ? 2 + fleet.MembersInstance[0].SlotInstance.Count(eq => eq != null && eq.MasterEquipment.CategoryType == EquipmentTypes.RepairFacility) : 0;
+			if (fleet.CanAnchorageRepair)
+			{
+				if (fleet.Is1st2ndRepairShip)
+				{
+					AnchorageRepairBound = 2
+						+ fleet.MembersInstance[0].SlotInstance.Count(eq => eq != null && eq.MasterEquipment.CategoryType == EquipmentTypes.RepairFacility)
+						+ fleet.MembersInstance[1].SlotInstance.Count(eq => eq != null && eq.MasterEquipment.CategoryType == EquipmentTypes.RepairFacility);
+				}
+				else
+				{
+					switch (fleet.MembersInstance[0].MasterShip.ShipID)
+					{
+						case 182:
+						case 187:
+							AnchorageRepairBound = 2 + fleet.MembersInstance[0].SlotInstance.Count(eq => eq != null && eq.MasterEquipment.CategoryType == EquipmentTypes.RepairFacility);
+							break;
+						case 958:
+							AnchorageRepairBound = fleet.MembersInstance[0].SlotInstance.Count(eq => eq != null && eq.MasterEquipment.CategoryType == EquipmentTypes.RepairFacility);
+							break;
+					}
+				}
+				if (AnchorageRepairBound > fleet.Members.Count(id => id > 0))
+					AnchorageRepairBound = fleet.Members.Count(id => id > 0);
+			}
+			else
+				AnchorageRepairBound = 0;
 
 			TableMember.SuspendLayout();
 			TableMember.RowCount = fleet.Members.Count(id => id > 0);
@@ -1241,16 +1295,19 @@ namespace ElectronicObserver.Window
 						}
 
 						int damage = hpbar.MaximumValue - hpbar.PrevValue;
-						int healAmount = Math.Min(Calculator.CalculateAnchorageRepairHealAmount(damage, dockingSeconds, elapsed), damage);
-
+						int healAmount = Math.Min(Calculator.CalculateAnchorageRepairHealAmount(damage, dockingSeconds, elapsed, fleet.Is1st2ndRepairShip), damage);
+						
 						hpbar.RepairTimeShowMode = ShipStatusHPRepairTimeShowMode.MouseOver;
-						hpbar.RepairTime = KCDatabase.Instance.Fleet.AnchorageRepairingTimer + Calculator.CalculateAnchorageRepairTime(damage, dockingSeconds, Math.Min(healAmount + 1, damage));
+						hpbar.RepairTime = KCDatabase.Instance.Fleet.AnchorageRepairingTimer + Calculator.CalculateAnchorageRepairTime(damage, dockingSeconds, Math.Min(healAmount + 1, damage), fleet.Is1st2ndRepairShip);
 						hpbar.Value = hpbar.PrevValue + healAmount;
 
 						hpbar.ResumeUpdate();
 					}
 				}
 			}
+
+			if (ControlFleet != null && ControlFleet.ConditionTimer != null && ControlFleet.ConditionTimer.Tag != null)
+				ControlFleet.ConditionTimer.Text = DateTimeHelper.ToTimeElapsedString((DateTime)ControlFleet.ConditionTimer.Tag);
 		}
 
 		//艦隊編成のコピー
