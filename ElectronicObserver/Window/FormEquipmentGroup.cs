@@ -1465,24 +1465,6 @@ namespace ElectronicObserver.Window
 				column.Frozen = count < group.ScrollLockColumnCount;
 				count++;
 			}
-	
-			// --- 追加: 装備中の艦娘列が極端に狭くなるのを防ぐ ---
-			// Designer 側は Fill になっているが、保存された設定で幅が 5 等になってしまうケースがあるため保護。
-			var equipCol = EquipView.Columns.Cast<DataGridViewColumn>().FirstOrDefault(c => c.Name == "EquipView_EquipedShips");
-			if (equipCol != null)
-			{
-				// 最小幅を設定しておく
-				equipCol.MinimumWidth = Math.Max(equipCol.MinimumWidth, 60);
-
-				// もし幅が異常に小さい場合は適切な値に直す
-				if (equipCol.Width < 30)
-				{
-					equipCol.Width = 150;
-				}
-
-				// 常に表示領域を埋めるよう Fill にする（必要なら Designer の設定と一致させる）
-				equipCol.AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-			}
 
 			IsRowsUpdating = false;
 		}

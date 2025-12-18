@@ -35,32 +35,14 @@ namespace ElectronicObserver.Window
 		private void InitializeComponent()
 		{
 			this.components = new System.ComponentModel.Container();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.EquipView = new System.Windows.Forms.DataGridView();
-			this.EquipView_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.EquipView_Icon = new System.Windows.Forms.DataGridViewImageColumn();
-			this.EquipView_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.EquipView_Category1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.EquipView_Category2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.EquipView_ImproveShips = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.EquipView_Range = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.EquipView_Firepower = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.EquipView_Accuracy = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.EquipView_Evasion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.EquipView_Bomber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.EquipView_Torpedo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.EquipView_LOS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.EquipView_ASW = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.EquipView_AA = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.EquipView_Armor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.EquipView_Radius = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.EquipView_EquipedShips = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.MenuMember = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.MenuMember_AddToGroup = new System.Windows.Forms.ToolStripMenuItem();
 			this.MenuMember_CreateGroup = new System.Windows.Forms.ToolStripMenuItem();
@@ -86,6 +68,24 @@ namespace ElectronicObserver.Window
 			this.Status_ByLevel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.Status_ByAircraftLevel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.SaveCSVDialog = new System.Windows.Forms.SaveFileDialog();
+			this.EquipView_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.EquipView_Icon = new System.Windows.Forms.DataGridViewImageColumn();
+			this.EquipView_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.EquipView_Category1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.EquipView_Category2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.EquipView_ImproveShips = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.EquipView_Range = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.EquipView_Firepower = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.EquipView_Accuracy = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.EquipView_Evasion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.EquipView_Bomber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.EquipView_Torpedo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.EquipView_LOS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.EquipView_ASW = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.EquipView_AA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.EquipView_Armor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.EquipView_Radius = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.EquipView_EquipedShips = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this.EquipView)).BeginInit();
 			this.MenuMember.SuspendLayout();
 			this.MenuGroup.SuspendLayout();
@@ -124,20 +124,20 @@ namespace ElectronicObserver.Window
 			this.EquipView_Radius,
 			this.EquipView_EquipedShips});
 			this.EquipView.ContextMenuStrip = this.MenuMember;
-			dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-			dataGridViewCellStyle7.BackColor = System.Drawing.SystemColors.Window;
-			dataGridViewCellStyle7.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
-			dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.ControlText;
-			dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-			dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-			dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-			this.EquipView.DefaultCellStyle = dataGridViewCellStyle7;
-			this.EquipView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.None;
-			this.EquipView.RowTemplate.Height = 21; this.EquipView.Dock = System.Windows.Forms.DockStyle.Fill;
+			dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
+			dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window;
+			dataGridViewCellStyle14.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
+			dataGridViewCellStyle14.ForeColor = System.Drawing.SystemColors.ControlText;
+			dataGridViewCellStyle14.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+			dataGridViewCellStyle14.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+			dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+			this.EquipView.DefaultCellStyle = dataGridViewCellStyle14;
+			this.EquipView.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.EquipView.Location = new System.Drawing.Point(0, 0);
 			this.EquipView.Name = "EquipView";
 			this.EquipView.ReadOnly = true;
 			this.EquipView.RowHeadersVisible = false;
+			this.EquipView.RowTemplate.Height = 21;
 			this.EquipView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.EquipView.Size = new System.Drawing.Size(300, 134);
 			this.EquipView.TabIndex = 0;
@@ -148,146 +148,6 @@ namespace ElectronicObserver.Window
 			this.EquipView.SelectionChanged += new System.EventHandler(this.EquipView_SelectionChanged);
 			this.EquipView.SortCompare += new System.Windows.Forms.DataGridViewSortCompareEventHandler(this.EquipView_SortCompare);
 			this.EquipView.Sorted += new System.EventHandler(this.EquipView_Sorted);
-			// 
-			// EquipView_ID
-			// 
-			this.EquipView_ID.HeaderText = "ID";
-			this.EquipView_ID.Name = "EquipView_ID";
-			this.EquipView_ID.ReadOnly = true;
-			this.EquipView_ID.Width = 60;
-			// 
-			// EquipView_Icon
-			// 
-			this.EquipView_Icon.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.NotSet;
-			this.EquipView_Icon.HeaderText = "";
-			this.EquipView_Icon.MinimumWidth = 2;
-			this.EquipView_Icon.Name = "EquipView_Icon";
-			this.EquipView_Icon.ReadOnly = true;
-			this.EquipView_Icon.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-			this.EquipView_Icon.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-			this.EquipView_Icon.Width = 2;
-			// 
-			// EquipView_Name
-			// 
-			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			this.EquipView_Name.DefaultCellStyle = dataGridViewCellStyle1;
-			this.EquipView_Name.HeaderText = "装備名";
-			this.EquipView_Name.Name = "EquipView_Name";
-			this.EquipView_Name.ReadOnly = true;
-			this.EquipView_Name.Width = 130;
-			// 
-			// EquipView_Category1
-			// 
-			dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			this.EquipView_Category1.DefaultCellStyle = dataGridViewCellStyle2;
-			this.EquipView_Category1.HeaderText = "カテゴリ";
-			this.EquipView_Category1.Name = "EquipView_Category1";
-			this.EquipView_Category1.ReadOnly = true;
-			// 
-			// EquipView_Category2
-			// 
-			dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			this.EquipView_Category2.DefaultCellStyle = dataGridViewCellStyle3;
-			this.EquipView_Category2.HeaderText = "カテゴリ2";
-			this.EquipView_Category2.Name = "EquipView_Category2";
-			this.EquipView_Category2.ReadOnly = true;
-			// 
-			// EquipView_ImproveShips
-			// 
-			dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			this.EquipView_ImproveShips.DefaultCellStyle = dataGridViewCellStyle4;
-			this.EquipView_ImproveShips.HeaderText = "改修担当艦";
-			this.EquipView_ImproveShips.Name = "EquipView_ImproveShips";
-			this.EquipView_ImproveShips.ReadOnly = true;
-			this.EquipView_ImproveShips.Width = 150;
-			// 
-			// EquipView_Range
-			// 
-			dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-			this.EquipView_Range.DefaultCellStyle = dataGridViewCellStyle5;
-			this.EquipView_Range.HeaderText = "射程";
-			this.EquipView_Range.Name = "EquipView_Range";
-			this.EquipView_Range.ReadOnly = true;
-			this.EquipView_Range.Width = 42;
-			// 
-			// EquipView_Firepower
-			// 
-			this.EquipView_Firepower.HeaderText = "火力";
-			this.EquipView_Firepower.Name = "EquipView_Firepower";
-			this.EquipView_Firepower.ReadOnly = true;
-			this.EquipView_Firepower.Width = 40;
-			// 
-			// EquipView_Accuracy
-			// 
-			this.EquipView_Accuracy.HeaderText = "命中/対爆";
-			this.EquipView_Accuracy.Name = "EquipView_Accuracy";
-			this.EquipView_Accuracy.ReadOnly = true;
-			this.EquipView_Accuracy.Width = 40;
-			// 
-			// EquipView_Evasion
-			// 
-			this.EquipView_Evasion.HeaderText = "回避/迎撃";
-			this.EquipView_Evasion.Name = "EquipView_Evasion";
-			this.EquipView_Evasion.ReadOnly = true;
-			this.EquipView_Evasion.Width = 40;
-			// 
-			// EquipView_Bomber
-			// 
-			this.EquipView_Bomber.HeaderText = "爆装";
-			this.EquipView_Bomber.Name = "EquipView_Bomber";
-			this.EquipView_Bomber.ReadOnly = true;
-			this.EquipView_Bomber.Width = 40;
-			// 
-			// EquipView_Torpedo
-			// 
-			this.EquipView_Torpedo.HeaderText = "雷装";
-			this.EquipView_Torpedo.Name = "EquipView_Torpedo";
-			this.EquipView_Torpedo.ReadOnly = true;
-			this.EquipView_Torpedo.Width = 40;
-			// 
-			// EquipView_LOS
-			// 
-			this.EquipView_LOS.HeaderText = "索敵";
-			this.EquipView_LOS.Name = "EquipView_LOS";
-			this.EquipView_LOS.ReadOnly = true;
-			this.EquipView_LOS.Width = 40;
-			// 
-			// EquipView_ASW
-			// 
-			this.EquipView_ASW.HeaderText = "対潜";
-			this.EquipView_ASW.Name = "EquipView_ASW";
-			this.EquipView_ASW.ReadOnly = true;
-			this.EquipView_ASW.Width = 40;
-			// 
-			// EquipView_AA
-			// 
-			this.EquipView_AA.HeaderText = "対空";
-			this.EquipView_AA.Name = "EquipView_AA";
-			this.EquipView_AA.ReadOnly = true;
-			this.EquipView_AA.Width = 40;
-			// 
-			// EquipView_Armor
-			// 
-			this.EquipView_Armor.HeaderText = "装甲";
-			this.EquipView_Armor.Name = "EquipView_Armor";
-			this.EquipView_Armor.ReadOnly = true;
-			this.EquipView_Armor.Width = 40;
-			// 
-			// EquipView_Radius
-			// 
-			this.EquipView_Radius.HeaderText = "半径";
-			this.EquipView_Radius.Name = "EquipView_Radius";
-			this.EquipView_Radius.ReadOnly = true;
-			this.EquipView_Radius.Width = 40;
-			// 
-			// EquipView_EquipedShips
-			// 
-			this.EquipView_EquipedShips.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-			dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-			this.EquipView_EquipedShips.DefaultCellStyle = dataGridViewCellStyle6;
-			this.EquipView_EquipedShips.HeaderText = "装備中の艦娘";
-			this.EquipView_EquipedShips.Name = "EquipView_EquipedShips";
-			this.EquipView_EquipedShips.ReadOnly = true;
 			// 
 			// MenuMember
 			// 
@@ -302,7 +162,7 @@ namespace ElectronicObserver.Window
 			this.toolStripSeparator3,
 			this.MenuMember_CSVOutput});
 			this.MenuMember.Name = "MenuMember";
-			this.MenuMember.Size = new System.Drawing.Size(216, 192);
+			this.MenuMember.Size = new System.Drawing.Size(216, 170);
 			this.MenuMember.Opening += new System.ComponentModel.CancelEventHandler(this.MenuMember_Opening);
 			// 
 			// MenuMember_AddToGroup
@@ -496,6 +356,145 @@ namespace ElectronicObserver.Window
 			// 
 			this.SaveCSVDialog.Filter = "CSV|*.csv|File|*";
 			this.SaveCSVDialog.Title = "CSVに出力";
+			// 
+			// EquipView_ID
+			// 
+			this.EquipView_ID.HeaderText = "ID";
+			this.EquipView_ID.Name = "EquipView_ID";
+			this.EquipView_ID.ReadOnly = true;
+			this.EquipView_ID.Width = 60;
+			// 
+			// EquipView_Icon
+			// 
+			this.EquipView_Icon.HeaderText = "";
+			this.EquipView_Icon.MinimumWidth = 2;
+			this.EquipView_Icon.Name = "EquipView_Icon";
+			this.EquipView_Icon.ReadOnly = true;
+			this.EquipView_Icon.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.EquipView_Icon.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+			this.EquipView_Icon.Width = 2;
+			// 
+			// EquipView_Name
+			// 
+			dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			this.EquipView_Name.DefaultCellStyle = dataGridViewCellStyle8;
+			this.EquipView_Name.HeaderText = "装備名";
+			this.EquipView_Name.Name = "EquipView_Name";
+			this.EquipView_Name.ReadOnly = true;
+			this.EquipView_Name.Width = 130;
+			// 
+			// EquipView_Category1
+			// 
+			dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			this.EquipView_Category1.DefaultCellStyle = dataGridViewCellStyle9;
+			this.EquipView_Category1.HeaderText = "カテゴリ";
+			this.EquipView_Category1.Name = "EquipView_Category1";
+			this.EquipView_Category1.ReadOnly = true;
+			// 
+			// EquipView_Category2
+			// 
+			dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			this.EquipView_Category2.DefaultCellStyle = dataGridViewCellStyle10;
+			this.EquipView_Category2.HeaderText = "カテゴリ2";
+			this.EquipView_Category2.Name = "EquipView_Category2";
+			this.EquipView_Category2.ReadOnly = true;
+			// 
+			// EquipView_ImproveShips
+			// 
+			dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			this.EquipView_ImproveShips.DefaultCellStyle = dataGridViewCellStyle11;
+			this.EquipView_ImproveShips.HeaderText = "改修担当艦";
+			this.EquipView_ImproveShips.Name = "EquipView_ImproveShips";
+			this.EquipView_ImproveShips.ReadOnly = true;
+			this.EquipView_ImproveShips.Width = 150;
+			// 
+			// EquipView_Range
+			// 
+			dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+			this.EquipView_Range.DefaultCellStyle = dataGridViewCellStyle12;
+			this.EquipView_Range.HeaderText = "射程";
+			this.EquipView_Range.Name = "EquipView_Range";
+			this.EquipView_Range.ReadOnly = true;
+			this.EquipView_Range.Width = 42;
+			// 
+			// EquipView_Firepower
+			// 
+			this.EquipView_Firepower.HeaderText = "火力";
+			this.EquipView_Firepower.Name = "EquipView_Firepower";
+			this.EquipView_Firepower.ReadOnly = true;
+			this.EquipView_Firepower.Width = 40;
+			// 
+			// EquipView_Accuracy
+			// 
+			this.EquipView_Accuracy.HeaderText = "命中/対爆";
+			this.EquipView_Accuracy.Name = "EquipView_Accuracy";
+			this.EquipView_Accuracy.ReadOnly = true;
+			this.EquipView_Accuracy.Width = 40;
+			// 
+			// EquipView_Evasion
+			// 
+			this.EquipView_Evasion.HeaderText = "回避/迎撃";
+			this.EquipView_Evasion.Name = "EquipView_Evasion";
+			this.EquipView_Evasion.ReadOnly = true;
+			this.EquipView_Evasion.Width = 40;
+			// 
+			// EquipView_Bomber
+			// 
+			this.EquipView_Bomber.HeaderText = "爆装";
+			this.EquipView_Bomber.Name = "EquipView_Bomber";
+			this.EquipView_Bomber.ReadOnly = true;
+			this.EquipView_Bomber.Width = 40;
+			// 
+			// EquipView_Torpedo
+			// 
+			this.EquipView_Torpedo.HeaderText = "雷装";
+			this.EquipView_Torpedo.Name = "EquipView_Torpedo";
+			this.EquipView_Torpedo.ReadOnly = true;
+			this.EquipView_Torpedo.Width = 40;
+			// 
+			// EquipView_LOS
+			// 
+			this.EquipView_LOS.HeaderText = "索敵";
+			this.EquipView_LOS.Name = "EquipView_LOS";
+			this.EquipView_LOS.ReadOnly = true;
+			this.EquipView_LOS.Width = 40;
+			// 
+			// EquipView_ASW
+			// 
+			this.EquipView_ASW.HeaderText = "対潜";
+			this.EquipView_ASW.Name = "EquipView_ASW";
+			this.EquipView_ASW.ReadOnly = true;
+			this.EquipView_ASW.Width = 40;
+			// 
+			// EquipView_AA
+			// 
+			this.EquipView_AA.HeaderText = "対空";
+			this.EquipView_AA.Name = "EquipView_AA";
+			this.EquipView_AA.ReadOnly = true;
+			this.EquipView_AA.Width = 40;
+			// 
+			// EquipView_Armor
+			// 
+			this.EquipView_Armor.HeaderText = "装甲";
+			this.EquipView_Armor.Name = "EquipView_Armor";
+			this.EquipView_Armor.ReadOnly = true;
+			this.EquipView_Armor.Width = 40;
+			// 
+			// EquipView_Radius
+			// 
+			this.EquipView_Radius.HeaderText = "半径";
+			this.EquipView_Radius.Name = "EquipView_Radius";
+			this.EquipView_Radius.ReadOnly = true;
+			this.EquipView_Radius.Width = 40;
+			// 
+			// EquipView_EquipedShips
+			// 
+			dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+			this.EquipView_EquipedShips.DefaultCellStyle = dataGridViewCellStyle13;
+			this.EquipView_EquipedShips.HeaderText = "装備中の艦娘";
+			this.EquipView_EquipedShips.Name = "EquipView_EquipedShips";
+			this.EquipView_EquipedShips.ReadOnly = true;
+			this.EquipView_EquipedShips.Width = 120;
 			// 
 			// FormEquipmentGroup
 			// 
