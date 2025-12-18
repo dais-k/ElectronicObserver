@@ -679,9 +679,9 @@ namespace ElectronicObserver.Data
 		public bool IsLandBase => Speed == 0;
 
 		/// <summary>
-		/// 図鑑に載っているか
+		/// 図鑑に載っているか(ゲーム内の艦船図鑑の数)
 		/// </summary>
-		public bool IsListedInAlbum => 0 < AlbumNo && AlbumNo <= 420;
+		public bool IsListedInAlbum => 0 < AlbumNo && AlbumNo <= 630;
 
 		/// <summary>
 		/// 改装段階

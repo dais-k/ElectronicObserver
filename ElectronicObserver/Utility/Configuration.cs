@@ -324,6 +324,11 @@ namespace ElectronicObserver.Utility
 				/// </summary>
 				public bool SaveLogImmediately { get; set; }
 
+				/// <summary>
+				/// 装備ボーナスログを保存するか
+				/// </summary>
+				public bool SaveEquippedBonusLog { get; set; }
+
 
 				public ConfigLog()
 				{
@@ -336,6 +341,8 @@ namespace ElectronicObserver.Utility
 					PlayTimeIgnoreInterval = 10 * 60;
 					SaveBattleLog = false;
 					SaveLogImmediately = false;
+					SaveEquippedBonusLog = true;
+
 				}
 
 			}

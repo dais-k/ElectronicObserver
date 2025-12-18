@@ -1,4 +1,5 @@
 ﻿using ElectronicObserver.Data;
+using ElectronicObserver.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -116,7 +117,11 @@ namespace ElectronicObserver.Observer.kcsapi.api_req_kaisou
 						ship.NameWithLevel,
 						string.Join(", ", ship.AllSlotInstance.Where(eq => eq != null).Select(eq => eq.NameWithLevel)));
 
-					Utility.Logger.Add(2, sb.ToString());
+					if (Configuration.Config.Log.SaveEquippedBonusLog)
+					{
+						Utility.Logger.Add(2, sb.ToString());
+					}
+						
 				}
 			}
 			base.OnResponseReceived((object)data);

@@ -376,6 +376,7 @@ namespace ElectronicObserver.Window.Dialog
 			UpdatePlayTime();
 			Log_SaveBattleLog.Checked = config.Log.SaveBattleLog;
 			Log_SaveLogImmediately.Checked = config.Log.SaveLogImmediately;
+			Log_SaveEquippedBonusLog.Checked = config.Log.SaveEquippedBonusLog;
 
 			//[動作]
 			Control_ConditionBorder.Value = config.Control.ConditionBorder;
@@ -385,7 +386,7 @@ namespace ElectronicObserver.Window.Dialog
 			Control_ShowSallyAreaAlertDialog.Checked = config.Control.ShowSallyAreaAlertDialog;
 			Control_ShowExpeditionAlertDialog.Checked = config.Control.ShowExpeditionAlertDialog;
 			Control_ShowDialogChooseAirBase.Checked = config.Control.ShowDialogChooseAirBase;
-            Control_ChooseTankTP.SelectedIndex = config.Control.ChooseTankTP;
+			Control_ChooseTankTP.SelectedIndex = config.Control.ChooseTankTP;
 
 			//[デバッグ]
 			Debug_EnableDebugMenu.Checked = config.Debug.EnableDebugMenu;
@@ -603,6 +604,7 @@ namespace ElectronicObserver.Window.Dialog
 			config.Log.ShowSpoiler = Log_ShowSpoiler.Checked;
 			config.Log.SaveBattleLog = Log_SaveBattleLog.Checked;
 			config.Log.SaveLogImmediately = Log_SaveLogImmediately.Checked;
+			config.Log.SaveEquippedBonusLog = Log_SaveEquippedBonusLog.Checked;
 
 			//[動作]
 			config.Control.ConditionBorder = (int)Control_ConditionBorder.Value;
@@ -612,7 +614,7 @@ namespace ElectronicObserver.Window.Dialog
 			config.Control.ShowSallyAreaAlertDialog = Control_ShowSallyAreaAlertDialog.Checked;
 			config.Control.ShowExpeditionAlertDialog = Control_ShowExpeditionAlertDialog.Checked;
 			config.Control.ShowDialogChooseAirBase = Control_ShowDialogChooseAirBase.Checked;
-            config.Control.ChooseTankTP = Control_ChooseTankTP.SelectedIndex;
+			config.Control.ChooseTankTP = Control_ChooseTankTP.SelectedIndex;
 
 			//[デバッグ]
 			config.Debug.EnableDebugMenu = Debug_EnableDebugMenu.Checked;
