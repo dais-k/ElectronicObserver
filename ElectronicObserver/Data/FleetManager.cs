@@ -149,6 +149,29 @@ namespace ElectronicObserver.Data
 			// 泊地修理・コンディションの処理
 			if (apiname == "api_port/port")
 			{
+				try
+				{
+					if (PreviousShips != null && PreviousShips.Any())
+					{
+						var increased = PreviousShips
+							.Join(KCDatabase.Instance.Ships.Values, pair => pair.Key, ship => ship.ID, (pair, ship) => new { Prev = pair.Value, Now = ship })
+							.Any(x => x.Prev != null && x.Now != null && x.Now.Condition > x.Prev.Condition);
+
+						if (increased)
+						{
+							StartConditionRepairingTimer();
+
+							// debug
+							if (Utility.Configuration.Config.Debug.EnableDebugMenu)
+								Utility.Logger.Add(1, "コンディション: 回復を検知したためタイマーをリセットします。");
+						}
+					}
+				}
+				catch
+				{
+					// 比較時の予期しない例外は無視して通常処理へ（堅牢性確保）
+				}
+
 				if ((DateTime.Now - ConditionRepairingTimer).TotalMinutes >= 15)
 					if (!Fleets.Values.Any(f => f != null && f.ConditionRepairTimerCheck))
 						StartConditionRepairingTimer();
