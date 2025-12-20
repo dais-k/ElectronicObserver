@@ -34,161 +34,222 @@ namespace Browser
 		private string StyleClassId { get; } = Guid.NewGuid().ToString().Substring(0, 8);
 
 		protected string PageScript => $@"
-			try
-			{{
-				var node = document.getElementById('{StyleClassId}');
-				if (node)
-				{{
-					document.head.removeChild(node);
+			(function applyPageCss() {{
+
+				function waitForHead() {{
+					if (!document || !document.head) {{
+						setTimeout(waitForHead, 50);
+						return;
+					}}
+
+					try {{
+						var old = document.getElementById('{StyleClassId}');
+						if (old) old.remove();
+
+						var style = document.createElement('style');
+						style.id = '{StyleClassId}';
+						style.textContent = `
+							body {{
+								margin: 0;
+								padding: 0;
+								min-width: 0;
+								min-height: 0;
+								overflow: hidden;
+								background-color: black;
+							}}
+
+							#main-ntg {{
+								position: static;
+							}}
+
+							#area-game {{
+								margin-left: 0;
+								margin-right: 0;
+								padding: 0;
+								width: 1200px;
+								height: 720px;
+								position: relative;
+							}}
+
+							.dmm-ntgnavi,
+							.area-naviapp,
+							#ntg-recommend,
+							#foot,
+							#foot+img {{
+								display: none !important;
+							}}
+
+							#w, #main-ntg, #page {{
+								margin: 0;
+								padding: 0;
+								width: 100%;
+								height: 0;
+								background: none !important;
+							}}
+
+							.gamesResetStyle,
+							.gamesResetStyle * {{
+								background: none !important;
+							}}
+
+							.gamesResetStyle > header,
+							.gamesResetStyle > footer,
+							.gamesResetStyle > aside {{
+								display: none !important;
+							}}
+
+							#game_frame {{
+								--game-frame-width: 1200px;
+								--game-frame-height: 720px;
+								position: fixed;
+								top: 0;
+								left: 0;
+							}}
+						`;
+
+						document.head.appendChild(style);
+
+					}} catch (e) {{
+						console.error('ページCSS適用に失敗:', e);
+					}}
 				}}
 
-				var style = document.createElement('style');
-				style.id = '{StyleClassId}';
-				style.textContent = `
-					body {{
-						margin: 0;
-						padding: 0;
-						min-width: 0;
-						min-height: 0;
-						overflow: hidden;
-						background-color: black;
-					}}
+				waitForHead();
 
-					#main-ntg {{
-						position: static;
-					}}
-
-					#area-game {{
-						margin-left: 0;
-						margin-right: 0;
-						padding: 0;
-						width: 1200;
-						height: 720;
-						position: relative;
-					}}
-
-					.dmm-ntgnavi {{
-						display: none;
-					}}
-
-					.area-naviapp {{
-						display: none;
-					}}
-
-					#ntg-recommend {{
-						display: none;
-					}}
-
-					#foot, #foot+img {{
-						display: none;
-					}}
-
-					#w, #main-ntg, #page {{
-						margin: 0;
-						padding: 0;
-						width: 100%;
-						height: 0;
-						background: none !important;
-					}}
-
-					#main-ntg {{
-						margin: 0 !important;
-					}}
-
-					.gamesResetStyle,
-					.gamesResetStyle * {{
-						background: none !important;
-					}}
-
-					/* hide ads */
-					.gamesResetStyle > header,
-					.gamesResetStyle > footer,
-					.gamesResetStyle > aside {{
-						display: none;
-					}}
-
-					#game_frame {{
-						--game-frame-width: 1200px;
-						--game-frame-height: 720px;
-						/* has to be fixed to avoid bugs when scrolling before stylesheet loads */
-						position: fixed;
-						top: 0;
-						left: 0;
-					}}
-				`;
-
-				document.head.appendChild(style);
-			}}
-			catch (e)
-			{{
-				alert(""ページCSS適用に失敗しました: "" + e);
-			}}";
-
-		protected string FrameScript =>
-			$@"
-				try
-				{{
-					var node = document.getElementById('{StyleClassId}');
-					if (node)
-					{{
-						document.head.removeChild(node);
-					}}
-
-					var style = document.createElement('style');
-					style.id = '{StyleClassId}';
-					style.textContent = `
-						body {{
-							visibility: hidden;
-						}}
-
-						#flashWrap {{
-							position: fixed;
-							left: 0;
-							top: 0;
-							width: 100% !important;
-							height: 100% !important;
-						}}
-
-						#htmlWrap {{
-							visibility: visible;
-							width: 100% !important;
-							height: 100% !important;
-						}}
-					`;
-					document.head.appendChild(style);
-				}}
-				catch (e)
-				{{
-					alert(""フレームCSS適用に失敗しました: "" + e);
-				}}
+			}})();
 			";
 
-		protected string RestoreScript =>
-			$@"
-				var node = document.getElementById('{StyleClassId}');
-				if (node)
-				{{
-					document.head.removeChild(node);
+
+		protected string FrameScript => $@"
+			(function applyFrameCss() {{
+
+				function waitForHead() {{
+					if (!document || !document.head) {{
+						setTimeout(waitForHead, 50);
+						return;
+					}}
+
+					try {{
+						var old = document.getElementById('{StyleClassId}');
+						if (old) old.remove();
+
+						var style = document.createElement('style');
+						style.id = '{StyleClassId}';
+						style.textContent = `
+							body {{
+								visibility: hidden;
+							}}
+							#flashWrap {{
+								position: fixed;
+								left: 0;
+								top: 0;
+								width: 100% !important;
+								height: 100% !important;
+							}}
+
+							#htmlWrap {{
+								visibility: visible;
+								width: 100% !important;
+								height: 100% !important;
+							}}
+						`;
+
+						document.head.appendChild(style);
+
+					}} catch (e) {{
+						console.error('フレームCSS適用に失敗:', e);
+					}}
 				}}
+
+				waitForHead();
+
+			}})();
+			";
+
+		protected string RestoreScript => $@"
+			(function restoreCss() {{
+
+				function waitForHead() {{
+					if (!document || !document.head) {{
+						setTimeout(waitForHead, 50);
+						return;
+					}}
+
+					try {{
+						var node = document.getElementById('{StyleClassId}');
+						if (node) {{
+							node.remove();
+						}}
+					}} catch (e) {{
+						console.error('RestoreScript: スタイル削除に失敗:', e);
+					}}
+				}}
+
+				waitForHead();
+
+			}})();
 			";
 
 		protected string DMMScript => @"
-			try {
-				if (DMM.netgame.reloadDialog) {
-					DMM.netgame.reloadDialog = function (){};
-				}
-			} catch(e) {
-				// todo: ""DMM"" doesn't seem to exist anymore so there's always an error here
-				// alert(""DMMによるページ更新ダイアログの非表示に失敗しました: "" + e);
-			}";
+			(function disableDMMReloadDialog() {
 
-		protected string OverrideReloadDialogScript =>
-			@"Object.defineProperty(window, 'confirm',
-				{
-					configurable: true,
-					writable: true,
-					value: function() { return false; }
-				});";
+				function waitForDMM() {
+					try {
+						// DMM.netgame が存在しない場合は待つ
+						if (typeof DMM === 'undefined' ||
+							!DMM.netgame ||
+							typeof DMM.netgame.reloadDialog === 'undefined') {
+
+							setTimeout(waitForDMM, 100);
+							return;
+						}
+
+						// reloadDialog を無効化
+						DMM.netgame.reloadDialog = function () {};
+
+					} catch (e) {
+						console.error('DMMScript: DMMリロードダイアログ無効化に失敗:', e);
+					}
+				}
+
+				waitForDMM();
+
+			})();
+			";
+
+		protected string OverrideReloadDialogScript => @"
+			(function overrideConfirm() {
+
+				function waitForWindow() {
+					try {
+						// window が未初期化なら待つ
+						if (typeof window === 'undefined') {
+							setTimeout(waitForWindow, 50);
+							return;
+						}
+
+						// confirm が存在しない場合も待つ
+						if (typeof window.confirm === 'undefined') {
+							setTimeout(waitForWindow, 50);
+							return;
+						}
+
+						// confirm を無効化
+						Object.defineProperty(window, 'confirm', {
+							configurable: true,
+							writable: true,
+							value: function() { return false; }
+						});
+
+					} catch (e) {
+						console.error('OverrideReloadDialogScript: confirm() 無効化に失敗:', e);
+					}
+				}
+
+				waitForWindow();
+
+			})();
+			";
 
 		private bool RestoreStyleSheet = false;
 
@@ -514,20 +575,27 @@ namespace Browser
 		}
 
 
+		// ---------------------------------------------------------
+		// LoadingStateChanged（DOM 完成後の確実な再適用）
+		// ---------------------------------------------------------
 		private void Browser_LoadingStateChanged(object sender, LoadingStateChangedEventArgs e)
 		{
-			// DocumentCompleted に相当?
-			// note: 非 UI thread からコールされるので、何かしら UI に触る場合は適切な処置が必要
-
 			if (e.IsLoading)
 				return;
 
 			BeginInvoke((Action)(() =>
 			{
-				ApplyStyleSheet();
-
-				ApplyZoom();
-				DestroyDMMreloadDialog();
+				try
+				{
+					// DOM が完成した後に確実に適用
+					ApplyStyleSheet();
+					ApplyZoom();
+					DestroyDMMreloadDialog();
+				}
+				catch (Exception ex)
+				{
+					SendErrorReport(ex.ToString(), "LoadingStateChanged: 再適用に失敗しました。");
+				}
 			}));
 		}
 
@@ -558,7 +626,7 @@ namespace Browser
 			var browser = Browser.GetBrowser();
 			foreach (var id in browser.GetFrameIdentifiers())
 			{
-				var frame = browser.GetFrame(id);
+				var frame = browser.GetFrameByIdentifier(id);
 				if (IsGameFrame(frame))
 					return frame;
 			}
@@ -573,7 +641,7 @@ namespace Browser
 			var browser = Browser.GetBrowser();
 			foreach (var id in browser.GetFrameIdentifiers())
 			{
-				var frame = browser.GetFrame(id);
+				var frame = browser.GetFrameByIdentifier(id);
 				if (IsKanColleFrame(frame))
 					return frame;
 			}
@@ -582,16 +650,19 @@ namespace Browser
 
 
 
-
 		private bool IsMainFrame(IFrame frame)
 		{
 			if (frame == null || string.IsNullOrEmpty(frame.Url)) return false;
+
 			try
 			{
-				var uri = new Uri(frame.Url);
-				return uri.Host.EndsWith("dmm.com") &&
-					   (uri.AbsolutePath.Contains("/game/kancolle") ||
-						uri.AbsolutePath.Contains("/netgame/social"));
+				var url = frame.Url;
+
+				// DMM のメインページはほぼ必ずこのどれか
+				return url.Contains("dmm.com/netgame") ||
+					   url.Contains("dmm.com/play") ||
+					   url.Contains("games.dmm.com") ||
+					   url.Contains("www.dmm.com/netgame");
 			}
 			catch
 			{
@@ -599,14 +670,18 @@ namespace Browser
 			}
 		}
 
+
 		private bool IsGameFrame(IFrame frame)
 		{
 			if (frame == null || string.IsNullOrEmpty(frame.Url)) return false;
+
 			try
 			{
 				var uri = new Uri(frame.Url);
+
+				// KanColle のゲームフレームは必ず /gadgets/ifr で始まる
 				return uri.Host.Contains("osapi.dmm.com") &&
-					   uri.AbsolutePath.Contains("/gadgets/");
+					   uri.AbsolutePath.StartsWith("/gadgets/ifr");
 			}
 			catch
 			{
@@ -617,9 +692,11 @@ namespace Browser
 		private bool IsKanColleFrame(IFrame frame)
 		{
 			if (frame == null || string.IsNullOrEmpty(frame.Url)) return false;
+
 			try
 			{
 				var uri = new Uri(frame.Url);
+
 				return uri.AbsolutePath.Contains("/kcs2/index.php");
 			}
 			catch
@@ -638,6 +715,7 @@ namespace Browser
 			if (!IsBrowserInitialized)
 				return;
 
+			// 設定で無効なら何もしない
 			if (!Configuration.AppliesStyleSheet && !RestoreStyleSheet)
 				return;
 
@@ -645,31 +723,36 @@ namespace Browser
 			{
 				var mainframe = GetMainFrame();
 				var gameframe = GetGameFrame();
+
+				// フレームがまだロードされていない場合は静かに抜ける
 				if (mainframe == null || gameframe == null)
 					return;
 
 				if (RestoreStyleSheet)
 				{
+					// DOM 安全版 RestoreScript に任せる
 					mainframe.EvaluateScriptAsync(RestoreScript);
 					gameframe.EvaluateScriptAsync(RestoreScript);
+
 					StyleSheetApplied = false;
 					RestoreStyleSheet = false;
 				}
 				else
 				{
+					// DOM 安全版 PageScript / FrameScript に任せる
 					mainframe.EvaluateScriptAsync(PageScript);
 					gameframe.EvaluateScriptAsync(FrameScript);
+
+					StyleSheetApplied = true;
 				}
-
-				StyleSheetApplied = true;
-
 			}
 			catch (Exception ex)
 			{
-				SendErrorReport(ex.ToString(), "スタイルシートの適用に失敗しました。");
+				SendErrorReport(ex.ToString(), "ApplyStyleSheet: スタイルシート適用に失敗しました。");
 			}
-
 		}
+
+
 
 		/// <summary>
 		/// DMMによるページ更新ダイアログを非表示にします。
@@ -697,19 +780,38 @@ namespace Browser
 
 		}
 
+
+		// ---------------------------------------------------------
+		// FrameLoadStart（早期注入）
+		// ---------------------------------------------------------
 		private void Browser_OnFrameLoadStart(object sender, FrameLoadStartEventArgs e)
 		{
-			if (e.Frame == null || !e.Frame.IsMain) return;
-			if (Configuration == null) return;
-			if (!Configuration.IsDMMreloadDialogDestroyable) return;
+			if (Configuration == null)
+				return;
 
 			try
 			{
-				e.Frame.ExecuteJavaScriptAsync(OverrideReloadDialogScript);
+				// メインフレーム → PageScript（DOM 安全版）
+				if (IsMainFrame(e.Frame))
+				{
+					e.Frame.ExecuteJavaScriptAsync(PageScript);
+				}
+
+				// ゲームフレーム → FrameScript（DOM 安全版）
+				if (IsGameFrame(e.Frame))
+				{
+					e.Frame.ExecuteJavaScriptAsync(FrameScript);
+				}
+
+				// confirm() 無効化（DOM 安全版）
+				if (Configuration.IsDMMreloadDialogDestroyable && e.Frame.IsMain)
+				{
+					e.Frame.ExecuteJavaScriptAsync(OverrideReloadDialogScript);
+				}
 			}
 			catch (Exception ex)
 			{
-				SendErrorReport(ex.ToString(), "DMMによるページ更新ダイアログの非表示に失敗しました。");
+				SendErrorReport(ex.ToString(), "FrameLoadStart: スクリプト注入に失敗しました。");
 			}
 		}
 
@@ -759,7 +861,47 @@ namespace Browser
 			if (!Configuration.AppliesStyleSheet)
 				StyleSheetApplied = false;
 
-			Browser.Reload(ignoreCache);
+			// UI スレッドで実行する（WCF 等から来る可能性に対応）
+			if (this.InvokeRequired)
+			{
+				this.BeginInvoke((Action)(() => RefreshBrowser(ignoreCache)));
+				return;
+			}
+
+			try
+			{
+				// キャッシュ無視モードはフルリロード（Cef の API に合わせる）
+				if (ignoreCache)
+				{
+					Browser.Reload(true);
+					return;
+				}
+
+				// 通常はメインフレームだけリロードして副次的な負荷を減らす
+				var mainFrame = GetMainFrame();
+				if (mainFrame != null)
+				{
+					try
+					{
+						// IFrame に Reload() は存在しないため、フレーム側で location.reload() を実行する
+						mainFrame.ExecuteJavaScriptAsync("location.reload();");
+						return;
+					}
+					catch
+					{
+						// フレーム経由で失敗したらフォールバック
+					}
+				}
+
+				// フォールバック：ブラウザ全体をリロード
+				Browser.Reload(false);
+			}
+			catch (Exception ex)
+			{
+				// 応急処置としてログを残しておく
+				AddLog(1, "RefreshBrowser failed: " + ex.Message);
+				try { Browser.Reload(ignoreCache); } catch { }
+			}
 		}
 
 		/// <summary>
