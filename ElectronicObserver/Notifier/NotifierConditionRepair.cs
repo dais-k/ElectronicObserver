@@ -52,7 +52,7 @@ namespace ElectronicObserver.Notifier
 			// 既に通知済みなら何もしない
 			if (processedFlag15 && processedFlag30) return;
 
-			// タイマがセットされていて、野崎など該当艦が存在するか確認
+			// タイマがセットされていて、野埼など該当艦が存在するか確認
 			if (fleets.ConditionRepairingTimer > DateTime.MinValue &&
 				fleets.Fleets.Values.Any(f => f.IsConditionRepairedShip))
 			{

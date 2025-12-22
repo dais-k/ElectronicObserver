@@ -329,7 +329,7 @@ namespace ElectronicObserver.Window.Dialog
 					case 650:
 						ShipType.Text = "南極観測船";
 						break;
-					//固有対応：南海・野崎
+					//固有対応：南海・野埼
 					case 699:
 						ShipType.Text = "特務艦";
 						break;
@@ -338,7 +338,7 @@ namespace ElectronicObserver.Window.Dialog
 						break;
 					case 996:
 					case 1002:
-						ShipType.Text = "野崎型給糧艦";
+						ShipType.Text = "野埼型給糧艦";
 						break;
 
 				}

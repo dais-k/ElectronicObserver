@@ -644,7 +644,7 @@ namespace ElectronicObserver.Data
 		
 		private static readonly HashSet<int> NosakiIds = new() { 996, 1002 };
 		/// <summary>
-		/// 旗艦か2番艦が野崎ちゃんか
+		/// 旗艦か2番艦が野埼ちゃんか
 		/// </summary>
 		public bool IsConditionRepairedShip =>
 			_members.Take(2)

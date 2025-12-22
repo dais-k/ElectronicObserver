@@ -1544,7 +1544,7 @@ namespace ElectronicObserver.Utility
 			[DataMember]
 			public ConfigNotifierBaseAirCorps NotifierBaseAirCorps { get; private set; }
 
-			/// <summary>[野崎タイマー通知]</summary>
+			/// <summary>[野埼タイマー通知]</summary>
 			[DataMember]
 			public ConfigNotifierBase NotifierConditionRepair { get; private set; }
 
