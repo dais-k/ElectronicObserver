@@ -149,33 +149,10 @@ namespace ElectronicObserver.Data
 			// 泊地修理・コンディションの処理
 			if (apiname == "api_port/port")
 			{
-				try
-				{
-					if (PreviousShips != null && PreviousShips.Any())
-					{
-						var increased = PreviousShips
-							.Join(KCDatabase.Instance.Ships.Values, pair => pair.Key, ship => ship.ID, (pair, ship) => new { Prev = pair.Value, Now = ship })
-							.Any(x => x.Prev != null && x.Now != null && x.Now.Condition > x.Prev.Condition);
-
-						if (increased)
-						{
-							StartConditionRepairingTimer();
-
-							// debug
-							if (Utility.Configuration.Config.Debug.EnableDebugMenu)
-								Utility.Logger.Add(1, "コンディション: 回復を検知したためタイマーをリセットします。");
-						}
-					}
-				}
-				catch
-				{
-					// 比較時の予期しない例外は無視して通常処理へ（堅牢性確保）
-				}
-
 				if ((DateTime.Now - ConditionRepairingTimer).TotalMinutes >= 15)
-					if (!Fleets.Values.Any(f => f != null && f.ConditionRepairTimerCheck))
-						StartConditionRepairingTimer();
-
+					StartConditionRepairingTimer();
+				else
+					CheckConditionRepairingHealing();
 
 				if ((DateTime.Now - AnchorageRepairingTimer).TotalMinutes >= 20)
 					StartAnchorageRepairingTimer();
@@ -440,11 +417,45 @@ namespace ElectronicObserver.Data
 		}
 
 		/// <summary>
-		/// 野崎タイマを現在時刻にセットします。
+		/// 野埼タイマを現在時刻にセットします。
 		/// </summary>
 		public void StartConditionRepairingTimer()
 		{
 			ConditionRepairingTimer = DateTime.Now;
+		}
+
+		/// <summary>
+		/// 15分経過していないのに母港給糧艦システムによる回復が発生したかをチェックし、発生していた場合は野埼タイマをリセットします。
+		/// </summary>
+		public void CheckConditionRepairingHealing()
+		{
+			foreach (var f in Fleets.Values)
+			{
+				if (!f.CanConditionRepair)
+					continue;
+
+				var memberIds = f.Members;
+				var prev = memberIds.Select(id => PreviousShips.ContainsKey(id) ? PreviousShips[id] : null).ToArray();
+				var now = memberIds.Select(id => KCDatabase.Instance.Ships.ContainsKey(id) ? KCDatabase.Instance.Ships[id] : null).ToArray();
+
+				for (int i = 0; i < memberIds.Count; i++)
+				{
+					if (prev[i] == null || now[i] == null)
+						continue;
+
+					// 回復検知
+					if (prev[i].Condition == 49 && now[i].Condition > 49)
+					{
+						StartConditionRepairingTimer();
+
+						//debug
+						if (Utility.Configuration.Config.Debug.EnableDebugMenu)
+							Utility.Logger.Add(1, $"コンディション: 野埼を含む艦隊で回復（退避時49 -> 現在{now[i].Condition}）を検知したためタイマーをリセットします。");
+						return;
+					}
+
+				}
+			}
 		}
 
 	}

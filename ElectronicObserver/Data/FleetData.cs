@@ -669,31 +669,12 @@ namespace ElectronicObserver.Data
 			return firstTwo.Any(ship =>
 				NosakiIds.Contains(ship.MasterShip.ShipID) &&
 				ship.HPRate > 0.5 &&
-				ship.Condition >= 40 && 
+				ship.Condition > 30 && 
 				ship.RepairingDockID == -1 &&
 				ship.AmmoRate == 1.0 &&
 				ship.FuelRate == 1.0) &&
 				membersInstance.All(s => s == null || (KCDatabase.Instance.Fleet[s.Fleet]?.ExpeditionState ?? 0) == 0) &&
 				membersInstance.Any(s => s?.RepairingDockID == -1);
-		}
-
-		/// <summary>
-		/// 母港給糧艦システムタイマーがリセット可能か
-		/// </summary>
-		public bool ConditionRepairTimerCheck
-		{
-			get
-			{
-				return ConditionRepairTimerChecker(MembersInstance);
-			}
-		}
-
-		public static bool ConditionRepairTimerChecker(IEnumerable<ShipData> membersInstance)
-		{
-			var firstTwo = membersInstance.Take(2).Where(s => s != null);
-			return firstTwo.Any(ship =>
-				NosakiIds.Contains(ship.MasterShip.ShipID) &&
-				ship.Condition <= 30);
 		}
 
 		/// <summary>
