@@ -36,18 +36,19 @@ namespace Browser
 		protected string PageScript => $@"
 			(function applyPageCss() {{
 
-				function waitForHead() {{
-					if (!document || !document.head) {{
-						setTimeout(waitForHead, 50);
-						return;
-					}}
+				const STYLE_ID = '{StyleClassId}';
 
+				function apply() {{
 					try {{
-						var old = document.getElementById('{StyleClassId}');
-						if (old) old.remove();
+						if (!document || !document.head) return false;
 
-						var style = document.createElement('style');
-						style.id = '{StyleClassId}';
+						let style = document.getElementById(STYLE_ID);
+						if (!style) {{
+							style = document.createElement('style');
+							style.id = STYLE_ID;
+							document.head.appendChild(style);
+						}}
+
 						style.textContent = `
 							body {{
 								margin: 0;
@@ -106,15 +107,18 @@ namespace Browser
 								left: 0;
 							}}
 						`;
-
-						document.head.appendChild(style);
-
+						return true;
 					}} catch (e) {{
-						console.error('ページCSS適用に失敗:', e);
+						return false;
 					}}
 				}}
 
-				waitForHead();
+				// 即時適用 + 自己修復
+				if (!apply()) {{
+					const timer = setInterval(() => {{
+						if (apply()) clearInterval(timer);
+					}}, 100);
+				}}
 
 			}})();
 			";
@@ -123,22 +127,24 @@ namespace Browser
 		protected string FrameScript => $@"
 			(function applyFrameCss() {{
 
-				function waitForHead() {{
-					if (!document || !document.head) {{
-						setTimeout(waitForHead, 50);
-						return;
-					}}
+				const STYLE_ID = '{StyleClassId}';
 
+				function apply() {{
 					try {{
-						var old = document.getElementById('{StyleClassId}');
-						if (old) old.remove();
+						if (!document || !document.head) return false;
 
-						var style = document.createElement('style');
-						style.id = '{StyleClassId}';
+						let style = document.getElementById(STYLE_ID);
+						if (!style) {{
+							style = document.createElement('style');
+							style.id = STYLE_ID;
+							document.head.appendChild(style);
+						}}
+
 						style.textContent = `
 							body {{
 								visibility: hidden;
 							}}
+
 							#flashWrap {{
 								position: fixed;
 								left: 0;
@@ -153,15 +159,18 @@ namespace Browser
 								height: 100% !important;
 							}}
 						`;
-
-						document.head.appendChild(style);
-
+						return true;
 					}} catch (e) {{
-						console.error('フレームCSS適用に失敗:', e);
+						return false;
 					}}
 				}}
 
-				waitForHead();
+				// 即時適用 + 自己修復
+				if (!apply()) {{
+					const timer = setInterval(() => {{
+						if (apply()) clearInterval(timer);
+					}}, 100);
+				}}
 
 			}})();
 			";
@@ -468,6 +477,7 @@ namespace Browser
 			};
 			Browser.LoadingStateChanged += Browser_LoadingStateChanged;
 			Browser.FrameLoadStart += Browser_OnFrameLoadStart;
+			Browser.FrameLoadEnd += Browser_FrameLoadEnd;
 			Browser.IsBrowserInitializedChanged += Browser_IsBrowserInitializedChanged;
 			SizeAdjuster.Controls.Add(Browser);
 		}
@@ -715,7 +725,6 @@ namespace Browser
 			if (!IsBrowserInitialized)
 				return;
 
-			// 設定で無効なら何もしない
 			if (!Configuration.AppliesStyleSheet && !RestoreStyleSheet)
 				return;
 
@@ -724,26 +733,28 @@ namespace Browser
 				var mainframe = GetMainFrame();
 				var gameframe = GetGameFrame();
 
-				// フレームがまだロードされていない場合は静かに抜ける
-				if (mainframe == null || gameframe == null)
-					return;
-
+				// --- Restore ---
 				if (RestoreStyleSheet)
 				{
-					// DOM 安全版 RestoreScript に任せる
-					mainframe.EvaluateScriptAsync(RestoreScript);
-					gameframe.EvaluateScriptAsync(RestoreScript);
+					mainframe?.EvaluateScriptAsync(RestoreScript);
+					gameframe?.EvaluateScriptAsync(RestoreScript);
 
 					StyleSheetApplied = false;
 					RestoreStyleSheet = false;
+					return;
 				}
-				else
-				{
-					// DOM 安全版 PageScript / FrameScript に任せる
-					mainframe.EvaluateScriptAsync(PageScript);
-					gameframe.EvaluateScriptAsync(FrameScript);
 
-					StyleSheetApplied = true;
+				// --- Apply ---
+				// MainFrame は先行適用（v140 対策）
+				if (mainframe != null)
+				{
+					mainframe.EvaluateScriptAsync(PageScript);
+				}
+
+				// GameFrame が取れた時点で「完成」
+				if (gameframe != null)
+				{
+					gameframe.EvaluateScriptAsync(FrameScript);
 				}
 			}
 			catch (Exception ex)
@@ -904,6 +915,28 @@ namespace Browser
 			}
 		}
 
+		private void Browser_FrameLoadEnd(object sender, FrameLoadEndEventArgs e)
+		{
+			if (!Configuration.AppliesStyleSheet)
+				return;
+
+			try
+			{
+				if (IsMainFrame(e.Frame))
+				{
+					e.Frame.ExecuteJavaScriptAsync(PageScript);
+				}
+
+				if (IsGameFrame(e.Frame))
+				{
+					e.Frame.ExecuteJavaScriptAsync(FrameScript);
+					StyleSheetApplied = true;
+				}
+			}
+			catch { }
+		}
+
+
 		/// <summary>
 		/// ズームを適用します。
 		/// </summary>
@@ -985,15 +1018,32 @@ namespace Browser
 
 
 				string script = $@"
-					(async function() 
-					{{
+					(async function() {{
 						await CefSharp.BindObjectAsync('{request.ID}');
 
-						let canvas = document.querySelector('canvas');
-						requestAnimationFrame(() =>
-						{{
-							let dataurl = canvas.toDataURL('image/png');
-							{request.ID}.complete(dataurl);
+						function waitForCanvas() {{
+							return new Promise(resolve => {{
+								const check = () => {{
+									const canvas = document.querySelector('canvas');
+									if (canvas && canvas.width > 0 && canvas.height > 0) {{
+										resolve(canvas);
+									}} else {{
+										requestAnimationFrame(check);
+									}}
+								}};
+								check();
+							}});
+						}}
+
+						const canvas = await waitForCanvas();
+
+						requestAnimationFrame(() => {{
+							try {{
+								const dataurl = canvas.toDataURL('image/png');
+								{request.ID}.complete(dataurl);
+							}} catch (e) {{
+								{request.ID}.complete(null);
+							}}
 						}});
 					}})();
 					";
