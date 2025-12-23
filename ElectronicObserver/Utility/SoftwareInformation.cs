@@ -31,12 +31,12 @@ namespace ElectronicObserver.Utility
 		/// <summary>
 		/// バージョン(英語)
 		/// </summary>
-		public static string VersionEnglish => "4.7.1 20251222";
+		public static string VersionEnglish => "4.7.1 20251224";
 		
 		/// <summary>
 		/// 更新日時
 		/// </summary>
-		public static DateTime UpdateTime => DateTimeHelper.CSVStringToTime("2025/12/22 16:00:00");
+		public static DateTime UpdateTime => DateTimeHelper.CSVStringToTime("2025/12/24 00:00:00");
 		
 		private static System.Net.WebClient client;
 		private static readonly Uri uri = new("https://raw.githubusercontent.com/dais-k/ElectronicObserver/develop/ElectronicObserver/version.txt");
