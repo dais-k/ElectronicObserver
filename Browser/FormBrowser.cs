@@ -754,7 +754,15 @@ namespace Browser
 				// GameFrame が取れた時点で「完成」
 				if (gameframe != null)
 				{
-					gameframe.EvaluateScriptAsync(FrameScript);
+					gameframe.EvaluateScriptAsync(FrameScript)
+						.ContinueWith(_ =>
+						{
+							BeginInvoke((Action)(() =>
+							{
+								StyleSheetApplied = true;
+								ApplyZoom();
+							}));
+						});
 				}
 			}
 			catch (Exception ex)
