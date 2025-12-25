@@ -279,7 +279,10 @@ namespace ElectronicObserver.Window
 											itemName = id;
 										}
 
-										lines.Add($"{itemName}×{it.NeedCount}{haveSuffix}");
+										if (id == "-1")
+											lines.Add($"-");
+										else
+											lines.Add($"{itemName}×{it.NeedCount}{haveSuffix}");
 									}
 
 									extraItems = string.Join(Environment.NewLine, lines);
