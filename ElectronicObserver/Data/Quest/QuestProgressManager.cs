@@ -1195,6 +1195,13 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressDiscard(q, 4, true, new[]{ 8 }),
 							}));
 							break;
+						case 1121:  //|1121|単|【年末年始】鎮守府大掃除！良いお年を！|「小口径主砲」「中口径主砲」「水上偵察機」各x11を廃棄、「九六式艦戦」x8「九四式爆雷投射機」x5鋼材2500を保有
+							Progresses.Add(new ProgressMultiDiscard(q, new[]{
+								new ProgressDiscard(q, 11, true, new[]{ 1 }),
+								new ProgressDiscard(q, 11, true, new[]{ 2 }),
+								new ProgressDiscard(q, 11, true, new[]{ 10 }),
+							}));
+							break;
 						case 1123:  //|1123|１|改良三座水上偵察機の増備|秘書艦「利根改二」または「由良改二」に零式水上偵察機★10を装備した状態で九七式艦攻(九三一空)x2を破棄、ボーキ950、新型航空兵装資材x2、開発資材x35、熟練搭乗員x2を保有
 							Progresses.Add(new ProgressDiscard(q, 2, true, new[] { 82 }, -1));
 							break;
@@ -1205,6 +1212,20 @@ namespace ElectronicObserver.Data.Quest
 							Progresses.Add(new ProgressMultiDiscard(q, new[]{
 								new ProgressDiscard(q, 8, true, new[]{ 25 }, -1),
 								new ProgressDiscard(q, 15, true, new[]{ 5 }),
+							}));
+							break;
+						case 1146:  //|1146|単|【年末年始】拡張大掃除&特別資源輸出-I|艦上爆撃機x8、艦上攻撃機x8、魚雷x16を廃棄、発煙装置(煙幕)x5、家具箱(小)x25、弾薬2025を準備
+							Progresses.Add(new ProgressMultiDiscard(q, new[]{
+								new ProgressDiscard(q, 8, true, new[]{ 7 }),
+								new ProgressDiscard(q, 8, true, new[]{ 8 }),
+								new ProgressDiscard(q, 16, true, new[]{ 5 }),
+							}));
+							break;
+						case 1147:  //|1147|単|【年末年始】拡張大掃除&特別資源輸出-II|大口径主砲8、中口径主砲16、水偵20を廃棄、13号対空電探8、21号対空電探4、鋼材2025を準備
+							Progresses.Add(new ProgressMultiDiscard(q, new[]{
+								new ProgressDiscard(q, 8, true, new[]{ 3 }),
+								new ProgressDiscard(q, 16, true, new[]{ 2 }),
+								new ProgressDiscard(q, 20, true, new[]{ 10 }),
 							}));
 							break;
 						case 1149:  //|1149|週|【期間限定任務】作戦後の不要装備等用途廃止|「高速建造材」x48を準備した上で、「中口径主砲」x8及び「魚雷」x8、「大口径主砲」x4を廃棄|2025/5/12～2025/5/30
