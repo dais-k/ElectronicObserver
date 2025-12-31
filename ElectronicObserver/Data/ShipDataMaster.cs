@@ -821,6 +821,8 @@ namespace ElectronicObserver.Data
 						return 9;
 					case 133:    //Norge級
 						return 12;
+					case 137:    //Thonburi級
+						return 13;
 					default: 
 						return 0;
 				}
@@ -856,7 +858,8 @@ namespace ElectronicObserver.Data
 		/// </summary>
 		public bool IsCoastalDefenceShip =>
 			(
-				ShipClass == 133  //Norge級
+				ShipClass == 133 ||  //Norge級
+				ShipClass == 137  //Thonburi級
 			);
 
 		/// <summary>
