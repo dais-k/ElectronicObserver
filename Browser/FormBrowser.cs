@@ -450,7 +450,9 @@ namespace Browser
 				Locale = "ja",
 				AcceptLanguageList = "ja,en-US,en",        // todo: いる？
 				LogSeverity = Configuration.SavesBrowserLog ? LogSeverity.Error : LogSeverity.Disable,
-				LogFile = "BrowserLog.log",
+				LogFile = Configuration.SavesBrowserLog
+					? Path.Combine(AppDomain.CurrentDomain.SetupInformation.ApplicationBase, "BrowserLog.log")
+					: string.Empty,
 			};
 
 			if (!Configuration.HardwareAccelerationEnabled)

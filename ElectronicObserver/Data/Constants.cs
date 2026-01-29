@@ -453,8 +453,8 @@ namespace ElectronicObserver.Data
 				case 10: return "中";
 				case 11: return "亜";
 				case 12: return "諾";
-                case 13: return "泰";
-                default: return "日";
+				case 13: return "泰";
+				default: return "日";
 			}
 		}
 

@@ -45,7 +45,7 @@ namespace ElectronicObserver.Data
 		/// <summary>潜水空母</summary>
 		SubmarineAircraftCarrier = 14,
 
-		/// <summary>輸送艦</summary>
+		/// <summary>輸送艦(深海)</summary>
 		Transport = 15,
 
 		/// <summary>水上機母艦</summary>

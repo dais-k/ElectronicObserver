@@ -343,7 +343,10 @@ namespace ElectronicObserver.Window.Dialog
 							{
 								special = false;
 								if (id == eq.EquipmentID)
+								{
 									special = true;
+									break;
+								}
 							}
 						}
 
