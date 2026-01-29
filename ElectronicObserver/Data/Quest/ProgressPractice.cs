@@ -85,13 +85,30 @@ namespace ElectronicObserver.Data.Quest
 						ret = true;
 					}
 					break;
-				case 329:   //|329|日|【節分任務:枡】節分演習！二〇二五|演習B勝利3|条件：旗艦潜水母艦or軽空母+潜水艦2or駆逐4or海防2|節分イベントの期間限定デイリー任務 2025/1/28
-					if ((ships.FirstOrDefault().MasterShip.ShipType == ShipTypes.SubmarineTender || ships.FirstOrDefault().MasterShip.ShipType == ShipTypes.LightAircraftCarrier) &&
-						((ships.Count(s => s.MasterShip.ShipType == ShipTypes.Destroyer) >= 4 ||
-						ships.Count(s => s.MasterShip.ShipType == ShipTypes.Escort) >= 2) ||
-						ships.Count(s => s.MasterShip.ShipType == ShipTypes.Submarine) + ships.Count(s => s.MasterShip.ShipType == ShipTypes.SubmarineAircraftCarrier) >= 2))
+				case 329:   //|329|日|【節分任務:枡】節分演習！二〇二六|演習B勝利3|条件：旗艦潜水母艦+潜水艦3or旗艦海防+海防2or旗艦輸送艦+駆逐5|節分イベントの期間限定デイリー任務 2026/1/28
+					switch (ships.FirstOrDefault().MasterShip.ShipType)
 					{
-						ret = true;
+						case ShipTypes.SubmarineTender:
+							if (ships.Count(s => s.MasterShip.ShipType == ShipTypes.Submarine || s.MasterShip.ShipType == ShipTypes.SubmarineAircraftCarrier) >= 3)
+							{
+								ret = true;
+							}
+							break;
+						case ShipTypes.Escort:
+							if (ships.Count(s => s.MasterShip.ShipType == ShipTypes.Escort) >= 3)
+							{
+								ret = true;
+							}
+							break;
+						case ShipTypes.AmphibiousAssaultShip:
+						case ShipTypes.FleetOiler:
+							if (ships.Count(s => s.MasterShip.ShipType == ShipTypes.Destroyer) >= 5)
+							{
+								ret = true;
+							}
+							break;
+						default:
+							break;
 					}
 					break;
 				case 330:   //|330|Ｑ|空母機動部隊、演習始め！|演習B勝利以上4|条件：航空母艦旗艦他1隻計2隻以上及び駆逐艦2隻を含む|クォータリーだが1日で進捗リセット
