@@ -36,6 +36,7 @@ namespace ElectronicObserver.Utility.Data
 			int suisei634Count = 0;
 			int zuiunCount = 0;
 			int fighterCount = 0;
+			int jetfighterCount = 0;
 			var dayAttackList = new List<DayAttackKind>();
 
 			if (slot == null)
@@ -60,6 +61,11 @@ namespace ElectronicObserver.Utility.Data
 					case EquipmentTypes.JetBomber:
 						jetbomberCount++;
 						break;
+
+					case EquipmentTypes.JetFighter:
+						jetfighterCount++;
+						break;
+
 					case EquipmentTypes.CarrierBasedBomber:
 						bomberCount++;
 						if (eq.Name.Contains("六三四空"))
@@ -137,8 +143,17 @@ namespace ElectronicObserver.Utility.Data
 					}
 				}
 
-				if (bomberCount > 0 && attackerCount > 0) //空母攻撃判定
+				if (bomberCount + attackerCount + jetfighterCount+ jetbomberCount > 0) //空母攻撃判定
 				{
+					if (jetfighterCount >= 1 && jetbomberCount >= 2)
+						dayAttackList.Add(DayAttackKind.CutinJetFighterJetBomberJetBomber);
+
+					if (jetfighterCount >= 1 && jetbomberCount >= 1)
+						dayAttackList.Add(DayAttackKind.CutinJetFighterJetBomber);
+
+					if (jetfighterCount >= 1 && bomberCount >= 1 && attackerCount >= 1)
+						dayAttackList.Add(DayAttackKind.CutinJetFighterBomberAttacker);
+
 					if (fighterCount >= 1 && bomberCount >= 1 && attackerCount >= 1)
 						dayAttackList.Add(DayAttackKind.CutinFighterBomberAttacker);
 
