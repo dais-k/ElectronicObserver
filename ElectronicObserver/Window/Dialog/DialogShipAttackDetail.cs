@@ -528,6 +528,15 @@ namespace ElectronicObserver.Window.Dialog
 						case "CutinBomberAttacker":
 							otc = 155;
 							break;
+						case "CutinJetFighterBomberAttacker":
+							otc = 115;
+							break;
+						case "CutinJetFighterJetBomber":
+							otc = 125;
+							break;
+						case "CutinJetFighterJetBomberJetBomber":
+							otc = 135;
+							break;
 						case "CutinMainMain":
 							otc = 150;
 							break;
