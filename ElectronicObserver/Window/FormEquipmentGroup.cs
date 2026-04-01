@@ -129,7 +129,7 @@ namespace ElectronicObserver.Window
 		{
 			EquipmentGroupManager groups = KCDatabase.Instance.EquipmentGroup;
 
-			// 空(≒初期状態)の時、おなじみ全所属艦を追加
+			// 空(≒初期状態)の時、全装備を追加
 			if (groups.EquipmentGroups.Count == 0)
 			{
 
@@ -198,6 +198,17 @@ namespace ElectronicObserver.Window
 			IsRowsUpdating = false;
 			Icon = ResourceManager.ImageToIcon(ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormShipGroup]);
 			InitializeImprovementTooltip();
+
+			// 初回ロード時にタブが存在するなら先頭タブを選択しておく
+			// これにより自動更新時に SelectedTab が null となって更新が無視される問題を防ぐ
+			if (SelectedTab == null && TabPanel.Controls.Count > 0)
+			{
+				var first = TabPanel.Controls.OfType<ImageLabel>().FirstOrDefault();
+				if (first != null)
+				{
+					ChangeEquipView(first);
+				}
+			}
 		}
 
 		void ConfigurationChanged()
@@ -248,9 +259,51 @@ namespace ElectronicObserver.Window
 						// 直接変えるとサイズが足りないか何かで変更が適用されないことがあるため、 Resize イベント中に変更する(ために値を記録する)
 						// しかし Resize イベントだけだと呼ばれないことがあるため、直接変えてもおく
 						// つらい
-						splitContainer1.SplitterDistance = _splitterDistance = int.Parse(args[i + 1]);
+						_splitterDistance = int.Parse(args[i + 1]);
 						break;
 				}
+			}
+		}
+
+		// レイアウト確定後に呼んで保存値を適用する（FormMain から呼ぶ想定）
+		public void ApplyPersistedSplitterDistance()
+		{
+			if (_splitterDistance == -1) return;
+
+			try
+			{
+				int distance = _splitterDistance;
+				int oldMin1 = splitContainer1.Panel1MinSize;
+				int oldMin2 = splitContainer1.Panel2MinSize;
+				try
+				{
+					splitContainer1.Panel1MinSize = 0;
+					splitContainer1.Panel2MinSize = 0;
+					splitContainer1.SplitterDistance = distance;
+				}
+				catch
+				{
+					try
+					{
+						int total = (splitContainer1.Orientation == Orientation.Horizontal) ? splitContainer1.Height : splitContainer1.Width;
+						int max = Math.Max(0, total - splitContainer1.SplitterWidth);
+						splitContainer1.SplitterDistance = Math.Max(0, Math.Min(distance, max));
+					}
+					catch { }
+				}
+				finally
+				{
+					try
+					{
+						splitContainer1.Panel1MinSize = oldMin1;
+						splitContainer1.Panel2MinSize = oldMin2;
+					}
+					catch { }
+				}
+			}
+			finally
+			{
+				_splitterDistance = -1;
 			}
 		}
 
@@ -1759,7 +1812,6 @@ namespace ElectronicObserver.Window
 				try
 				{
 					splitContainer1.SplitterDistance = _splitterDistance;
-					_splitterDistance = -1;
 				}
 				catch (Exception)
 				{

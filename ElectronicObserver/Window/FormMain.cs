@@ -632,6 +632,12 @@ namespace ElectronicObserver.Window
 
 					WindowPlacementManager.LoadWindowPlacement(this, archive.GetEntry("WindowPlacement.xml").Open());
 					LoadSubWindowsLayout(archive.GetEntry("SubWindowLayout.xml").Open());
+ 
+					this.BeginInvoke(new Action(() =>
+					{
+						try { fShipGroup?.ApplyPersistedSplitterDistance(); } catch { }
+						try { fEquipmentGroup?.ApplyPersistedSplitterDistance(); } catch { }
+					}));
 				}
 
 				Utility.Logger.Add(2, path + " からウィンドウ レイアウトを復元しました。");
