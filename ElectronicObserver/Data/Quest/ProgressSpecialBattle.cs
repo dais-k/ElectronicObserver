@@ -57,6 +57,25 @@ namespace ElectronicObserver.Data.Quest
 			switch (QuestID)
 			{
 				//============================ 200～299 ============================
+				// |234|週|バレンタイン2026特別限定任務|1-3・1-4・2-1ボスS勝利各1|要 大井, 球磨, 鹿島, 神威, 大泊, 神風, 高波, 涼波, 藤波, 早波, 浜波 の中から旗艦+随伴2以上
+				case 234:
+					membernames = new string[] { "おおい", "くま", "かしま", "かもい", "おおとまり", "かみかぜ", "たかなみ", "すずなみ", "ふじなみ", "はやなみ", "はまなみ" };
+					isFlagship = false;
+					membercount = 0;
+					foreach (var item in membernames)
+					{
+						if (isFlagship == false && members[0]?.MasterShip?.NameReading == item)
+						{
+							isFlagship = true;
+						}
+
+						if (members.Count(s => s?.MasterShip?.NameReading == item) != 0)
+						{
+							membercount++;
+						}
+					}
+					isAccepted = (isFlagship == true && membercount >= 3);
+					break;
 				// |249|月|「第五戦隊」出撃せよ！|2-5ボスS勝利1|要「那智」「妙高」「羽黒」
 				case 249:
 					{

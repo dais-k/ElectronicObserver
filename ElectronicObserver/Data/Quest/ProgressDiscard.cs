@@ -64,8 +64,15 @@ namespace ElectronicObserver.Data.Quest
 
 			foreach (var i in equipments)
 			{
-				var eq = KCDatabase.Instance.Equipments[i];
+				// パースや DB に存在しない ID を安全にスキップする
+				if (i <= 0) continue;
 
+				// Equipments は外部で削除されている可能性があるため TryGetValue で安全に取得する
+				if (!KCDatabase.Instance.Equipments.TryGetValue(i, out var eq) || eq == null)
+					continue;
+
+				// MasterEquipment が null の可能性も考慮
+				var master = eq.MasterEquipment;
 				switch (CategoryIndex)
 				{
 					case -1:
@@ -73,15 +80,15 @@ namespace ElectronicObserver.Data.Quest
 							Increment();
 						break;
 					case 1:
-						if (Categories.Contains(eq.MasterEquipment.CardType))
+						if (master != null && Categories.Contains(master.CardType))
 							Increment();
 						break;
 					case 2:
-						if (Categories.Contains((int)eq.MasterEquipment.CategoryType))
+						if (master != null && Categories.Contains((int)master.CategoryType))
 							Increment();
 						break;
 					case 3:
-						if (Categories.Contains(eq.MasterEquipment.IconType))
+						if (master != null && Categories.Contains(master.IconType))
 							Increment();
 						break;
 				}
@@ -133,8 +140,8 @@ namespace ElectronicObserver.Data.Quest
 					isAccepted = 0;
 					//秘書艦が空母系か？
 					if (members.FirstOrDefault()?.MasterShip?.ShipType == ShipTypes.AircraftCarrier ||
-					    members.FirstOrDefault()?.MasterShip?.ShipType == ShipTypes.LightAircraftCarrier ||
-					    members.FirstOrDefault()?.MasterShip?.ShipType == ShipTypes.ArmoredAircraftCarrier)
+						members.FirstOrDefault()?.MasterShip?.ShipType == ShipTypes.LightAircraftCarrier ||
+						members.FirstOrDefault()?.MasterShip?.ShipType == ShipTypes.ArmoredAircraftCarrier)
 					{
 						//装備スロット内を調べて練度MAXの零戦21型(熟練)があれば条件達成
 						foreach(var slot in members.FirstOrDefault().SlotInstance)
@@ -164,11 +171,11 @@ namespace ElectronicObserver.Data.Quest
 					isAccepted = (members.FirstOrDefault()?.MasterShip?.ShipID == 488 &&
 								  members.FirstOrDefault().SlotInstance[0] != null &&
 								  members.FirstOrDefault().SlotInstance[0].EquipmentID == 238 &&
-							      members.FirstOrDefault().SlotInstance[0].Level == 10) ? 1 : 0;
+								  members.FirstOrDefault().SlotInstance[0].Level == 10) ? 1 : 0;
 					break;
 				case 1108:  //|1108|単|調整改良型「水中探信儀」の増産|秘書艦「山風改二(丁)」もしくは「時雨改二」の第一スロットに三式水中探信儀★10を装備した状態で九三式水中聴音機x2破棄、三式水中探信儀x2破棄、新型兵装資材x2＆開発資材x30＆ボーキ1300を保有
 					isAccepted = (((members.FirstOrDefault()?.MasterShip?.ShipID == 588) ||  //山風改二
-						           (members.FirstOrDefault()?.MasterShip?.ShipID == 667) ||  //山風改二丁
+								   (members.FirstOrDefault()?.MasterShip?.ShipID == 667) ||  //山風改二丁
 								   (members.FirstOrDefault()?.MasterShip?.ShipID == 145)) && //時雨改二
 								  members.FirstOrDefault().SlotInstance[0] != null &&
 								  members.FirstOrDefault().SlotInstance[0].EquipmentID == 47 &&
@@ -182,13 +189,20 @@ namespace ElectronicObserver.Data.Quest
 					break;
 				case 1123:  //|1123|１|改良三座水上偵察機の増備|秘書艦「利根改二」または「由良改二」に零式水上偵察機★10を装備した状態で九七式艦攻(九三一空)x2を破棄、ボーキ950、新型航空兵装資材x2、開発資材x35、熟練搭乗員x2を保有
 					isAccepted = (((members.FirstOrDefault()?.MasterShip?.ShipID == 188) ||		//利根改二
-						           (members.FirstOrDefault()?.MasterShip?.ShipID == 488)) &&	//由良改二
+								   (members.FirstOrDefault()?.MasterShip?.ShipID == 488)) &&	//由良改二
 								  members.FirstOrDefault().SlotInstance[0] != null &&
 								  members.FirstOrDefault().SlotInstance[0].EquipmentID == 25 &&
 								  members.FirstOrDefault().SlotInstance[0].Level == 10) ? 1 : 0;
 					break;
 				case 1138:  //|1138|６|【高射装置量産】94式高射装置の追加配備|秘書艦に秋月型を配置し91式高射装置を4つ廃棄、ボーキ1300、鋼材480、高速建造材x4、開発資材x16を保有
 					isAccepted = members.FirstOrDefault()?.MasterShip?.ShipClass == 54 ? 1 : 0;
+					break;
+				case 1160:  //|1160|単|【工廠任務】試製震電の艦戦型改二への改修|飛龍改二/改三(旗艦)且つ、藤波改二, 早波改二, 浜波改二, 風雲改二から3隻以上配備した第一艦隊を編成
+						isAccepted = ((members.FirstOrDefault()?.MasterShip?.ShipID == 196 || members.FirstOrDefault()?.MasterShip?.ShipID == 1031 ) &&
+									members.Count(s => s != null && (s.MasterShip?.ShipID == 981 || s.MasterShip?.ShipID == 982 || s.MasterShip?.ShipID == 983 || s.MasterShip?.ShipID == 564) ) >= 3) ? 1 : 0;
+					break;
+				case 1161:  //|1161|単|【工廠任務】新装備運用のための工廠整備【壱】|第一旗艦に「飛龍改二/改三」を配備
+					isAccepted = (members.FirstOrDefault()?.MasterShip?.ShipID == 196 || members.FirstOrDefault()?.MasterShip?.ShipID == 1031) ? 1 : 0;
 					break;
 				default:
 					//任務IDが当てはまらないなら-1のまま、つまりチェックの必要なし

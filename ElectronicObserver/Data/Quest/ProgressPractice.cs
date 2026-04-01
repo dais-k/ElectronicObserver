@@ -66,6 +66,9 @@ namespace ElectronicObserver.Data.Quest
 
 		private bool MeetsSpecialRequirements(int questId)
 		{
+			// 邪悪
+			var Empty = (ShipTypes)(-1);
+
 			bool ret = false;
 			FleetData fleet = KCDatabase.Instance.Fleet.Fleets.Values
 				.FirstOrDefault(f => f.IsInPractice);
@@ -73,6 +76,14 @@ namespace ElectronicObserver.Data.Quest
 			if (fleet == null) return false;
 
 			List<ShipData> ships = fleet.MembersInstance.Where(s => s != null).ToList();
+ 
+			var members = fleet.MembersWithoutEscaped;
+			var memberstype = members.Select(s => s?.MasterShip?.ShipType ?? Empty).ToArray();
+
+			string[] membernames;
+			bool[] fleetmember;
+			bool isFlagship = false;
+			var membercount = 0;
 
 			switch (questId)
 			{
@@ -155,6 +166,13 @@ namespace ElectronicObserver.Data.Quest
 						ret = true;
 					}
 					break;
+				case 340:   //|340|週|【桃の節句任務】桃の節句艦隊演習2026|演習S勝利以上3|条件：海防艦3or駆逐艦4|クォータリーだが1日で進捗リセット
+					if ((ships.Count(s => s.MasterShip.ShipType == ShipTypes.Escort) >= 3) ||
+						(ships.Count(s => s.MasterShip.ShipType == ShipTypes.Destroyer) >= 4))
+					{
+						ret = true;
+					}
+					break;
 				case 342:   //|342|Ｑ|小艦艇群演習強化任務|演習A勝利以上4|(駆逐艦/海防艦)3隻+(駆逐艦/海防艦/軽巡級)1隻|クォータリーだが1日で進捗リセット
 					if ((ships.Count(s => s.MasterShip.ShipType == ShipTypes.Destroyer || s.MasterShip.ShipType == ShipTypes.Escort) >= 4)
 							||
@@ -211,6 +229,24 @@ namespace ElectronicObserver.Data.Quest
 					{
 						ret = true;
 					}
+					break;
+				case 349:   //|349|週|バレンタイン2026限定任務【スイーツ演習】|演習S勝利5|条件：「Thonburi」「Helena」「Mogador」「Gotland」「Perth」「Commandant Teste」「曙」「朧」「野埼」旗艦含め3隻以上 | バレンタインイベントの期間限定ウイークリー任務 
+					membernames = new string[] { "トンブリ", "ヘレナ", "モガドール", "ゴトランド", "パース", "コマンダン・テスト", "あけぼの", "おぼろ", "のさき"};
+					isFlagship = false;
+					membercount = 0;
+					foreach (var item in membernames)
+					{
+						if (isFlagship == false && members[0]?.MasterShip?.NameReading == item)
+						{
+							isFlagship = true;
+						}
+
+						if (members.Count(s => s?.MasterShip?.NameReading == item) != 0)
+						{
+							membercount++;
+						}
+					}
+					ret = (isFlagship == true && membercount >= 3);
 					break;
 				case 350:   //|350|３|精鋭「第七駆逐隊」演習開始！|演習A勝利3|条件：朧、曙、漣、潮|イヤーリーだが1日で進捗リセット
 					if (ships.Count(s =>
@@ -311,7 +347,7 @@ namespace ElectronicObserver.Data.Quest
 					}
 					break;
 				case 363:   //|363|週|【艦隊12周年記念任務】記念艦隊演習！|演習A勝利以上5|条件：「平安丸」「Mogador」「Gotland」「大泊」「朧」「曙」「衣笠改二」が旗艦と2番艦 | 1日で進捗リセット|
-					string[] membernames = new string[] { "へいあんまる", "モガドール", "ゴトランド", "おおとまり", "おぼろ", "あけぼの", "きぬがさ" };
+					membernames = new string[] { "へいあんまる", "モガドール", "ゴトランド", "おおとまり", "おぼろ", "あけぼの", "きぬがさ" };
 					bool[] shipcheck = new bool[] { false, false };
 					foreach (var item in membernames)
 					{

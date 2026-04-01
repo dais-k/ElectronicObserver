@@ -189,17 +189,42 @@ namespace ElectronicObserver.Data
 			{
 				case "api_req_quest/clearitemget":
 					{
-						int id = int.Parse(data["api_quest_id"]);
-						var quest = Quests[id];
+						// 安全に api_quest_id を取得・パースし、該当する任務が存在するかチェックする
+						if (data == null || !data.TryGetValue("api_quest_id", out var questIdStr) || !int.TryParse(questIdStr, out int id))
+						{
+							Utility.Logger.Add(2, "任務完了通知を受信しましたが、api_quest_id が存在しないか不正です。");
+							break;
+						}
 
-						Utility.Logger.Add(2, string.Format("任務『{0}』を達成しました。", quest.Name));
+						if (Quests == null || !Quests.ContainsKey(id))
+						{
+							Utility.Logger.Add(2, $"任務ID {id} の達成通知を受信しましたが、該当する任務が見つかりませんでした。");
+							// 件数を誤って減らさないよう Count は変更しない
+							break;
+						}
+
+						var quest = Quests[id];
+						Utility.Logger.Add(2, string.Format("任務『{0}』を達成しました。", quest?.Name ?? $"ID:{id}"));
 
 						Quests.Remove(id);
-						Count--;
+						Count = Math.Max(0, Count - 1);
 					}
 					break;
 				case "api_req_quest/stop":
-					Quests[int.Parse(data["api_quest_id"])].State = 1;
+					{
+						if (data == null || !data.TryGetValue("api_quest_id", out var stopIdStr) || !int.TryParse(stopIdStr, out int stopId))
+						{
+							Utility.Logger.Add(2, "任務停止通知を受信しましたが、api_quest_id が存在しないか不正です。");
+							break;
+						}
+
+						if (Quests != null && Quests.ContainsKey(stopId))
+						{
+							var q = Quests[stopId];
+							if (q != null)
+								q.State = 1;
+						}
+					}
 					break;
 			}
 
