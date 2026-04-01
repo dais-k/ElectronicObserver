@@ -591,6 +591,40 @@ namespace ElectronicObserver.Utility.Data
 		}
 
 		/// <summary>
+		/// 艦隊の航空偵察値を求めます。
+		/// </summary>
+		/// <param name="fleet">対象の艦隊。</param>
+		public static double GetAerialRecon(FleetData fleet)
+		{
+			double aerialRecon = 0.0;
+
+			foreach (var ship in fleet.MembersWithoutEscaped)
+			{
+				if (ship == null) continue;
+
+				var eqs = ship.SlotInstanceMaster;
+
+				for (int i = 0; i < ship.Slot.Count; i++)
+				{
+					if (eqs[i] == null)
+						continue;
+
+					switch (eqs[i].CategoryType)
+					{
+						case EquipmentTypes.SeaplaneRecon:
+						case EquipmentTypes.SeaplaneBomber:
+						case EquipmentTypes.FlyingBoat:
+							aerialRecon += eqs[i].LOS * Math.Sqrt(Math.Sqrt(ship.Aircraft[i]));
+							break;
+					}
+
+				}
+			}
+
+			return aerialRecon;
+		}
+		
+		/// <summary>
 		/// 煙幕発動
 		/// ※煙幕の発動率ではなく、煙幕が発動した場合に何重の煙幕になるかの確率
 		/// x.com/yukicacoon/status/1739480992090632669

@@ -285,6 +285,8 @@ namespace ElectronicObserver.Window
 					StringBuilder sb = new StringBuilder();
 					double probStart = fleet.GetContactProbability();
 					var probSelect = fleet.GetContactSelectionProbability();
+					var aerialRecon = Calculator.GetAerialRecon(fleet); // 航空偵察値
+
 
 					sb.AppendFormat("新判定式(33) 分岐点係数: {0}\r\n　(クリックで切り替え)\r\n\r\n触接開始率: \r\n　確保 {1:p1} / 優勢 {2:p1}\r\n",
 						BranchWeight,
@@ -299,6 +301,12 @@ namespace ElectronicObserver.Window
 						{
 							sb.AppendFormat("　命中{0} : {1:p1}\r\n", p.Key, p.Value);
 						}
+					}
+
+					if (aerialRecon >= 0)
+					{
+						sb.AppendFormat("\r\n航空偵察： {0:0.00}\r\n",
+							aerialRecon);
 					}
 
 					ToolTipInfo.SetToolTip(SearchingAbility, sb.ToString());
