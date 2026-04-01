@@ -759,12 +759,12 @@ namespace ElectronicObserver.Utility
 				public bool ShowAntiGroundPower { get; set; }
 
 				/// <summary>
-				/// 支援攻撃力を表示させる
+				/// 支援攻撃力を表示させるか
 				/// </summary>
 				public bool ShowSupportPower { get; set; }
 
 				/// <summary>
-				/// 秋刀魚漁有効装備数を表示させる
+				/// 秋刀魚漁有効装備数を表示させるか
 				/// </summary>
 				public bool ShowSanmaEquip { get; set; }
 

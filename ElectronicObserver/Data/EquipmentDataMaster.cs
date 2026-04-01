@@ -271,7 +271,8 @@ namespace ElectronicObserver.Data
 			CategoryType == EquipmentTypes.MainGunMedium ||
 			CategoryType == EquipmentTypes.MainGunLarge ||
 			CategoryType == EquipmentTypes.MainGunLarge2 ||
-			CategoryType == EquipmentTypes.SecondaryGun;
+			CategoryType == EquipmentTypes.SecondaryGun ||
+			CategoryType == EquipmentTypes.SecondaryGun2;
 
 		/// <summary> 主砲系かどうか </summary>
 		public bool IsMainGun =>
@@ -446,7 +447,7 @@ namespace ElectronicObserver.Data
 		/// <summary> 対空電探かどうか </summary>
 		public bool IsAirRadar => IsRadar && AA >= 2;
 
-		/// <summary> 水上電探かどうか </summary>
+		/// <summary> 対水上電探かどうか </summary>
 		public bool IsSurfaceRadar => IsRadar && LOS >= 5;
 
 		/// <summary> 測距儀付き電探(大和型電探)かどうか </summary>
@@ -473,7 +474,8 @@ namespace ElectronicObserver.Data
 			EquipmentID == 288 ||       // 試製15cm9連装対潜噴進砲
 			EquipmentID == 287 ||       // 三式爆雷投射機 集中配備
 			EquipmentID == 377 ||       // RUR-4A Weapon Alpha改
-			EquipmentID == 472;         // Mk.32 対潜魚雷(Mk.2落射機)
+			EquipmentID == 472 ||       // Mk.32 対潜魚雷(Mk.2落射機)
+			EquipmentID == 569;         // 三式爆雷投射機改
 
 		/// <summary> 対潜迫撃砲かどうか(爆雷/爆雷投射機は含まない) </summary>
 		public bool IsAntiSubmarineMortar =>

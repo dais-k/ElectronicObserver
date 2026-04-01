@@ -107,7 +107,7 @@ namespace ElectronicObserver.Window.Dialog
 			int formation = Formation.SelectedItem as FormationComboBoxData;
 			int aaCutinKind = AACutinKind.SelectedItem as AACutinComboBoxData;
 			int enemyAircraftCount = enemySlotCountValue;
-			int enemyAvoidance = (AAFireAvoidance.SelectedIndex < 0)? 0 : AAFireAvoidance.SelectedIndex;
+			int enemyAvoidance = (AAFireAvoidance.SelectedIndex < 0)? 0 : AAFireAvoidance.SelectedIndex;    //敵航空機の射撃回避の段階。0:なし、1:小、2:中、3:大、4:特大
 			double[] avoid1 = new double[5] { 1.0, 0.6, 0.6, 0.5, 0.5 };
 			double[] avoid2 = new double[5] { 1.0, 1.0, 0.7, 0.7, 0.5 };
 			double[] avoid3 = new double[5] { 1.0, 1.0, 0.6, 0.4, 0.4 };
