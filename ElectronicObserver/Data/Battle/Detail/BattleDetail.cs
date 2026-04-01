@@ -229,8 +229,35 @@ namespace ElectronicObserver.Data.Battle.Detail
 							builder.Append("[").Append(GetAttackKind()).Append("(").Append(string.Join("", present)).Append(")] ");
 					}
 				}
-				else
+				else if (GetAttackKind().Contains("カットイン(魚雷/魚雷/魚雷)") && EquipmentIDs != null)
+				{
+					var masters = EquipmentIDs
+						.Select(id => KCDatabase.Instance.MasterEquipments[id])
+						.Where(eq => eq != null)
+						.ToArray();
 
+					if (masters.Length > 0)
+					{
+						var lateModelTorpedoCount = masters.Count(eq => eq.IsLateModelTorpedo);
+						var submarineRadorCount = masters.Count(eq => (int)eq.CategoryType == 51);
+						if (lateModelTorpedoCount > 0)
+						{
+							if (submarineRadorCount > 0)
+							{
+								builder.Append("[潜水艦カットイン(電探/魚雷/魚雷)] ");
+							}
+							else if (lateModelTorpedoCount > 1)
+							{
+								builder.Append("[潜水艦カットイン(魚雷/魚雷/魚雷)] ");
+							}
+						}
+						else
+						{
+							builder.Append("[").Append(GetAttackKind()).Append("] ");
+						}
+					}
+				}
+				else
 				{
 					builder.Append("[").Append(GetAttackKind()).Append("] ");
 				}
