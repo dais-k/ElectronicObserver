@@ -73,7 +73,7 @@
 			// statusStrip1
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.StatusInfo});
+			this.StatusInfo});
 			this.statusStrip1.Location = new System.Drawing.Point(0, 419);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(624, 22);
@@ -158,6 +158,7 @@
 			this.IsLargeConstruction.Text = "大型艦建造";
 			this.IsLargeConstruction.ThreeState = true;
 			this.IsLargeConstruction.UseVisualStyleBackColor = true;
+			this.IsLargeConstruction.CheckStateChanged += new System.EventHandler(this.IsLargeConstruction_CheckStateChanged);
 			// 
 			// label7
 			// 
@@ -213,7 +214,7 @@
 			// Recipe
 			// 
 			this.Recipe.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
+			| System.Windows.Forms.AnchorStyles.Right)));
 			this.Recipe.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.Recipe.FormattingEnabled = true;
 			this.Recipe.Location = new System.Drawing.Point(412, 10);
@@ -330,14 +331,14 @@
 			this.RecordView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.RecordView.ColumnHeadersVisible = false;
 			this.RecordView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.RecordView_Header,
-            this.RecordView_Name,
-            this.RecordView_Date,
-            this.RecordView_Recipe,
-            this.RecordView_SecretaryShip,
-            this.RecordView_Material100,
-            this.RecordView_Material20,
-            this.RecordView_Material1});
+			this.RecordView_Header,
+			this.RecordView_Name,
+			this.RecordView_Date,
+			this.RecordView_Recipe,
+			this.RecordView_SecretaryShip,
+			this.RecordView_Material100,
+			this.RecordView_Material20,
+			this.RecordView_Material1});
 			dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
 			dataGridViewCellStyle1.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);

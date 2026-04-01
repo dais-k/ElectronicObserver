@@ -212,6 +212,8 @@ namespace ElectronicObserver.Window.Dialog
 
 			Icon = ResourceManager.ImageToIcon(ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.FormConstructionRecord]);
 
+			UpdateIsLargeConstructionText();
+
 		}
 
 
@@ -443,6 +445,27 @@ namespace ElectronicObserver.Window.Dialog
 				if (ship == null || ship.ShipType != category)
 					SecretaryCategory.SelectedIndex = 0;
 			}
+		}
+
+		private void UpdateIsLargeConstructionText()
+		{
+			switch (IsLargeConstruction.CheckState)
+			{
+				case CheckState.Checked:
+					IsLargeConstruction.Text = "大型艦建造";
+					break;
+				case CheckState.Unchecked:
+					IsLargeConstruction.Text = "通常艦建造";
+					break;
+				default:
+					IsLargeConstruction.Text = "大型＋通常";
+					break;
+			}
+		}
+
+		private void IsLargeConstruction_CheckStateChanged(object sender, EventArgs e)
+		{
+			UpdateIsLargeConstructionText();
 		}
 
 

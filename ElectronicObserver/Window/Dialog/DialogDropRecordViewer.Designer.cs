@@ -239,14 +239,14 @@
 			this.RecordView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
 			this.RecordView.ColumnHeadersVisible = false;
 			this.RecordView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.RecordView_Header,
-            this.RecordView_Name,
-            this.RecordView_Date,
-            this.RecordView_Map,
-            this.RecordView_Rank,
-            this.RecordView_RankS,
-            this.RecordView_RankA,
-            this.RecordView_RankB});
+			this.RecordView_Header,
+			this.RecordView_Name,
+			this.RecordView_Date,
+			this.RecordView_Map,
+			this.RecordView_Rank,
+			this.RecordView_RankS,
+			this.RecordView_RankA,
+			this.RecordView_RankB});
 			dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
 			dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Window;
 			dataGridViewCellStyle5.Font = new System.Drawing.Font("Meiryo UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Pixel);
@@ -343,6 +343,7 @@
 			this.IsBossOnly.Text = "Boss";
 			this.IsBossOnly.ThreeState = true;
 			this.IsBossOnly.UseVisualStyleBackColor = true;
+			this.IsBossOnly.CheckStateChanged += new System.EventHandler(this.IsBossOnly_CheckStateChanged);
 			// 
 			// MapAreaID
 			// 
@@ -467,7 +468,7 @@
 			// statusStrip1
 			// 
 			this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.StatusInfo});
+			this.StatusInfo});
 			this.statusStrip1.Location = new System.Drawing.Point(0, 419);
 			this.statusStrip1.Name = "statusStrip1";
 			this.statusStrip1.Size = new System.Drawing.Size(624, 22);

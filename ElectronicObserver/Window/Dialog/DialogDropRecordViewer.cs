@@ -217,6 +217,8 @@ namespace ElectronicObserver.Window.Dialog
 			LabelEquipmentName.ImageIndex = (int)ResourceManager.EquipmentContent.MainGunL;
 
 			Icon = ResourceManager.ImageToIcon(ResourceManager.Instance.Icons.Images[(int)ResourceManager.IconContent.ItemPresentBox]);
+
+			UpdateIsBossOnlyText();
 		}
 
 		private void DialogDropRecordViewer_FormClosed(object sender, FormClosedEventArgs e)
@@ -400,6 +402,28 @@ namespace ElectronicObserver.Window.Dialog
 		}
 
 
+		private void UpdateIsBossOnlyText()
+		{
+			switch (IsBossOnly.CheckState)
+			{
+				case CheckState.Checked:
+					IsBossOnly.Text = "ボスのみ";
+					break;
+				case CheckState.Unchecked:
+					IsBossOnly.Text = "道中のみ";
+					break;
+				default:
+					IsBossOnly.Text = "全て";
+					break;
+			}
+		}
+
+		private void IsBossOnly_CheckStateChanged(object sender, EventArgs e)
+		{
+			UpdateIsBossOnlyText();
+		}
+		
+		
 		private void ButtonRun_Click(object sender, EventArgs e)
 		{
 
