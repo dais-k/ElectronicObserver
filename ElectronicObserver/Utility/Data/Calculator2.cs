@@ -500,7 +500,8 @@ namespace ElectronicObserver.Utility.Data
 		public static int[] GetAACutinKind(int shipID, int[] slot, int sId = -1)
 		{
 			int highangle = 0;
-			int highangle_director = 0;
+			int highangle_over8 = 0;
+			int highangle_over9 = 0;
 			int highangle_10kai = 0;
 			int highangle_10kai_Directorkai = 0;
 			int highangle_musashi = 0;
@@ -509,6 +510,7 @@ namespace ElectronicObserver.Utility.Data
 			int highangle_yamato = 0;
 			int highangle_atlanta = 0;
 			int highangle_atlanta_GFCS = 0;
+			int highangle_ooyodo = 0;
 			int director = 0;
 			int director_94 = 0;
 			int radar = 0;
@@ -542,7 +544,12 @@ namespace ElectronicObserver.Utility.Data
 					highangle++;
 
 					if (eq.IsSpecialHighAngleGun)
-						highangle_director++;
+					{
+						highangle_over8++;
+						if (eq.AA >= 9)
+							highangle_over9++;
+					}
+
 
 					switch (eq.EquipmentID)
 					{
@@ -569,6 +576,10 @@ namespace ElectronicObserver.Utility.Data
 							break;
 						case 553:   // 10cm連装高角砲改
 							highangle_10kai++;
+							break;
+						case 71:    //10㎝連装高角砲(砲架)
+						case 220:   //8cm高角砲改＋増設機銃
+							highangle_ooyodo++;
 							break;
 					}
 				}
@@ -721,7 +732,7 @@ namespace ElectronicObserver.Utility.Data
 					break;
 
 				case 487:   // 鬼怒改二
-					if (aagun_over8 >= 1 && (highangle - highangle_director >= 1))
+					if (aagun_over8 >= 1 && (highangle - highangle_over8 >= 1))
 						aacutinlist.Add(19);
 					if (aagun_over8 >= 1)
 						aacutinlist.Add(20);
@@ -857,10 +868,11 @@ namespace ElectronicObserver.Utility.Data
 
 				case 426:   // 吹雪改二
 				case 981:   // 藤波改二
+				case 982:   // 早波改二
 				case 983:   // 浜波改二
 				case 986:   // 白雪改二
 				case 987:   // 初雪改二
-					if (highangle_director >= 2 && radar_over4 >= 1)
+					if (highangle_over8 >= 2 && radar_over4 >= 1)
 						aacutinlist.Add(49);
 					if ((highangle_10kai + highangle_10kai_Directorkai) >= 2 && radar_over4 >= 1 && director_94 >= 1)
 						aacutinlist.Add(50);
@@ -868,6 +880,20 @@ namespace ElectronicObserver.Utility.Data
 						aacutinlist.Add(51);
 					if (highangle_10kai >= 2 && director_94 >= 1)
 						aacutinlist.Add(52);
+					break;
+
+				case 1031:  // 飛龍改三
+					if (highangle_over9 >= 1 && radar_over4 >= 1)
+						aacutinlist.Add(53);
+					if (highangle >= 1 && aagun_over8 >= 1)
+					{
+						if (radar_aaradar >= 1)
+							aacutinlist.Add(10);
+
+						aacutinlist.Add(11);
+					}
+					if (radar_aaradar >= 1 && highangle_musashi >= 1 && aagun_Rocket_Mod2 >= 1)
+						aacutinlist.Add(27);
 					break;
 			}
 
@@ -883,20 +909,24 @@ namespace ElectronicObserver.Utility.Data
 			//以下汎用カットイン
 			if (maingunl >= 1 && aashell >= 1 && director >= 1 && radar_aaradar >= 1) //戦艦系汎用
 				aacutinlist.Add(4);
-			if (highangle_director >= 2 && radar_aaradar >= 1 && KCDatabase.Instance.MasterShips[shipID]?.ShipClass != 54)
+			if (highangle_over8 >= 2 && radar_aaradar >= 1 && KCDatabase.Instance.MasterShips[shipID]?.ShipClass != 54)
 				aacutinlist.Add(5);
 			if (maingunl >= 1 && aashell >= 1 && director >= 1) //戦艦系汎用
 				aacutinlist.Add(6);
 			if (highangle >= 1 && director >= 1 && radar_aaradar >= 1 && KCDatabase.Instance.MasterShips[shipID]?.ShipClass != 54)
 				aacutinlist.Add(7);
-			if (highangle_director >= 1 && radar_aaradar >= 1 && KCDatabase.Instance.MasterShips[shipID]?.ShipClass != 54)
+			if (highangle_over8 >= 1 && radar_aaradar >= 1 && KCDatabase.Instance.MasterShips[shipID]?.ShipClass != 54)
 				aacutinlist.Add(8);
 			if (highangle >= 1 && director >= 1)
 				aacutinlist.Add(9);
 			if (aagun_over8 >= 1 && aagun_over3 >= 2 && radar_aaradar >= 1)
 				aacutinlist.Add(12);
-			if (highangle_director >= 1 && aagun_over8 >= 1 && radar_aaradar >= 1 && shipID != 428)
-				aacutinlist.Add(13);
+			if (highangle_over8 >= 1 && aagun_over8 >= 1 && radar_aaradar >= 1)
+			{
+				if(shipID != 428 && shipID != 1031)
+					aacutinlist.Add(13);
+			}
+
 
 			//並び替え処理
 			if (aacutinlist.Count >= 2)
