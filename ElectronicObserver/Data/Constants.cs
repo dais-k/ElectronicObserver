@@ -1117,6 +1117,12 @@ namespace ElectronicObserver.Data
 					return "空母カットイン(BBA)";
 				case DayAttackKind.CutinBomberAttacker:
 					return "空母カットイン(BA)";
+				case DayAttackKind.CutinJetFighterBomberAttacker:
+					return "空母カットイン(jFBA)";
+				case DayAttackKind.CutinJetFighterJetBomberJetBomber:
+					return "空母カットイン(jFjBjB)";
+				case DayAttackKind.CutinJetFighterJetBomber:
+					return "空母カットイン(jFjB)";
 				case DayAttackKind.Rocket:
 					return "ロケット砲撃";
 				case DayAttackKind.LandingDaihatsu:

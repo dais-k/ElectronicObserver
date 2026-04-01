@@ -54,7 +54,11 @@ namespace ElectronicObserver.Utility.Data
 						|| attack.name == DayAttackKind.CutinAirAttack
 						|| attack.name == DayAttackKind.CutinFighterBomberAttacker
 						|| attack.name == DayAttackKind.CutinBomberBomberAttacker
-						|| attack.name == DayAttackKind.CutinBomberAttacker)
+						|| attack.name == DayAttackKind.CutinBomberAttacker
+						|| attack.name == DayAttackKind.CutinJetFighterBomberAttacker
+						|| attack.name == DayAttackKind.CutinJetFighterJetBomber
+						|| attack.name == DayAttackKind.CutinJetFighterJetBomberJetBomber
+						)
 				{
 					//空撃の基本火力
 					basepower = Math.Floor((firepowerTotal + spItemHoug + torpedoTotal + spItemRaig + Math.Floor((bomberTotal) * 1.3)
@@ -108,6 +112,15 @@ namespace ElectronicObserver.Utility.Data
 						break;
 					case DayAttackKind.CutinBomberAttacker:
 						basepower *= 1.15;
+						break;
+					case DayAttackKind.CutinJetFighterBomberAttacker:
+						basepower *= 1.27;
+						break;
+					case DayAttackKind.CutinJetFighterJetBomberJetBomber:
+						basepower *= 1.35;
+						break;
+					case DayAttackKind.CutinJetFighterJetBomber:
+						basepower *= 1.3;
 						break;
 
 				}

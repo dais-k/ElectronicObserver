@@ -2548,6 +2548,15 @@ namespace ElectronicObserver.Utility.Data
 		/// <summary> 空母カットイン(BA) </summary>
 		CutinBomberAttacker,
 
+		/// <summary> 空母カットイン(jFBA) </summary>
+		CutinJetFighterBomberAttacker,
+
+		/// <summary> 空母カットイン(jFjBjB) </summary>
+		CutinJetFighterJetBomberJetBomber,
+
+		/// <summary> 空母カットイン(jFjB) </summary>
+		CutinJetFighterJetBomber,
+
 		/// <summary> ロケット攻撃 </summary>
 		Rocket = 2000,
 
