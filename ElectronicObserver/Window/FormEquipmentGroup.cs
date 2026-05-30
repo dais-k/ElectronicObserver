@@ -51,6 +51,7 @@ namespace ElectronicObserver.Window
 
 		private bool IsRowsUpdating;
 		private int _splitterDistance;
+		private int _equipNameSortMethod;
 
 		public FormEquipmentGroup(FormMain parent)
 		{
@@ -242,6 +243,8 @@ namespace ElectronicObserver.Window
 
 			MenuGroup_AutoUpdate.Checked = config.FormEquipmentGroup.AutoUpdate;
 			MenuGroup_ShowStatusBar.Checked = config.FormEquipmentGroup.ShowStatusBar;
+			_equipNameSortMethod = config.FormShipGroup.EquipNameSortMethod;
+
 
 		}
 
@@ -1097,32 +1100,27 @@ namespace ElectronicObserver.Window
 			}
 			else
 			{
-				var allInstances = db.Equipments.Values
-					.Where(i => i != null && i.MasterEquipment != null && !i.MasterEquipment.IsAbyssalEquipment)
+				// 複数行選択時：選択行数と選択対象の所持数を表示
+				var equipmentIDs = selectedRows.Cast<DataGridViewRow>()
+					.Select(r => r.Cells[EquipView_ID.Index].Value)
+					.Where(v => v is int)
+					.Select(v => (int)v)
+					.Distinct()
 					.ToList();
 
-				int totalAll = allInstances.Count;
-				int equippedAll = allInstances.Count(i => equippedMasterIDs.Contains(i.MasterID));
+				var instances = db.Equipments.Values
+					.Where(eq => eq != null && equipmentIDs.Contains(eq.EquipmentID) && eq.MasterEquipment != null && !eq.MasterEquipment.IsAbyssalEquipment)
+					.ToList();
 
-				Status_Total.Text = $"全装備総数 (非深海装備): {totalAll} 個 (装備中/配備中: {equippedAll})";
+				int total = instances.Count;
+				int equippedCount = instances.Count(i => equippedMasterIDs.Contains(i.MasterID));
 
-				var byLevelAll = allInstances
-					.GroupBy(i => i.Level)
-					.OrderBy(g => g.Key)
-					.Select(g => $"★{g.Key}:{g.Count()}")
-					.Take(10)
-					.ToArray();
+				// 表示例: "選択: 3 行 / 種類: 2 / 所持数: 10 (装備中/配備中: 4)"
+				Status_Total.Text = $"選択: {selectedRows.Count}  所持数: {total} (装備中/配備中: {equippedCount})";
 
-				Status_ByLevel.Text = "改修(一部): " + (byLevelAll.Length > 0 ? string.Join(" / ", byLevelAll) : "なし");
-
-				var byAlvAll = allInstances
-					.GroupBy(i => i.AircraftLevel)
-					.OrderBy(g => g.Key)
-					.Select(g => $"{g.Key}:{g.Count()}")
-					.Take(10)
-					.ToArray();
-
-				Status_ByAircraftLevel.Text = "熟練度(一部): " + (byAlvAll.Length > 0 ? string.Join(" / ", byAlvAll) : "なし");
+				// 複数選択時は詳細統計は空にする（必要なら集約表示を追加可能）
+				Status_ByLevel.Text = "";
+				Status_ByAircraftLevel.Text = "";
 			}
 		}
 
@@ -1162,65 +1160,183 @@ namespace ElectronicObserver.Window
 		{
 			try
 			{
-				// カテゴリ列は表示文字列(50音順)ではなく Category / Category2 の値で比較する
+				var db = KCDatabase.Instance;
+
+				// EquipView の行から必ずマスター装備ID(EquipmentID)を取得する
+				int id1 = -1, id2 = -1;
+				try
+				{
+					var v1 = EquipView.Rows[e.RowIndex1].Cells[EquipView_ID.Index].Value;
+					var v2 = EquipView.Rows[e.RowIndex2].Cells[EquipView_ID.Index].Value;
+					if (v1 is int) id1 = (int)v1;
+					if (v2 is int) id2 = (int)v2;
+				}
+				catch
+				{
+					id1 = id2 = -1;
+				}
+
+				// カテゴリ列は Category/Category2 の数値で比較する（優先）
 				if (e.Column == EquipView_Category1 || e.Column == EquipView_Category2)
 				{
-					var db = KCDatabase.Instance;
-
-					object val1 = null, val2 = null;
-					int id1 = -1, id2 = -1;
-
-					// EquipView の行から装備のマスターIDを取得して比較に使う
-					try
-					{
-						val1 = EquipView.Rows[e.RowIndex1].Cells[EquipView_ID.Index].Value;
-						val2 = EquipView.Rows[e.RowIndex2].Cells[EquipView_ID.Index].Value;
-						if (val1 is int) id1 = (int)val1;
-						if (val2 is int) id2 = (int)val2;
-					}
-					catch
-					{
-						// 取得失敗時はフォールバックで表示文字列で比較する
-						id1 = id2 = -1;
-					}
-
 					int cat1 = int.MaxValue;
 					int cat2 = int.MaxValue;
 
 					if (id1 > 0 && db.MasterEquipments.TryGetValue(id1, out var m1) && m1 != null)
-					{
 						cat1 = (int)(e.Column == EquipView_Category1 ? m1.CategoryType : m1.CategoryType2);
-					}
 					if (id2 > 0 && db.MasterEquipments.TryGetValue(id2, out var m2) && m2 != null)
-					{
 						cat2 = (int)(e.Column == EquipView_Category1 ? m2.CategoryType : m2.CategoryType2);
-					}
 
-					// 比較
 					e.SortResult = cat1.CompareTo(cat2);
 
-					// 同値なら表示名(または装備名)で二次比較して安定化
+					// 同値なら二次比較へ
 					if (e.SortResult == 0)
 					{
-						string s1 = e.CellValue1?.ToString() ?? "";
-						string s2 = e.CellValue2?.ToString() ?? "";
-
-						// 可能ならマスターの名前で比較
-						if (id1 > 0 && db.MasterEquipments.TryGetValue(id1, out var mm1) && mm1 != null)
-							s1 = mm1.Name;
-						if (id2 > 0 && db.MasterEquipments.TryGetValue(id2, out var mm2) && mm2 != null)
-							s2 = mm2.Name;
-
-						e.SortResult = string.Compare(s1, s2, StringComparison.CurrentCulture);
+						ApplySecondarySort(e, db, id1, id2);
 					}
 
 					e.Handled = true;
 					return;
 				}
+
+				// ID列・名前列は既定の比較に任せる
+				if (e.Column == EquipView_ID || e.Column == EquipView_Name)
+				{
+					// 何もしない -> デフォルト比較を使う
+					return;
+				}
+
+				// その他の列：まず既定に近い比較を試みる（セル表示値を比較）
+				// null/空の取り扱いや文字列/数値の混在を簡単に処理する
+				object vcell1 = e.CellValue1;
+				object vcell2 = e.CellValue2;
+
+				int primaryResult = CompareCellValues(vcell1, vcell2);
+				e.SortResult = primaryResult;
+
+				// 同値なら二次比較（_equipNameSortMethod に従う）
+				if (e.SortResult == 0)
+				{
+					ApplySecondarySort(e, db, id1, id2);
+				}
+
+				e.Handled = true;
+				return;
 			}
 			catch
 			{
 				// 失敗したら既定の比較にフォールバック（何もしない）
+			}
+
+			// ローカルヘルパ: セル値の比較（簡易的に既定の比較を模倣）
+			static int CompareCellValues(object a, object b)
+			{
+				// null 対応
+				if (a == null && b == null) return 0;
+				if (a == null) return -1;
+				if (b == null) return 1;
+
+				// 同一型で IComparable を実装していればそれを使う
+				if (a is IComparable ca && a.GetType() == b.GetType())
+				{
+					try { return ca.CompareTo(b); } catch { }
+				}
+
+				// 数値文字列や数値が混在する場合、整数として比較を試みる
+				if (TryGetInt(a, out int ai) || TryGetInt(b, out int bi))
+				{
+					if (!TryGetInt(a, out ai)) return -1;
+					if (!TryGetInt(b, out bi)) return 1;
+					return ai.CompareTo(bi);
+				}
+
+				// フォールバックで文字列比較
+				string sa = a?.ToString() ?? "";
+				string sb = b?.ToString() ?? "";
+				return string.Compare(sa, sb, StringComparison.CurrentCulture);
+			}
+
+			// ローカルヘルパ: オブジェクトから最初の整数を得る（数値型ならそのまま）
+			static bool TryGetInt(object o, out int value)
+			{
+				value = 0;
+				if (o == null) return false;
+				if (o is int i) { value = i; return true; }
+				if (o is long l && l >= int.MinValue && l <= int.MaxValue) { value = (int)l; return true; }
+				if (int.TryParse(o.ToString(), out var p)) { value = p; return true; }
+
+				// 文字列中の最初の連続した数字を抽出して解析
+				string s = o.ToString();
+				int cur = 0;
+				bool inNum = false;
+				bool neg = false;
+				for (int k = 0; k < s.Length; k++)
+				{
+					char c = s[k];
+					if (!inNum && c == '-') { neg = true; continue; }
+					if (char.IsDigit(c))
+					{
+						inNum = true;
+						cur = cur * 10 + (c - '0');
+					}
+					else if (inNum)
+					{
+						value = neg ? -cur : cur;
+						return true;
+					}
+				}
+				if (inNum) { value = neg ? -cur : cur; return true; }
+				return false;
+			}
+
+			// ローカルヘルパ: 二次ソートの適用
+			void ApplySecondarySort(DataGridViewSortCompareEventArgs evt, KCDatabase db, int masterId1, int masterId2)
+			{
+				// 0: ID順、1: 名前順
+				if (_equipNameSortMethod == 0)
+				{
+					// マスターIDが取れていればそれで比較
+					if (masterId1 > 0 && masterId2 > 0)
+					{
+						evt.SortResult = masterId1.CompareTo(masterId2);
+						return;
+					}
+
+					// マスターIDが取れない場合は CellValue の中から数値を抽出して比較
+					if (TryGetInt(evt.CellValue1, out int n1) && TryGetInt(evt.CellValue2, out int n2))
+					{
+						evt.SortResult = n1.CompareTo(n2);
+						return;
+					}
+
+					// 最終フォールバックは名前で比較
+					string ns1 = GetNameString();
+					string ns2 = GetNameString2();
+					evt.SortResult = string.Compare(ns1, ns2, StringComparison.CurrentCulture);
+					return;
+				}
+				else
+				{
+					// 名前順（文化依存）。マスター名を優先して使う
+					string name1 = GetNameString();
+					string name2 = GetNameString2();
+					evt.SortResult = string.Compare(name1, name2, StringComparison.CurrentCulture);
+					return;
+				}
+
+				// ローカルサブルーチン: マスター名 or セル表示を取得
+				string GetNameString()
+				{
+					if (masterId1 > 0 && db.MasterEquipments.TryGetValue(masterId1, out var mm1) && mm1 != null)
+						return mm1.Name ?? evt.CellValue1?.ToString() ?? "";
+					return evt.CellValue1?.ToString() ?? "";
+				}
+				string GetNameString2()
+				{
+					if (masterId2 > 0 && db.MasterEquipments.TryGetValue(masterId2, out var mm2) && mm2 != null)
+						return mm2.Name ?? evt.CellValue2?.ToString() ?? "";
+					return evt.CellValue2?.ToString() ?? "";
+				}
 			}
 		}
 
@@ -1704,6 +1820,29 @@ namespace ElectronicObserver.Window
 				new DialogAlbumMasterEquipment(selectedId).Show(Parent);
 
 			}
+		}
+
+		private void MenuMember_CopyName_Click(object sender, EventArgs e)
+		{
+			var ids = GetSelectedShipID().ToArray();
+			if (ids.Length == 0)
+			{
+				System.Media.SystemSounds.Exclamation.Play();
+				return;
+			}
+
+			var names = ids.Select(id =>
+			{
+				var master = KCDatabase.Instance.MasterEquipments.ContainsKey(id) ? KCDatabase.Instance.MasterEquipments[id] : null;
+				string name = master?.Name ?? "";
+				// ダブルクォートを CSV 風にエスケープ（" -> ""）
+				name = name.Replace("\"", "\"\"");
+				return "\"" + name + "\"";
+			});
+
+			string result = string.Join(", ", names);
+			Clipboard.SetData(DataFormats.StringFormat, result);
+			Utility.Logger.Add(2, "選択装備名をクリップボードにコピーしました。");
 		}
 
 		void TabLabel_MouseDown(object sender, MouseEventArgs e)

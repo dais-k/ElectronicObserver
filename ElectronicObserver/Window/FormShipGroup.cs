@@ -1490,6 +1490,41 @@ namespace ElectronicObserver.Window
 			}
 		}
 
+		private void MenuMember_CopyName_Click(object sender, EventArgs e)
+		{
+			var ids = GetSelectedShipID().ToArray();
+			if (ids.Length == 0)
+			{
+				return;
+			}
+
+			var names = ids.Select(id =>
+			{
+				ShipData ship = KCDatabase.Instance.Ships.ContainsKey(id) ? KCDatabase.Instance.Ships[id] : null;
+				string name = ship?.MasterShip?.Name ?? "";
+				// ダブルクォートを CSV 風にエスケープ（" -> ""）
+				name = name.Replace("\"", "\"\"");
+				return "\"" + name + "\"";
+			});
+
+			string result = string.Join(", ", names);
+			Clipboard.SetData(DataFormats.StringFormat, result);
+			Utility.Logger.Add(2, "選択艦名をクリップボードにコピーしました。");
+		}
+
+		private void MenuMember_CopyID_Click(object sender, EventArgs e)
+		{
+			var ids = GetSelectedShipID().ToArray();
+			if (ids.Length == 0)
+			{
+				return;
+			}
+
+			string result = string.Join(", ", ids);
+			Clipboard.SetData(DataFormats.StringFormat, result);
+			Utility.Logger.Add(2, "選択艦の個人IDをクリップボードにコピーしました。");
+		}
+
 		void TabLabel_MouseDown(object sender, MouseEventArgs e)
 		{
 			if (e.Button == System.Windows.Forms.MouseButtons.Left)

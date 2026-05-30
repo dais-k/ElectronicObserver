@@ -431,16 +431,59 @@ namespace ElectronicObserver.Window.Dialog
 					}
 					if (eq.EquippableStypeAtExpansion.Any())
 					{
-						foreach (var ss in eq.EquippableStypeAtExpansion)
+						foreach (var stypeId in eq.EquippableStypeAtExpansion)
 						{
+							// 特殊処理 (equipmentID == 33)
 							if (equipmentID == 33)
 							{
 								EquipSlots.Items.Add($"上記艦種・艦娘が装備可"); eqlist.Add(-1);
+								continue;
+							}
+
+							var shiptype = db.ShipTypes.ContainsKey(stypeId) ? db.ShipTypes[stypeId] : null;
+							if (shiptype == null)
+							{
+								EquipSlots.Items.Add(" " + $"[不明:{stypeId}]"); eqlist.Add(-1);
+								continue;
+							}
+
+							// 通常装備可かどうかで振り分け、specialShips に例外があれば ×/〇 表示を付与
+							if (shiptype.EquippableCategories.Contains(eqCategory))
+							{
+								if (specialShips.ContainsKey(shiptype.Type))
+								{
+									EquipSlots.Items.Add(" " + shiptype.Name + " (×は不可)");
+									eqlist.Add(-1);
+									foreach (var ss in specialShips[shiptype.Type])
+									{
+										EquipSlots.Items.Add("  ×" + db.MasterShips[ss]?.NameWithClass);
+										eqlist.Add(ss);
+									}
+								}
+								else
+								{
+									EquipSlots.Items.Add(" " + shiptype.Name);
+									eqlist.Add(-1);
+								}
 							}
 							else
 							{
-								EquipSlots.Items.Add(" " + db.ShipTypes[ss]?.Name);
-								eqlist.Add(-1);
+								if (specialShips.ContainsKey(shiptype.Type))
+								{
+									EquipSlots.Items.Add(" " + shiptype.Name + " (〇が対象)");
+									eqlist.Add(-1);
+									foreach (var ss in specialShips[shiptype.Type])
+									{
+										EquipSlots.Items.Add("  〇" + db.MasterShips[ss]?.NameWithClass);
+										eqlist.Add(ss);
+									}
+								}
+								else
+								{
+									// 拡張で追加される艦種だが例外情報がない場合は名称のみ表示
+									EquipSlots.Items.Add(" " + shiptype.Name);
+									eqlist.Add(-1);
+								}
 							}
 						}
 					}

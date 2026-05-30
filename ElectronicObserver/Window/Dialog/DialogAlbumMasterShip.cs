@@ -867,9 +867,25 @@ namespace ElectronicObserver.Window.Dialog
 			exweapons.AddRange(db.MasterEquipments.Values.Where(eq => eq.EquippableCtypeAtExpansion.Contains(ship.ShipClass)).ToList());
 
 			// 特定の艦で指定の EquipmentID を除外する
-			if (ship.IsCoastalDefenceShip)//海防戦艦なら海防艦全指定されている爆雷を除外
+			if (ship.IsCoastalDefenceShip)
 			{
-				var exclude = new HashSet<int> { 226, 227, 488 };
+				var exclude = new HashSet<int> { 45, 226, 227, 346, 347, 488, 569 };
+				exweapons = exweapons.Where(eq => !exclude.Contains(eq.EquipmentID)).ToList();
+			}
+			if (ship.ID == 507 || ship.ID == 162 || ship.ID == 182 || ship.ID == 634 || ship.ID == 635 || ship.ID == 645 || ship.ID == 650 || ship.ID == 944 || ship.ID == 996 || ship.ID == 988 ||
+				ship.ShipClass == 50 || ship.ShipClass == 60 || ship.ShipClass == 70 || ship.ShipClass == 90)
+			{
+				var exclude = new HashSet<int> { 346, 347 };
+				exweapons = exweapons.Where(eq => !exclude.Contains(eq.EquipmentID)).ToList();
+			}
+			if (ship.ID == 877)
+			{
+				var exclude = new HashSet<int> { 35, 317, 483 };
+				exweapons = exweapons.Where(eq => !exclude.Contains(eq.EquipmentID)).ToList();
+			}
+			if (ship.ID == 162|| ship.ID == 645 || ship.ID == 650 || ship.ID == 900 || ship.ID == 945 || ship.ID == 988)
+			{
+				var exclude = new HashSet<int> { 524 };
 				exweapons = exweapons.Where(eq => !exclude.Contains(eq.EquipmentID)).ToList();
 			}
 
@@ -1008,6 +1024,8 @@ namespace ElectronicObserver.Window.Dialog
 				ship.NeedActionReport > 0 ? (int)ResourceManager.IconContent.ItemActionReport :
 				ship.NeedBlueprint > 0 ? (int)ResourceManager.IconContent.ItemBlueprint :
 				ship.NeedAviationMaterial > 0 ? (int)ResourceManager.IconContent.ItemAviationMaterial :
+				ship.NeedArmamentMaterial > 0 ? (int)ResourceManager.IconContent.ItemAviationMaterial :
+				ship.NeedLatestTechnology > 0 ? (int)ResourceManager.IconContent.ItemActionReport :
 				-1;
 		}
 
@@ -1022,6 +1040,10 @@ namespace ElectronicObserver.Window.Dialog
 				sb.AppendLine("戦闘詳報: " + ship.NeedActionReport);
 			if (ship.NeedAviationMaterial > 0)
 				sb.AppendLine("新型航空兵装資材: " + ship.NeedAviationMaterial);
+			if (ship.NeedArmamentMaterial > 0)
+				sb.AppendLine("新型兵装資材: " + ship.NeedArmamentMaterial);
+			if (ship.NeedLatestTechnology > 0)
+				sb.AppendLine("海外艦最新技術: " + ship.NeedLatestTechnology);
 
 			return sb.ToString();
 		}
@@ -1081,6 +1103,8 @@ namespace ElectronicObserver.Window.Dialog
 								ship.NeedCatapult > 0 ? ship.NeedCatapult + "個" : "-",
 								ship.NeedActionReport > 0 ? ship.NeedActionReport + "枚" : "-",
 								ship.NeedAviationMaterial > 0 ? ship.NeedAviationMaterial + "個" : "-",
+								ship.NeedArmamentMaterial > 0 ? ship.NeedArmamentMaterial + "個" : "-",
+								ship.NeedLatestTechnology > 0 ? ship.NeedLatestTechnology + "個" : "-",
 								ship.RemodelTier,
 								ship.HPMin,
 								ship.HPMaxMarried,
@@ -1164,7 +1188,7 @@ namespace ElectronicObserver.Window.Dialog
 					using (StreamWriter sw = new StreamWriter(SaveCSVDialog.FileName, false, Utility.Configuration.Config.Log.FileEncoding))
 					{
 
-						sw.WriteLine(string.Format("艦船ID,図鑑番号,艦名,読み,艦種,艦型,ソート順,改装前,改装後,改装Lv,改装弾薬,改装鋼材,改装設計図,カタパルト,戦闘詳報,新型航空兵装資材,改装段階,耐久初期,耐久最大,耐久結婚,耐久改修,火力初期,火力最大,雷装初期,雷装最大,対空初期,対空最大,装甲初期,装甲最大,対潜初期最小,対潜初期最大,対潜最大,対潜{0}最小,対潜{0}最大,回避初期最小,回避初期最大,回避最大,回避{0}最小,回避{0}最大,索敵初期最小,索敵初期最大,索敵最大,索敵{0}最小,索敵{0}最大,運初期,運最大,速力,射程,レア,スロット数,搭載機数1,搭載機数2,搭載機数3,搭載機数4,搭載機数5,初期装備1,初期装備2,初期装備3,初期装備4,初期装備5,建造時間,解体燃料,解体弾薬,解体鋼材,解体ボーキ,改修火力,改修雷装,改修対空,改修装甲,ドロップ文章,図鑑文章,搭載燃料,搭載弾薬,ボイス,リソース名,画像バージョン,ボイスバージョン,母港ボイスバージョン", ExpTable.ShipMaximumLevel));
+						sw.WriteLine(string.Format("艦船ID,図鑑番号,艦名,読み,艦種,艦型,ソート順,改装前,改装後,改装Lv,改装弾薬,改装鋼材,改装設計図,カタパルト,戦闘詳報,新型航空兵装資材,新型兵装資材,海外艦最新技術,改装段階,耐久初期,耐久最大,耐久結婚,耐久改修,火力初期,火力最大,雷装初期,雷装最大,対空初期,対空最大,装甲初期,装甲最大,対潜初期最小,対潜初期最大,対潜最大,対潜{0}最小,対潜{0}最大,回避初期最小,回避初期最大,回避最大,回避{0}最小,回避{0}最大,索敵初期最小,索敵初期最大,索敵最大,索敵{0}最小,索敵{0}最大,運初期,運最大,速力,射程,レア,スロット数,搭載機数1,搭載機数2,搭載機数3,搭載機数4,搭載機数5,初期装備1,初期装備2,初期装備3,初期装備4,初期装備5,建造時間,解体燃料,解体弾薬,解体鋼材,解体ボーキ,改修火力,改修雷装,改修対空,改修装甲,ドロップ文章,図鑑文章,搭載燃料,搭載弾薬,ボイス,リソース名,画像バージョン,ボイスバージョン,母港ボイスバージョン", ExpTable.ShipMaximumLevel));
 
 						foreach (ShipDataMaster ship in KCDatabase.Instance.MasterShips.Values)
 						{
@@ -1186,6 +1210,8 @@ namespace ElectronicObserver.Window.Dialog
 								ship.NeedCatapult,
 								ship.NeedActionReport,
 								ship.NeedAviationMaterial,
+								ship.NeedArmamentMaterial,
+								ship.NeedLatestTechnology,
 								ship.RemodelTier,
 								ship.HPMin,
 								ship.HPMax,
@@ -1554,6 +1580,10 @@ namespace ElectronicObserver.Window.Dialog
 						append.Add("要戦闘詳報");
 					if (before.NeedAviationMaterial > 0)
 						append.Add("要新型航空兵装資材");
+					if (before.NeedArmamentMaterial > 0)
+						append.Add("要新型兵装資材");
+					if (before.NeedLatestTechnology > 0)
+						append.Add("要海外艦最新技術");
 
 					sb.AppendFormat("改造前: {0} Lv. {1} ({2})\r\n",
 						before.NameWithClass, before.RemodelAfterLevel, string.Join(", ", append));
@@ -1577,6 +1607,10 @@ namespace ElectronicObserver.Window.Dialog
 						append.Add("要戦闘詳報");
 					if (ship.NeedAviationMaterial > 0)
 						append.Add("要新型航空兵装資材");
+					if (ship.NeedArmamentMaterial > 0)
+						append.Add("要新型兵装資材");
+					if (ship.NeedLatestTechnology > 0)
+						append.Add("要海外艦最新技術");
 
 					sb.AppendFormat("改造後: {0} Lv. {1} ({2})\r\n",
 						ship.RemodelAfterShip.NameWithClass, ship.RemodelAfterLevel, string.Join(", ", append));

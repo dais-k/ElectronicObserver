@@ -183,6 +183,9 @@ namespace ElectronicObserver.Data.Quest
 				case 2:
 					iscleared = DateTimeHelper.IsCrossedDay(_prevTime, 0, 0, 0);
 					break;
+				case 3:
+					iscleared = true;
+					break;
 			}
 
 
@@ -415,8 +418,8 @@ namespace ElectronicObserver.Data.Quest
 								Progresses.Add(new ProgressPractice(q, 5, "A", true));
 							}
 							break;
-						case 367:   //|367|日|【梅雨限定任務】海上護衛隊、雨中演習！|演習A勝利4|条件：海防艦2隻以上または駆逐艦4隻以上|期間限定デイリー任務 2025/05/30～
-							if (DateTime.Now < new DateTime(2025, 6, 30))
+						case 367:   //|367|日|【梅雨限定任務】海上護衛隊、雨中演習！|演習A勝利4|条件：海防艦3隻以上または駆逐艦5隻以上|期間限定デイリー任務 2025/05/30～
+							if (DateTime.Now < new DateTime(2026, 12, 31))
 							{
 								Progresses.Add(new ProgressPractice(q, 4, "A", true));
 							}
@@ -972,37 +975,39 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressSpecialBattle(q, 1, "S", new[] { 22 }, true),
 							}));
 							break;
-						case 953:   //|953|週|【梅雨限定任務】雨の南西諸島防衛戦！|2-1, 2-2, 2-3ボスA勝利各1回|条件：巡洋艦を旗艦、駆逐艦x1、海防艦x1、水上機母艦x1|期間限定任務 2025/5/30～
-							if (DateTime.Now < new DateTime(2025, 6, 30))
+						case 953:   //|953|週|【梅雨限定任務】雨の南西諸島防衛戦2026|1-2, 1-4, 2-1, 2-2ボスA勝利各1回|条件：(海防2 または 水母2)旗艦,2番艦、駆逐2|期間限定任務 2026/5/29～
+							if (DateTime.Now < new DateTime(2026, 12, 30))
 							{
 								Progresses.Add(new ProgressMultiBattle(q, new[]{
+									new ProgressSpecialBattle(q, 1, "A", new[] { 12 }, true),
+									new ProgressSpecialBattle(q, 1, "A", new[] { 14 }, true),
 									new ProgressSpecialBattle(q, 1, "A", new[] { 21 }, true),
 									new ProgressSpecialBattle(q, 1, "A", new[] { 22 }, true),
+								}));
+							}
+							break;
+						case 954:   //|954|週|【梅雨拡張任務】梅雨の海上護衛強化2026|1-3, 1-5, 2-3, 7-4ボスA勝利各1回+1-6到達3回|条件：軽空(旗艦), 駆逐2以上|期間限定任務 2026/5/29～
+							if (DateTime.Now < new DateTime(2026, 12, 30))
+							{
+								Progresses.Add(new ProgressMultiBattle(q, new[]{
+									new ProgressSpecialBattle(q, 1, "A", new[] { 13 }, true),
+									new ProgressSpecialBattle(q, 1, "A", new[] { 15 }, true),
 									new ProgressSpecialBattle(q, 1, "A", new[] { 23 }, true),
+									new ProgressSpecialBattle(q, 1, "A", new[] { 74 }, true),
+									new ProgressSpecialBattle(q, 3, "x", new[] { 16 }, true),
 								}));
 							}
 							break;
-						case 954:   //|954|週|【梅雨拡張任務】梅雨の海上護衛強化2025|1-2, 1-3, 1-4, 1-5ボスS勝利各1回+1-6到達2回|条件：駆逐艦を旗艦、海防艦x2|期間限定任務 2025/5/30～
-							if (DateTime.Now < new DateTime(2025, 6, 30))
+						case 955:   //|955|月|【梅雨任務拡張作戦】南方反攻望楼作戦を叩け！|5-1, 5-2, 5-3, 5-4, 5-5, 5-6-3ボスS勝利各1回|条件：戦艦1, 重巡級2または夕雲型2|期間限定任務  2025/5/30～
+							if (DateTime.Now < new DateTime(2026, 12, 30))
 							{
 								Progresses.Add(new ProgressMultiBattle(q, new[]{
-									new ProgressSpecialBattle(q, 1, "S", new[] { 12 }, true),
-									new ProgressSpecialBattle(q, 1, "S", new[] { 13 }, true),
-									new ProgressSpecialBattle(q, 1, "S", new[] { 14 }, true),
-									new ProgressSpecialBattle(q, 1, "S", new[] { 15 }, true),
-									new ProgressSpecialBattle(q, 2, "x", new[] { 16 }, true),
-								}));
-							}
-							break;
-						case 955:   //|955|月|【梅雨限定月間任務】西方海域統合作戦2025|4-1, 4-2, 4-3, 4-4, 4-5ボスS勝利各1回|条件：空母1以上、(重巡or秋月型)2以上|期間限定任務  2025/5/30～
-							if (DateTime.Now < new DateTime(2025, 6, 30))
-							{
-								Progresses.Add(new ProgressMultiBattle(q, new[]{
-									new ProgressSpecialBattle(q, 1, "S", new[] { 41 }, true),
-									new ProgressSpecialBattle(q, 1, "S", new[] { 42 }, true),
-									new ProgressSpecialBattle(q, 1, "S", new[] { 43 }, true),
-									new ProgressSpecialBattle(q, 1, "S", new[] { 44 }, true),
-									new ProgressSpecialBattle(q, 1, "S", new[] { 45 }, true),
+									new ProgressSpecialBattle(q, 1, "S", new[] { 51 }, true),
+									new ProgressSpecialBattle(q, 1, "S", new[] { 52 }, true),
+									new ProgressSpecialBattle(q, 1, "S", new[] { 53 }, true),
+									new ProgressSpecialBattle(q, 1, "S", new[] { 54 }, true),
+									new ProgressSpecialBattle(q, 1, "S", new[] { 55 }, true),
+									new ProgressSpecialBattle(q, 1, "S", new[] { 56 }, true, 3),
 								}));
 							}
 							break;

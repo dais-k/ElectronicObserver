@@ -65,8 +65,8 @@ namespace ElectronicObserver.Window.Dialog
 			MinNightAttacksTriggerRates = new ImageLabel[] { MinNightTriggerRate1, MinNightTriggerRate2, MinNightTriggerRate3, MinNightTriggerRate4, MinNightTriggerRate5 , MinNightTriggerRate6 };
 			DayGroundAttackPowers = new ImageLabel[] { DayGrdAtk1, DayGrdAtk2, DayGrdAtk3, DayGrdAtk4, DayGrdAtk5, DayGrdAtk6 };
 			NightGroundAttackPowers = new ImageLabel[] { NightGrdAtk1, NightGrdAtk2, NightGrdAtk3, NightGrdAtk4, NightGrdAtk5, NightGrdAtk6 };
-			AACutinTypes = new ImageLabel[] { AACutinType1, AACutinType2, AACutinType3, AACutinType4, AACutinType5, AACutinType6, AACutinType7, AACutinType8 };
-			AACutinNames = new ImageLabel[] { AACutinName1, AACutinName2, AACutinName3, AACutinName4, AACutinName5, AACutinName6, AACutinName7, AACutinName8 };
+			AACutinTypes = new ImageLabel[] { AACutinType1, AACutinType2, AACutinType3, AACutinType4, AACutinType5, AACutinType6, AACutinType7, AACutinType8, AACutinType9, AACutinType10 };
+			AACutinNames = new ImageLabel[] { AACutinName1, AACutinName2, AACutinName3, AACutinName4, AACutinName5, AACutinName6, AACutinName7, AACutinName8, AACutinName9, AACutinName10 };
 			SupportAirclaftPowers = new ImageLabel[] { SupportAirclaftPower1, SupportAirclaftPower2, SupportAirclaftPower3, SupportAirclaftPower4, SupportAirclaftPower5 };
 			SupportAntiSubmarinePowers12 = new ImageLabel[] { SupportAntiSubmarinePower12_1, SupportAntiSubmarinePower12_2, SupportAntiSubmarinePower12_3, SupportAntiSubmarinePower12_4, SupportAntiSubmarinePower12_5 };
 			SupportAntiSubmarinePowers15 = new ImageLabel[] { SupportAntiSubmarinePower15_1, SupportAntiSubmarinePower15_2, SupportAntiSubmarinePower15_3, SupportAntiSubmarinePower15_4, SupportAntiSubmarinePower15_5 };

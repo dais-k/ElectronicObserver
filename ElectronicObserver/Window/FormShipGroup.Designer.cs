@@ -124,6 +124,8 @@
 			this.Status_ShipCount = new System.Windows.Forms.ToolStripStatusLabel();
 			this.Status_LevelTotal = new System.Windows.Forms.ToolStripStatusLabel();
 			this.Status_LevelAverage = new System.Windows.Forms.ToolStripStatusLabel();
+			this.MenuMember_CopyName = new System.Windows.Forms.ToolStripMenuItem();
+			this.MenuMember_CopyID = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.ShipView)).BeginInit();
 			this.MenuMember.SuspendLayout();
 			this.MenuGroup.SuspendLayout();
@@ -212,12 +214,12 @@
 			dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
 			dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
 			this.ShipView.DefaultCellStyle = dataGridViewCellStyle9;
-			this.ShipView.AutoSizeRowsMode = System.Windows.Forms.DataGridViewAutoSizeRowsMode.None;
-			this.ShipView.RowTemplate.Height = 21; this.ShipView.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.ShipView.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.ShipView.Location = new System.Drawing.Point(0, 0);
 			this.ShipView.Name = "ShipView";
 			this.ShipView.ReadOnly = true;
 			this.ShipView.RowHeadersVisible = false;
+			this.ShipView.RowTemplate.Height = 21;
 			this.ShipView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
 			this.ShipView.Size = new System.Drawing.Size(300, 134);
 			this.ShipView.TabIndex = 0;
@@ -681,9 +683,11 @@
 			this.MenuMember_SortOrder,
 			this.toolStripSeparator3,
 			this.MenuMember_CSVOutput,
-			this.MenuMember_OpenShipAttackDetail});
+			this.MenuMember_OpenShipAttackDetail,
+			this.MenuMember_CopyID,
+			this.MenuMember_CopyName});
 			this.MenuMember.Name = "MenuMember";
-			this.MenuMember.Size = new System.Drawing.Size(216, 192);
+			this.MenuMember.Size = new System.Drawing.Size(216, 258);
 			this.MenuMember.Opening += new System.ComponentModel.CancelEventHandler(this.MenuMember_Opening);
 			// 
 			// MenuMember_AddToGroup
@@ -751,6 +755,22 @@
 			this.MenuMember_OpenShipAttackDetail.Size = new System.Drawing.Size(215, 22);
 			this.MenuMember_OpenShipAttackDetail.Text = "攻撃詳細を開く(&I)";
 			this.MenuMember_OpenShipAttackDetail.Click += new System.EventHandler(this.MenuMember_OpenShipAttackDetail_Click);
+			// 
+			// MenuMember_CopyName
+			// 
+			this.MenuMember_CopyName.Name = "MenuMember_CopyName";
+			this.MenuMember_CopyName.Size = new System.Drawing.Size(215, 22);
+			this.MenuMember_CopyName.Text = "艦娘名をコピー";
+			this.MenuMember_CopyName.Click += new System.EventHandler(this.MenuMember_CopyName_Click);
+			this.MenuMember_CopyName.Visible = false;
+			// 
+			// MenuMember_CopyID
+			// 
+			this.MenuMember_CopyID.Name = "MenuMember_CopyID";
+			this.MenuMember_CopyID.Size = new System.Drawing.Size(215, 22);
+			this.MenuMember_CopyID.Text = "個人IDをコピー";
+			this.MenuMember_CopyID.Click += new System.EventHandler(this.MenuMember_CopyID_Click);
+			this.MenuMember_CopyID.Visible = false;
 			// 
 			// MenuGroup
 			// 
@@ -938,6 +958,8 @@
 		private System.Windows.Forms.ToolStripMenuItem MenuMember_Exclude;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripMenuItem MenuMember_OpenShipAttackDetail;
+		private System.Windows.Forms.ToolStripMenuItem MenuMember_CopyName;
+		private System.Windows.Forms.ToolStripMenuItem MenuMember_CopyID;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_ID;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_ShipType;
 		private System.Windows.Forms.DataGridViewTextBoxColumn ShipView_ShipClass;

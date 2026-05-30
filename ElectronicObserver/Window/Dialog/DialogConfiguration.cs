@@ -478,6 +478,7 @@ namespace ElectronicObserver.Window.Dialog
 			FormShipGroup_ShowStatusBar.Checked = config.FormShipGroup.ShowStatusBar;
 			FormShipGroup_ShipNameSortMethod.SelectedIndex = config.FormShipGroup.ShipNameSortMethod;
 			FormShipGroup_WhichOpenDialogMethod.SelectedIndex = config.FormShipGroup.WhichOpenDialogMethod;
+			FormShipGroup_EquipNameSortMethod.SelectedIndex = config.FormShipGroup.EquipNameSortMethod;
 
 			FormBattle_IsScrollable.Checked = config.FormBattle.IsScrollable;
 			FormBattle_HideDuringBattle.Checked = config.FormBattle.HideDuringBattle;
@@ -713,6 +714,7 @@ namespace ElectronicObserver.Window.Dialog
 			config.FormShipGroup.ShowStatusBar = FormShipGroup_ShowStatusBar.Checked;
 			config.FormShipGroup.ShipNameSortMethod = FormShipGroup_ShipNameSortMethod.SelectedIndex;
 			config.FormShipGroup.WhichOpenDialogMethod = FormShipGroup_WhichOpenDialogMethod.SelectedIndex;
+			config.FormShipGroup.EquipNameSortMethod = FormShipGroup_EquipNameSortMethod.SelectedIndex;
 
 			config.FormBattle.IsScrollable = FormBattle_IsScrollable.Checked;
 			config.FormBattle.HideDuringBattle = FormBattle_HideDuringBattle.Checked;

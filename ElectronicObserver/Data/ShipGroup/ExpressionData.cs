@@ -151,6 +151,7 @@ namespace ElectronicObserver.Data.ShipGroup
 			{ ".MasterShip.EquippableCategories", "装備可能リスト" },
 			{ ".MasterShip.ShipNationality", "国籍" },
 			{ ".MasterShip.IsGlasses", "眼鏡っ娘" },
+			{ ".MasterShip.RemodelTier", "改装段階" },
 		};
 
 		private static Dictionary<string, Type> ExpressionTypeTable = new Dictionary<string, Type>();

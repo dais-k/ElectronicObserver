@@ -193,6 +193,11 @@ namespace ElectronicObserver.Data
 		/// </summary>
 		public int NeedArmamentMaterial { get; internal set; }
 
+		/// <summary>
+		/// 改装に必要な 海外艦最新技術 の個数
+		/// </summary>
+		public int NeedLatestTechnology { get; internal set; }
+
 		#region Parameters
 
 		/// <summary>

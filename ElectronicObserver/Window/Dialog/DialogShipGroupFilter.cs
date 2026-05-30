@@ -633,6 +633,10 @@ namespace ElectronicObserver.Window.Dialog
 						RightOperand_NumericUpDown.Minimum = 0;
 						RightOperand_NumericUpDown.Maximum = 5;
 						break;
+					case ".RemodelTier":
+						RightOperand_NumericUpDown.Minimum = 0;
+						RightOperand_NumericUpDown.Maximum = 10;
+						break;
 					default:
 						RightOperand_NumericUpDown.Minimum = 0;
 						RightOperand_NumericUpDown.Maximum = 9999;

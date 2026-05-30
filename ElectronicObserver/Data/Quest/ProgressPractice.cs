@@ -372,8 +372,8 @@ namespace ElectronicObserver.Data.Quest
 					}
 					break;
 				case 367:   //|367|日|【梅雨限定任務】海上護衛隊、雨中演習！|演習A勝利4|条件：海防艦2隻以上または駆逐艦4隻以上|期間限定デイリー任務
-					if ((ships.Count(s => s.MasterShip.ShipType == ShipTypes.Escort) >= 2) ||
-						(ships.Count(s => s.MasterShip.ShipType == ShipTypes.Destroyer) >= 4))
+					if ((ships.Count(s => s.MasterShip.ShipType == ShipTypes.Escort) >= 3) ||
+						(ships.Count(s => s.MasterShip.ShipType == ShipTypes.Destroyer) >= 5))
 					{
 						ret = true;
 					}

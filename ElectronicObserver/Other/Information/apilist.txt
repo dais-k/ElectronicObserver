@@ -578,6 +578,7 @@ api_start2/getData	：艦娘・装備固有データその他
 		api_report_count		：戦闘詳報　所要枚数
 		api_aviation_mat_count	：新型航空兵装資材　所要個数
 		api_arms_mat_count		：新型兵装資材　所要個数
+		api_tech_count			：海外艦最新技術　所要個数
 		api_sortno				：? (概ね図鑑IDだが、霞(改/二/乙), 利根(改/二), 筑摩(改/二)などで異なる)
 
 	api_mst_bgm			：母港BGMデータ？

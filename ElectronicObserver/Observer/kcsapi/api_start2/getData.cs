@@ -200,11 +200,13 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 
 				if (shipbefore != null)
 				{
-					shipbefore.NeedBlueprint = (int)elem.api_drawing_count;
-					shipbefore.NeedCatapult = (int)elem.api_catapult_count;
-					shipbefore.NeedActionReport = (int)elem.api_report_count;
-					shipbefore.NeedAviationMaterial = (int)elem.api_aviation_mat_count;
-					shipbefore.NeedArmamentMaterial = elem.api_arms_mat_count() ? (int)elem.api_arms_mat_count : 0;
+					shipbefore.NeedBlueprint = (int)elem.api_drawing_count; // 改装設計図
+					shipbefore.NeedCatapult = (int)elem.api_catapult_count; // 試製甲板カタパルト
+					shipbefore.NeedActionReport = (int)elem.api_report_count; // 戦闘詳報
+					shipbefore.NeedAviationMaterial = (int)elem.api_aviation_mat_count; // 新型航空兵装資材
+					shipbefore.NeedArmamentMaterial = elem.api_arms_mat_count() ? (int)elem.api_arms_mat_count : 0; // 新型兵装資材
+					shipbefore.NeedLatestTechnology = elem.api_tech_count() ? (int)elem.api_tech_count : 0; // 海外艦最新技術
+
 				}
 			}
 
@@ -272,7 +274,7 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 					if (slotitemId == 413 && equipData.Api_ctypes.ContainsKey(38))
 					{
 						ctypes = ctypes.Where(id => id != 38);
-						var specialShips = new[] { 542, 543, 649 };
+						var specialShips = new[] { 542, 543, 649, 743, 982, 1033 };
 						masterEq.equippableShipsAtExpansion = masterEq.equippableShipsAtExpansion.Concat(specialShips).Distinct().ToArray();
 					}
 

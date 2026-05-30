@@ -872,6 +872,47 @@ namespace ElectronicObserver.Utility.Data
 				case 983:   // 浜波改二
 				case 986:   // 白雪改二
 				case 987:   // 初雪改二
+				case 1033:  // 玉波改二
+					if (highangle_over8 >= 2 && radar_over4 >= 1)
+						aacutinlist.Add(49);
+					if ((highangle_10kai + highangle_10kai_Directorkai) >= 2 && radar_over4 >= 1 && director_94 >= 1)
+						aacutinlist.Add(50);
+					if ((highangle_10kai + highangle_10kai_Directorkai) >= 1 && radar_over4 >= 1 && aagun_over5 >= 1)
+						aacutinlist.Add(51);
+					if (highangle_10kai >= 2 && director_94 >= 1)
+						aacutinlist.Add(52);
+					break;
+
+				case 1035:   // 吹雪改三
+					if (highangle >= 1 && aagun_total >= 1)
+						aacutinlist.Add(15);
+					if (highangle >= 1 && aagun_total >= 1 && radar_aaradar >= 1)
+						aacutinlist.Add(16);
+					if (highangle >= 1 && radar_aaradar >= 1)
+						aacutinlist.Add(21);
+					if (highangle >= 1 && aagun_over3 >= 1)
+						aacutinlist.Add(24);
+					if (highangle_over8 >= 2 && radar_over4 >= 1)
+						aacutinlist.Add(49);
+					if ((highangle_10kai + highangle_10kai_Directorkai) >= 2 && radar_over4 >= 1 && director_94 >= 1)
+						aacutinlist.Add(50);
+					if ((highangle_10kai + highangle_10kai_Directorkai) >= 1 && radar_over4 >= 1 && aagun_over5 >= 1)
+						aacutinlist.Add(51);
+					if (highangle_10kai >= 2 && director_94 >= 1)
+						aacutinlist.Add(52);
+					break;
+
+				case 1040:   // 吹雪改三護(六式)
+					if (highangle >= 1 && radar >= 1)
+						aacutinlist.Add(2);
+					if (highangle >= 1 && radar_aaradar >= 1)
+						aacutinlist.Add(21);
+					if (highangle_Mk30_GFCS >= 2)
+						aacutinlist.Add(34);
+					if (highangle_Mk30_GFCS >= 1 && highangle_Mk30 >= 1)
+						aacutinlist.Add(35);
+					if (highangle_Mk30 >= 2 && radar_GFCS >= 1)
+						aacutinlist.Add(36);
 					if (highangle_over8 >= 2 && radar_over4 >= 1)
 						aacutinlist.Add(49);
 					if ((highangle_10kai + highangle_10kai_Directorkai) >= 2 && radar_over4 >= 1 && director_94 >= 1)

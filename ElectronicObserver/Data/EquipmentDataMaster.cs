@@ -532,7 +532,7 @@ namespace ElectronicObserver.Data
 			EquipmentID == 447 ||       // 零式艦戦64型(複座KMX搭載機)
 			EquipmentID == 487;         // 零式艦戦64型(熟練爆戦)
 
-		/// <summary> 増設スロットに載るかどうか</summary>
+		/// <summary> デフォルトで増設スロットに載るかどうか</summary>
 		public bool IsExslotEquipped =>
 			CategoryType == EquipmentTypes.ExtraArmor ||
 			CategoryType == EquipmentTypes.AAGun ||

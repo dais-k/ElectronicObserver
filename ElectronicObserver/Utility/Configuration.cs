@@ -364,7 +364,7 @@ namespace ElectronicObserver.Utility
 
 				/// <summary>
 				/// レコードを自動保存するか
-				/// 0=しない、1=1時間ごと、2=1日ごと, 3=即時
+				/// 0=しない、1=1時間ごと、2=1日ごと、3=即時
 				/// </summary>
 				public int RecordAutoSaving { get; set; }
 
@@ -884,7 +884,7 @@ namespace ElectronicObserver.Utility
 
 				/// <summary>
 				/// 進捗を自動保存するか
-				/// 0 = しない、1 = 一時間ごと、2 = 一日ごと
+				/// 0 = しない、1 = 一時間ごと、2 = 一日ごと、3 = 即時
 				/// </summary>
 				public int ProgressAutoSaving { get; set; }
 
@@ -939,12 +939,19 @@ namespace ElectronicObserver.Utility
 				/// </summary>
 				public int WhichOpenDialogMethod { get; set; }
 
+				/// <summary>
+				/// 装備名列のソート方法
+				/// 0 = ID順, 1 = あいうえお順
+				/// </summary>
+				public int EquipNameSortMethod { get; set; }
+				
 				public ConfigFormShipGroup()
 				{
 					AutoUpdate = true;
 					ShowStatusBar = true;
 					ShipNameSortMethod = 0;
 					WhichOpenDialogMethod = 0;
+					EquipNameSortMethod = 0;
 				}
 			}
 			/// <summary>[艦船グループ]ウィンドウ</summary>
@@ -1061,7 +1068,7 @@ namespace ElectronicObserver.Utility
 					ZoomRate = 1;
 					ZoomFit = false;
 					//LogInPageURL = @"http://www.dmm.com/netgame_s/kancolle/";
-					LogInPageURL = @"https://games.dmm.com/detail/kancolle";
+					LogInPageURL = @"https://play.games.dmm.com/game/kancolle";
 					IsEnabled = true;
 					ScreenShotPath = "ScreenShot";
 					ScreenShotFormat = 2;

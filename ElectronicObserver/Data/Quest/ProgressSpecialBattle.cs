@@ -64,7 +64,7 @@ namespace ElectronicObserver.Data.Quest
 					membercount = 0;
 					foreach (var item in membernames)
 					{
-						if (isFlagship == false && members[0]?.MasterShip?.NameReading == item)
+						if (isFlagship == false && members.FirstOrDefault()?.MasterShip?.NameReading == item)
 						{
 							isFlagship = true;
 						}
@@ -177,11 +177,11 @@ namespace ElectronicObserver.Data.Quest
 					fleetmember = new bool[] { false, false };
 					foreach (var item in membernames)
 					{
-						if (fleetmember[0] == false && members[0]?.MasterShip?.NameReading == item)
+						if (fleetmember[0] == false && members.FirstOrDefault()?.MasterShip?.NameReading == item)
 						{
 							fleetmember[0] = true;
 						}
-						if (fleetmember[1] == false && members[1]?.MasterShip?.NameReading == item)
+						if (fleetmember[1] == false && members.ElementAtOrDefault(1)?.MasterShip?.NameReading == item)
 						{
 							fleetmember[1] = true;
 						}
@@ -193,11 +193,11 @@ namespace ElectronicObserver.Data.Quest
 					fleetmember = new bool[] { false, false };
 					foreach (var item in membernames)
 					{
-						if (fleetmember[0] == false && members[0]?.MasterShip?.NameReading == item)
+						if (fleetmember[0] == false && members.FirstOrDefault()?.MasterShip?.NameReading == item)
 						{
 							fleetmember[0] = true;
 						}
-						if (fleetmember[1] == false && members[1]?.MasterShip?.NameReading == item)
+						if (fleetmember[1] == false && members.ElementAtOrDefault(1)?.MasterShip?.NameReading == item)
 						{
 							fleetmember[1] = true;
 						}
@@ -294,7 +294,7 @@ namespace ElectronicObserver.Data.Quest
 					break;
 				//============================ 900～999 ============================
 				case 903:   // |903|季|拡張「六水戦」、最前線へ！|5-1・5-4・6-4・6-5ボスS勝利各1|要旗艦夕張改二(|特|丁), 由良改二or(睦月/如月/弥生/卯月/菊月/望月2)|進捗3/4で80%
-					isAccepted = members[0]?.MasterShip?.NameReading == "ゆうばり" && members[0]?.MasterShip?.RemodelTier >= 2 &&
+					isAccepted = members.FirstOrDefault()?.MasterShip?.NameReading == "ゆうばり" && members.FirstOrDefault()?.MasterShip?.RemodelTier >= 2 &&
 						(members.Any(s => s?.ShipID == 488) || members.Count(s =>
 						{
 							switch (s?.MasterShip?.NameReading)
@@ -434,36 +434,34 @@ namespace ElectronicObserver.Data.Quest
 				case 952:   //|952|単|【作戦準備】第二段階任務(対地/対空整備)|1-3, 1-4, 2-1, 2-2ボスS勝利各1回|条件：駆逐3以上|
 					isAccepted = memberstype.Count(t => t == ShipTypes.Destroyer) >= 3;
 					break;
-				case 953:   //|953|週|【梅雨限定任務】雨の南西諸島防衛戦！|2-1, 2-2, 2-3ボスA勝利各1回|条件：巡洋艦を旗艦、駆逐艦x1、海防艦x1、水上機母艦x1|期間限定任務
+				case 953:   //|953|週|【梅雨限定任務】雨の南西諸島防衛戦2026|2-1, 2-2, 2-3ボスA勝利各1回|条件：(海防2 または 水母2)旗艦,2番艦、駆逐2|期間限定任務 2026/5/29～
 					isAccepted =
-						(members.FirstOrDefault()?.MasterShip?.ShipType == ShipTypes.HeavyCruiser ||
-						 members.FirstOrDefault()?.MasterShip?.ShipType == ShipTypes.LightCruiser ||
-						 members.FirstOrDefault()?.MasterShip?.ShipType == ShipTypes.TorpedoCruiser ||
-						 members.FirstOrDefault()?.MasterShip?.ShipType == ShipTypes.TrainingCruiser ||
-						 members.FirstOrDefault()?.MasterShip?.ShipType == ShipTypes.AviationCruiser)
-						 &&
-						 members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Destroyer) >= 1 &&
-						 members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Escort) >= 1 &&
-						 members.Count(s => s?.MasterShip?.ShipType == ShipTypes.SeaplaneTender) >= 1;
-					break;
-				case 954:   //|954|週|【梅雨拡張任務】梅雨の海上護衛強化2025|1-2, 1-3, 1-4, 1-5ボスS勝利各1回+1-6到達2回|条件：駆逐艦を旗艦、海防艦x2|期間限定任務
-					isAccepted =
-						(members.FirstOrDefault()?.MasterShip?.ShipType == ShipTypes.Destroyer)
-						 &&
-						(members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Escort) >= 2);
-					break;
-				case 955:   //|955|月|【梅雨限定月間任務】西方海域統合作戦2025|4-1, 4-2, 4-3, 4-4, 4-5ボスS勝利各1回|条件：空母1以上、(重巡or秋月型)2以上|期間限定任務
-					isAccepted =
-						(members.Count(s => s?.MasterShip?.ShipType == ShipTypes.LightAircraftCarrier ||
-											s?.MasterShip?.ShipType == ShipTypes.AircraftCarrier ||
-											s?.MasterShip?.ShipType == ShipTypes.ArmoredAircraftCarrier) >= 1)
+						(members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Destroyer) >= 2)
 						&&
-						(members.Count(s => s?.MasterShip?.ShipClass == 54) >=2 ||
+						((members.FirstOrDefault()?.MasterShip?.ShipType == ShipTypes.Escort &&
+						 members.ElementAtOrDefault(1)?.MasterShip?.ShipType == ShipTypes.Escort)
+						||
+						(members.FirstOrDefault()?.MasterShip?.ShipType == ShipTypes.SeaplaneTender &&
+						 members.ElementAtOrDefault(1)?.MasterShip?.ShipType == ShipTypes.SeaplaneTender));
+					break;
+				case 954:   //|954|週|【梅雨拡張任務】梅雨の海上護衛強化2026|1-3, 1-5, 2-3, 7-4ボスA勝利各1回+1-6到達3回|条件：軽空(旗艦), 駆逐2以上|期間限定任務 2026/5/29～
+					isAccepted =
+						(members.FirstOrDefault()?.MasterShip?.ShipType == ShipTypes.LightAircraftCarrier)
+						 &&
+						(members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Destroyer) >= 2);
+					break;
+				case 955:   //|955|月|【梅雨任務拡張作戦】南方反攻望楼作戦を叩け！|5-1, 5-2, 5-3, 5-4, 5-5, 5-6-3ボスS勝利各1回|条件：戦艦1, 重巡級2または夕雲型2|期間限定任務  2025/5/30～
+					isAccepted =
+						(members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Battlecruiser ||
+											s?.MasterShip?.ShipType == ShipTypes.Battleship ||
+											s?.MasterShip?.ShipType == ShipTypes.AviationBattleship) >= 1)
+						&&
+						(members.Count(s => s?.MasterShip?.ShipClass == 38) >=2 ||
 						(members.Count(s => s?.MasterShip?.ShipType == ShipTypes.HeavyCruiser || s?.MasterShip?.ShipType == ShipTypes.AviationCruiser) >= 2));
 					break;
 				case 957:	//|957|単|「山風改二」、抜錨せよ！|1-2、1-3、1-4、1-5ボス各S勝利1改|条件：山風改二旗艦および随伴に駆逐/海防3|
 					isAccepted = 
-						(members[0]?.MasterShip?.ShipID == 588 || members[0]?.MasterShip?.ShipID == 667) && (memberstype.Count(t => t == ShipTypes.Destroyer) + memberstype.Count(t => t == ShipTypes.Escort)) >= 4;
+						(members.FirstOrDefault()?.MasterShip?.ShipID == 588 || members.FirstOrDefault()?.MasterShip?.ShipID == 667) && (memberstype.Count(t => t == ShipTypes.Destroyer) + memberstype.Count(t => t == ShipTypes.Escort)) >= 4;
 					break;
 				case 958:   //|958|単|改白露型駆逐艦「山風改二」、奮戦す！|2-2、7-2、5-1、6-4ボスS勝利1回||条件：山風改二、江風改二、海風改二から2隻|
 					isAccepted =
@@ -524,7 +522,7 @@ namespace ElectronicObserver.Data.Quest
 					membercount = 0;
 					foreach (var item in membernames)
 					{
-						if (isFlagship == false && members[0]?.MasterShip?.NameReading == item)
+						if (isFlagship == false && members.FirstOrDefault()?.MasterShip?.NameReading == item)
 						{
 							isFlagship = true;
 						}
@@ -542,7 +540,7 @@ namespace ElectronicObserver.Data.Quest
 					membercount = 0;
 					foreach (var item in membernames)
 					{
-						if (isFlagship == false && members[0]?.MasterShip?.NameReading == item)
+						if (isFlagship == false && members.FirstOrDefault()?.MasterShip?.NameReading == item)
 						{
 							isFlagship = true;
 						}
@@ -583,7 +581,7 @@ namespace ElectronicObserver.Data.Quest
 					break;
 				case 1012:  //|1012|５|鵜来型海防艦、静かな海を防衛せよ！|1-1S勝利3回、1-2, 1-5 A勝利2回以上|条件：鵜来型(旗艦), 海防1-3 (旗艦込最大4隻), 海防艦のみ|
 					isAccepted =
-						(members[0]?.MasterShip?.ShipClass == 117 &&
+						(members.FirstOrDefault()?.MasterShip?.ShipClass == 117 &&
 						 members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Escort) <= 4 &&
 						 memberstype.All(t => t == ShipTypes.Escort || t == Empty));
 					break;
@@ -621,8 +619,8 @@ namespace ElectronicObserver.Data.Quest
 						(memberstype.Count(t => t == ShipTypes.Destroyer) >= 3 || memberstype.Count(t => t == ShipTypes.Escort) >= 1);
 					break;
 				case 1035:   //|1035|月|【夏季限定任務】ソロモンの夏夜|5-1, 5-3, 5-4それぞれS勝利×1回|条件：旗艦に能代 or Atlanta or Richard P.Leary, 駆逐艦 x3
-					isAccepted = (((members[0]?.MasterShip?.NameReading == "のしろ" || members[0]?.MasterShip?.NameReading == "アトランタ") && members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Destroyer) >= 3)
-						|| (members[0]?.MasterShip?.NameReading == "リチャード・P・リアリー" && members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Destroyer) >= 3));
+					isAccepted = (((members.FirstOrDefault()?.MasterShip?.NameReading == "のしろ" || members.FirstOrDefault()?.MasterShip?.NameReading == "アトランタ") && members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Destroyer) >= 3)
+						|| (members.FirstOrDefault()?.MasterShip?.NameReading == "リチャード・P・リアリー" && members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Destroyer) >= 3));
 					break;
 				case 1039:   //|1039|週|【期間限定任務】Halloween海上護衛隊出撃！|1-2, 1-4, 1-5それぞれS勝利×1回|条件：阿武隈, 曙, 朝潮, 巻波, 浜波, 鵜来, 稲木, 能美, 第四号海防艦,第三〇号海防艦, 第二十二号海防艦 から4隻
 					isAccepted =
@@ -653,7 +651,7 @@ namespace ElectronicObserver.Data.Quest
 					membercount = 0;
 					foreach (var item in membernames)
 					{
-						if (isFlagship == false && members[0]?.MasterShip?.NameReading == item)
+						if (isFlagship == false && members.FirstOrDefault()?.MasterShip?.NameReading == item)
 						{
 							isFlagship = true;
 						}
@@ -666,7 +664,7 @@ namespace ElectronicObserver.Data.Quest
 					if (members.Count(s => s?.MasterShip?.ShipID == 639) > 0)
 					{
 						membercount++;
-						if (members[0]?.MasterShip?.ShipID == 639) //迅鯨改
+						if (members.FirstOrDefault()?.MasterShip?.ShipID == 639) //迅鯨改
 						{
 							isFlagship = true;
 						}

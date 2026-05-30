@@ -238,6 +238,10 @@
 			this.SupportShellingPower = new ElectronicObserver.Window.Control.ImageLabel();
 			this.Errorpanel = new System.Windows.Forms.Panel();
 			this.ErrorMessage = new System.Windows.Forms.Label();
+			this.AACutinType10 = new ElectronicObserver.Window.Control.ImageLabel();
+			this.AACutinType9 = new ElectronicObserver.Window.Control.ImageLabel();
+			this.AACutinName9 = new ElectronicObserver.Window.Control.ImageLabel();
+			this.AACutinName10 = new ElectronicObserver.Window.Control.ImageLabel();
 			this.TableParameterMain.SuspendLayout();
 			this.BasePanelShipGirl.SuspendLayout();
 			this.TableEquipment.SuspendLayout();
@@ -1992,10 +1996,10 @@
 			this.tabPage2.Controls.Add(this.AACutinTitleName);
 			this.tabPage2.Controls.Add(this.flowLayoutPanel1);
 			this.tabPage2.Controls.Add(this.TableAACutinList);
-			this.tabPage2.Location = new System.Drawing.Point(4, 25);
+			this.tabPage2.Location = new System.Drawing.Point(4, 27);
 			this.tabPage2.Name = "tabPage2";
 			this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-			this.tabPage2.Size = new System.Drawing.Size(430, 412);
+			this.tabPage2.Size = new System.Drawing.Size(430, 410);
 			this.tabPage2.TabIndex = 1;
 			this.tabPage2.Text = "雷撃・対潜・制空・対空";
 			// 
@@ -2004,7 +2008,7 @@
 			this.AACutinTitleName.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.AACutinTitleName.AutoSize = false;
 			this.AACutinTitleName.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.AACutinTitleName.Location = new System.Drawing.Point(9, 151);
+			this.AACutinTitleName.Location = new System.Drawing.Point(9, 150);
 			this.AACutinTitleName.Name = "AACutinTitleName";
 			this.AACutinTitleName.Size = new System.Drawing.Size(131, 20);
 			this.AACutinTitleName.TabIndex = 7;
@@ -2351,9 +2355,13 @@
 			this.TableAACutinList.Controls.Add(this.AACutinName6, 1, 5);
 			this.TableAACutinList.Controls.Add(this.AACutinName7, 1, 6);
 			this.TableAACutinList.Controls.Add(this.AACutinName8, 1, 7);
+			this.TableAACutinList.Controls.Add(this.AACutinType10, 0, 9);
+			this.TableAACutinList.Controls.Add(this.AACutinType9, 0, 8);
+			this.TableAACutinList.Controls.Add(this.AACutinName9, 1, 8);
+			this.TableAACutinList.Controls.Add(this.AACutinName10, 1, 9);
 			this.TableAACutinList.Location = new System.Drawing.Point(3, 177);
 			this.TableAACutinList.Name = "TableAACutinList";
-			this.TableAACutinList.RowCount = 8;
+			this.TableAACutinList.RowCount = 10;
 			this.TableAACutinList.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.TableAACutinList.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.TableAACutinList.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
@@ -2362,7 +2370,9 @@
 			this.TableAACutinList.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.TableAACutinList.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.TableAACutinList.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-			this.TableAACutinList.Size = new System.Drawing.Size(417, 162);
+			this.TableAACutinList.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.TableAACutinList.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.TableAACutinList.Size = new System.Drawing.Size(417, 201);
 			this.TableAACutinList.TabIndex = 1;
 			// 
 			// AACutinType1
@@ -2454,7 +2464,7 @@
 			this.AACutinType8.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.AACutinType8.AutoSize = false;
 			this.AACutinType8.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.AACutinType8.Location = new System.Drawing.Point(3, 144);
+			this.AACutinType8.Location = new System.Drawing.Point(3, 143);
 			this.AACutinType8.Name = "AACutinType8";
 			this.AACutinType8.Size = new System.Drawing.Size(50, 14);
 			this.AACutinType8.TabIndex = 7;
@@ -2543,7 +2553,7 @@
 			this.AACutinName8.Anchor = System.Windows.Forms.AnchorStyles.Left;
 			this.AACutinName8.AutoSize = false;
 			this.AACutinName8.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
-			this.AACutinName8.Location = new System.Drawing.Point(59, 144);
+			this.AACutinName8.Location = new System.Drawing.Point(59, 143);
 			this.AACutinName8.Name = "AACutinName8";
 			this.AACutinName8.Size = new System.Drawing.Size(350, 14);
 			this.AACutinName8.TabIndex = 7;
@@ -2907,6 +2917,52 @@
 			this.ErrorMessage.Text = "この艦娘はもういません・・・";
 			this.ErrorMessage.Visible = false;
 			// 
+			// AACutinType10
+			// 
+			this.AACutinType10.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.AACutinType10.AutoSize = false;
+			this.AACutinType10.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.AACutinType10.Location = new System.Drawing.Point(3, 183);
+			this.AACutinType10.Name = "AACutinType10";
+			this.AACutinType10.Size = new System.Drawing.Size(50, 14);
+			this.AACutinType10.TabIndex = 7;
+			this.AACutinType10.Text = "30";
+			this.AACutinType10.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// AACutinType9
+			// 
+			this.AACutinType9.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.AACutinType9.AutoSize = false;
+			this.AACutinType9.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.AACutinType9.Location = new System.Drawing.Point(3, 163);
+			this.AACutinType9.Name = "AACutinType9";
+			this.AACutinType9.Size = new System.Drawing.Size(50, 14);
+			this.AACutinType9.TabIndex = 7;
+			this.AACutinType9.Text = "30";
+			this.AACutinType9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// AACutinName9
+			// 
+			this.AACutinName9.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.AACutinName9.AutoSize = false;
+			this.AACutinName9.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.AACutinName9.Location = new System.Drawing.Point(59, 163);
+			this.AACutinName9.Name = "AACutinName9";
+			this.AACutinName9.Size = new System.Drawing.Size(350, 14);
+			this.AACutinName9.TabIndex = 7;
+			this.AACutinName9.Text = "12.7cm連装砲C型改三H/電探装備マスト or 機銃増備<白露型>";
+			// 
+			// AACutinName10
+			// 
+			this.AACutinName10.Anchor = System.Windows.Forms.AnchorStyles.Left;
+			this.AACutinName10.AutoSize = false;
+			this.AACutinName10.ImageAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			this.AACutinName10.Location = new System.Drawing.Point(59, 183);
+			this.AACutinName10.Name = "AACutinName10";
+			this.AACutinName10.Size = new System.Drawing.Size(350, 14);
+			this.AACutinName10.TabIndex = 7;
+			this.AACutinName10.Text = "12.7cm連装砲C型改三H/電探装備マスト or 機銃増備<白露型>";
+			// 
 			// DialogShipAttackDetail
 			// 
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -3178,5 +3234,9 @@
 		private Control.ImageLabel SpItemSouk;
 		private Control.ImageLabel SpItemKaih;
 		private Control.ImageLabel Sanma;
-	}
+        private Control.ImageLabel AACutinType10;
+        private Control.ImageLabel AACutinType9;
+        private Control.ImageLabel AACutinName9;
+        private Control.ImageLabel AACutinName10;
+    }
 }

@@ -503,8 +503,8 @@ namespace ElectronicObserver.Data
 				case 36: return "特型内火艇";
 				case 37: return "陸上攻撃機";
 				case 38: return "局地戦闘機";
-				case 39: return "噴式戦闘爆撃機(噴式景雲改";
-				case 40: return "噴式戦闘爆撃機(橘花改";
+				case 39: return "噴式戦闘爆撃機(噴式景雲改)";
+				case 40: return "噴式戦闘爆撃機(橘花改)";
 				case 41: return "輸送機材";
 				case 42: return "潜水艦装備";
 				case 43: return "水上戦闘機";
@@ -512,7 +512,7 @@ namespace ElectronicObserver.Data
 				case 45: return "夜間戦闘機";
 				case 46: return "夜間攻撃機";
 				case 47: return "陸上対潜哨戒機";
-				case 48: return "陸上攻撃機(襲撃機";
+				case 48: return "陸上攻撃機(襲撃機)";
 				case 49: return "大型陸上機";
 				case 50: return "夜間偵察機";
 				case 51: return "夜間水上爆撃機";
@@ -521,7 +521,7 @@ namespace ElectronicObserver.Data
 				case 54: return "艦載発煙装置";
 				case 55: return "阻塞気球";
 				case 56: return "噴式局地戦闘機";
-				case 57: return "試作局地戦闘機";
+				case 57: return "局地戦闘機(試製震電)";
 				case 58: return "夜間爆撃機";
 				case 59: return "全翼戦闘爆撃機";
 				default: return "不明";  
@@ -1283,7 +1283,7 @@ namespace ElectronicObserver.Data
 				case 1:
 					return "高角砲×2／電探 <秋月型>";
 				case 2:
-					return "高角砲／電探 <秋月型>";
+					return "高角砲／電探 <秋月型・吹雪改三護> ";
 				case 3:
 					return "高角砲×2 <秋月型>";
 				case 4:
@@ -1309,9 +1309,9 @@ namespace ElectronicObserver.Data
 				case 14:
 					return "高角砲／対空機銃／対空電探 <五十鈴改二>";
 				case 15:
-					return "高角砲／対空機銃 <五十鈴改二>";
+					return "高角砲／対空機銃 <五十鈴改二・時雨改三・吹雪改三>";
 				case 16:
-					return "高角砲／対空機銃／対空電探 <霞改二乙・夕張改二>";
+					return "高角砲／対空機銃／対空電探 <霞改二乙・夕張改二・時雨改三・吹雪改三>";
 				case 17:
 					return "高角砲／対空機銃 <霞改二乙・稲木改二>";
 				case 18:
@@ -1321,13 +1321,13 @@ namespace ElectronicObserver.Data
 				case 20:
 					return "特殊機銃 <鬼怒改二>";
 				case 21:
-					return "高角砲／対空電探 <由良改二>";
+					return "高角砲／対空電探 <由良改二・時雨改三・吹雪改三/護>";
 				case 22:
 					return "特殊機銃 <文月改二>";
 				case 23:
 					return "対空機銃(対空3～8) <UIT-25・伊504>";
 				case 24:
-					return "高角砲／対空機銃(対空3～8) <天龍型改二>";
+					return "高角砲／対空機銃(対空3～8) <天龍型改二・時雨改三・吹雪改三>";
 				case 25:
 					return "噴進砲改二／対空電探／三式弾 <伊勢型改/改二>";
 				case 26:
@@ -1347,11 +1347,11 @@ namespace ElectronicObserver.Data
 				case 33:
 					return "高角砲／対空機銃(対空4以上) <Gotland改/andra>";
 				case 34:
-					return "Fletcher砲改+GFCS×2 <Fletcher級>";
+					return "Fletcher砲改+GFCS×2 <Fletcher級・吹雪改三護>";
 				case 35:
-					return "Fletcher砲改+GFCS／Fletcher砲(改) <Fletcher級>";
+					return "Fletcher砲改+GFCS／Fletcher砲(改) <Fletcher級・吹雪改三護>";
 				case 36:
-					return "Fletcher砲(改)×2／GFCS電探 <Fletcher級>";
+					return "Fletcher砲(改)×2／GFCS電探 <Fletcher級・吹雪改三護>";
 				case 37:
 					return "Fletcher砲(改)×2 <Fletcher級>";
 				case 38:
@@ -1375,15 +1375,15 @@ namespace ElectronicObserver.Data
 				case 47:
 					return "12.7cm連装砲C型改三H／12.7cm連装砲C型改三H or 25mm対空機銃増備 or 対空電探(対空4以上) <白露改二・村雨改二・春雨改二・時雨改二/改三>";
 				case 48:
-					return "10cm連装高角砲改＋高射装置改×2／対空電探(対空4以上) <秋月型改・改二>";
+					return "10cm連装高角砲改＋高射装置改×2／対空電探(対空4以上) <秋月型改/改二・吹雪改三護>";
 				case 49:
 					return "特殊高角砲×2／対空電探(対空4以上) <藤波改二・吹雪改二・白雪改二・浜波改二・早波改二>";
 				case 50:
-					return "10cm連装高角砲改(＋高射装置改)×2／対空電探(対空4以上)／94式高射装置 <藤波改二・吹雪改二・白雪改二・初雪改二・浜波改二・早波改二・秋月型>";
+					return "10cm連装高角砲改(＋高射装置改)×2／対空電探(対空4以上)／94式高射装置 <秋月型・白雪改二・初雪改二・玉波改二・藤波改二・浜波改二・早波改二・吹雪改二/改三/護>";
 				case 51:
-					return "10cm連装高角砲改(＋高射装置改)／対空電探(対空4以上)／対空機銃(対空5以上) <藤波改二・吹雪改二・白雪改二・初雪改二・浜波改二・早波改二>";
+					return "10cm連装高角砲改(＋高射装置改)／対空電探(対空4以上)／対空機銃(対空5以上) <白雪改二・初雪改二・玉波改二・藤波改二・浜波改二・早波改二・吹雪改二/改三/護>";
 				case 52:
-					return "10cm連装高角砲改×2／94式高射装置 <藤波改二・吹雪改二・白雪改二・初雪改二・浜波改二・早波改二・秋月型>";
+					return "10cm連装高角砲改×2／94式高射装置 <秋月型・白雪改二・初雪改二・玉波改二・藤波改二・浜波改二・早波改二・吹雪改二/改三/護>";
 				case 53:
 					return "特殊高角砲(対空9以上)／対空電探(対空4以上) <飛龍改三>";
 				default:
