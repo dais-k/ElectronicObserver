@@ -371,7 +371,7 @@ namespace ElectronicObserver.Window
 			this.MenuMember_CopyName.Size = new System.Drawing.Size(215, 22);
 			this.MenuMember_CopyName.Text = "装備名をコピー";
 			this.MenuMember_CopyName.Click += new System.EventHandler(this.MenuMember_CopyName_Click);
-			this.MenuMember_CopyName.Visible = false;
+			this.MenuMember_CopyName.Visible = true;
 			// 
 			// MenuGroup
 			// 
