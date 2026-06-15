@@ -1002,12 +1002,12 @@ namespace ElectronicObserver.Data.Quest
 							if (DateTime.Now < new DateTime(2026, 12, 30))
 							{
 								Progresses.Add(new ProgressMultiBattle(q, new[]{
-									new ProgressSpecialBattle(q, 1, "S", new[] { 51 }, true),
-									new ProgressSpecialBattle(q, 1, "S", new[] { 52 }, true),
-									new ProgressSpecialBattle(q, 1, "S", new[] { 53 }, true),
-									new ProgressSpecialBattle(q, 1, "S", new[] { 54 }, true),
-									new ProgressSpecialBattle(q, 1, "S", new[] { 55 }, true),
-									new ProgressSpecialBattle(q, 1, "S", new[] { 56 }, true, 3),
+									new ProgressSpecialBattle(q, 1, "A", new[] { 51 }, true),
+									new ProgressSpecialBattle(q, 1, "A", new[] { 52 }, true),
+									new ProgressSpecialBattle(q, 1, "A", new[] { 53 }, true),
+									new ProgressSpecialBattle(q, 1, "A", new[] { 54 }, true),
+									new ProgressSpecialBattle(q, 1, "A", new[] { 55 }, true),
+									new ProgressSpecialBattle(q, 1, "A", new[] { 56 }, true, 3),
 								}));
 							}
 							break;
@@ -1019,7 +1019,7 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressSpecialBattle(q, 1, "S", new[] { 15 }, true),
 							}));
 							break;
-						case 958:   //|958|単|改白露型駆逐艦「山風改二」、奮戦す！|2-2、7-2、5-1、6-4ボスS勝利1回||条件：山風改二、江風改二、海風改二から2隻|
+						case 958:   //|958|単|改白露型駆逐艦「山風改二」、奮戦す！|2-2、7-2-2、5-1、6-4ボスS勝利1回||条件：山風改二、江風改二、海風改二から2隻|
 							Progresses.Add(new ProgressMultiBattle(q, new[] {
 								new ProgressSpecialBattle(q, 1, "S", new[] { 22 }, true),
 								new ProgressSpecialBattle(q, 1, "S", new[] { 51 }, true),
@@ -1117,10 +1117,10 @@ namespace ElectronicObserver.Data.Quest
 							break;
 						case 1022:  //|1022|月|【期間限定任務】「三十二駆」月次戦闘哨戒！|2-3、4-1、5-1、7-1ボスを各S勝利1回ずつ|条件：玉波、涼波、藤波、早波、浜波から3, 自由2|2024/12/2～
 							Progresses.Add(new ProgressMultiBattle(q, new[] {
-								new ProgressSpecialBattle(q, 1, "S", new[] { 23 }, true),
-								new ProgressSpecialBattle(q, 1, "S", new[] { 41 }, true),
-								new ProgressSpecialBattle(q, 1, "S", new[] { 51 }, true),
-								new ProgressSpecialBattle(q, 1, "S", new[] { 71 }, true),
+								new ProgressSpecialBattle(q, 1, "A", new[] { 23 }, true),
+								new ProgressSpecialBattle(q, 1, "A", new[] { 71 }, true),
+								new ProgressSpecialBattle(q, 1, "A", new[] { 41 }, true),
+								new ProgressSpecialBattle(q, 1, "A", new[] { 51 }, true),
 							}));
 							break;
 						case 1030:  //|1030|週|【期間限定任務】Fletcher級、哨戒任務！|1-3, 1-4, 2-4　それぞれS勝利×2回|条件：Fletcher級駆逐艦2,Northampton級かNew Orleans級1|2025/5/12～2025/5/30
@@ -1132,6 +1132,13 @@ namespace ElectronicObserver.Data.Quest
 									new ProgressSpecialBattle(q, 2, "S", new[] { 24 }, true),
 								}));
 							}
+							break;
+						case 1031:  //|1031|単|【初夏限定任務】北方海域 戦闘哨戒作戦2026|3-1, 3-2, 3-5 それぞれS勝利×2回|条件：榛名, Gambier Bay, Tuscaloosa, 夕張, 大井, 早波, 浜波, 薄雲, 朧, Thonburi, 宗谷 から旗艦含め3隻
+							Progresses.Add(new ProgressMultiBattle(q, new[] {
+								new ProgressSpecialBattle(q, 2, "S", new[] { 31 }, true),
+								new ProgressSpecialBattle(q, 2, "S", new[] { 32 }, true),
+								new ProgressSpecialBattle(q, 2, "S", new[] { 35 }, true),
+							}));
 							break;
 						case 1034:  //|1034|月|【夏季限定任務】夏の日の「朝日」護衛|1-2, 1-3, 1-4, 2-1それぞれS勝利×1回|条件：朝日[旗艦], 駆逐3 or 海防1
 							Progresses.Add(new ProgressMultiBattle(q, new[] {
@@ -1159,6 +1166,23 @@ namespace ElectronicObserver.Data.Quest
 							Progresses.Add(new ProgressMultiBattle(q, new[] {
 								new ProgressSpecialBattle(q, 2, "S", new[] { 21 }, true),
 								new ProgressSpecialBattle(q, 2, "S", new[] { 22 }, true),
+							}));
+							break;
+						case 1045:  //|1045|４|「吹雪改三」抜錨します！見てくださいっ！|7-5-3, 5-1, 5-3, 5-4, 5-5 それぞれS勝利?×1回|条件：吹雪改三/改三護(六式)旗艦、特I型2番艦
+							Progresses.Add(new ProgressMultiBattle(q, new[] {
+								new ProgressSpecialBattle(q, 1, "S", new[] { 51 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 52 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 53 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 54 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 55 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 75 }, true, 3),
+							}));
+							break;
+						case 1047:  //|1047|単|「涼波改二」ラバウルより抜錨せよ！|5-4, 5-5, 5-6 それぞれS勝利×2回|条件：涼波改二/補(旗艦)、「鳥海」「鈴谷」「最上」「能代」「玉波」「藤波」「早波」から2隻
+							Progresses.Add(new ProgressMultiBattle(q, new[] {
+								new ProgressSpecialBattle(q, 1, "S", new[] { 54 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 55 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 56 }, true, 3),
 							}));
 							break;
 						//============================ 1100～1199 ============================
@@ -1269,6 +1293,11 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressDiscard(q, 10, true, new[]{ 7 }),
 							}));
 							break;
+						case 1154:  //|1154|単|【新型対潜兵装開発】対潜噴進爆雷砲の開発|Lv.96以上の駆逐を秘書艦にし、第一スロットに「三式爆雷投射機 集中配備」★MAX、第二スロットに「12cm単装砲」★6以上を装備。新型噴進装備開発資材3を準備。「三式水中探信儀」×6を廃棄
+							Progresses.Add(new ProgressMultiDiscard(q, new[]{
+								new ProgressDiscard(q, 6, true, new[]{ 47 }, -1),
+							}));
+							break;
 						case 1156:  //|1156|単|【重南瓜祭り拡張任務】大きいの収穫すりゅ？|「艦上爆撃機」×12「艦上攻撃機」×12「水上偵察機」×12を廃棄、新型航空兵装資材2、南瓜5、開発資材80を準備
 							Progresses.Add(new ProgressMultiDiscard(q, new[]{
 								new ProgressDiscard(q, 12, true, new[]{ 7 }),
@@ -1289,7 +1318,7 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressDiscard(q, 5, true, new[]{ 55 }, -1),
 							}));
 							break;
-						case 1161:  //|1161|単|【工廠任務】新装備運用のための工廠整備【壱】|艦戦×9, 艦爆×9, 艦攻×9, 爆雷兵装x8, 機銃兵装x8, 中口径主砲x9, 大口径主砲x7を廃棄
+						case 1161:  //|1161|単|【工廠任務】新装備運用のための工廠整備【壱】|旗艦に「飛龍改二/改三」を配備。弾薬8800を準備。艦戦×9, 艦爆×9, 艦攻×9, 爆雷兵装x8,機銃兵装x8, 中口径主砲x9, 大口径主砲x7を廃棄
 							Progresses.Add(new ProgressMultiDiscard(q, new[]{
 								new ProgressDiscard(q, 9, true, new[]{ 6 }),
 								new ProgressDiscard(q, 9, true, new[]{ 7 }),
@@ -1300,12 +1329,19 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressDiscard(q, 7, true, new[]{ 3 }),
 							}));
 							break;
-						case 1162:  //|1162|単|【工廠任務】新装備運用のための工廠整備【壱】|零式艦戦52型×6, 紫電一一型×4, 12.7cm連装高角砲×8, 46cm三連装砲x2を廃棄
+						case 1162:  //|1162|単|【工廠任務】新装備運用のための工廠整備【弐】|零式艦戦52型×6, 紫電一一型×4, 12.7cm連装高角砲×8, 46cm三連装砲x2を廃棄
 							Progresses.Add(new ProgressMultiDiscard(q, new[]{
 								new ProgressDiscard(q, 6, true, new[]{ 21 }, -1),
 								new ProgressDiscard(q, 4, true, new[]{ 201 }, -1),
 								new ProgressDiscard(q, 8, true, new[]{ 10 }, -1),
 								new ProgressDiscard(q, 2, true, new[]{ 9 }, -1),
+							}));
+							break;
+						case 1164:  //|1164|単|【工廠任務】水雷戦隊新改装艦、改装準備！|玉波(旗艦)且つ、藤波, 北上を配備した艦隊で、新型兵装資材1、15.2cm連装砲4を準備(←廃棄しない)。三式爆雷投射機8、三式水中探信儀4、12.7cm連装高角砲8を廃棄
+							Progresses.Add(new ProgressMultiDiscard(q, new[]{
+								new ProgressDiscard(q, 8, true, new[]{ 45 }, -1),
+								new ProgressDiscard(q, 4, true, new[]{ 47 }, -1),
+								new ProgressDiscard(q, 8, true, new[]{ 10 }, -1),
 							}));
 							break;
 					}

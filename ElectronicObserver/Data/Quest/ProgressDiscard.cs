@@ -197,12 +197,26 @@ namespace ElectronicObserver.Data.Quest
 				case 1138:  //|1138|６|【高射装置量産】94式高射装置の追加配備|秘書艦に秋月型を配置し91式高射装置を4つ廃棄、ボーキ1300、鋼材480、高速建造材x4、開発資材x16を保有
 					isAccepted = members.FirstOrDefault()?.MasterShip?.ShipClass == 54 ? 1 : 0;
 					break;
+				case 1154:  //|1154|単|【新型対潜兵装開発】対潜噴進爆雷砲の開発|Lv.96以上の駆逐を秘書艦にし、第一スロットに「三式爆雷投射機 集中配備」★MAX、第二スロットに「12cm単装砲」★6以上を装備。新型噴進装備開発資材3を準備。「三式水中探信儀」×6を廃棄
+					isAccepted = (members.FirstOrDefault()?.Level >= 96 &&
+								  members.FirstOrDefault()?.MasterShip?.ShipType == ShipTypes.Destroyer &&
+								  members.FirstOrDefault().SlotInstance[0] != null &&
+								  members.FirstOrDefault().SlotInstance[0].EquipmentID == 287 &&
+								  members.FirstOrDefault().SlotInstance[0].Level == 10 &&
+								  members.FirstOrDefault().SlotInstance[1] != null &&
+								  members.FirstOrDefault().SlotInstance[1].EquipmentID == 1 &&
+								  members.FirstOrDefault().SlotInstance[1].Level >= 6) ? 1 : 0;
+					break;
 				case 1160:  //|1160|単|【工廠任務】試製震電の艦戦型改二への改修|飛龍改二/改三(旗艦)且つ、藤波改二, 早波改二, 浜波改二, 風雲改二から3隻以上配備した第一艦隊を編成
 						isAccepted = ((members.FirstOrDefault()?.MasterShip?.ShipID == 196 || members.FirstOrDefault()?.MasterShip?.ShipID == 1031 ) &&
 									members.Count(s => s != null && (s.MasterShip?.ShipID == 981 || s.MasterShip?.ShipID == 982 || s.MasterShip?.ShipID == 983 || s.MasterShip?.ShipID == 564) ) >= 3) ? 1 : 0;
 					break;
-				case 1161:  //|1161|単|【工廠任務】新装備運用のための工廠整備【壱】|第一旗艦に「飛龍改二/改三」を配備
+				case 1161:  //|1161|単|【工廠任務】新装備運用のための工廠整備【壱】|旗艦に「飛龍改二/改三」を配備。弾薬8800を準備。艦戦×9, 艦爆×9, 艦攻×9, 爆雷兵装x8,機銃兵装x8, 中口径主砲x9, 大口径主砲x7を廃棄
 					isAccepted = (members.FirstOrDefault()?.MasterShip?.ShipID == 196 || members.FirstOrDefault()?.MasterShip?.ShipID == 1031) ? 1 : 0;
+					break;
+				case 1164:  //|1164|単|【工廠任務】水雷戦隊新改装艦、改装準備！|玉波(旗艦)且つ、藤波, 北上を配備した艦隊で、新型兵装資材1、15.2cm連装砲4を準備(←廃棄しない)。三式爆雷投射機8、三式水中探信儀4、12.7cm連装高角砲8を廃棄
+					isAccepted = (members.FirstOrDefault()?.MasterShip?.NameReading == "たまなみ" &&
+								members.Count(s => s != null && (s.MasterShip?.NameReading == "ふじなみ" || s.MasterShip?.NameReading == "きたかみ")) == 2) ? 1 : 0;
 					break;
 				default:
 					//任務IDが当てはまらないなら-1のまま、つまりチェックの必要なし

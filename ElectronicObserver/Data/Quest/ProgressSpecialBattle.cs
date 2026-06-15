@@ -247,7 +247,7 @@ namespace ElectronicObserver.Data.Quest
 				// |875|季|精鋭「三一駆」、鉄底海域に突入せよ！|5-4ボスS勝利2|要長波改二/(高波改or沖波改or朝霜改)
 				case 875:
 					isAccepted =
-						members.Any(s => s?.ShipID == 543) &&
+						(members.Any(s => s?.ShipID == 543) || members.Any(s => s?.ShipID == 743)) &&
 						members.Any(s =>
 						{
 							switch (s?.MasterShip?.NameReading)
@@ -457,7 +457,7 @@ namespace ElectronicObserver.Data.Quest
 											s?.MasterShip?.ShipType == ShipTypes.AviationBattleship) >= 1)
 						&&
 						(members.Count(s => s?.MasterShip?.ShipClass == 38) >=2 ||
-						(members.Count(s => s?.MasterShip?.ShipType == ShipTypes.HeavyCruiser || s?.MasterShip?.ShipType == ShipTypes.AviationCruiser) >= 2));
+						(members.Count(s => s?.MasterShip?.ShipType == ShipTypes.HeavyCruiser || s?.MasterShip?.ShipType == ShipTypes.AviationCruiser) >= 2)) && CheckGaugeIndex56(bm.Compass);
 					break;
 				case 957:	//|957|単|「山風改二」、抜錨せよ！|1-2、1-3、1-4、1-5ボス各S勝利1改|条件：山風改二旗艦および随伴に駆逐/海防3|
 					isAccepted = 
@@ -477,7 +477,7 @@ namespace ElectronicObserver.Data.Quest
 								default:
 									return false;
 							}
-						}) >= 2;
+						}) >= 2 && CheckGaugeIndex72(bm.Compass);
 					break;
 				case 961:   //|961|単|奮戦！精鋭「第十五駆逐隊」第一小隊|2-4、5-4、7-2-2ボスを各S勝利1回ずつ|条件：黒潮改二、親潮改二を編成に入れる|
 					isAccepted =
@@ -491,14 +491,15 @@ namespace ElectronicObserver.Data.Quest
 								default:
 									return false;
 							}
-						}) >= 2;
+						}) >= 2 && CheckGaugeIndex72(bm.Compass);
 					break;
 				case 973:   //|973|５|日英米合同水上艦隊、抜錨せよ！|3-1、3-3、4-3、7-3-2ボスを各A勝利以上1回ずつ|条件：米+英艦艇3隻を編成に入れる、かつ空母を含まない|
 					isAccepted =
 						(memberstype.Count(t => t == ShipTypes.LightAircraftCarrier) == 0) &&
 						(memberstype.Count(t => t == ShipTypes.AircraftCarrier) == 0) &&
 						(memberstype.Count(t => t == ShipTypes.ArmoredAircraftCarrier) == 0) &&
-						(members.Count(s => s?.MasterShip?.ShipNationality == 1) + members.Count(s => s?.MasterShip?.ShipNationality == 2)) >= 3;
+						(members.Count(s => s?.MasterShip?.ShipNationality == 1) + members.Count(s => s?.MasterShip?.ShipNationality == 2)) >= 3
+						&& CheckGaugeIndex73(bm.Compass);
 					break;
 				case 975:   //|975|５|精鋭「第十九駆逐隊」、全力出撃！|1-5、2-3、3-2、5-3ボスを各S勝利1回ずつ|条件：磯波改二、浦波改二、綾波改二、敷波改二を編成に入れる|
 					isAccepted =
@@ -614,6 +615,24 @@ namespace ElectronicObserver.Data.Quest
 						 (members.Count(s => s?.MasterShip?.ShipClass == 95) +
 						 members.Count(s => s?.MasterShip?.ShipClass == 121)) >= 1);
 					break;
+				case 1031:  //|1031|単|【初夏限定任務】北方海域 戦闘哨戒作戦2026|3-1, 3-2, 3-5 それぞれS勝利×2回|条件：榛名, Gambier Bay, Tuscaloosa, 夕張, 大井, 早波, 浜波, 薄雲, 朧, Thonburi, 宗谷 から旗艦含め3隻
+					membernames = new string[] { "トンブリ", "ゆうばり", "おおい", "タスカルーサ", "ガンビア・ベイ", "はるな", "そうや", "おぼろ", "うすぐも", "はまなみ", "はやなみ" };
+					isFlagship = false;
+					membercount = 0;
+					foreach (var item in membernames)
+					{
+						if (isFlagship == false && members.FirstOrDefault()?.MasterShip?.NameReading == item)
+						{
+							isFlagship = true;
+						}
+
+						if (members.Count(s => s?.MasterShip?.NameReading == item) != 0)
+						{
+							membercount++;
+						}
+					}
+					isAccepted = (isFlagship == true && membercount >= 3);
+					break;
 				case 1034:   //|1034|月|【夏季限定任務】夏の日の「朝日」護衛|1-2, 1-3, 1-4, 2-1それぞれS勝利×1回|条件：朝日[旗艦], 駆逐3 or 海防1
 					isAccepted = members.FirstOrDefault()?.MasterShip?.NameReading == "あさひ" &&
 						(memberstype.Count(t => t == ShipTypes.Destroyer) >= 3 || memberstype.Count(t => t == ShipTypes.Escort) >= 1);
@@ -671,6 +690,40 @@ namespace ElectronicObserver.Data.Quest
 					}
 					isAccepted = (isFlagship == true && membercount >= 3);
 					break;
+				case 1045:   //|1045|４|「吹雪改三」抜錨します！見てくださいっ！|7-5-3, 5-1, 5-3, 5-4, 5-5 それぞれS勝利?×1回|条件：吹雪改三/改三護(六式)旗艦、特I型2番艦
+					membernames = new string[] { "うすぐも", "うらなみ", "しらくも", "みゆき", "しらゆき", "いそなみ", "はつゆき" };
+					isFlagship = false;
+					membercount = 0;
+					if (members.FirstOrDefault()?.MasterShip?.ShipID == 1035 || members.FirstOrDefault()?.MasterShip?.ShipID == 1040)
+					{
+						isFlagship = true;
+					}
+					foreach (var item in membernames)
+					{
+						if (members.ElementAtOrDefault(1)?.MasterShip?.NameReading == item)
+						{
+							membercount++;
+						}
+					}
+					isAccepted = isFlagship == true && membercount != 0 && CheckGaugeIndex75(bm.Compass);
+					break;
+				case 1047:  //|1047|単|「涼波改二」ラバウルより抜錨せよ！|5-4, 5-5, 5-6 それぞれS勝利×2回|条件：涼波改二/補(旗艦)、「鳥海」「鈴谷」「最上」「能代」「玉波」「藤波」「早波」から2隻
+					membernames = new string[] { "のしろ", "ちょうかい", "もがみ", "すずや", "たまなみ", "はやなみ", "ふじなみ" };
+					isFlagship = false;
+					membercount = 0;
+					if (members.FirstOrDefault()?.MasterShip?.ShipID == 1034 || members.FirstOrDefault()?.MasterShip?.ShipID == 745)
+					{
+						isFlagship = true;
+					}
+					foreach (var item in membernames)
+					{
+						if (members.Count(s => s?.MasterShip?.NameReading == item) != 0)
+						{
+							membercount++;
+						}
+					}
+					isAccepted = isFlagship == true && membercount != 0 && CheckGaugeIndex56(bm.Compass);
+					break;
 			}
 
 			// 第二ゲージでも第一ボスに行ける場合があるので、個別対応が必要
@@ -682,6 +735,24 @@ namespace ElectronicObserver.Data.Quest
 		}
 
 
+		private bool CheckGaugeIndex56(CompassData compass)
+		{
+			if (compass.MapAreaID == 5 && compass.MapInfoID == 6)
+			{
+				switch (compass.Destination)
+				{
+					case 11:
+						return GaugeIndex == 1;
+					case 27:
+						return GaugeIndex == 2;
+					case 43:
+						return GaugeIndex == 3;
+					default:
+						return false;
+				}
+			}
+			return true;
+		}
 
 		private bool CheckGaugeIndex72(CompassData compass)
 		{
@@ -721,6 +792,25 @@ namespace ElectronicObserver.Data.Quest
 			return true;
 		}
 
+		private bool CheckGaugeIndex75(CompassData compass)
+		{
+			if (compass.MapAreaID == 7 && compass.MapInfoID == 5)
+			{
+				switch (compass.Destination)
+				{
+					case 11:
+						return GaugeIndex == 1;
+					case 19:
+						return GaugeIndex == 2;
+					case 24:
+					case 25:
+						return GaugeIndex == 3;
+					default:
+						return false;
+				}
+			}
+			return true;
+		}
 
 		public override string GetClearCondition()
 		{
