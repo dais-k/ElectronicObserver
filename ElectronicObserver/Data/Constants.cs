@@ -577,6 +577,10 @@ namespace ElectronicObserver.Data
 					return "夜間熟練搭乗員";
 				case 102:
 					return "航空特別増加食";
+				case 103:
+					return "工廠拡張キー";
+				case 104:
+					return "工廠資源";
 				case 1000:
 					return "(★6)熟練搭乗員";
 				case 1001:
@@ -673,6 +677,22 @@ namespace ElectronicObserver.Data
 					return "(★8～)緊急修理資材";
 				case 1057:
 					return "(★9～)緊急修理資材";
+				case 1060:
+					return "(★6)工廠資源";
+				case 1061:
+					return "(★7)工廠資源";
+				case 1062:
+					return "(★8)工廠資源";
+				case 1063:
+					return "(★9)工廠資源";
+				case 1064:
+					return "(★6～)工廠資源";
+				case 1065:
+					return "(★7～)工廠資源";
+				case 1066:
+					return "(★8～)工廠資源";
+				case 1067:
+					return "(★9～)工廠資源";
 				default:
 					return "不明";
 			}
