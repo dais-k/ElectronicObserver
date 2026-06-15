@@ -105,6 +105,7 @@ namespace ElectronicObserver.Window
 
 			QuestView.DefaultCellStyle = CSDefaultCenter;
 			QuestView_Category.DefaultCellStyle = CSCategories[CSCategories.Length - 2]; //その他を指定しておく
+			QuestView_ID.DefaultCellStyle = CSDefaultCenter;
 			QuestView_Name.DefaultCellStyle = CSDefaultLeft;
 			QuestView_Progress.DefaultCellStyle = CSDefaultLeft;
 
@@ -287,6 +288,9 @@ namespace ElectronicObserver.Window
 				row.Cells[QuestView_Type.Index].Value = q.LabelType >= 100 ? q.LabelType : q.Type;
 				row.Cells[QuestView_Category.Index].Value = q.Category;
 				row.Cells[QuestView_Category.Index].Style = CSCategories[Math.Min(q.Category - 1, CSCategories.Length - 1)];
+				// 新しく追加した ID 列は数値をそのまま表示
+				row.Cells[QuestView_ID.Index].Value = q.QuestID;
+				// 任務名列は値に QuestID を入れ、CellFormatting で名前に変換する（表示は任務名）
 				row.Cells[QuestView_Name.Index].Value = q.QuestID;
 				{
 					var progress = KCDatabase.Instance.QuestProgress[q.QuestID];
@@ -350,6 +354,7 @@ namespace ElectronicObserver.Window
 			{
 				int index = QuestView.Rows.Add();
 				QuestView.Rows[index].Cells[QuestView_State.Index].Value = null;
+				// ID は空、任務名列にメッセージを入れる
 				QuestView.Rows[index].Cells[QuestView_Name.Index].Value = string.Format("(未取得の任務 x {0})", (KCDatabase.Instance.Quest.Count - KCDatabase.Instance.Quest.Quests.Count));
 			}
 
@@ -547,7 +552,7 @@ namespace ElectronicObserver.Window
 			{
 				DataGridViewRow row = new DataGridViewRow();
 				row.CreateCells(QuestView);
-				row.SetValues(null, null, null, "(未取得)", null);
+				row.SetValues(null, null, null, null, "(未取得)", null);
 				QuestView.Rows.Add(row);
 			}
 
@@ -754,12 +759,29 @@ namespace ElectronicObserver.Window
 			if (rows != null && rows.Count > 0 && rows[0].Index != -1)
 			{
 
-				return rows[0].Cells[QuestView_Name.Index].Value as int? ?? -1;
+				return rows[0].Cells[QuestView_ID.Index].Value as int? ?? -1;
 			}
 
 			return -1;
 		}
 
+		private void MenuMain_CopyQuestName_Click(object sender, EventArgs e)
+		{
+			var quest = KCDatabase.Instance.Quest[GetSelectedRowQuestID()];
+
+			if (quest != null)
+			{
+				try
+				{
+					Clipboard.SetData(DataFormats.StringFormat, quest.Name);
+					Utility.Logger.Add(2, $"任務名『{quest.Name}』をクリップボードにコピーしました。");
+				}
+				catch (Exception ex)
+				{
+					Utility.ErrorReporter.SendErrorReport(ex, "任務名のコピーに失敗しました。");
+				}
+			}
+		}
 
 		protected override string GetPersistString()
 		{
