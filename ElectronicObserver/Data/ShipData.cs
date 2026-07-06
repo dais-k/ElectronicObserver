@@ -139,6 +139,23 @@ namespace ElectronicObserver.Data
 		/// </summary>
 		public int AircraftTotal => _aircraft.Sum(a => Math.Max(a, 0));
 
+		private int[] _aircraftMax;
+
+		/// <summary>
+		/// 各スロットの航空機最大搭載量
+		/// </summary>
+		public ReadOnlyCollection<int> AircraftMax => Array.AsReadOnly(_aircraftMax);
+
+		/// <summary>
+		/// 全スロット合計搭載量
+		/// </summary>
+		public int AircraftTotalMax => _aircraftMax.Sum(a => Math.Max(a, 0));
+
+		/// <summary>
+		/// RawData に api_onslot_max が含まれているか
+		/// </summary>
+		public bool Isonslotmax => RawData.api_onslot_max();
+		
 		/// <summary>
 		/// 搭載燃料
 		/// </summary>
@@ -574,7 +591,7 @@ namespace ElectronicObserver.Data
 			get
 			{
 				double[] airs = new double[_aircraft.Length];
-				var airmax = MasterShip.Aircraft;
+				var airmax = AircraftMax;
 
 				for (int i = 0; i < airs.Length; i++)
 				{
@@ -588,7 +605,7 @@ namespace ElectronicObserver.Data
 		/// <summary>
 		/// 搭載機残量割合
 		/// </summary>
-		public double AircraftTotalRate => (double)AircraftTotal / Math.Max(MasterShip.AircraftTotal, 1);
+		public double AircraftTotalRate => (double)AircraftTotal / Math.Max(AircraftTotalMax, 1);
 
 		/// <summary>
 		/// 増設スロットが使用可能か
@@ -2170,6 +2187,12 @@ namespace ElectronicObserver.Data
 					_aircraft = (int[])RawData.api_onslot;
 					_modernized = (int[])RawData.api_kyouka;
 
+					// 追加: _aircraftMax を設定。api_onslot_max が存在すればそれを使い、なければ MasterShip.Aircraft を配列に変換して使う
+					if (RawData.api_onslot_max())
+						_aircraftMax = (int[])RawData.api_onslot_max;
+					else
+						_aircraftMax = MasterShip?.Aircraft?.ToArray() ?? new int[] { 0, 0, 0, 0, 0 };
+					
 					if (data.api_sp_effect_items()) // 海色リボンか白タスキを持っているかどうか
 					{
 						SpItemKind = (int)RawData.api_sp_effect_items[0].api_kind;
@@ -2186,6 +2209,7 @@ namespace ElectronicObserver.Data
 						}
 
 					}
+
 					break;
 
 				case "api_req_hokyu/charge":

@@ -519,7 +519,7 @@ namespace ElectronicObserver.Window.Control
 				var eq = ship.SlotInstance[i];
 				SlotList[i].EquipmentID = eq?.EquipmentID ?? -1;
 				SlotList[i].AircraftCurrent = ship.Aircraft[i];
-				SlotList[i].AircraftMax = ship.MasterShip.Aircraft[i];
+				SlotList[i].AircraftMax = ship.AircraftMax[i];
 				SlotList[i].Level = eq?.Level ?? 0;
 				SlotList[i].AircraftLevel = eq?.AircraftLevel ?? 0;
 			}

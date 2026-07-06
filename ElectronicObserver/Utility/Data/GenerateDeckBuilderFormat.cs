@@ -160,6 +160,12 @@ namespace ElectronicObserver.Utility.Data
 					string.Join(",", apiExp),
 					ship.ExpansionSlot,
 					(ship.SallyArea >= 0 ? ship.SallyArea : 0));
+				if (ship.Isonslotmax)
+				{
+					var maxs = ship.AircraftMax;
+					var values = string.Join(",", Enumerable.Range(0, 5).Select(i => i < maxs.Count ? maxs[i].ToString() : "0"));
+					sb.AppendFormat(@",""api_onslot_max"":[{0}]", values);
+				}
 				if (ship.SpItemKind > 0)
 				{
 					switch (ship.SpItemKind)

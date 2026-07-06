@@ -791,7 +791,7 @@ namespace ElectronicObserver.Window
 				{
 					var eq = ship.SlotInstance[i];
 					if (eq != null)
-						sb.AppendFormat("[{0}/{1}] {2}\r\n", ship.Aircraft[i], ship.MasterShip.Aircraft[i], eq.NameWithLevel);
+						sb.AppendFormat("[{0}/{1}] {2}\r\n", ship.Aircraft[i], ship.AircraftMax[i], eq.NameWithLevel);
 				}
 
 				{

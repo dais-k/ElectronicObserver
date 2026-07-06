@@ -82,12 +82,12 @@ namespace ElectronicObserver.Data.ShipGroup
 			{ ".Aircraft[3]", "搭載 #4" },
 			{ ".Aircraft[4]", "搭載 #5" },
 			{ ".AircraftTotal", "搭載機数合計" },
-			{ ".MasterShip.Aircraft[0]", "最大搭載 #1" },
-			{ ".MasterShip.Aircraft[1]", "最大搭載 #2" },
-			{ ".MasterShip.Aircraft[2]", "最大搭載 #3" },
-			{ ".MasterShip.Aircraft[3]", "最大搭載 #4" },
-			{ ".MasterShip.Aircraft[4]", "最大搭載 #5" },
-			{ ".MasterShip.AircraftTotal", "最大搭載機数" },		//要る？
+			{ ".AircraftMax[0]", "最大搭載 #1" },
+			{ ".AircraftMax[1]", "最大搭載 #2" },
+			{ ".AircraftMax[2]", "最大搭載 #3" },
+			{ ".AircraftMax[3]", "最大搭載 #4" },
+			{ ".AircraftMax[4]", "最大搭載 #5" },
+			{ ".AircraftTotalMax", "最大搭載機数" },		//要る？
 			{ ".AircraftRate[0]", "搭載割合 #1" },
 			{ ".AircraftRate[1]", "搭載割合 #2" },
 			{ ".AircraftRate[2]", "搭載割合 #3" },
