@@ -724,6 +724,30 @@ namespace ElectronicObserver.Data.Quest
 					}
 					isAccepted = isFlagship == true && membercount != 0 && CheckGaugeIndex56(bm.Compass);
 					break;
+				case 1048:  //|1048|月|【期間限定任務】戦略兵站物資、緊急輸送！|1-3, 1-4 それぞれA勝利以上×1回|条件：「補給or揚陸or水母or航戦」(旗艦), 「駆逐+海防」4以上
+					isFlagship = false;
+					membercount = 0;
+					if (members.FirstOrDefault()?.MasterShip?.ShipType == ShipTypes.FleetOiler || 
+						members.FirstOrDefault()?.MasterShip?.ShipType == ShipTypes.AmphibiousAssaultShip ||
+						members.FirstOrDefault()?.MasterShip?.ShipType == ShipTypes.SeaplaneTender ||
+						members.FirstOrDefault()?.MasterShip?.ShipType == ShipTypes.AviationBattleship)
+					{
+						isFlagship = true;
+					}
+					membercount = members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Destroyer) + members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Escort);
+					isAccepted = isFlagship == true && membercount >= 4;
+					break;
+				case 1049:  //|1049|月|【期間限定拡張作戦】戦略兵站物資、拡張輸送！|2-3, 7-5-2 それぞれA勝利以上×1回|条件：「補給or揚陸」(旗艦), 「駆逐+海防」3以上
+					isFlagship = false;
+					membercount = 0;
+					if (members.FirstOrDefault()?.MasterShip?.ShipType == ShipTypes.FleetOiler ||
+						members.FirstOrDefault()?.MasterShip?.ShipType == ShipTypes.AmphibiousAssaultShip)
+					{
+						isFlagship = true;
+					}
+					membercount = members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Destroyer) + members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Escort);
+					isAccepted = isFlagship == true && membercount >= 3 && CheckGaugeIndex75(bm.Compass);
+					break;
 			}
 
 			// 第二ゲージでも第一ボスに行ける場合があるので、個別対応が必要

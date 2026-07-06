@@ -457,6 +457,12 @@ namespace ElectronicObserver.Data.Quest
 						case 381:   //|381|週|【期間限定任務】秋月型演習任務|演習A勝利以上×3回|条件：秋月, 照月, 涼月, 初月, 冬月, 秋雲, 秋霜, 秋津洲 から3隻以上|1日で進捗リセット|期間限定ウィークリー任務
 							Progresses.Add(new ProgressPractice(q, 3, "A", true));
 							break;
+						case 382:   //|382|月|【期間限定任務】第三十一戦隊 緊急演習！|演習A勝利以上×3回|条件：「榧」「杉」「樫」「竹」「潮」「響」「初霜」「雪風」「冬月」「涼月」から5隻編成 | 1日で進捗リセット|期間限定任務
+							Progresses.Add(new ProgressPractice(q, 3, "A", true));
+							break;
+						case 383:   //|383|週|【期間限定任務】フランス艦隊、特別演習！|演習A勝利以上×3回|条件：フランス艦を3隻以上 | 1日で進捗リセット|期間限定任務
+							Progresses.Add(new ProgressPractice(q, 3, "A", true));
+							break;
 						//============================ 400～499 ============================
 						case 402:   //|402|「遠征」を3回成功させよう！|遠征成功3
 							Progresses.Add(new ProgressExpedition(q, 3, null));
@@ -1183,6 +1189,18 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressSpecialBattle(q, 1, "S", new[] { 54 }, true),
 								new ProgressSpecialBattle(q, 1, "S", new[] { 55 }, true),
 								new ProgressSpecialBattle(q, 1, "S", new[] { 56 }, true, 3),
+							}));
+							break;
+						case 1048:  //|1048|月|【期間限定任務】戦略兵站物資、緊急輸送！|1-3, 1-4 それぞれA勝利以上×1回|条件：「補給or揚陸or水母or航戦」(旗艦), 「駆逐+海防」4以上
+							Progresses.Add(new ProgressMultiBattle(q, new[] {
+								new ProgressSpecialBattle(q, 1, "A", new[] { 13 }, true),
+								new ProgressSpecialBattle(q, 1, "A", new[] { 14 }, true),
+							}));
+							break;
+						case 1049:  //|1049|月|【期間限定拡張作戦】戦略兵站物資、拡張輸送！|2-3, 7-5-2 それぞれA勝利以上×1回|条件：「補給or揚陸」(旗艦), 「駆逐+海防」3以上
+							Progresses.Add(new ProgressMultiBattle(q, new[] {
+								new ProgressSpecialBattle(q, 1, "A", new[] { 23 }, true),
+								new ProgressSpecialBattle(q, 1, "A", new[] { 75 }, true, 2),
 							}));
 							break;
 						//============================ 1100～1199 ============================
