@@ -1226,6 +1226,7 @@ namespace ElectronicObserver.Utility.Data
 			var armyInfantryChiHaKai = 0;
 			var t97ChiHa = 0;
 			var t97ChiHaKai = 0;
+			var r35tank = 0; double[] rate_r35tank1 = new double[5] { 1.5, 1.2, 1.5, 1.5, 1.6 };
 
 			foreach (var slot in allSlotInstance)
 			{
@@ -1315,6 +1316,9 @@ namespace ElectronicObserver.Utility.Data
 						break;
 					case 514:
 						no3TankJ++;
+						break;
+					case 576:
+						r35tank++;
 						break;
 					case 167:
 						toku2tank++;
@@ -1434,6 +1438,14 @@ namespace ElectronicObserver.Utility.Data
 							basepower *= rate_no2Tank2[skin];
 						else
 							basepower *= rate_no2Tank1[skin];
+					}
+
+					if (r35tank != 0) //R35フランス戦車
+					{
+						if (r35tank >= 1)
+							basepower *= rate_r35tank1[skin];
+						//else
+							//basepower *= rate_no2Tank1[skin];
 					}
 
 					if (m4A1DD + chihaKai + no3TankJ + armyInfantryChiHaKai + t97ChiHaKai != 0) //M4A1+チハ改+Ⅲ号戦車J+陸戦部隊チハ改+T97チハ改
@@ -1638,10 +1650,28 @@ namespace ElectronicObserver.Utility.Data
 				}
 			}
 
-			//上陸支援舟艇シナジー補正
+			//II号戦車/北アフリカ仕様特殊補正
 			{
-				var typeA = daihatsu + tokudaihatsu + rikusen + isshiki + no2Tank + toku4tank + toku4tankkai;
-				var typeB = elevenReg + no3Tank + no3TankJ + chiha + chihaKai + toku2tank;
+				if (no2Tank != 0)
+				{
+					basepower *= 1.15;
+					basepower += 15;
+				}
+			}
+
+			//R35特殊補正
+			{
+				if (r35tank != 0)
+				{
+					basepower *= 1.2;
+					basepower += 20;
+				}
+			}
+
+			//上陸支援舟艇シナジー補正 A組：武装大発 B組：装甲艇(AB艇)
+			{
+				var typeA = daihatsu + tokudaihatsu + rikusen + isshiki + no2Tank + toku4tank + toku4tankkai + r35tank; //上陸支援舟艇シナジー補正C組
+				var typeB = elevenReg + no3Tank + no3TankJ + chiha + chihaKai + toku2tank; //上陸支援舟艇シナジー補正D組
 				if (daihatsuAB != 0 && busouDaihatsu != 0)
 				{
 					if (typeA != 0 && typeB != 0)
