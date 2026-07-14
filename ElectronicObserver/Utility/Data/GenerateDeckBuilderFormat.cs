@@ -48,7 +48,7 @@ namespace ElectronicObserver.Utility.Data
 						foreach (var eq in ship.SlotInstance.Where(eq => eq != null))
 						{
 							if (eq != null)
-								sb.AppendFormat(@"""i{0}"":{{""id"":{1},""rf"":{2},""mas"":{3}}},", eqcount.ToString(), eq.EquipmentID, eq.Level, eq.AircraftLevel);
+								sb.AppendFormat(@"""i{0}"":{{""id"":{1},""rf"":{2},""mas"":{3},""ac"":{4}}},", eqcount.ToString(), eq.EquipmentID, eq.Level, eq.AircraftLevel, ship.AircraftMax[eqcount - 1]);
 							eqcount++;
 						}
 						if (ship.IsExpansionSlotAvailable && ship.ExpansionSlotInstance != null)
