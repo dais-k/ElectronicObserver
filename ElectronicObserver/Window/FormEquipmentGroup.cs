@@ -359,7 +359,7 @@ namespace ElectronicObserver.Window
 		/// （最適化: アイコンはキャッシュ経由で行作成時に設定し、装備配備先文字列は事前にまとめて計算したマップを利用）
 		/// </summary>
 		/// <param name="equip">追加する装備マスターデータ。</param>
-		private DataGridViewRow CreateEquipViewRow(EquipmentDataMaster equip, Dictionary<int, string> shipsMap = null)
+		private DataGridViewRow CreateEquipViewRow(EquipmentDataMaster equip, Dictionary<int, string> shipsMap = null, Dictionary<int, int> quantityMap = null)
 		{
 			if (equip == null) return null;
 
@@ -371,8 +371,11 @@ namespace ElectronicObserver.Window
 			string today = GetTodayImprovementNames(equip.Improvements);
 			string improveDisplay = today == "-" ? GetNextImprovementNamesCombined(equip.Improvements) : today;
 
-			// SetValues ではアイコン列には int (IconType) を入れておく（ソートのため）
-			row.SetValues(
+            // 装備の所持数を取得。quantityMap が null の場合は個別走査で取得する。
+            int quantity = quantityMap != null && quantityMap.TryGetValue(equip.EquipmentID, out var count) ? count : 0;
+
+            // SetValues ではアイコン列には int (IconType) を入れておく（ソートのため）
+            row.SetValues(
 				equip.EquipmentID,
 				equip.IconType,
 				equip.Name,
@@ -390,8 +393,9 @@ namespace ElectronicObserver.Window
 				equip.AA,
 				equip.Armor,
 				equip.AircraftDistance,
-				// EquipView_EquipedShips は後で shipsMap から設定するか、フォールバックで取得
-				shipsMap != null && shipsMap.TryGetValue(equip.EquipmentID, out var ships) ? ships : GetShipsEquipping(equip.EquipmentID)
+                quantity,
+                // EquipView_EquipedShips は後で shipsMap から設定するか、フォールバックで取得
+                shipsMap != null && shipsMap.TryGetValue(equip.EquipmentID, out var ships) ? ships : GetShipsEquipping(equip.EquipmentID)
 			);
 
 			// 値は int のままにして、ツールチップと（任意で）Tag にキャッシュ画像を入れておく。
@@ -419,13 +423,36 @@ namespace ElectronicObserver.Window
 
 			return row;
 		}
-		
-		
-		/// <summary>
-		/// 指定したタブのグループのEquipViewを作成します。
-		/// </summary>
-		/// <param name="target">作成するビューのグループデータ</param>
-		private void BuildEquipView(ImageLabel target)
+
+        /// <summary>
+        /// 指定された装備ID集合について、装備の所持数を一括で集計する。
+        /// BuildEquipView の内部最適化用。
+        /// </summary>
+        private Dictionary<int, int> BuildEquipQuantityMap(IEnumerable<int> equipmentIDs)
+        {
+            var ids = new HashSet<int>(equipmentIDs.Where(i => i > 0));
+            var result = ids.ToDictionary(i => i, i => 0);
+
+            foreach (var eq in KCDatabase.Instance.Equipments.Values)
+            {
+                if (eq == null || eq.MasterEquipment == null || eq.MasterEquipment.IsAbyssalEquipment)
+                    continue;
+
+                int equipmentID = eq.EquipmentID;
+                if (ids.Contains(equipmentID))
+                {
+                    result[equipmentID]++;
+                }
+            }
+
+            return result;
+        }
+        
+        /// <summary>
+        /// 指定したタブのグループのEquipViewを作成します。
+        /// </summary>
+        /// <param name="target">作成するビューのグループデータ</param>
+        private void BuildEquipView(ImageLabel target)
 		{
 			if (target == null)
 				return;
@@ -455,18 +482,19 @@ namespace ElectronicObserver.Window
 
 			EquipView.Rows.Clear();
 
-			var equips = group.MembersInstance;
-			var rows = new List<DataGridViewRow>(equips.Count());
+            var equips = group.MembersInstance.ToList();
+            var rows = new List<DataGridViewRow>(equips.Count());
 
-			// --- ここで装備ごとの配備先文字列マップを一括構築しておく（GetShipsEquipping を繰り返さない） ---
-			var equipIds = equips.Select(e => e?.EquipmentID ?? -1).Where(id => id > 0).Distinct();
-			var shipsMap = BuildEquipToShipsMap(equipIds);
+            // --- ここで装備ごとの配備先文字列マップを一括構築しておく（GetShipsEquipping を繰り返さない） ---
+            var equipIds = equips.Select(e => e?.EquipmentID ?? -1).Where(id => id > 0).Distinct().ToArray();
+            var shipsMap = BuildEquipToShipsMap(equipIds);
+            var quantityMap = BuildEquipQuantityMap(equipIds);
 
-			foreach (var eq in equips)
+            foreach (var eq in equips)
 			{
 				if (eq == null) continue;
 
-				DataGridViewRow row = CreateEquipViewRow(eq, shipsMap);
+				DataGridViewRow row = CreateEquipViewRow(eq, shipsMap, quantityMap);
 				rows.Add(row);
 			}
 
