@@ -96,6 +96,7 @@ namespace ElectronicObserver.Window
 			o.APIList["api_req_kaisou/powerup"].ResponseReceived += Updated;
 			o.APIList["api_req_kousyou/createitem"].ResponseReceived += Updated;
 			o.APIList["api_req_kousyou/remodel_slot"].ResponseReceived += Updated;
+			o.APIList["api_req_kousyou/remodel_slot_recover"].ResponseReceived += Updated;
 			o.APIList["api_get_member/material"].ResponseReceived += Updated;
 			o.APIList["api_get_member/ship_deck"].ResponseReceived += Updated;
 			o.APIList["api_req_air_corps/set_plane"].ResponseReceived += Updated;
@@ -509,22 +510,22 @@ namespace ElectronicObserver.Window
 			
 		}
 
-        private void DisplayUseItem_MouseClick(object sender, MouseEventArgs e)
-        {
-            if(e.Button == MouseButtons.Right)
-            {
-                var db = KCDatabase.Instance;
-                var sb = new StringBuilder();
-                foreach (var item in db.UseItems.Values)
-                {
-                    sb.Append(item.MasterUseItem.Name).Append(" x ").Append(item.Count).AppendLine();
-                }
+		private void DisplayUseItem_MouseClick(object sender, MouseEventArgs e)
+		{
+			if(e.Button == MouseButtons.Right)
+			{
+				var db = KCDatabase.Instance;
+				var sb = new StringBuilder();
+				foreach (var item in db.UseItems.Values)
+				{
+					sb.Append(item.MasterUseItem.Name).Append(" x ").Append(item.Count).AppendLine();
+				}
 
-                MessageBox.Show(sb.ToString(), "保有アイテム一覧", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
+				MessageBox.Show(sb.ToString(), "保有アイテム一覧", MessageBoxButtons.OK, MessageBoxIcon.Information);
+			}
+		}
 
-        private int RealShipCount
+		private int RealShipCount
 		{
 			get
 			{
@@ -555,6 +556,6 @@ namespace ElectronicObserver.Window
 		}
 
 
-    }
+	}
 
 }
