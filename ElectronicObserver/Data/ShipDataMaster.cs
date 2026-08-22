@@ -813,6 +813,9 @@ namespace ElectronicObserver.Data
 					case 79:      //Richelieu級
 					case 128:     //La Galissonnière級
 					case 129:     //Mogador級
+					case 138:     //Algérie級
+					case 139:     //Aigle級
+					case 141:     //Béarn級
 						return 5;
 					case 73:      //Гангут級
 					case 81:      //Ташкент級
@@ -823,6 +826,7 @@ namespace ElectronicObserver.Data
 					case 98:      //De Ruyter級
 						return 8;
 					case 89:      //Gotland級
+					case 140:     //Visby級
 						return 9;
 					case 133:    //Norge級
 						return 12;
@@ -855,7 +859,8 @@ namespace ElectronicObserver.Data
 				NameReading == "ローマ" ||
 				NameReading == "い8" ||
 				NameReading == "ひらど" ||
-				NameReading == "へいあんまる"
+				NameReading == "へいあんまる" ||
+				NameReading == "ひえまる"
 			);
 
 		/// <summary>

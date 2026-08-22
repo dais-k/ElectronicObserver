@@ -429,6 +429,10 @@ namespace ElectronicObserver.Data
 				case 135: return "Glorious級";
 				case 136: return "野埼型";
 				case 137: return "Thonburi級";
+				case 138: return "Algérie級";
+				case 139: return "Aigle級";
+				case 140: return "Visby級";
+				case 141: return "Béarn級";
 				default: 
 					return "不明";
 			}

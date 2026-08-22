@@ -1139,6 +1139,9 @@ namespace ElectronicObserver.Utility.Data
 					case 514: //特大発動艇+3号戦車J型
 						tp += (c == 0) ? 23.0 : 21.4;
 						break;
+					case 576: //大発動艇(R35&フランス兵)
+						tp += (c == 0) ? 24.0 : 22.4;
+						break;
 					case 355: //M4A1DD
 						tp += (c == 0) ? 20.0 : 20.4;
 						break;

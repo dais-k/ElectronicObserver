@@ -522,7 +522,9 @@ namespace ElectronicObserver.Data
 			EquipmentID == 544 ||       // SBD VB-2(爆撃飛行隊)
 			EquipmentID == 550 ||       // 試製 明星(増加試作機)
 			EquipmentID == 551 ||       // 明星改
-			EquipmentID == 552;         // 九九式練爆二二型改(夜間装備実験機)
+			EquipmentID == 552 ||       // 九九式練爆二二型改(夜間装備実験機)
+			EquipmentID == 578 ||       // SB2U-2
+			EquipmentID == 587;         // V-156F(SB2U輸出型)
 
 		/// <summary> 改修値が制空に影響する艦爆かどうか(要は爆戦)</summary>
 		public bool IsAirLevelBonusedGroundBomber =>
