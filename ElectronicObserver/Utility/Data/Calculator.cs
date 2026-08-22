@@ -1058,6 +1058,7 @@ namespace ElectronicObserver.Utility.Data
 			int nightPcBomberCount = 0;
 			int nightBomberCount = 0;
 			int nightPersonnelCount = 0;
+			int nightAirplaneCount = 0;
 			int surfaceRadarCount = 0;
 			int picketCrewCount = 0;
 			int masterPicketCrewCount = 0;
@@ -1174,8 +1175,8 @@ namespace ElectronicObserver.Utility.Data
 				}
 			}
 
-			if (attackerShipID == 545
-				|| attackerShipID == 599 || attackerShipID == 610 || attackerShipID == 883)      // Saratoga Mk.II/赤城改二戊/加賀改二戊/龍鳳改二戊
+			// 無条件夜間航空攻撃可能な娘
+			if (attacker.IsNightAirAttackCarrier)
 				nightPersonnelCount++;
 
 			if (includeSpecialAttack)
@@ -1233,23 +1234,42 @@ namespace ElectronicObserver.Utility.Data
 					return NightAttackKind.DoubleShelling;
 
 				// 空母カットイン
-				if (nightPersonnelCount > 0)
+				if (nightPersonnelCount != 0)
 				{
-					if (nightFighterCount > 0 &&
-						((nightAttackerCount + nightBomberCount) > 0 || (nightFighterCount + swordfishCount + nightCapableBomberCount) >= 3))
-						return NightAttackKind.CutinAirAttack;
-					else if (nightPcBomberCount > 0 && (nightFighterCount + nightAttackerCount + nightBomberCount > 0))
-						return NightAttackKind.CutinAirAttack;
-				}
-
-				if (nightPersonnelCount > 0)
-				{
-					if (attackerShipID == 515 || attackerShipID == 393)     // Ark Royal(改)
-						if (swordfishCount > 0)
-							nightAirAttackFlag = true;
-
-					if (nightFighterCount > 0 || nightAttackerCount > 0)
-						nightAirAttackFlag = true;
+					if (nightFighterCount >= 2 && nightAttackerCount >= 1)
+						return NightAttackKind.CutinNightAirAttackFFA;
+					if (nightFighterCount >= 1 && nightAttackerCount >= 1)
+						return NightAttackKind.CutinNightAirAttackFA;
+					if (nightFighterCount >= 1 && nightPcBomberCount >= 1)
+						return NightAttackKind.CutinNightAirAttackFS;
+					if (nightFighterCount == 0 && nightAttackerCount >= 1 && nightPcBomberCount >= 1)
+						return NightAttackKind.CutinNightAirAttackAS;
+					if (nightFighterCount >= 1 && nightBomberCount >= 1)
+					{
+						if (nightPcBomberCount >= 1)
+							return NightAttackKind.CutinNightAirAttackFS;
+						else
+							return NightAttackKind.CutinNightAirAttackFB;
+					}
+					if (nightFighterCount == 0 && nightAttackerCount >= 1 && nightBomberCount >= 1)
+					{
+						if (nightPcBomberCount >= 1)
+							return NightAttackKind.CutinNightAirAttackAS;
+						else
+							return NightAttackKind.CutinNightAirAttackAB;
+					}
+					if (nightFighterCount == 0 && nightAttackerCount == 0 && nightPcBomberCount >= 1 && nightBomberCount >= 1)
+						return NightAttackKind.CutinNightAirAttackBS;
+					if (nightFighterCount != 0)
+					{
+						nightAirplaneCount = (nightFighterCount - 1) + nightAttackerCount + nightBomberCount + nightCapableBomberCount + nightPcBomberCount + swordfishCount;
+						if (nightAirplaneCount >= 2)
+							return NightAttackKind.CutinNightAirAttackFOther;
+					}
+					else
+						nightAirplaneCount = nightFighterCount + nightAttackerCount + nightBomberCount + nightCapableBomberCount + nightPcBomberCount + swordfishCount;
+					if (nightAirplaneCount != 0)
+						return NightAttackKind.NightAirAttack;
 				}
 			}
 
@@ -1276,12 +1296,22 @@ namespace ElectronicObserver.Utility.Data
 
 				if (attacker.IsAircraftCarrier)
 				{
-					if (attackerShipID == 432 || attackerShipID == 353 || attackerShipID == 433)        // Graf Zeppelin(改), Saratoga
+					if (attacker.Name == "リコリス棲姫" || attacker.Name == "深海海月姫")
 						return NightAttackKind.Shelling;
-					else if (attacker.Name == "リコリス棲姫" || attacker.Name == "深海海月姫")
-						return NightAttackKind.Shelling;
-					else
-						return NightAttackKind.AirAttack; //加賀改二護などがここに該当する
+					
+					if (attackerShipID == 515 || attackerShipID == 393)     // Ark Royal(改)
+						if (swordfishCount > 0)
+							return NightAttackKind.NightSwordfish;
+
+					if (attacker.IsNightShellingCarrier)
+						return NightAttackKind.Shelling; //砲撃エフェクト
+					
+					if (nightPersonnelCount != 0 || attacker.IsAbyssalShip)
+					{
+						if (nightFighterCount + nightAttackerCount + nightBomberCount + nightCapableBomberCount + nightPcBomberCount > 0)
+							return NightAttackKind.NightAirAttack;
+					}
+					return NightAttackKind.Nothing;
 
 				}
 				else if (attacker.IsSubmarine)
@@ -2578,6 +2608,9 @@ namespace ElectronicObserver.Utility.Data
 		/// <summary> 雷撃 </summary>
 		Torpedo,
 
+		/// <summary> 航空爆雷攻撃 </summary>
+		AirDepthCharge,
+
 		/// <summary> 空母カットイン(FBA) </summary>
 		CutinFighterBomberAttacker,
 
@@ -2729,6 +2762,9 @@ namespace ElectronicObserver.Utility.Data
 		/// <summary> 雷撃 </summary>
 		Torpedo,
 
+		/// <summary> 航空爆雷攻撃 </summary>
+		AirDepthCharge,
+		
 		/// <summary> ロケット攻撃 </summary>
 		Rocket = 2000,
 
@@ -2797,6 +2833,9 @@ namespace ElectronicObserver.Utility.Data
 
 		/// <summary> 夜間瑞雲攻撃(瑞雲2/電探) </summary>
 		SpecialNightZuiun2Rader,
+
+		/// <summary> 攻撃不能 </summary>
+		Nothing = 9999,
 	}
 
 	/// <summary>

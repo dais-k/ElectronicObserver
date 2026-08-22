@@ -61,8 +61,33 @@ namespace ElectronicObserver.Utility.Data
 						)
 				{
 					//空撃の基本火力
-					basepower = Math.Floor((firepowerTotal + spItemHoug + torpedoTotal + spItemRaig + Math.Floor((bomberTotal) * 1.3)
-						+ GetDayBattleEquipmentLevelBonus(allSlotInstance) + GetCombinedFleetShellingDamageBonus(fleet)) * 1.5) + 55;
+					if (shipID != 1061)
+					{
+						// 装備ID=580, 581 による雷装補正（580 -> -2 / 581 改修>=2 -> -3）
+						int torpedoPenalty = 0;
+						foreach (var eq in allSlotInstance)
+						{
+							if (eq == null)
+								continue;
+
+							// 装備IDは EquipmentID プロパティを使用
+							if (eq.EquipmentID == 580)
+								torpedoPenalty += 2;
+							else if (eq.EquipmentID == 581 && eq.Level >= 2)
+								torpedoPenalty += 3;
+						}
+
+						var adjustedTorpedoTotal = torpedoTotal - torpedoPenalty - ship.TorpedoBase;
+						
+						basepower = Math.Floor((firepowerTotal + spItemHoug + adjustedTorpedoTotal + spItemRaig + Math.Floor((bomberTotal) * 1.3)
+							+ GetDayBattleEquipmentLevelBonus(allSlotInstance) + GetCombinedFleetShellingDamageBonus(fleet)) * 1.5) + 55;
+					}
+					else
+					{
+						basepower = Math.Floor((firepowerTotal + spItemHoug + torpedoTotal + spItemRaig + Math.Floor((bomberTotal) * 1.3)
+							+ GetDayBattleEquipmentLevelBonus(allSlotInstance) + GetCombinedFleetShellingDamageBonus(fleet)) * 1.5) + 55;
+					}
+
 					basepower *= GetHPDamageBonus(hpRate) * GetEngagementFormDamageRate(engagementForm);
 
 					// キャップ
@@ -309,8 +334,9 @@ namespace ElectronicObserver.Utility.Data
 			var slotInstance = ship.SlotInstance;
 			var aircraft = ship.Aircraft;
 			var airs = slotInstance.Zip(aircraft, (eq, count) => new { eq, master = eq?.MasterEquipment, count }).Where(a => a.eq != null);
-			double firepower = ship.FirepowerBase + GetAviationPersonnelBomberLevelBonus(allSlotInstance) + GetAviationPersonnelFirepowerLevelBonus(allSlotInstance); //素火力+熟練甲板要員＋航空整備員の改修による装備ボーナス(火力・爆装)
-			firepower += ship.TorpedoTotal - (allSlotInstance.Sum(p => p?.MasterEquipment?.Torpedo?? 0)); //雷撃青字ボーナス
+			double firepower = ship.FirepowerBase + ship.TorpedoBase; //素火力＋素雷装
+			firepower += GetAviationPersonnelBomberLevelBonus(allSlotInstance) + GetAviationPersonnelFirepowerLevelBonus(allSlotInstance) + GetAviationPersonnelTorpedoLevelBonus(allSlotInstance); //素火力+熟練甲板要員＋航空整備員の改修による装備ボーナス(火力・爆装・雷装)
+			firepower += ship.CalculateAttackerTorpedoBonus(true); // 夜攻の雷撃ボーナス
 			firepower += airs.Where(p => p.master.IsNightAircraftTypeA).Sum(p => p.master.Firepower + p.master.Torpedo + p.master.Bomber) + airs.Where(p => p.master.IsNightAircraftTypeB).Sum(p => p.master.Firepower + p.master.Torpedo + p.master.Bomber); //夜間航空機の火力+雷装+爆装
 			firepower -= airs.Where(p => p.master.EquipmentID == 389).Sum(p => p.master.Bomber); // TBM-3W+3Sの爆装をマイナス
 			firepower += airs.Where(p => p.master.IsNightAircraftTypeA).Sum(p => (p.count * 3) + (0.45 * (p.master.Firepower + p.master.Torpedo + p.master.Bomber + p.master.ASW)) * Math.Sqrt(p.count) + Math.Sqrt(p.eq.Level)); // 夜戦夜攻夜爆
@@ -487,7 +513,6 @@ namespace ElectronicObserver.Utility.Data
 				switch (slot.MasterEquipment.CategoryType)
 				{
 					case EquipmentTypes.MainGunSmall:
-					case EquipmentTypes.MainGunMedium:
 					case EquipmentTypes.AAShell:
 					case EquipmentTypes.APShell:
 					case EquipmentTypes.AAGun:
@@ -503,7 +528,14 @@ namespace ElectronicObserver.Utility.Data
 					case EquipmentTypes.ArmyInfantry:
 						basepower += Math.Sqrt(slot.Level);
 						break;
-
+				   
+					case EquipmentTypes.MainGunMedium:
+						if (slot.MasterEquipment.Firepower >= 13)
+							basepower += Math.Sqrt(slot.Level) * 1.5;
+						else
+							basepower += Math.Sqrt(slot.Level);
+						break;
+					
 					case EquipmentTypes.MainGunLarge:
 					case EquipmentTypes.MainGunLarge2:
 						basepower += Math.Sqrt(slot.Level) * 1.5;
@@ -518,26 +550,11 @@ namespace ElectronicObserver.Utility.Data
 								basepower += Math.Sqrt(slot.Level);
 								break;
 
-							case 10:        // 12.7cm連装高角砲
-							case 66:        // 8cm高角砲
-							case 71:        // 10cm連装高角砲(砲架)
-							case 130:       // 12.7cm高角砲＋高射装置
-							case 220:       // 8cm高角砲改+増設機銃
-							case 275:       // 10cm連装高角砲改+増設機銃
-							case 464:       // 10cm連装高角砲群 集中配備
-							case 524:       // 12cm単装高角砲+25mm機銃増備
-								basepower += 0.2 * slot.Level;
-								break;
-
-							case 12:        // 15.5cm三連装副砲
-							case 234:       // 15.5cm三連装副砲改
-							case 247:       // 15.2cm三連装砲
-							case 467:		// 5inch連装砲(副砲配置) 集中配備
-								basepower += 0.3 * slot.Level;
-								break;
-
 							default:
-								basepower += 0;
+								if(slot.MasterEquipment.Firepower <= 4)
+									basepower += 0.2 * slot.Level;
+								else if (slot.MasterEquipment.Firepower >= 5)
+									basepower += 0.3 * slot.Level;
 								break;
 						}
 						break;
@@ -690,26 +707,11 @@ namespace ElectronicObserver.Utility.Data
 								basepower += Math.Sqrt(slot.Level);
 								break;
 
-							case 10:        // 12.7cm連装高角砲
-							case 66:        // 8cm高角砲
-							case 71:        // 10cm連装高角砲(砲架)
-							case 130:       // 12.7cm高角砲＋高射装置
-							case 220:       // 8cm高角砲改+増設機銃
-							case 275:       // 10cm連装高角砲改+増設機銃
-							case 464:       // 10cm連装高角砲群 集中配備
-							case 524:       // 12cm単装高角砲+25mm機銃増備
-								basepower += 0.2 * slot.Level;
-								break;
-
-							case 12:        // 15.5cm三連装副砲
-							case 234:       // 15.5cm三連装副砲改
-							case 247:       // 15.2cm三連装砲
-							case 467:       // 5inch連装砲(副砲配置) 集中配備
-								basepower += 0.3 * slot.Level;
-								break;
-
 							default:
-								basepower += 0;
+								if (slot.MasterEquipment.Firepower <= 4)
+									basepower += 0.2 * slot.Level;
+								else if (slot.MasterEquipment.Firepower >= 5)
+									basepower += 0.3 * slot.Level;
 								break;
 						}
 						break;
@@ -872,12 +874,15 @@ namespace ElectronicObserver.Utility.Data
 						case 303:   // Bofors15.2cm連装砲 Model1930
 						case 360:   // Bofors 15cm連装速射砲 Mk.9 Model 1938
 						case 361:   // Bofors 15cm連装速射砲 Mk.9改＋単装速射砲 Mk.10改 Model 1938
+						case 518:   // 14cm連装砲改二
+						case 534:   // 13.8cm連装砲
+						case 535:   // 13.8cm連装砲改
 							twin++;
 							break;
 					}
 				}
 
-				return Math.Sqrt(twin) * 2.0 + Math.Sqrt(single);
+				return Math.Sqrt(twin) * (2.0 + Math.Sqrt(single));
 			}
 
 			return 0;

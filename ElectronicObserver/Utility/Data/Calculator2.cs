@@ -346,15 +346,14 @@ namespace ElectronicObserver.Utility.Data
 				}
 			}
 
-			// 無条件夜間航空攻撃可能な娘 Saratoga Mk.II/赤城改二戊/加賀改二戊/龍鳳改二戊/しまね丸改
-			if (attackerShipID == 545
-				|| attackerShipID == 599 || attackerShipID == 610 || attackerShipID == 883 || attackerShipID == 1008)
+			// 無条件夜間航空攻撃可能な娘
+			if (attacker.IsNightAirAttackCarrier)
 				nightPersonnelCount++;
 
 			if (includeSpecialAttack)
 			{
 				// 空母カットイン
-				if (nightPersonnelCount > 0)
+				if (nightPersonnelCount != 0)
 				{
 					if (nightFighterCount >= 2 && nightAttackerCount >= 1)
 						nightAttackList.Add(NightAttackKind.CutinNightAirAttackFFA);
@@ -393,18 +392,9 @@ namespace ElectronicObserver.Utility.Data
 				}
 
 				//空母夜間特殊攻撃
-				if (nightPersonnelCount == 0)
-				{
-					if (attackerShipID == 515 || attackerShipID == 393)     // Ark Royal(改)
-						if (swordfishCount > 0)
-							nightAttackList.Add(NightAttackKind.NightSwordfish);
-					if (attackerShipID == 432 || attackerShipID == 353
-						|| attackerShipID == 433 || attackerShipID == 646
-						|| attackerShipID == 889 || attackerShipID == 536
-						|| attackerShipID == 529 || attackerShipID == 735
-						|| attackerShipID == 966)        // Graf Zeppelin(改), Saratoga,加賀改二護,大鷹型改二,レキシントン(改)
-						nightAttackList.Add(NightAttackKind.AirAttack); //空撃
-				}
+				if (attackerShipID == 515 || attackerShipID == 393)     // Ark Royal(改)
+					if (swordfishCount > 0)
+						nightAttackList.Add(NightAttackKind.NightSwordfish);
 
 				// 潜水艦カットイン
 				if (attacker?.ShipType == ShipTypes.Submarine || attacker.ShipType == ShipTypes.SubmarineAircraftCarrier)
@@ -480,6 +470,10 @@ namespace ElectronicObserver.Utility.Data
 				(subGunCount >= 2 && torpedoCount <= 1))
 				nightAttackList.Add(NightAttackKind.DoubleShelling);
 
+			// 空母夜間砲撃
+			if (attacker.IsNightShellingCarrier)
+				nightAttackList.Add(NightAttackKind.Shelling); //砲撃エフェクト
+
 			// 基本夜戦しない判定
 			if (attacker?.ShipType != ShipTypes.AircraftCarrier
 				&& attacker?.ShipType != ShipTypes.ArmoredAircraftCarrier
@@ -490,6 +484,7 @@ namespace ElectronicObserver.Utility.Data
 			{
 					nightAttackList.Add(NightAttackKind.NormalAttack);
 			}
+
 			NightAttackKind[] getNightAtkName = nightAttackList.ToArray();
 			return getNightAtkName;
 		}

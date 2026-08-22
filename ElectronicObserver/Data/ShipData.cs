@@ -1193,12 +1193,14 @@ namespace ElectronicObserver.Data
 						case 360:   // Bofors 15cm連装速射砲 Mk.9 Model 1938
 						case 361:   // Bofors 15cm連装速射砲 Mk.9改＋単装速射砲 Mk.10改 Model 1938
 						case 518:   // 14cm連装砲改二
+						case 534:   // 13.8cm連装砲
+						case 535:   // 13.8cm連装砲改
 							twin++;
 							break;
 					}
 				}
 
-				return Math.Sqrt(twin) * 2.0 + Math.Sqrt(single);
+				return Math.Sqrt(twin) * (2.0 + Math.Sqrt(single));
 			}
 
 			return 0;
@@ -1515,99 +1517,64 @@ namespace ElectronicObserver.Data
 		{
 			var kind = Calculator.GetNightAttackKind(AllSlotMaster.ToArray(), ShipID, -1);
 			double basepower = 0;
+			double basepower_shelling = 0;
+			double basepower_air = 0;
 
-			//空母カットイン
-			if (kind == NightAttackKind.CutinAirAttack)
+			basepower_shelling = FirepowerTotal + TorpedoTotal + SpItemHoug + SpItemRaig + GetNightBattleEquipmentLevelBonus();
+
+			var airs = SlotInstance.Zip(Aircraft, (eq, count) => new { eq, master = eq?.MasterEquipment, count }).Where(a => a.eq != null);
+			basepower_air = FirepowerBase + TorpedoBase + SpItemHoug + SpItemRaig + GetAviationPersonnelBomberLevelBonus() + GetAviationPersonnelFirepowerLevelBonus() + GetAviationPersonnelTorpedoLevelBonus() + CalculateAttackerTorpedoBonus(true) +
+				airs.Where(p => p.master.IsNightAircraftTypeA)
+					.Sum(p => p.master.Firepower + p.master.Torpedo + p.master.Bomber +
+						3 * p.count +
+						0.45 * (p.master.Firepower + p.master.Torpedo + p.master.Bomber + p.master.ASW) * Math.Sqrt(p.count) + Math.Sqrt(p.eq.Level)) +
+				airs.Where(p => p.master.IsNightAircraftTypeB)
+					.Sum(p => p.master.Firepower + p.master.Torpedo + p.master.Bomber +
+						0.3 * (p.master.Firepower + p.master.Torpedo + p.master.Bomber + p.master.ASW) * Math.Sqrt(p.count) + Math.Sqrt(p.eq.Level)) -
+						airs.Where(p => p.master.EquipmentID == 389).Sum(p => p.master.Bomber);
+			;
+
+			switch (kind)
 			{
-				var airs = SlotInstance.Zip(Aircraft, (eq, count) => new { eq, master = eq?.MasterEquipment, count }).Where(a => a.eq != null);
-
-				basepower = FirepowerBase + GetAviationPersonnelBomberLevelBonus()+ GetAviationPersonnelFirepowerLevelBonus() + GetAviationPersonnelTorpedoLevelBonus() +
-					airs.Where(p => p.master.IsNightAircraftTypeA)
-						.Sum(p => p.master.Firepower + p.master.Torpedo + p.master.Bomber +
-							3 * p.count +
-							0.45 * (p.master.Firepower + p.master.Torpedo + p.master.Bomber + p.master.ASW) * Math.Sqrt(p.count) + Math.Sqrt(p.eq.Level)) +
-					airs.Where(p => p.master.IsNightAircraftTypeB)
-						.Sum(p => p.master.Firepower + p.master.Torpedo + p.master.Bomber +
-							0.3 * (p.master.Firepower + p.master.Torpedo + p.master.Bomber + p.master.ASW) * Math.Sqrt(p.count) + Math.Sqrt(p.eq.Level));
-
-			}
-			//空撃
-			else if (kind == NightAttackKind.AirAttack)
-			{
-				int countNightAircraft = SlotInstance.Where(eq => eq != null).Where(eq => eq?.MasterEquipment.IsNightAircraftTypeA ?? false).Count();
-
-				// Ark Royal (改) かつ 夜間に行動可能な航空機が1つもない場合(Swordfishで夜戦が可能になっている)
-				if ((ShipID == 515 || ShipID == 393) && countNightAircraft == 0)
-				{
+				case NightAttackKind.NightAirAttack:
+					basepower = basepower_air;
+					break;
+				//空母夜襲カットイン
+				case NightAttackKind.CutinNightAirAttackFFA:
+					basepower = basepower_air * 1.25;
+					break;
+				case NightAttackKind.CutinNightAirAttackFA:
+				case NightAttackKind.CutinNightAirAttackFS:
+				case NightAttackKind.CutinNightAirAttackAS:
+				case NightAttackKind.CutinNightAirAttackFB:
+				case NightAttackKind.CutinNightAirAttackAB:
+				case NightAttackKind.CutinNightAirAttackBS:
+					basepower = basepower_air * 1.2;
+					break;
+				case NightAttackKind.CutinNightAirAttackFOther:
+					basepower = basepower_air * 1.18;
+					break;
+				case NightAttackKind.NightSwordfish:
 					// ソードフィッシュ系に限り装備の火力/雷装/改修値が加算される
 					// 改修値はルート計算
 					// ※熟練度による威力補正はクリティカル時の火力を表示していないので含まない
 					basepower = FirepowerBase
 						+ SlotInstanceMaster.Where(eq => eq?.IsSwordfish ?? false).Sum(eq => eq.Firepower + eq.Torpedo)
 						+ SlotInstance.Where(eq => eq?.MasterEquipment.IsSwordfish ?? false).Sum(eq => Math.Sqrt(eq.Level));
-				}
-				//神鷹改二、大鷹改二、雲鷹改二、加賀改二護、レキシントン(改) かつ 夜間に行動可能な航空機が1つもない場合(無条件に夜戦可能・航空攻撃アニメーション)
-				if ((ShipID == 529 || ShipID == 536 || ShipID == 889 || ShipID == 646 || ShipID == 735 || ShipID == 966) && countNightAircraft == 0)
-				{
-					// ソードフィッシュ系に限らずすべての装備の火力/雷装/改修値が加算される
-					// (艦載機の改修値は暫定でルート計算)
-					basepower = FirepowerBase
-						+ SlotInstanceMaster.Where(eq => eq?.IsAvailable ?? false).Sum(eq => eq.Firepower + eq.Torpedo)
-						+ GetNightBattleEquipmentLevelBonus()
-						+ SlotInstance.Where(eq => eq?.MasterEquipment.IsAircraft ?? false).Sum(eq => Math.Sqrt(eq.Level));
-				}
-				//その他の場合は空母カットインと同じ計算
-				else
-				{
-					var airs = SlotInstance.Zip(Aircraft, (eq, count) => new { eq, master = eq?.MasterEquipment, count }).Where(a => a.eq != null);
+					break;
 
-					basepower = FirepowerBase + GetAviationPersonnelBomberLevelBonus() + GetAviationPersonnelFirepowerLevelBonus() + GetAviationPersonnelTorpedoLevelBonus() +
-						airs.Where(p => p.master.IsNightAircraftTypeA)
-							.Sum(p => p.master.Firepower + p.master.Torpedo + p.master.Bomber +
-								3 * p.count +
-								0.45 * (p.master.Firepower + p.master.Torpedo + p.master.Bomber + p.master.ASW) * Math.Sqrt(p.count) + Math.Sqrt(p.eq.Level)) +
-						airs.Where(p => p.master.IsNightAircraftTypeB)
-							.Sum(p => p.master.Firepower + p.master.Torpedo + p.master.Bomber +
-								0.3 * (p.master.Firepower + p.master.Torpedo + p.master.Bomber + p.master.ASW) * Math.Sqrt(p.count) + Math.Sqrt(p.eq.Level));
-				}
-			}
-			//グラーフツェッペリン(改)と未改造サラトガ固有(砲撃アニメーション)
-			else if (ShipID == 353 || ShipID == 432 || ShipID == 433)
-			{
-				// ソードフィッシュ系に限らずすべての装備の火力/雷装/改修値が加算される
-				// (艦載機の改修値は暫定でルート計算)
-				basepower = FirepowerBase
-					+ SlotInstanceMaster.Where(eq => eq?.IsAvailable ?? false).Sum(eq => eq.Firepower + eq.Torpedo)
-					+ GetNightBattleEquipmentLevelBonus()
-					+ SlotInstance.Where(eq => eq?.MasterEquipment.IsAircraft ?? false).Sum(eq => Math.Sqrt(eq.Level));
-			}
-			//アークロイヤル(改)の夜戦連撃
-			else if (ShipID == 515 || ShipID == 393)
-			{
-				// ソードフィッシュ系に限り装備の火力/雷装/改修値が加算される
-				// 改修値はルート計算
-				// ※熟練度による威力補正はクリティカル時の火力を表示していないので含まない
-				basepower = FirepowerBase
-					+ SlotInstanceMaster.Where(eq => eq?.IsSwordfish ?? false).Sum(eq => eq.Firepower + eq.Torpedo)
-					+ SlotInstance.Where(eq => eq?.MasterEquipment.IsSwordfish ?? false).Sum(eq => Math.Sqrt(eq.Level));
-			}
-			else
-			{
-				basepower = FirepowerTotal + TorpedoTotal + GetNightBattleEquipmentLevelBonus();
-			}
-
-			basepower *= GetHPDamageBonus();
-
-			switch (kind)
-			{
-				//連撃
+				case NightAttackKind.Shelling:
+					basepower = basepower_shelling;
+					break;
+				
+					//連撃
 				case NightAttackKind.DoubleShelling:
-					basepower *= 1.2;
+					basepower = basepower_shelling *1.2;
 					break;
 
 				//主魚
 				case NightAttackKind.CutinMainTorpedo:
-					basepower *= 1.3;
+					basepower = basepower_shelling *1.3;
 					break;
 
 				//魚雷
@@ -1617,15 +1584,15 @@ namespace ElectronicObserver.Data
 						{
 							//潜水艦：後期艦首魚雷+潜水艦電探
 							case NightTorpedoCutinKind.LateModelTorpedoSubmarineEquipment:
-								basepower *= 1.75;
+								basepower = basepower_shelling * 1.75;
 								break;
 							//潜水艦：後期艦首魚雷*2
 							case NightTorpedoCutinKind.LateModelTorpedo2:
-								basepower *= 1.6;
+								basepower = basepower_shelling * 1.6;
 								break;
 							//水上艦
 							default:
-								basepower *= 1.5;
+								basepower = basepower_shelling * 1.5;
 								break;
 						}
 					}
@@ -1633,30 +1600,12 @@ namespace ElectronicObserver.Data
 
 				//主副
 				case NightAttackKind.CutinMainSub:
-					basepower *= 1.75;
+					basepower = basepower_shelling * 1.75;
 					break;
 
 				//主砲
 				case NightAttackKind.CutinMainMain:
-					basepower *= 2.0;
-					break;
-
-				//空母夜襲カットイン
-				case NightAttackKind.CutinAirAttack:
-					{
-						int nightFighter = SlotInstanceMaster.Count(eq => eq?.IsNightFighter ?? false);
-						int nightAttacker = SlotInstanceMaster.Count(eq => eq?.IsNightAttacker ?? false);
-						int nightBomber = SlotInstanceMaster.Count(eq => eq?.EquipmentID == 320);     // 彗星一二型(三一号光電管爆弾搭載機)
-
-						if (nightFighter >= 2 && nightAttacker >= 1)
-							basepower *= 1.25;
-						else if (nightBomber >= 1 && nightFighter + nightAttacker >= 1)
-							basepower *= 1.2;
-						else if (nightFighter >= 1 && nightAttacker >= 1)
-							basepower *= 1.2;
-						else
-							basepower *= 1.18;
-					}
+					basepower = basepower_shelling * 2.0;
 					break;
 
 				//主魚電
@@ -1665,15 +1614,7 @@ namespace ElectronicObserver.Data
 						double baseModifier = 1.3;
 
 						basepower = CalcTorpedoRaderPicket(basepower, baseModifier);
-						//int typeDmod2 = AllSlotInstanceMaster.Count(eq => eq?.EquipmentID == 267);  // 12.7cm連装砲D型改二
-						//int typeDmod3 = AllSlotInstanceMaster.Count(eq => eq?.EquipmentID == 366);  // 12.7cm連装砲D型改三
-						//var modifierTable = new double[] { 1, 1.25, 1.4 };
-						//
-						//baseModifier *= modifierTable[Math.Min(typeDmod2 + typeDmod3, modifierTable.Length - 1)] * (1 + typeDmod3 * 0.05);
-						//
-						//basepower *= baseModifier;
 					}
-					
 					break;
 
 				//魚見電
@@ -1682,13 +1623,6 @@ namespace ElectronicObserver.Data
 						double baseModifier = 1.25;
 
 						basepower = CalcTorpedoRaderPicket(basepower, baseModifier);
-						//int typeDmod2 = AllSlotInstanceMaster.Count(eq => eq?.EquipmentID == 267);  // 12.7cm連装砲D型改二
-						//int typeDmod3 = AllSlotInstanceMaster.Count(eq => eq?.EquipmentID == 366);  // 12.7cm連装砲D型改三
-						//var modifierTable = new double[] { 1, 1.25, 1.4 };
-						//
-						//baseModifier *= modifierTable[Math.Min(typeDmod2 + typeDmod3, modifierTable.Length - 1)] * (1 + typeDmod3 * 0.05);
-						//
-						//basepower *= baseModifier;
 					}
 					break;
 
@@ -1729,7 +1663,7 @@ namespace ElectronicObserver.Data
 							zuiunCountHosei = 0;
 						}
 
-						if(surfaceRaderCount >= 1)
+						if (surfaceRaderCount >= 1)
 						{
 							raderHosei += 0.04;
 						}
@@ -1877,6 +1811,9 @@ namespace ElectronicObserver.Data
 					case 726:       // Heywood L.E.改
 					case 901:       // Javelin改
 					case 737:       // Richard P.Leary改
+					case 1040:      // 吹雪改三護(六式)
+					case 1062:      // Visby
+					case 1067:      // Visby改
 						return true;
 				}
 
@@ -2422,10 +2359,10 @@ namespace ElectronicObserver.Data
 		}
 
 		/// <summary>
-		/// 航空戦での最小艦攻雷装ボーナスを算出します
+		/// 航空戦での最小艦攻雷装ボーナスを算出します total=trueなら艦攻の合計雷装値を返す
 		/// </summary>
 		/// <returns></returns>
-		public int CalculateAttackerTorpedoBonus()
+		public int CalculateAttackerTorpedoBonus(bool total = false)
 		{
 			int bonuspower = -1;
 			var bonuspowerMin = new List<int>();
@@ -2457,12 +2394,6 @@ namespace ElectronicObserver.Data
 							case 560:   // 瑞鳳改二乙
 							case 318:   // 龍鳳改
 								bonuspower = 1;
-								break;
-							case 515:   // Ark Royal
-							case 393:   // Ark Royal改
-							case 885:   // Victorious
-							case 713:   // Victorious改
-								bonuspower = 0;
 								break;
 							default:
 								bonuspower = -1;
@@ -2508,12 +2439,6 @@ namespace ElectronicObserver.Data
 							case 408:   // 隼鷹改二
 								bonuspower = 1;
 								break;
-							case 515:   // Ark Royal
-							case 393:   // Ark Royal改
-							case 885:   // Victorious
-							case 713:   // Victorious改
-								bonuspower = 0;
-								break;
 							default:
 								bonuspower = -1;
 								break;
@@ -2546,12 +2471,6 @@ namespace ElectronicObserver.Data
 							case 297:   // 千代田航改二
 								bonuspower = 1;
 								break;
-							case 515:   // Ark Royal
-							case 393:   // Ark Royal改
-							case 885:   // Victorious
-							case 713:   // Victorious改
-								bonuspower = 0;
-								break;
 							default:
 								bonuspower = -1;
 								break;
@@ -2565,6 +2484,8 @@ namespace ElectronicObserver.Data
 							case 393:   // Ark Royal改
 							case 885:   // Victorious
 							case 713:   // Victorious改
+							case 1027:  // Glorious
+							case 741: // Glorious改
 								bonuspower = 3;
 								break;
 							default:
@@ -2580,6 +2501,8 @@ namespace ElectronicObserver.Data
 							case 393:   // Ark Royal改
 							case 885:   // Victorious
 							case 713:   // Victorious改
+							case 1027:  // Glorious
+							case 741: // Glorious改
 								if (slot.Level >= 8)
 									bonuspower = 2;
 								else
@@ -2593,19 +2516,74 @@ namespace ElectronicObserver.Data
 					
 					case 238:   // 零式水上偵察機11型乙
 					case 239:   // 零式水上偵察機11型乙(熟練)
-					case 118:   // 紫雲
-					case 521:   // 紫雲(熟練)
-					case 522:   // 零式小型水上機
-					case 523:   // 零式小型水上機(熟練)
 						switch (ShipID)
 						{
-							case 630:   // Gotland andra
-								bonuspower = 0;
+							case 501:   // 最上改二
+							case 506:   // 最上改二特
+							case 302:   // 三隈改二
+							case 307:   // 三隈改二特
+								bonuspower = 1;
 								break;
 							default:
 								bonuspower = -1;
 								break;
 						}
+						break;
+
+					case 118:   // 紫雲
+						switch (ShipID)
+						{
+							case 307:   // 三隈改二特
+								if (slot.Level >= 10)
+									bonuspower = 1;
+								else
+									bonuspower = -1;
+								break;
+							default:
+								bonuspower = -1;
+								break;
+						}
+						break;
+
+					case 521:   // 紫雲(熟練)
+						switch (ShipID)
+						{
+							case 307:   // 三隈改二特
+								if (slot.Level >= 3)
+									bonuspower = 1;
+								else
+									bonuspower = -1;
+								break;
+							default:
+								bonuspower = -1;
+								break;
+						}
+						break;
+
+					case 522:   // 零式小型水上機
+						if (MasterShip.ShipType == ShipTypes.SubmarineAircraftCarrier)
+						{
+							if (slot.Level != 0)
+								bonuspower = 2;
+							else
+								bonuspower = 1;
+							break;
+						}
+						else
+							bonuspower = -1;
+						break;
+
+					case 523:   // 零式小型水上機(熟練)
+						if (MasterShip.ShipType == ShipTypes.SubmarineAircraftCarrier)
+						{
+							if (slot.Level != 0)
+								bonuspower = 4;
+							else
+								bonuspower = 3;
+							break;
+						}
+						else
+							bonuspower = -1;
 						break;
 
 					case 368:   // Swordfish Mk.III改(水上機型)
@@ -2634,7 +2612,10 @@ namespace ElectronicObserver.Data
 				}
 				if (bonuspower > -1) bonuspowerMin.Add(bonuspower);
 			}
-			return (bonuspowerMin.Count != 0) ? bonuspowerMin.Min() : 0; 
+			if (total)
+				return (bonuspowerMin.Count != 0) ? bonuspowerMin.Sum() : 0;
+			else
+				return (bonuspowerMin.Count != 0) ? bonuspowerMin.Min() : 0; 
 		}
 	}
 }

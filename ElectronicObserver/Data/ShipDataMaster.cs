@@ -686,7 +686,7 @@ namespace ElectronicObserver.Data
 		/// <summary>
 		/// 図鑑に載っているか(ゲーム内の艦船図鑑の数)
 		/// </summary>
-		public bool IsListedInAlbum => 0 < AlbumNo && AlbumNo <= 630;
+		public bool IsListedInAlbum => 0 < AlbumNo && AlbumNo <= 700;
 
 		/// <summary>
 		/// 改装段階
@@ -750,6 +750,40 @@ namespace ElectronicObserver.Data
 				ShipType == ShipTypes.SeaplaneTender
 			);
 
+		/// <summary>
+		/// 無条件夜戦砲撃可能空母か
+		/// </summary>
+		public bool IsNightShellingCarrier =>
+			(
+				ShipID == 432 ||    // Graf Zeppelin
+				ShipID == 353 ||    // Graf Zeppelin改
+				ShipID == 433 ||    // Saratoga
+				ShipID == 735 ||    // Lexington改
+				ShipID == 966 ||    // Lexington
+				ShipID == 1025 ||   // Wasp
+				ShipID == 1030 ||   // Wasp改
+				ShipID == 646 ||    // 加賀改二護
+				ShipID == 889 ||    // 雲鷹改二
+				ShipID == 536 ||    // 神鷹改二
+				ShipID == 529 ||    // 大鷹改二
+				ShipID == 1055 ||   // Bearn
+				ShipID == 1060 ||   // Bearn改 
+				ShipID == 1061      // Bearn amelioration
+			);
+
+		/// <summary>
+		/// 無条件夜間航空攻撃可能空母か
+		/// </summary>
+		public bool IsNightAirAttackCarrier =>
+			(
+				ShipID == 545 ||    // Saratoga Mk.II
+				ShipID == 599 ||    // 赤城改二戊
+				ShipID == 610 ||    // 加賀改二戊
+				ShipID == 883 ||    // 龍鳳改二戊
+				ShipID == 1008 ||   // しまね丸改
+				ShipID == 1036      //Independence Flight II
+			);
+		
 		/// <summary>
 		/// 国籍
 		/// (1:米 2:英 3:伊 4:独 5:仏 6:露 7:豪 8:蘭 9:瑞 10:中 11:亜 12:諾)
