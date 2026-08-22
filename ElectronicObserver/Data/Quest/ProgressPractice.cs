@@ -549,7 +549,7 @@ namespace ElectronicObserver.Data.Quest
 						ret = true;
 					}
 					break;
-				case 382:   //|382|月|【期間限定任務】第三十一戦隊 緊急演習！|演習A勝利以上×3回|条件：「榧」「杉」「樫」「竹」「潮」「響」「初霜」「雪風」「冬月」「涼月」から5隻編成 | 1日で進捗リセット|期間限定任務
+				case 382:   //|382|月|【期間限定任務】第三十一戦隊 緊急演習！|演習A勝利以上×3回|条件：「花月」「桐」「竹」「榧」「杉」「樫」「潮」「響」から5隻編成 | 1日で進捗リセット|期間限定任務
 					if (ships.Count(s =>
 					{
 						switch (s?.MasterShip?.NameReading)
@@ -561,10 +561,8 @@ namespace ElectronicObserver.Data.Quest
 							case "うしお":
 							case "ひびき":
 
-							case "はつしも":
-							case "ゆきかぜ":
-							case "すずつき":
-							case "ふゆつき":
+							case "はなづき":
+							case "きり":
 								return true;
 							default:
 								return false;

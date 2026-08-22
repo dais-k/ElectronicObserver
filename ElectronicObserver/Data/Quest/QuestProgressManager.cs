@@ -1177,7 +1177,6 @@ namespace ElectronicObserver.Data.Quest
 						case 1045:  //|1045|４|「吹雪改三」抜錨します！見てくださいっ！|7-5-3, 5-1, 5-3, 5-4, 5-5 それぞれS勝利?×1回|条件：吹雪改三/改三護(六式)旗艦、特I型2番艦
 							Progresses.Add(new ProgressMultiBattle(q, new[] {
 								new ProgressSpecialBattle(q, 1, "S", new[] { 51 }, true),
-								new ProgressSpecialBattle(q, 1, "S", new[] { 52 }, true),
 								new ProgressSpecialBattle(q, 1, "S", new[] { 53 }, true),
 								new ProgressSpecialBattle(q, 1, "S", new[] { 54 }, true),
 								new ProgressSpecialBattle(q, 1, "S", new[] { 55 }, true),
@@ -1361,6 +1360,12 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressDiscard(q, 4, true, new[]{ 47 }, -1),
 								new ProgressDiscard(q, 8, true, new[]{ 10 }, -1),
 							}));
+							break;
+						case 1166:   //|1166|続：装備の改修強化1(失敗可)
+							Progresses.Add(new ProgressImprovement(q, 1));
+							break;
+						case 1167:   //|1167|装備の改修集中強化3(失敗可)
+							Progresses.Add(new ProgressImprovement(q, 3));
 							break;
 					}
 
