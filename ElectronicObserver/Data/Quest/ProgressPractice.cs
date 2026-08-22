@@ -567,7 +567,7 @@ namespace ElectronicObserver.Data.Quest
 							default:
 								return false;
 						}
-					}) >= 3)
+					}) >= 5)
 					{
 						ret = true;
 					}
