@@ -24,6 +24,7 @@ namespace ElectronicObserver.Window
 			{ Tuple.Create( 3, 5 ), 150},
 			{ Tuple.Create( 4, 5 ), 180},
 			{ Tuple.Create( 5, 5 ), 200},
+			{ Tuple.Create( 5, 6 ), 225},
 			{ Tuple.Create( 6, 5 ), 250},
 			{ Tuple.Create( 7, 5 ), 170},
 		};
