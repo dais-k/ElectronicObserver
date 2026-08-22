@@ -1470,7 +1470,7 @@ namespace ElectronicObserver.Window
 		}
 
 		/// <summary>
-		/// 現在の艦隊データで作戦室(https://jervis.vercel.app/)を開く
+		/// 現在の艦隊データで作戦室(https://fleethub.madonoharu.workers.dev/)を開く
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
@@ -1489,11 +1489,11 @@ namespace ElectronicObserver.Window
 				{
 					areaId = dca.areaId;
 					fleet = GetFleetExportFlag(dca);
-					OpenUrlWithDeciBuilderData("https://jervis.vercel.app", areaId, fleet, 2);
+					OpenUrlWithDeciBuilderData("https://fleethub.madonoharu.workers.dev", areaId, fleet, 2);
 				}
 			}
 			else
-				OpenUrlWithDeciBuilderData("https://jervis.vercel.app", areaId, fleet, 2);
+				OpenUrlWithDeciBuilderData("https://fleethub.madonoharu.workers.dev", areaId, fleet, 2);
 		}
 
 		/// <summary>
