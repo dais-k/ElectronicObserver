@@ -866,29 +866,62 @@ namespace ElectronicObserver.Window.Dialog
 			exweapons.AddRange(db.MasterEquipments.Values.Where(eq => eq.EquippableStypeAtExpansion.Contains(ship.ShipTypeInstance.ID)).ToList());
 			exweapons.AddRange(db.MasterEquipments.Values.Where(eq => eq.EquippableCtypeAtExpansion.Contains(ship.ShipClass)).ToList());
 
-			// 特定の艦で指定の EquipmentID を除外する
-			if (ship.IsCoastalDefenceShip)
+			// 特定の艦で指定の装備を除外する
+			exweapons.RemoveAll(eq =>
 			{
-				var exclude = new HashSet<int> { 45, 226, 227, 346, 347, 488, 569 };
-				exweapons = exweapons.Where(eq => !exclude.Contains(eq.EquipmentID)).ToList();
-			}
-			if (ship.ID == 507 || ship.ID == 162 || ship.ID == 182 || ship.ID == 634 || ship.ID == 635 || ship.ID == 645 || ship.ID == 650 || ship.ID == 944 || ship.ID == 996 || ship.ID == 988 ||
-				ship.ShipClass == 50 || ship.ShipClass == 60 || ship.ShipClass == 70 || ship.ShipClass == 90)
-			{
-				var exclude = new HashSet<int> { 346, 347 };
-				exweapons = exweapons.Where(eq => !exclude.Contains(eq.EquipmentID)).ToList();
-			}
-			if (ship.ID == 877)
-			{
-				var exclude = new HashSet<int> { 35, 317, 483 };
-				exweapons = exweapons.Where(eq => !exclude.Contains(eq.EquipmentID)).ToList();
-			}
-			if (ship.ID == 162|| ship.ID == 645 || ship.ID == 650 || ship.ID == 900 || ship.ID == 945 || ship.ID == 988)
-			{
-				var exclude = new HashSet<int> { 524 };
-				exweapons = exweapons.Where(eq => !exclude.Contains(eq.EquipmentID)).ToList();
-			}
+				int eqCategory = (int)eq.CategoryType2;
+				var shiptype = ship.ShipTypeInstance;
 
+				var preSpecialShips = new Dictionary<ShipTypes, List<ShipDataMaster>>();
+				var specialShips = new Dictionary<ShipTypes, List<int>>();
+
+				foreach (var s in db.MasterShips.Values.Where(x => x.SpecialEquippableCategories != null))
+				{
+					bool usual = s.ShipTypeInstance.EquippableCategories.Contains(eqCategory);
+					bool special = s.SpecialEquippableCategories.Contains(eqCategory);
+
+					if (s.specialEquippableId != null)
+					{
+						foreach (var id in s.specialEquippableId)
+						{
+							if (!db.MasterEquipments.ContainsKey(id) || (int)db.MasterEquipments[id].CategoryType != eqCategory)
+								continue;
+
+							special = false;
+							if (id == eq.EquipmentID)
+							{
+								special = true;
+								break;
+							}
+						}
+					}
+
+					if (usual != special)
+					{
+						if (preSpecialShips.ContainsKey(s.ShipType))
+							preSpecialShips[s.ShipType].Add(s);
+						else
+							preSpecialShips.Add(s.ShipType, new List<ShipDataMaster>(new[] { s }));
+					}
+				}
+
+				foreach (var sp in preSpecialShips)
+				{
+					specialShips[sp.Key] = sp.Value
+						.OrderBy(s => s.ShipClass)
+						.ThenBy(s => s.NameReading)
+						.ThenBy(s => s.RemodelTier)
+						.Select(s => s.ShipID)
+						.ToList();
+				}
+
+				bool usualEquippable = shiptype.EquippableCategories.Contains(eqCategory);
+				bool isSpecialShip = specialShips.ContainsKey(shiptype.Type) && specialShips[shiptype.Type].Contains(shipID);
+
+				return usualEquippable ? isSpecialShip : !isSpecialShip;
+			});
+
+			// カテゴリ別に並び替え、同じカテゴリ内は装備名でソートする
 			exweapons = exweapons.OrderBy(eq => eq.CategoryType2)
 								 .ThenBy(eq => eq.Name).ToList();
 
