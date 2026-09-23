@@ -722,7 +722,7 @@ namespace ElectronicObserver.Data.Quest
 							membercount++;
 						}
 					}
-					isAccepted = isFlagship == true && membercount != 0 && CheckGaugeIndex56(bm.Compass);
+					isAccepted = isFlagship == true && membercount >= 2 && CheckGaugeIndex56(bm.Compass);
 					break;
 				case 1048:  //|1048|月|【期間限定任務】戦略兵站物資、緊急輸送！|1-3, 1-4 それぞれA勝利以上×1回|条件：「補給or揚陸or水母or航戦」(旗艦), 「駆逐+海防」4以上
 					isFlagship = false;
@@ -748,6 +748,53 @@ namespace ElectronicObserver.Data.Quest
 					membercount = members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Destroyer) + members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Escort);
 					isAccepted = isFlagship == true && membercount >= 3 && CheckGaugeIndex75(bm.Compass);
 					break;
+				case 1050:  //|1050|９|「第九戦隊」抜錨！前線展開せよッ！|1-4, 2-1, 2-2, 2-3 それぞれS勝利以上×1回|条件：旗艦及び随伴艦に「北上改二／改三」及び「大井改二」、駆逐2
+					membernames = new string[] { "118", "119", "1071" };
+					isFlagship = false;
+					membercount = 0;
+					foreach (var item in membernames)
+					{
+						if (isFlagship == false && members.FirstOrDefault()?.MasterShip?.ShipID == int.Parse(item))
+						{
+							isFlagship = true;
+						}
+
+						if (members.Count(s => s?.MasterShip?.ShipID == int.Parse(item)) != 0)
+						{
+							membercount++;
+						}
+					}
+					isAccepted = isFlagship == true && membercount >= 2 && (members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Destroyer) >= 2);
+					break;
+				case 1051:  //|1051|８|改装「1YB3H」旗艦、敵中を突破せよ！|1-5, 2-3, 2-5, 4-3  それぞれA勝利以上×1回, 1-6終点到達|条件：「山城改二補」旗艦、随伴「扶桑」または「時雨」、さらに「最上」「満潮」「朝雲」「山雲」から2隻
+					isAccepted = 
+						members.FirstOrDefault()?.MasterShip?.ShipID == 749 &&
+						members.Count(s =>
+						{
+							switch (s?.MasterShip?.NameReading)
+							{
+								case "ふそう":
+								case "しぐれ":
+									return true;
+								default:
+									return false;
+							}
+						}) != 0 &&
+						members.Count(s =>
+						{
+							switch (s?.MasterShip?.NameReading)
+							{
+								case "もがみ":
+								case "みちしお":
+								case "あさぐも":
+								case "やまぐも":
+									return true;
+								default:
+									return false;
+							}
+						}) >= 2;
+					break;
+
 			}
 
 			// 第二ゲージでも第一ボスに行ける場合があるので、個別対応が必要

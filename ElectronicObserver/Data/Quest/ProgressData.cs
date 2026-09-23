@@ -283,6 +283,12 @@ namespace ElectronicObserver.Data.Quest
 						case 383:
 							Progress = 2;
 							break;
+						case 384:
+							Progress = 3;
+							break;
+						case 385:
+							Progress = 3;
+							break;
 						case 1138:
 							Progress = 3;
 							break;

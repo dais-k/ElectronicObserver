@@ -578,6 +578,61 @@ namespace ElectronicObserver.Data.Quest
 						ret = true;
 					}
 					break;
+				case 384:   //|384|週|【期間限定任務】提督との秋祭り演習！|演習B勝利以上×4回|条件：「秋雲」「秋月」「綾波」「敷波」「白露」「浦風」「浜風」「長波」「藤波」「朝霜」「白雲」「朧」「漣」「迅鯨」「長鯨」「大鯨」「神通」から4隻以上 | 1日で進捗リセット|期間限定任務
+					if (ships.Count(s =>
+					{
+						switch (s?.MasterShip?.NameReading)
+						{
+							case "あきぐも":
+							case "あきづき":
+							case "あやなみ":
+							case "しきなみ":
+							case "しらつゆ":
+							case "うらかぜ":
+							case "はまかぜ":
+							case "ながなみ":
+							case "ふじなみ":
+							case "あさしも":
+							case "しらくも":
+							case "おぼろ":
+							case "さざなみ":
+							case "じんげい":
+							case "ちょうげい":
+							case "たいげい":
+							case "じんつう":
+								return true;
+							default:
+								return false;
+						}
+					}) >= 4)
+					{
+						ret = true;
+					}
+					break;
+				case 385:   //|385|週|【期間限定拡張任務】秋祭り拡張演習！|演習S勝利以上×4回|条件：「Algérie」「Vautour」「Mogador」「Béarn」「日枝丸」「平安丸」「大泊」「陸奥」「South Dakota」「Victorious」から3隻以上 | 1日で進捗リセット|期間限定任務
+					if (ships.Count(s =>
+					{
+						switch (s?.MasterShip?.NameReading)
+						{
+							case "アルジェリー":
+							case "ヴァトール":
+							case "モガドール":
+							case "ベアルン":
+							case "ひえまる":
+							case "へいあんまる":
+							case "おおとまり":
+							case "むつ":
+							case "サウスダコタ":
+							case "ヴィクトリアス":
+								return true;
+							default:
+								return false;
+						}
+					}) >= 3)
+					{
+						ret = true;
+					}
+					break;
 
 
 				default:

@@ -463,8 +463,14 @@ namespace ElectronicObserver.Data.Quest
 						case 383:   //|383|週|【期間限定任務】フランス艦隊、特別演習！|演習A勝利以上×3回|条件：フランス艦を3隻以上 | 1日で進捗リセット|期間限定任務
 							Progresses.Add(new ProgressPractice(q, 3, "A", true));
 							break;
-						//============================ 400～499 ============================
-						case 402:   //|402|「遠征」を3回成功させよう！|遠征成功3
+						case 384:   //|384|週|【期間限定任務】提督との秋祭り演習！|演習B勝利以上×4回|条件：「秋雲」「秋月」「綾波」「敷波」「白露」「浦風」「浜風」「長波」「藤波」「朝霜」「白雲」「朧」「漣」「迅鯨」「長鯨」「大鯨」「神通」から4隻以上 | 1日で進捗リセット|期間限定任務
+							Progresses.Add(new ProgressPractice(q, 4, "B", true));
+							break;
+                        case 385:   //|385|週|【期間限定拡張任務】秋祭り拡張演習！|演習S勝利以上×4回|条件：「Algérie」「Vautour」「Mogador」「Béarn」「日枝丸」「平安丸」「大泊」「陸奥」「South Dakota」「Victorious」から3隻以上 | 1日で進捗リセット|期間限定任務
+                            Progresses.Add(new ProgressPractice(q, 4, "S", true));
+                            break;
+                        //============================ 400～499 ============================
+                        case 402:   //|402|「遠征」を3回成功させよう！|遠征成功3
 							Progresses.Add(new ProgressExpedition(q, 3, null));
 							break;
 						case 403:   //|403|「遠征」を10回成功させよう！|遠征成功10
@@ -1200,6 +1206,23 @@ namespace ElectronicObserver.Data.Quest
 							Progresses.Add(new ProgressMultiBattle(q, new[] {
 								new ProgressSpecialBattle(q, 1, "A", new[] { 23 }, true),
 								new ProgressSpecialBattle(q, 1, "A", new[] { 75 }, true, 2),
+							}));
+							break;
+						case 1050:  //|1050|９|「第九戦隊」抜錨！前線展開せよッ！|1-4, 2-1, 2-2, 2-3 それぞれS勝利以上×1回|条件：旗艦及び随伴艦に「北上改二／改三」及び「大井改二」、駆逐2
+							Progresses.Add(new ProgressMultiBattle(q, new[] {
+								new ProgressSpecialBattle(q, 1, "S", new[] { 14 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 21 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 22 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 23 }, true),
+							}));
+							break;
+						case 1051:  //|1051|８|改装「1YB3H」旗艦、敵中を突破せよ！|1-5, 2-3, 2-5, 4-3  それぞれA勝利以上×1回, 1-6終点到達|条件：「山城改二補」旗艦、随伴「扶桑」または「時雨」、さらに「最上」「満潮」「朝雲」「山雲」から2隻
+							Progresses.Add(new ProgressMultiBattle(q, new[] {
+								new ProgressSpecialBattle(q, 1, "A", new[] { 15 }, true),
+								new ProgressSpecialBattle(q, 1, "x", new[] { 16 }, true),
+								new ProgressSpecialBattle(q, 1, "A", new[] { 23 }, true),
+								new ProgressSpecialBattle(q, 1, "A", new[] { 25 }, true),
+								new ProgressSpecialBattle(q, 1, "A", new[] { 43 }, true),
 							}));
 							break;
 						//============================ 1100～1199 ============================
