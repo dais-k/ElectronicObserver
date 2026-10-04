@@ -308,10 +308,55 @@ namespace ElectronicObserver.Observer.kcsapi.api_start2
 			try
 			{
 				ImprovementDataStore.Load();
+
+				var improvementFeedMap = new Dictionary<int, HashSet<int>>();
+
+				foreach (var equipment in db.MasterEquipments.Values.Where(eq => eq != null))
+				{
+					foreach (var improvement in equipment.Improvements ?? Enumerable.Empty<EquipmentDataMaster.Improvement>())
+					{
+						foreach (var resource in improvement.Resource?.ExtraResources ?? Enumerable.Empty<EquipmentDataMaster.ResourceEntry>())
+						{
+							foreach (var item in resource.Items ?? Enumerable.Empty<EquipmentDataMaster.ResourceItem>())
+							{
+								if (!int.TryParse(item.Id, out int materialEquipmentId) || materialEquipmentId <= 0)
+								{
+									continue;
+								}
+								
+								if (db.MasterEquipments[materialEquipmentId] == null)
+								{
+									continue;
+								}
+								
+								if (!improvementFeedMap.TryGetValue(materialEquipmentId, out var feedTargets))
+								{
+									feedTargets = new HashSet<int>();
+									improvementFeedMap.Add(materialEquipmentId, feedTargets);
+								}
+
+								feedTargets.Add(equipment.EquipmentID);
+							}
+						}
+					}
+				}
+
+				foreach (var equipment in db.MasterEquipments.Values.Where(eq => eq != null))
+				{
+					equipment.improvementFeed =
+						improvementFeedMap.TryGetValue(equipment.EquipmentID, out var feedTargets)
+						? feedTargets.OrderBy(id => id).ToArray()
+						: new int[0];
+				}
+
+				foreach (var ship in db.MasterShips.Values)
+				{
+					ship?.BuildEquipImprovement();
+				}
 			}
 			catch
 			{
-				// 読み込み失敗でも既存の挙動に影響させない
+				Utility.Logger.Add(2, "改修データの読み込みに失敗しました。");
 			}
 
 			Utility.Logger.Add(2, "提督が鎮守府に着任しました。これより艦隊の指揮を執ります。");

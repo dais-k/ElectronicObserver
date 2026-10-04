@@ -229,6 +229,12 @@ namespace ElectronicObserver.Data
 			public ResourceBlock Resource { get; set; } = new();
 		}
 
+		/// <summary>
+		/// この装備を素材として使用する改修先装備IDの一覧
+		/// </summary>
+		public int[] improvementFeed = new int[0];
+		public IEnumerable<int> ImprovementFeed => improvementFeed;
+
 		public class ReqCondition
 		{
 			public List<List<int>> WeekConditions { get; set; } = new();

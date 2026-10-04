@@ -43,6 +43,25 @@ namespace ElectronicObserver.Window
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
 			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
 			this.EquipView = new System.Windows.Forms.DataGridView();
+			this.EquipView_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.EquipView_Icon = new System.Windows.Forms.DataGridViewImageColumn();
+			this.EquipView_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.EquipView_Category1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.EquipView_Category2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.EquipView_ImproveShips = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.EquipView_Range = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.EquipView_Firepower = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.EquipView_Accuracy = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.EquipView_Evasion = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.EquipView_Bomber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.EquipView_Torpedo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.EquipView_LOS = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.EquipView_ASW = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.EquipView_AA = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.EquipView_Armor = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.EquipView_Radius = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.EquipView_Quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.EquipView_EquipedShips = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.MenuMember = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.MenuMember_AddToGroup = new System.Windows.Forms.ToolStripMenuItem();
 			this.MenuMember_CreateGroup = new System.Windows.Forms.ToolStripMenuItem();
@@ -69,25 +88,8 @@ namespace ElectronicObserver.Window
 			this.Status_ByLevel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.Status_ByAircraftLevel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.SaveCSVDialog = new System.Windows.Forms.SaveFileDialog();
-			this.EquipView_ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.EquipView_Icon = new System.Windows.Forms.DataGridViewImageColumn();
-			this.EquipView_Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.EquipView_Category1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.EquipView_Category2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.EquipView_ImproveShips = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.EquipView_Range = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.EquipView_Firepower = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.EquipView_Accuracy = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.EquipView_Evasion = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.EquipView_Bomber = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.EquipView_Torpedo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.EquipView_LOS = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.EquipView_ASW = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.EquipView_AA = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.EquipView_Armor = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.EquipView_Radius = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.EquipView_Quantity = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.EquipView_EquipedShips = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.MenuMember_ShowImprovementFeed = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			((System.ComponentModel.ISupportInitialize)(this.EquipView)).BeginInit();
 			this.MenuMember.SuspendLayout();
 			this.MenuGroup.SuspendLayout();
@@ -151,222 +153,6 @@ namespace ElectronicObserver.Window
 			this.EquipView.SelectionChanged += new System.EventHandler(this.EquipView_SelectionChanged);
 			this.EquipView.SortCompare += new System.Windows.Forms.DataGridViewSortCompareEventHandler(this.EquipView_SortCompare);
 			this.EquipView.Sorted += new System.EventHandler(this.EquipView_Sorted);
-			// 
-			// MenuMember
-			// 
-			this.MenuMember.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.MenuMember_AddToGroup,
-			this.MenuMember_CreateGroup,
-			this.MenuMember_Exclude,
-			this.toolStripSeparator2,
-			this.MenuMember_Filter,
-			this.MenuMember_ColumnFilter,
-			this.MenuMember_SortOrder,
-			this.toolStripSeparator3,
-			this.MenuMember_CSVOutput,
-			this.MenuMember_CopyName});
-			this.MenuMember.Name = "MenuMember";
-			this.MenuMember.Size = new System.Drawing.Size(216, 192);
-			this.MenuMember.Opening += new System.ComponentModel.CancelEventHandler(this.MenuMember_Opening);
-			// 
-			// MenuMember_AddToGroup
-			// 
-			this.MenuMember_AddToGroup.Name = "MenuMember_AddToGroup";
-			this.MenuMember_AddToGroup.Size = new System.Drawing.Size(215, 22);
-			this.MenuMember_AddToGroup.Text = "グループへ追加(&A)...";
-			this.MenuMember_AddToGroup.Click += new System.EventHandler(this.MenuMember_AddToGroup_Click);
-			// 
-			// MenuMember_CreateGroup
-			// 
-			this.MenuMember_CreateGroup.Name = "MenuMember_CreateGroup";
-			this.MenuMember_CreateGroup.Size = new System.Drawing.Size(215, 22);
-			this.MenuMember_CreateGroup.Text = "新規グループの作成(&N)...";
-			this.MenuMember_CreateGroup.Click += new System.EventHandler(this.MenuMember_CreateGroup_Click);
-			// 
-			// MenuMember_Exclude
-			// 
-			this.MenuMember_Exclude.Name = "MenuMember_Exclude";
-			this.MenuMember_Exclude.Size = new System.Drawing.Size(215, 22);
-			this.MenuMember_Exclude.Text = "除外(&E)";
-			this.MenuMember_Exclude.Click += new System.EventHandler(this.MenuMember_Exclude_Click);
-			// 
-			// toolStripSeparator2
-			// 
-			this.toolStripSeparator2.Name = "toolStripSeparator2";
-			this.toolStripSeparator2.Size = new System.Drawing.Size(212, 6);
-			// 
-			// MenuMember_Filter
-			// 
-			this.MenuMember_Filter.Name = "MenuMember_Filter";
-			this.MenuMember_Filter.Size = new System.Drawing.Size(215, 22);
-			this.MenuMember_Filter.Text = "フィルタ設定(&F)...";
-			this.MenuMember_Filter.Click += new System.EventHandler(this.MenuMember_Filter_Click);
-			// 
-			// MenuMember_ColumnFilter
-			// 
-			this.MenuMember_ColumnFilter.Name = "MenuMember_ColumnFilter";
-			this.MenuMember_ColumnFilter.Size = new System.Drawing.Size(215, 22);
-			this.MenuMember_ColumnFilter.Text = "列の表示設定(&C)...";
-			this.MenuMember_ColumnFilter.Click += new System.EventHandler(this.MenuMember_ColumnFilter_Click);
-			// 
-			// MenuMember_SortOrder
-			// 
-			this.MenuMember_SortOrder.Name = "MenuMember_SortOrder";
-			this.MenuMember_SortOrder.Size = new System.Drawing.Size(215, 22);
-			this.MenuMember_SortOrder.Text = "自動ソート設定(&S)...";
-			this.MenuMember_SortOrder.Click += new System.EventHandler(this.MenuMember_SortOrder_Click);
-			// 
-			// toolStripSeparator3
-			// 
-			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(212, 6);
-			// 
-			// MenuMember_CSVOutput
-			// 
-			this.MenuMember_CSVOutput.Name = "MenuMember_CSVOutput";
-			this.MenuMember_CSVOutput.Size = new System.Drawing.Size(215, 22);
-			this.MenuMember_CSVOutput.Text = "グループのCSV出力(&O)...";
-			this.MenuMember_CSVOutput.Click += new System.EventHandler(this.MenuMember_CSVOutput_Click);
-			// 
-			// MenuMember_CopyName
-			// 
-			this.MenuMember_CopyName.Name = "MenuMember_CopyName";
-			this.MenuMember_CopyName.Size = new System.Drawing.Size(215, 22);
-			this.MenuMember_CopyName.Text = "装備名をコピー";
-			this.MenuMember_CopyName.Click += new System.EventHandler(this.MenuMember_CopyName_Click);
-			// 
-			// MenuGroup
-			// 
-			this.MenuGroup.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.MenuGroup_Add,
-			this.MenuGroup_Copy,
-			this.MenuGroup_Rename,
-			this.MenuGroup_Delete,
-			this.toolStripSeparator4,
-			this.MenuGroup_AutoUpdate,
-			this.MenuGroup_ShowStatusBar});
-			this.MenuGroup.Name = "MenuGroup";
-			this.MenuGroup.Size = new System.Drawing.Size(221, 142);
-			this.MenuGroup.Opening += new System.ComponentModel.CancelEventHandler(this.MenuGroup_Opening);
-			// 
-			// MenuGroup_Add
-			// 
-			this.MenuGroup_Add.Name = "MenuGroup_Add";
-			this.MenuGroup_Add.Size = new System.Drawing.Size(220, 22);
-			this.MenuGroup_Add.Text = "グループを追加(&A)";
-			this.MenuGroup_Add.Click += new System.EventHandler(this.MenuGroup_Add_Click);
-			// 
-			// MenuGroup_Copy
-			// 
-			this.MenuGroup_Copy.Name = "MenuGroup_Copy";
-			this.MenuGroup_Copy.Size = new System.Drawing.Size(220, 22);
-			this.MenuGroup_Copy.Text = "グループをコピー(&C)";
-			this.MenuGroup_Copy.Click += new System.EventHandler(this.MenuGroup_Copy_Click);
-			// 
-			// MenuGroup_Rename
-			// 
-			this.MenuGroup_Rename.Name = "MenuGroup_Rename";
-			this.MenuGroup_Rename.Size = new System.Drawing.Size(220, 22);
-			this.MenuGroup_Rename.Text = "グループ名の変更(&R)...";
-			this.MenuGroup_Rename.Click += new System.EventHandler(this.MenuGroup_Rename_Click);
-			// 
-			// MenuGroup_Delete
-			// 
-			this.MenuGroup_Delete.Name = "MenuGroup_Delete";
-			this.MenuGroup_Delete.Size = new System.Drawing.Size(220, 22);
-			this.MenuGroup_Delete.Text = "グループを削除(&D)";
-			this.MenuGroup_Delete.Click += new System.EventHandler(this.MenuGroup_Delete_Click);
-			// 
-			// toolStripSeparator4
-			// 
-			this.toolStripSeparator4.Name = "toolStripSeparator4";
-			this.toolStripSeparator4.Size = new System.Drawing.Size(217, 6);
-			// 
-			// MenuGroup_AutoUpdate
-			// 
-			this.MenuGroup_AutoUpdate.CheckOnClick = true;
-			this.MenuGroup_AutoUpdate.Name = "MenuGroup_AutoUpdate";
-			this.MenuGroup_AutoUpdate.Size = new System.Drawing.Size(220, 22);
-			this.MenuGroup_AutoUpdate.Text = "自動更新する";
-			// 
-			// MenuGroup_ShowStatusBar
-			// 
-			this.MenuGroup_ShowStatusBar.Checked = true;
-			this.MenuGroup_ShowStatusBar.CheckOnClick = true;
-			this.MenuGroup_ShowStatusBar.CheckState = System.Windows.Forms.CheckState.Checked;
-			this.MenuGroup_ShowStatusBar.Name = "MenuGroup_ShowStatusBar";
-			this.MenuGroup_ShowStatusBar.Size = new System.Drawing.Size(220, 22);
-			this.MenuGroup_ShowStatusBar.Text = "ステータスバーを表示する";
-			this.MenuGroup_ShowStatusBar.CheckedChanged += new System.EventHandler(this.MenuGroup_ShowStatusBar_CheckedChanged);
-			// 
-			// splitContainer1
-			// 
-			this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
-			this.splitContainer1.Location = new System.Drawing.Point(0, 0);
-			this.splitContainer1.Name = "splitContainer1";
-			this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
-			// 
-			// splitContainer1.Panel1
-			// 
-			this.splitContainer1.Panel1.Controls.Add(this.TabPanel);
-			// 
-			// splitContainer1.Panel2
-			// 
-			this.splitContainer1.Panel2.Controls.Add(this.EquipView);
-			this.splitContainer1.Panel2.Controls.Add(this.StatusBar);
-			this.splitContainer1.Size = new System.Drawing.Size(300, 200);
-			this.splitContainer1.SplitterDistance = 40;
-			this.splitContainer1.TabIndex = 1;
-			// 
-			// TabPanel
-			// 
-			this.TabPanel.AllowDrop = true;
-			this.TabPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-			| System.Windows.Forms.AnchorStyles.Left) 
-			| System.Windows.Forms.AnchorStyles.Right)));
-			this.TabPanel.AutoScroll = true;
-			this.TabPanel.ContextMenuStrip = this.MenuGroup;
-			this.TabPanel.Location = new System.Drawing.Point(0, 0);
-			this.TabPanel.Name = "TabPanel";
-			this.TabPanel.Size = new System.Drawing.Size(300, 40);
-			this.TabPanel.TabIndex = 0;
-			this.TabPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.TabPanel_DragDrop);
-			this.TabPanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.TabPanel_DragEnter);
-			this.TabPanel.QueryContinueDrag += new System.Windows.Forms.QueryContinueDragEventHandler(this.TabPanel_QueryContinueDrag);
-			this.TabPanel.DoubleClick += new System.EventHandler(this.TabPanel_DoubleClick);
-			// 
-			// StatusBar
-			// 
-			this.StatusBar.ImageScalingSize = new System.Drawing.Size(32, 32);
-			this.StatusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-			this.Status_Total,
-			this.Status_ByLevel,
-			this.Status_ByAircraftLevel});
-			this.StatusBar.Location = new System.Drawing.Point(0, 134);
-			this.StatusBar.Name = "StatusBar";
-			this.StatusBar.Size = new System.Drawing.Size(300, 22);
-			this.StatusBar.TabIndex = 1;
-			// 
-			// Status_Total
-			// 
-			this.Status_Total.Name = "Status_Total";
-			this.Status_Total.Size = new System.Drawing.Size(0, 17);
-			// 
-			// Status_ByLevel
-			// 
-			this.Status_ByLevel.Name = "Status_ByLevel";
-			this.Status_ByLevel.Size = new System.Drawing.Size(0, 17);
-			// 
-			// Status_ByAircraftLevel
-			// 
-			this.Status_ByAircraftLevel.Name = "Status_ByAircraftLevel";
-			this.Status_ByAircraftLevel.Size = new System.Drawing.Size(0, 17);
-			// 
-			// SaveCSVDialog
-			// 
-			this.SaveCSVDialog.Filter = "CSV|*.csv|File|*";
-			this.SaveCSVDialog.Title = "CSVに出力";
 			// 
 			// EquipView_ID
 			// 
@@ -514,6 +300,236 @@ namespace ElectronicObserver.Window
 			this.EquipView_EquipedShips.ReadOnly = true;
 			this.EquipView_EquipedShips.Width = 120;
 			// 
+			// MenuMember
+			// 
+			this.MenuMember.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.MenuMember_ShowImprovementFeed,
+			this.toolStripSeparator1,
+			this.MenuMember_AddToGroup,
+			this.MenuMember_CreateGroup,
+			this.MenuMember_Exclude,
+			this.toolStripSeparator2,
+			this.MenuMember_Filter,
+			this.MenuMember_ColumnFilter,
+			this.MenuMember_SortOrder,
+			this.toolStripSeparator3,
+			this.MenuMember_CSVOutput,
+			this.MenuMember_CopyName});
+			this.MenuMember.Name = "MenuMember";
+			this.MenuMember.Size = new System.Drawing.Size(272, 242);
+			this.MenuMember.Opening += new System.ComponentModel.CancelEventHandler(this.MenuMember_Opening);
+			// 
+			// MenuMember_AddToGroup
+			// 
+			this.MenuMember_AddToGroup.Name = "MenuMember_AddToGroup";
+			this.MenuMember_AddToGroup.Size = new System.Drawing.Size(271, 22);
+			this.MenuMember_AddToGroup.Text = "グループへ追加(&A)...";
+			this.MenuMember_AddToGroup.Click += new System.EventHandler(this.MenuMember_AddToGroup_Click);
+			// 
+			// MenuMember_CreateGroup
+			// 
+			this.MenuMember_CreateGroup.Name = "MenuMember_CreateGroup";
+			this.MenuMember_CreateGroup.Size = new System.Drawing.Size(271, 22);
+			this.MenuMember_CreateGroup.Text = "新規グループの作成(&N)...";
+			this.MenuMember_CreateGroup.Click += new System.EventHandler(this.MenuMember_CreateGroup_Click);
+			// 
+			// MenuMember_Exclude
+			// 
+			this.MenuMember_Exclude.Name = "MenuMember_Exclude";
+			this.MenuMember_Exclude.Size = new System.Drawing.Size(271, 22);
+			this.MenuMember_Exclude.Text = "除外(&E)";
+			this.MenuMember_Exclude.Click += new System.EventHandler(this.MenuMember_Exclude_Click);
+			// 
+			// toolStripSeparator2
+			// 
+			this.toolStripSeparator2.Name = "toolStripSeparator2";
+			this.toolStripSeparator2.Size = new System.Drawing.Size(268, 6);
+			// 
+			// MenuMember_Filter
+			// 
+			this.MenuMember_Filter.Name = "MenuMember_Filter";
+			this.MenuMember_Filter.Size = new System.Drawing.Size(271, 22);
+			this.MenuMember_Filter.Text = "フィルタ設定(&F)...";
+			this.MenuMember_Filter.Click += new System.EventHandler(this.MenuMember_Filter_Click);
+			// 
+			// MenuMember_ColumnFilter
+			// 
+			this.MenuMember_ColumnFilter.Name = "MenuMember_ColumnFilter";
+			this.MenuMember_ColumnFilter.Size = new System.Drawing.Size(271, 22);
+			this.MenuMember_ColumnFilter.Text = "列の表示設定(&C)...";
+			this.MenuMember_ColumnFilter.Click += new System.EventHandler(this.MenuMember_ColumnFilter_Click);
+			// 
+			// MenuMember_SortOrder
+			// 
+			this.MenuMember_SortOrder.Name = "MenuMember_SortOrder";
+			this.MenuMember_SortOrder.Size = new System.Drawing.Size(271, 22);
+			this.MenuMember_SortOrder.Text = "自動ソート設定(&S)...";
+			this.MenuMember_SortOrder.Click += new System.EventHandler(this.MenuMember_SortOrder_Click);
+			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(268, 6);
+			// 
+			// MenuMember_CSVOutput
+			// 
+			this.MenuMember_CSVOutput.Name = "MenuMember_CSVOutput";
+			this.MenuMember_CSVOutput.Size = new System.Drawing.Size(271, 22);
+			this.MenuMember_CSVOutput.Text = "グループのCSV出力(&O)...";
+			this.MenuMember_CSVOutput.Click += new System.EventHandler(this.MenuMember_CSVOutput_Click);
+			// 
+			// MenuMember_CopyName
+			// 
+			this.MenuMember_CopyName.Name = "MenuMember_CopyName";
+			this.MenuMember_CopyName.Size = new System.Drawing.Size(271, 22);
+			this.MenuMember_CopyName.Text = "装備名をコピー";
+			this.MenuMember_CopyName.Click += new System.EventHandler(this.MenuMember_CopyName_Click);
+			// 
+			// MenuGroup
+			// 
+			this.MenuGroup.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.MenuGroup_Add,
+			this.MenuGroup_Copy,
+			this.MenuGroup_Rename,
+			this.MenuGroup_Delete,
+			this.toolStripSeparator4,
+			this.MenuGroup_AutoUpdate,
+			this.MenuGroup_ShowStatusBar});
+			this.MenuGroup.Name = "MenuGroup";
+			this.MenuGroup.Size = new System.Drawing.Size(221, 142);
+			this.MenuGroup.Opening += new System.ComponentModel.CancelEventHandler(this.MenuGroup_Opening);
+			// 
+			// MenuGroup_Add
+			// 
+			this.MenuGroup_Add.Name = "MenuGroup_Add";
+			this.MenuGroup_Add.Size = new System.Drawing.Size(220, 22);
+			this.MenuGroup_Add.Text = "グループを追加(&A)";
+			this.MenuGroup_Add.Click += new System.EventHandler(this.MenuGroup_Add_Click);
+			// 
+			// MenuGroup_Copy
+			// 
+			this.MenuGroup_Copy.Name = "MenuGroup_Copy";
+			this.MenuGroup_Copy.Size = new System.Drawing.Size(220, 22);
+			this.MenuGroup_Copy.Text = "グループをコピー(&C)";
+			this.MenuGroup_Copy.Click += new System.EventHandler(this.MenuGroup_Copy_Click);
+			// 
+			// MenuGroup_Rename
+			// 
+			this.MenuGroup_Rename.Name = "MenuGroup_Rename";
+			this.MenuGroup_Rename.Size = new System.Drawing.Size(220, 22);
+			this.MenuGroup_Rename.Text = "グループ名の変更(&R)...";
+			this.MenuGroup_Rename.Click += new System.EventHandler(this.MenuGroup_Rename_Click);
+			// 
+			// MenuGroup_Delete
+			// 
+			this.MenuGroup_Delete.Name = "MenuGroup_Delete";
+			this.MenuGroup_Delete.Size = new System.Drawing.Size(220, 22);
+			this.MenuGroup_Delete.Text = "グループを削除(&D)";
+			this.MenuGroup_Delete.Click += new System.EventHandler(this.MenuGroup_Delete_Click);
+			// 
+			// toolStripSeparator4
+			// 
+			this.toolStripSeparator4.Name = "toolStripSeparator4";
+			this.toolStripSeparator4.Size = new System.Drawing.Size(217, 6);
+			// 
+			// MenuGroup_AutoUpdate
+			// 
+			this.MenuGroup_AutoUpdate.CheckOnClick = true;
+			this.MenuGroup_AutoUpdate.Name = "MenuGroup_AutoUpdate";
+			this.MenuGroup_AutoUpdate.Size = new System.Drawing.Size(220, 22);
+			this.MenuGroup_AutoUpdate.Text = "自動更新する";
+			// 
+			// MenuGroup_ShowStatusBar
+			// 
+			this.MenuGroup_ShowStatusBar.Checked = true;
+			this.MenuGroup_ShowStatusBar.CheckOnClick = true;
+			this.MenuGroup_ShowStatusBar.CheckState = System.Windows.Forms.CheckState.Checked;
+			this.MenuGroup_ShowStatusBar.Name = "MenuGroup_ShowStatusBar";
+			this.MenuGroup_ShowStatusBar.Size = new System.Drawing.Size(220, 22);
+			this.MenuGroup_ShowStatusBar.Text = "ステータスバーを表示する";
+			this.MenuGroup_ShowStatusBar.CheckedChanged += new System.EventHandler(this.MenuGroup_ShowStatusBar_CheckedChanged);
+			// 
+			// splitContainer1
+			// 
+			this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.splitContainer1.FixedPanel = System.Windows.Forms.FixedPanel.Panel1;
+			this.splitContainer1.Location = new System.Drawing.Point(0, 0);
+			this.splitContainer1.Name = "splitContainer1";
+			this.splitContainer1.Orientation = System.Windows.Forms.Orientation.Horizontal;
+			// 
+			// splitContainer1.Panel1
+			// 
+			this.splitContainer1.Panel1.Controls.Add(this.TabPanel);
+			// 
+			// splitContainer1.Panel2
+			// 
+			this.splitContainer1.Panel2.Controls.Add(this.EquipView);
+			this.splitContainer1.Panel2.Controls.Add(this.StatusBar);
+			this.splitContainer1.Size = new System.Drawing.Size(300, 200);
+			this.splitContainer1.SplitterDistance = 40;
+			this.splitContainer1.TabIndex = 1;
+			// 
+			// TabPanel
+			// 
+			this.TabPanel.AllowDrop = true;
+			this.TabPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			| System.Windows.Forms.AnchorStyles.Left) 
+			| System.Windows.Forms.AnchorStyles.Right)));
+			this.TabPanel.AutoScroll = true;
+			this.TabPanel.ContextMenuStrip = this.MenuGroup;
+			this.TabPanel.Location = new System.Drawing.Point(0, 0);
+			this.TabPanel.Name = "TabPanel";
+			this.TabPanel.Size = new System.Drawing.Size(300, 40);
+			this.TabPanel.TabIndex = 0;
+			this.TabPanel.DragDrop += new System.Windows.Forms.DragEventHandler(this.TabPanel_DragDrop);
+			this.TabPanel.DragEnter += new System.Windows.Forms.DragEventHandler(this.TabPanel_DragEnter);
+			this.TabPanel.QueryContinueDrag += new System.Windows.Forms.QueryContinueDragEventHandler(this.TabPanel_QueryContinueDrag);
+			this.TabPanel.DoubleClick += new System.EventHandler(this.TabPanel_DoubleClick);
+			// 
+			// StatusBar
+			// 
+			this.StatusBar.ImageScalingSize = new System.Drawing.Size(32, 32);
+			this.StatusBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+			this.Status_Total,
+			this.Status_ByLevel,
+			this.Status_ByAircraftLevel});
+			this.StatusBar.Location = new System.Drawing.Point(0, 134);
+			this.StatusBar.Name = "StatusBar";
+			this.StatusBar.Size = new System.Drawing.Size(300, 22);
+			this.StatusBar.TabIndex = 1;
+			// 
+			// Status_Total
+			// 
+			this.Status_Total.Name = "Status_Total";
+			this.Status_Total.Size = new System.Drawing.Size(0, 17);
+			// 
+			// Status_ByLevel
+			// 
+			this.Status_ByLevel.Name = "Status_ByLevel";
+			this.Status_ByLevel.Size = new System.Drawing.Size(0, 17);
+			// 
+			// Status_ByAircraftLevel
+			// 
+			this.Status_ByAircraftLevel.Name = "Status_ByAircraftLevel";
+			this.Status_ByAircraftLevel.Size = new System.Drawing.Size(0, 17);
+			// 
+			// SaveCSVDialog
+			// 
+			this.SaveCSVDialog.Filter = "CSV|*.csv|File|*";
+			this.SaveCSVDialog.Title = "CSVに出力";
+			// 
+			// MenuMember_ShowImprovementFeed
+			// 
+			this.MenuMember_ShowImprovementFeed.Name = "MenuMember_ShowImprovementFeed";
+			this.MenuMember_ShowImprovementFeed.Size = new System.Drawing.Size(271, 22);
+			this.MenuMember_ShowImprovementFeed.Text = "本装備を使用する改修装備を検索(&I)";
+			this.MenuMember_ShowImprovementFeed.Click += new System.EventHandler(this.MenuMember_ShowImprovementFeed_Click);
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(268, 6);
+			// 
 			// FormEquipmentGroup
 			// 
 			this.AutoHidePortion = 150D;
@@ -589,5 +605,7 @@ namespace ElectronicObserver.Window
 		private DataGridViewTextBoxColumn EquipView_Radius;
 		private DataGridViewTextBoxColumn EquipView_Quantity;
 		private DataGridViewTextBoxColumn EquipView_EquipedShips;
+		private ToolStripMenuItem MenuMember_ShowImprovementFeed;
+		private ToolStripSeparator toolStripSeparator1;
 	}
 }

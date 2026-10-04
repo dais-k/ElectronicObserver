@@ -61,7 +61,7 @@ namespace ElectronicObserver.Window
 
 			IsRowsUpdating = true;
 			_splitterDistance = -1;
-
+			
 			foreach (DataGridViewColumn column in ShipView.Columns)
 			{
 				column.MinimumWidth = 2;
@@ -126,6 +126,7 @@ namespace ElectronicObserver.Window
 			ShipView_Slot4.DefaultCellStyle = CSDefaultLeft;
 			ShipView_Slot5.DefaultCellStyle = CSDefaultLeft;
 			ShipView_ExpansionSlot.DefaultCellStyle = CSDefaultLeft;
+			ShipView_EquipImprovement.DefaultCellStyle = CSDefaultLeft;
 
 			#endregion
 
@@ -407,7 +408,8 @@ namespace ElectronicObserver.Window
 				ship.TorpedoPower,
 				ship.NightBattlePower,
 				ship.IsLocked ? 1 : ship.IsLockedByEquipment ? 2 : 0,
-				ship.SallyArea
+				ship.SallyArea,
+				GetTodayEquipImprovementText(ship.MasterShip)
 				);
 
 			row.Cells[ShipView_Name.Index].Tag = ship.ShipID;
@@ -635,6 +637,156 @@ namespace ElectronicObserver.Window
 			{
 				return ship.ExpansionSlot == 0 ? "" :
 					ship.ExpansionSlotInstance?.NameWithLevel ?? "(なし)";
+			}
+		}
+
+		private string GetTodayEquipImprovementText(ShipDataMaster ship)
+		{
+			if (ship == null || ship.EquipImprovement == null || ship.EquipImprovement.Count < 7)
+				return "";
+
+			int today = (int)DateTime.Now.DayOfWeek;
+			var ids = ship.EquipImprovement[today];
+
+			if (ids == null || ids.Count == 0)
+				return "";
+
+			return string.Join(" / ", ids
+				.Take(3)
+				.Select(id =>
+				{
+					if (KCDatabase.Instance.MasterEquipments.TryGetValue(id, out var eq) && eq != null)
+						return eq.Name;
+
+					return $"ID:{id}";
+				}));
+		}
+
+		private string GetImprovementEquipsString(ShipDataMaster ship)
+		{
+			if (ship == null)
+				return "";
+
+			var weekNames = new[]
+			{
+				"日曜日",
+				"月曜日",
+				"火曜日",
+				"水曜日",
+				"木曜日",
+				"金曜日",
+				"土曜日",
+			};
+
+			var lines = new List<string>(7);
+
+			for (int day = 0; day < 7; day++)
+			{
+				var ids = ship.EquipImprovement != null && ship.EquipImprovement.Count > day
+					? ship.EquipImprovement[day]
+					: null;
+
+				string equips;
+				if (ids == null || ids.Count == 0)
+				{
+					equips = "(なし)";
+				}
+				else
+				{
+					equips = string.Join(" / ", ids.Select(id =>
+					{
+						if (KCDatabase.Instance.MasterEquipments.TryGetValue(id, out var eq) && eq != null)
+							return eq.Name;
+
+						return $"ID:{id}";
+					}));
+				}
+
+				lines.Add($"{weekNames[day]}：{equips}");
+			}
+
+			return string.Join("\r\n", lines);
+		}
+
+		private void ShowImprovementEquipsDialog(string title, string text)
+		{
+			using (var dialog = new Form())
+			using (var textBox = new TextBox())
+			using (var button = new Button())
+			{
+				dialog.Text = title;
+				dialog.StartPosition = FormStartPosition.CenterParent;
+				dialog.FormBorderStyle = FormBorderStyle.FixedDialog;
+				dialog.MinimizeBox = false;
+				dialog.MaximizeBox = false;
+				dialog.ShowInTaskbar = false;
+				dialog.Icon = this.Icon;
+				dialog.Font = this.Font;
+				dialog.BackColor = SystemColors.Control;
+
+				textBox.Multiline = true;
+				textBox.ReadOnly = true;
+				textBox.BorderStyle = BorderStyle.None;
+				textBox.ScrollBars = ScrollBars.None;
+				textBox.WordWrap = false;
+				textBox.ShortcutsEnabled = false;
+				textBox.TabStop = false;
+				textBox.HideSelection = true;
+				textBox.Font = this.Font;
+				textBox.Text = text;
+				textBox.BackColor = dialog.BackColor;
+				textBox.Location = new Point(12, 12);
+
+				button.Text = "OK";
+				button.DialogResult = DialogResult.OK;
+				button.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+
+				dialog.AcceptButton = button;
+				dialog.CancelButton = button;
+
+				var lines = text.Replace("\r\n", "\n").Split('\n');
+				int maxWidth = 0;
+
+				foreach (string line in lines)
+				{
+					Size size = TextRenderer.MeasureText(
+						line.Length == 0 ? " " : line,
+						textBox.Font,
+						new Size(int.MaxValue, int.MaxValue),
+						TextFormatFlags.NoPrefix | TextFormatFlags.SingleLine);
+
+					if (size.Width > maxWidth)
+						maxWidth = size.Width;
+				}
+
+				int lineHeight = TextRenderer.MeasureText(
+					"A",
+					textBox.Font,
+					new Size(int.MaxValue, int.MaxValue),
+					TextFormatFlags.NoPrefix | TextFormatFlags.SingleLine).Height;
+
+				int visibleLines = Math.Max(7, lines.Length);
+				int textWidth = Math.Min(Math.Max(260, maxWidth + 20), 1200);
+				int textHeight = Math.Max(120, lineHeight * visibleLines + 8);
+
+				textBox.Size = new Size(textWidth, textHeight);
+
+				button.Size = new Size(75, 23);
+				button.Location = new Point(textBox.Left + textBox.Width - button.Width, textBox.Bottom + 12);
+
+				dialog.ClientSize = new Size(textBox.Right + 12, button.Bottom + 12);
+
+				dialog.Controls.Add(textBox);
+				dialog.Controls.Add(button);
+
+				dialog.Shown += (s, ev) =>
+				{
+					button.Focus();
+					textBox.SelectionStart = 0;
+					textBox.SelectionLength = 0;
+				};
+
+				dialog.ShowDialog(this);
 			}
 		}
 
@@ -1445,6 +1597,32 @@ namespace ElectronicObserver.Window
 					}
 				}
 			}
+		}
+
+		private void MenuMember_ShowImprovementEquips_Click(object sender, EventArgs e)
+		{
+			var ids = GetSelectedShipID().ToArray();
+			if (ids.Length == 0)
+			{
+				System.Media.SystemSounds.Exclamation.Play();
+				return;
+			}
+
+			var ship = KCDatabase.Instance.Ships.ContainsKey(ids[0]) ? KCDatabase.Instance.Ships[ids[0]] : null;
+			var masterShip = ship?.MasterShip;
+
+			if (masterShip == null)
+			{
+				System.Media.SystemSounds.Exclamation.Play();
+				return;
+			}
+
+			string text = GetImprovementEquipsString(masterShip);
+
+			if (string.IsNullOrEmpty(text))
+				text = "改修装備情報はありません。";
+
+			ShowImprovementEquipsDialog("改修を担当する特別装備", text);
 		}
 
 		#endregion

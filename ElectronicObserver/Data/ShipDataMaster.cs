@@ -974,6 +974,74 @@ namespace ElectronicObserver.Data
 			}
 		}
 
+		private List<List<int>> equipImprovement = Enumerable.Range(0, 7)
+			.Select(_ => new List<int>())
+			.ToList();
+
+		/// <summary>
+		/// 改修担当装備ID。
+		/// 日曜～土曜の7日分を保持し、各曜日は装備IDを最大3件持つ。
+		/// </summary>
+		public IReadOnlyList<IReadOnlyList<int>> EquipImprovement => equipImprovement;
+
+		internal void BuildEquipImprovement()
+		{
+			var result = Enumerable.Range(0, 7)
+				.Select(_ => new List<int>())
+				.ToList();
+
+			foreach (var equipment in KCDatabase.Instance.MasterEquipments.Values)
+			{
+				if (equipment?.Improvements == null || equipment.Improvements.Count == 0)
+					continue;
+
+				foreach (var improvement in equipment.Improvements)
+				{
+					var weekConditions = improvement?.Req?.WeekConditions;
+					if (weekConditions == null)
+						continue;
+
+					for (int day = 0; day < 7; day++)
+					{
+						if (result[day].Count >= 3)
+							continue;
+
+						var ships = weekConditions.ElementAtOrDefault(day);
+						if (ships == null || ships.Count == 0)
+							continue;
+
+						if (!ships.Contains(ShipID))
+							continue;
+
+						if (!result[day].Contains(equipment.EquipmentID))
+						{
+							result[day].Add(equipment.EquipmentID);
+						}
+					}
+				}
+			}
+
+			equipImprovement = result;
+		}
+ 
+		/// <summary>
+		/// 今日の改修装備があるかどうか
+		/// </summary>
+		public bool HasEquipImprovementToday
+		{
+			get
+			{
+				if (EquipImprovement == null || EquipImprovement.Count < 7)
+					return false;
+
+				int today = (int)DateTime.Now.DayOfWeek;
+				var list = EquipImprovement[today];
+
+				return list != null && list.Count > 0;
+			}
+		}
+		
+		
 		public ShipDataMaster()
 		{
 			RemodelBeforeShipID = 0;

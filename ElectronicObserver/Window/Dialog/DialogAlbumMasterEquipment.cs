@@ -1097,6 +1097,30 @@ namespace ElectronicObserver.Window.Dialog
 			MessageBox.Show(result, "入手手段表示", MessageBoxButtons.OK, MessageBoxIcon.Information);
 		}
 
+		private void StripMenu_View_ShowImprovementFeed_Click(object sender, EventArgs e)
+		{
+			int eqID = EquipmentID.Tag as int? ?? -1;
+			var eq = KCDatabase.Instance.MasterEquipments[eqID];
+
+			if (eq == null)
+			{
+				System.Media.SystemSounds.Exclamation.Play();
+				return;
+			}
+
+			string result = string.Join("\r\n",
+				eq.ImprovementFeed
+				.Select(id => KCDatabase.Instance.MasterEquipments[id])
+				.Where(master => master != null)
+				.Select(master => $"[{master.EquipmentID}] {master.Name}"));
+
+			if (string.IsNullOrWhiteSpace(result))
+			{
+				result = eq.Name + " を素材として使用する改修先装備はありません。";
+			}
+
+			MessageBox.Show(result, "本装備を使用する改修装備", MessageBoxButtons.OK, MessageBoxIcon.Information);
+		}
 
 		private void StripMenu_Edit_GoogleEquipmentName_Click(object sender, EventArgs e)
 		{
