@@ -696,7 +696,7 @@ namespace ElectronicObserver.Window
 					equips = string.Join(" / ", ids.Select(id =>
 					{
 						if (KCDatabase.Instance.MasterEquipments.TryGetValue(id, out var eq) && eq != null)
-							return eq.Name;
+							return $"[{eq.EquipmentID}] {eq.Name}";
 
 						return $"ID:{id}";
 					}));
@@ -711,7 +711,7 @@ namespace ElectronicObserver.Window
 		private void ShowImprovementEquipsDialog(string title, string text)
 		{
 			using (var dialog = new Form())
-			using (var textBox = new TextBox())
+			using (var panel = new FlowLayoutPanel())
 			using (var button = new Button())
 			{
 				dialog.Text = title;
@@ -724,25 +724,14 @@ namespace ElectronicObserver.Window
 				dialog.Font = this.Font;
 				dialog.BackColor = SystemColors.Control;
 
-				textBox.Multiline = true;
-				textBox.ReadOnly = true;
-				textBox.BorderStyle = BorderStyle.None;
-				textBox.ScrollBars = ScrollBars.None;
-				textBox.WordWrap = false;
-				textBox.ShortcutsEnabled = false;
-				textBox.TabStop = false;
-				textBox.HideSelection = true;
-				textBox.Font = this.Font;
-				textBox.Text = text;
-				textBox.BackColor = dialog.BackColor;
-				textBox.Location = new Point(12, 12);
-
-				button.Text = "OK";
-				button.DialogResult = DialogResult.OK;
-				button.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-
-				dialog.AcceptButton = button;
-				dialog.CancelButton = button;
+				panel.FlowDirection = FlowDirection.TopDown;
+				panel.WrapContents = false;
+				panel.AutoSize = true;
+				panel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+				panel.Location = new Point(12, 12);
+				panel.Margin = Padding.Empty;
+				panel.Padding = Padding.Empty;
+				panel.BackColor = dialog.BackColor;
 
 				var lines = text.Replace("\r\n", "\n").Split('\n');
 				int maxWidth = 0;
@@ -751,7 +740,7 @@ namespace ElectronicObserver.Window
 				{
 					Size size = TextRenderer.MeasureText(
 						line.Length == 0 ? " " : line,
-						textBox.Font,
+						dialog.Font,
 						new Size(int.MaxValue, int.MaxValue),
 						TextFormatFlags.NoPrefix | TextFormatFlags.SingleLine);
 
@@ -759,37 +748,50 @@ namespace ElectronicObserver.Window
 						maxWidth = size.Width;
 				}
 
-				int lineHeight = TextRenderer.MeasureText(
-					"A",
-					textBox.Font,
-					new Size(int.MaxValue, int.MaxValue),
-					TextFormatFlags.NoPrefix | TextFormatFlags.SingleLine).Height;
+				int textWidth = Math.Min(Math.Max(260, maxWidth + 4), 1200);
 
-				int visibleLines = Math.Max(7, lines.Length);
-				int textWidth = Math.Min(Math.Max(260, maxWidth + 20), 1200);
-				int textHeight = Math.Max(120, lineHeight * visibleLines + 8);
+				foreach (string line in lines)
+				{
+					var label = new Label
+					{
+						AutoSize = false,
+						Width = textWidth,
+						Height = TextRenderer.MeasureText(
+							line.Length == 0 ? " " : line,
+							dialog.Font,
+							new Size(int.MaxValue, int.MaxValue),
+							TextFormatFlags.NoPrefix | TextFormatFlags.SingleLine).Height + 6,
+						Text = line,
+						Font = dialog.Font,
+						BackColor = dialog.BackColor,
+						ForeColor = SystemColors.ControlText,
+						Margin = Padding.Empty,
+						Padding = new Padding(0, 3, 0, 3),
+						TextAlign = ContentAlignment.MiddleLeft
+					};
 
-				textBox.Size = new Size(textWidth, textHeight);
+					panel.Controls.Add(label);
+				}
 
+				button.Text = "OK";
+				button.DialogResult = DialogResult.OK;
 				button.Size = new Size(75, 23);
-				button.Location = new Point(textBox.Left + textBox.Width - button.Width, textBox.Bottom + 12);
 
-				dialog.ClientSize = new Size(textBox.Right + 12, button.Bottom + 12);
+				dialog.AcceptButton = button;
+				dialog.CancelButton = button;
 
-				dialog.Controls.Add(textBox);
+				dialog.Controls.Add(panel);
 				dialog.Controls.Add(button);
 
-				dialog.Shown += (s, ev) =>
-				{
-					button.Focus();
-					textBox.SelectionStart = 0;
-					textBox.SelectionLength = 0;
-				};
+				button.Location = new Point(panel.Left + panel.Width - button.Width, panel.Bottom + 12);
+				dialog.ClientSize = new Size(panel.Right + 12, button.Bottom + 12);
+
+				dialog.Shown += (s, ev) => button.Focus();
 
 				dialog.ShowDialog(this);
 			}
 		}
-
+		
 		/// <summary>
 		/// 現在選択している艦船のIDリストを求めます。
 		/// </summary>
