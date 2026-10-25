@@ -1682,8 +1682,6 @@ namespace ElectronicObserver.Window
 			{
 				ShipData ship = KCDatabase.Instance.Ships.ContainsKey(id) ? KCDatabase.Instance.Ships[id] : null;
 				string name = ship?.MasterShip?.Name ?? "";
-				// ダブルクォートを CSV 風にエスケープ（" -> ""）
-				name = name.Replace("\"", "\"\"");
 				return "\"" + name + "\"";
 			});
 
@@ -1717,8 +1715,6 @@ namespace ElectronicObserver.Window
 			{
 				ShipData ship = KCDatabase.Instance.Ships.ContainsKey(id) ? KCDatabase.Instance.Ships[id] : null;
 				string name = ship?.MasterShip?.NameReading ?? "";
-				// ダブルクォートを CSV 風にエスケープ（" -> ""）
-				name = name.Replace("\"", "\"\"");
 				return "\"" + name + "\"";
 			});
 
