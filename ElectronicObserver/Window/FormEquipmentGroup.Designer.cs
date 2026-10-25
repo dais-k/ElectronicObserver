@@ -522,7 +522,7 @@ namespace ElectronicObserver.Window
 			// 
 			this.MenuMember_ShowImprovementFeed.Name = "MenuMember_ShowImprovementFeed";
 			this.MenuMember_ShowImprovementFeed.Size = new System.Drawing.Size(271, 22);
-			this.MenuMember_ShowImprovementFeed.Text = "本装備を使用する改修装備を検索(&I)";
+			this.MenuMember_ShowImprovementFeed.Text = "改修で本装備を使用する装備を検索(&I)";
 			this.MenuMember_ShowImprovementFeed.Click += new System.EventHandler(this.MenuMember_ShowImprovementFeed_Click);
 			// 
 			// toolStripSeparator1

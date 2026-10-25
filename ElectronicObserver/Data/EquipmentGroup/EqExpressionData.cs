@@ -78,6 +78,7 @@ namespace ElectronicObserver.Data.EquipmentGroup
 			{ ".MasterEquipment.IsAircraftOnlyAirbase", "基地航空隊専用" },
 			{ ".MasterEquipment.IsOwned", "所持している" },
 			{ ".MasterEquipment.ImprovableToday", "本日改修可能" },
+			{ ".MasterEquipment.ImprovableDays", "改修可能曜日" },
 		};
 
 		private static Dictionary<string, Type> ExpressionTypeTable = new Dictionary<string, Type>();
@@ -526,6 +527,31 @@ namespace ElectronicObserver.Data.EquipmentGroup
 			{
 				return Constants.GetRange((int)RightOperand);
 
+			}
+			else if (LeftOperand == ".MasterEquipment.ImprovableDays")
+			{
+				if (RightOperand == null)
+					return "(未指定)";
+
+				switch (Convert.ToInt32(RightOperand))
+				{
+					case 0:
+						return "日曜日";
+					case 1:
+						return "月曜日";
+					case 2:
+						return "火曜日";
+					case 3:
+						return "水曜日";
+					case 4:
+						return "木曜日";
+					case 5:
+						return "金曜日";
+					case 6:
+						return "土曜日";
+					default:
+						return RightOperand.ToString();
+				}
 			}
 			else if (RightOperand is bool)
 			{

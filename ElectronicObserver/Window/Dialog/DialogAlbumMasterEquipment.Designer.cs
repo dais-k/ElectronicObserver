@@ -1057,7 +1057,7 @@
 			this.StripMenu_View_ShowImprovementFeed.Name = "StripMenu_View_ShowImprovementFeed";
 			this.StripMenu_View_ShowImprovementFeed.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.I)));
 			this.StripMenu_View_ShowImprovementFeed.Size = new System.Drawing.Size(315, 22);
-			this.StripMenu_View_ShowImprovementFeed.Text = "本装備を使用する改修装備を検索(&I)";
+			this.StripMenu_View_ShowImprovementFeed.Text = "改修で本装備を使用する装備を検索(&I)";
 			this.StripMenu_View_ShowImprovementFeed.Click += new System.EventHandler(this.StripMenu_View_ShowImprovementFeed_Click);
 			// 
 			// DialogAlbumMasterEquipment

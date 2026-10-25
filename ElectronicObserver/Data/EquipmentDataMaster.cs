@@ -261,7 +261,21 @@ namespace ElectronicObserver.Data
 			public int NeedCount { get; set; }
 		}
 
-
+		/// <summary>
+		/// 改修可能な曜日。
+		/// 日曜日を0、土曜日を6とする。
+		/// </summary>
+		public IEnumerable<int> ImprovableDays =>
+			Improvements?
+				.Where(improvement => improvement?.Req?.WeekConditions != null)
+				.SelectMany(improvement => improvement.Req.WeekConditions
+					.SelectMany((shipIds, day) =>
+						shipIds != null && shipIds.Any(id => id >= 0)
+							? new[] { day }
+							: Enumerable.Empty<int>()))
+				.Distinct()
+				.OrderBy(day => day)
+			?? Enumerable.Empty<int>();
 
 
 

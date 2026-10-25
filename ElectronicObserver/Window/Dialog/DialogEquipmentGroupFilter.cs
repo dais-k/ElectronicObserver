@@ -37,6 +37,7 @@ namespace ElectronicObserver.Window.Dialog
 		private DataTable _dtRightOperand_equipmentIcontype;
 		private DataTable _dtRightOperand_equipmentCategory1;
 		private DataTable _dtRightOperand_equipmentCategory2;
+		private DataTable _dtRightOperand_improvableDay;
 		#endregion
 
 		public DialogEquipmentGroupFilter(EquipmentGroupData group)
@@ -161,6 +162,23 @@ namespace ElectronicObserver.Window.Dialog
 				_dtRightOperand_bool.Rows.Add(true, "○");
 				_dtRightOperand_bool.Rows.Add(false, "×");
 				_dtRightOperand_bool.AcceptChanges();
+			}
+			{
+				_dtRightOperand_improvableDay = new DataTable();
+				_dtRightOperand_improvableDay.Columns.AddRange(new DataColumn[]{
+					new DataColumn("Value", typeof(int)),
+					new DataColumn("Display", typeof(string))
+				});
+
+				_dtRightOperand_improvableDay.Rows.Add(0, "日曜日");
+				_dtRightOperand_improvableDay.Rows.Add(1, "月曜日");
+				_dtRightOperand_improvableDay.Rows.Add(2, "火曜日");
+				_dtRightOperand_improvableDay.Rows.Add(3, "水曜日");
+				_dtRightOperand_improvableDay.Rows.Add(4, "木曜日");
+				_dtRightOperand_improvableDay.Rows.Add(5, "金曜日");
+				_dtRightOperand_improvableDay.Rows.Add(6, "土曜日");
+
+				_dtRightOperand_improvableDay.AcceptChanges();
 			}
 			{
 				_dtRightOperand_equipmentname = new DataTable();
@@ -332,7 +350,7 @@ namespace ElectronicObserver.Window.Dialog
 			row.SetValues(
 				exp.Enabled,
 				exp.LeftOperand,
-				exp.RightOperand,
+				exp.RightOperandToString(),
 				exp.Operator
 				);
 
@@ -570,6 +588,24 @@ namespace ElectronicObserver.Window.Dialog
 				RightOperand_ComboBox.SelectedValue = right ?? 1;
 
 			}
+			else if (left == ".MasterEquipment.ImprovableDays")
+			{
+				RightOperand_ComboBox.Visible = true;
+				RightOperand_ComboBox.Enabled = true;
+				RightOperand_ComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+				RightOperand_NumericUpDown.Visible = false;
+				RightOperand_NumericUpDown.Enabled = false;
+				RightOperand_TextBox.Visible = false;
+				RightOperand_TextBox.Enabled = false;
+
+				Operator.Enabled = true;
+				Operator.DataSource = _dtOperator_array;
+
+				RightOperand_ComboBox.ValueMember = "Value";
+				RightOperand_ComboBox.DisplayMember = "Display";
+				RightOperand_ComboBox.DataSource = _dtRightOperand_improvableDay;
+				RightOperand_ComboBox.SelectedValue = right == null ? 0 : Convert.ToInt32(right);
+			}           
 			// 以下、汎用判定
 			else if (lefttype == null)
 			{
