@@ -638,7 +638,8 @@ namespace Browser
 			var browser = Browser.GetBrowser();
 			foreach (var id in browser.GetFrameIdentifiers())
 			{
-				var frame = browser.GetFrameByIdentifier(id);
+				var frame = browser.GetFrameByIdentifier(id); //現行Cef
+				//var frame = browser.GetFrame(id); //Cef102
 				if (IsGameFrame(frame))
 					return frame;
 			}
@@ -653,7 +654,8 @@ namespace Browser
 			var browser = Browser.GetBrowser();
 			foreach (var id in browser.GetFrameIdentifiers())
 			{
-				var frame = browser.GetFrameByIdentifier(id);
+				var frame = browser.GetFrameByIdentifier(id); //現行Cef
+				//var frame = browser.GetFrame(id); //Cef102
 				if (IsKanColleFrame(frame))
 					return frame;
 			}

@@ -43,7 +43,8 @@ namespace Browser.CefOp
 		/// <summary>
 		/// 描画プロセスが何らかの理由で落ちた際の処理を行います。
 		/// </summary>
-		protected override void OnRenderProcessTerminated(IWebBrowser browserControl, IBrowser browser, CefTerminationStatus status, int errorCode, string errorMessage)
+		protected override void OnRenderProcessTerminated(IWebBrowser browserControl, IBrowser browser, CefTerminationStatus status, int errorCode, string errorMessage) //現行Cef
+		//protected override void OnRenderProcessTerminated(IWebBrowser browserControl, IBrowser browser, CefTerminationStatus status) //Cef102
 		{
 			// note: out of memory (例外コード: 0xe0000008) でクラッシュした場合、このイベントは呼ばれない
 
