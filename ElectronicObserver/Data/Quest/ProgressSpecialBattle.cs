@@ -517,8 +517,69 @@ namespace ElectronicObserver.Data.Quest
 							}
 						}) >= 4;
 					break;
-				case 987:   //|987|週|【週間拡張任務】秋の南瓜祭り! Buono!|4-2, 4-3, 4-4 それぞれS勝利×1回|条件：Roma, Minneapolis, 村雨, 夕立, 朧, 曙, Maestrale, Grecale,Libeccio, Scirocco, Jervis, Luigi Torelliから旗艦含め3隻以上
-					membernames = new string[] { "ローマ", "ミネアポリス", "むらさめ", "ゆうだち", "おぼろ", "あけぼの", "マエストラーレ", "グレカーレ", "リベッチオ", "シロッコ", "ジャーヴィス", "ルイージ・トレッリ" };
+				case 984:   //|984|単|【期間限定任務】14年目実りの秋、南瓜始め！|1-3, 1-4, 2-1 それぞれS勝利×2回|条件：鈴谷, 村雨, 夕立, 曙, 朧, 朝潮, 野分, 迅鯨, 長鯨から旗艦と随伴2(計3隻) |
+					membernames = new string[] { "すずや", "むらさめ", "ゆうだち", "おぼろ", "あけぼの", "あさしお", "のわき", "じんげい", "ちょうげい" };
+					isFlagship = false;
+					membercount = 0;
+					foreach (var item in membernames)
+					{
+						if (isFlagship == false && members.FirstOrDefault()?.MasterShip?.NameReading == item)
+						{
+							isFlagship = true;
+						}
+
+						if (members.Count(s => s?.MasterShip?.NameReading == item) != 0)
+						{
+							membercount++;
+						}
+					}
+					isAccepted = (isFlagship == true && membercount >= 3);
+					break;
+				case 985:   //|985|週|【期間限定任務】特務護衛戦隊、抜錨せよ！|1-2、1-5、2-2、2-3ボスを各S勝利1回ずつ|条件：村雨, 巻波, 早波, 浜波, 樫, 対馬, 鵜来, 稲木, 大泊, 迅鯨, 長鯨 朝日から3隻以上 |
+					isAccepted =
+						members.Count(s =>
+						{
+							switch (s?.MasterShip?.NameReading)
+							{
+								case "かし":
+								case "はまなみ":
+								case "はやなみ":
+								case "まきなみ":
+								case "むらさめ":
+								case "つしま":
+								case "うくる":
+								case "いなぎ":
+								case "おおとまり":
+								case "あさひ":
+								case "じんげい":
+								case "ちょうげい":
+									return true;
+								default:
+									return false;
+							}
+						}) >= 3;
+					break;
+				case 986:   //|986|単|【期間限定任務】USS Trick or Treat！|2-1, 2-5, 3-1 それぞれS勝利×2回|条件：Indiana, Gambier Bay, Minneapolis, Tuscaloosa, Brooklyn, Johnston, Richard P.Leary から3隻以上|
+					isAccepted =
+						members.Count(s =>
+						{
+							switch (s?.MasterShip?.NameReading)
+							{
+								case "インディアナ":
+								case "ガンビア・ベイ":
+								case "ミネアポリス":
+								case "タスカルーサ":
+								case "ブルックリン":
+								case "ジョンストン":
+								case "リチャード・P・リアリー":
+									return true;
+								default:
+									return false;
+							}
+						}) >= 3;
+					break;
+				case 987:   //|987|月|【期間限定任務】西方南瓜祭り!  Buono!|4-2, 4-3, 4-4 それぞれS勝利×1回|条件：Roma, 鈴谷, Maestrale, Grecale, Libeccio, Scirocco, Jervis, 村雨, 朧, 曙, Luigi Torelli, 伊47, 伊201から旗艦含め3隻以上
+					membernames = new string[] { "ローマ", "すずや", "グレカーレ", "シロッコ", "マエストラーレ", "リベッチオ", "ジャーヴィス", "むらさめ", "おぼろ", "あけぼの", "ルイージ・トレッリ", "い47", "い201" };
 					isFlagship = false;
 					membercount = 0;
 					foreach (var item in membernames)
@@ -534,9 +595,10 @@ namespace ElectronicObserver.Data.Quest
 						}
 					}
 					isAccepted = (isFlagship == true && membercount >= 3);
+
 					break;
-				case 1002:   //|1002|単|【限定拡張任務】南瓜祭り2025、拡張作戦！|3-2, 3-5, 6-4 それぞれS勝利×1回|条件：Gambier Bay, Minneapolis, Tuscaloosa, Jervis, 朧, 夕立, 村雨 ,朝潮, 野分, 巻波 から旗艦含め3隻
-					membernames = new string[] { "ガンビア・ベイ", "ミネアポリス", "タスカルーサ", "ジャーヴィス", "おぼろ", "ゆうだち", "むらさめ", "あさしお", "のわき", "まきなみ" };
+				case 1002:  //|1002|単|【限定拡張作戦】南瓜祭り2026、北方作戦！|3-2, 3-4, 3-5 それぞれS勝利×1回|条件：Gambier Bay, 鈴谷, Minneapolis, Tuscaloosa, 阿武隈, 曙, 朧, 清霜, 樫, Johnston から旗艦含む3隻以上
+					membernames = new string[] { "ガンビア・ベイ", "すずや", "ミネアポリス", "タスカルーサ", "あぶくま", "おぼろ", "きよしも", "かし", "ジョンストン" };
 					isFlagship = false;
 					membercount = 0;
 					foreach (var item in membernames)
@@ -641,17 +703,36 @@ namespace ElectronicObserver.Data.Quest
 					isAccepted = (((members.FirstOrDefault()?.MasterShip?.NameReading == "のしろ" || members.FirstOrDefault()?.MasterShip?.NameReading == "アトランタ") && members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Destroyer) >= 3)
 						|| (members.FirstOrDefault()?.MasterShip?.NameReading == "リチャード・P・リアリー" && members.Count(s => s?.MasterShip?.ShipType == ShipTypes.Destroyer) >= 3));
 					break;
-				case 1039:   //|1039|週|【期間限定任務】Halloween海上護衛隊出撃！|1-2, 1-4, 1-5それぞれS勝利×1回|条件：阿武隈, 曙, 朝潮, 巻波, 浜波, 鵜来, 稲木, 能美, 第四号海防艦,第三〇号海防艦, 第二十二号海防艦 から4隻
+				case 1038:  //|1038|単|【限定拡張作戦】Halloween、おかわり開始！|1-1, 1-3 それぞれS勝利×4回|条件：鈴谷, 曙, 朧, 樫, Johnston, Richard P.Leary, 朝日, 迅鯨, 長鯨, 瑞穂から旗艦含め4隻以上
+					membernames = new string[] { "すずや", "あけぼの", "おぼろ", "かし", "ジョンストン", "リチャード・P・リアリー", "あさひ", "じんげい", "ちょうげい", "みずほ" };
+					isFlagship = false;
+					membercount = 0;
+					foreach (var item in membernames)
+					{
+						if (isFlagship == false && members.FirstOrDefault()?.MasterShip?.NameReading == item)
+						{
+							isFlagship = true;
+						}
+
+						if (members.Count(s => s?.MasterShip?.NameReading == item) != 0)
+						{
+							membercount++;
+						}
+					}
+					isAccepted = (isFlagship == true && membercount >= 4);
+					break;
+				case 1039:  //|1039|週|【期間限定任務】Halloween海上護衛隊出撃！|1-2, 1-4, 1-5それぞれS勝利×1回|条件：阿武隈, 樫, 朝潮, 巻波, 浜波, 対馬, 鵜来, 稲木, 能美, 第四号海防艦, 第三〇号海防艦, 第二十二号海防艦 から4隻
 					isAccepted =
 						members.Count(s =>
 						{
 							switch (s?.MasterShip?.NameReading)
 							{
 								case "あぶくま":
-								case "あけぼの":
+								case "かし":
 								case "あさしお":
 								case "はまなみ":
 								case "まきなみ":
+								case "つしま":
 								case "うくる":
 								case "いなぎ":
 								case "のうみ":
@@ -664,8 +745,8 @@ namespace ElectronicObserver.Data.Quest
 							}
 						}) >= 4;
 					break;
-				case 1040:   //|1040|週|【期間限定任務】Halloween狼隊、夜の襲撃！|2-1, 2-2それぞれS勝利×2回|条件：「Tuscaloosa」「朧」「夕立」「野分」「早波」「熊野丸」「迅鯨改」旗艦含め3隻以上
-					membernames = new string[] { "タスカルーサ", "くまのまる", "おぼろ", "ゆうだち", "のわき", "はやなみ" };
+				case 1040:  //|1040|月|【限定拡張作戦】Halloween狼隊、夜の襲撃！|2-1, 2-2それぞれS勝利×2回|条件：Indiana, Tuscaloosa, 朧, 夕立, 野分, 早波, 熊野丸, 迅鯨改から旗艦と随伴2(計3隻)
+					membernames = new string[] { "インディアナ", "タスカルーサ", "おぼろ", "ゆうだち", "のわき", "はやなみ", "くまのまる" };
 					isFlagship = false;
 					membercount = 0;
 					foreach (var item in membernames)
@@ -788,6 +869,22 @@ namespace ElectronicObserver.Data.Quest
 								case "みちしお":
 								case "あさぐも":
 								case "やまぐも":
+									return true;
+								default:
+									return false;
+							}
+						}) >= 2;
+					break;
+				case 1053:  //|1053|単|再編二十駆「天霧」「狭霧」南方へ展開せよ！|5-1, 5-3, 5-4, 5-6-3 それぞれS勝利×1回|条件：天霧改二/丁, 狭霧改二 を含む
+					isAccepted =
+						CheckGaugeIndex56(bm.Compass) &&
+						members.Count(s =>
+						{
+							switch (s?.MasterShip?.ShipID)
+							{
+								case 903: //天霧改二
+								case 908: //天霧改二丁
+								case 902: //狭霧改二
 									return true;
 								default:
 									return false;

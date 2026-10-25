@@ -409,6 +409,9 @@ namespace ElectronicObserver.Data.Quest
 						case 357:   //|357|６|「大和型戦艦」第一戦隊演習、始め！|演習S勝利以上3|条件：大和、武蔵、軽巡1隻、駆逐2隻|イヤーリーだが1日で進捗リセット|
 							Progresses.Add(new ProgressPractice(q, 3, "S", true));
 							break;
+						case 359:   //|359|週|Halloween艦隊 実りの秋、最新演習！|演習A勝利以上5|条件：鈴谷, Minneapolis, 阿武隈, 朧, 曙, 村雨, 夕立, 野分, 朝潮, 早波, 浜波, Jervis, Johnston, 伊201 から4隻以上| イヤーリーだが1日で進捗リセット|
+							Progresses.Add(new ProgressPractice(q, 5, "A", true));
+							break;
 						case 362:   //|362|４|特型初代「第十一駆逐隊」演習スペシャル！|演習A勝利以上4|条件：吹雪、白雪、初雪、深雪|イヤーリーだが1日で進捗リセット|
 							Progresses.Add(new ProgressPractice(q, 4, "A", true));
 							break;
@@ -466,11 +469,11 @@ namespace ElectronicObserver.Data.Quest
 						case 384:   //|384|週|【期間限定任務】提督との秋祭り演習！|演習B勝利以上×4回|条件：「秋雲」「秋月」「綾波」「敷波」「白露」「浦風」「浜風」「長波」「藤波」「朝霜」「白雲」「朧」「漣」「迅鯨」「長鯨」「大鯨」「神通」から4隻以上 | 1日で進捗リセット|期間限定任務
 							Progresses.Add(new ProgressPractice(q, 4, "B", true));
 							break;
-                        case 385:   //|385|週|【期間限定拡張任務】秋祭り拡張演習！|演習S勝利以上×4回|条件：「Algérie」「Vautour」「Mogador」「Béarn」「日枝丸」「平安丸」「大泊」「陸奥」「South Dakota」「Victorious」から3隻以上 | 1日で進捗リセット|期間限定任務
-                            Progresses.Add(new ProgressPractice(q, 4, "S", true));
-                            break;
-                        //============================ 400～499 ============================
-                        case 402:   //|402|「遠征」を3回成功させよう！|遠征成功3
+						case 385:   //|385|週|【期間限定拡張任務】秋祭り拡張演習！|演習S勝利以上×4回|条件：「Algérie」「Vautour」「Mogador」「Béarn」「日枝丸」「平安丸」「大泊」「陸奥」「South Dakota」「Victorious」から3隻以上 | 1日で進捗リセット|期間限定任務
+							Progresses.Add(new ProgressPractice(q, 4, "S", true));
+							break;
+						//============================ 400～499 ============================
+						case 402:   //|402|「遠征」を3回成功させよう！|遠征成功3
 							Progresses.Add(new ProgressExpedition(q, 3, null));
 							break;
 						case 403:   //|403|「遠征」を10回成功させよう！|遠征成功10
@@ -1062,26 +1065,43 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressSpecialBattle(q, 1, "S", new[] { 53 }, true),
 							}));
 							break;
-						case 987:   //|987|週|【週間拡張任務】秋の南瓜祭り! Buono!|4-2, 4-3, 4-4 それぞれS勝利×1回|条件：Roma, Minneapolis, 村雨, 夕立, 朧, 曙, Maestrale, Grecale,Libeccio, Scirocco, Jervis, Luigi Torelliから旗艦含め3隻以上 南瓜イベント2025 /9/26～
-							//if (DateTime.Now < new DateTime(2024, 11, 9))
-							{
-								Progresses.Add(new ProgressMultiBattle(q, new[] {
-									new ProgressSpecialBattle(q, 1, "S", new[] { 42 }, true),
-									new ProgressSpecialBattle(q, 1, "S", new[] { 43 }, true),
-									new ProgressSpecialBattle(q, 1, "S", new[] { 44 }, true),
-								}));
-							}
+						case 984:   //|984|単|【期間限定任務】14年目実りの秋、南瓜始め！|1-3, 1-4, 2-1 それぞれS勝利×2回|条件：鈴谷, 村雨, 夕立, 曙, 朧, 朝潮, 野分, 迅鯨, 長鯨から旗艦と随伴2(計3隻) |
+							Progresses.Add(new ProgressMultiBattle(q, new[] {
+								new ProgressSpecialBattle(q, 2, "S", new[] { 13 }, true),
+								new ProgressSpecialBattle(q, 2, "S", new[] { 14 }, true),
+								new ProgressSpecialBattle(q, 2, "S", new[] { 21 }, true),
+							}));
+							break;
+						case 985:   //|985|週|【期間限定任務】特務護衛戦隊、抜錨せよ！|1-2、1-5、2-2、2-3ボスを各S勝利1回ずつ|条件：村雨, 巻波, 早波, 浜波, 樫, 対馬, 鵜来, 稲木, 大泊, 迅鯨, 長鯨 朝日から3隻以上 |
+							Progresses.Add(new ProgressMultiBattle(q, new[] {
+								new ProgressSpecialBattle(q, 1, "S", new[] { 12 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 15 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 22 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 23 }, true),
+							}));
+							break;
+						case 986:   //|986|単|【期間限定任務】USS Trick or Treat！|2-1, 2-5, 3-1 それぞれS勝利×2回|条件：Indiana, Gambier Bay, Minneapolis, Tuscaloosa, Brooklyn, Johnston, Richard P.Leary から3隻以上|
+							Progresses.Add(new ProgressMultiBattle(q, new[] {
+								new ProgressSpecialBattle(q, 2, "S", new[] { 21 }, true),
+								new ProgressSpecialBattle(q, 2, "S", new[] { 25 }, true),
+								new ProgressSpecialBattle(q, 2, "S", new[] { 31 }, true),
+							}));
+							break;
+						case 987:   //|987|月|【期間限定任務】西方南瓜祭り!  Buono!|4-2, 4-3, 4-4 それぞれS勝利×1回|条件：Roma, 鈴谷, Maestrale, Grecale, Libeccio, Scirocco, Jervis, 村雨, 朧, 曙, Luigi Torelli, 伊47, 伊201から旗艦含め3隻以上
+							Progresses.Add(new ProgressMultiBattle(q, new[] {
+								new ProgressSpecialBattle(q, 1, "S", new[] { 42 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 43 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 44 }, true),
+							}));
 							break;
 						//============================ 1000～1099 ============================
-						case 1002:  //|1002|単|【限定拡張任務】南瓜祭り2025、拡張作戦！|3-2, 3-5, 6-4 それぞれS勝利×1回|条件：Gambier Bay, Minneapolis, Tuscaloosa, Jervis, 朧, 夕立, 村雨 ,朝潮, 野分, 巻波 から旗艦含め3隻| 南瓜イベント2025/9/26～
-							//if (DateTime.Now < new DateTime(2024, 11, 9))
-							{
-								Progresses.Add(new ProgressMultiBattle(q, new[] {
-									new ProgressSpecialBattle(q, 1, "S", new[] { 32 }, true),
-									new ProgressSpecialBattle(q, 1, "S", new[] { 35 }, true),
-									new ProgressSpecialBattle(q, 1, "S", new[] { 64 }, true),
-								}));
-							}
+						case 1002:  //|1002|単|【限定拡張作戦】南瓜祭り2026、北方作戦！|3-2, 3-4, 3-5 それぞれS勝利×1回|条件：Gambier Bay, 鈴谷, Minneapolis, Tuscaloosa, 阿武隈, 曙, 朧, 清霜, 樫, Johnston から旗艦含む3隻以上
+
+							Progresses.Add(new ProgressMultiBattle(q, new[] {
+								new ProgressSpecialBattle(q, 1, "S", new[] { 32 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 34 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 35 }, true),
+							}));
 							break;
 						case 1005:  //|1005|１|精強「第七駆逐隊」緊急出動！|1-2、1-3、1-5、3-2ボスを各A勝利1回ずつ|条件：「朧改」「漣改」「曙改(二)」「潮改(二)」を編成に入れる|
 							Progresses.Add(new ProgressMultiBattle(q, new[] {
@@ -1167,14 +1187,21 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressSpecialBattle(q, 1, "S", new[] { 54 }, true),
 							}));
 							break;
-						case 1039:  //|1039|週|【期間限定任務】Halloween海上護衛隊出撃！|1-2, 1-4, 1-5それぞれS勝利×1回|条件：阿武隈, 曙, 朝潮, 巻波, 浜波, 鵜来, 稲木, 能美, 第四号海防艦,第三〇号海防艦, 第二十二号海防艦 から4隻
+						case 1038:  //|1038|単|【限定拡張作戦】Halloween、おかわり開始！|1-1, 1-3 それぞれS勝利×4回|条件：鈴谷, 曙, 朧, 樫, Johnston, Richard P.Leary, 朝日, 迅鯨, 長鯨, 瑞穂から旗艦含め4隻以上
+							Progresses.Add(new ProgressMultiBattle(q, new[] {
+								new ProgressSpecialBattle(q, 4, "S", new[] { 11 }, true),
+								new ProgressSpecialBattle(q, 4, "S", new[] { 13 }, true),
+							}));
+							break;
+						case 1039:  //|1039|週|【期間限定任務】Halloween海上護衛隊出撃！|1-2, 1-4, 1-5それぞれS勝利×1回|条件：阿武隈, 樫, 朝潮, 巻波, 浜波, 対馬, 鵜来, 稲木, 能美, 第四号海防艦, 第三〇号海防艦, 第二十二号海防艦 から4隻
+
 							Progresses.Add(new ProgressMultiBattle(q, new[] {
 								new ProgressSpecialBattle(q, 1, "S", new[] { 12 }, true),
 								new ProgressSpecialBattle(q, 1, "S", new[] { 14 }, true),
 								new ProgressSpecialBattle(q, 1, "S", new[] { 15 }, true),
 							}));
 							break;
-						case 1040:  //|1040|週|【期間限定任務】Halloween狼隊、夜の襲撃！|2-1, 2-2それぞれS勝利×2回|条件：「Tuscaloosa」「朧」「夕立」「野分」「早波」「熊野丸」「迅鯨改」旗艦含め3隻以上
+						case 1040:  //|1040|月|【限定拡張作戦】Halloween狼隊、夜の襲撃！|2-1, 2-2それぞれS勝利×2回|条件：Indiana, Tuscaloosa, 朧, 夕立, 野分, 早波, 熊野丸, 迅鯨改から旗艦と随伴2(計3隻)
 							Progresses.Add(new ProgressMultiBattle(q, new[] {
 								new ProgressSpecialBattle(q, 2, "S", new[] { 21 }, true),
 								new ProgressSpecialBattle(q, 2, "S", new[] { 22 }, true),
@@ -1225,6 +1252,14 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressSpecialBattle(q, 1, "A", new[] { 43 }, true),
 							}));
 							break;
+						case 1053:  //|1053|単|再編二十駆「天霧」「狭霧」南方へ展開せよ！|5-1, 5-3, 5-4, 5-6-3 それぞれS勝利×1回|条件：天霧改二/丁, 狭霧改二 を含む
+							Progresses.Add(new ProgressMultiBattle(q, new[] {
+								new ProgressSpecialBattle(q, 1, "S", new[] { 51 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 53 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 54 }, true),
+								new ProgressSpecialBattle(q, 1, "S", new[] { 56 }, true, 3),
+							}));
+							break;
 						//============================ 1100～1199 ============================
 						case 1103:  //|1103|６|潜水艦強化兵装の量産|61cm三連装(酸素)魚雷x3を破棄し、開発資材60、九三式水中聴音機x2、13号対空電探改x2を所有|
 							Progresses.Add(new ProgressDiscard(q, 3, true, new[] { 125 }, -1));
@@ -1266,13 +1301,12 @@ namespace ElectronicObserver.Data.Quest
 								new ProgressDiscard(q, 4, true, new[]{ 3 }),
 							}));
 							break;
-						case 1119:   //|1119|週|【期間限定】Halloweenの南瓜、食べりゅ？|(小口径主砲x8, 中口径主砲x8,  水上偵察機x8)廃棄, (20.3cm連装砲x8, 九九式艦爆x8, 家具コインx1031)保有、南瓜イベント 2025/9/26～
-							//if (DateTime.Now < new DateTime(2024, 11, 9))
+						case 1119:   //|1119|月|【期間限定】Halloweenの南瓜、食べりゅ？|(小口径主砲x8, 中口径主砲x9,  水上偵察機x9)廃棄, (九九式艦爆×10、九七式艦攻×10、家具コイン1031を準備)保有、南瓜イベント
 							{
 								Progresses.Add(new ProgressMultiDiscard(q, new[]{
-									new ProgressDiscard(q, 8, true, new[]{ 1 }),
-									new ProgressDiscard(q, 8, true, new[]{ 2 }),
-									new ProgressDiscard(q, 8, true, new[]{ 10 }),
+									new ProgressDiscard(q, 9, true, new[]{ 1 }),
+									new ProgressDiscard(q, 9, true, new[]{ 2 }),
+									new ProgressDiscard(q, 9, true, new[]{ 10 }),
 								}));
 							}
 							break;

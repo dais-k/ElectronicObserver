@@ -328,6 +328,34 @@ namespace ElectronicObserver.Data.Quest
 						ret = true;
 					}
 					break;
+				case 359:   //|359|週|Halloween艦隊 実りの秋、最新演習！|演習A勝利以上5|条件：鈴谷, Minneapolis, 阿武隈, 朧, 曙, 村雨, 夕立, 野分, 朝潮, 早波, 浜波, Jervis, Johnston, 伊201 から4隻以上| イヤーリーだが1日で進捗リセット|
+					if (ships.Count(s =>
+					{
+						switch (s?.MasterShip?.NameReading)
+						{
+							case "ミネアポリス":
+							case "すずや":
+							case "あぶくま":
+							case "おぼろ":
+							case "あけぼの":
+							case "むらさめ":
+							case "ゆうだち":
+							case "のわき":
+							case "あさしお":
+							case "はやなみ":
+							case "はまなみ":
+							case "ジャーヴィス":
+							case "ジョンストン":
+							case "い201":
+								return true;
+							default:
+								return false;
+						}
+					}) >= 4)
+					{
+						ret = true;
+					}
+					break;
 				case 362:   //|362|４|特型初代「第十一駆逐隊」演習スペシャル！|演習A勝利以上4|条件：吹雪、白雪、初雪、深雪|イヤーリーだが1日で進捗リセット|
 					if (ships.Count(s =>
 					{
